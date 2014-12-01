@@ -1,0 +1,78 @@
+/* All */
+body { background: #242424; color: #3d3d3d; }
+/* header */
+.hd { width: 100%; background: #212121; }
+.hd-top { background: #2f3032; color: #c1c1c1; padding: 2px 0 3px 0; text-align: right; font-size: 12px; }
+.hd-top>div>a { color: #c1c1c1; padding: 0 10px; }
+.hd-top>div>a.last { padding: 0 3px 0 10px; }
+.hd-top>div>a.active { color: #fff; }
+.hd-mn { position: relative; }
+.hd-logo { padding: 15px 0 8px; margin-left: -1px; }
+.hd-nav { height: 40px; }
+.hd-nav>li { position: relative; display: block; float: left; }
+.hd-nav>li>a { position: relative; display: block; padding: 8px 30px 4px; text-decoration: none; color: #fff; font-size: 18px; font-family: 'Microsoft Yahei'; border-bottom: 3px #212121 solid; }
+.hd-nav>li>a.active { border-bottom: 3px #f13c38 solid; }
+.hd-nav>li>a:hover { border-bottom: 3px #f13c38 solid; }
+.hd-nav>li.first>a { background: #2a2a2b; border-bottom: 3px #2a2a2b solid; *height: 20px; }
+.hd-nav>li.first>a>img { float: right; display: block; padding: 9px 0; transition: .3s; }
+.hd-nav>li.first>a.on>img { transform: rotate(180deg); }
+.hd-nav>li.first>a, .hd-mask>li>a { width: 265px; padding: 6px 20px 6px 15px; }
+.hd-mask { position: absolute; left: 0; background: #212121; display: none; z-index: 101; }
+.hd-mask>li { width: 265px; }
+.hd-mask>li>a { color: #fff; display: block; font-size: 16px; font-family: 'Microsoft Yahei'; border-bottom: 1px #191919 dashed; }
+.hd-mask>li>a:hover { text-decoration: none; background: #1d1d1d; cursor: pointer; }
+.hd-mask>li>a.active { background: #1d1d1d; }
+.hd-mask>li>a>span { color: #a5a5a5; font-size: 12px; padding-left: 15px; }
+.hd-mask-icon { display: inline-block; width: 51px; }
+.hd-mask-list { overflow: hidden; width: 100%; padding-bottom: 8px; }
+.hd-mask-list>li { float: left; position: relative; display: block; text-align: center; width: 33%; }
+.hd-mask-list>li>a { display: block; color: #a5a5a5; font-size: 12px; }
+/* Page */
+.section { width: 100%; }
+.page-hd { height: 360px; }
+.page-er, .page-hd, .page-he,.page-new { width: 985px; margin: auto; color: #999;}
+
+.bg-0{background: #d12840;}
+.bg-1 { background: #242424; }
+.bg-2 { background: #2a2a2b; }
+.page .title { padding-bottom: 10px; color: #333; font-size: 16px; }
+
+.page-new{ padding: 10px 0; color: #999;}
+
+.page-he{ color: #999;}
+.kj-num {
+float: right;
+width: 259px;
+padding-left: 20px;
+}
+.mod-kj .lot-title span { margin-right: 10px }
+.mod-kj .lot-title .lot-name { font-weight: bold }
+.kj-cont{ background: #242424;}
+.mod-kj .num-list { color: #d72828; font-size: 20px; font-family: "Tahoma"; }
+.mod-kj .num-list li { float: left; margin-right: 10px; line-height: 39px ;}
+.mod-kj .num-list li.num-blue { color: #4493eb }
+.mod-kj .links a { display: inline-block; padding: 0 10px; border-left: 1px solid #E5E5E5 }
+.mod-kj .links a.first-link { padding: 0 10px 0 0; border-left: 0 }
+.mod-famous-guide .first-guide { margin-bottom: 11px; padding-bottom: 12px; border-bottom: 1px solid #E5E5E5 }
+
+.page-er { padding: 20px 0; }
+.page-er li { float: left; width: 492.2px; }
+.mod-app .qrcode-img { float: left; margin-right: 12px }
+.mod-app .app-info { float: left; color: #999; }
+.mod-app .app-info .app-title { font-size: 18px; font-weight: normal; margin: 0 0 5px; }
+.mod-app .app-info .txt { padding-bottom: 6px; }
+/* footer */
+.ft { width: 100%; background: #242424; padding: 30px 0 50px 0; overflow: hidden; color: #545454; }
+.ft-l { float: left; width: 230px; height: 228px; }
+.ft-l>ul { width: 100%; }
+.ft-l>ul>li { float: left; display: block; width: 50%; text-align: center; font-size: 12px; height: 114px; position: relative; }
+.ft-l>ul>li>img { display: block; margin: auto; }
+.ft-l>ul>li>a { position: absolute; bottom: 10px; left: 40px; color: #4e4e4e; }
+.ft-r { float: left; padding-left: 80px; width: 740px; *width: 660px;}
+.ft-list { padding-bottom: 20px; width: 660px;}
+.ft-list>li { float: left; width: 190px; }
+.ft-list>li.last { width: 90px; }
+.ft-list>li>h4 { font-size: 20px; }
+.ft-list>li>ul { list-style: disc; font-size: 12px; padding: 0 0 0 16px; }
+.ft-list>li>ul>li>a { color: #545454; line-height: 1.9; }
+.ft-img { padding-left: 140px; }
