@@ -12,6 +12,7 @@ var COMMON = {};
 var MANUAL = {};
 var DRAG = {};
 var SEEDS = {};
+var ZHUI = {};
 var DEBUG = false;
 
 SEEDS.ballNum = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
@@ -23,10 +24,29 @@ SEEDS.ssq = {
   blueTotal: 1,
 };
 
+/**********追号模块**************/
+// 给AJAX 返回的HTML添加时间 检测 追号总金额
+ZHUI.bindZhuiHaoEvent = function() {
 
-var BALLDATA = {};
-BALLDATA.red = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
-BALLDATA.blue = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+};
+
+// 绑定合买相关事件
+ZHUI.bindHeMaiEvent = function() {
+
+};
+
+// 更新合买 总金额
+ZHUI.setHeMaiTotal = function(box) {
+  console.log(box);
+}
+
+// 更新追号 总金额
+ZHUI.setZhuiHaoTotal = function(box) {
+  var qi = box.find('.j-qi-count');
+  var jine = box.find('.br-zhui-list tbody .br-zhui-c')
+  console.log(box);
+};
+
 
 /**************QUEUE*************/
 // 计算阶乘的函数
@@ -99,7 +119,7 @@ COMMON.setZhuTotal = function(r, el) {
   // r:1 - 快捷投注
   // r:2 - 多期投注
   // e - 来源
-  var p = el.parents('.br-gou'),
+  var p = el.parents('.box-left'),
     m = [],
     total = 0;
   r = parseInt(r);
@@ -132,6 +152,8 @@ COMMON.setZhuTotal = function(r, el) {
       break;
   }
   console.log('页尾统计更新');
+  ZHUI.setZhuiHaoTotal(p);
+  ZHUI.setHeMaiTotal(p);
 }
 
 // 更新统计注数
@@ -639,149 +661,3 @@ DRAG.getOneListNums = function(el) {
 
   return arr;
 }
-
-
-
-/****************Bind Other Tabs Toggle Event****************/
-$(function() {
-
-  // Quick, senior toggle
-  $('#br-hd-group a').on('click', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    if ($(this).hasClass('active')) {
-      return;
-    } else {
-      $('#br-hd-group .active').removeClass('active');
-
-      var t = parseInt($(this).attr('data-t'));
-      if (t) {
-        $('#quick').addClass('hidden');
-        $('#senior').removeClass('hidden');
-      } else {
-        $('#senior').addClass('hidden');
-        $('#quick').removeClass('hidden');
-      }
-
-      $(this).addClass('active');
-      return;
-    }
-  });
-
-  // br-type icon toggle
-  $('.j-br-type a[data-toggle="tab"]').on('click', function(e) {
-    $('.j-br-type .icon-y2').removeClass('icon-y2');
-    $(this).find('.icon').addClass('icon-y2');
-  });
-
-  // 方案设置
-  $('.br-set-group').on('click', '.br-set', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(this).siblings('.active').removeClass('active');
-    $(this).addClass('active');
-  });
-
-  // 追号模块
-  $('.br-details').on('click', '.br-zhui-btn', function(event) {
-    // Ajax 获取 期数
-
-    // $.ajax({
-    //   url: 'http://kp2.yuncai.com/lottery/digital/query-track-issue/dlt',
-    //   type: 'get',
-    //   dataType: 'json',
-    //   data: {num: 10},
-    // })
-    // .done(function(data) {
-    //   console.log(data);
-    //   console.log("success");
-    // })
-    // .fail(function() {
-    //   console.log("error");
-    // })
-    // .always(function() {
-    //   console.log("complete");
-    // });
-
-    var data = {
-      "retCode": 100000,
-      "retMsg": "",
-      "retData": [{
-        "id": "18",
-        "qihao": "14140",
-        "awardTime": "2014-11-2920:45"
-      }, {
-        "id": "19",
-        "qihao": "14141",
-        "awardTime": "2014-12-0120:45"
-      }, {
-        "id": "20",
-        "qihao": "14142",
-        "awardTime": "2014-12-0320:45"
-      }, {
-        "id": "21",
-        "qihao": "14143",
-        "awardTime": "2014-12-0620:45"
-      }, {
-        "id": "22",
-        "qihao": "14144",
-        "awardTime": "2014-12-0820:45"
-      }, {
-        "id": "23",
-        "qihao": "14145",
-        "awardTime": "2014-12-1020:45"
-      }, {
-        "id": "24",
-        "qihao": "14146",
-        "awardTime": "2014-12-1320:45"
-      }, {
-        "id": "25",
-        "qihao": "14147",
-        "awardTime": "2014-12-1520:45"
-      }, {
-        "id": "26",
-        "qihao": "14148",
-        "awardTime": "2014-12-1720:45"
-      }, {
-        "id": "27",
-        "qihao": "14149",
-        "awardTime": "2014-12-2020:45"
-      }]
-    };
-    if (data) {
-      var html = ''
-      for (var i = 0; i < data.retData.length; i++) {
-        html += '<tr><td>' + i + '</td><td><input type="checkbox" class="br-zhui-c">' + data.retData[i]['qihao'] + '期</td><td><input type="text" class="br-input br-zhui-bei">倍</td><td>10元</td><td>' + data.retData[i]['awardTime'] + '</td></tr>';
-      };
-      var zhui = $(this).parents('.br-details').find('.br-zhui');
-      zhui.find('.br-zhui-list tbody').html(html);
-    }
-
-
-
-    //
-
-
-  });
-
-  // 合买模块
-  $('.br-details').on('click', '.br-zhui-btn', function(event) {
-    // 计算认购比例
-
-    // 计算保底比例
-
-  });
-
-  // 右侧栏选项框
-  $('.tab-cut').on('mouseover', 'li', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $('#lr_tab li.on').removeClass('on');
-    $(this).addClass('on');
-    var c = $('#lr_content .tab-con');
-    c.hide();
-    c.eq($(this).index()).show();
-  });
-
-
-});
