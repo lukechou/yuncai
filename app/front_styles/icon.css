@@ -13,91 +13,91 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .icon-card {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -271px;
+  background-position: 0px -247px;
   width: 25px;
   height: 19px;
 }
 .icon-d0 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -467px;
+  background-position: 0px -553px;
   width: 26px;
   height: 32px;
 }
 .icon-d1 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -403px;
+  background-position: 0px -521px;
   width: 26px;
   height: 32px;
 }
 .icon-d2 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -499px;
+  background-position: 0px -489px;
   width: 26px;
   height: 32px;
 }
 .icon-d3 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -435px;
+  background-position: 0px -457px;
   width: 26px;
   height: 32px;
 }
 .icon-i {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -329px;
+  background-position: 0px -383px;
   width: 22px;
   height: 22px;
 }
 .icon-message {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -233px;
+  background-position: 0px -304px;
   width: 25px;
   height: 19px;
 }
 .icon-mobile {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -376px;
+  background-position: 0px -430px;
   width: 18px;
   height: 27px;
 }
 .icon-moon {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -147px;
+  background-position: 0px -161px;
   width: 15px;
   height: 16px;
 }
 .icon-nl-1-1 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -215px;
+  background-position: 0px -211px;
   width: 19px;
   height: 18px;
 }
 .icon-nl-1-2 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -197px;
+  background-position: 0px -229px;
   width: 19px;
   height: 18px;
 }
 .icon-nl-2-1 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -118px;
+  background-position: 0px -104px;
   width: 16px;
   height: 14px;
 }
 .icon-nl-2-2 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -104px;
+  background-position: 0px -118px;
   width: 16px;
   height: 14px;
 }
 .icon-nl-3-1 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -163px;
+  background-position: 0px -194px;
   width: 16px;
   height: 17px;
 }
 .icon-nl-3-2 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -180px;
+  background-position: 0px -177px;
   width: 16px;
   height: 17px;
 }
@@ -115,39 +115,51 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .icon-pass {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -252px;
+  background-position: 0px -266px;
   width: 25px;
   height: 19px;
 }
 .icon-r1 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -62px;
+  background-position: 0px -90px;
   width: 17px;
   height: 14px;
 }
 .icon-start {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -132px;
+  background-position: 0px -146px;
   width: 16px;
   height: 15px;
 }
 .icon-stop {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -309px;
+  background-position: 0px -323px;
   width: 20px;
   height: 20px;
 }
 .icon-suc {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -48px;
+  background-position: 0px -62px;
   width: 14px;
   height: 14px;
 }
+.icon-suc1 {
+  background-image: url(../front_images/icon.png);
+  background-position: 0px -363px;
+  width: 20px;
+  height: 20px;
+}
 .icon-sun {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -290px;
+  background-position: 0px -285px;
   width: 19px;
   height: 19px;
+}
+.icon-tan {
+  background-image: url(../front_images/icon.png);
+  background-position: 0px -48px;
+  width: 14px;
+  height: 14px;
 }
 .icon-warm {
   background-image: url(../front_images/icon.png);
@@ -157,13 +169,13 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .icon-write {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -351px;
+  background-position: 0px -405px;
   width: 25px;
   height: 25px;
 }
 .icon-y {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -90px;
+  background-position: 0px -132px;
   width: 14px;
   height: 14px;
 }
@@ -172,4 +184,10 @@ Icon classes can be used entirely standalone. They are named after their origina
   background-position: 0px -76px;
   width: 14px;
   height: 14px;
+}
+.icon-yes {
+  background-image: url(../front_images/icon.png);
+  background-position: 0px -343px;
+  width: 20px;
+  height: 20px;
 }

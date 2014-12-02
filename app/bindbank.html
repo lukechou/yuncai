@@ -190,99 +190,127 @@
       </ul>
     </div>
     <div class="ps-mn">
-      <div class="draw">
 
-        <ul class="nav nav-tabs m-tab-nav" role="tablist">
-          <li role="presentation" class="active">
-            <a href="#home" role="tab" data-toggle="tab">提款申请</a>
-          </li>
-          <li role="presentation" >
-            <a href="#profile" role="tab" data-toggle="tab">提款记录</a>
-          </li>
-        </ul>
+      <div class="bindcard">
+        <div class="panel panel-default bg-1 m-panel">
+          <div class="panel-heading">
+            <h3 class="panel-title">绑定银行卡</h3>
+          </div>
+          <div class="panel-body">
+            <div class="bindcard-tips"> <i class="icon icon-tan"></i>
+              银行卡用户姓名与身份证姓名必须一致
+            </div>
+            <form class="form-horizontal bind-form bindcard-form" id="bind-form" role="form">
 
-        <div class="tab-content">
+              <div class="form-group">
+                <label class="col-sm-5 control-label">真实姓名：</label>
+                <div class="col-sm-5">
+                  <div class="text">师*</div>
+                </div>
+              </div>
 
-          <div role="tabpanel" class="tab-pane active" id="home">
-            <!-- 提款未绑定信息 -->
-            <div class="draw-bang">
-              <div class="sec1">
-                <p class="no-bang-tips">缺少提款信息，请按以下步骤操作：</p>
-                <ul>
-                  <li>
-                    <a href="">
-                      <img src="front_images/bang1.png" alt="绑定身份证">
-                      <div>
-                        <p>第一步：</p>
-                        <p>绑定身份证</p>
-                      </div>
-                    </a>
-                  </li>
-                  <li>
-                    <img src="front_images/bang2.png" alt="绑定银行卡">
-                    <div></div>
-                  </li>
-                  <li>
-                    <img src="front_images/bang3.png" alt="提款">
-                    <div></div>
-                  </li>
-                </ul>
+              <div class="form-group">
+                <label class="col-sm-5 control-label">身份证号码：</label>
+                <div class="col-sm-5">
+                  <div class="text">610112********4029</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label">银行名称：</label>
+                <div class="col-sm-5">
+                  <div class="text">
+                    <select name="" id="j-yinhang" class="yinhang mr5">
+                      <option value="招商银行">招商银行</option>
+                    </select>
+                    <span class="fc-3">温馨提示</span> <i class="icon icon-warm"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-5 control-label">开户行地区：</label>
+                <div class="col-sm-5">
+                  <div id="target" class="text">
+                    <select data-province="广东省" id="j-info-sheng" class="sheng mr5"></select>
+                    <select data-city="深圳市" id="j-info-shi" class="shi"></select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label">开户支行名称：</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="j-zhi" />
+                  <span class="tip-fen">如：深圳分行振兴支行</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label">银&nbsp;&nbsp;行&nbsp;&nbsp;卡&nbsp;&nbsp;号：</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="j-card"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label">确认银行卡号：</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="j-confirm-card" maxlength="18" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label">登&nbsp;&nbsp;录&nbsp;&nbsp;密&nbsp;&nbsp;码：</label>
+                <div class="col-sm-5">
+                  <input type="password" class="form-control" id="j-pwd" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label"></label>
+                <div class="col-sm-5">
+                  <button class="btn btn-bind" id="j-bind-sub">绑定</button>
+                </div>
+              </div>
+            </form>
+
+            <div class="bindcard-suc" id="bindbak-suc">
+              <img src="front_images/dui.png" alt="绑定成功" class="pull-left" />
+              <div class="pull-left">
+                <h5>银行卡绑定成功！</h5>
+                <p>
+                  银行名称：
+                  <span id="j-bindBank"></span>
+                </p>
+                <p>
+                  开户地区：
+                  <span id="j-bindAddress"></span>
+                </p>
+                <p>
+                  开户支行：
+                  <span id="j-bindZhi"></span>
+                </p>
+                <p>
+                  银行卡号：
+                  <span id="j-bindCard"></span>
+                </p>
+                <br>
+                <a href="safe.html" class="btn btn-bind">查看账户安全</a>
               </div>
             </div>
 
-            <!-- 提款已绑定信息
-            <div class="draw-bang"></div>
-            <div class="m-tips-box"> <i class="tips-icon"></i>
-              <p>温馨提示：</p>
-              <p>1.您可以查询到最近3个月的账户明细。</p>
-              <p>2.如果您在充值时，银行账户被扣款而我的彩票账户余额没有增加，请及时与我们联系，我们将第一时间为您处理！</p>
-              <p>3.如有其它问题，请联系网站客服：4008-898-310。</p>
-            </div>
-            -->
-
           </div>
-          <!-- /.tab-pane-->
+        </div>
+      </div>
+      <!-- /.bindcard-->
 
-          <div role="tabpanel" class="tab-pane mt10" id="profile">
-            <div class="m-de-hd">
-              <select name="" id="nearday">
-                <option value="1">当天</option>
-                <option value="7">最近7天</option>
-                <option value="15">最近15天</option>
-                <option value="30">最近30天</option>
-                <option value="90" selected>最近90天</option>
-              </select>
-              状态：
-              <select name="" id="nearday">
-                <option value="0" selected>全部</option>
-                <option value="1">处理中</option>
-                <option value="2">成功</option>
-                <option value="3">失败</option>
-                <option value="4">取消</option>
-              </select>
-              <button class="btn btn-warning btn-sm">查询</button>
-            </div>
-
-            <table class="table table-striped m-mn-table graybor">
-              <thead>
-                <tr>
-                  <th>交易时间</th>
-                  <th>支出</th>
-                  <th>状态</th>
-                  <th>操作与备注</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>2014-09-23 12:13:27</td>
-                  <td>49.60</td>
-                  <td>提款成功</td>
-                  <td>手续费0元</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.tab-pane--> </div>
+      <div class="m-tips-box">
+        <i class="tips-icon"></i>
+        <p>温馨提示：</p>
+        <p>1、银行卡资料绑定成功后，所有经银行转账的提款将会存入您绑定的银行账号。</p>
+        <p>2、绑定提款银行卡的持卡人姓名需与绑定的真实姓名一致，否则无法正常体现。</p>
+        <p>
+          3、绑定银行卡资料，不允许用户自行修改，如有特殊情况确实需要变更，请联系网站客服，客服热线：4008-898-310（8:00-24:00）
+        </p>
       </div>
     </div>
     <!-- /.ps-mn--> </div>
@@ -376,9 +404,88 @@
     <!-- /.ft-mn--> </div>
   <!-- /.ft-->
 
+  <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">温馨提示</h4>
+      </div>
+      <div class="modal-body text-center fc-84" id="tip-content"></div>
+    </div>
+  </div><!-- /.showTips-->
   <script src="front_scripts/lib/jquery.js"></script>
+  <script src="front_scripts/lib/distpicker.data.min.js"></script>
+  <script src="front_scripts/lib/distpicker.min.js"></script>
   <script src="front_scripts/lib/bootstrap.min.js"></script>
   <script src="front_scripts/app.js"></script>
-  <script src="front_scripts/account/draw.js"></script>
-</body>
+  <script>
+  $(function() {
+
+    $("#target").distpicker();
+
+    //确认绑定
+    $('#j-bind-sub').on('click', function(event) {
+      event.preventDefault();
+
+      var bank = $('#j-yinhang').val();
+      var sheng = $('#j-info-sheng').val();
+      var shi =$('#j-info-shi').val();
+      var zhi = $('#j-zhi').val();
+      var card = $('#j-card').val();
+      var confirmCard = $('#j-confirm-card').val();
+      var pwd = $('#j-pwd').val();
+
+      if(bank=='' ||sheng=='' ||shi==''||zhi=='' ||card=='' || confirmCard == '' ||pwd==''){
+        APP.showTips('请先填写完整信息');
+        return ;
+      }
+
+      if(card!= confirmCard){
+        APP.showTips('两次输入银行卡号不一致！');
+        return;
+      }
+
+      // debugger
+      $('#bind-form').hide();
+      $('#bindbak-suc').fadeIn();
+      $('.bindcard-tips').toggle();
+
+      function setStart(len){
+        var str = '';
+        for (var i = 0; i < len; i++) {
+          str += '*';
+        };
+        return str;
+      }
+
+      // 更新 绑定成功HTML
+      $('#j-bindBank').html(bank)
+      $('#j-bindAddress').html(sheng+shi)
+      $('#j-bindZhi').html(zhi)
+      $('#j-bindCard').html(card)
+      // Ajax 提交绑定信息
+      $.ajax({
+        url: '/path/to/file',
+        type: 'post',
+        dataType: 'json',
+        data: {param1: 'value1'},
+      })
+      .done(function() {
+        $('#bind-form').hide();
+        $('#bindbak-suc').fadeIn();
+        $('.bindcard-tips').toggle();
+        console.log("success");
+      })
+      .fail(function() {
+        APP.showTips('服务器繁忙请稍后再试！');
+        console.log("error");
+      });
+
+    });
+
+  });
+  </script></body>
 </html>

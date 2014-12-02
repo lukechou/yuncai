@@ -148,7 +148,7 @@
     <div class="ps-nav">
       <ul class="m-nav-t nav">
         <li>
-          <a href="index.html">我的账户</a>
+          <a href="index.html" class="active">我的账户</a>
         </li>
         <li>
           <a href="record.html">投注记录</a>
@@ -159,13 +159,13 @@
       </ul>
       <ul class="m-nav-l">
         <li>
-          <a href="chongzhi.html">充&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值</a>
+          <a href="chongzhi.html">充&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值</a> <i class="bor"></i>
         </li>
         <li>
-          <a href="draw.html" class="active">提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款</a>
+          <a href="draw.html">提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款</a>
         </li>
         <li>
-          <a href="safe.html">帐号安全</a>
+          <a href="safe.html" class="active">帐号安全</a>
         </li>
         <li>
           <a href="info.html">基本资料</a>
@@ -190,78 +190,44 @@
       </ul>
     </div>
     <div class="ps-mn">
-      <div class="bindcard">
-        <div class="panel panel-default bg-1 m-panel">
+      <div class="safemobile info">
+        <div class="panel panel-default bg-1">
+
           <div class="panel-heading">
-            <h3 class="panel-title">
-              绑定身份证信息
-              <span class="fc-84">(用于提款及个人身份确认)</span>
-            </h3>
+            <h3 class="panel-title">修改绑定手机</h3>
           </div>
+
           <div class="panel-body">
-
-            <form class="form-horizontal bind-form" id="bind-form" role="form">
-              <div class="form-group">
-                <label class="col-sm-5 control-label">
-                  真&nbsp;&nbsp;&nbsp;&nbsp;实&nbsp;&nbsp;&nbsp;&nbsp;姓&nbsp;&nbsp;&nbsp;&nbsp;名：
-                </label>
-                <div class="col-sm-5">
-                  <input type="text" class="form-control" id="username" />
-                </div>
+            <div class="info-text" id="j-info-text">
+              <div class="info-list">
+                <span class="title">原手机号码:</span>
+                <span class="value">
+                  <input type="text" id="mobile" value=""></span>
               </div>
-
-              <div class="form-group">
-                <label class="col-sm-5 control-label">身&nbsp;&nbsp;份&nbsp;&nbsp;证&nbsp;&nbsp;号&nbsp;&nbsp;码：</label>
-                <div class="col-sm-5">
-                  <input type="text" class="form-control" id="number" maxlength="18" />
-                </div>
+              <div class="info-list">
+                <span class="title">新手机号码:</span>
+                <span class="value">
+                  <input type="text" id="suremobile" value=""></span>
               </div>
-
-              <div class="form-group">
-                <label class="col-sm-5 control-label">确认身份证号码：</label>
-                <div class="col-sm-5">
-                  <input type="text" class="form-control" id="confirm-number" maxlength="18" />
-                </div>
+              <div class="info-list">
+                <span class="title">登录密码:</span>
+                <span class="value">
+                  <input type="password" id="userpwd" value=""></span>
+                <span class="pwd-tips"> <i class="icon icon-yes"></i>
+                  手机号码成功
+                </span>
               </div>
-
-              <div class="form-group">
-                <label class="col-sm-5 control-label">
-                  登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;&nbsp;码：
-                </label>
-                <div class="col-sm-5">
-                  <input type="password" class="form-control" id="password" maxlength="18" />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-5 control-label"></label>
-                <div class="col-sm-5">
-                  <button class="btn btn-bind" id="j-bind-sub">确认绑定</button>
-                </div>
-              </div>
-            </form>
-
-            <div class="bindcard-suc" id="bindcard-suc">
-              <img src="front_images/dui.png" alt="绑定成功" class="pull-left" />
-              <div class="pull-left">
-                <h5>身份证信息绑定成功！</h5>
-                <p>
-                  真实姓名：
-                  <span id="bindName"></span>
-                </p>
-                <p>
-                  身份证号：
-                  <span id="bindNumber"></span>
-                </p>
-                <br>
-                <a href="safe.html" class="btn btn-bind">查看账户安全</a>
+              <div class="info-list">
+                <span class="title"></span>
+                <span class="value">
+                  <button class="btn btn-sub" id="j-pwdsave">确认修改</button>
+                </span>
               </div>
             </div>
-
-          </div>
-        </div>
+            <!-- /.info-text--> </div>
+          <!-- /.panel-body--> </div>
       </div>
-    </div>
+      <!-- /.safe--> </div>
     <!-- /.ps-mn--> </div>
   <!-- /.personal-->
 
@@ -353,77 +319,38 @@
     <!-- /.ft-mn--> </div>
   <!-- /.ft-->
 
-  <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-          <span class="sr-only">Close</span>
-        </button>
-        <h4 class="modal-title" id="myModalLabel">温馨提示</h4>
-      </div>
-      <div class="modal-body text-center fc-84" id="tip-content"></div>
-    </div>
-  </div><!-- /.showTips-->
-
-  <script src="front_scripts/lib/jquery.js"></script>
-  <script src="front_scripts/lib/bootstrap.min.js"></script>
+  <script src="front_scripts/jquery.js"></script>
   <script src="front_scripts/app.js"></script>
   <script>
-
   $(function() {
+    //修改密码
+    $('#j-pwdsave').on('click', function(){
 
-    //确认绑定
-    $('#j-bind-sub').on('click', function(event) {
-      event.preventDefault();
+      $('.pwd-tips').fadeIn('fast', function() {
+        setTimeout(function(){
+          $('.pwd-tips').fadeOut();
+        }, 1000);
+      });
 
-      var username = $('#username').val();
-      var number = $('#number').val();
-      var confirmNumber =$('#confirm-number').val();
-      var password = $('#password').val();
-
-      if(username=='' ||number=='' || confirmNumber == '' ||password==''){
-        APP.showTips('请先填写完整信息');
-        return ;
-      }
-
-      if(number!= confirmNumber){
-        APP.showTips('两次输入身份证号码不一致！');
-        return;
-      }
-
-      // debugger
-      $('#bind-form').hide();
-      $('#bindcard-suc').fadeIn();
-
-      function setStart(len){
-        var str = '';
-        for (var i = 0; i < len; i++) {
-          str += '*';
-        };
-        return str;
-      }
-
-      $('#bindName').html(username.slice(0,1) + setStart(username.length-1));
-      $('#bindNumber').html(number.slice(0,6) + setStart(number.length-10)+number.slice(-4));
-      // Ajax 提交绑定信息
       $.ajax({
         url: '/path/to/file',
-        type: 'post',
-        dataType: 'json',
+        type: 'default GET (Other values: POST)',
+        dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
         data: {param1: 'value1'},
       })
       .done(function() {
-        $('#bind-form').hide();
-        $('#bindcard-suc').fadeIn();
         console.log("success");
       })
       .fail(function() {
-        APP.showTips('服务器繁忙请稍后再试！');
         console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
       });
 
-    });
+
+    })
   });
-  </script></body>
+  </script>
+</body>
 </html>

@@ -205,50 +205,161 @@
 
           <div role="tabpanel" class="tab-pane active" id="home">
             <!-- 提款未绑定信息 -->
-            <div class="draw-bang">
-              <div class="sec1">
-                <p class="no-bang-tips">缺少提款信息，请按以下步骤操作：</p>
-                <ul class="bind-ul clearfix">
-                  <li class="first">
-                    <a href="bindcard.html">
-                      <img src="front_images/bind1.png" alt="绑定身份证">
-                      <div class="text">
-                        <p>第一步：</p>
-                        <p class="title">绑定身份证</p>
-                      </div>
-                    </a>
+            <!--div class="draw-bang">
+            <div class="sec1">
+              <p class="no-bang-tips">缺少提款信息，请按以下步骤操作：</p>
+              <ul class="bind-ul clearfix">
+                <li class="first">
+                  <a href="bindcard.html">
+                    <img src="front_images/bind1.png" alt="绑定身份证">
+                    <div class="text">
+                      <p>第一步：</p>
+                      <p class="title">绑定身份证</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="second">
+                  <a href="bindbank.html">
+                    <img src="front_images/bind2.png" alt="绑定银行卡">
+                    <div class="text">
+                      <p>第二步：</p>
+                      <p>绑定银行卡</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="third">
+                  <a href="#">
+                    <img src="front_images/bind3.png" alt="提款">
+                    <div class="text">
+                      <p>第三步：</p>
+                      <p>提款</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div-->
+
+          <!-- 提款已绑定信息-->
+          <div class="draw-bang">
+            <form class="form-horizontal bind-form binded-form" id="j-bind-form" role="form">
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label">真实姓名：</label>
+                <div class="col-sm-5">
+                  <div class="text">师*</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label">银行名称：</label>
+                <div class="col-sm-5">
+                  <div class="text">招商银行</div>
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <label class="col-sm-5 control-label">银行卡号：</label>
+                <div class="text">621485655183******</div>
+              </div>
+
+              <div class="form-group bold">
+                <label class="col-sm-5 control-label">最大可提取金额：</label>
+                <div class="text">
+                  <span class="fc-3">49.60</span>
+                  元
+                </div>
+              </div>
+
+              <div class="form-group bold">
+                <label class="col-sm-5 control-label">提现金额：</label>
+                <div class="text" >
+                  <input type="text" class="text-inp" id="j-tiqu-money"> <b>元</b>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-5 control-label"></label>
+                <div class="col-sm-5">
+                  <button class="btn btn-bind" id="j-bind-sub">下一步</button>
+                </div>
+              </div>
+            </form>
+
+            <div id="j-confirm" class="j-confirm">
+              <div class="bindcard-tips"> <i class="icon icon-tan"></i>
+                到账时间：工农建招银行提款申请后工作日1小时内到账，其他银行1-2个工作日，请耐心等待。
+              </div>
+              <div class="confirm-text">
+                <ul>
+                  <li> <b>确认提款信息</b>
                   </li>
-                  <li class="second">
-                    <a href="bindbank.html">
-                      <img src="front_images/bind2.png" alt="绑定银行卡">
-                      <div class="text">
-                        <p>第二步：</p>
-                        <p>绑定身份证</p>
-                      </div>
-                    </a>
+                  <li>真实姓名：师*</li>
+                  <li>提现银行：招商银行</li>
+                  <li>
+                    提现金额：
+                    <span class="getmoney">49.60</span>
+                    元
                   </li>
-                  <li class="third">
-                    <a href="#">
-                      <img src="front_images/bind3.png" alt="提款">
-                      <div class="text">
-                        <p>第三步：</p>
-                        <p>绑定身份证</p>
-                      </div>
-                    </a>
+                  <li>
+                    手续费：
+                    <span class="fc-3">暂免</span>
+                  </li>
+                  <li>
+                    到账金额：
+                    <span class="fc-3 getmoney">49.6</span>
+                    元
+                  </li>
+                  <li>
+                    <button class="btn btn-bind" id="j-confirm-sub">确认提交</button>
                   </li>
                 </ul>
               </div>
             </div>
 
-            <!-- 提款已绑定信息
-            <div class="draw-bang"></div>
-          <div class="m-tips-box"> <i class="tips-icon"></i>
-            <p>温馨提示：</p>
-            <p>1.您可以查询到最近3个月的账户明细。</p>
-            <p>2.如果您在充值时，银行账户被扣款而我的彩票账户余额没有增加，请及时与我们联系，我们将第一时间为您处理！</p>
-            <p>3.如有其它问题，请联系网站客服：4008-898-310。</p>
+            <div id="j-next" class="j-next">
+
+              <div class="next-text">
+                <img src="front_images/dui.png" alt="提款成功" class="text-dui">
+                <ul>
+                  <li class="title">您的提现申请已提交成功!</li>
+                  <li>如果您的真实姓名、身份证、开户银行名称、开户支行、银行卡号等信息设置不正确导致提现失败，资金将自动退回到您的账户。</li>
+                  <li>申请成功时间：2014-09-23 11:54:21</li>
+                  <li>提 现 银 行：招商银行</li>
+                  <li>
+                    提 现 金 额：
+                    <span class="getmoney fc-3">49.60</span>
+                    元
+                  </li>
+                  <li>
+                    手   续   费：
+                    <span class="fc-3">暂免</span>
+                  </li>
+                  <li>
+                    到 账 金 额：
+                    <span class="getmoney fc-3">49.60</span>
+                    元
+                  </li>
+                </ul>
+                <div class="more">
+                  您可能需要：
+                  <a href="info.html">查询账户明细</a>
+                  |
+                  <a href="draw.html">继续提现</a>
+                </div>
+              </div>
+            </div>
+
           </div>
-          -->
+          <!-- 提款信息绑定 End-->
+          <div class="m-tips-box" id="j-tips-box"> <i class="tips-icon"></i>
+            <p>温馨提示：</p>
+            <p>1、银行卡资料绑定成功后，所有经银行转账的提款将会存入您绑定的银行账号。</p>
+            <p>2、绑定提款银行卡的持卡人姓名需与绑定的真实姓名一致，否则无法正常体现。</p>
+            <p>
+              3、绑定银行卡资料，不允许用户自行修改，如有特殊情况确实需要变更，请联系网站客服，客服热线：4008-898-310（8:00-24:00）
+            </p>
+          </div>
         </div>
         <!-- /.tab-pane-->
 
@@ -386,9 +497,72 @@
   <!-- /.ft-mn-->
 </div>
 <!-- /.ft-->
-
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+      </button>
+      <h4 class="modal-title" id="myModalLabel">温馨提示</h4>
+    </div>
+    <div class="modal-body text-center fc-84" id="tip-content"></div>
+  </div>
+</div>
+<!-- /.showTips-->
 <script src="front_scripts/lib/jquery.js"></script>
 <script src="front_scripts/lib/bootstrap.min.js"></script>
 <script src="front_scripts/app.js"></script>
+<script>
+$(function() {
+
+  //下一步
+  $('#j-bind-sub').on('click',function(event){
+    event.preventDefault();
+
+    var money = parseInt($('#j-tiqu-money').val()) | 0;
+    if(isNaN(money)||money==0){
+      APP.showTips('请先输入正确金额')
+    }else{
+      $('.getmoney').html(money);
+      $('#j-bind-form').hide()
+      $('#j-confirm').fadeIn()
+      $('#j-tips-box').hide()
+    }
+
+  });
+
+  //确认提交
+  $('#j-confirm-sub').on('click',function(event){
+    event.preventDefault();
+
+    //提取金额
+    var money =  parseInt($('#j-tiqu-money').val());
+
+
+    // debugger
+    $('#j-confirm').hide()
+    $('#j-next').fadeIn()
+
+    $.ajax({
+      url: '/path/to/file',
+      type: 'default GET (Other values: POST)',
+      dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+      data: {param1: 'value1'},
+    })
+    .done(function() {
+      $('#j-confirm').hide()
+      $('#j-next').fadeIn()
+      console.log("success");
+    })
+    .fail(function() {
+      APP.showTips('服务器繁忙请稍后再试！')
+      console.log("error");
+    });
+
+  });
+
+});
+</script>
 </body>
 </html>

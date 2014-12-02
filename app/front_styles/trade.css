@@ -185,5 +185,3 @@
 .area_select .touz_clear { margin-right: 8px; font-size: 12px; color: #3d3d3d; }
 .area_select .touz_clear.fc-3 { color: #f13c38; }
 .area_select .touz_clear.fc-4 { color: #0d67c4; }
-/* 弹出框 */
-.modal.in .modal-dialog { background: #fff; }

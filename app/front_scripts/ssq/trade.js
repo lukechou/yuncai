@@ -121,6 +121,7 @@ ZHUI.bindZhuiHaoEvent = function() {
   $('.br-details thead .br-zhui-bei').on('change', function(event) {
     var val = $(this).val();
     $(this).parents('.br-details').find('tbody .br-zhui-bei').val(val);
+    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
   });
 
   $('.br-details tbody .br-zhui-bei').on('change', function(event) {
@@ -131,12 +132,45 @@ ZHUI.bindZhuiHaoEvent = function() {
 
 // 绑定合买相关事件
 ZHUI.bindHeMaiEvent = function() {
-
+  $('.j-rengou').on('change', function(event) {
+    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
+  });
+  $('.br-select').on('change', function(event) {
+    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
+  });
+  $('.j-baodi-check').on('change', function(event) {
+    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
+  });
+  $('.j-baodi-text').on('change', function(event) {
+    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
+  });
 };
 
 // 更新合买 总金额
 ZHUI.setHeMaiTotal = function(box) {
-  console.log(box);
+  // 获取购买金额
+  var m = box.find('.j-quick-total').html() * 1;
+  //认购金额
+  var rengouMoney = box.find('.j-rengou').val() || 1;
+  //我要提成
+  var ticheng = box.find('.br-select').val() || 0;
+
+  //我要保底金额
+  var baodiMoney = 0;
+  if (box.find(('.j-baodi-check'))[0].checked) {
+    box.find('.j-baodi-text').val(baodiMoney);
+  } else {
+    baodiMoney = 0;
+  }
+
+  box.find('.j-rengou').val(rengouMoney);
+  box.find('.br-select').val(ticheng);
+  box.find('.j-rengou-percentage').val(m / rengouMoney);
+
+  //如果要保底 更新保底金额
+  box.find('.j-baodi-text').val(baodiMoney)
+  debugger;
+
 }
 
 // 更新追号 总金额

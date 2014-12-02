@@ -191,8 +191,94 @@
       </ul>
     </div>
     <div class="ps-mn">
-      <div class="safe">
+      <div class="safemobile info">
+        <div class="panel panel-default bg-1">
 
+          <div class="panel-heading">
+            <h3 class="panel-title">绑定邮箱</h3>
+          </div>
+
+          <div class="panel-body">
+
+            <div class="safeemail" id="j-safeemail-1">
+              <div class="bindcard-tips"> <i class="icon icon-tan"></i>
+                温馨提示：当账户信息发生变更时将发送邮件到您的邮箱；免费定制多种服务
+              </div>
+
+              <div class="info-text" id="j-info-text">
+
+                <div class="info-list">
+                  <span class="title">电子邮箱:</span>
+                  <span class="value">
+                    <input type="email" id="emial" value=""></span>
+                </div>
+                <div class="info-list">
+                  <span class="title">登录密码:</span>
+                  <span class="value">
+                    <input type="password" id="password" value=""></span>
+                </div>
+                <div class="info-list">
+                  <span class="title"></span>
+                  <span class="value">
+                    <button class="btn btn-sub" id="j-send">发送验证邮件</button>
+                  </span>
+                </div>
+              </div>
+              <!-- /.info-text--> </div>
+
+            <!-- /.safeemial-->
+            <div class="safeemail" id="j-safeemail-2">
+              <div class="info-text" id="j-info-text">
+
+                <div class="info-list">
+                  <span class="title">您 的 邮 箱:</span>
+                  <span class="value">
+                    <span class="fc-6">724185205@qq.com</span>
+                    收到一封验证邮件，请在24小时内完成验证操作！
+                  </span>
+                </div>
+                <div class="info-list">
+                  <span class="title"></span>
+                  <span class="value">
+                    <button class="btn btn-bind">立即绑定邮箱</button>
+                  </span>
+                </div>
+                <div class="info-list">
+                  <span class="title">邮箱验证码:</span>
+                  <span class="value">
+                    <input type="password" id="password" value=""></span>
+                </div>
+                <div class="info-list">
+                  <span class="title"></span>
+                  <span class="value">
+                    <button class="btn btn-bind mr5" id="j-send-2">确定</button>
+                    <span>
+                      没收到?
+                      <a href="#">再次发送</a>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- /.safeemial-->
+            <div class="safeemail" id="j-safeemail-3">
+              <div class="bindcard-suc" id="bindcard-suc" style="display: block;">
+                <img src="front_images/dui.png" alt="绑定成功" class="pull-left">
+                <div class="pull-left">
+                  <h5>绑定邮箱成功！</h5>
+                  <p>
+                    邮箱地址：
+                    <span id="bindName">185*****050</span>
+                  </p>
+                  <br>
+                  <a href="safe.html" class="btn btn-bind">返回账户安全</a>
+                </div>
+              </div>
+            </div>
+            <!-- /.safeemial-->
+
+            <!-- /.safeemail--> </div>
+          <!-- /.panel-body--> </div>
       </div>
       <!-- /.safe--> </div>
     <!-- /.ps-mn--> </div>
@@ -285,12 +371,20 @@
       <!-- /.ft-r--> </div>
     <!-- /.ft-mn--> </div>
   <!-- /.ft-->
-  <!-- Plugin -->
-  <!-- build:js scripts/plugin.js-->
   <script src="front_scripts/jquery.js"></script>
-  <!-- endbuild -->
-  <!-- build:js scripts/app.js-->
   <script src="front_scripts/app.js"></script>
-  <!-- endbuild -->
+  <script>
+  $(function() {
+    $('#j-send').on('click',function(){
+      $('#j-safeemail-1').hide();
+      $('#j-safeemail-2').fadeIn();
+    });
+    $('#j-send-2').on('click',function(){
+      $('#j-safeemail-2').hide();
+      $('#j-safeemail-3').fadeIn();
+    });
+  });
+
+  </script>
 </body>
 </html>

@@ -196,11 +196,11 @@
         <div class="panel panel-default bg-1">
 
           <div class="panel-heading">
-            <h3 class="panel-title">基本资料:</h3>
+            <h3 class="panel-title">绑定手机</h3>
           </div>
 
           <div class="panel-body">
-            <div class="info-text">
+            <div class="info-text" id="j-info-text">
               <div class="info-list">
                 <span class="title">手机号码:</span>
                 <span class="value">
@@ -209,7 +209,8 @@
               <div class="info-list">
                 <span class="title"></span>
                 <span class="value">
-                  <button class="btn btn-c2 btn-common fs-12">免费获得手机验证码</button></span>
+                  <button class="btn btn-c2 btn-common fs-12">免费获得手机验证码</button>
+                </span>
               </div>
               <div class="info-list">
                 <span class="title">验 证 码:</span>
@@ -224,14 +225,28 @@
               <div class="info-list">
                 <span class="title"></span>
                 <span class="value">
-                  <button class="btn btn-sub" id="infosave">绑定</button>
+                  <button class="btn btn-sub" id="j-infosave">绑定</button>
                 </span>
               </div>
             </div>
+
+            <div class="bindcard-suc" id="bindcard-suc" >
+              <img src="front_images/dui.png" alt="绑定成功" class="pull-left">
+              <div class="pull-left">
+                <h5>绑定手机成功！</h5>
+                <p>
+                  手机号码：
+                  <span id="bindName">185*****050</span>
+                </p>
+                <br>
+                <a href="safe.html" class="btn btn-bind">返回账户安全</a>
+              </div>
+            </div>
+
             <!-- /.info-text--> </div>
           <!-- /.panel-body--> </div>
       </div>
-      <!-- /.info--> </div>
+      <!-- /.safemobile--> </div>
     <!-- /.ps-mn--> </div>
   <!-- /.personal-->
 
@@ -322,12 +337,15 @@
       <!-- /.ft-r--> </div>
     <!-- /.ft-mn--> </div>
   <!-- /.ft-->
-  <!-- Plugin -->
-  <!-- build:js scripts/plugin.js-->
   <script src="front_scripts/jquery.js"></script>
-  <!-- endbuild -->
-  <!-- build:js scripts/app.js-->
   <script src="front_scripts/app.js"></script>
-  <!-- endbuild -->
+  <script>
+  $('#j-infosave').on('click', function(){
+    $('#j-info-text').hide()
+    $('#bindcard-suc').fadeIn()
+  });
+
+  </script>
+
 </body>
 </html>

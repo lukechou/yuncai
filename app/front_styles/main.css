@@ -158,11 +158,14 @@ body { background: #f0efef; color: #3d3d3d; }
 .info-list { margin-bottom: 20px; }
 .info-list .title { display: inline-block; width: 50px; text-align: right; }
 .info-list .value { margin-left: 5px; }
-.info-list .value>input[type=radio] { position: relative; top: 2px; margin: 0 3px; }
-.info-list .value>input[type=text] { background: #f0efef; }
+.info-list .value>input[type=radio] { position: relative; top: 2px; margin: 0 3px; width: 10px; }
+.info-list .value>input { background: #f0efef; width: 200px; }
 .info-list .value .btn-sub { \width: 100px; padding: 5px 0; font-size: 14px; }
-.info-list .value>input[type=text], .info-list .value>select { padding: 5px 10px; border: 1px #c4c4c4 solid; }
+.info-list .value>input, .info-list .value>select { padding: 5px 10px; border: 1px #c4c4c4 solid; }
+.pwd-tips{ display: none;}
+.pwd-tips i{ position: relative; top: 6px; margin: 0 6px;}
 .info-text #target { display: inline-block; }
+.info-text #target select{ border: 1px #c4c4c4 solid; padding: 5px; background: #f0efef;}
 #info-text2 { position: relative; display: none; }
 #info-text2 .user-head { position: absolute; left: -100px; }
 #info-text2 .info-list { margin-left: 80px; }
@@ -180,6 +183,16 @@ body { background: #f0efef; color: #3d3d3d; }
 .safe-ul .opr { display: inline-block; width: 80px; text-align: center; float: right; float: right; }
 .safe-ul .opr .btn { color: #3d3d3d; font-size: 12px; }
 .safemobile .info-list .title { width: 65px; }
+.safemobile .panel-body{ padding: 0;}
+.safemobile .panel-body .info-text{ padding: 51px 15px 15px 230px; }
+.safeemail{ padding: 10px 30px;}
+.safemobile .panel-body .safeemail .info-text{ padding: 51px 15px 15px 210px; }
+#j-safeemail-2,#j-safeemail-3{ display: none;}
+.safemobile .panel-body #j-safeemail-2 .info-text{ padding: 51px 15px 15px 140px; }
+.safecard .panel{ min-height: 320px;}
+.safecard .panel-body{ padding: 10px 0 50px;}
+.safecard .confirm-text{ width: 220px; margin: auto; padding-left: 25px;}
+
 /* 充值页面 */
 .recharge { padding: 20px; background: #f0efef; }
 .recharge .rehead { padding: 0 0 15px; }
@@ -242,27 +255,61 @@ body { background: #f0efef; color: #3d3d3d; }
 .draw-bang { border: 1px #c4c4c4 solid; border-top: none; }
 .sec1 { padding: 30px 40px; }
 .no-bang-tips { color: #f13c38; font-size: 12px; }
+
 .bind-ul { margin: auto; display: block; width: 647px; }
-.bind-ul li { width: 200px; height: 126px; float: left; }
+.bind-ul li { width: 200px; height: 126px; float: left; background: url(../front_images/bind-bor.png) no-repeat;}
 .bind-ul li a { color: #3d3d3d; font-weight: bold; }
 .bind-ul li img { padding-top: 29px; float: left; }
 .bind-ul li .text { width: 85px; float: left; margin: 35px 0 0 16px; font-size: 16px; }
 .bind-ul li .text .title { color: #0d67c4; }
+.bind-ul li:first-child{ background: none;}
 .bind-ul li.first { padding-right: 30px; }
-.bind-ul li.second { width: 247px; background: url(../front_images/bind-bor.png) no-repeat; padding-left: 40px; }
+.bind-ul li.second { width: 247px; padding-left: 40px; }
 .bind-ul li.third { padding-left: 30px; }
 
-
+/* 绑定身份证 */
 .bind-form { width: 440px; margin: 35px auto 0; }
 .bind-form .control-label { font-weight: normal;}
 .bind-form .form-group { }
 .bind-form .form-control { border-radius: 0; border: 1px #c4c4c4 solid; height: 28px; }
+.bind-form .form-control[type=text],.bind-form .form-control[type=password]{background: #f0efef;}
 .bind-form .form-group>div{ padding: 0;}
-
-
+/* 绑定成功 */
 .bindcard-suc{ margin: 40px 0 0 270px; display: none;}
 .bindcard-suc>div.pull-left{ margin-left: 15px;}
 .bindcard-suc h5{ font-size: 18px; font-weight: bold; margin-bottom: 20px;}
+/* 绑定银行卡*/
+.bindcard-tips{ padding: 5px 10px; background: #fbf6e9; border: 1px #eac07d solid; color: #b77409; }
+.bindcard-tips .icon{ position: relative; top: 2px; margin-right: 3px;}
+.bindcard-form{ margin: 35px auto 0; }
+.bindcard-form .form-group{ position: relative;}
+.bindcard-form .form-group .text{ margin-top: 7px;}
+.bindcard-form .form-group .text select{ border: 1px #c4c4c4 solid; padding: 5px 3px;}
+.bindcard-form .form-group .yinhang{ width: 120px;}
+.bindcard-form .form-group .sheng,.bindcard-form .form-group .shi{ width: 93px;}
+.bindcard-form .form-group .tip-fen{ position: absolute; top: 5px; right: -130px; color: #848484;}
+
+/* 已经绑定银行卡 */
+.binded-form{ margin: 0 auto; padding-top: 50px; }
+.binded-form .form-group{ position: relative;}
+.binded-form .form-group .text{ margin-top: 7px; }
+.binded-form .form-group .text-inp{ width: 145px; background: #f0efef; border: 1px #c4c4c4 solid;}
+.binded-form .bold,.binded-form .bold .control-label{ font-weight: bold;}
+
+/* 确认绑定*/
+.j-confirm{ display: none; padding:8px 30px; min-height:500px;}
+.confirm-text{ margin: auto; padding-top: 40px; width: 130px;}
+.confirm-text li{ padding-bottom: 15px;}
+
+.j-next{  display: none; padding:8px 30px; min-height:500px;}
+.next-text{ padding-top: 45px;}
+.next-text .text-dui{ float: left; width: 51px;}
+.next-text ul{ margin-left: 70px; margin-bottom: 10px; margin-top: 10px;}
+.next-text ul li{ padding-bottom: 15px;}
+.next-text ul .title{ font-size: 18px; font-weight: bold;font-family: 'Microsoft Yahei';}
+.next-text .more{ margin-left: 70px;}
+
+
 
 
 

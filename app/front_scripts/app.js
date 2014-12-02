@@ -1,3 +1,9 @@
+var APP = {};
+APP.showTips = function(h) {
+  $('#tip-content').html(h);
+  $('#myModal').modal('show');
+};
+
 $(function() {
 
   // 选择彩种
