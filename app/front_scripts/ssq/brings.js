@@ -554,44 +554,4 @@ $(function() {
     console.log('MANUAL向列表添加一注');
   });
 
-
-  // 快捷投注 - 提交请求
-  $('#qiuck-sub').on('click', function(event) {
-    event.preventDefault();
-
-    var lotyName = $('#lotyName').val();
-    var playName = $('#playName').val();
-    var unikey = $('#unikey').val();
-    var zhushu = $('#j-qiucksub-zhu').html();
-    var beishu = $('#j-qiucksub-bei').val();
-    var qihaoId = $('#qihaoId').val();;
-    var qihao = $('#qihao').val();;
-    var codes = COMMON.formarFormSub($(this).parents('.br-tou').siblings('.br-gou').find('.br-zhu-item'));
-
-    $.ajax({
-        url: '/lottery/digital/buy-self/' + lotyName + '/' + playName,
-        type: 'post',
-        dataType: 'json',
-        data: {
-          unikey: unikey,
-          zhushu: zhushu,
-          beishu: beishu,
-          qihaoId: qihaoId,
-          qihao: qihao,
-          codes: codes
-        },
-      })
-      .done(function() {
-        console.log("success");
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
-
-  });
-
-
 });

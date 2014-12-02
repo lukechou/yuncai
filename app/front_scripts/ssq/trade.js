@@ -25,8 +25,107 @@ SEEDS.ssq = {
 };
 
 /**********追号模块**************/
+ZHUI.getNewHtml = function(el) {
+  // Ajax 获取 期数
+
+  // $.ajax({
+  //   url: 'http://kp2.yuncai.com/lottery/digital/query-track-issue/dlt',
+  //   type: 'get',
+  //   dataType: 'json',
+  //   data: {num: 10},
+  // })
+  // .done(function(data) {
+  //   console.log(data);
+  //   console.log("success");
+  // })
+  // .fail(function() {
+  //   console.log("error");
+  // })
+  // .always(function() {
+  //   console.log("complete");
+  // });
+
+  var data = {
+    "retCode": 100000,
+    "retMsg": "",
+    "retData": [{
+      "id": "18",
+      "qihao": "14140",
+      "awardTime": "2014-11-2920:45"
+    }, {
+      "id": "19",
+      "qihao": "14141",
+      "awardTime": "2014-12-0120:45"
+    }, {
+      "id": "20",
+      "qihao": "14142",
+      "awardTime": "2014-12-0320:45"
+    }, {
+      "id": "21",
+      "qihao": "14143",
+      "awardTime": "2014-12-0620:45"
+    }, {
+      "id": "22",
+      "qihao": "14144",
+      "awardTime": "2014-12-0820:45"
+    }, {
+      "id": "23",
+      "qihao": "14145",
+      "awardTime": "2014-12-1020:45"
+    }, {
+      "id": "24",
+      "qihao": "14146",
+      "awardTime": "2014-12-1320:45"
+    }, {
+      "id": "25",
+      "qihao": "14147",
+      "awardTime": "2014-12-1520:45"
+    }, {
+      "id": "26",
+      "qihao": "14148",
+      "awardTime": "2014-12-1720:45"
+    }, {
+      "id": "27",
+      "qihao": "14149",
+      "awardTime": "2014-12-2020:45"
+    }]
+  };
+  if (data) {
+    var html = ''
+    var DATA = data.retData;
+    for (var i = 0; i < DATA.length; i++) {
+      html += '<tr><td>' + i + '</td><td><input type="checkbox" class="br-zhui-c" checked>' + DATA[i]['qihao'] + '期</td><td><input type="text" class="br-input br-zhui-bei" value="1">倍</td><td><span class="j-money">10</span>元</td><td>' + DATA[i]['awardTime'] + '</td></tr>';
+    };
+    var zhui = el.parents('.br-details').find('.br-zhui');
+    zhui.find('.br-zhui-list tbody').html(html);
+    ZHUI.bindZhuiHaoEvent();
+    ZHUI.setZhuiHaoTotal(el.parents('.box-left'));
+  }
+};
+
 // 给AJAX 返回的HTML添加时间 检测 追号总金额
 ZHUI.bindZhuiHaoEvent = function() {
+
+  $('.br-details thead .br-zhui-c').on('change', function(event) {
+    var checked = $(this)[0].checked;
+    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+      el.checked = checked;
+    });
+    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
+  });
+
+  $('.br-details tbody .br-zhui-c').on('change', function(event) {
+    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
+  });
+
+  $('.br-details thead .br-zhui-bei').on('change', function(event) {
+    var val = $(this).val();
+    $(this).parents('.br-details').find('tbody .br-zhui-bei').val(val);
+  });
+
+  $('.br-details tbody .br-zhui-bei').on('change', function(event) {
+    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
+  });
 
 };
 
@@ -42,26 +141,44 @@ ZHUI.setHeMaiTotal = function(box) {
 
 // 更新追号 总金额
 ZHUI.setZhuiHaoTotal = function(box) {
-  var qi = box.find('.j-qi-count');
-  var jine = box.find('.br-zhui-list tbody .br-zhui-c')
-  console.log(box);
+
+  // 更新金额
+  var m = box.find('.j-quick-total').html() * 1;
+  box.find('.br-details tbody .br-zhui-bei').each(function(index, el) {
+    box.find('.br-details tbody .j-money')[index].innerHTML = el.value * m;
+  });
+
+  var checkedList = box.find('.br-details tbody .br-zhui-c:checked')
+  var money = 0;
+  box.find('.br-details tbody .br-zhui-c:checked').parents('tr').find('.j-money').each(function(index, el) {
+
+    money += parseInt(el.innerHTML);
+
+  });
+
+
+  //更新 购买期数 和 追期购买总金额
+  box.find('.j-qi-count').html(checkedList.length)
+  box.find('.j-qi-money').html(money)
+
 };
 
 
 /**************QUEUE*************/
 // 计算阶乘的函数
 QUEUE.a = function(n) {
-    try {
-      if (n == 1 || n == 2) {
-        return n;
-      } else {
-        return n * QUEUE.a(n - 1);
-      }
-    } catch (e) {
-      alert(e);
+  try {
+    if (n == 1 || n == 2) {
+      return n;
+    } else {
+      return n * QUEUE.a(n - 1);
     }
+  } catch (e) {
+    alert(e);
   }
-  //计算排列组合的可能数目
+}
+
+//计算排列组合的可能数目
 QUEUE.getACTotalNum = function(n, m, type) {
   if (n == m) {
     return 1;
@@ -82,20 +199,52 @@ QUEUE.getACTotalNum = function(n, m, type) {
 
 
 /****************COMMON****************/
-// 拟态框
+/**
+ * [getCommonParams 购买彩票,获取要提交的参数]
+ * @param  {} el [.box-left 对象]
+ * @return {}    [彩票提交必须参数]
+ */
+COMMON.getCommonParams = function(el) {
+
+  var params = {
+    lotyName: $('#lotyName').val(),
+    playName: $('#playName').val(),
+    unikey: $('#unikey').val(),
+    qihaoId: $('#qihaoId').val(),
+    qihao: $('#qihao').val(),
+    zhushu: el.find('.j-quick-zhu').html(),
+    beishu: el.find('.j-quick-bei').val(),
+    codes: COMMON.formarFormSub(el.find('.br-gou .br-zhu-item'))
+  };
+  return params;
+}
+
+/**
+ * [showTips 拟态框]
+ * @param  {String} h tips's HTML
+ * @return {null}
+ */
 COMMON.showTips = function(h) {
   $('#tip-content').html(h);
   $('#myModal').modal('show');
 }
 
-// 号码排序
+/**
+ * [sortNum 号码排序]
+ * @param  {Array} num Sort Array
+ * @return {Array}
+ */
 COMMON.sortNum = function(num) {
   return num.sort(function(a, b) {
     return a - b;
   });
 }
 
-//  清除所有球的选中状态
+/**
+ * [clearAllBallActive 清除所有球的选中状态]
+ * @param  {Object} el Ball-Aear
+ * @return {null}
+ */
 COMMON.clearAllBallActive = function(el) {
   el.find('.active').removeClass();
 }
