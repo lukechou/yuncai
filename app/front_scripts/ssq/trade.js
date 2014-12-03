@@ -12,7 +12,6 @@ var COMMON = {};
 var MANUAL = {};
 var DRAG = {};
 var SEEDS = {};
-var ZHUI = {};
 var DEBUG = false;
 
 SEEDS.ballNum = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
@@ -23,180 +22,6 @@ SEEDS.ssq = {
   redTotal: 6,
   blueTotal: 1,
 };
-
-/**********追号模块**************/
-ZHUI.getNewHtml = function(el) {
-  // Ajax 获取 期数
-
-  // $.ajax({
-  //   url: 'http://kp2.yuncai.com/lottery/digital/query-track-issue/dlt',
-  //   type: 'get',
-  //   dataType: 'json',
-  //   data: {num: 10},
-  // })
-  // .done(function(data) {
-  //   console.log(data);
-  //   console.log("success");
-  // })
-  // .fail(function() {
-  //   console.log("error");
-  // })
-  // .always(function() {
-  //   console.log("complete");
-  // });
-
-  var data = {
-    "retCode": 100000,
-    "retMsg": "",
-    "retData": [{
-      "id": "18",
-      "qihao": "14140",
-      "awardTime": "2014-11-2920:45"
-    }, {
-      "id": "19",
-      "qihao": "14141",
-      "awardTime": "2014-12-0120:45"
-    }, {
-      "id": "20",
-      "qihao": "14142",
-      "awardTime": "2014-12-0320:45"
-    }, {
-      "id": "21",
-      "qihao": "14143",
-      "awardTime": "2014-12-0620:45"
-    }, {
-      "id": "22",
-      "qihao": "14144",
-      "awardTime": "2014-12-0820:45"
-    }, {
-      "id": "23",
-      "qihao": "14145",
-      "awardTime": "2014-12-1020:45"
-    }, {
-      "id": "24",
-      "qihao": "14146",
-      "awardTime": "2014-12-1320:45"
-    }, {
-      "id": "25",
-      "qihao": "14147",
-      "awardTime": "2014-12-1520:45"
-    }, {
-      "id": "26",
-      "qihao": "14148",
-      "awardTime": "2014-12-1720:45"
-    }, {
-      "id": "27",
-      "qihao": "14149",
-      "awardTime": "2014-12-2020:45"
-    }]
-  };
-  if (data) {
-    var html = ''
-    var DATA = data.retData;
-    for (var i = 0; i < DATA.length; i++) {
-      html += '<tr><td>' + i + '</td><td><input type="checkbox" class="br-zhui-c" checked>' + DATA[i]['qihao'] + '期</td><td><input type="text" class="br-input br-zhui-bei" value="1">倍</td><td><span class="j-money">10</span>元</td><td>' + DATA[i]['awardTime'] + '</td></tr>';
-    };
-    var zhui = el.parents('.br-details').find('.br-zhui');
-    zhui.find('.br-zhui-list tbody').html(html);
-    ZHUI.bindZhuiHaoEvent();
-    ZHUI.setZhuiHaoTotal(el.parents('.box-left'));
-  }
-};
-
-// 给AJAX 返回的HTML添加时间 检测 追号总金额
-ZHUI.bindZhuiHaoEvent = function() {
-
-  $('.br-details thead .br-zhui-c').on('change', function(event) {
-    var checked = $(this)[0].checked;
-    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
-      el.checked = checked;
-    });
-    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
-  });
-
-  $('.br-details tbody .br-zhui-c').on('change', function(event) {
-    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
-  });
-
-  $('.br-details thead .br-zhui-bei').on('change', function(event) {
-    var val = $(this).val();
-    $(this).parents('.br-details').find('tbody .br-zhui-bei').val(val);
-    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
-  });
-
-  $('.br-details tbody .br-zhui-bei').on('change', function(event) {
-    ZHUI.setZhuiHaoTotal($(this).parents('.box-left'));
-  });
-
-};
-
-// 绑定合买相关事件
-ZHUI.bindHeMaiEvent = function() {
-  $('.j-rengou').on('change', function(event) {
-    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
-  });
-  $('.br-select').on('change', function(event) {
-    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
-  });
-  $('.j-baodi-check').on('change', function(event) {
-    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
-  });
-  $('.j-baodi-text').on('change', function(event) {
-    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
-  });
-};
-
-// 更新合买 总金额
-ZHUI.setHeMaiTotal = function(box) {
-  // 获取购买金额
-  var m = box.find('.j-quick-total').html() * 1;
-  //认购金额
-  var rengouMoney = box.find('.j-rengou').val() || 1;
-  //我要提成
-  var ticheng = box.find('.br-select').val() || 0;
-
-  //我要保底金额
-  var baodiMoney = 0;
-  if (box.find(('.j-baodi-check'))[0].checked) {
-    box.find('.j-baodi-text').val(baodiMoney);
-  } else {
-    baodiMoney = 0;
-  }
-
-  box.find('.j-rengou').val(rengouMoney);
-  box.find('.br-select').val(ticheng);
-  box.find('.j-rengou-percentage').val(m / rengouMoney);
-
-  //如果要保底 更新保底金额
-  box.find('.j-baodi-text').val(baodiMoney)
-  debugger;
-
-}
-
-// 更新追号 总金额
-ZHUI.setZhuiHaoTotal = function(box) {
-
-  // 更新金额
-  var m = box.find('.j-quick-total').html() * 1;
-  box.find('.br-details tbody .br-zhui-bei').each(function(index, el) {
-    box.find('.br-details tbody .j-money')[index].innerHTML = el.value * m;
-  });
-
-  var checkedList = box.find('.br-details tbody .br-zhui-c:checked')
-  var money = 0;
-  box.find('.br-details tbody .br-zhui-c:checked').parents('tr').find('.j-money').each(function(index, el) {
-
-    money += parseInt(el.innerHTML);
-
-  });
-
-
-  //更新 购买期数 和 追期购买总金额
-  box.find('.j-qi-count').html(checkedList.length)
-  box.find('.j-qi-money').html(money)
-
-};
-
 
 /**************QUEUE*************/
 // 计算阶乘的函数
@@ -451,6 +276,45 @@ COMMON.getItemNum = function(item) {
     }
   });
   return arr;
+}
+
+// 拖胆列表注数格式化 for 表单提交
+COMMON.tuodanFormarFormSub = function(items) {
+
+  var list = [];
+  for (var i = 0; i < items.length; i++) {
+
+    var redDan = [],
+      blueDan = [],
+      redTuo = [],
+      blueTuo = [],
+      itemsList = items.eq(i),
+      ball = itemsList.find('span');
+
+    for (var j = 0; j < ball.length; j++) {
+
+      var html = ball.eq(j).html()
+      var type = parseInt(ball.eq(j).attr('data-s'))
+      switch (type) {
+        case 0:
+          redDan.push(html)
+          break;
+        case 1:
+          redTuo.push(html)
+          break;
+        case 2:
+          blueDan.push(html)
+          break;
+        case 3:
+          blueTuo.push(html)
+          break;
+      }
+    };
+
+    list.push('(' + redDan.join(',') + ')' + redTuo.join(',') + '|' + '(' + blueDan.join(',') + ')' + blueTuo.join(','));
+
+  };
+  return list.join('$');
 }
 
 // 列表注数格式化 for 表单提交

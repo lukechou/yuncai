@@ -1,5 +1,6 @@
 /********** 追号模块 **************/
 var ZHUI = {};
+
 ZHUI.getNewHtml = function(el) {
   // Ajax 获取 期数
   var num = parseInt(el.parents('.box-left').find('.zh_issue_num').val());
@@ -30,7 +31,6 @@ ZHUI.getNewHtml = function(el) {
       console.log("error");
     });
 };
-
 
 
 
@@ -72,6 +72,7 @@ ZHUI.bindHeMaiEvent = function() {
 };
 // 更新合买 总金额
 ZHUI.setHeMaiTotal = function(box) {
+    debugger
     // 获取购买金额
     var m = box.find('.j-quick-total').html() * 1;
     //认购金额
@@ -87,7 +88,7 @@ ZHUI.setHeMaiTotal = function(box) {
     var baodiPercent = '';
     var b = '';
 
-    if (box.find('.j-baodi-check')[0].checked && m!=0) {
+    if (box.find('.j-baodi-check')[0].checked && m != 0) {
       b = parseInt(box.find('.j-baodi-text').val()) | 0
       if (b == 0) {
         baodiMoney = Math.ceil(m * 0.2);
@@ -117,7 +118,8 @@ ZHUI.setHeMaiTotal = function(box) {
     box.find('.j-baodi-percent').html(baodiPercent)
     box.find('.j-rengou-tip').html(rengouMoney)
     box.find('.j-baidi-tip').html(baodiMoney)
-    box.find('.j-totalm-tip').html(rengouMoney+baodiMoney)
+    box.find('.j-totalm-tip').html(rengouMoney + baodiMoney)
+    debugger
   }
   // 更新追号 总金额
 ZHUI.setZhuiHaoTotal = function(box) {
@@ -149,8 +151,7 @@ $(function() {
     ZHUI.getNewHtml($(this));
   });
   $('.br-details').on('click', '.br-he-btn', function(event) {
-    ZHUI.setHeMaiTotal($(this));
-    $(this).parents('.box-left')
+    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
   });
   ZHUI.bindHeMaiEvent();
 });
@@ -225,7 +226,7 @@ $(function() {
     params.qishu = box.find('.j-quick-qi').val();
     debugger;
     $.ajax({
-        url: '/lottery/digital/buy-self/' + lotyName + '/' + playName,
+        url: '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName,
         type: 'post',
         dataType: 'json',
         data: params,
@@ -247,13 +248,13 @@ $(function() {
     var buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
     switch (buytype) {
       case 2:
-        if(box.find('.is_end_zhongjiang')[0].checked){
+        if (box.find('.is_end_zhongjiang')[0].checked) {
           params.endminmoney = box.find('.end_min_money').val()
         }
         var q = []
         var c = box.find('.br-details tbody .br-zhui-c:checked')
         for (var i = 0; i < c.length; i++) {
-          q.push(c.eq(i).attr('data-qihaoid')+'|'+c.eq(i).attr('data-qi')+'|'+c.eq(i).parents('tr').find('.br-zhui-bei').val());
+          q.push(c.eq(i).attr('data-qihaoid') + '|' + c.eq(i).attr('data-qi') + '|' + c.eq(i).parents('tr').find('.br-zhui-bei').val());
         };
         params.zhuihaoqihao = q
         break;
@@ -270,7 +271,7 @@ $(function() {
     }
     debugger;
     $.ajax({
-        url: '/lottery/digital/buy-self/' + lotyName + '/' + playName,
+        url: '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName,
         type: 'post',
         dataType: 'json',
         data: params,
@@ -289,18 +290,17 @@ $(function() {
     var box = $(this).parents('.box-left');
     var params = COMMON.getCommonParams(box);
     params.codes = COMMON.tuodanFormarFormSub(box.find('.br-zhu-item'))
-
     // 判断购买方式 2追买 3合买
     var buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
     switch (buytype) {
       case 2:
-        if(box.find('.is_end_zhongjiang')[0].checked){
+        if (box.find('.is_end_zhongjiang')[0].checked) {
           params.endminmoney = box.find('.end_min_money').val()
         }
         var q = []
         var c = box.find('.br-details tbody .br-zhui-c:checked')
         for (var i = 0; i < c.length; i++) {
-          q.push(c.eq(i).attr('data-qihaoid')+'|'+c.eq(i).attr('data-qi')+'|'+c.eq(i).parents('tr').find('.br-zhui-bei').val());
+          q.push(c.eq(i).attr('data-qihaoid') + '|' + c.eq(i).attr('data-qi') + '|' + c.eq(i).parents('tr').find('.br-zhui-bei').val());
         };
         params.zhuihaoqihao = q
         break;

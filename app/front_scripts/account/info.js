@@ -1,51 +1,49 @@
 $(function() {
 
   // 省市联动
-  $("#target").distpicker();
+//  $("#target").distpicker();
 
   // Save Info
   $('#infosave').on('click', function() {
 
     //数据过滤
     var sex = $('input[name=sex]:checked').val()
-    var sheng = $('#info-sheng').val()
-    var shi = $('#info-shi').val()
+//    var sheng = $('#info-sheng').val()
+//    var shi = $('#info-shi').val()
+    var address = $('#address').val()
     var qq = $('#userqq').val()
-    var sexStr = ['男','女','保密']
-
+    var sexStr = ['女','男','保密']
     var DATA = {
       sex: sex,
-      sheng: sheng,
-      shi: shi,
+      address: address,
+//      shi: shi,
       qq: qq,
     };
-
     console.log(DATA.sex, DATA.sheng, DATA.shi, DATA.qq);
-
-    // $.ajax({
-    //   url: '/path/to/file',
-    //   type: 'default GET (Other values: POST)',
-    //   dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-    //   data: DATA,
-    // })
-    // .done(function() {
-    //   console.log("success");
-    // })
-    // .fail(function() {
-    //   console.log("error");
-    // })
-    // .always(function() {
-    //   console.log("complete");
-    // });
-
-    // Ajax Success
-    $('#saved-sex').html(sexStr[DATA.sex])
-    $('#saved-address').html(DATA.sheng + ' ' + DATA.shi)
-    $('#saved-qq').html(DATA.qq)
-
-    $('#info-text1').hide()
-    $('#info-text2').fadeIn()
-
+     $.ajax({
+       url: '/account/info/ajax',
+       type: 'get',
+       dataType: 'json',
+       data: DATA,
+     })
+     .done(function(data) {
+    	 console.log("success");
+    	 if(data.retCode==100000){
+		    $('#saved-sex').html(sexStr[DATA.sex]);
+		    $('#saved-address').html(address);
+		    $('#saved-qq').html(DATA.qq);
+		    $('#info-text1').hide();
+		    $('#info-text2').fadeIn();    		 
+    	 }else{
+    		 console.log(data.retMsg);
+    	 }
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
   });
 
   // Back Update User Info

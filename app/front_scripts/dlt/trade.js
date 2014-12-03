@@ -55,20 +55,51 @@ QUEUE.getACTotalNum = function(n, m, type) {
 
 
 /****************COMMON****************/
-// 拟态框
+/**
+ * [getCommonParams 购买彩票,获取要提交的参数]
+ * @param  {} el [.box-left 对象]
+ * @return {}    [彩票提交必须参数]
+ */
+COMMON.getCommonParams = function(el) {
+
+  var params = {
+    lotyName: $('#lotyName').val(),
+    playName: $('#playName').val(),
+    unikey: $('#unikey').val(),
+    qihaoId: $('#qihaoId').val(),
+    qihao: $('#qihao').val(),
+    zhushu: el.find('.j-quick-zhu').html(),
+    beishu: el.find('.j-quick-bei').val(),
+    codes: COMMON.formarFormSub(el.find('.br-gou .br-zhu-item'))
+  };
+  return params;
+}
+/**
+ * [showTips 拟态框]
+ * @param  {String} h tips's HTML
+ * @return {null}
+ */
 COMMON.showTips = function(h) {
   $('#tip-content').html(h);
   $('#myModal').modal('show');
 }
 
-// 号码排序
+/**
+ * [sortNum 号码排序]
+ * @param  {Array} num Sort Array
+ * @return {Array}
+ */
 COMMON.sortNum = function(num) {
   return num.sort(function(a, b) {
     return a - b;
   });
 }
 
-//  清除所有球的选中状态
+/**
+ * [clearAllBallActive 清除所有球的选中状态]
+ * @param  {Object} el Ball-Aear
+ * @return {null}
+ */
 COMMON.clearAllBallActive = function(el) {
   el.find('.active').removeClass();
 }
@@ -85,7 +116,44 @@ COMMON.updateCount = function(m, c) {
   m.val(v);
   console.log('加减输入框CHANGE');
 }
+// 拖胆列表注数格式化 for 表单提交
+COMMON.tuodanFormarFormSub = function(items) {
 
+  var list = [];
+  for (var i = 0; i < items.length; i++) {
+
+    var redDan = [],
+      blueDan = [],
+      redTuo = [],
+      blueTuo = [],
+      itemsList = items.eq(i),
+      ball = itemsList.find('span');
+
+    for (var j = 0; j < ball.length; j++) {
+
+      var html = ball.eq(j).html()
+      var type = parseInt(ball.eq(j).attr('data-s'))
+      switch (type) {
+        case 0:
+          redDan.push(html)
+          break;
+        case 1:
+          redTuo.push(html)
+          break;
+        case 2:
+          blueDan.push(html)
+          break;
+        case 3:
+          blueTuo.push(html)
+          break;
+      }
+    };
+
+    list.push('(' + redDan.join(',') + ')' + redTuo.join(',') + '|' + '(' + blueDan.join(',') + ')' + blueTuo.join(','));
+
+  };
+  return list.join('$');
+}
 
 // 页尾统计 投注总额
 COMMON.setZhuTotal = function(r, el) {
@@ -125,6 +193,8 @@ COMMON.setZhuTotal = function(r, el) {
       break;
   }
   console.log('页尾统计更新');
+  ZHUI.setZhuiHaoTotal(p);
+  ZHUI.setHeMaiTotal(p);
 }
 
 // 更新统计注数

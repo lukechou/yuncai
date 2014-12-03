@@ -26,11 +26,13 @@ $(function() {
   $('.btn-results').on('change', function(event) {
     var r = $(this).attr('data-r');
     var v = parseInt($(this).val());
+
     if (isNaN(v)) {
       $(this).val(1);
     } else {
       $(this).val(v);
     }
+
     COMMON.setZhuTotal(r, $(this));
   });
 
@@ -550,7 +552,7 @@ $(function() {
     }
 
     MANUAL.totalSdNums();
-
+    ZHUI.setHeMaiTotal($(this).parents('.box-left'));
     console.log('MANUAL向列表添加一注');
   });
 

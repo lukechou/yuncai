@@ -1,28 +1,43 @@
 $(function() {
-
-  var BANK = '',
-    MONEY = '';
-
+  var BANK = '', MONEY = '';
   // Next Button
   $('#j-sub-bank').on('click', function() {
-
     if ($(this).hasClass('selected')) {
-      var user = $('#uinfo').html();
+      // var user = $('#uinfo').html();
       var bank = $('input[name=type]:checked').val();
-      if (checkMoney()) {
+      if (isIllageMoney()) {
         $('#js-sum-e').removeClass('hide');
       } else {
         if (bank) {
-          $('.recharge').hide();
-          $('#j-money-sum').html(MONEY);
-          $('.cz-sure').fadeIn();
-          console.log(user, MONEY, bank);
+          console.log(MONEY, bank);
+          $.ajax({
+              url: '/account/pre_top_up',
+              type: 'post',
+              dataType: 'json',
+              data: {
+                money: MONEY,
+                type: bank
+              },
+            })
+            .done(function(data) {
+              if (data.retCode != 100000) {
+                alert("raymond记得修改:" + data.retMsg);
+              } else {
+                $('.recharge').hide();
+                $('#j-money-sum').html(MONEY);
+                $('.cz-sure').fadeIn();
+                $('.cz-surehd-ft').html(data.retData.topUpFormHtml);
+              }
+            })
+            .fail(function() {
+            	alert("raymond记得修改:购彩过于火爆，请稍后再试");
+              console.log("error");
+            });
         } else {
           $('.js-type-e').removeClass('hide');
         }
       }
     }
-
   });
 
   function toggleTypeTips(el) {
@@ -32,14 +47,14 @@ $(function() {
     $('#j-sure-bank').removeClass().addClass(BANK);
   }
 
-  function checkMoney() {
+  function isIllageMoney() {
     MONEY = parseInt($('#js-sum').val());
     return isNaN(MONEY);
   }
 
   // 金额更改
   $('#js-sum').on('change', function() {
-    if (checkMoney()) {
+    if (isIllageMoney()) {
       $('#js-sum-e').removeClass('hide');
       $('#js-sum-suc').addClass('hide');
     } else {
@@ -57,7 +72,7 @@ $(function() {
     $('.bank-selected').removeClass('bank-selected');
     $(this).addClass('bank-selected');
     $(this).find('input')[0].checked = true;
-    if (!checkMoney()) $('#j-sub-bank').addClass('selected');
+    if (!isIllageMoney()) $('#j-sub-bank').addClass('selected');
   });
 
   // 选择其他银行
