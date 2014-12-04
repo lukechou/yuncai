@@ -18,7 +18,10 @@ module.exports = function(grunt) {
     // Configurable paths
     var config = {
         app: 'app',
-        dist: 'dist'
+        dist: 'dist',
+        img: 'front_images',
+        js: 'front_scripts',
+        css: 'front_styles',
     };
 
     // Define the configuration for all the tasks
@@ -34,7 +37,7 @@ module.exports = function(grunt) {
                 tasks: ['bowerInstall']
             },
             js: {
-                files: ['<%= config.app %>/scripts/{,*/}*.js'],
+                files: ['<%= config.app %>/'+config.js+'/{,*/}*.js'],
                 tasks: ['jshint'],
                 options: {
                     livereload: true
@@ -48,7 +51,7 @@ module.exports = function(grunt) {
                 files: ['Gruntfile.js']
             },
             styles: {
-                files: ['<%= config.app %>/styles/{,*/}*.css'],
+                files: ['<%= config.app %>/'+config.css+'/{,*/}*.css'],
                 tasks: ['newer:copy:styles', 'autoprefixer']
             },
             livereload: {
@@ -57,8 +60,8 @@ module.exports = function(grunt) {
                 },
                 files: [
                     '<%= config.app %>/{,*/}*.html',
-                    '.tmp/styles/{,*/}*.css',
-                    '<%= config.app %>/images/{,*/}*'
+                    '.tmp/'+config.css+'/{,*/}*.css',
+                    '<%= config.app %>/'+config.img+'/{,*/}*'
                 ]
             }
         },
@@ -128,8 +131,8 @@ module.exports = function(grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= config.app %>/scripts/{,*/}*.js',
-                '!<%= config.app %>/scripts/vendor/*',
+                '<%= config.app %>/'+config.js+'/{,*/}*.js',
+                '!<%= config.app %>/'+config.js+'/vendor/*',
                 'test/spec/{,*/}*.js'
             ]
         },
@@ -152,9 +155,9 @@ module.exports = function(grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '.tmp/styles/',
+                    cwd: '.tmp/'+config.css+'/',
                     src: '{,*/}*.css',
-                    dest: '.tmp/styles/'
+                    dest: '.tmp/'+config.css+'/'
                 }]
             }
         },
@@ -172,10 +175,10 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     src: [
-                        '<%= config.dist %>/scripts/{,*/}*.js',
-                        '<%= config.dist %>/styles/{,*/}*.css',
-                        '<%= config.dist %>/images/{,*/}*.*',
-                        '<%= config.dist %>/styles/fonts/{,*/}*.*',
+                        '<%= config.dist %>/'+config.js+'/{,*/}*.js',
+                        '<%= config.dist %>/'+config.css+'/{,*/}*.css',
+                        '<%= config.dist %>/'+config.img+'/{,*/}*.*',
+                        '<%= config.dist %>/'+config.css+'/fonts/{,*/}*.*',
                         '<%= config.dist %>/*.{ico,png}'
                     ]
                 }
@@ -195,7 +198,7 @@ module.exports = function(grunt) {
         // Performs rewrites based on rev and the useminPrepare configuration
         usemin: {
             options: {
-                assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images'],
+                assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/'+config.img],
                 patterns: {
                     js: [
                         [/(images\/.*?\.(?:gif|jpeg|jpg|png|webp|svg))/gm, 'Update the JS to reference our revved images']
@@ -203,8 +206,8 @@ module.exports = function(grunt) {
                 }
             },
             html: ['<%= config.dist %>/{,*/}*.html'],
-            css: ['<%= config.dist %>/styles/{,*/}*.css'],
-            js: ['<%= config.dist %>/scripts/{,*/}*.js']
+            css: ['<%= config.dist %>/'+config.css+'/{,*/}*.css'],
+            js: ['<%= config.dist %>/'+config.js+'/{,*/}*.js']
         },
 
         // The following *-min tasks produce minified files in the dist folder
@@ -212,9 +215,9 @@ module.exports = function(grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= config.app %>/images',
+                    cwd: '<%= config.app %>/'+config.img,
                     src: '{,*/}*.{gif,jpeg,jpg,png}',
-                    dest: '<%= config.dist %>/images'
+                    dest: '<%= config.dist %>/'+config.img
                 }]
             }
         },
@@ -223,9 +226,9 @@ module.exports = function(grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= config.app %>/images',
+                    cwd: '<%= config.app %>/'+config.js,
                     src: '{,*/}*.svg',
-                    dest: '<%= config.dist %>/images'
+                    dest: '<%= config.dist %>/'+config.js
                 }]
             }
         },
@@ -288,17 +291,17 @@ module.exports = function(grunt) {
                     src: [
                         '*.{ico,png,txt}',
                         '.htaccess',
-                        'images/{,*/}*.webp',
+                        config.img+'/{,*/}*.webp',
                         '{,*/}*.html',
-                        'styles/fonts/{,*/}*.*'
+                        config.css+'/fonts/{,*/}*.*'
                     ]
                 }]
             },
             styles: {
                 expand: true,
                 dot: true,
-                cwd: '<%= config.app %>/styles',
-                dest: '.tmp/styles/',
+                cwd: '<%= config.app %>/'+config.css,
+                dest: '.tmp/'+config.css+'/',
                 src: '{,*/}*.css'
             }
         },
@@ -320,9 +323,9 @@ module.exports = function(grunt) {
         // Converting a set of images into a spritesheet and corresponding CSS variables.
         sprite: {
             all: {
-                src: 'app/images/icon/*.png',
-                destImg: 'app/images/icon.png',
-                destCSS: 'app/styles/icon.css'
+                src: 'app/'+config.img+'/icon/*.png',
+                destImg: 'app/'+config.img+'/icon.png',
+                destCSS: 'app/'+config.css+'/icon.css'
             }
         }
     });
