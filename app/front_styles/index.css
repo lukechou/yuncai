@@ -36,7 +36,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .fs-18 { font-size: 18px; }
 .fs-24 { font-size: 24px; }
 .fs-yh { font-family: 'Microsoft Yahei'; }
-.bg-0 { background: #d12840; }
+.bg-0 { background: #cf3430; }
 .bg-1 { background: #242424; }
 .bg-2 { background: #2a2a2b; }
 .bg-3 { background: #272728; }
@@ -52,8 +52,8 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .box-right { width: 305px; float: right; padding-left: 15px;}
 /* Page Hd */
 .page-hd { height: 360px; position: relative; }
-.page-hd .carousel .er { margin: 90px 175px 0 0; display: block; float: right; }
-.page-hd .sticky { padding-top: 10px; background: rgba(0, 0, 0, .2); width: 130px; height: 360px; top: 0; right: 0; position: absolute; color: #fff; text-align: center; font-size: 12px; }
+.page-hd .carousel .er { display: block; width: 100%; }
+.page-hd .sticky { padding-top: 10px; background: rgba(0, 0, 0, .2); width: 132px; height: 360px; top: 0; right: 0; position: absolute; color: #fff; text-align: center; font-size: 12px; }
 .page-hd .sticky .bei, .page-hd .sticky .head { margin-bottom: 6px; }
 .page-hd .head { margin-top: 15px; border-radius: 50%; width: 96px; height: 96px; }
 .page-hd p { margin-bottom: 3px; }
