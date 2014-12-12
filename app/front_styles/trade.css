@@ -128,12 +128,17 @@
 
 
 
-.ds-con { border: 1px solid #c4c4c4; color: #3d3d3d; line-height: 24px; width: 610px; padding: 5px 0 0 10px; overflow: hidden; border-radius: 2px; }
+.ds-con { position: relative; border: 1px solid #c4c4c4; color: #3d3d3d; line-height: 24px; width: 610px; padding: 5px 0 0 10px; overflow: hidden; border-radius: 2px; }
 .ds-con .sd-number { border: none; width: 100%; color: #afafaf; line-height: 24px; height: 145px; outline: 0; background: #f0efef; font-size: 12px;}
 .ds-con .sd-number.focus { color: #000000; font-size: 14px; font-family: Arial; outline-width: 0px; outline-style: none; outline-color: invert; }
 .ds-con .upload-tips { padding: 10px; font-size: 12px; color: #afafaf; }
 
-
+.textarea-mask{ color: #848484; font-size: 12px; position: absolute; top: 0;
+left: 0;
+padding: 10px;
+width: 610px;
+height: 159px;}
+.textarea-mask p{ margin-bottom: 5px;}
 
 
 

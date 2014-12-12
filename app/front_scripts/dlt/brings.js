@@ -8,32 +8,6 @@
 
 $(function() {
 
-  var qiuckSet = ''; // -常规 修改当前注
-  var tuoDanSet = ''; // -拖胆 修改当前注
-
-  // 绑定加减输入框事件
-  $('.br-count-item').on('click', '.j-count', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    var m = $(this).siblings('.btn-results'),
-      c = $(this).attr('data-c'),
-      r = m.attr('data-r');
-    COMMON.updateCount(m, c);
-    COMMON.setZhuTotal(r, $(this));
-  });
-
-  // 绑定加减总数输入框事件
-  $('.btn-results').on('change', function(event) {
-    var r = $(this).attr('data-r');
-    var v = parseInt($(this).val());
-    if (isNaN(v)) {
-      $(this).val(1);
-    } else {
-      $(this).val(v);
-    }
-    COMMON.setZhuTotal(r, $(this));
-  });
-
   /*
    *  快捷投注
    */
@@ -57,7 +31,7 @@ $(function() {
 
 
     if (parseInt(total) > 20000) {
-      COMMON.showTips(tips[2]);
+      APP.showTips(tips[2]);
       return;
     }
 
@@ -79,10 +53,14 @@ $(function() {
           $(this).parents('.box-left').find('.br-zhu-l').append(html);
           COMMON.checkBallGroup($(this));
         } else {
-          COMMON.showTips(tips[1]);
+          APP.showTips(tips[1]);
         }
       } else {
-        COMMON.showTips(tips[0]);
+        if(eGroup.length>0){
+          APP.showTips(tips[1]);
+        }else{
+          APP.showTips(tips[0]);
+        }
       }
     }
 
@@ -106,10 +84,10 @@ $(function() {
           $(this).attr('data-add', 1);
           $(this).find('span').html('添加到投注列表');
         } else {
-          COMMON.showTips(tips[1]);
+          APP.showTips(tips[1]);
         }
       } else {
-        COMMON.showTips(tips[0]);
+        APP.showTips(tips[0]);
       }
     }
 
@@ -176,23 +154,6 @@ $(function() {
 
   });
 
-  // 快捷投注 选球
-  $('.ball-group').on('click', 'li', function(event) {
-    $(this).toggleClass('active');
-    COMMON.checkBallGroup($(this));
-  });
-
-  // 快捷投注 清空投注列表
-  $('.clearredball').on('click', function(event) {
-    $(this).parents('.area_select').siblings('.ball_red').find('.active').removeClass();
-    COMMON.checkBallGroup($(this));
-  });
-
-  $('.clearblueball').on('click', function(event) {
-    $(this).parents('.area_select').siblings('.ball_blue').find('.active').removeClass();
-    COMMON.checkBallGroup($(this));
-  });
-
   // 快捷投注随机选球
   $('.jxredball').on('click', function(event) {
     var v = $(this).siblings('.jxRedBall_Num').val();
@@ -210,7 +171,7 @@ $(function() {
 
   // 删除当前注
   $('.j-br-zhu').on('click', '.br-zhu-del', function(event) {
-    if (DEBUG) debugger;
+
     var c = $(this).parents('.br-zhu');
     $(this).parents('.br-zhu-item').remove();
     $('.btn-add').attr('data-add', 1);
@@ -241,7 +202,7 @@ $(function() {
 
   // 清空列表
   $('.j-zhu-clean').on('click', function(event) {
-    if (DEBUG) debugger;
+
     $(this).parents('.br-zhu-r').siblings('.br-zhu-l').html('');
     COMMON.updateTotalZhu($(this));
   });
@@ -252,43 +213,12 @@ $(function() {
    *
    */
 
-  // 拖胆投注 选号 红区
-  $('.m-num-group-red').on('click', 'a', function(event) {
-
-    var i = $(this).index(),
-      parent = '.m-num-group-red',
-      parentEl = $(this).parents(parent),
-      min = parseInt(parentEl.attr('data-min')),
-      max = parseInt(parentEl.attr('data-max')),
-      dan = parentEl.attr('data-dan'),
-      len = parentEl.find('.active').length;
-
-    if (dan == 1) {
-      if (len < max) {
-        parentEl.siblings(parent).find('a').eq(i).removeClass('active');
-        $(this).toggleClass('active');
-      } else {
-        if (len == max && $(this).hasClass('active')) {
-          $(this).toggleClass('active');
-        } else {
-          COMMON.showTips('最多只能有4个胆码');
-        }
-      }
-    } else {
-      parentEl.siblings(parent).find('a').eq(i).removeClass('active');
-      $(this).toggleClass('active');
-    }
-
-    DRAG.checkBallAear();
-  });
-
   // 拖胆投注 选号 蓝区
   $('.m-num-group-blue').on('click', 'a', function(event) {
 
     var i = $(this).index(),
       parent = '.m-num-group-blue',
       parentEl = $(this).parents(parent),
-      min = parseInt(parentEl.attr('data-min')),
       max = parseInt(parentEl.attr('data-max')),
       dan = parentEl.attr('data-dan'),
       len = parentEl.find('.active').length;
@@ -301,7 +231,7 @@ $(function() {
         if (len == max && $(this).hasClass('active')) {
           $(this).toggleClass('active');
         } else {
-          COMMON.showTips('最多只能有1个胆码');
+          APP.showTips('最多只能有1个胆码');
         }
       }
     } else {
@@ -310,28 +240,6 @@ $(function() {
     }
     DRAG.checkBallAear();
   });
-
-  // 拖胆随机选球
-  $('.j-random-tuo').on('click', function(event) {
-    var _this = $(this),
-      g = '.m-num-group',
-      tuo = _this.parents(g),
-      dan = tuo.siblings(g),
-      num = DRAG.getTuodanNum(dan),
-      co = _this.attr('data-color'),
-      len = tuo.find('.tuo-select').val();
-    getRandomNums = DRAG.randomTuodanNum(num, co, len);
-    DRAG.createOneTuodanBall(getRandomNums, tuo);
-    DRAG.checkBallAear();
-  });
-
-  // 拖胆投注-清空选球区域
-  $('.m-num-group').on('click', '.m-num-clean', function(event) {
-    $(this).parents('.m-num-group').find('a.active').removeClass('active');
-    DRAG.checkBallAear();
-    COMMON.setZhuTotal(1, $(this));
-  });
-
 
   // 拖胆注添加到列表
   $('#tuo-sub').on('click', function(event) {
@@ -340,12 +248,16 @@ $(function() {
     var zhuHtml = '';
     var zhu = DRAG.getTuodanBallZhu();
     var brGou = $(this).parents('.br-gou');
-    var tips = ['前区胆码至少选择一个', '您选的方案不足一注'];
+    var tips = ['前区胆码至少选择一个', '您选的方案不足一注','您好，单个投注的金额应小于2万元，请返回重新选择'];
     var type = $(this).attr('data-add');
 
+    if (zhu.total*2 > 20000) {
+      APP.showTips(tips[2]);
+      return;
+    }
     // is Select Ball Enough
-    if (zhu.code === -1) COMMON.showTips(tips[0]);
-    if (zhu.code === -2) COMMON.showTips(tips[1]);
+    if (zhu.code === -1) APP.showTips(tips[0]);
+    if (zhu.code === -2) APP.showTips(tips[1]);
 
     if (zhu.code > 0) {
 
@@ -379,21 +291,6 @@ $(function() {
       }
 
     }
-  });
-
-  // 删除当前注
-  $('#j-tuo-zhu').on('click', '.br-zhu-del', function(event) {
-
-    if (DEBUG) debugger;
-
-    var c = $(this).parents('.br-zhu');
-    $(this).parents('.br-zhu-item').remove();
-    $('#tuo-sub').attr('data-add', 1);
-    $('#tuo-sub').find('span').html('添加到投注列表');
-
-    COMMON.updateTotalZhu(c);
-
-    console.log('删除一注');
   });
 
   // 拖胆投注-修改选中注
@@ -479,12 +376,12 @@ $(function() {
   var sdNumberTips = '';
   var sdStatus = true;
 
+  $('#j-textarea-mask').on('click', function(event) {
+    $(this).hide()
+    $('#sd_number')[0].focus()
+  });
+
   $('#sd_number').on('focus', function(event) {
-    if (sdStatus) {
-      sdNumberTips = $(this).val();
-      $(this).val('');
-      sdStatus = false;
-    }
     $(this).addClass('focus');
   });
 
@@ -494,7 +391,7 @@ $(function() {
 
   // 删除当前注
   $('#sd-list').on('click', '.br-zhu-del', function(event) {
-    if (DEBUG) debugger;
+
     var c = $(this).parents('.br-zhu');
     $(this).parents('.br-zhu-item').remove();
     MANUAL.setSdTotal();
@@ -503,7 +400,7 @@ $(function() {
 
   // 清空列表
   $('#j-sd-clean').on('click', function(event) {
-    if (DEBUG) debugger;
+
     $(this).parents('.br-zhu-r').siblings('.br-zhu-l').html('');
     MANUAL.setSdTotal();
   });
@@ -515,16 +412,17 @@ $(function() {
     var formatZhus = '';
     var l = '';
     var html = '';
-    var tips = ['<h5>您好，请按照正确格式填写，例：</h5><p>格式1：01,02,03,04,05|10,11</p><p>格式2：01,02,03,04,05+10,11', '请输入投注号码'];
+    var tips = ['<h5>您好，请按照正确格式填写，例：</h5><p>格式1：01,02,03,04,05+10,11</p>', '请输入投注号码'];
 
     if (!_.isEmpty(str)) {
       formatZhus = MANUAL.sdFormat(str);
     } else {
-      COMMON.showTips(tips[1]);
+      APP.showTips(tips[1]);
+      return;
     }
 
     if (formatZhus && formatZhus.code == 0) {
-      COMMON.showTips(tips[0]);
+      APP.showTips(tips[0]);
     }
 
     for (var i = 0; i < formatZhus.good.length; i++) {

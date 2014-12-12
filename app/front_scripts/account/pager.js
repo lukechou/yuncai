@@ -1,122 +1,193 @@
- $(document).ready(function() {
+var PAGE = {};
+PAGE.config = {};
+PAGE.makePageHtml = function(pageHtmlNode) {
+  if (PAGE.config.pageNum <= 1) {
+	  pageHtmlNode.html('');
+    return;
+  }
+  pageHtmlNode.html('<div class="pull-right pages">' + (PAGE.config.page) + '/<span class="j-days">' + PAGE.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="'+PAGE.config.page+'" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>');
+};
 
-   var tables = $('.table');
-   loadMoneyRecord(30, 0, 0, tables.eq(0).find('tbody'));
+PAGE.bindPageEvent = function(callback) {
+
+  $('.next-page').on('click', function(event) {
+    PAGE.config.page = parseInt(PAGE.config.page)
+    PAGE.config.page += 1;
+    callback(PAGE.config);
+  });
+
+  $('.back-page').on('click', function(event) {
+    PAGE.config.page = parseInt(PAGE.config.page)
+    PAGE.config.page -= 1;
+    if (PAGE.config.page <= 0) {
+      PAGE.config.page = 1;
+    }
+    callback(PAGE.config);
+  });
+
+  $('.j-pages-value').on('change', function(event) {
+
+    var max = $(this).siblings('.j-days').html();
+    var go = parseInt($(this).val());
+
+    if(isNaN(go)){
+      go = 1;
+    }else{
+      go = Math.ceil(go);
+    }
+
+    if(max<go){
+      go = max;
+    }
+    if(go<1){
+      go =1;
+    }
+    $(this).val(go);
+  });
+
+  $('.j-pages-go').on('click', function(event) {
+    PAGE.config.page = $(this).siblings('.j-pages-value').val()||1;
+    callback(PAGE.config);
+  });
+
+};
+
+//投注记录
+PAGE.loadOrderRecord = function(obj) {
+
+  PAGE.config = obj;
+  var url = window.location.pathname + '/ajax';
+  $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'json',
+      data: {
+          type: obj.type,
+          days: obj.days,
+          page: obj.page,
+          pageSize: obj.pageSize,
+      },
+    })
+    .done(function(data) {
+      if (data.retCode == 100000) {
+        var dataSize = data.retData.data.length;
+        var html = "";
+        if (dataSize > 0) {
+          var detailData = data.retData.data;
+          for (var i = 0; i < detailData.length; i++) {
+            dataItem = detailData[i];
+            var projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
+            var continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
+            html += "<tr><td>" + dataItem.lotyCNName + "</td><td>" + dataItem.createTime + "</td><td>" + dataItem.money + "元</td><td>" + dataItem.status + "</td><td>" + projectDetailUrl + continueBuy + "</td></tr>";
+          };
+          // 中奖列表才有汇总功能
+          if (obj.type == '1') {
+            $('#summary_bonus_sum').html(data.retData.summary.bonusSum);
+            $('#summary_bonus_size').html(data.retData.summary.bonusSize);
+          }
+        } else {
+          html = "<tr><td colspan='6'>没有数据</td></tr>";
+        }
+        PAGE.config.pageNum = Math.ceil(data.retData.totalRecord / obj.pageSize);
+        PAGE.makePageHtml(obj['innerHtmlObj'].parents('.table').siblings('.j-page-box'));
+        PAGE.bindPageEvent(PAGE.loadOrderRecord);
+      } else {
+        html = "<tr><td colspan='6'>" + data.retMsg + "</td></tr>";
+      }
+      obj['innerHtmlObj'].html(html);
+    });
+};
+
+// 详情分页
+PAGE.loadDetailRecord = function(obj) {
+
+  PAGE.config = obj;
+  var url = window.location.pathname + '/ajax';
+  $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'json',
+      data: {
+        type: obj.type,
+        days: obj.days,
+        page: obj.page,
+        pageSize: obj.pageSize,
+      },
+    })
+    .done(function(data) {
+      if (data.retCode == 100000) {
+        var dataSize = data.retData.data.length;
+        var html = "";
+        if (dataSize > 0) {
+          var detailData = data.retData.data;
+          for (var i = 0; i < detailData.length; i++) {
+            dataItem = detailData[i];
+            if (obj.type == 4) {
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+            } else if (obj.type == 5) {
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>提款中</td><td>" + dataItem.tradeRemark + "</td><td>取消</td></tr>";
+            } else {
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+            }
+          };
+        } else {
+          html = "<tr><td colspan='6'>没有数据</td></tr>";
+        }
+        // 中奖列表才有汇总功能
+        if (data.retData.summary) {
+          obj['innerHtmlObj'].parents('.tab-pane').find('.j-summary-money').html(data.retData.summary.money)
+          obj['innerHtmlObj'].parents('.tab-pane').find('.j-summary-times').html(data.retData.summary.times)
+        }
+        PAGE.config.pageNum = Math.ceil(data.retData.totalRecord / obj.pageSize);
+        PAGE.makePageHtml(obj['innerHtmlObj'].parents('.table').siblings('.j-page-box'));
+//        PAGE.callBack = PAGE.getDrawRecord;
+        PAGE.bindPageEvent(PAGE.loadDetailRecord);
+      } else {
+        html = "<tr><td colspan='6'>" + data.retMsg + "</td></tr>";
+      }
+      obj['innerHtmlObj'].html(html);
+    });
+};
 
 
-   $('#nav-tabs').on("click", ' a', function() {
-     var i = parseInt($(this).attr('data-type'))
-     loadMoneyRecord(30, i, 0, tables.eq(i).find('tbody'));
-   });
-
-
-
-   function getPageParams() {
-     var t = $('.nav-tabs').find('.active a').attr('data-type');
-     var page = {
-       type: t,
-       days: $('.nearday')[t].value,
-       pages: $('.j-pages-value')[t].value,
-       maxpage: parseInt($('.j-days')[t].innerHTML),
-     };
-     return page;
-   }
-
-   $('.back-page').on('click', function(event) {
-     event.preventDefault();
-     var page = getPageParams();
-     if (page.pages > 1) {
-       page.pages--;
-     } else {
-       alert('已经是第一页了！！！')
-       return;
-     }
-     $('.j-pages-value')[page.type].value = page.pages;
-     loadMoneyRecord(page.days, page.type, page.pages, tables.eq(page.type).find('tbody'));
-   });
-
-   $('.next-page').on('click', function(event) {
-     event.preventDefault();
-     var page = getPageParams();
-     if (page.pages < page.maxpage) {
-       page.pages++;
-     } else {
-       alert('已经是最后一页了！！！')
-       return;
-     }
-     $('.j-pages-value')[page.type].value = page.pages;
-     loadMoneyRecord(page.days, page.type, page.pages, tables.eq(page.type).find('tbody'));
-   });
-
-   $(".j-pages-value").on('keydown', function(event) {
-
-     var pages = event.which;
-     var v = $(this).val();
-
-     if (pages == 13) {
-       if (isNaN(v) || v == '') {
-         alert('请填入要跳转的页数！');
-       } else {
-         var page = getPageParams();
-         loadMoneyRecord(page.days, page.type, page.pages, tables.eq(page.type).find('tbody'));
-       }
-     }
-
-   });
-
-   $(".j-pages-go").on('click', function(event) {
-
-     var v = $('#j-pages-value').val();
-     if (isNaN(v) || v == '') {
-       alert('请填入要跳转的页数！');
-     } else {
-       var page = getPageParams();
-       loadMoneyRecord(page.days, page.type, page.pages, tables.eq(page.type).find('tbody'));
-     }
-
-   });
-
-   function loadMoneyRecord(num, type, page, innerHtmlObj) {
-     var url = window.location.pathname + '/ajax';
-     $.ajax({
-         url: url,
-         type: 'GET',
-         dataType: 'json',
-         data: {
-           type: type,
-           days: num,
-           page: page,
-         },
-       })
-       .done(function(data) {
-
-         if (data.retCode == 100000) {
-           var dataSize = data.retData.data.length;
-           var html = "";
-           if (dataSize > 0) {
-
-             var detailData = data.retData.data;
-             for (var i = 0; i < detailData.length; i++) {
-               var projectDetailUrl = '<a href="#">查看详情</a>';
-               var continueBuy = '<a href="#">继续投注</a>';
-               dataItem = detailData[i];
-               html += "<tr><td>" + dataItem.lotyCNName + "</td><td>" + dataItem.createTime + "元</td><td>" + dataItem.money + "</td><td>" + dataItem.status + "</td><td>" + projectDetailUrl + continueBuy + "</td></tr>";
-             };
-             // 中奖列表才有汇总功能
-             if (type == 1) {
-               $('#summary_bonus_sum').html(data.retData.summary.bonusSum);
-               $('#summary_bonus_size').html(data.retData.summary.bonusSize);
-             }
-
-           } else {
-             html = "<tr><td colspan='6'>没有数据</td></tr>";
-           }
-         } else {
-           html = "<tr><td colspan='6'>" + data.retMsg + "</td></tr>";
-         }
-         innerHtmlObj.html(html);
-       });
-
-   };
-
- });
+// 充值分页
+PAGE.getDrawRecord = function(obj) {
+  PAGE.config = obj;
+  var url = '/account/draw/record/ajax';
+  $.ajax({
+      url: url,
+      type: 'get',
+      dataType: 'json',
+      data: {
+    	page:obj.page,
+    	pageSize:obj.pageSize,
+        days: $('#days').val(),
+        status: $('#status').val()
+      },
+    })
+    .done(function(data) {
+      var htmlOutput = "";
+      if (data.retCode == 100000) {
+        var dataSize = data.retData.data.length;
+        if (dataSize > 0) {
+          var detailData = data.retData.data;
+          for (var i = 0; i < detailData.length; i++) {
+            dataItem = detailData[i];
+            htmlOutput += '<tr><td>' + dataItem.time + '</td><td>' + dataItem.drawMoney + '元</td><td>' + dataItem.status + '</td><td>手续费' + dataItem.commission + '元</td></tr>';
+          }
+        } else {
+          htmlOutput = '<td colspan="4">暂无相关记录</td>';
+        }
+        PAGE.config.pageNum = Math.ceil(data.retData.totalRecord / obj.pageSize);
+        PAGE.makePageHtml(obj['innerHtmlObj'].parents('.table').siblings('.j-page-box'));
+//        PAGE.callBack = PAGE.getDrawRecord;
+        PAGE.bindPageEvent(PAGE.getDrawRecord);
+      } else {
+        htmlOutput = '<td colspan="4">' + data.retMsg + '</td>';
+      }
+      $('#tkRecordList').html(htmlOutput);
+    })
+    .fail(function() {
+      console.log("error");
+    });
+};

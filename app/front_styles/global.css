@@ -4,7 +4,7 @@
 .bg-4 { background: #5198f1; }
 /* List */
 ul, ol { list-style: none; padding: 0; margin: 0; }
-.nobor { border: none!important; }
+.nobor { border: none !important; }
 .graybor { border: 1px #c4c4c4 solid; }
 .panel { border-radius: 0; }
 .m-list { overflow: hidden; width: 230px; padding: 10px 0; }
@@ -31,18 +31,19 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Microsoft Yahei'; }
 .mt10 { margin-top: 10px; }
 .mt25 { margin-top: 25px !important; }
 .mr0 { margin-right: 0; }
-.mr5 { margin-right: 5px; }
+.mr5 { margin-right: 5px !important; }
 .mr15 { margin-right: 15px; }
 .mb0 { margin-bottom: 0; }
 .mb30 { margin-bottom: 30px; }
 .ml0 { margin-left: 0; }
-.ml15{ margin-left: 15px;}
-.ml25{ margin-left: 25px;}
-.ml30{ margin-left: 30px;}
+.ml15 { margin-left: 15px; }
+.ml25 { margin-left: 25px; }
+.ml30 { margin-left: 30px; }
 .ml8 { margin-left: 8px; }
 .ml50 { margin-left: 50px; }
 .ml70 { margin-left: 70px; }
 .w985 { width: 985px; margin: auto; }
+.w180 { width: 180px; }
 .ps-t2 { position: relative; top: 2px; }
 .ps-t-2 { position: relative; top: -2px; }
 /* Width */
@@ -51,15 +52,18 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Microsoft Yahei'; }
 .w70 { width: 70px; }
 /* 分页 */
 .pages { font-size: 14px; }
-.pages .govalue { border: 1px #c4c4c4 solid; width: 50px; padding: 0 5px; height: 25px }
-.pages button { border: 1px #c4c4c4 solid; height: 25px; line-height: 25px; padding: 0 2px; background: #f0efef; color: #428bca; margin: -2px 0 0 -5px; }
+.pages .back-page,.pages .next-page{ margin: 0 0 0 15px;}
+.pages .govalue { border: 1px #c4c4c4 solid; width: 50px; padding: 0 5px; height: 25px; margin-left: 10px;}
+.pages button { border: 1px #c4c4c4 solid; height: 25px; line-height: 25px; padding: 0 4px; background: #f0efef; color: #428bca; margin: -2px 10px 0 -5px; }
+
+
 /* Icon */
 .icon { display: inline-block; }
 /* Input */
 .m-pager { padding-left: 0; margin: 20px 0; text-align: center; list-style: none; font-size: 12px; }
-.m-pager a { color: #404040; margin: 0 5px;}
+.m-pager a { color: #404040; margin: 0 5px; }
 .m-pager a.dis { color: #848484; }
-.m-pager-i { width: 50px; margin-right: 5px; background: #f0efef; border: 1px #c4c4c4 solid;}
+.m-pager-i { width: 50px; margin-right: 5px; background: #f0efef; border: 1px #c4c4c4 solid; }
 /* Button */
 .btn { border-radius: 2px; }
 .btn-add, .btn-add2 { color: #fff; font-weight: bold; background: #bdbcbc; padding: 10px 25px 10px 35px; position: relative; }
@@ -79,13 +83,13 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Microsoft Yahei'; }
 .m-num-tips { font-size: 12px; }
 .m-num-tips>b { margin-right: 10px; }
 .m-num-title { border-bottom: 1px dashed #c4c4c4; margin: 20px auto 30px; text-align: center; zoom: 1; position: relative; }
-.m-num-title>p { display: inline-block; zoom: 1; padding: 0 10px; background: #f0efef; position: absolute; margin: auto; left: 0; right: 0; top: -10px; width: 190px; }
+.m-num-title>p { display: inline-block; zoom: 1; padding: 0 10px; background: #f0efef; position: absolute; margin: auto; left: 0; right: 0; top: -10px; width: 225px; }
 .m-num-title2>p { width: 400px; padding: 0; font-size: 12px; }
 .m-num-title>p>b { padding-right: 10px; }
 .m-num-group { margin: 0 0 40px -5px; position: relative; }
 .m-num-group>a { display: block; height: 35px; width: 35px; font-size: 16px; font-weight: bold; text-align: center; line-height: 35px; background: #dddedf; color: #3d3d3d; border: 1px #c4c4c4 solid; border-radius: 50%; float: left; margin: 5px 4px; }
-.m-num-group-red>a:hover, .m-num-group-red>a.active { background: #f13c38; color: #fff; text-decoration: none; border: none; }
-.m-num-group-blue>a:hover, .m-num-group-blue>a.active { background: #5198f1; color: #fff; text-decoration: none; border: none; }
+.m-num-group-red>a.active { background: #f13c38; color: #fff; text-decoration: none; border: none; }
+.m-num-group-blue>a.active { background: #5198f1; color: #fff; text-decoration: none; border: none; }
 .m-num-fun { font-size: 12px; position: absolute; bottom: 10px; right: 10px; }
 .m-num-fun>select { background: #f0efef; border: 1px #c4c4c4 solid; width: 45px; padding: 3px; }
 .m-num-sui { margin: 0 5px; }
@@ -118,4 +122,19 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Microsoft Yahei'; }
 .m-panel .panel-title { color: #3d3d3d; font-family: 'Microsoft Yahei'; }
 .m-panel .panel-heading { background: #dddedf; border-bottom: 1px #c4c4c4 solid; }
 /* 弹出框 */
-.modal.in .modal-dialog { background: #fff; }
+.friend-modal .modal-header{ background: #f13c38; padding: 10px 15px; color: #fff; }
+.friend-modal .modal-dialog{width: 450px;}
+.friend-modal .modal-header h4{ font-size: 14px;}
+.friend-modal .modal-header .close{ margin-top: -2px;}
+.modal-header .close { color: #fff; opacity: 1; font-weight: normal; margin-top: 5px; }
+.friend-modal.modal.in .modal-dialog { background: #fff; }
+
+.agreement-modal .modal-dialog{ width: 800px;}
+.agreement{ height: 500px;}
+.agreement .head{ font-size: 14px;
+font-weight: bold;
+color: #3d3d3d;
+margin-bottom: 10px; }
+.agreement .mn{ height: 400px; overflow: auto; border: 1px #c4c4c4 solid; color: #3d3d3d; font-size: 12px; padding: 8px 10px 30px;}
+.agreement .mn p{margin-bottom:0; text-align: left;}
+.agreement .foot{ padding-top: 20px;}

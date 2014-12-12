@@ -17,45 +17,56 @@ $(function() {
     blueTotal: 2,
   };
 
-  function getOneZhuHtml() {
-      var type = $('#j-q-type .active').attr('data-seed')
+  function getOneZhuHtml(t) {
+      var type = 0;
+      if (t) {
+        type = t
+      } else {
+        type = $('#j-q-type .active').attr('data-seed')
+      }
       var redGroup = _.sample(SEEDS[type].redBall, SEEDS[type].redTotal)
       var blueGroup = _.sample(SEEDS[type].blueBall, SEEDS[type].blueTotal)
       var html = ''
       for (var i = 0; i < redGroup.length; i++) {
-        html += '<li>'+redGroup[i]+'</li>'
+        html += '<li>' + redGroup[i] + '</li>'
       };
       for (var i = 0; i < blueGroup.length; i++) {
-        html += '<li class="blue">'+blueGroup[i]+'</li>'
+        html += '<li class="blue">' + blueGroup[i] + '</li>'
       };
       return html;
     }
     //快速投注
+
+  $('.tou-ls')[0].innerHTML = getOneZhuHtml('ssq')
+  $('.tou-ls')[1].innerHTML = getOneZhuHtml('dlt')
+
   $('#j-q-tou').on('click', '.btn-change', function(event) {
 
     var el = $(this).parents('.tou-hd').find('.tou-ls')
     el.html(getOneZhuHtml())
   });
 
-    //快速投注 投注
+  //快速投注 投注
   $('#j-q-tou').on('click', '.btn-tou', function(event) {
     debugger
     //
     $.ajax({
-      url: '/path/to/file',
-      type: 'default GET (Other values: POST)',
-      dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-      data: {param1: 'value1'},
-    })
-    .done(function() {
-      console.log("success");
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
+        url: '/path/to/file',
+        type: 'default GET (Other values: POST)',
+        dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+        data: {
+          param1: 'value1'
+        },
+      })
+      .done(function() {
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
 
   });
 

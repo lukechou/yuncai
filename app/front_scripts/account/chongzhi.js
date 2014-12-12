@@ -1,5 +1,6 @@
 $(function() {
-  var BANK = '', MONEY = '';
+  var BANK = '',
+    MONEY = '';
   // Next Button
   $('#j-sub-bank').on('click', function() {
     if ($(this).hasClass('selected')) {
@@ -21,7 +22,7 @@ $(function() {
             })
             .done(function(data) {
               if (data.retCode != 100000) {
-                alert("raymond记得修改:" + data.retMsg);
+                APP.showTips(data.retMsg);
               } else {
                 $('.recharge').hide();
                 $('#j-money-sum').html(MONEY);
@@ -30,7 +31,7 @@ $(function() {
               }
             })
             .fail(function() {
-            	alert("raymond记得修改:购彩过于火爆，请稍后再试");
+              APP.showTips("购彩过于火爆，请稍后再试");
               console.log("error");
             });
         } else {
@@ -48,22 +49,36 @@ $(function() {
   }
 
   function isIllageMoney() {
-    MONEY = parseInt($('#js-sum').val());
+    MONEY = $('#js-sum').val()*1;
     return isNaN(MONEY);
   }
 
   // 金额更改
   $('#js-sum').on('change', function() {
     if (isIllageMoney()) {
+      $('#js-sum-e').html('请输入整数的金额')
       $('#js-sum-e').removeClass('hide');
       $('#js-sum-suc').addClass('hide');
     } else {
-      $('#js-sum-suc').removeClass('hide');
-      $('#js-sum-e').addClass('hide');
-      if ($('input[name=type]:checked').val()) {
-        $('#j-sub-bank').addClass('selected');
+      MONEY = MONEY.toFixed(2)
+      $('#js-sum').val(MONEY)
+
+      if (MONEY < 0.01) {
+        $('#js-sum-e').html('充值金额不能小于0.01元')
+        $('#js-sum-e').removeClass('hide');
+        $('#js-sum-suc').addClass('hide');
+      } else {
+        if(MONEY>999999999){
+          $('#js-sum').val(999999999)
+        }
+        $('#js-sum-suc').removeClass('hide');
+        $('#js-sum-e').addClass('hide');
+        if ($('input[name=type]:checked').val()) {
+          $('#j-sub-bank').addClass('selected');
+        }
       }
     }
+
   });
 
   // 银行更改

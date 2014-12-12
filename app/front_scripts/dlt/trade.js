@@ -1,166 +1,15 @@
-/*
- *
- *  QUEUE  组合计算 取得排列的数目
- *  DEBUG
- *  BALLNUM  号码组
- *  SEEDS  彩种
- *  COMMON  通用组件
- *
- */
-var QUEUE = {};
-var COMMON = {};
-var MANUAL = {};
-var DRAG = {};
-var SEEDS = {};
-var DEBUG = false;
-var BALLNUM = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
-
-
-
 var BALLDATA = {};
+var BALLNUM = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
 BALLDATA.red = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
 BALLDATA.blue = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 
-/**************QUEUE*************/
-// 计算阶乘的函数
-QUEUE.a = function(n) {
-    try {
-      if (n == 1 || n == 2) {
-        return n;
-      } else {
-        return n * QUEUE.a(n - 1);
-      }
-    } catch (e) {
-      alert(e);
-    }
-  }
-  //计算排列组合的可能数目
-QUEUE.getACTotalNum = function(n, m, type) {
-  if (n == m) {
-    return 1;
-  } else if (n < m) {
-    return 0;
-  } else {
-    m = 2 * m > n ? (n - m) : m;
-    var Anm = QUEUE.a(n) / QUEUE.a(n - m);
-    if (type === 'A') {
-      return Anm;
-    } else if (type === 'C') {
-      return Anm / QUEUE.a(m);
-    } else {
-      return 0;
-    }
-  }
-}
-
-
-/****************COMMON****************/
-/**
- * [getCommonParams 购买彩票,获取要提交的参数]
- * @param  {} el [.box-left 对象]
- * @return {}    [彩票提交必须参数]
- */
-COMMON.getCommonParams = function(el) {
-
-  var params = {
-    lotyName: $('#lotyName').val(),
-    playName: $('#playName').val(),
-    unikey: $('#unikey').val(),
-    qihaoId: $('#qihaoId').val(),
-    qihao: $('#qihao').val(),
-    zhushu: el.find('.j-quick-zhu').html(),
-    beishu: el.find('.j-quick-bei').val(),
-    codes: COMMON.formarFormSub(el.find('.br-gou .br-zhu-item'))
-  };
-  return params;
-}
-/**
- * [showTips 拟态框]
- * @param  {String} h tips's HTML
- * @return {null}
- */
-COMMON.showTips = function(h) {
-  $('#tip-content').html(h);
-  $('#myModal').modal('show');
-}
-
-/**
- * [sortNum 号码排序]
- * @param  {Array} num Sort Array
- * @return {Array}
- */
-COMMON.sortNum = function(num) {
-  return num.sort(function(a, b) {
-    return a - b;
-  });
-}
-
-/**
- * [clearAllBallActive 清除所有球的选中状态]
- * @param  {Object} el Ball-Aear
- * @return {null}
- */
-COMMON.clearAllBallActive = function(el) {
-  el.find('.active').removeClass();
-}
-
-// 页尾统计 加减输入框 change
-COMMON.updateCount = function(m, c) {
-  var v = parseInt(m.val());
-  if (c == 1) {
-    v++;
-  } else {
-    v--;
-  }
-  v = (v && v >= 1) ? v : 1;
-  m.val(v);
-  console.log('加减输入框CHANGE');
-}
-// 拖胆列表注数格式化 for 表单提交
-COMMON.tuodanFormarFormSub = function(items) {
-
-  var list = [];
-  for (var i = 0; i < items.length; i++) {
-
-    var redDan = [],
-      blueDan = [],
-      redTuo = [],
-      blueTuo = [],
-      itemsList = items.eq(i),
-      ball = itemsList.find('span');
-
-    for (var j = 0; j < ball.length; j++) {
-
-      var html = ball.eq(j).html()
-      var type = parseInt(ball.eq(j).attr('data-s'))
-      switch (type) {
-        case 0:
-          redDan.push(html)
-          break;
-        case 1:
-          redTuo.push(html)
-          break;
-        case 2:
-          blueDan.push(html)
-          break;
-        case 3:
-          blueTuo.push(html)
-          break;
-      }
-    };
-
-    list.push('(' + redDan.join(',') + ')' + redTuo.join(',') + '|' + '(' + blueDan.join(',') + ')' + blueTuo.join(','));
-
-  };
-  return list.join('$');
-}
 
 // 页尾统计 投注总额
 COMMON.setZhuTotal = function(r, el) {
   // r:1 - 快捷投注
   // r:2 - 多期投注
   // e - 来源
-  var p = el.parents('.br-gou'),
+  var p = el.parents('.box-left'),
     m = [],
     total = 0;
   r = parseInt(r);
@@ -197,22 +46,49 @@ COMMON.setZhuTotal = function(r, el) {
   ZHUI.setHeMaiTotal(p);
 }
 
-// 更新统计注数
-COMMON.updateTotalZhu = function(t) {
+// 拖胆列表注数格式化 for 表单提交
+COMMON.tuodanFormarFormSub = function(items) {
 
-  var p = t.parents('.box-left');
-  var s = 0;
+  var list = [];
+  for (var i = 0; i < items.length; i++) {
 
-  p.find('.money').each(function(index, el) {
-    s += parseInt(el.innerHTML);
-  });
+    var redDan = [],
+      blueDan = [],
+      redTuo = [],
+      blueTuo = [],
+      itemsList = items.eq(i),
+      ball = itemsList.find('span');
 
-  p.find('.j-quick-zhu').html(s / 2);
+    for (var j = 0; j < ball.length; j++) {
 
-  COMMON.setZhuTotal(1, t);
+      var html = ball.eq(j).html()
+      var type = parseInt(ball.eq(j).attr('data-s'))
+      switch (type) {
+        case 0:
+          redDan.push(html)
+          break;
+        case 1:
+          redTuo.push(html)
+          break;
+        case 2:
+          blueDan.push(html)
+          break;
+        case 3:
+          blueTuo.push(html)
+          break;
+      }
+    };
 
-  console.log('更新统计注数');
+    if(blueDan.length == 0){
+      list.push( redDan.join(',') + '@' + redTuo.join(',') + '|' + blueTuo.join(','));
+    }else{
+      list.push( redDan.join(',') + '@' + redTuo.join(',') + '|' + blueDan.join(',') + '@' + blueTuo.join(','));
+    }
+
+  };
+  return list.join('$');
 }
+
 
 // 随机产生任意注 List HTML
 COMMON.getManyZhu = function(len) {
@@ -294,7 +170,7 @@ COMMON.randomNum = function(el, type, l) {
 
 // 从列表获取一注号码
 COMMON.getItemNum = function(item) {
-  if (DEBUG) debugger;
+
   var arr = {
     red: [],
     blue: []
@@ -341,33 +217,6 @@ COMMON.formarFormSub = function(items) {
   return list.join('$');
 }
 
-// 检测 选球区
-COMMON.checkBallGroup = function(g) {
-
-  if (DEBUG) debugger;
-
-  // check select ball for toggle add button status
-  var p = g.parents('.box-left');
-  var rLen = parseInt(p.find('.ball_red li.active').length),
-    bLen = parseInt(p.find('.ball_blue li.active').length),
-    x = 0,
-    y = 0,
-    t = 0;
-
-  if (rLen > 0 || bLen > 0) {
-    p.find('.btn-add').addClass('active');
-  } else {
-    p.find('.btn-add').removeClass('active');
-  }
-  if (rLen >= 5 && bLen >= 2) {
-    x = QUEUE.getACTotalNum(rLen, 5, 'C');
-    y = QUEUE.getACTotalNum(bLen, 2, 'C');
-    t = x * y;
-  }
-
-  COMMON.updateQuickZhu(rLen, bLen, t, t * 2, p);
-}
-
 //常规 中间提示更新
 COMMON.updateQuickZhu = function(a, b, c, d, p) {
   p.find('.j-quick-hd-qnum').html(a);
@@ -376,45 +225,7 @@ COMMON.updateQuickZhu = function(a, b, c, d, p) {
   p.find('.j-quick-hd-total').html(d);
 }
 
-
 /**************MANUAL**************/
-// MANUAL 设置上方 注数 金额 统计
-MANUAL.totalSdNums = function() {
-
-  var str = $.trim($('#sd_number').val());
-  var l = 0;
-  if (str !== '') {
-    l = str.split(/\n/g).length;
-  }
-  $('#sd-tip-zhu').html(l);
-  $('#sd-tip-total').html(l * 2);
-}
-
-// MANUAL 设置下方 注数 金额 统计
-MANUAL.setSdTotal = function() {
-  var t = 0;
-  $('#sd-list').find('.money').each(function(index, el) {
-    t += parseInt(el.innerHTML);
-  });
-  $('#sd-tip-zhu2').html(t / 2);
-  $('#sd-tip-total2').html(t);
-}
-
-// MANUAL 字符串分解 成红球 篮球
-MANUAL.relovStr = function(str) {
-
-  var l = '';
-  var arr = [];
-  if (str.indexOf('+') >= 0) {
-    l = str.split(/\+/g);
-  } else {
-    l = str.split(/\|/g);
-  }
-
-  arr.push(_.uniq(l[0].split(',')));
-  arr.push(_.uniq(l[1].split(',')));
-  return arr;
-}
 
 // 返回一注List HTML
 MANUAL.getListHTML = function(r, b, m, h) {
@@ -428,15 +239,14 @@ MANUAL.getListHTML = function(r, b, m, h) {
   li += '<b>[单式上传]</b><div class="list">';
 
   for (var i = 0; i < r.length; i++) {
-    li += '<span>' + r[i] + '</span>';
+    li += '<span data-c="0">' + r[i] + '</span>';
   };
 
   for (var i = 0; i < b.length; i++) {
-    li += '<span class="fc-5">' + b[i] + '</span>';
+    li += '<span data-c="1" class="fc-5">' + b[i] + '</span>';
   };
 
   li += '</div>';
-
   if (m) {
     li += '<div class="pull-right"><b><i class="money">' + m + '</i>元</b>';
   } else {
@@ -452,99 +262,11 @@ MANUAL.getListHTML = function(r, b, m, h) {
   return li;
 }
 
-// 检测手动输入注
-MANUAL.checkSdZhu = function(nums, typeNums, len) {
-  if (nums.length == len) {
-    for (var i = 0; i < nums.length; i++) {
-      if (!_.find(typeNums, function(num) {
-          return num == nums[i];
-        })) {
-        return false;
-      }
-    };
-    return true;
-  } else {
-    return false;
-  }
-}
-
-// 格式化 手动上传号码
-MANUAL.sdFormat = function(str) {
-
-  var type = [5, 2],
-    l1 = '',
-    l2 = '';
-  var zhus = {};
-  zhus.code = 0;
-  zhus.good = [];
-  zhus.bad = [];
-
-  zhus.all = str.split(/\n/g);
-
-  // 数组分组
-  // 是否存在 分隔符 + 或 |
-  // 是否分成2组
-  // 是否去重 检测选球个数
-  for (var i = 0; i < zhus.all.length; i++) {
-
-
-    if (zhus.all[i].indexOf('+') >= 0 || zhus.all[i].indexOf('|') >= 0) {
-
-      if (zhus.all[i].indexOf('+') >= 0) {
-        l = zhus.all[i].split(/\+/g);
-      } else {
-        l = zhus.all[i].split(/\|/g)
-      }
-
-      if (l.length == 2) {
-
-        l1 = _.uniq(l[0].split(','));
-        l2 = _.uniq(l[1].split(','));
-
-        if (MANUAL.checkSdZhu(l1, BALLDATA.red, type[0]) && MANUAL.checkSdZhu(l2, BALLDATA.red, type[1])) {
-
-          zhus.good.push(zhus.all[i]);
-
-        } else {
-
-          zhus.bad.push(zhus.all[i]);
-        }
-
-      } else {
-
-        zhus.bad.push(zhus.all[i]);
-
-      }
-
-    } else {
-      zhus.bad.push(zhus.all[i]);
-    }
-
-  }
-
-  if (zhus.bad.length == 0) {
-    zhus.code = 1;
-  }
-
-  return zhus;
-}
-
-
-
 /*****************DRAG***************/
-//拖胆获取一个区域选中的号码
-DRAG.getTuodanNum = function(item) {
-  if (DEBUG) debugger;
-  var arr = [];
-  item.find('a.active').each(function(index, el) {
-    arr.push(el.innerHTML);
-  });
-  return arr;
-}
 
 // 拖胆随机获得拖码区 多个号码
 DRAG.randomTuodanNum = function(num, co, len) {
-  if (DEBUG) debugger;
+
 
   var n = BALLDATA[co].concat();
   for (var i = 0; i < num.length; i++) {
@@ -553,20 +275,9 @@ DRAG.randomTuodanNum = function(num, co, len) {
   return _.sample(n, len);
 }
 
-// 选中一个区域部分球
-DRAG.createOneTuodanBall = function(nums, el) {
-  if (DEBUG) debugger;
-  COMMON.clearAllBallActive(el);
-
-  for (var i = 0; i < nums.length; i++) {
-    rnum = parseInt(nums[i]) - 1;
-    el.find('a').eq(rnum).addClass('active');
-  };
-}
-
 // 获取选中球 和 选中球生成的注数
 DRAG.getTuodanBallZhu = function() {
-  if (DEBUG) debugger;
+
   // get all param
   var arr = {},
     x = 0,
@@ -617,7 +328,7 @@ DRAG.getTuodanBallZhu = function() {
 
 // 返回一注List HTML
 DRAG.addOneTuoZhu = function(rd, rt, bd, bt, m, h) {
-  if (DEBUG) debugger;
+
   var li = '';
   if (!h) {
     li += '<div class="br-zhu-item clearfix">';
@@ -625,17 +336,22 @@ DRAG.addOneTuoZhu = function(rd, rt, bd, bt, m, h) {
 
   li += '<b>[快捷投注]</b><div class="list">';
 
+  if(rd.length>0) li +='(';
   for (var i = 0; i < rd.length; i++) {
     li += '<span data-s="0">' + rd[i].innerHTML + '</span>';
   };
+  if(rd.length>0) li +=')';
 
   for (var i = 0; i < rt.length; i++) {
     li += '<span data-s="1">' + rt[i].innerHTML + '</span>';
   };
 
+  if(bd.length>0) li +='<span class="fc-5">(</span>';
   for (var i = 0; i < bd.length; i++) {
     li += '<span class="fc-5" data-s="2">' + bd[i].innerHTML + '</span>';
   };
+  if(bd.length>0) li +='<span class="fc-5">)</span>';
+
   for (var i = 0; i < bt.length; i++) {
     li += '<span class="fc-5" data-s="3">' + bt[i].innerHTML + '</span>';
   };
@@ -659,7 +375,7 @@ DRAG.addOneTuoZhu = function(rd, rt, bd, bt, m, h) {
 
 // 更新投注中间提示
 DRAG.updateTuoTips = function(zhu) {
-  if (DEBUG) debugger;
+
   $('#numtuo1').html(zhu.rDans + zhu.rTuos);
   $('#numtuo2').html(zhu.rDans);
   $('#numtuo3').html(zhu.rTuos);
@@ -668,24 +384,6 @@ DRAG.updateTuoTips = function(zhu) {
   $('#numtuo6').html(zhu.bTuos);
   $('#numtuo7').html(zhu.total);
   $('#numtuo8').html(zhu.total * 2);
-}
-
-// 检测拖胆选球区
-DRAG.checkBallAear = function() {
-  if (DEBUG) debugger;
-
-  // 获取 选球区状态
-  var zhu = DRAG.getTuodanBallZhu();
-
-  if (zhu.rDans > 0 || zhu.bDans > 0 || zhu.rTuos > 0 || zhu.bTuos > 0) {
-    $('#tuo-sub').addClass('active');
-  } else {
-    $('#tuo-sub').removeClass('active');
-  }
-
-  // 更新Tips View
-  DRAG.updateTuoTips(zhu);
-
 }
 
 // 从列表一项获取一注号码
@@ -708,58 +406,3 @@ DRAG.getOneListNums = function(el) {
   return arr;
 }
 
-
-
-/****************Bind Other Tabs Toggle Event****************/
-$(function() {
-
-  // Quick, senior toggle
-  $('#br-hd-group a').on('click', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    if ($(this).hasClass('active')) {
-      return;
-    } else {
-      $('#br-hd-group .active').removeClass('active');
-
-      var t = parseInt($(this).attr('data-t'));
-      if (t) {
-        $('#quick').addClass('hidden');
-        $('#senior').removeClass('hidden');
-      } else {
-        $('#senior').addClass('hidden');
-        $('#quick').removeClass('hidden');
-      }
-
-      $(this).addClass('active');
-      return;
-    }
-  });
-
-  // br-type icon toggle
-  $('.j-br-type a[data-toggle="tab"]').on('click', function(e) {
-    $('.j-br-type .icon-y2').removeClass('icon-y2');
-    $(this).find('.icon').addClass('icon-y2');
-  });
-
-  // 方案设置
-  $('.br-set-group').on('click', '.br-set', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(this).siblings('.active').removeClass('active');
-    $(this).addClass('active');
-  });
-
-  // 右侧栏选项框
-  $('.tab-cut').on('mouseover', 'li', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $('#lr_tab li.on').removeClass('on');
-    $(this).addClass('on');
-    var c = $('#lr_content .tab-con');
-    c.hide();
-    c.eq($(this).index()).show();
-  });
-
-
-});

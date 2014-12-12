@@ -10,16 +10,20 @@ $(function() {
     var sex = $('input[name=sex]:checked').val()
 //    var sheng = $('#info-sheng').val()
 //    var shi = $('#info-shi').val()
-    var address = $('#address').val()
-    var qq = $('#userqq').val()
-    var sexStr = ['女','男','保密']
+    var address = $('#address').val();
+    var qq = $('#userqq').val();
+    var sexStr = ['女','男','保密'];
+    if(!qq.match(/[1-9][0-9]{5,9}/)){
+      APP.showTips('QQ号码不合法！')
+      return;
+    }
     var DATA = {
       sex: sex,
       address: address,
 //      shi: shi,
       qq: qq,
     };
-    console.log(DATA.sex, DATA.sheng, DATA.shi, DATA.qq);
+
      $.ajax({
        url: '/account/info/ajax',
        type: 'get',
@@ -33,7 +37,7 @@ $(function() {
 		    $('#saved-address').html(address);
 		    $('#saved-qq').html(DATA.qq);
 		    $('#info-text1').hide();
-		    $('#info-text2').fadeIn();    		 
+		    $('#info-text2').fadeIn();
     	 }else{
     		 console.log(data.retMsg);
     	 }
