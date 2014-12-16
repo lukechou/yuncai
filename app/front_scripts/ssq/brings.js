@@ -15,7 +15,7 @@ $(function() {
   // 添加到投注列表 or 修改投注号码
   $('.btn-add').on('click', function(event) {
 
-    var p = $(this).parents('.br-gou').siblings('.layout_select'),
+    var p = $(this).parents('.box-left').find('.j-touz-area'),
       a = parseInt($(this).attr('data-add')),
       h = $(this).hasClass('active'),
       total = $(this).parents('.br-gou').siblings('.m-num-title').find('.j-quick-hd-total').html();
@@ -23,15 +23,19 @@ $(function() {
     var html = '',
       rNums = [],
       bNums = [],
-      tips = ['请先选择号码', '至少选择' + SEEDS.ssq.redTotal + '个红球和' + SEEDS.ssq.blueTotal + '个蓝球', '您好，单个投注的金额应小于2万元，请返回重新选择'];
+      tips = ['请先选择号码', '至少选择' + SEEDS[lotyName].redTotal + '个红球和' + SEEDS[lotyName].blueTotal + '个蓝球', '您好，单个投注的金额应小于2万元，请返回重新选择'];
 
     var eRed = p.find('.ball_red .active'),
       eBlue = p.find('.ball_blue .active'),
       eGroup = p.find('.ball-group .active');
 
-
     if (parseInt(total) > 20000) {
       APP.showTips(tips[2]);
+      return;
+    }
+
+    if($(this).parents('.box-left').find('.br-zhu-item').length >= Config.maxHang){
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
       return;
     }
 
@@ -47,7 +51,7 @@ $(function() {
           bNums.push(e);
         });
 
-        if (rNums.length >= SEEDS.ssq.redTotal && bNums.length >= SEEDS.ssq.blueTotal) {
+        if (rNums.length >= SEEDS[lotyName].redTotal && bNums.length >= SEEDS.ssq.blueTotal) {
           eGroup.removeClass();
           html = COMMON.getOneZhu(rNums, bNums, total);
           $(this).parents('.box-left').find('.br-zhu-l').append(html);
@@ -169,44 +173,6 @@ $(function() {
     COMMON.checkBallGroup($(this));
   });
 
-  // 删除当前注
-  $('.j-br-zhu').on('click', '.br-zhu-del', function(event) {
-
-    var c = $(this).parents('.br-zhu');
-    $(this).parents('.br-zhu-item').remove();
-    $('.btn-add').attr('data-add', 1);
-    $('.btn-add').find('span').html('添加到投注列表');
-    COMMON.updateTotalZhu(c);
-  });
-
-  // 机选一注
-  $('.j-zhu-add1').on('click', function(event) {
-    var html = COMMON.getManyZhu(1);
-    $(this).parents('.br-zhu-r').siblings('.br-zhu-l').append(html);
-    COMMON.updateTotalZhu($(this));
-  });
-
-  // 机选5注
-  $('.j-zhu-add5').on('click', function(event) {
-    var html = COMMON.getManyZhu(5);
-    $(this).parents('.br-zhu-r').siblings('.br-zhu-l').append(html);
-    COMMON.updateTotalZhu($(this));
-  });
-
-  // 机选10注
-  $('.j-zhu-add10').on('click', function(event) {
-    var html = COMMON.getManyZhu(10);
-    $(this).parents('.br-zhu-r').siblings('.br-zhu-l').append(html);
-    COMMON.updateTotalZhu($(this));
-  });
-
-  // 清空列表
-  $('.j-zhu-clean').on('click', function(event) {
-
-    $(this).parents('.br-zhu-r').siblings('.br-zhu-l').html('');
-    COMMON.updateTotalZhu($(this));
-  });
-
   /*
    *
    *拖胆投注
@@ -251,6 +217,10 @@ $(function() {
 
     if (zhu.total*2 > 20000) {
       APP.showTips(tips[2]);
+      return;
+    }
+    if($(this).parents('.box-left').find('.br-zhu-item').length >= Config.maxHang){
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
       return;
     }
 
@@ -421,6 +391,11 @@ $(function() {
     var l = '';
     var html = '';
     var tips = ['<h5>您好，请按照正确格式填写，例：</h5><p>格式1：01,02,03,04,05,06+10</p>', '请输入投注号码'];
+
+    if($(this).parents('.box-left').find('.br-zhu-item').length >= Config.maxHang){
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
+      return;
+    }
 
     if (!_.isEmpty(str)) {
       formatZhus = MANUAL.sdFormat(str);

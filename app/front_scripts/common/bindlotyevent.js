@@ -143,6 +143,39 @@ $(function() {
     COMMON.checkBallGroup($(this));
   });
 
+  // 删除当前注
+  $('.j-br-zhu').on('click', '.br-zhu-del', function(event) {
+
+    var c = $(this).parents('.br-zhu');
+    $(this).parents('.br-zhu-item').remove();
+    $('.btn-add').attr('data-add', 1);
+    $('.btn-add').find('span').html('添加到投注列表');
+    COMMON.updateTotalZhu(c);
+  });
+
+  // 机选N注
+  $('.j-zhu-adds').on('click', function(event) {
+    var box = $(this).parents('.box-left')
+    var len = parseInt($(this).attr('data-zhu'));
+    var html = COMMON.getManyZhu(len);
+    var zhuTotal = parseInt(box.find('.br-zhu-item').length);
+
+    if ((zhuTotal + len) <= Config.maxHang) {
+      box.find('.br-zhu-l').append(html);
+      COMMON.updateTotalZhu($(this));
+    }else{
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
+      return;
+    }
+
+  });
+
+  // 清空列表
+  $('.j-zhu-clean').on('click', function(event) {
+
+    $(this).parents('.br-zhu-r').siblings('.br-zhu-l').html('');
+    COMMON.updateTotalZhu($(this));
+  });
 
 
   /**
@@ -269,7 +302,6 @@ $(function() {
       qi = box.find('.j-qi-box'),
       he = box.find('.j-he-box'),
       buyType = parseInt(li.attr('data-buytype'));
-
     switch (buyType) {
       case 1:
         box.find('.j-bei-text').show()
@@ -277,7 +309,8 @@ $(function() {
         he.addClass('hide');
         break;
       case 2:
-        box.find('.j-bei-text').find('.j-quick-bei').val(1)
+        box.find('.j-bei-text .j-quick-bei').val(1)
+        COMMON.updateTotalZhu($(this))
         box.find('.j-bei-text').hide()
         qi.removeClass('hide');
         he.addClass('hide');
@@ -288,6 +321,7 @@ $(function() {
         qi.addClass('hide');
         break;
     }
+
     $(this).parents('.j-br-type').find('.icon-y2').removeClass('icon-y2');
     $(this).find('.icon').addClass('icon-y2');
   });

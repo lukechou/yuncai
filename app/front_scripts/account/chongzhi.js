@@ -31,8 +31,7 @@ $(function() {
               }
             })
             .fail(function() {
-              APP.showTips("购彩过于火爆，请稍后再试");
-              console.log("error");
+              APP.onServerFail();
             });
         } else {
           $('.js-type-e').removeClass('hide');
@@ -49,8 +48,16 @@ $(function() {
   }
 
   function isIllageMoney() {
-    MONEY = $('#js-sum').val()*1;
+    MONEY = $('#js-sum').val() * 1;
     return isNaN(MONEY);
+  }
+
+  function isAllSelect() {
+    if ($('input[name=type]:checked').val() && !isIllageMoney()) {
+      if (Number($('#js-sum').val()) <= 1000000) {
+        $('#j-sub-bank').addClass('selected');
+      }
+    }
   }
 
   // 金额更改
@@ -68,13 +75,14 @@ $(function() {
         $('#js-sum-e').removeClass('hide');
         $('#js-sum-suc').addClass('hide');
       } else {
-        if(MONEY>999999999){
-          $('#js-sum').val(999999999)
-        }
-        $('#js-sum-suc').removeClass('hide');
-        $('#js-sum-e').addClass('hide');
-        if ($('input[name=type]:checked').val()) {
-          $('#j-sub-bank').addClass('selected');
+        if (MONEY > 1000000) {
+          $('#js-sum-e').html('输入的金额不能大于一百万')
+          $('#js-sum-e').removeClass('hide');
+          $('#js-sum-suc').addClass('hide');
+        } else {
+          $('#js-sum-suc').removeClass('hide');
+          $('#js-sum-e').addClass('hide');
+          isAllSelect();
         }
       }
     }
@@ -83,11 +91,17 @@ $(function() {
 
   // 银行更改
   $('#bank-area .bank').on('click', function() {
+
     toggleTypeTips($(this));
+
     $('.bank-selected').removeClass('bank-selected');
+
     $(this).addClass('bank-selected');
+
     $(this).find('input')[0].checked = true;
-    if (!isIllageMoney()) $('#j-sub-bank').addClass('selected');
+
+    isAllSelect();
+
   });
 
   // 选择其他银行

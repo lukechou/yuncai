@@ -231,6 +231,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .ps-mn-box .hi, .ps-mn-box .second, .ps-mn-box .btn { font-family: 'Microsoft Yahei'; }
 .ps-mn-box .hi { font-size: 16px; margin-right: 15px; }
 .ps-mn-box .near { padding: 5px 10px; background: #f0efef; border: 1px #c4c4c4 solid; display: block; }
+.ps-mn-box .near>a{ color: #3d3d3d;}
 .ps-mn-box .money { font-size: 30px; }
 .ps-mn-box .second { font-size: 16px; margin-bottom: 20px; }
 .ps-mn-box .second .btn { background: #f13c38; color: #fff; width: 100px; padding: 5px 0; margin-right: 5px; }
@@ -312,7 +313,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .info-text #target { display: inline-block; }
 .info-text #target select { border: 1px #c4c4c4 solid; padding: 5px; background: #f0efef; }
 #info-text2 { position: relative; display: none; }
-#info-text2 .user-head { position: absolute; left: -100px; }
+#info-text2 .user-head { height: 74px; width: 74px; position: absolute; left: -100px; display: none; }
 #info-text2 .info-list { margin-left: 80px; }
 /* 个人中心-账户安全 */
 .safe { padding: 30px 40px; }

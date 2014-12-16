@@ -40,23 +40,6 @@ COMMON.setZhuTotal = function(r, el) {
   ZHUI.setHeMaiTotal(p);
 }
 
-
-
-// 随机产生任意注 List HTML
-COMMON.getManyZhu = function(len) {
-
-  var html = '';
-  for (var i = 0; i < len; i++) {
-
-    var rNums = COMMON.sortNum(_.sample(SEEDS.ssq.redBall, SEEDS.ssq.redTotal));
-    var bNums = _.sample(SEEDS.ssq.blueBall, SEEDS.ssq.blueTotal);
-    html += this.getOneZhu(rNums, bNums);
-  }
-
-  console.log('随机产生任意' + len + '注List HTML');
-  return html;
-}
-
 // 返回一注 List HTML
 COMMON.getOneZhu = function(r, b, m, h) {
 

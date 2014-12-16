@@ -1,5 +1,14 @@
 // Common Module
 var APP = {};
+var FILTER = {};
+
+FILTER.isDecimal = function(num) {
+  if (parseInt(num) == num) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 APP.handRetCode = function(retCode, retMsg) {
 
@@ -8,7 +17,7 @@ APP.handRetCode = function(retCode, retMsg) {
       this.showLoginBox();
       break;
     case 120001:
-    this.showTips(retMsg+',购买失败！'+'<a href="/account/top-up" class="btn btn-danger ml15" target="_blank">立即充值</a>')
+      this.showTips(retMsg + ',购买失败！' + '<a href="/account/top-up" class="btn btn-danger ml15" target="_blank">立即充值</a>')
       break;
     default:
       this.showTips(retMsg);
@@ -84,7 +93,44 @@ APP.showTips = function(h) {
 
 };
 
+APP.getUrlPara = function(paraName) {
+  var sUrl = window.location.href;
+  var sReg = "(?:\\?|&){1}" + paraName + "=([^&]*)"
+  var re = new RegExp(sReg, "gi");
+  re.exec(sUrl);
+  return RegExp.$1;
+};
 
+APP.onServerFail = function() {
+  APP.showTips('服务器繁忙,请稍后再试!')
+};
+
+APP.submitHemai = function(obj) {
+  $.ajax({
+      url: obj.joinURI,
+      type: 'get',
+      dataType: 'json',
+      data: {
+        pid: obj.prjctId,
+        buyNum: obj.byNum
+      },
+    })
+    .done(function(data) {
+      if (data.retCode == 100000) {
+
+        if (obj.onSuccess) {
+          obj.onSuccess();
+        }
+
+        APP.showTips('参与合买成功');
+      } else {
+        APP.handRetCode(data.retCode, data.retMsg);
+      }
+    })
+    .fail(function() {
+      APP.onServerFail();
+    });
+}
 
 ////////////////////////////////////////////////////////////////////////////
 /**

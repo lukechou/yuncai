@@ -30,7 +30,7 @@ body { background: #242424; color: #3d3d3d; }
 /* Page */
 .section { width: 100%; }
 .page-er, .page-hd, .page-he, .page-new, .page-count, .page-quick { width: 985px; margin: auto; color: #999; }
-.w985 { width: 985px; margin: auto; }
+.w985 { width: 985px; margin: auto; overflow: hidden;}
 ul, ol { list-style: none; padding: 0; margin: 0; }
 .fs-14 { font-size: 14px; }
 .fs-18 { font-size: 18px; }
@@ -53,7 +53,9 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 /* Page Hd */
 .page-hd { height: 360px; position: relative; }
 .page-hd .carousel .er { display: block; width: 100%; }
-.page-hd .sticky { padding-top: 10px; background: rgba(0, 0, 0, .2); width: 132px; height: 360px; top: 0; right: 0; position: absolute; color: #fff; text-align: center; font-size: 12px; }
+.page-hd .sticky { width: 132px; height: 360px; top: 0; right: 0; position: absolute; color: #fff; text-align: center; font-size: 12px;}
+.page-hd .sticky .mask{ height: 100%; width: 100%; position: absolute; top: 0; left: 0; background:#000; opacity: .2; -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity = 20); filter: alpha(opacity = 20);}
+.page-hd .sticky .main{ width: 132px; height: 360px; position: absolute; top: 0; left: 0; z-index: 10; padding-top: 10px;}
 .page-hd .sticky .bei, .page-hd .sticky .head { margin-bottom: 6px; }
 .page-hd .head { margin-top: 15px; border-radius: 50%; width: 96px; height: 96px; }
 .page-hd p { margin-bottom: 3px; }

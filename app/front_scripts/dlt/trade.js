@@ -89,20 +89,6 @@ COMMON.tuodanFormarFormSub = function(items) {
   return list.join('$');
 }
 
-
-// 随机产生任意注 List HTML
-COMMON.getManyZhu = function(len) {
-
-  var html = '';
-  for (var i = 0; i < len; i++) {
-    var r = COMMON.sortNum(_.sample(BALLDATA.red, 5));
-    var b = COMMON.sortNum(_.sample(BALLDATA.blue, 2));
-    html += this.getOneZhu(r, b);
-  }
-  console.log('随机产生任意' + len + '注List HTML');
-  return html;
-}
-
 // 返回一注 List HTML
 COMMON.getOneZhu = function(r, b, m, h) {
 

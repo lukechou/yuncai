@@ -17,7 +17,8 @@ var ZHUI = {};
 var Config = {
   maxBeiShu: 9999,
   maxQiShu: 154,
-  maxZhuShu: 100
+  maxZhuShu: 100,
+  maxHang: 100
 };
 var DEBUG = false;
 
@@ -178,6 +179,19 @@ COMMON.updateCount = function(m, c) {
   m.val(v);
 }
 
+// 随机产生任意注 List HTML
+COMMON.getManyZhu = function(len) {
+
+  var html = '';
+  for (var i = 0; i < len; i++) {
+    var rNums = COMMON.sortNum(_.sample(SEEDS[lotyName].redBall, SEEDS[lotyName].redTotal));
+    var bNums = _.sample(SEEDS[lotyName].blueBall, SEEDS[lotyName].blueTotal);
+    html += this.getOneZhu(rNums, bNums);
+  }
+
+  return html;
+}
+
 // 更新统计注数
 COMMON.updateTotalZhu = function(t) {
 
@@ -191,8 +205,6 @@ COMMON.updateTotalZhu = function(t) {
   p.find('.j-quick-zhu').html(s / 2);
 
   COMMON.setZhuTotal(1, t);
-
-  console.log('更新统计注数');
 }
 
 // 检测 选球区
@@ -266,9 +278,9 @@ MANUAL.totalSdNums = function() {
   }
   $('#sd-tip-zhu').html(l);
   $('#sd-tip-total').html(l * 2);
-  if(l){
+  if (l) {
     $('#sd_sub').addClass('active')
-  }else{
+  } else {
     $('#sd_sub').removeClass('active')
   }
 
@@ -393,14 +405,13 @@ ZHUI.getNewHtml = function(el) {
         var html = ''
         var DATA = data.retData;
         for (var i = 0; i < DATA.length; i++) {
-          html += '<tr><td>' + (i+1) + '</td><td><input type="checkbox" class="br-zhui-c" data-qihaoId="' + DATA[i]['id'] + '" data-qi="' + DATA[i]['qihao'] + '" checked>' + DATA[i]['qihao'] + '期</td><td><input type="text" class="br-input br-zhui-bei" value="1">倍</td><td><span class="j-money">10</span>元</td><td>' + DATA[i]['awardTime'].slice(0,10)+'<span class="ml15">'+DATA[i]['awardTime'].slice(10) + '</span></td></tr>';
+          html += '<tr><td>' + (i + 1) + '</td><td><input type="checkbox" class="br-zhui-c" data-qihaoId="' + DATA[i]['id'] + '" data-qi="' + DATA[i]['qihao'] + '" checked>' + DATA[i]['qihao'] + '期</td><td><input type="text" class="br-input br-zhui-bei" value="1">倍</td><td><span class="j-money">10</span>元</td><td>' + DATA[i]['awardTime'].slice(0, 10) + '<span class="ml15">' + DATA[i]['awardTime'].slice(10) + '</span></td></tr>';
         };
         var zhui = el.parents('.br-details').find('.br-zhui');
         zhui.find('.br-zhui-list tbody').html(html);
         ZHUI.bindZhuiHaoEvent();
         ZHUI.setZhuiHaoTotal(el.parents('.box-left'));
       }
-      console.log("success");
     })
     .fail(function() {
       console.log("error");
@@ -434,25 +445,32 @@ ZHUI.setHeMaiTotal = function(box) {
   var baodiMoney = '';
   var baodiPercent = '';
   var b = '';
+  var isBaodi = false;
 
-  if (box.find('.j-baodi-check')[0].checked && (m != 0)) {
+  if (box.find('.j-baodi-check')[0]) {
+    isBaodi = box.find('.j-baodi-check')[0].checked;
+  } else {
+    isBaodi = false;
+  }
+
+  if (isBaodi && (m != 0)) {
     box.find('.j-baodi-text')[0].disabled = false;
     b = parseInt(box.find('.j-baodi-text').val()) || 0
     if (b == 0) {
-      if( (rengouMoney/m) < 0.8 ){
+      if ((rengouMoney / m) < 0.8) {
         baodiMoney = Math.ceil(m * 0.2);
         baodiPercent = (baodiMoney / m * 100).toFixed(2);
-      }else{
+      } else {
         baodiMoney = m - rengouMoney
         baodiPercent = (baodiMoney / m * 100).toFixed(2)
       }
     } else {
       if ((b + rengouMoney) < m) {
         if ((b / m) < 0.2) {
-          if((Math.ceil(m * 0.2)+rengouMoney)>m){
+          if ((Math.ceil(m * 0.2) + rengouMoney) > m) {
             baodiMoney = m - rengouMoney
             baodiPercent = (baodiMoney / m * 100).toFixed(2)
-          }else{
+          } else {
             baodiMoney = Math.ceil(m * 0.2);
             baodiPercent = (baodiMoney / m * 100).toFixed(2);
           }
@@ -467,7 +485,9 @@ ZHUI.setHeMaiTotal = function(box) {
       }
     }
   } else {
-    box.find('.j-baodi-text')[0].disabled = true;
+    if (box.find('.j-baodi-text')[0]) {
+      box.find('.j-baodi-text')[0].disabled = true;
+    }
     baodiMoney = 0
     baodiPercent = '0.00'
   }
@@ -505,17 +525,17 @@ ZHUI.bindZhuiHaoEvent = function() {
 
   $('.br-details thead .br-zhui-bei').on('change', function(event) {
 
-    var val = parseInt($(this).val())||1;
-    if(isNaN(val)){
+    var val = parseInt($(this).val()) || 1;
+    if (isNaN(val)) {
       val = 1
-    }else{
-      if(val <1){
-        val =1;
-      }else{
+    } else {
+      if (val < 1) {
+        val = 1;
+      } else {
         val = Math.ceil(val);
       }
     }
-    if(val>9999){
+    if (val > 9999) {
       val = 9999;
     }
     $(this).val(val);
@@ -525,17 +545,17 @@ ZHUI.bindZhuiHaoEvent = function() {
 
 
   $('.br-details tbody .br-zhui-bei').on('change', function(event) {
-    var val = parseInt($(this).val())||1;
-    if(isNaN(val)){
+    var val = parseInt($(this).val()) || 1;
+    if (isNaN(val)) {
       val = 1
-    }else{
-      if(val <1){
-        val =1;
-      }else{
+    } else {
+      if (val < 1) {
+        val = 1;
+      } else {
         val = Math.ceil(val);
       }
     }
-    if(val>9999){
+    if (val > 9999) {
       val = 9999;
     }
     $(this).val(val);
@@ -543,13 +563,13 @@ ZHUI.bindZhuiHaoEvent = function() {
   });
 
   $('.br-details .end_min_money').on('change', function(event) {
-    var val = parseInt($(this).val())||1;
-    if(isNaN(val)){
+    var val = parseInt($(this).val()) || 1;
+    if (isNaN(val)) {
       val = 1
-    }else{
-      if(val <1){
-        val =1;
-      }else{
+    } else {
+      if (val < 1) {
+        val = 1;
+      } else {
         val = Math.ceil(val);
       }
     }
@@ -573,50 +593,60 @@ ZHUI.bindHeMaiEvent = function() {
     ZHUI.setHeMaiTotal($(this).parents('.box-left'));
   });
 
+
+
+  function inputOnfocus(el) {
+    if ($.trim(el.val()) == el.attr('data-text')) {
+      el.parents('p').find('.j-btext-total').html(0)
+      el.val('')
+    }
+  }
+
+  function inputOnblur(el) {
+    var text = el.attr('data-text');
+    if ($.trim(el.val()) == '') {
+      el.val(text);
+      el.parents('p').find('.j-btext-total').html(text.length)
+    }
+  }
+
   $('.br-textarea').on('focus', function(event) {
-    if($(this).attr('data-r')==0){
-      $(this).parents('.box-left').find('.j-btext-total').html(0)
-      $(this).val('')
-      $(this).attr('data-r', 1)
-    }
-  });
-  $('.br-textarea').on('keypress', function(event) {
-
-    var len = $(this).val().length
-    var size = parseInt($(this).attr('data-size'))||20;
-
-    if(len<=size){
-     $(this).parents('.box-left').find('.j-btext-total').html(len)
-    }else{
-     $(this).val($(this).val().slice(0,(size-1)))
-     $(this).parents('.box-left').find('.j-btext-total').html(size)
-    }
-
+    inputOnfocus($(this));
   });
 
   $('.j-project-title').on('focus', function(event) {
-
-    if($(this).attr('data-r')==0){
-      $(this).parents('.box-left').find('.j-ctext-total').html(0)
-      $(this).val('')
-      $(this).attr('data-r', 1)
-    }
-
+    inputOnfocus($(this));
   });
 
-  $('.j-project-title').on('keypress', function(event) {
-
-    var len = $(this).val().length
-    var size = parseInt($(this).attr('data-size'))||20;
-
-    if(len<=size){
-     $(this).parents('.box-left').find('.j-ctext-total').html(len)
-    }else{
-     $(this).val($(this).val().slice(0,(size-1)))
-     $(this).parents('.box-left').find('.j-ctext-total').html(size)
-    }
-
+  $('.br-textarea').on('blur', function(event) {
+    inputOnblur($(this));
   });
+
+  $('.j-project-title').on('blur', function(event) {
+    inputOnblur($(this));
+  });
+
+  function reSetStrsize(t) {
+
+    var len = t.val().length;
+    var size = parseInt(t.attr('data-size'));
+
+    if (len <= size) {
+      t.parents('p').find('.j-btext-total').html(len)
+    } else {
+      t.val(t.val().slice(0, (size - 1)))
+      t.parents('p').find('.j-btext-total').html(size)
+    }
+  }
+
+  $('.br-textarea').on('keyup', function(event) {
+    reSetStrsize($(this));
+  });
+
+  $('.j-project-title').on('keyup', function(event) {
+    reSetStrsize($(this));
+  });
+
 };
 
 // 更新追号 总金额

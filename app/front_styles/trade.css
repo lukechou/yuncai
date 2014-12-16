@@ -23,7 +23,7 @@
 /* Brings-count */
 .br-count { margin-left: 70px; }
 .br-count .btn-group { margin: 0 5px; }
-.br-count .btn { background: #dddedf; padding: 2px 8px; border: 1px #c4c4c4 solid; }
+.br-count .btn { background: #dddedf; padding: 2px 8px; border: 1px #c4c4c4 solid; height: 26px;}
 .br-count .btn-results { padding: 2px 5px; width: 50px; background: #f0efef; }
 .br-count2 { margin: 40px auto 80px; text-align: center; }
 .br-count-item { display: inline-block; }
