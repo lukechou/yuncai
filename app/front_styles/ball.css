@@ -1,0 +1,475 @@
+body {
+  background: #fff;
+}
+.ft {
+  background: #f1f1f1;
+}
+
+/* RaceBall */
+.raceball {
+  margin-top: 15px;
+}
+.raceball .g-left {
+  float: left;
+  width: 700px;
+}
+.raceball .g-right {
+  float: right;
+  width: 260px;
+  border: 1px #dfdfdf solid;
+}
+
+/* hd */
+.g-hd {
+  position: relative;
+  height: 100px;
+  padding: 10px 0;
+  margin-bottom: 15px;
+  border: 1px #dfdfdf solid;
+  border-bottom: 3px #f13c38 solid;
+}
+.g-hd-logo {
+  margin: 0 10px 0 20px;
+}
+.g-hd-title {
+  font-size: 16px;
+  margin: 0;
+}
+.g-hd-title>b {
+  font-size: 22px;
+}
+.g-hd-group {
+  position: absolute;
+  bottom: 0;
+  left: 109px;
+}
+.g-hd-group>a {
+  background: #f1f1f1;
+  padding: 8px 25px;
+  color: #3d3d3d;
+  font-family: 'Microsoft Yahei';
+  font-size: 16px;
+  display: inline-block;
+  height: 36px;
+}
+.g-hd-group>a.active, .g-hd-group>a:hover {
+  text-decoration: none;
+  background: #f13c38;
+  color: #fff;
+}
+.g-hd-time {
+  position: absolute;
+  right: 10px;
+  font-size: 12px;
+  bottom: 8px;
+  color: #848484;
+}
+
+/* left tips */
+.m-down-tips {
+  border: 1px #dfdfdf solid;
+  margin: 12px auto;
+  border-bottom: none;
+}
+.m-down-tips>h3 {
+  background: #f1f1f1;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 8px 20px;
+  margin: 0;
+  border-bottom: 1px #dfdfdf solid;
+  cursor: pointer;
+}
+.m-down-tips>ul {
+  border-bottom: 1px #dfdfdf solid;
+  padding: 10px 20px;
+  font-size: 12px;
+  line-height: 2.2;
+}
+
+/* 投注表格头部 */
+.dataHead {
+  position: relative;
+  z-index: 10;
+  height: 60px;
+  line-height: 60px;
+  zoom: 1;
+  text-align: center;
+  background: #f1f1f1;
+  color: #3d3d3d;
+  width: 700px;
+  margin-left: 1px;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+}
+.dataHead a {
+  color: #3d3d3d;
+}
+.dataHead dd {
+  float: left;
+  height: 60px;
+  border-left: 1px solid #dfdfdf;
+  position: relative;
+}
+.dataHead span {
+  height: 29px;
+  line-height: 29px;
+  display: block;
+  border-bottom: 1px solid #dfdfdf;
+}
+.dataHead .co6 .btnBox, .dataHead .co7 .btnBox {
+  margin-left: -1px;
+  white-space: nowrap;
+}
+.dataHead .co6 .btnBox em {
+  width: 65px;
+}
+.dataHead .gameSeleList {
+  background: #f1f1f1;
+  width: 285px;
+  border: 1px solid #dfdfdf;
+  margin-left: -1px;
+  top: 60px;
+  left: -1px;
+  position: absolute;
+  z-index: 100;
+  display: none;
+}
+.dataHead .optionList {
+  background: #f1f1f1;
+  padding: 5px 0;
+  border: 1px solid #dfdfdf;
+  border-top: 0;
+  left: -2px;
+  top: 60px;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  display: none;
+}
+.dataHead .optionList a, .dataHead .optionList a:visited {
+  display: block;
+  height: 24px;
+  line-height: 24px;
+  color: #fff
+}
+.dataHead .optionList a:hover {
+  background: #3a3a3a
+}
+.dataHead .co7 .optionList {
+  width: 100%;
+  top: 29px
+}
+.co1 {
+  width: 32px;
+  overflow: hidden
+}
+.co2 {
+  width: 61px;
+  cursor: pointer
+}
+.co3 {
+  width: 64px
+}
+.co4 {
+  width: 170px
+}
+.co6 {
+  width: 170px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.co7 {
+  width: 124px;
+}
+.dataHead .co8, .dataBody .co8 {
+  width: 45px;
+  float: none;
+  position: absolute;
+  right: 0;
+  border-right: 0;
+}
+.closeData dd, .isOver {
+  display: none
+}
+
+/* 投注表格主体 */
+.dataBody {
+  color: #aaa;
+  border: 1px solid #101010;
+  background: #282828;
+  position: relative;
+  zoom: 1
+}
+.dataBody dl {
+  width: 700px;
+  position: relative
+}
+.dataBody dt {
+  position: relative;
+  height: 34px;
+  line-height: 34px;
+  color: #aaa;
+  padding-left: 10px;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid #393939;
+}
+.dataBody dt .cuspText {
+  position: absolute;
+  right: 20px;
+  top: 0
+}
+.dataBody dt .cusp {
+  top: 15px;
+  right: -12px
+}
+.dataBody dd {
+  border-bottom: 1px solid #1d1d1d;
+  height: 40px;
+  position: relative;
+  z-index: 2;
+  zoom: 1
+}
+.dataBody dd span {
+  float: left;
+  border: 1px solid #393939;
+  border-color: #393939 #1d1d1d #1d1d1d #393939;
+  border-width: 1px 1px 0 1px;
+  text-align: center;
+  background: #282828;
+  height: 39px;
+  line-height: 39px
+}
+.dataBody dd.even span {
+  background: #333
+}
+.dataBody dd.focusTip {
+  height: 34px;
+  line-height: 34px
+}
+.dataBody dd.focusTip div {
+  height: 24px;
+  line-height: 24px;
+  margin: 0 10px;
+  top: 5px;
+  position: relative;
+  background: #484646;
+  padding: 0 10px;
+  overflow: hidden
+}
+.dataBody dd.focusTip i {
+  position: absolute;
+  top: 0;
+  left: 62px;
+  z-index: 203;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+  border-width: 0 5px 5px;
+  border-color: transparent transparent #484646;
+  border-style: solid;
+  _border-style: solid dotted
+}
+.dataBody .co8 .ico_square {
+  *top: 10px;
+  *float: left
+}
+.dataBody dd.even .co2 {
+  background: #292929
+}
+.dataBody .ico_square:hover {
+  text-decoration: none
+}
+.dataBody .towLine {
+  overflow: hidden;
+  border: 0;
+  line-height: 38px
+}
+.dataBody .towLine em {
+  height: 38px;
+  line-height: 38px;
+  display: inline-block;
+  width: 33%;
+  border-bottom: 1px solid #1d1d1d;
+  border-top: 1px solid #393939
+}
+.dataBody .co2 {
+  background: #1d1d1d
+}
+.dataBody .co2 a {
+  display: block
+}
+.dataBody dd .hostTeam, .dataBody dd .guestTeam {
+  width: 46%;
+  float: left;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden
+}
+.dataBody dd .hostTeam b, .dataBody dd .guestTeam b {
+  font-size: 14px
+}
+.dataBody dd .finalScore {
+  display: none;
+  float: left;
+  width: 25%;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 700;
+  color: #f6c15a
+}
+.dataBody dd.isStop .hostTeam, .dataBody dd.isStop .guestTeam {
+  width: 37%
+}
+.dataBody dd.isStop .hostTeam i, .dataBody dd.isStop .guestTeam i {
+  display: none
+}
+.dataBody dd.isStop .finalScore {
+  display: block
+}
+.dataBody dd .guestTeam {
+  float: right;
+  text-align: left
+}
+.dataBody dd .co4 a {
+  display: block;
+  zoom: 1;
+  overflow: hidden;
+  width: 175px;
+  height: 100%;
+  cursor: pointer
+}
+.dataBody dd .co4 a, .dataBody dd .co4 a:visited {
+  color: #fff
+}
+.dataBody dd .co4 a.c_ffca6e, .dataBody dd .co4 a.c_ffca6e:visited {
+  color: #FFCA6E
+}
+.dataBody dd .co4 a:hover {
+  color: #FFCA6E;
+  text-decoration: none;
+  _text-decoration: underline
+}
+.dataBody dd .co4 a:hover b {
+  border-bottom: 1px solid #FFCA6E
+}
+.dataBody dd a.c_f6c15a, .dataBody dd a.c_f6c15a:visited {
+  color: #ffca6e
+}
+.dataBody span.over em, .dataBody span em.over {
+  background: 0 0;
+  color: #717171;
+  border-width: 0 1px 0 0;
+  border-color: #393939 #1D1D1D #1D1D1D #393939;
+  cursor: default
+}
+.dataBody .btnBox {
+  border: 0;
+  position: relative
+}
+.dataBody .btnBox em {
+  width: 49px;
+  cursor: pointer;
+  background: url(http://pimg1.126.net/caipiao/img/lotteryBet/jczqNew/jczq_repeat.png?v=371a6b199900d8df4bad97495c1b0bc4) 0 -108px repeat-x #252525;
+  color: #eee;
+  height: 39px;
+  line-height: 39px;
+  display: inline-block;
+  vertical-align: top;
+  border: 1px solid #1d1d1d;
+  border-left: 0;
+  border-top: 0;
+  text-align: center
+}
+.dataBody .btnBox em.hover {
+  background-position: 0 -424px
+}
+.dataBody .btnBox em.active {
+  background-position: 0 -147px;
+  color: #000;
+  border-bottom-color: #f6c15a
+}
+.dataBody .btnBox i {
+  font-family: simsun
+}
+.dataBody dd span.btnBox .block {
+  width: 100%;
+  height: 39px;
+  line-height: 39px;
+  margin-left: -1px
+}
+.dataBody .btnBox em.lastOne {
+  border-right: 0
+}
+
+/* Right */
+.unselect, .unselect a:link, .unselect:visited {
+  color: #333
+}
+.unselect table, .unselect .scrollMoni, .unselect .guoguanTab, .unselect .guoguanList, .unselect .guoguanTipsBox {
+  display: none
+}
+
+/* .unselect */
+.unselect h2 {
+  font: 500 16px/36px 'Microsoft Yahei';
+  background: #f1f1f1;
+  color: #3d3d3d;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  margin: 0;
+  line-height: 36px;
+  height: 36px;
+  padding-left: 15px;
+}
+.unselect h2 i {
+  font: 700 22px/33px Verdana;
+  margin-right: 5px;
+}
+.unselect .unSeleTips {
+  display: block;
+  height: 42px;
+  line-height: 42px;
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+}
+
+/* btn-Group */
+.unselect .btn-group {
+  margin: 0 5px;
+}
+.unselect .btn {
+  background: #f1f1f1;
+  padding: 2px 8px;
+  border: 1px #dfdfdf solid;
+  height: 26px;
+}
+.unselect .btn-results {
+  padding: 2px 5px;
+  width: 50px;
+  background: #fff;
+}
+
+/* unselect last box */
+.qrtz-box {
+  padding: 0 10px 5px;
+  font-size: 12px;
+}
+.qrtz-box p{ margin: 8px 0;}
+.qrtz-box p strong{ font-weight: normal;}
+.qrtz-box .fr a{ float: right;}
+.qrtz-box .dott {
+  padding: 5px 0;
+  text-align: center;
+  border-bottom: 1px #dfdfdf dashed
+}
+.qrtz-box .orderRule,.qrtz-box .orderRule a {
+  color: #848484;
+}
+.qrtz-box .orderRule .icon {
+  position: relative;
+  top: 3px;
+  margin-right: 5px;
+}
