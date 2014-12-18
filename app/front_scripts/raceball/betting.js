@@ -3,6 +3,32 @@ define(['jquery'], function($) {
 
   var bindEvent = function() {
 
+    // hover click btn
+    $('.towLine').on('mousemove', 'em', function(event) {
+      if (!$(this).hasClass('active')) {
+        $(this).addClass('hover');
+      };
+    });
+
+    $('.towLine').on('mouseout', 'em', function(event) {
+      if ($(this).hasClass('hover')) {
+        $(this).removeClass('hover');
+      };
+    });
+
+    $('.towLine').on('click', 'em', function(event) {
+      $(this).toggleClass('active');
+      debugger
+      console.log('add one zhu to right aside');
+    });
+
+
+    //切换购买类型
+    $('#j-vote-nav').on('click', 'a', function(event) {
+      var type = $(this).attr('data-type');
+      $('#bettingBox').removeClass('onlySpf onlyRqSpf').addClass(type)
+    });
+
     //  购买主体 Toggle
     $('.j-dataBody-toggle').on('click', function(event) {
       $(this).parents('dl').find('dd').toggle();
