@@ -4,6 +4,7 @@ require.config({
         bootstrap: '../lib/bootstrap.min',
         lodash: '../lib/lodash.compat.min',
         app: '../common/app',
+        betting: 'betting'
     },
     shim: {
         bootstrap: {
@@ -17,22 +18,9 @@ require.config({
     }
 });
 
-require(['jquery', 'lodash', 'app', 'bootstrap'], function($, _, APP) {
+require(['jquery', 'lodash', 'app', 'betting', 'bootstrap'], function($, _, APP, B) {
     'use strict';
     // use app here
     APP.init();
-    console.log('Running jQuery %s', $().jquery);
+    B.bindEvent();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-

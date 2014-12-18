@@ -34,7 +34,7 @@ body { background: #242424; color: #3d3d3d; }
 /* Page */
 .section { width: 100%; }
 .page-er, .page-hd, .page-he, .page-new, .page-count, .page-quick { width: 985px; margin: auto; color: #999; }
-.w985 { width: 985px; margin: auto; overflow: hidden;}
+.w985 { width: 985px; margin: auto;}
 ul, ol { list-style: none; padding: 0; margin: 0; }
 .fs-14 { font-size: 14px; }
 .fs-18 { font-size: 18px; }
