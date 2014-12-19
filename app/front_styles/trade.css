@@ -1,8 +1,8 @@
 /* Brings */
-.brings-mn, .brings-tips { border: 1px #c4c4c4 solid; }
+.brings-mn, .brings-tips { border: 1px #dfdfdf solid; }
 .brings-mn { margin-top: 15px; }
-.brings-tips { border: 1px #c4c4c4 solid; margin: 12px auto; }
-.brings-tips>h3 { background: #dddedf; font-weight: bold; font-size: 12px; padding: 8px 20px; margin: 0; border-bottom: 1px #c4c4c4 solid; }
+.brings-tips { border: 1px #dfdfdf solid; margin: 12px auto; }
+.brings-tips>h3 { background: #f1f1f1; font-weight: bold; font-size: 12px; padding: 8px 20px; margin: 0; border-bottom: 1px #dfdfdf solid; }
 .brings-tips>ul { padding: 10px 20px; font-size: 12px; line-height: 2.2; }
 /* Brings-hd */
 .brings-hd { border-bottom: 3px #f13c38 solid; position: relative; padding: 10px 0; }
@@ -10,21 +10,21 @@
 .br-hd-title { font-size: 16px; margin: 0; }
 .br-hd-title>b { font-size: 22px; }
 .br-hd-group { position: absolute; bottom: 0; left: 109px; }
-.br-hd-group>a { background: #dddedf; padding: 8px 25px; color: #3d3d3d; font-family: 'Microsoft Yahei'; font-size: 16px; display: inline-block; height: 36px; }
+.br-hd-group>a { background: #f1f1f1; padding: 8px 25px; color: #3d3d3d; font-family: 'Microsoft Yahei'; font-size: 16px; display: inline-block; height: 36px; }
 .br-hd-group>a.active, .br-hd-group>a:hover { text-decoration: none; background: #f13c38; color: #fff; }
 .br-hd-time, .br-hd-qi { position: absolute; right: 10px; font-size: 12px; }
 .br-hd-qi { top: 35px; }
 .br-hd-time { bottom: 15px; color: #848484; }
 .br-tuo { padding: 25px 58px; }
-.br-nav { background: #dddedf; padding: 6px 0 0 30px; }
-.br-nav>li>a { border-radius: 0; background: #dddedf; color: #3d3d3d; border: none; margin: 0; padding: 6px 15px; border: 1px transparent solid; font-size: 12px; border-bottom: none; }
-.br-nav>li.active>a, .br-nav>li>a:hover, .br-nav>li.active>a:hover, .br-nav>li.active>a:focus { border-radius: 0; background: #f0efef; border-top: 2px #f13c38 solid; border-right: 1px #c4c4c4 solid; border-left: 1px #c4c4c4 solid; border-bottom: none; }
+.br-nav { background: #f1f1f1; padding: 6px 0 0 30px; }
+.br-nav>li>a { border-radius: 0; background: #f1f1f1; color: #3d3d3d; border: none; margin: 0; padding: 6px 15px; border: 1px transparent solid; font-size: 12px; border-bottom: none; }
+.br-nav>li.active>a, .br-nav>li>a:hover, .br-nav>li.active>a:hover, .br-nav>li.active>a:focus { border-radius: 0; background: #fff; border-top: 2px #f13c38 solid; border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; border-bottom: none; }
 .br-gou { width: 695px; margin: auto; }
 /* Brings-count */
 .br-count { margin-left: 70px; }
 .br-count .btn-group { margin: 0 5px; }
-.br-count .btn { background: #dddedf; padding: 2px 8px; border: 1px #c4c4c4 solid; height: 26px;}
-.br-count .btn-results { padding: 2px 5px; width: 50px; background: #f0efef; }
+.br-count .btn { background: #f1f1f1; padding: 2px 8px; border: 1px #dfdfdf solid; height: 26px;}
+.br-count .btn-results { padding: 2px 5px; width: 50px; background: #fff; }
 .br-count2 { margin: 40px auto 80px; text-align: center; }
 .br-count-item { display: inline-block; }
 .br-count-item2 { margin: 0 35px; }
@@ -32,8 +32,8 @@
 /* Brings-zhu */
 .br-tou>p { margin: 0 0 25px; }
 .br-zhu { margin: 30px 0; }
-.br-zhu-l { border: 1px #c4c4c4 solid; width: 500px; height: 155px; font-size: 12px; overflow: scroll; }
-.br-zhu-item { padding: 5px 10px; color: #f13c38; border-bottom: 1px #c4c4c4 dashed; cursor: pointer; }
+.br-zhu-l { border: 1px #dfdfdf solid; width: 500px; height: 155px; font-size: 12px; overflow: scroll; }
+.br-zhu-item { padding: 5px 10px; color: #f13c38; border-bottom: 1px #dfdfdf dashed; cursor: pointer; }
 .br-zhu-item:hover, .br-zhu-item.active { background: #fcead3; }
 .br-zhu-item b { float: left; width: 55px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
 .br-zhu-item .list { float: left; display: inline; width: 270px; _width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -45,26 +45,26 @@
 .br-zhu-r ul>li { margin-bottom: 10px; }
 .br-zhu-r ul>li>a { width: 76px; }
 .br-zhu-r ul>li:last-child { margin: 0; }
-.br-zhu-r .btn { font-size: 12px; background: #dbdbdb; color: #3d3d3d; }
+.br-zhu-r .btn { font-size: 12px; background: #f1f1f1; color: #3d3d3d; }
 .br-zhu-r .btn:hover { color: #0d67c4; }
 .br-zhu-r2 { width: 78px; }
 /* Brings-details */
 .br-details { margin: 30px 0; }
-.br-type { background: #dddedf; padding: 6px 15px; }
-.br-type>li.active>a, .br-type>li>a:hover, .br-type>li>a:hover, .br-type>li.active>a:hover, .br-type>li.active>a:focus { border-radius: 0; background: #dddedf; border: none; }
+.br-type { background: #f1f1f1; padding: 6px 15px; border: 1px solid #dfdfdf;}
+.br-type>li.active>a, .br-type>li>a:hover, .br-type>li>a:hover, .br-type>li.active>a:hover, .br-type>li.active>a:focus { border-radius: 0; background: #f1f1f1; border: none; }
 .br-type>li>a { position: relative; padding: 0; border: 0; margin-left: 40px; color: #3d3d3d; }
 .br-type>li>a>.icon { position: absolute; top: 2px; left: -20px; }
 /* Brings-Together */
-.br-together, .br-zhui { background: #f0efef; border: 2px #dddedf solid; border-top: none; padding: 15px 13px; font-size: 12px; color: #848484; }
+.br-together, .br-zhui { background: #fff; border: 2px #dddedf solid; border-top: none; padding: 15px 13px; font-size: 12px; color: #848484; }
 .br-together .title { width: 60px; display: inline-block; text-align: right; margin-right: 5px; float: left; color: #3d3d3d; }
 .br-set { padding: 0 6px; height: 21px; line-height: 21px; text-align: center; display: block; border: 1px solid #dddddd; color: #333333; float: left; margin-right: 11px; }
 .br-set:hover, .br-set.active { text-decoration: none; color: #f13c38; border-color: #f13c38; }
-.br-input, .br-textarea, .br-select { background: #f0efef; border: 1px solid #c4c4c4; padding: 2px; font-size: 12px; }
+.br-input, .br-textarea, .br-select { background: #fff; border: 1px solid #dfdfdf; padding: 2px; font-size: 12px; }
 .br-textarea { width: 340px; height: 100px; }
 .br-textarea-tips { position: relative; top: -85px; left: 5px; }
 /* Brings-zhui Module */
 .br-zhui { padding: 0; text-align: center; }
-.br-zhui-top { position: relative; z-index: 5; color: #3d3d3d; border-bottom: 1px #c4c4c4 solid; padding: 6px 10px 6px 15px; }
+.br-zhui-top { position: relative; z-index: 5; color: #3d3d3d; border-bottom: 1px #dfdfdf solid; padding: 6px 10px 6px 15px; }
 .br-zhui-top h5 { font: 12px/1.5 tahoma, arial, '宋体'; float: left; vertical-align: 0; margin: 3px 0 0; }
 .br-zhui-top select { font: 12px/1.5 tahoma, arial, '宋体'; margin-left: 10px; height: 22px; }
 .br-zhui-label { float: right; color: #848484; }
@@ -78,9 +78,9 @@
 /* 右侧辅助功能区 */
 .box-left { position: relative; width: 700px; float: left; margin-left: 10px; display: inline; }
 .box-left2{ position: relative; display: block; margin:0; float: none; width: 100%;}
-.box-right { float: right; width: 230px; margin: 10px 0 0; border-left: 1px #c4c4c4 solid; color: #3d3d3d; display: inline; }
+.box-right { float: right; width: 230px; margin: 10px 0 0; border-left: 1px #dfdfdf solid; color: #3d3d3d; display: inline; }
 /* 标题样式 */
-.sub-title { background: #dddedf; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 10px; height: 34px; border-top: 1px #c4c4c4 solid; border-bottom: 1px #c4c4c4 solid; }
+.sub-title { background: #f1f1f1; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 10px; height: 34px; border-top: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid; }
 .more-detail { float: right; margin-right: 10px; font: 12px/34px '宋体'; }
 .more-detail a { color: #848484; text-decoration: none; }
 .more-detail a:hover { color: #0d67c4; }
@@ -88,9 +88,9 @@
 /* 表格格式 */
 .sub-content { font-size: 12px; }
 .sub-content .table { margin-bottom: 0; }
-.sub-content .table>thead>tr>th { background: #e4e5e6; border: none; border: none; font-weight: normal; }
+.sub-content .table>thead>tr>th { background: #f1f1f1; border: none; border: none; font-weight: normal; }
 .sub-content .table>thead>tr>th, .sub-content .table>tbody>tr>td { text-align: center; }
-.sub-content .table>tbody>tr>td { border-top: 1px #c4c4c4 dashed; padding: 8px 0; }
+.sub-content .table>tbody>tr>td { border-top: 1px #dfdfdf dashed; padding: 8px 0; }
 .sub-content .table>tbody>tr.first>td { border: none; }
 /* 开奖公告 */
 .kjgg .sub-content { padding: 5px 15px; }
@@ -98,7 +98,7 @@
 .kjgg .sub-content>p>.bg-3, .kjgg .sub-content>p>.bg-4 { border-radius: 50%; width: 20px; height: 20px; display: inline-block; color: #fff; text-align: center; line-height: 20px; margin-right: 5px; }
 /* 号码统计 */
 .tab-cut { overflow: hidden; height: 29px; width: 100%; }
-.tab-cut li { font: normal 12px/28px '宋体'; color: #333; display: inline-block; width: 25%; float: left; text-align: center; cursor: pointer; background: #e4e5e6; border-bottom: 1px solid #c4c4c4; border-left: 1px #c4c4c4 solid; }
+.tab-cut li { font: normal 12px/28px '宋体'; color: #333; display: inline-block; width: 25%; float: left; text-align: center; cursor: pointer; background: #e4e5e6; border-bottom: 1px solid #dfdfdf; border-left: 1px #dfdfdf solid; }
 .tab-cut li.on { font-weight: bold; background: #f0efef; border-bottom: none; border-bottom-color: transparent; }
 .tab-cut li.br { border-right: 1px solid #ddd; }
 .hmtj .tab-con { padding: 10px 8px; }
@@ -116,7 +116,7 @@
 /* -- 粘贴上传 -- */
 .br-tabs, .br-tabs-b { width: 610px; margin: 30px 60px 0; }
 .br-tabs .nav-tabs>li>a { font-size: 12px; padding: 8px 15px; color: #3d3d3d; }
-.br-tabs .nav-tabs>li.active>a, .br-tabs .nav-tabs>li.active>a:hover, .br-tabs .nav-tabs>li.active>a:focus { background: #dddedf; border-radius: 0; border-color: #c4c4c4; border-bottom: none; font-weight: bold; }
+.br-tabs .nav-tabs>li.active>a, .br-tabs .nav-tabs>li.active>a:hover, .br-tabs .nav-tabs>li.active>a:focus { background: #f1f1f1; border-radius: 0; border-color: #dfdfdf; border-bottom: none; font-weight: bold; }
 .box-upload { display: none; width: 563px; margin: 20px auto 0; }
 .ds-menu { *zoom: 1; }
 .ds-menu li.on { border: 1px solid #c4161c; border-bottom-width: 0; font-weight: bold; height: 32px; line-height: 32px; padding: 0 8px; background: #fef9f3; margin: 0 8px -1px 0; *position: relative; }
@@ -128,8 +128,8 @@
 
 
 
-.ds-con { position: relative; border: 1px solid #c4c4c4; color: #3d3d3d; line-height: 24px; width: 610px; padding: 5px 0 0 10px; overflow: hidden; border-radius: 2px; }
-.ds-con .sd-number { border: none; width: 100%; color: #afafaf; line-height: 24px; height: 145px; outline: 0; background: #f0efef; font-size: 12px;}
+.ds-con { position: relative; border: 1px solid #dfdfdf; color: #3d3d3d; line-height: 24px; width: 610px; padding: 5px 0 0 10px; overflow: hidden; border-radius: 2px; }
+.ds-con .sd-number { border: none; width: 100%; color: #afafaf; line-height: 24px; height: 145px; outline: 0; background: #fff; font-size: 12px;}
 .ds-con .sd-number.focus { color: #000000; font-size: 14px; font-family: Arial; outline-width: 0px; outline-style: none; outline-color: invert; }
 .ds-con .upload-tips { padding: 10px; font-size: 12px; color: #afafaf; }
 
@@ -171,7 +171,7 @@ height: 159px;}
 .touz_area_box li span { cursor: pointer; display: block; overflow: hidden; text-align: center; width: 32px; height: 32px; line-height: 32px; font-size: 16px; border-radius: 50%; }
 .touz_area_box li em { color: #afafaf; font-size: 12px; font-style: normal; font-weight: normal; }
 .touz_area_box li em.colorRed { color: #f13c38; }
-.touz_area_box li span.gray_ball, .touz_area_box li span { background: #dddedf; color: #3d3d3d; border: 1px #c4c4c4 solid; }
+.touz_area_box li span.gray_ball, .touz_area_box li span { background: #f1f1f1; color: #3d3d3d; border: 1px #dfdfdf solid; }
 .touz_area_box .red_area li.active span { background: #f13c38; color: #fff; text-decoration: none; border: none; }
 .touz_area_box .blue_area li.active span { background: #5198f1; color: #fff; text-decoration: none; border: none; }
 .touz_area_box .red_area { width: 470px; }

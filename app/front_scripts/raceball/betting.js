@@ -5,7 +5,7 @@ define(['jquery'], function($) {
 
     // hover click btn
     $('.towLine').on('mousemove', 'em', function(event) {
-      if (!$(this).hasClass('active')) {
+      if (!$(this).hasClass('active') && !$(this).hasClass('rq')) {
         $(this).addClass('hover');
       };
     });
