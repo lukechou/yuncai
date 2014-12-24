@@ -73,6 +73,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .btn-ligou { background: #f13c38; padding: 8px 30px; font-size: 20px; color: #fff; font-family: 'Microsoft Yahei'; margin: 15px auto 10px; }
 .btn-c1 { background: #f13c38; }
 .btn-c2 { background: #f1f1f1; }
+.btn-gray { background: #bdbcbc; color: #fff; }
 .btn-sear { background: #f88c35; }
 .btn-clean { padding: 0; width: 70px; height: 26px; line-height: 26px; }
 .btn-bind { background: #f13c38; color: #fff; padding: 6px 20px; }
@@ -90,7 +91,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .m-num-group-red>a.active { background: #f13c38; color: #fff; text-decoration: none; border: none; }
 .m-num-group-blue>a.active { background: #5198f1; color: #fff; text-decoration: none; border: none; }
 .m-num-fun { font-size: 12px; position: absolute; bottom: 10px; right: 10px; }
-.m-num-fun>select { background: #f0efef; border: 1px #c4c4c4 solid; width: 45px; padding: 3px; }
+.m-num-fun>select { background: #fff; border: 1px #c4c4c4 solid; width: 45px; padding: 3px; }
 .m-num-sui { margin: 0 5px; }
 .m-num-clean { color: #3d3d3d; }
 .m-num-sui:hover, .m-num-clean:hover { cursor: pointer; text-decoration: underline; }
@@ -106,7 +107,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .m-mn-table-bor { border: 1px #dfdfdf solid; }
 /* user */
 .m-user-title { background: #f1f1f1; padding: 5px 20px 0; position: relative; height: 36px; border-bottom: 1px #dfdfdf solid; }
-.m-user-title>b { background: #fff; border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; border-top: 2px #f13f3b solid; position: absolute; display: block; padding: 5px 20px; top: 7px;}
+.m-user-title>b { background: #fff; border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; border-top: 2px #f13f3b solid; position: absolute; display: block; padding: 5px 20px; top: 7px; }
 .m-tb-title { padding: 15px 20px 0; font-size: 12px; }
 /* m-tips-box */
 .m-tips-box { background: #fff; border: 1px #dfdfdf solid; margin-top: 10px; padding: 20px 40px; position: relative; }
@@ -120,16 +121,39 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .m-panel { border: 1px #dfdfdf solid; min-height: 540px; }
 .m-panel .panel-title { color: #3d3d3d; font-family: 'Microsoft Yahei'; }
 .m-panel .panel-heading { background: #dddedf; border-bottom: 1px #dfdfdf solid; }
+
 /* 弹出框 */
 .friend-modal .modal-header { background: #f13c38; padding: 10px 15px; color: #fff; }
-.friend-modal .modal-dialog { width: 450px; }
+.friend-modal .modal-dialog { width: 450px; border: 8px solid rgba(0,0,0,0.6);}
 .friend-modal .modal-header h4 { font-size: 14px; }
 .friend-modal .modal-header .close { margin-top: -2px; }
 .modal-header .close { color: #fff; opacity: 1; font-weight: normal; margin-top: 5px; }
 .friend-modal.modal.in .modal-dialog { background: #fff; }
+
+/* 协议弹出框*/
 .agreement-modal .modal-dialog { width: 800px; }
 .agreement { height: 500px; }
 .agreement .head { font-size: 14px; font-weight: bold; color: #3d3d3d; margin-bottom: 10px; }
 .agreement .mn { height: 400px; overflow: auto; border: 1px #dfdfdf solid; color: #3d3d3d; font-size: 12px; padding: 8px 10px 30px; }
 .agreement .mn p { margin-bottom: 0; text-align: left; }
 .agreement .foot { padding-top: 20px; }
+
+/* 付款确认框 */
+.frbox { width: 420px; padding: 5px 60px 10px; }
+.frbox .icon { float: left; }
+.frbox .text { margin-left: 75px; font-size: 12px; text-align: left; color: #3d3d3d;}
+.frbox .text span{ margin: 0 5px;}
+.frbox .btns .btn { padding: 5px 35px; }
+.frbox .btns .btn-danger{ margin-right: 10px;}
+
+.tipbox .last{ margin:0;}
+.tipbox .last>.btn{ padding: 5px 35px;}
+
+
+
+
+
+
+
+
+

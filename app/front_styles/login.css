@@ -1,48 +1,32 @@
-.login{ padding: 40px 0 130px 0;}
-.login-logo{ margin-bottom: 20px;}
-
-.login-left{ width: 630px; height: 400px; background: #b52222;}
-.login-limg{ margin: 100px auto 0; display: block; }
-
-.login-right{ width: 355px; height: 400px; background: #fff;}
-.login-right form{ width: 300px; margin: 50px auto 0;}
-.login-right h1{ font-size: 24px;}
-.login-right .tips{ height: 35px; line-height: 35px; padding: 10px;
- border: 1px #f13c38 solid; padding: 0 0 0 10px;
- margin-bottom: 5px; font-size: 12px; visibility: hidden;
-}
-.login-right .tips i{ position: relative; top: 3px;}
-.login-right input{ display: block; width: 100%; border: 1px #c4c4c4 solid; padding: 14px 15px; margin-bottom: 20px; border-radius: 2px;}
-.login-right .btn{ background: #f13c38; color: #fff; font-family: 'Microsoft Yahei';}
-.login-right form p{ font-size: 12px; text-align: right; margin-top: 30px;}
-.login-right form p>a{ color: #3d3d3d; padding: 0 10px;}
-.login-right form p>a.first{ border-right: 1px #3d3d3d solid;}
-
-
-.register{ padding: 15px 0 75px 0;}
-.register .panel-heading{padding-left: 20px; border-radius: 0; background: #dddedf;}
-.register .panel-heading h3{ font-size: 20px; font-weight: bold;}
-
-.register .panel-body{ background: #f0efef;}
-.register form{ padding: 80px 0 280px 0; }
-.register form .control-label{ font-size: 12px; font-weight: normal;}
-.register form .form-control{ background:#f0efef; border: 1px #c4c4c4 solid; border-radius: 0; }
-.register .btn{ background: #f13c38; color: #fff; font-family: 'Microsoft Yahei';}
-.register-ft p{ margin: 10px 0; font-size: 12px;}
-
-.check{ position: relative;}
-.check-input{ width: 100px; margin-right: 10px; float: left;}
-.check-img{ width: 100px; height: 34px;}
-.check-link{ position: absolute; right: -35px; top: 8px; font-size: 12px;}
-
-.reg-success{ display: none; padding: 80px 0 290px 0; width: 360px; margin:auto;}
-.reg-success .pull-right{ width: 300px;}
-.reg-success .pull-right h3{ font-size: 18px; font-weight: bold;}
-.reg-success .pull-right ul{ font-size: 12px; padding: 30px 0 15px 0;}
-.reg-success .pull-right .tips{ margin-top: 30px; font-size: 12px;}
-
-
-
-
-
-
+.login { padding: 40px 0 130px 0; }
+.login-logo { margin-bottom: 20px; }
+.login-left { width: 630px; height: 400px; background: #b52222; }
+.login-limg { margin: 100px auto 0; display: block; }
+.login-right { width: 355px; height: 400px; background: #fff; }
+.login-right form { width: 300px; margin: 50px auto 0; }
+.login-right h1 { font-size: 24px; }
+.login-right .tips { height: 35px; line-height: 35px; padding: 10px; border: 1px #f13c38 solid; padding: 0 0 0 10px; margin-bottom: 5px; font-size: 12px; visibility: hidden; }
+.login-right .tips i { position: relative; top: 3px; }
+.login-right input { display: block; width: 100%; border: 1px #dfdfdf solid; padding: 14px 15px; margin-bottom: 20px; border-radius: 2px; }
+.login-right .btn { background: #f13c38; color: #fff; font-family: 'Microsoft Yahei'; }
+.login-right form p { font-size: 12px; text-align: right; margin-top: 30px; }
+.login-right form p>a { color: #3d3d3d; padding: 0 10px; }
+.login-right form p>a.first { border-right: 1px #3d3d3d solid; }
+.register { padding: 15px 0 75px 0; }
+.register .panel-heading { padding-left: 20px; border-radius: 0; background: #f1f1f1; }
+.register .panel-heading h3 { font-size: 20px; font-weight: bold; }
+.register .panel-body { background: #fff; }
+.register form { padding: 80px 0 280px 0; }
+.register form .control-label { font-size: 12px; font-weight: normal; }
+.register form .form-control { background: #fff; border: 1px #dfdfdf solid; border-radius: 0; }
+.register .btn { background: #f13c38; color: #fff; font-family: 'Microsoft Yahei'; }
+.register-ft p { margin: 10px 0; font-size: 12px; }
+.check { position: relative; }
+.check-input { width: 100px; margin-right: 10px; float: left; }
+.check-img { width: 100px; height: 34px; }
+.check-link { position: absolute; right: -35px; top: 8px; font-size: 12px; }
+.reg-success { display: none; padding: 80px 0 290px 0; margin-left: 296px; }
+.reg-success .tips-box { margin-left: 15px; margin-top: -5px; }
+.reg-success .tips-box h3 { font-size: 18px; font-weight: bold; }
+.reg-success .tips-box ul { font-size: 12px; padding: 30px 0 15px 0; }
+.reg-success .tips-box .tips { margin-top: 30px; font-size: 12px; }
