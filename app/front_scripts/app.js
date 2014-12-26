@@ -2,37 +2,71 @@
 var APP = {};
 var FILTER = {};
 
+/**
+ * Filter Decimal
+ * @param  {Number}  num
+ * @return {Boolean}     [description]
+ */
 FILTER.isDecimal = function(num) {
   if (parseInt(num) == num) {
     return false;
   } else {
     return true;
   }
-}
+};
 
+
+/**
+ * HandRetCode for Ajax
+ * @param  {retCode} retCode Ajax Respone Status
+ * @param  {retMsg} retMsg  Ajaxa Respone Msg
+ * @return {null}
+ */
 APP.handRetCode = function(retCode, retMsg) {
-
   switch (retCode) {
     case 120002:
       this.showLoginBox();
       break;
     case 120001:
-      this.showTips(retMsg + ',购买失败！' + '<a href="/account/top-up" class="btn btn-danger ml15" target="_blank">立即充值</a>')
+      this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
       break;
     default:
-      this.showTips(retMsg);
+      this.showTips('<div class="tipbox"><p>' + retMsg + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>');
       break;
   }
-}
+};
+
+/**
+ * Update User Money
+ * @return {null}
+ */
+APP.updateUserMoney = function() {
+
+  $.ajax({
+      url: '/account/islogin',
+      type: 'get',
+      dataType: 'json',
+    })
+    .done(function(data) {
+      if (data.retCode === 100000) {
+        $('#userMoney').html(data.retData.money);
+      }
+    });
+
+};
 
 APP.showLoginBox = function() {
 
-  var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+  if (!$('#user-login')[0]) {
+    var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+    $('body').append(html);
+  }
 
-  $('body').append(html)
-  $('#j-login-modal').modal('show')
+  $('#j-login-modal').on('show.bs.modal', APP.centerModal);
+  $('#j-login-modal').modal('show');
+  $('#user-login').unbind();
+  this.bindLoginEvent();
 
-  this.bindLoginEvent()
 };
 
 APP.regStr = function(s) {
@@ -42,7 +76,11 @@ APP.regStr = function(s) {
     rs = rs + s.substr(i, 1).replace(pattern, '');
   }
   return rs;
-}
+};
+
+APP.getConfirmHtml = function(h) {
+  return '<div class="tipbox"><p>' + h + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
+};
 
 APP.bindLoginEvent = function() {
 
@@ -73,7 +111,7 @@ APP.bindLoginEvent = function() {
           APP.showTips('Server has some error!')
         });
     } else {
-      alert('帐号密码不能为空')
+      APP.showTips(APP.getConfirmHtml('帐号密码不能为空'));
       return;
     }
 
@@ -81,17 +119,54 @@ APP.bindLoginEvent = function() {
 
 }
 
-APP.showTips = function(h) {
+/**
+ * [showTips 拟态框]
+ * @param  {Object} obj tips's HTML {title:'title', html:'html'}
+ * @return {null}
+ */
+APP.showTips = function(o) {
 
-  if (!$('#myModal')[0]) {
-    var html = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title" id="myModalLabel">友情提示</h4></div><div class="modal-body text-center fc-84" id="app-content"></div></div></div>';
-    $('body').append(html)
+  var obj = {
+    title: '友情提示',
+    html: ''
+  };
+  if (typeof o == 'string') {
+    obj.html = o;
+  } else {
+    obj = o;
+    if (!o.title) {
+      obj.title = '友情提示';
+    }
   }
 
-  $('#app-content').html(h)
-  $('#myModal').modal('show')
+  if (!$('#myModal')[0]) {
+    var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + obj.html + '</div></div></div>';
+    $('body').append(compiled);
+  } else {
+    $('.j-apptips-title').html(obj.title);
+    $('#apptips-content').html(obj.html);
+  }
+
+  $('#myModal').on('show.bs.modal', APP.centerModal);
+
+  //if($('#myModal').hasClass('in')){
+  $('#myModal').modal('show');
 
 };
+
+
+APP.centerModal = function() {
+  $(this).css('display', 'block');
+  var $dialog = $(this).find(".modal-dialog");
+  var offset = ($(window).height() - $dialog.height()) / 2;
+  $dialog.css("margin-top", offset);
+};
+
+$('.Modal').on('show.bs.modal', APP.centerModal);
+
+$(window).on("resize", function() {
+  $('.modal:visible').each(APP.centerModal);
+});
 
 APP.getUrlPara = function(paraName) {
   var sUrl = window.location.href;
@@ -101,8 +176,33 @@ APP.getUrlPara = function(paraName) {
   return RegExp.$1;
 };
 
+
+APP.onSubmitConfirm = function(callback, data, html) {
+
+  $.ajax({
+      url: '/account/islogin',
+      type: 'get',
+      dataType: 'json',
+    })
+    .done(function(D) {
+      if (D.retCode === 100000) {
+        if (Number(D.retData.money.replace(/,/g, '')) > data.byNum) {
+          APP.showTips(html);
+          $('#buyConfirm').on('click', function(event) {
+            callback(data);
+          });
+        } else {
+          APP.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+        }
+      } else {
+        APP.handRetCode(D.retCode, D.retMsg);
+      }
+    });
+
+}
+
 APP.onServerFail = function() {
-  APP.showTips('服务器繁忙,请稍后再试!')
+  APP.showTips(APP.getConfirmHtml('服务器繁忙,请稍后再试!'));
 };
 
 APP.submitHemai = function(obj) {
@@ -117,12 +217,14 @@ APP.submitHemai = function(obj) {
     })
     .done(function(data) {
       if (data.retCode == 100000) {
-
         if (obj.onSuccess) {
           obj.onSuccess();
         }
-
-        APP.showTips('参与合买成功');
+        APP.updateUserMoney();
+        APP.showTips('<div class="tipbox"><p>合买成功!</p><p class="last"><button class="btn btn-danger" id="hemaiRefresh">确定</button></p></div>');
+        $('body').on('click', '.close', function(event) {
+          window.history.go(0);
+        });
       } else {
         APP.handRetCode(data.retCode, data.retMsg);
       }

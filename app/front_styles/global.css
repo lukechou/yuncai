@@ -62,7 +62,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .m-pager { padding-left: 0; margin: 20px 0; text-align: center; list-style: none; font-size: 12px; }
 .m-pager a { color: #404040; margin: 0 5px; }
 .m-pager a.dis { color: #848484; }
-.m-pager-i { width: 50px; margin-right: 5px; background: #f0efef; border: 1px #c4c4c4 solid; }
+.m-pager-i { width: 50px; margin-right: 5px; background: #fff; border: 1px #dfdfdf solid; }
 /* Button */
 .btn { border-radius: 2px; }
 .btn-add, .btn-add2 { color: #fff; font-weight: bold; background: #bdbcbc; padding: 10px 25px 10px 35px; position: relative; }

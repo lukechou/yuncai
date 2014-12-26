@@ -1,59 +1,96 @@
-var PAGE = {};
-PAGE.config = {};
-PAGE.makePageHtml = function(pageHtmlNode) {
+var PAGE = (function() {
+  'use strict';
 
-  if (PAGE.config.pageNum <= 1) {
-    pageHtmlNode.html('');
-    return;
-  }
-  pageHtmlNode.html('<div class="pull-right pages">' + PAGE.config.page + '/<span class="j-days">' + PAGE.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="' + PAGE.config.page + '" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>');
-};
+  var PAGE = {
+    ajaxUrl: '',
+    config: {
+      pageNum: 0,
+    },
+    pageElement: null,
+    pageTable: null,
+    appendTable: function(html) {
+      this.pageTable.html(html);
+    },
+    makePageHtml: function(pageHtmlNode) {
+      if (this.pageElement || !pageHtmlNode) {
+        pageHtmlNode = this.pageElement;
+      }
+      if (this.config.pageNum <= 1) {
+        pageHtmlNode.html('');
+        return;
+      }
+      pageHtmlNode.html('<div class="pull-right pages">' + this.config.page + '/<span class="j-days">' + this.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="' + this.config.page + '" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>');
+    },
+    initAjax: function(obj) {
+      var _this = this;
+      _this.config = obj;
 
-PAGE.bindPageEvent = function(callback) {
+      $.ajax({
+          url: _this.ajaxUrl,
+          type: 'get',
+          dataType: 'json',
+          data: _this.config,
+        })
+        .done(function(data) {
+          _this.onSuccess(data);
+        })
+        .fail(function() {
+          _this.onFail();
+        });
+    },
+    bindPageEvent: function(callback) {
 
-  $('.next-page').on('click', function(event) {
-    PAGE.config.page = parseInt(PAGE.config.page)
-    if (PAGE.config.page < PAGE.config.pageNum) {
-      PAGE.config.page += 1;
-      callback(PAGE.config);
-    }
-  });
+      $('.next-page').on('click', function(event) {
+        PAGE.config.page = parseInt(PAGE.config.page)
+        if (PAGE.config.page < PAGE.config.pageNum) {
+          PAGE.config.page += 1;
+          callback(PAGE.config);
+        }
+      });
 
-  $('.back-page').on('click', function(event) {
-    PAGE.config.page = parseInt(PAGE.config.page)
-    PAGE.config.page -= 1;
-    if (PAGE.config.page <= 0) {
-      PAGE.config.page = 1;
-    }
-    callback(PAGE.config);
-  });
+      $('.back-page').on('click', function(event) {
+        PAGE.config.page = parseInt(PAGE.config.page)
+        PAGE.config.page -= 1;
+        if (PAGE.config.page <= 0) {
+          PAGE.config.page = 1;
+        }
+        callback(PAGE.config);
+      });
 
-  $('.j-pages-value').on('change', function(event) {
+      $('.j-pages-value').on('change', function(event) {
 
-    var max = $(this).siblings('.j-days').html();
-    var go = parseInt($(this).val());
+        var max = $(this).siblings('.j-days').html();
+        var go = parseInt($(this).val());
 
-    if (isNaN(go)) {
-      go = 1;
-    } else {
-      go = Math.ceil(go);
-    }
+        if (isNaN(go)) {
+          go = 1;
+        } else {
+          go = Math.ceil(go);
+        }
 
-    if (max < go) {
-      go = max;
-    }
-    if (go < 1) {
-      go = 1;
-    }
-    $(this).val(go);
-  });
+        if (max < go) {
+          go = max;
+        }
+        if (go < 1) {
+          go = 1;
+        }
+        $(this).val(go);
+      });
 
-  $('.j-pages-go').on('click', function(event) {
-    PAGE.config.page = $(this).siblings('.j-pages-value').val() || 1;
-    callback(PAGE.config);
-  });
+      $('.j-pages-go').on('click', function(event) {
+        PAGE.config.page = $(this).siblings('.j-pages-value').val() || 1;
+        callback(PAGE.config);
+      });
 
-};
+    },
+    onSuccess: null,
+    onFail: null,
+  };
+
+  return PAGE;
+
+}());
+
 
 //投注记录
 PAGE.loadOrderRecord = function(obj) {
@@ -79,8 +116,12 @@ PAGE.loadOrderRecord = function(obj) {
           var detailData = data.retData.data;
           for (var i = 0; i < detailData.length; i++) {
             dataItem = detailData[i];
-            var projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
-            var continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
+            var projectDetailUrl = '';
+            var continueBuy = '';
+            if (dataItem.show == 1) {
+              var projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
+              var continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
+            }
             html += "<tr><td>" + dataItem.lotyCNName + "</td><td>" + dataItem.createTime + "</td><td>" + dataItem.money + "元</td><td>" + dataItem.status + "</td><td>" + projectDetailUrl + continueBuy + "</td></tr>";
           };
           // 中奖列表才有汇总功能
@@ -135,7 +176,8 @@ PAGE.loadDetailRecord = function(obj) {
                 html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
                 break;
               case 5:
-                html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>提款中</td><td>" + dataItem.tradeRemark + "</td><td>取消</td></tr>";
+                var tkStaus = '提款完成';
+                html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + tkStaus + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
                 break;
               default:
                 html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
@@ -165,7 +207,7 @@ PAGE.loadDetailRecord = function(obj) {
 };
 
 
-// 充值分页
+// 提款记录分页
 PAGE.getDrawRecord = function(obj) {
   PAGE.config = obj;
   var url = '/account/draw/record/ajax';
@@ -178,7 +220,7 @@ PAGE.getDrawRecord = function(obj) {
         pageSize: obj.pageSize,
         days: $('#days').val(),
         status: $('#status').val()
-      },
+      }
     })
     .done(function(data) {
       var htmlOutput = "";
@@ -188,7 +230,12 @@ PAGE.getDrawRecord = function(obj) {
           var detailData = data.retData.data;
           for (var i = 0; i < detailData.length; i++) {
             dataItem = detailData[i];
-            htmlOutput += '<tr><td>' + dataItem.time + '</td><td>' + dataItem.drawMoney + '元</td><td>' + dataItem.status + '</td><td>手续费' + dataItem.commission + '元</td></tr>';
+            htmlOutput += '<tr><td>' + dataItem.time + '</td><td>' + dataItem.drawMoney + '元</td><td class="j-status">' + dataItem.status + '</td>';
+            if (dataItem.tkCaoZuo) {
+              htmlOutput += '<td><a href="javascript:;" class="j-cancel" data-id="' + dataItem.tkCaoZuo + '">取消</a></td></tr>';
+            } else {
+              htmlOutput += '<td></td></tr>';
+            }
           }
         } else {
           htmlOutput = '<td colspan="4">暂无相关记录</td>';
@@ -214,6 +261,7 @@ PAGE.loadPrjctLst = function(obj) {
   var htmlOutput = '';
   var htmlStatu = '';
   var htmlUse = '';
+  var dataItem = '';
 
   $.ajax({
       url: '/lottery/project-center/' + lotyName + '/ajax',
@@ -248,11 +296,11 @@ PAGE.loadPrjctLst = function(obj) {
               htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
               break
             default:
-              htmlStatu = '<input type="text" class="u-ci w50 j-gou-count" placeholder="最多' + dataItem.lessNum + '" data-max="' + dataItem.lessNum + '">';
+              htmlStatu = '<input type="text" class="u-ci w50 j-gou-count" placeholder="最多' + dataItem.lessNum + '" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
               htmlUse = '<button data-type="1" class="btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
               break;
           }
-          htmlOutput += '<tr><td>' + i + '</td><td>' + dataItem.username + '</td><td>' + dataItem.schedule + ' %</td><td class="text-right fc-3">' + dataItem.price + '元</td><td>' + dataItem.unitPrice + '</td><td>' + htmlStatu + '</td><td>' + htmlUse + '</td></tr>';
+          htmlOutput += '<tr><td>' + i + '</td><td>' + dataItem.username + '</td><td>' + dataItem.schedule + ' %</td><td class="text-right fc-3 j-mtotal">' + dataItem.price + '元</td><td>' + dataItem.unitPrice + '</td><td>' + htmlStatu + '</td><td>' + htmlUse + '</td></tr>';
         }
 
       } else {

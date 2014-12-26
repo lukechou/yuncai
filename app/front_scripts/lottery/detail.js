@@ -1,103 +1,139 @@
-    var HeMai = {
-      max: $('#j-max').html(),
-      dan: $('#j-dan').html(),
-      total: $('#j-total').html(),
-    };
+'use strict';
+$(function() {
+  var HeMai = {
+    max: $('#j-max').html(),
+    dan: $('#j-dan').html(),
+    total: $('#j-total').html(),
+  };
 
-    var buy = {
-      buyTotal: $('#j-buy'),
-      buyMoney: $('#j-buy-total')
-    };
+  var buy = {
+    buyTotal: $('#j-buy'),
+    buyMoney: $('#j-buy-total')
+  };
 
-    function updateBuyMoneyTotal() {
-      var x = parseInt(buy.buyTotal.val());
-      var y = parseInt(HeMai.dan);
-      $('#j-buy-total').html(x * y);
+  function updateBuyMoneyTotal() {
+    var x = parseInt(buy.buyTotal.val());
+    var y = parseInt(HeMai.dan);
+    $('#j-buy-total').html(x * y);
+  }
+
+  function checkBuyTotal() {
+    var v = parseInt(buy.buyTotal.val());
+    var results = true;
+
+    if (!buy.buyTotal.val()) {
+      APP.showTips(APP.getConfirmHtml('购买份数不能为空！'));
+      return false;
     }
 
-    function checkBuyTotal() {
-      var v = parseInt(buy.buyTotal.val());
-      var results = true;
-
-      if (!buy.buyTotal.val()) {
-        APP.showTips('购买份数不能为空！');
-        return false;
-      }
-
-      if (isNaN(v)) {
-        buy.buyTotal.val(HeMai.max);
-        updateBuyMoneyTotal();
-        APP.showTips('请输入购买份数')
-        return false;
-      }
-
-      if (FILTER.isDecimal(buy.buyTotal.val())) {
-        APP.showTips('购买份数不能为小数')
-        return false;
-      }
-
-      if (v > HeMai.max) {
-        APP.showTips('现在最多可以购买' + HeMai.max + '份啊！');
-        return false;
-      }
-      return results;
-    }
-
-    $('#j-buy').on('change', function() {
-      var v = parseInt(buy.buyTotal.val());
-
-      if (isNaN(v)) {
-        return;
-      }
-
-      if (FILTER.isDecimal(buy.buyTotal.val())) {
-        return;
-      }
-      if (v > HeMai.max) {
-        return;
-      }
-
+    if (isNaN(v)) {
+      buy.buyTotal.val(HeMai.max);
       updateBuyMoneyTotal();
+      APP.showTips(APP.getConfirmHtml('请输入购买份数'));
+      return false;
+    }
 
-    });
+    if (FILTER.isDecimal(buy.buyTotal.val())) {
+      APP.showTips(APP.getConfirmHtml('购买份数不能为小数'));
+      return false;
+    }
 
-    $('#buy-submit').on('click', function() {
-      var isAgreen = $('#j-isAgreen')[0].checked;
-      if (!isAgreen) {
-        APP.showTips('请先阅读并同意《委托投注规则》后才能继续')
-      } else {
-        if (checkBuyTotal()) {
-          var data = {
-            byNum: buy.buyTotal.val(),
-            joinURI: $('#j-joinURI').val(),
-            prjctId: $('#j-projectId').val(),
-            onSuccess: function() {
+    if (v > HeMai.max) {
+      APP.showTips(APP.getConfirmHtml('现在最多可以购买' + HeMai.max + '份啊！'));
+      return false;
+    }
+    return results;
+  }
 
-              var v = parseInt(buy.buyTotal.val());
-              var max = parseInt(HeMai.max);
-              var percent = (100 - ((max - v) * HeMai.dan / HeMai.total * 100)).toFixed(2);
+  $('body').on('click', '#hemaiRefresh', function(event) {
+    window.history.go(0);
+  });
 
-              if (percent == 100) {
-                $('#j-buy')[0].disabled = true;
-                $('#buy-submit')[0].disabled = true;
-                buy.buyTotal.val('').attr('placeholder', '剩余0份');
-                $('#j-pro-bar').html('100%').width('100%');
-                buy.buyMoney.html(0);
-                HeMai = null;
-                buy = null;
-              } else {
-                $('#j-max').html(max - v);
-                $('#j-pro-bar').html(percent + '%').width(percent + '%');
-                buy.buyTotal.val('').attr('placeholder', '剩余' + (max - v) + '份');
-                buy.buyMoney.html(0);
-                HeMai.max = max - v;
-              }
+  $('#j-buy').on('change', function() {
+    var v = parseInt(buy.buyTotal.val());
 
-              APP.showTips('充值成功!')
+    if (isNaN(v)) {
+      buy.buyTotal.val(HeMai.max);
+    }
+
+    if (FILTER.isDecimal(buy.buyTotal.val())) {
+      buy.buyTotal.val(HeMai.max);
+    }
+    if (v > HeMai.max) {
+      buy.buyTotal.val(HeMai.max);
+    }
+
+    updateBuyMoneyTotal();
+
+  });
+
+  $('#buy-submit').on('click', function() {
+    var isAgreen = $('#j-isAgreen')[0].checked;
+    var template = '';
+    var h = '';
+    var b = buy.buyTotal.val();
+    var mtotal = $('#j-total').html();
+    var mid = $('#j-qihao').val();
+    var mname = $('#j-lotyName').html();
+    var html = '';
+    var v = '';
+    var max = '';
+    var percent = '';
+    var data = '';
+    var appendHtml = '';
+    var date = '';
+
+    if (!isAgreen) {
+      APP.showTips(APP.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
+    } else {
+      if (checkBuyTotal()) {
+
+        data = {
+          byNum: b,
+          joinURI: $('#j-joinURI').val(),
+          prjctId: $('#j-projectId').val(),
+          onSuccess: function() {
+
+            v = parseInt(buy.buyTotal.val());
+            max = parseInt(HeMai.max);
+            percent = (100 - ((max - v) * HeMai.dan / HeMai.total * 100)).toFixed(2);
+
+            if (percent == 100) {
+              $('#j-buy')[0].disabled = true;
+              $('#buy-submit')[0].disabled = true;
+              buy.buyTotal.val('').attr('placeholder', '剩余0份');
+              $('#j-pro-bar').html('100%').width('100%');
+              buy.buyMoney.html(0);
+              HeMai = null;
+              buy = null;
+            } else {
+              $('#j-max').html(max - v);
+              $('#j-pro-bar').html(percent + '%').width(percent + '%');
+              buy.buyTotal.val('').attr('placeholder', '剩余' + (max - v) + '份');
+              buy.buyMoney.html(0);
+              HeMai.max = max - v;
             }
-          };
-          APP.submitHemai(data);
-        }
-      }
+            date = new Date();
+            appendHtml = '<tr><td>' + ($('#messages tbody tr').length + 1) + '</td><td>' + $('#myname').html() + '</td><td>' + b + '</td><td>' + b + '</td><td>0.00</td><td>' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + '</td></tr>';
+            $('#messages tbody').append(appendHtml);
 
-    })
+          }
+        };
+        template = _.template('<div class="frbox"><img src="//static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= id%></span>期</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
+
+        h = template({
+          lotyName: mname,
+          id: mid,
+          total: mtotal,
+          pay: b
+        });
+
+        html = {
+          html: h,
+        };
+        APP.onSubmitConfirm(APP.submitHemai, data, html);
+      }
+    }
+
+  })
+});

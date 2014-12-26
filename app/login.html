@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>彩胜网-购彩大厅</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes"  />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"  />
+  <meta name="format-detection" content="telephone=no , email = no"  />
+  <meta name="Keywords" content="彩胜网">
+  <meta name="Description" content="彩胜网">
+  <meta name="author" content="彩胜网">
+  <link rel="stylesheet" href="front_styles/bootstrap.min.css">
+  <link rel="stylesheet" href="front_styles/icon.css">
+  <link rel="stylesheet" href="front_styles/global.css">
+  <link rel="stylesheet" href="front_styles/main.css">
+  <link rel="stylesheet" href="front_styles/login.css"></head>
+<body>
+  <div class="login w985">
+    <a href="index.html">
+      <img src="front_images/login-logo.png" class="login-logo" alt="login-logo"></a>
+    <div class="mn clearfix">
+      <div class="login-left pull-left">
+        <img src="front_images/hd-1.png" class="login-limg" alt="login-logo"></div>
+      <div class="login-right pull-right">
+        <form class="" method="post" id="login-form" action="" >
+          <h1>欢迎登录彩胜账户</h1>
+          <div class="tips"> <i class="icon icon-stop "></i>
+            <span id="j-tips">您输入的账号或密码有误，请重新输入！</span>
+          </div>
+          <input name="username" id='username' type="text" placeholder="用户名">
+          <input name="password" id='password' type="password" placeholder="密码">
+          <button class="btn btn-lg btn-block" type="submit">登录</button>
+          <p>
+            <a href="#" class="first">找回密码</a>
+            <a href="register.html">注册新用户</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <div class="ft">
+    <div class="ft-mn w985">
+      <div class="ft-l clearfix">
+        <ul>
+          <li>
+            <img src="front_images//ft-1.png" alt="购彩方便">
+            <a href="#">购彩方便</a>
+          </li>
+          <li>
+            <img src="front_images//ft-2.png" alt="账户安全">
+            <a href="#">账户安全</a>
+          </li>
+          <li>
+            <img src="front_images//ft-3.png" alt="领奖无忧">
+            <a href="#">领奖无忧</a>
+          </li>
+          <li>
+            <img src="front_images//ft-4.png" alt="无手续费">
+            <a href="#">无手续费</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.ft-l-->
+      <div class="ft-r ">
+        <ul class="ft-list clearfix">
+          <li>
+            <h4>新手上路</h4>
+            <ul>
+              <li>
+                <a href="#">购彩流程</a>
+              </li>
+              <li>
+                <a href="#">领奖流程</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h4>支付方式</h4>
+            <ul>
+              <li>
+                <a href="#">网银支付</a>
+              </li>
+              <li>
+                <a href="#">支付宝支付</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h4>帮助中心</h4>
+            <ul>
+              <li>
+                <a href="#">常见问题</a>
+              </li>
+              <li>
+                <a href="#">功能指引</a>
+              </li>
+              <li>
+                <a href="#">彩种介绍</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h4>友情链接</h4>
+            <ul>
+              <li>
+                <a href="#">关于我们</a>
+              </li>
+              <li>
+                <a href="#">联系我们</a>
+              </li>
+              <li>
+                <a href="#">产品介绍</a>
+              </li>
+              <li>
+                <a href="#">服务热线</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
+        <div class="ft-img">
+          <img src="front_images/ft-biao.png" alt="公共信息安全网络监管" />
+        </div>
+      </div>
+      <!-- /.ft-r--> </div>
+    <!-- /.ft-mn--> </div>
+  <!-- /.ft-->
+  <script src="front_scripts/jquery.js"></script>
+  <script src="front_scripts/app.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    $('#login-form').on('submit', function(event){
+      event.preventDefault();
+      $.ajax({
+        url: '/account/userinfo/user/dologin',
+        type: 'post',
+        dataType: 'json',
+        data: {
+          username: $('#username').val(),
+          password:$('#password').val()
+        },
+      })
+      .done(function(data) {
+        if(data.retCode==100000){
+          window.location.href=data.retData.redirectURL;
+        }else{
+          $("#j-tips").html(data.retMsg);
+          $('.tips').css('visibility', 'visible');
+        }
+        console.log("success");
+      })
+      .fail(function() {
+        console.log("error");
+      });
+    });
+  });
+  </script>
+</body>
+</html>

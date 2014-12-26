@@ -1,6 +1,22 @@
 $(function() {
-  var BANK = '',
-    MONEY = '';
+
+  var cz = (function() {
+    'use strict';
+
+    var cz = {
+      money: '',
+      bank: '',
+      type: '',
+      setTipsTable: function() {
+        $('#j-cz-sureft .item').hide();
+        $('#j-cz-sureft .item'+this.type).show();
+      }
+    };
+
+    return cz;
+
+  }());
+
   // Next Button
   $('#j-sub-bank').on('click', function() {
     if ($(this).hasClass('selected')) {
@@ -10,13 +26,12 @@ $(function() {
         $('#js-sum-e').removeClass('hide');
       } else {
         if (bank) {
-          console.log(MONEY, bank);
           $.ajax({
               url: '/account/pre_top_up',
               type: 'post',
               dataType: 'json',
               data: {
-                money: MONEY,
+                money: cz.money,
                 type: bank
               },
             })
@@ -25,8 +40,9 @@ $(function() {
                 APP.showTips(data.retMsg);
               } else {
                 $('.recharge').hide();
-                $('#j-money-sum').html(MONEY);
+                $('#j-money-sum').html(cz.money);
                 $('.cz-sure').fadeIn();
+                cz.setTipsTable();
                 $('.cz-surehd-ft').html(data.retData.topUpFormHtml);
               }
             })
@@ -41,20 +57,22 @@ $(function() {
   });
 
   function toggleTypeTips(el) {
-    var BANK = el.attr('class');
-    $('#j-type-tips').find('.bank').removeClass().addClass(BANK);
+    cz.bank = el.attr('class');
+    cz.type = el.attr('data-type');
+    $('#j-type-tips').find('.bank').removeClass().addClass(cz.bank);
     $('#j-type-tips').show();
-    $('#j-sure-bank').removeClass().addClass(BANK);
+    $('#j-sure-bank').removeClass().addClass(cz.bank);
   }
 
   function isIllageMoney() {
-    MONEY = $('#js-sum').val() * 1;
-    return isNaN(MONEY);
+    cz.money = $('#js-sum').val() * 1;
+    return isNaN(cz.money);
   }
 
   function isAllSelect() {
     if ($('input[name=type]:checked').val() && !isIllageMoney()) {
-      if (Number($('#js-sum').val()) <= 1000000) {
+      var n = Number($('#js-sum').val());
+      if (n <= 1000000 && n >= 0.01) {
         $('#j-sub-bank').addClass('selected');
       }
     }
@@ -67,15 +85,15 @@ $(function() {
       $('#js-sum-e').removeClass('hide');
       $('#js-sum-suc').addClass('hide');
     } else {
-      MONEY = MONEY.toFixed(2)
-      $('#js-sum').val(MONEY)
+      cz.money = cz.money.toFixed(2)
+      $('#js-sum').val(cz.money)
 
-      if (MONEY < 0.01) {
+      if (cz.money < 0.01) {
         $('#js-sum-e').html('充值金额不能小于0.01元')
         $('#js-sum-e').removeClass('hide');
         $('#js-sum-suc').addClass('hide');
       } else {
-        if (MONEY > 1000000) {
+        if (cz.money > 1000000) {
           $('#js-sum-e').html('输入的金额不能大于一百万')
           $('#js-sum-e').removeClass('hide');
           $('#js-sum-suc').addClass('hide');
