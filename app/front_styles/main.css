@@ -172,11 +172,16 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .xiang .m-tab-nav span { float: right; font-size: 12px; margin-right: 20px; line-height: 28px; }
 .xiang .top { margin: 10px 0; font-size: 12px; color: #242424; }
 .xiang .top-title { color: #848484; }
+.xiang .top a{ color: #3d3d3d;}
 .xiang .mn { border: 1px #c4c4c4 solid; }
 .xiang .head { height: 100px; border-bottom: 3px solid #f13c38; padding: 10px 15px; }
 .xiang .head .text { margin-left: 10px; font-size: 12px; height: 77px; position: relative; }
 .xiang .head h2 { font-size: 22px; margin: 12px 0 14px; }
 .xiang .head p { color: #848484; }
+.xiang .rball,.xiang .bball { width: 20px; height: 20px; text-align: center; line-height: 20px; border-radius: 50%; color: #fff; display: inline-block; }
+.xiang .rball{ background: #f13c38;}
+.xiang .bball{ background: #5198f1;}
+
 .xiang .head .time { margin-right: 10px; }
 .xiang .box .left, .xiang .box .right { height: 375px; }
 .xiang .box .left-hd, .xiang .box .right-hd { height: 210px; }
@@ -198,7 +203,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .xiang .box .right-hd .table, .xiang .box .right-hd ul { width: 712px; margin: auto; font-size: 12px; }
 .xiang .box .right-hd ul { margin-top: 15px; }
 .xiang .box .right-hd ul li { margin-bottom: 10px; }
-.xiang .box .right-hd ul li .progress { display: inline-block; background: #f1f1f1; margin: 0; width: 500px; position: relative; top: 6px; }
+.xiang .box .right-hd ul li .progress { display: inline-block; background: #a0a0a0; margin: 0; width: 500px; position: relative; top: 6px; }
 .xiang .box .right-hd ul li .progress-bar { background: #f13c38; }
 .xiang .box .right-hd ul li .pro-tips { background: #f1f1f1; border: 1px #dfdfdf solid; min-width: 67px; height: 22px; display: inline-block; text-align: center; line-height: 22px; padding: 0 3px; border-radius: 2px; }
 .xiang .box .right-hd .table td { font-size: 12px; padding: 8px 10px 8px 20px; }
@@ -288,7 +293,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .bg-green { background: #25b43a; }
 .bg-red { background: #e52669; }
 .detail-box .tongji { width: 432px; height: 120px; margin: auto; position: relative; }
-.j-loadTips{ border: 1px #dfdfdf solid; border-top: none; padding: 5px; text-align: center;}
+.j-loadTips { border: 1px #dfdfdf solid; border-top: none; padding: 5px; text-align: center; }
 .tongji-text { position: absolute; color: #fff; font-weight: bold; }
 .tongji-title { left: 35px; top: 49px; }
 .tongji-item1 { top: 16px; right: 40px; }
@@ -389,10 +394,10 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .cz-surehd .cz-surehd-right .money { font-size: 18px; font-family: 'Microsoft Yahei'; }
 .cz-surehd .cz-surehd-right .bankTip .bank { position: relative; top: 10px; }
 .cz-surehd-ft { margin-left: 63px; }
-.cz-sureft .item{ display: none;}
+.cz-sureft .item { display: none; }
 .btn-sure { background: #f13c38; color: #fff; padding: 7px 32px; margin: 20px 0; font-size: 16px; }
 .cz-surehd-ft>p { color: #848484; }
-.cz-sure .table>tbody>tr>td.td-row-2,.cz-sure .table>tbody>tr>td.td-row-3,.cz-sure .table>tbody>tr>td.td-row-4 { padding: 0 5px; vertical-align: middle;}
+.cz-sure .table>tbody>tr>td.td-row-2, .cz-sure .table>tbody>tr>td.td-row-3, .cz-sure .table>tbody>tr>td.td-row-4 { padding: 0 5px; vertical-align: middle; }
 /* 个人中心-提款 */
 .draw .m-mn-table>thead>tr>th { border-bottom: 1px #dfdfdf solid; }
 .draw-bang { border: 1px #dfdfdf solid; border-top: none; }

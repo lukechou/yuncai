@@ -47,57 +47,92 @@ body { background: #fff; }
 /* 投注表格主体 */
 .onlySpf .dataBody .towLine .line2 { display: none }
 .onlyRqSpf .dataBody .towLine .line1 { display: none }
-
-
 .dataBody { color: #3d3d3d; position: relative; zoom: 1; font-size: 12px; }
-.dataBody dl { width: 700px; position: relative; margin-bottom: 0; }
+.dataBody dl { width: 700px; position: relative; margin-bottom: 0; border-bottom: 1px #dfdfdf solid;}
 .dataBody dt { padding-left: 10px; font-size: 12px; color: #3d3d3d; font-weight: normal; height: 40px; position: relative; border: 1px solid #dfdfdf; border-width: 0 1px; line-height: 40px; }
 .dataBody dt .cuspText { margin-right: 10px; cursor: pointer; }
 .dataBody dt .cusp { top: 15px; right: -12px }
 .dataBody dt .matchSize { margin-left: 10px; }
-
-
 /* All dd */
 .dataBody dd { height: 39px; position: relative; z-index: 2; zoom: 1; border-right: 1px #dfdfdf solid; }
 .dataBody dd span { height: 39px; line-height: 39px; border: 1px solid #dfdfdf; border-bottom: 0; border-right: none; text-align: center; float: left; }
 .dataBody dd:hover { background: #f6f7f9; }
-
-
 /* touZhu area */
-.dataBody .btnBox .rq { width: 36px; }
 .dataBody .towLine { border: 0; line-height: 38px; overflow: hidden; border-bottom: none; }
 .dataBody .towLine em { height: 38px; line-height: 38px; display: inline-block; width: 39px; }
 .dataBody .towLine em a { color: #3d3d3d; padding: 3px; }
-.dataBody .towLine em a:hover{ text-decoration: none;}
-.dataBody .co2 { background: #f13c38; color: #fff; border-width: 1px 0 0; }
+.dataBody .towLine em a:hover, .dataBody .towLine em a:focus { text-decoration: none; }
+.dataBody .co2 { background: #f13c38; color: #fff; border-width: 1px 0 0; overflow: hidden;}
 .dataBody dd .hostTeam, .dataBody dd .guestTeam { width: 46%; float: left; text-align: right; white-space: nowrap; overflow: hidden; }
 .dataBody dd .guestTeam { float: right; text-align: left }
 .dataBody .btnBox { border: 0; position: relative; }
 .dataBody .btnBox em { width: 56px; cursor: pointer; color: #3d3d3d; height: 39px; line-height: 39px; display: block; border: 1px solid #dfdfdf; text-align: center; vertical-align: top; float: left; border-right: none; }
-.dataBody .co6_1 em{ background: url(../front_images/default.png);}
-
-
+.dataBody .co6_1 em { background: url(../front_images/default.png); }
+.dataBody .btnBox .rq { width: 36px; background: 0 0; }
+.dataBody .btnBox .rq.active { color: #3d3d3d; }
 .dataBody dd span.btnBox .block { width: 100%; height: 39px; line-height: 39px; margin-left: -1px }
 .line1, .line2 { zoom: 1; height: 38px; line-height: 38px; white-space: nowrap; overflow: hidden; }
-
 .co6_1 em.hover, .co6_1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
-.co6_1 em.hover { background: #1fc338; }
-.co6_1 em.active { background: #f13c38; }
+.co6_1 em.hover { background: url(../front_images/hover.png); color: #3d3d3d; }
+.co6_1 em.active { background: url(../front_images/active.png); color: #fff; }
 .co7 em.hover a { background: #f13c38; }
 .co7 em.active a { background: #f13c38; }
-
 .dataBody dl dd .co7 .line1, .dataBody dl dd .co7 .line2 { border: 1px solid #dfdfdf; border-bottom: 0; border-right: none; }
-
-
-.dataBody .co8 .ico_square {display: none; }
-
+.dataBody .co8 .ico_square { display: none; }
 /* Right */
 .unselect, .unselect a { color: #3d3d3d; }
-.unselect table, .unselect .scrollMoni, .unselect .guoguanTab, .unselect .guoguanList, .unselect .guoguanTipsBox { display: none }
+.unselect .scrollMoni, .unselect .guoguanTab, .unselect .guoguanList, .unselect .guoguanTipsBox { }
 /* .unselect */
 .unselect h2 { font: 500 16px/36px 'Microsoft Yahei'; background: #f1f1f1; color: #3d3d3d; border-bottom: 1px solid #dfdfdf; margin: 0; line-height: 36px; height: 36px; padding-left: 15px; border-top: 1px solid #dfdfdf; }
 .unselect h2 i { font: 700 22px/33px Verdana; margin-right: 5px; }
 .unselect .unSeleTips { display: block; height: 42px; line-height: 42px; margin: 0; text-align: center; font-size: 12px; }
+
+.m-lstitle { width: 258px; background: #f1f1f1; border-bottom: 1px #dfdfdf solid; font-size: 12px; }
+.m-lstitle li { float: left; padding: 5px 0; text-align: center; border-left: 1px #dfdfdf solid; }
+.t1 { width: 65px; }
+.t2 { width: 158px; }
+.t3 { width: 35px; }
+
+
+.scrollMoni { font-size: 12px; display: none; padding-bottom: 5px;}
+.scrollMoni .table{ margin: 0;}
+.scrollMoni .table>tbody>tr>th, .scrollMoni .table>tbody>tr>td { border: none; text-align: center; }
+
+.scrollMoni .icoDan{ border: 1px #dfdfdf solid; color: #dfdfdf; padding: 1px;}
+.scrollMoni .icoDan:hover,.scrollMoni .icoDan:focus{ text-decoration: none;}
+.scrollMoni .icoDan:hover{ color: #3d3d3d; border-color: #3d3d3d;}
+.scrollMoni .icoDan:focus{ color: #f13c38; border-color: #f13c38;}
+
+.scrollMoni .table .gameOption .betList{ padding: 0 0 0 25px;}
+a.block2, a.block0, a.block1, a.blockYel, a.block2:visited, a.block0:visited, a.block1:visited, a.blockYel:visited { float: left; width: 65px; height: 24px; line-height: 24px; text-align: center; color: #fff; margin: 0 5px 0 0; }
+a.block0 { background: #f13c38; }
+a.block1 { background: #f88c35; }
+a.block2 { background: #448b3b; }
+
+
+.guoguanList { padding: 8px 0 8px 25px;}
+.guoguanList .jtip{ float: left; width: 65px;  text-align: center; color: #3d3d3d; border: 2px #dfdfdf solid; margin: 0 5px 0 0; line-height: 24px; cursor: pointer;}
+.guoguanList .jtip.active{ border-color: #f13c38; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* btn-Group */
 .unselect .btn-group { margin: 0 5px; }
 .unselect .btn { background: #f1f1f1; padding: 2px 8px; border: 1px #dfdfdf solid; height: 26px; }

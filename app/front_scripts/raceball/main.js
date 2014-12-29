@@ -2,8 +2,8 @@ require.config({
     paths: {
         jquery: '../lib/jquery',
         bootstrap: '../lib/bootstrap.min',
+        scroll: '../lib/jquery.mCustomScrollbar.concat.min',
         lodash: '../lib/lodash.compat.min',
-        app: '../common/app',
         betting: 'betting'
     },
     shim: {
@@ -11,16 +11,38 @@ require.config({
             deps: ['jquery'],
             exports: 'jquery'
         },
-        app: {
+        scroll: {
             deps: ['jquery'],
-            exports: 'app'
+            exports: 'jquery'
         }
     }
 });
 
-require(['jquery', 'lodash', 'app', 'betting', 'bootstrap'], function($, _, APP, B) {
+require(['jquery', 'lodash', 'betting', 'bootstrap', 'scroll'], function($, _, B) {
     'use strict';
-    // use app here
-    APP.init();
-    B.bindEvent();
+
+    B.init();
+
+    $("#poolStep1 .scrollMoni").mCustomScrollbar({
+        theme: "minimal",
+        setHeight: 120,
+    });
+
+    $.ajax({
+        url: 'http://kp2.yuncai.com/lottery/match-detail/index',
+        type: 'get',
+        dataType: 'jsonp',
+        jsonp:"jsonpcallback",
+    })
+    .done(function(data) {
+        debugger
+        console.log("success");
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+
 });

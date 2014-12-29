@@ -129,36 +129,26 @@ COMMON.getAlertHtml = function(o) {
   var html = '';
   var lotyName = (o.lotyName == 'ssq') ? '双色球' : '大乐透';
   var isZhui = false;
-  var isMost = (o.zhuihaoqihao) ? true : false;
   var m = 0;
   var box = '';
   var obj = {};
   var payMoney = '';
   var Money = DLT.getZhuiJiaStatus();
+  var isMost = (o.zhuihaoqihao) ? true : false;
 
-  isZhui = (Config.box.find('.j-br-type .active').attr('data-buytype') == 2) ? true : false;
+  isZhui = (o.qishu == 1) ? false : true;
+
+  // isZhui = (Config.box.find('.j-br-type .active').attr('data-buytype') == 2) ? true : false;
 
   if (isZhui) {
-    if (isMost) {
-      box = TEMPLATE.zhbox;
-      for (var i = 0; i < o.zhuihaoqihao.length; i++) {
-        m += Number(o.zhuihaoqihao[i].split('|')[2]);
-      };
-      payMoney = o.zhushu * Money * m;
-      obj = {
-        qs: o.qishu,
-        total: payMoney
-      };
 
+    box = TEMPLATE.zhbox;
+    payMoney = o.zhushu * Money * o.beishu * o.qishu;
+    obj = {
+      qs: o.qishu,
+      total: payMoney
+    };
 
-    } else {
-      box = TEMPLATE.zhbox;
-      payMoney = o.zhushu * Money * o.beishu * o.qishu;
-      obj = {
-        qs: o.qishu,
-        total: payMoney
-      };
-    }
   } else {
     if (o.rengouMoney) {
       if (o.baodiText != 0) {
@@ -197,6 +187,18 @@ COMMON.getAlertHtml = function(o) {
         total: payMoney
       };
     }
+  }
+
+  if (isMost) {
+    box = TEMPLATE.zhbox;
+    for (var i = 0; i < o.zhuihaoqihao.length; i++) {
+      m += Number(o.zhuihaoqihao[i].split('|')[2]);
+    };
+    payMoney = o.zhushu * Money * m;
+    obj = {
+      qs: o.qishu,
+      total: payMoney
+    };
   }
 
   Config.lotyName = o.lotyName;
@@ -241,6 +243,13 @@ COMMON.checkParamsStatus = function(p, v) {
   if (!v.isCheck) {
     APP.showTips(APP.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
     c = 0;
+  }
+
+  if (p.zhuihaoqihao) {
+    if (p.zhuihaoqihao == 0) {
+      APP.showTips(APP.getConfirmHtml('请至少选择1注号码投注'));
+      c = 0;
+    }
   }
 
   return c;
@@ -354,7 +363,7 @@ COMMON.getManyZhu = function(len) {
   var html = '';
   for (var i = 0; i < len; i++) {
     var rNums = COMMON.sortNum(_.sample(SEEDS[Config.lotyName].redBall, SEEDS[Config.lotyName].redTotal));
-    var bNums = _.sample(SEEDS[Config.lotyName].blueBall, SEEDS[Config.lotyName].blueTotal);
+    var bNums = COMMON.sortNum(_.sample(SEEDS[Config.lotyName].blueBall, SEEDS[Config.lotyName].blueTotal));
     html += this.getOneZhu(rNums, bNums);
   }
 
@@ -826,6 +835,8 @@ MANUAL.getListHTML = function(r, b, m, h) {
   var li = '';
   var money = DLT.getZhuiJiaStatus();
   m = m / money;
+  r = COMMON.sortNum(r);
+  b = COMMON.sortNum(b);
 
   if (!h) {
     li += '<div class="br-zhu-item clearfix">';

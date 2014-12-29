@@ -835,6 +835,7 @@ $(function() {
     var params = {};
     var buytype = '';
     var requestURL = '';
+    var money = DLT.getZhuiJiaStatus();
 
     params = COMMON.getCommonParams();
 
@@ -874,7 +875,7 @@ $(function() {
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
     vote.callback = function() {
-      if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * 2)) {
+      if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
         APP.showTips(APP.getConfirmHtml('ERROR：认购金额和保底金额超过购买金额！'));
         return;
       }
@@ -908,6 +909,7 @@ $(function() {
     var params = {};
     var buytype = '';
     var requestURL = '';
+    var money = DLT.getZhuiJiaStatus();
 
     params = COMMON.getCommonParams();
     params.codes = COMMON.tuodanFormarFormSub(box.find('.br-zhu-item'));
@@ -948,7 +950,7 @@ $(function() {
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
     vote.callback = function() {
-      if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * 2)) {
+      if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
         APP.showTips(APP.getConfirmHtml('ERROR：认购金额和保底金额超过购买金额！'));
         return;
       }
@@ -981,6 +983,7 @@ $(function() {
     var params = {};
     var buytype = '';
     var requestURL = '';
+    var money = DLT.getZhuiJiaStatus();
 
     params = COMMON.getCommonParams();
     params.beishu = 1;
@@ -1006,7 +1009,7 @@ $(function() {
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
     vote.callback = function() {
 
-      if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * 2)) {
+      if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
         APP.showTips(APP.getConfirmHtml('ERROR：认购金额和保底金额超过购买金额！'));
         return;
       }
@@ -1054,7 +1057,7 @@ $(function() {
           data: params,
         })
         .done(function(data) {
-          COMMON.onSubmitDone(data.retCode, data.retMsg)
+          COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId)
         })
         .fail(function() {
           COMMON.onSubmitFail()
