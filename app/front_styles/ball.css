@@ -35,14 +35,14 @@ body { background: #fff; }
 .dataHead .optionList a:hover { background: #3a3a3a }
 .dataHead .co7 .optionList { width: 100%; top: 29px }
 .co1 { width: 32px; overflow: hidden }
-.co2 { width: 61px; cursor: pointer }
+.co2 { width: 110px; cursor: pointer }
 .co3 { width: 64px }
-.co4 { width: 170px }
+.co4 { width: 230px }
 .co5 { width: 36px }
 .co6 { width: 168px; overflow: hidden; white-space: nowrap; }
 .co6_1 { width: 204px; }
 .co7 { width: 124px; }
-.dataHead .co8, .dataBody .co8 { width: 45px; float: none; position: absolute; right: 0; }
+.dataHead .co8, .dataBody .co8 { width: 60px; float: none; position: absolute; right: 0; }
 .closeData dd, .isOver { display: none }
 /* 投注表格主体 */
 .onlySpf .dataBody .towLine .line2 { display: none }
@@ -78,7 +78,6 @@ body { background: #fff; }
 .co7 em.hover a { background: #f13c38; }
 .co7 em.active a { background: #f13c38; }
 .dataBody dl dd .co7 .line1, .dataBody dl dd .co7 .line2 { border: 1px solid #dfdfdf; border-bottom: 0; border-right: none; }
-.dataBody .co8 .ico_square { display: none; }
 /* Right */
 .unselect, .unselect a { color: #3d3d3d; }
 .unselect .scrollMoni, .unselect .guoguanTab, .unselect .guoguanList, .unselect .guoguanTipsBox { }
@@ -94,33 +93,45 @@ body { background: #fff; }
 .t3 { width: 35px; }
 
 
-.scrollMoni { font-size: 12px; display: none; padding-bottom: 5px;}
+.scrollMoni { font-size: 12px; display: none; max-height: 140px;}
 .scrollMoni .table{ margin: 0;}
 .scrollMoni .table>tbody>tr>th, .scrollMoni .table>tbody>tr>td { border: none; text-align: center; }
+.mCSB_inside>.mCSB_container{ margin-right: 0;}
+.mCSB_scrollTools{ right: -5px; }
 
-.scrollMoni .icoDan{ border: 1px #dfdfdf solid; color: #dfdfdf; padding: 1px;}
+
+.scrollMoni .icoDan{ border: 1px #dfdfdf solid; color: #3d3d3d; padding: 1px;}
 .scrollMoni .icoDan:hover,.scrollMoni .icoDan:focus{ text-decoration: none;}
-.scrollMoni .icoDan:hover{ color: #3d3d3d; border-color: #3d3d3d;}
+.scrollMoni .icoDan:hover{ color: #f13c38; border-color: #f13c38;}
 .scrollMoni .icoDan:focus{ color: #f13c38; border-color: #f13c38;}
+.scrollMoni .icoDan.disable{ color: #dfdfdf;}
 
-.scrollMoni .table .gameOption .betList{ padding: 0 0 0 25px;}
+.scrollMoni .table .gameOption .betList{ padding: 0 0 5px 25px;}
 a.block2, a.block0, a.block1, a.blockYel, a.block2:visited, a.block0:visited, a.block1:visited, a.blockYel:visited { float: left; width: 65px; height: 24px; line-height: 24px; text-align: center; color: #fff; margin: 0 5px 0 0; }
 a.block0 { background: #f13c38; }
 a.block1 { background: #f88c35; }
 a.block2 { background: #448b3b; }
 
-
+#poolStep2 .guoguanList{ display: none;}
 .guoguanList { padding: 8px 0 8px 25px;}
-.guoguanList .jtip{ float: left; width: 65px;  text-align: center; color: #3d3d3d; border: 2px #dfdfdf solid; margin: 0 5px 0 0; line-height: 24px; cursor: pointer;}
+.guoguanList .jtip{ float: left; width: 65px;  text-align: center; color: #3d3d3d; border: 2px #dfdfdf solid; margin: 0 5px 5px 0; line-height: 24px; cursor: pointer;}
 .guoguanList .jtip.active{ border-color: #f13c38; }
 
 
+.ball-modal .modal-dialog{ width: 560px; font-size:12px;}
+.ballbox .btns{ width: 130px; margin: auto;}
 
-
-
-
-
-
+.br-together, .br-zhui { background: #fff;  padding: 15px 0 0; font-size: 12px; color: #848484; }
+.br-together .title { width: 60px; display: inline-block; text-align: right; margin-right: 5px; float: left; color: #3d3d3d; }
+.br-set { padding: 0 6px; height: 21px; line-height: 21px; text-align: center; display: block; border: 1px solid #dddddd; color: #333333; float: left; margin-right: 11px; }
+.br-set:hover, .br-set.active { text-decoration: none; color: #f13c38; border-color: #f13c38; }
+.br-input, .br-textarea, .br-select { background: #fff; border: 1px solid #dfdfdf; padding: 2px; font-size: 12px; }
+.br-textarea { width: 340px; height: 100px; }
+.br-together p{ position: relative;}
+.br-textarea-tips { position: absolute;
+top: 0px;
+width: 70px;
+right: 30px; }
 
 
 
@@ -144,7 +155,7 @@ a.block2 { background: #448b3b; }
 .qrtz-box .fr a { float: right; }
 .qrtz-box .dott { padding: 5px 0; text-align: center; border-bottom: 1px #dfdfdf dashed }
 .qrtz-box .orderRule, .qrtz-box .orderRule a { color: #848484; }
-.qrtz-box .orderRule .icon { position: relative; top: 3px; margin-right: 5px; }
+.qrtz-box .orderRule .icon { position: relative; cursor: pointer; top: 3px; margin-right: 5px; }
 .tzBtnBox { margin: 10px 0; }
 .tzBtnBox .ljtzBtn, .tzBtnBox .fqhmBtn { width: 115px; height: 38px; line-height: 38px; color: #fff; border: none; padding: 0; }
 .tzBtnBox .ljtzBtn { background: #f13c38; margin-right: 5px; }

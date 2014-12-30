@@ -14,9 +14,12 @@ define(['jquery'], function($) {
 
     bet.prototype = {
       beishu: 1,
+      zhushu: null,
       isAgreen: true,
       match: [],
+      bunch: [],
       dd: null,
+      maxBonus: null,
       box: $('#bettingBox'),
       tab: 'spf',
     };
@@ -35,7 +38,19 @@ define(['jquery'], function($) {
       }
     };
 
-    bet.prototype.addOneItem = function(i, dd) {
+    bet.prototype.toggleBunch = function(h, method) {
+
+      if (h) {
+        this.bunch.push(method);
+      } else {
+        _.remove(this.bunch, function(b) {
+          return b == method;
+        });
+      }
+
+    };
+
+    bet.prototype.addOneItem = function(i, dd, sp) {
       var _this = this;
       var m = ['胜', '平', '负'];
       var code = dd.attr('matchcode');
@@ -57,14 +72,15 @@ define(['jquery'], function($) {
       _this.match.push({
         index: i,
         type: _this.tab,
-        matchcode: code
+        matchcode: code,
+        sp: sp
       });
 
       if (hasMatch) {
         compiled = _.template('<a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a>');
         $('#selectGamePool .gameOption[matchcode=' + code + '] .betList').append(compiled(fill));
       } else {
-        compiled = _.template('<tr matchcode="<%= matchcode%>" class="gameTitle"><th class="t1"><a class="icoDel" href="javascript:;"></a><%= matchnumcn%></th><th class="t2"><%= hostname%> <%= guestname%></th><th class="t3"><a href="javascript:;" class="icoDan" disabled="disabled" checked="">胆</a></th></tr><tr class="gameOption" matchcode="<%= matchcode%>"><td colspan="5" class="betList"><a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a></td></tr>');
+        compiled = _.template('<tr matchcode="<%= matchcode%>" class="gameTitle"><th class="t1"><a class="icoDel" href="javascript:;"></a><%= matchnumcn%></th><th class="t2"><%= hostname%> <%= guestname%></th></tr><tr class="gameOption" matchcode="<%= matchcode%>"><td colspan="5" class="betList"><a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a></td></tr>');
         $('#selectGamePool tbody').append(compiled(fill));
       }
       $('#poolStep1 .scrollMoni').show();
@@ -101,22 +117,173 @@ define(['jquery'], function($) {
     };
 
     bet.prototype.setSecondBox = function() {
-      var len = $('#selectGamePool .gameTitle').length;
+
+      var _this = this;
+      var len = _.uniq(_this.match, 'matchcode').length;
+
       var obj = {
         len: len,
+        isCheck: false,
+        active: ''
       };
-      var html = _.template('<li inf="至少猜中<%= len%>场可中奖" class="jtip" data-method="<%= len%>_1" data-check="false"><%= len%>串1</li>');
+      var tips = $('#poolErrorTips');
+      var list = $('#j-method-ls');
+      var html = '';
+      var jtip = list.find('.jtip');
+
+      if (len > 8) return;
 
       if (len >= 2) {
-        $('#poolErrorTips').hide();
-        $('#poolStep2 .guoguanList').html(html(obj));
+
+        if ($('#j-me-' + len)[0]) {
+          if ((jtip.length + 1) > len) {
+            jtip.eq(jtip.length - 1).remove();
+          }
+        } else {
+
+          if (len == 2) {
+            obj.isCheck = true;
+            obj.active = 'active';
+            _this.toggleBunch(true, '2_1');
+          }
+
+          if (len == 3) {
+            jtip.removeClass('active').attr('data-check', 'false');
+            _this.toggleBunch(false, '2_1')
+          }
+
+          html = _.template('<li inf="至少猜中<%= len%>场可中奖" class="jtip <%= active%>" id="j-me-<%= len%>" data-method="<%= len%>_1" data-check="<%= isCheck%>"><%= len%>串1</li>');
+
+          tips.hide();
+          list.show().append(html(obj));
+        }
       } else {
-        $('#poolErrorTips').show();
+        list.hide().html('');
+        tips.show();
       }
+
+    };
+
+    // 计算阶乘的函数
+    bet.prototype.combinations = function(numArr, choose) {
+
+      var n = numArr.length;
+      var c = [];
+      var total = 0;
+
+      var inner = function(start, choose_) {
+
+        var d = 1;
+
+        if (choose_ == 0) {
+          d = 1;
+          for (var i = 0; i < c.length; i++) {
+            d *= c[i];
+          };
+          total += d;
+        } else {
+          for (var i = start; i <= n - choose_; ++i) {
+            c.push(numArr[i]);
+            inner(i + 1, choose_ - 1);
+            c.pop();
+          }
+        }
+
+      };
+
+      inner(0, choose);
+      return total;
+    };
+
+    bet.prototype.getTotalZhus = function() {
+
+      var _this = this;
+
+      var groupTotalChange = [];
+      var acTotalNum = 1;
+      var method = null;
+      var group = _.groupBy(_this.match, function(match) {
+        return match.matchcode;
+      });
+      var ms = _.uniq(_this.match, 'matchcode');
+      var matchTotal = ms.length;
+      var chuanArr = [];
+      var maxList = [];
+      var mb = 0;
+      var result = {
+        zhus: 0,
+        maxBonus: 0,
+      };
+
+      $('#j-method-ls .jtip[data-check="true"]').each(function(index, el) {
+        chuanArr.push(el.attributes['data-method'].value);
+      });
+
+      for (var prop in group) {
+        if (group.hasOwnProperty(prop)) {
+          maxList.push(_.max(group[prop], 'sp'));
+        }
+      }
+
+
+
+      if (chuanArr.length != 0) {
+
+        for (var i = 0; i < ms.length; i++) {
+          groupTotalChange.push(group[ms[i].matchcode].length);
+        };
+
+        for (var i = 0; i < chuanArr.length; i++) {
+          mb = 0;
+          method = Number(chuanArr[i].slice(0, 1));
+
+          result.zhus += _this.combinations(groupTotalChange, method);
+
+          for (var k = 0; k < method; k++) {
+            mb += Number(maxList[k].sp);
+          };
+
+          result.maxBonus += mb;
+
+        };
+
+      }
+
+      result.maxBonus *= _this.beishu * 2;
+      result.maxBonus = result.maxBonus.toFixed(2);
+      return result;
+
+    };
+
+    bet.prototype.clearBetData = function() {
+      $('#selectGamePool tbody').html('');
+      $('#poolStep1 .scrollMoni').hide();
+      $('#poolStep1 .unSeleTips').fadeIn();
+      _this.box.find('.towLine em').removeClass('active hover');
+
+      _this.match = [];
+      _this.dd = null;
+      _this.bunch = [];
+      _this.setSecondBox();
+      _this.setAllTotal();
     };
 
     bet.prototype.setAllTotal = function() {
 
+      var _this = this;
+      var ms = _.uniq(_this.match, 'matchcode').length;
+      var s = _this.getTotalZhus();
+      var zhus = s.zhus || 0;
+      var totalMoney = zhus * 2;
+      var maxBonus = s.maxBonus;
+      maxBonus = (maxBonus == 0) ? '0.00' : maxBonus;
+      _this.maxBonus = maxBonus;
+
+      _this.zhushu = zhus;
+      $('#gameNumber').html(ms);
+      $('#gameZhu').html(zhus);
+      $('#totalMoney').html(totalMoney);
+      $('#maxbonus').html(maxBonus);
     };
 
     bet.prototype.bindMain = function() {
@@ -137,11 +304,11 @@ define(['jquery'], function($) {
 
         var t = $(this);
         var i = t.attr('index');
-        var e = _this.getOtherEm(t, i);
+        //var e = _this.getOtherEm(t, i);
 
         if (!t.hasClass(a) && !t.hasClass('rq')) {
           t.addClass(h);
-          e.addClass(h);
+          // e.addClass(h);
         };
 
       });
@@ -150,11 +317,11 @@ define(['jquery'], function($) {
 
         var t = $(this);
         var i = t.attr('index');
-        var e = _this.getOtherEm(t, i);
+        //var e = _this.getOtherEm(t, i);
 
         if (!t.hasClass(a) && !t.hasClass('rq')) {
           t.removeClass(h);
-          e.removeClass(h);
+          // e.removeClass(h);
         };
 
       });
@@ -162,19 +329,20 @@ define(['jquery'], function($) {
       _this.box.on('click', '.towLine em', function(event) {
         var t = $(this);
         var i = t.attr('index');
+        var sp = t.attr('sp');
         var gametype = t.attr('gametype');
-        var e = _this.getOtherEm(t, i);
+        //var e = _this.getOtherEm(t, i);
         var dd = t.parents('dd');
 
         if (t.hasClass('rq')) return;
         if (t.hasClass(a)) {
           t.removeClass();
-          e.removeClass();
+          // e.removeClass();
           _this.removeOneItem(i, dd);
         } else {
           t.addClass(a);
-          e.addClass(a);
-          _this.addOneItem(i, dd);
+          //e.addClass(a);
+          _this.addOneItem(i, dd, sp);
         }
 
       });
@@ -182,14 +350,62 @@ define(['jquery'], function($) {
       // Toggle Buy Type
       $('#j-vote-nav').on('click', 'a', function(event) {
         var type = $(this).attr('data-type');
+        _this.tab = (type == 'onlySpf') ? 'spf' : 'rfspf';
         _this.box.removeClass('onlySpf onlyRqSpf').addClass(type);
-        t.tab = (type == 'onlySpf') ? 'spf' : 'rfspf';
+        _this.clearBetData();
       });
 
       //  Buy Main Toggle
       _this.box.on('click', '.j-dataBody-toggle', function(event) {
         $(this).parents('dl').find('dd').toggle();
       });
+
+    };
+
+    bet.prototype.getSubmitParams = function() {
+
+      var _this = this;
+      var matchs = [];
+      var content = [];
+      var j = [3, 1, 0];
+      var obj = null;
+      var t = null;
+      var o = {};
+      var c = [];
+      var m = [];
+      var f = [];
+
+
+      // get Params
+      m = _.uniq(_this.match, 'matchcode');
+      for (var i = 0; i < m.length; i++) {
+        matchs.push(m[i].matchcode);
+      };
+
+      for (var i = 0; i < matchs.length; i++) {
+
+        c = [];
+
+        f = _.where(_this.match, {
+          'matchcode': matchs[i]
+        });
+
+        for (var k = 0; k < f.length; k++) {
+          c.push(j[f[k].index]);
+        };
+
+        content.push(c.join(','));
+      };
+
+      obj = {
+        zhushu: _this.zhushu,
+        beishu: _this.beishu,
+        matchKeys: matchs.join(','),
+        bunch: _this.bunch.join(','),
+        content: content.join('|'),
+      };
+
+      return obj;
 
     };
 
@@ -215,10 +431,19 @@ define(['jquery'], function($) {
       });
 
       $('#poolStep2').on('click', '.jtip', function(event) {
+
         var t = $(this);
         var a = 'active';
+        var h = null;
+        var method = t.attr('data-method') || null;
+
         t.toggleClass(a);
-        t.attr('data-check', t.hasClass(a));
+        h = t.hasClass(a);
+        t.attr('data-check', h);
+
+        _this.toggleBunch(h, method);
+        _this.setAllTotal();
+
       });
 
       $('#orderRule').on('click', '.icon', function(event) {
@@ -230,6 +455,10 @@ define(['jquery'], function($) {
       $('#j-touzhu-tips').on('click', function(event) {
         $('#j-touzhu-tipstext').toggle();
         $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
+      });
+
+      $('#btnclear').on('click', function(event) {
+        _this.clearBetData();
       });
 
     };
@@ -276,17 +505,5 @@ define(['jquery'], function($) {
   }());
 
   var b = new bet();
-
-  Object.observe(b, function(changes) {
-
-    // 这个异步毁掉函数将会运行
-    changes.forEach(function(change) {
-
-      // 让我们获知变化
-      console.log(change.type, change.name, change.oldValue);
-    });
-
-  });
-
   return b;
 });
