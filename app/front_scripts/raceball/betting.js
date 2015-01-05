@@ -2,7 +2,6 @@ define(['jquery'], function($) {
   'use strict';
 
   var bet = (function() {
-    'use strict';
 
     function bet(args) {
       // enforces new
@@ -25,6 +24,17 @@ define(['jquery'], function($) {
     };
 
     bet.prototype.init = function() {
+      this.prototype = {
+        beishu: 1,
+        zhushu: null,
+        isAgreen: true,
+        match: [],
+        bunch: [],
+        dd: null,
+        maxBonus: null,
+        box: $('#bettingBox'),
+        tab: 'spf',
+      };
       this.bindMain();
       this.bindRight();
       this.bindHdnav();
@@ -164,23 +174,18 @@ define(['jquery'], function($) {
 
     };
 
-    // 计算阶乘的函数
-    bet.prototype.combinations = function(numArr, choose) {
-
+    /**
+     * [combinations description]
+     * @param  {[type]} numArr 对阵matchkey
+     * @param  {[type]} choose [description]
+     * @return {[type]}        [description]
+     */
+    bet.prototype.combinations = function(numArr, choose, callback) {
       var n = numArr.length;
       var c = [];
-      var total = 0;
-
       var inner = function(start, choose_) {
-
-        var d = 1;
-
         if (choose_ == 0) {
-          d = 1;
-          for (var i = 0; i < c.length; i++) {
-            d *= c[i];
-          };
-          total += d;
+          callback(c);
         } else {
           for (var i = start; i <= n - choose_; ++i) {
             c.push(numArr[i]);
@@ -188,18 +193,14 @@ define(['jquery'], function($) {
             c.pop();
           }
         }
-
       };
-
       inner(0, choose);
-      return total;
     };
 
     bet.prototype.getTotalZhus = function() {
 
       var _this = this;
-
-      var groupTotalChange = [];
+      var matchkeys = [];
       var acTotalNum = 1;
       var method = null;
       var group = _.groupBy(_this.match, function(match) {
@@ -217,6 +218,7 @@ define(['jquery'], function($) {
 
       $('#j-method-ls .jtip[data-check="true"]').each(function(index, el) {
         chuanArr.push(el.attributes['data-method'].value);
+        $('#j-no-method').fadeOut();
       });
 
       for (var prop in group) {
@@ -224,26 +226,34 @@ define(['jquery'], function($) {
           maxList.push(_.max(group[prop], 'sp'));
         }
       }
-
-
-
+      var matchkeySp = {};
+      var matchkeySpArr = [];
       if (chuanArr.length != 0) {
 
         for (var i = 0; i < ms.length; i++) {
-          groupTotalChange.push(group[ms[i].matchcode].length);
+          matchkeySpArr = [];
+          matchkeys.push(ms[i].matchcode);
+          var tem = group[ms[i].matchcode];
+          for (var k = tem.length - 1; k >= 0; k--) {
+            matchkeySpArr.push(tem[k].sp);
+          };
+          matchkeySp[ms[i].matchcode] = matchkeySpArr;
         };
 
         for (var i = 0; i < chuanArr.length; i++) {
+
           mb = 0;
           method = Number(chuanArr[i].slice(0, 1));
-
-          result.zhus += _this.combinations(groupTotalChange, method);
-
-          for (var k = 0; k < method; k++) {
-            mb += Number(maxList[k].sp);
-          };
-
-          result.maxBonus += mb;
+          _this.combinations(matchkeys, method, function(matchs) {
+            var _tmpZhushu = 1;
+            var _tmpMaxBonus = 1;
+            for (var i = 0; i < matchs.length; i++) {
+              _tmpZhushu *= matchkeySp[matchs[i]].length;
+              _tmpMaxBonus *= _.max(matchkeySp[matchs[i]]);
+            }
+            result.zhus += _tmpZhushu;
+            result.maxBonus += _tmpMaxBonus;
+          });
 
         };
 
@@ -256,6 +266,7 @@ define(['jquery'], function($) {
     };
 
     bet.prototype.clearBetData = function() {
+      var _this = this;
       $('#selectGamePool tbody').html('');
       $('#poolStep1 .scrollMoni').hide();
       $('#poolStep1 .unSeleTips').fadeIn();
@@ -274,7 +285,7 @@ define(['jquery'], function($) {
       var ms = _.uniq(_this.match, 'matchcode').length;
       var s = _this.getTotalZhus();
       var zhus = s.zhus || 0;
-      var totalMoney = zhus * 2;
+      var totalMoney = zhus * 2 * _this.beishu;
       var maxBonus = s.maxBonus;
       maxBonus = (maxBonus == 0) ? '0.00' : maxBonus;
       _this.maxBonus = maxBonus;
@@ -350,14 +361,29 @@ define(['jquery'], function($) {
       // Toggle Buy Type
       $('#j-vote-nav').on('click', 'a', function(event) {
         var type = $(this).attr('data-type');
-        _this.tab = (type == 'onlySpf') ? 'spf' : 'rfspf';
+        _this.tab = (type == 'onlySpf') ? 'spf' : 'rqspf';
         _this.box.removeClass('onlySpf onlyRqSpf').addClass(type);
         _this.clearBetData();
       });
 
       //  Buy Main Toggle
       _this.box.on('click', '.j-dataBody-toggle', function(event) {
-        $(this).parents('dl').find('dd').toggle();
+
+        var t = $(this);
+        var s = t.attr('data-show');
+        var dd = t.parents('dl').find('dd');
+        var title = ['隐藏', '展开'];
+
+        if (s == 1) {
+          dd.hide();
+          t.attr('data-show', 0);
+        } else {
+          dd.show();
+          t.attr('data-show', 1);
+        }
+
+        t.html(title[s]);
+
       });
 
     };
@@ -374,7 +400,6 @@ define(['jquery'], function($) {
       var c = [];
       var m = [];
       var f = [];
-
 
       // get Params
       m = _.uniq(_this.match, 'matchcode');
@@ -414,20 +439,26 @@ define(['jquery'], function($) {
       var _this = this;
 
       $('.j-coutn-total').on('click', '.j-count', function(event) {
+
         var m = $(this).siblings('.btn-results'),
           c = $(this).attr('data-c'),
           r = m.attr('data-r');
+
         _this.updateCount(m, c);
         _this.setAllTotal();
+
       });
 
       $('.btn-results').on('keyup', function(event) {
+
         var t = $(this);
         var r = t.attr('data-r');
         var v = _this.filterNum(t.val());
+
         t.val(v);
         _this.beishu = v;
         _this.setAllTotal();
+
       });
 
       $('#poolStep2').on('click', '.jtip', function(event) {
@@ -484,6 +515,7 @@ define(['jquery'], function($) {
         v--;
       }
       v = (v >= 1) ? v : 1;
+      v = v > 99999 ? 99999 : v;
       this.beishu = v;
       m.val(v);
     };
@@ -497,6 +529,7 @@ define(['jquery'], function($) {
         n = (n >= 1) ? n : 1;
         n = n;
       }
+      n = n > 99999 ? 99999 : n;
       return n;
     };
 

@@ -2,7 +2,6 @@ define(['jquery'], function($) {
   'use strict';
 
   var app = (function() {
-    'use strict';
 
     function app(args) {
       // enforces new
@@ -50,7 +49,7 @@ define(['jquery'], function($) {
               if (data.retCode == 100000) {
                 window.location.href = data.retData.redirectURL;
               } else {
-                alert(data.retMsg);
+                _this.showTips(_this.getConfirmHtml(data.retMsg));
               }
             })
             .fail(function() {
@@ -78,7 +77,6 @@ define(['jquery'], function($) {
       return '<div class="tipbox"><p>' + h + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
     };
 
-
     /**
      * HandRetCode for Ajax
      * @param  {retCode} retCode Ajax Respone Status
@@ -86,21 +84,42 @@ define(['jquery'], function($) {
      * @return {null}
      */
     app.prototype.handRetCode = function(retCode, retMsg) {
+      var _this = this;
+
       switch (retCode) {
         case 120002:
-          this.showLoginBox();
+          _this.showLoginBox();
           break;
         case 120001:
-          this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+          _this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
           break;
         default:
-          this.showTips('<div class="tipbox"><p>' + retMsg + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>');
+          _this.showTips('<div class="tipbox"><p>' + retMsg + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>');
           break;
       }
     };
 
-    // 彩票购买提交 初始化
+    // Buy ticket Submit Init
     app.prototype.onSubmitInit = function(vote) {
+      var _this = this;
+
+      _this.checkLogin({
+        enoughMoney: function() {
+          _this.showTips({
+            title: vote.title,
+            html: vote.confirmHtml
+          });
+
+          $('#buyConfirm').on('click', function(event) {
+            vote.callback();
+          });
+        }
+      });
+
+    };
+
+    // Check User Login
+    app.prototype.checkLogin = function(o) {
       var _this = this;
 
       $.ajax({
@@ -110,20 +129,13 @@ define(['jquery'], function($) {
         })
         .done(function(D) {
           if (D.retCode === 100000) {
-            if (Number(D.retData.money.replace(/,/g, '')) >= Config.payMoney) {
-
-              _this.showTips({
-                title: vote.title,
-                html: vote.confirmHtml
-              });
-
-              $('#buyConfirm').on('click', function(event) {
-                vote.callback();
-              });
-
+            var userMoney = Number(D.retData.money.replace(/,/g, ''));
+            if (userMoney >= Config.payMoney && userMoney != 0) {
+              if (o.enoughMoney) o.enoughMoney();
             } else {
               _this.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
             }
+            if (o.always) o.always();
           } else {
             _this.handRetCode(D.retCode, D.retMsg);
           }
@@ -165,7 +177,6 @@ define(['jquery'], function($) {
 
       $('#myModal').on('show.bs.modal', _this.centerModal);
 
-      //if($('#myModal').hasClass('in')){
       $('#myModal').modal('show');
 
     };
@@ -179,6 +190,10 @@ define(['jquery'], function($) {
       var $dialog = $(this).find(".modal-dialog");
       var offset = ($(window).height() - $dialog.height()) / 2;
       $dialog.css("margin-top", offset);
+    };
+
+    app.prototype.onServiceFail = function() {
+      this.showTips(this.getConfirmHtml('服务器繁忙,请稍后再试!'));
     };
 
     return app;

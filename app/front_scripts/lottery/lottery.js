@@ -24,7 +24,6 @@ var DLT = {};
 var qiuckSet = ''; // -常规 修改当前注
 var tuoDanSet = ''; // -拖胆 修改当前注
 
-
 var Config = (function() {
   'use strict';
 
@@ -82,10 +81,10 @@ SEEDS.dlt = {
 };
 
 TEMPLATE = {
-  frbox: '<div class="frbox"><img src="//static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>共<span><%= zs %></span>注, 投注<span><%= bs %></span>倍</p><p>本次需支付<span class="fc-3"><%= total %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
-  zhbox: '<div class="frbox"><img src="//static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>追号<span><%= qs %></span>期</p><p>本次需支付<span class="fc-3"><%= total %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
-  rgbox: '<div class="frbox"><img src="//static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %>.00</span>元</p><p>共需支付<span class="fc-3"><%= rengou %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
-  bdbox: '<div class="frbox"><img src="//static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %>.00</span>元, 保底<span><%= baodi %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>'
+  frbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>共<span><%= zs %></span>注, 投注<span><%= bs %></span>倍</p><p>本次需支付<span class="fc-3"><%= total %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
+  zhbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p>追号<span><%= qs %></span>期</p><p>本次需支付<span class="fc-3"><%= total %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
+  rgbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %>.00</span>元</p><p>共需支付<span class="fc-3"><%= rengou %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
+  bdbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %>.00</span>元, 保底<span><%= baodi %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>'
 };
 
 /**************QUEUE*************/
@@ -208,8 +207,6 @@ COMMON.getAlertHtml = function(o) {
 
   return html;
 }
-
-
 
 /**
  * onSubmitDone 彩票购买提交成功回调事件
@@ -433,7 +430,6 @@ COMMON.setZhuTotal = function() {
   }
 }
 
-
 // 检测 选球区
 COMMON.checkBallGroup = function() {
 
@@ -457,7 +453,6 @@ COMMON.checkBallGroup = function() {
 
   COMMON.updateQuickZhu(rLen, bLen, t, t * m, p);
 }
-
 
 // 返回一注 List HTML
 COMMON.getOneZhu = function(r, b, m, h) {
@@ -1025,7 +1020,6 @@ ZHUI.setHeMaiTotal = function(box) {
     rengouMoney = Math.ceil(ticheng * 0.01 * m);
   }
 
-
   //我要保底金额
   var baodiMoney = '';
   var baodiPercent = '';
@@ -1085,7 +1079,6 @@ ZHUI.setHeMaiTotal = function(box) {
     box.find('.j-rengou-percentage').html((rengouMoney / m * 100).toFixed(2));
   }
 
-
   //如果要保底 更新保底金额
   box.find('.j-baodi-text').val(baodiMoney)
   box.find('.j-baodi-percent').html(baodiPercent)
@@ -1093,7 +1086,6 @@ ZHUI.setHeMaiTotal = function(box) {
   box.find('.j-baidi-tip').html(baodiMoney)
   box.find('.j-totalm-tip').html(rengouMoney + baodiMoney)
 };
-
 
 // 给AJAX 返回的HTML添加时间 检测 追号总金额
 ZHUI.bindZhuiHaoEvent = function() {
@@ -1127,7 +1119,6 @@ ZHUI.bindZhuiHaoEvent = function() {
     $(this).parents('.br-details').find('tbody .br-zhui-bei').val(val);
     ZHUI.setZhuiHaoTotal(Config.box);
   });
-
 
   $('.br-details tbody .br-zhui-bei').on('change', function(event) {
     var val = parseInt($(this).val()) || 1;
@@ -1177,8 +1168,6 @@ ZHUI.bindHeMaiEvent = function() {
   $('.j-baodi-text').on('change', function(event) {
     ZHUI.setHeMaiTotal(Config.box);
   });
-
-
 
   function inputOnfocus(el) {
     if ($.trim(el.val()) == el.attr('data-text')) {
@@ -1276,7 +1265,6 @@ DLT.updateZhuList = function(box) {
   }
 
 }
-
 
 DLT.getZhuiJiaStatus = function() {
   if (Config.box.find('.j-zj-check')[0]) {

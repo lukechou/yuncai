@@ -63,7 +63,7 @@ body { background: #fff; color: #3d3d3d; }
 .hall-list>li>.text>h5 { font-size: 20px; margin-bottom: 6px; }
 .hall-list>li>.text>p { font-family: 'Microsoft Yahei'; }
 .hall-list>li:first-child { margin-left: 0; }
-.hall-list>li>img { display: block; margin: auto; }
+.hall-list>li>img { display: block; margin: auto;}
 .hall-list .l-group { width: 120px; height: 17px; margin: auto; font-size: 12px; }
 .hall-list .l-group>a { color: #0d67c4; display: block; width: 50%; float: left; }
 .hall-list .li-disabled .btn-ligou { background: #bdbcbc; }
@@ -94,7 +94,7 @@ body { background: #fff; color: #3d3d3d; }
 .m-he-nav .line { width: 90%; margin: auto; border-bottom: 1px #c4c4c4 dashed; }
 /* 定制跟单-右侧头部 */
 .m-cs-rtbox { background: #fff; border: 1px #c4c4c4 solid; font-size: 12px; padding: 10px 10px 10px 20px; }
-.m-cs-rtbox .logo { margin-right: 20px; }
+.m-cs-rtbox .logo { margin-right: 20px; height: 78px; width: 78px; }
 .m-cs-rtbox .mn { width: 655px; position: relative; }
 .m-cs-rtbox .title { font-size: 16px; margin: 10px 0 15px; }
 .m-cs-rtbox .title>b { font-size: 22px; margin-right: 20px; }
@@ -288,7 +288,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .record-shai-ft { background: #f1f1f1; border: 1px #dfdfdf solid; margin-top: 10px; padding: 20px 40px; }
 /* 个人中心-账户明细 */
 .detail { font-size: 12px; }
-.detail-box { padding: 15px 20px; border: 1px #dfdfdf solid; height: 300px; }
+.detail-box { padding: 15px 20px; border: 1px #dfdfdf solid; height: 200px; }
 .detail-box .sque { width: 12px; height: 12px; display: inline-block; }
 .bg-green { background: #25b43a; }
 .bg-red { background: #e52669; }

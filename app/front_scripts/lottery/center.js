@@ -1,6 +1,7 @@
 'use strict';
 $(function() {
   $('#j-gou').on('click', '.j-gou-btn', function() {
+
     var tr = $(this).parents('tr');
     var count = tr.find('.j-gou-count');
     var b = Number(count.val());
@@ -11,7 +12,14 @@ $(function() {
     var h = '';
     var mtotal = tr.find('.j-mtotal').html();
     var mid = $('#j-mqi').html();
-    var mname = (lotyName == 'ssq') ? '双色球' : '大乐透';
+    var midHtml = '';
+    var lotyNameObj = {
+      ssq: '双色球',
+      dlt: '大乐透',
+      jczq: '竞彩足球',
+    };
+    var mname = lotyNameObj[lotyName];
+
     if (checkByNum(b, max)) {
       data = {
         byNum: b,
@@ -25,10 +33,11 @@ $(function() {
           });
         }
       };
-      template = _.template('<div class="frbox"><img src="//static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= id%></span>期</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
+      if (mid) midHtml = '第<span>' + mid + '</span>期';
+
+      template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
       h = template({
         lotyName: mname,
-        id: mid,
         total: mtotal,
         pay: b
       });
@@ -82,7 +91,7 @@ $(function() {
     username: '',
     pageSize: 10,
     innerHtmlObj: $('.m-pager'),
-    page: 0
+    page: 1
   });
 
   $('#searchBtn').on('click', function(event) {
@@ -99,7 +108,7 @@ $(function() {
       username: username,
       pageSize: 10,
       innerHtmlObj: $('.m-pager'),
-      page: 0
+      page: 1
     };
     PAGE.loadPrjctLst(obj);
   });
