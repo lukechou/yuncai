@@ -12,7 +12,13 @@ define(['jquery'], function($) {
     }
 
     app.prototype = {};
+
+    /**
+     * 全局通用登录弹出框
+     * @return {null}
+     */
     app.prototype.showLoginBox = function() {
+
       var _this = this;
 
       if (!$('#user-login')[0]) {
@@ -23,15 +29,8 @@ define(['jquery'], function($) {
       $('#j-login-modal').on('show.bs.modal', _this.centerModal);
       $('#j-login-modal').modal('show');
       $('#user-login').unbind();
-      _this.bindLoginEvent();
-
-    };
-
-    app.prototype.bindLoginEvent = function() {
-      var _this = this;
 
       $('#user-login').on('click', function(event) {
-
         var user = _this.regStr($('#login-username').val())
         var pwd = _this.regStr($('#login-password').val())
 
@@ -61,18 +60,62 @@ define(['jquery'], function($) {
         }
 
       });
+    };
 
-    }
-
+    /**
+     * 过滤字符串
+     * @param  {String} s 字符串
+     * @return {String}   过滤后的字符串
+     */
     app.prototype.regStr = function(s) {
+
       var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——| {}【】‘；：”“'。，、？]")
       var rs = "";
       for (var i = 0; i < s.length; i++) {
         rs = rs + s.substr(i, 1).replace(pattern, '');
       }
+
       return rs;
     };
 
+    /**
+     * Update User Money
+     * @return {null}
+     */
+    app.prototype.updateUserMoney = function() {
+      $.ajax({
+          url: '/account/islogin',
+          type: 'get',
+          dataType: 'json',
+        })
+        .done(function(data) {
+          if (data.retCode === 100000) {
+            $('#userMoney').html(data.retData.money);
+          }
+        });
+    };
+
+    /**
+     * 获取参数
+     * @param  {url} paraName 获取参数
+     * @return {String}
+     */
+    app.prototype.parseQueryString = function(url) {
+      var re = /[\?&]([^\?&=]+)=([^&]+)/g,
+        matcher = null,
+        items = {};
+      url = url || window.location.search;
+      while (null != (matcher = re.exec(url))) {
+        items[matcher[1]] = decodeURIComponent(matcher[2]);
+      }
+      return items;
+    };
+
+    /**
+     * 获取通用弹出框 有确定按钮
+     * @param  {String} h 弹出框HTML
+     * @return {String}   弹出框HTML
+     */
     app.prototype.getConfirmHtml = function(h) {
       return '<div class="tipbox"><p>' + h + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
     };
@@ -99,7 +142,11 @@ define(['jquery'], function($) {
       }
     };
 
-    // Buy ticket Submit Init
+    /**
+     * Buy ticket Submit Init
+     * @param  {Object} vote 回调对象
+     * @return {null}
+     */
     app.prototype.onSubmitInit = function(vote) {
       var _this = this;
 
@@ -118,7 +165,11 @@ define(['jquery'], function($) {
 
     };
 
-    // Check User Login
+    /**
+     * Check User Status And Has Enougth Money
+     * @param  {Object} o 回调对象
+     * @return {null}
+     */
     app.prototype.checkLogin = function(o) {
       var _this = this;
 
@@ -140,11 +191,10 @@ define(['jquery'], function($) {
             _this.handRetCode(D.retCode, D.retMsg);
           }
         });
-
     };
 
     /**
-     * [showTips 拟态框]
+     * showTips 全局通用拟态框
      * @param  {Object} obj tips's HTML {title:'title', html:'html'}
      * @return {null}
      */
@@ -192,8 +242,26 @@ define(['jquery'], function($) {
       $dialog.css("margin-top", offset);
     };
 
+    /**
+     * Ajax ServiceFial ShowTips
+     * @return {null}
+     */
     app.prototype.onServiceFail = function() {
       this.showTips(this.getConfirmHtml('服务器繁忙,请稍后再试!'));
+    };
+
+    app.prototype.init = function() {
+
+      $('#choseCai').hover(function() {
+        var m = $(this);
+        m.find('#hdMask').toggle();
+        m.find('a').toggleClass('on');
+      }, function() {
+        var m = $(this);
+        m.find('#hdMask').toggle();
+        m.find('a').toggleClass('on');
+      });
+
     };
 
     return app;
@@ -201,5 +269,6 @@ define(['jquery'], function($) {
   }());
 
   var a = new app();
+  a.init();
   return a;
 });

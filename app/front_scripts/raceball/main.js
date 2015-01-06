@@ -1,13 +1,13 @@
 require.config({
   paths: {
     jquery: '../lib/jquery',
-    store: '../lib/store.min',
-    bootstrap: '../lib/bootstrap.min',
-    scroll: '../lib/jquery.mCustomScrollbar.concat.min',
     lodash: '../lib/lodash.compat.min',
+    bootstrap: '../lib/bootstrap.min',
+    store: '../lib/store.min',
+    app: '../common/app',
+    scroll: '../lib/jquery.mCustomScrollbar.concat.min',
     betting: 'betting',
     hemai: 'hemai',
-    app: 'app'
   },
   shim: {
     bootstrap: {
@@ -21,12 +21,11 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll'], function($, _, BET, A, store, H) {
+require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll'], function($, _, BET, APP, store, H) {
   'use strict';
 
   //初始化竞彩足球, 合买
   BET.init();
-  H.init();
   Config.lotyName = 'jczq';
 
   var buyTicket = function(obj, type) {
@@ -43,25 +42,47 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
           store.set('projectNo', data.retData.projectNo);
           window.location.href = '/html/lottery/trade/success.html';
         } else {
-          A.handRetCode(data.retCode, data.retMsg);
+          APP.handRetCode(data.retCode, data.retMsg);
         }
       })
       .fail(function() {
-        A.onServiceFail();
+        APP.onServiceFail();
       });
+  };
+
+  var showTipMask = function() {
+    var b = $('#j-game-method');
+    var top = b[0].offsetTop;
+    var m = $('#tipMark');
+    $('#j-no-method').show();
+    m.css({
+      display: 'block',
+      width: b.width(),
+      height: b.height(),
+      top: top,
+    });
+    var count = 0;
+    var times = function() {
+      m.fadeToggle('fast', function() {});
+      if (count > 5) {
+        clearInterval(f);
+      }
+      count++
+    };
+    var f = setInterval(times, 100);
   };
 
   var checkParams = function() {
     if (_.uniq(BET.match, 'matchcode').length > 8) {
-      A.showTips(A.getConfirmHtml('您好，投注场次不得超过8场哦'))
+      APP.showTips(APP.getConfirmHtml('您好，投注场次不得超过8场哦'))
       return false;
     }
     if (!BET.isAgreen) {
-      A.showTips(A.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
+      APP.showTips(APP.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
       return false;
     }
     if (!BET.zhushu) {
-      $('#j-no-method').fadeIn();
+      showTipMask();
       return false;
     }
     return true;
@@ -101,7 +122,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     });
 
     Config.payMoney = 1;
-    A.checkLogin({
+    APP.checkLogin({
       enoughMoney: function() {
         c = checkParams();
         if (c) {
@@ -125,12 +146,16 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     obj.rengouMoney = $('#ballModal .j-rengou').val();
     obj.tichengPercent = $('#ipt_extraPercent').val();
     obj.baodiMoney = $('#ballModal .j-baodi-text').val();
-    obj.projectSet = $('#ballModal .br-set.active').attr('data-set');
+    obj.shareLevel = $('#ballModal .br-set.active').attr('data-set');
     obj.projectTitle = $('#ballModal .j-project-title').val();
     obj.projectText = $('#ballModal .br-textarea').val();
     Config.payMoney = Number(obj.rengouMoney) + Number(obj.baodiMoney);
 
-    buyTicket(obj, type);
+    APP.checkLogin({
+      enoughMoney: function() {
+        buyTicket(obj, type);
+      }
+    });
 
   });
 
@@ -162,11 +187,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       buyTicket(obj, type);
     };
 
-    A.checkLogin({
+    APP.checkLogin({
       always: function() {
         c = checkParams();
         if (c) {
-          A.onSubmitInit(vote);
+          APP.onSubmitInit(vote);
         };
       }
     });

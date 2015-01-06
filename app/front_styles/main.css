@@ -183,8 +183,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .xiang .bball{ background: #5198f1;}
 
 .xiang .head .time { margin-right: 10px; }
-.xiang .box .left, .xiang .box .right { height: 375px; }
-.xiang .box .left-hd, .xiang .box .right-hd { height: 210px; }
+.xiang .box .left-hd, .xiang .box .right-hd { min-height: 210px; }
 .xiang .box .left { width: 230px; float: left; font-size: 12px; }
 .xiang .box .left-hd { text-align: center; border-bottom: 1px #c4c4c4 dashed; margin: 0 10px; }
 .xiang .box .left-hd>img { margin: 25px 0 5px; }
@@ -199,9 +198,9 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .xiang .box .right-ft p { font-size: 12px; padding: 15px 0 10px; text-align: center; }
 .xiang .box .right-ft p input { width: 100px; color: #848484; border: 1px #c4c4c4 solid; padding: 3px 5px; background: #fff; }
 .xiang .box .right-ft p .fc-3 { margin: 0 5px; font-weight: bold; }
+.xiang .box .right-hd{ padding: 10px 0;}
 .xiang .box .right-hd .table { background: #fff; padding: 0 20px; }
 .xiang .box .right-hd .table, .xiang .box .right-hd ul { width: 712px; margin: auto; font-size: 12px; }
-.xiang .box .right-hd ul { margin-top: 15px; }
 .xiang .box .right-hd ul li { margin-bottom: 10px; }
 .xiang .box .right-hd ul li .progress { display: inline-block; background: #a0a0a0; margin: 0; width: 500px; position: relative; top: 6px; }
 .xiang .box .right-hd ul li .progress-bar { background: #f13c38; }

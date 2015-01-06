@@ -20,14 +20,19 @@ define(['jquery'], function($) {
       var _this = this;
       var box = _this.box;
 
-      // 获取购买金额
+      // 方案总金额
       var m = box.find('#j-total-money').html() * 1;
+      var rengouMoney = '';
+      var ticheng = '';
 
-      //认购金额
-      var rengouMoney = box.find('.j-rengou').val() * 1 || 1;
+      var conf = {
+        minRengouMoney: Math.ceil(m * .05),
+        RemgouMoneyVal: box.find('.j-rengou').val() * 1,
+      }
 
-      //我要提成
-      var ticheng = box.find('.br-select').val() * 1 || 0;
+      rengouMoney = (conf.RemgouMoneyVal < conf.minRengouMoney) ? conf.minRengouMoney : conf.RemgouMoneyVal;
+
+      ticheng = box.find('.br-select').val() * 1 || 0;
 
       if (rengouMoney > m) {
         rengouMoney = m
@@ -104,6 +109,7 @@ define(['jquery'], function($) {
     };
 
     hemai.prototype.reSetStrsize = function(t) {
+
       var len = t.val().length;
       var size = parseInt(t.attr('data-size'));
 
@@ -113,10 +119,13 @@ define(['jquery'], function($) {
         t.val(t.val().slice(0, (size - 1)))
         t.parents('p').find('.j-btext-total').html(size)
       }
+
     };
 
     hemai.prototype.init = function() {
+
       var _this = this;
+
       $('.j-rengou').on('change', function(event) {
         _this.setHeMaiTotal();
       });
@@ -169,5 +178,6 @@ define(['jquery'], function($) {
   }());
 
   var h = new hemai();
+  h.init();
   return h;
 });

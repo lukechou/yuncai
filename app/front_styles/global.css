@@ -51,6 +51,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .w40 { width: 40px; }
 .w50 { width: 50px; }
 .w70 { width: 70px; }
+.w120{ width: 120px;}
 /* 分页 */
 .pages { font-size: 14px; margin-top: 10px; }
 .pages .back-page, .pages .next-page { margin: 0 0 0 15px; }
@@ -74,7 +75,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .btn-c1 { background: #f13c38; }
 .btn-c2 { background: #f1f1f1; }
 .btn-gray { background: #bdbcbc; color: #fff; }
-.btn-sear { background: #f88c35; }
+.btn-sear { background: #f88c35; color: #fff; }
 .btn-clean { padding: 0; width: 70px; height: 26px; line-height: 26px; }
 .btn-bind { background: #f13c38; color: #fff; padding: 6px 20px; }
 .btn-bind:hover, .btn-bind:focus { color: #fff; }
