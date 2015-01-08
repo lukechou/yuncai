@@ -2,7 +2,6 @@ define(['jquery'], function($) {
   'use strict';
 
   var app = (function() {
-    'use strict';
 
     function app(args) {
       // enforces new
@@ -13,7 +12,13 @@ define(['jquery'], function($) {
     }
 
     app.prototype = {};
+
+    /**
+     * 全局通用登录弹出框
+     * @return {null}
+     */
     app.prototype.showLoginBox = function() {
+
       var _this = this;
 
       if (!$('#user-login')[0]) {
@@ -24,15 +29,8 @@ define(['jquery'], function($) {
       $('#j-login-modal').on('show.bs.modal', _this.centerModal);
       $('#j-login-modal').modal('show');
       $('#user-login').unbind();
-      _this.bindLoginEvent();
-
-    };
-
-    app.prototype.bindLoginEvent = function() {
-      var _this = this;
 
       $('#user-login').on('click', function(event) {
-
         var user = _this.regStr($('#login-username').val())
         var pwd = _this.regStr($('#login-password').val())
 
@@ -50,7 +48,7 @@ define(['jquery'], function($) {
               if (data.retCode == 100000) {
                 window.location.href = data.retData.redirectURL;
               } else {
-                alert(data.retMsg);
+                _this.showTips(_this.getConfirmHtml(data.retMsg));
               }
             })
             .fail(function() {
@@ -62,22 +60,65 @@ define(['jquery'], function($) {
         }
 
       });
+    };
 
-    }
-
+    /**
+     * 过滤字符串
+     * @param  {String} s 字符串
+     * @return {String}   过滤后的字符串
+     */
     app.prototype.regStr = function(s) {
+
       var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——| {}【】‘；：”“'。，、？]")
       var rs = "";
       for (var i = 0; i < s.length; i++) {
         rs = rs + s.substr(i, 1).replace(pattern, '');
       }
+
       return rs;
     };
 
+    /**
+     * Update User Money
+     * @return {null}
+     */
+    app.prototype.updateUserMoney = function() {
+      $.ajax({
+          url: '/account/islogin',
+          type: 'get',
+          dataType: 'json',
+        })
+        .done(function(data) {
+          if (data.retCode === 100000) {
+            $('#userMoney').html(data.retData.money);
+          }
+        });
+    };
+
+    /**
+     * 获取参数
+     * @param  {url} paraName 获取参数
+     * @return {String}
+     */
+    app.prototype.parseQueryString = function(url) {
+      var re = /[\?&]([^\?&=]+)=([^&]+)/g,
+        matcher = null,
+        items = {};
+      url = url || window.location.search;
+      while (null != (matcher = re.exec(url))) {
+        items[matcher[1]] = decodeURIComponent(matcher[2]);
+      }
+      return items;
+    };
+
+    /**
+     * 获取通用弹出框 有确定按钮
+     * @param  {String} h 弹出框HTML
+     * @return {String}   弹出框HTML
+     */
     app.prototype.getConfirmHtml = function(h) {
       return '<div class="tipbox"><p>' + h + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
     };
-
 
     /**
      * HandRetCode for Ajax
@@ -86,21 +127,50 @@ define(['jquery'], function($) {
      * @return {null}
      */
     app.prototype.handRetCode = function(retCode, retMsg) {
+      var _this = this;
+
       switch (retCode) {
         case 120002:
-          this.showLoginBox();
+          _this.showLoginBox();
           break;
         case 120001:
-          this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+          _this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
           break;
         default:
-          this.showTips('<div class="tipbox"><p>' + retMsg + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>');
+          _this.showTips('<div class="tipbox"><p>' + retMsg + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>');
           break;
       }
     };
 
-    // 彩票购买提交 初始化
+    /**
+     * Buy ticket Submit Init
+     * @param  {Object} vote 回调对象
+     * @return {null}
+     */
     app.prototype.onSubmitInit = function(vote) {
+      var _this = this;
+
+      _this.checkLogin({
+        enoughMoney: function() {
+          _this.showTips({
+            title: vote.title,
+            html: vote.confirmHtml
+          });
+
+          $('#buyConfirm').on('click', function(event) {
+            vote.callback();
+          });
+        }
+      });
+
+    };
+
+    /**
+     * Check User Status And Has Enougth Money
+     * @param  {Object} o 回调对象
+     * @return {null}
+     */
+    app.prototype.checkLogin = function(o) {
       var _this = this;
 
       $.ajax({
@@ -110,29 +180,21 @@ define(['jquery'], function($) {
         })
         .done(function(D) {
           if (D.retCode === 100000) {
-            if (Number(D.retData.money.replace(/,/g, '')) >= Config.payMoney) {
-
-              _this.showTips({
-                title: vote.title,
-                html: vote.confirmHtml
-              });
-
-              $('#buyConfirm').on('click', function(event) {
-                vote.callback();
-              });
-
+            var userMoney = Number(D.retData.money.replace(/,/g, ''));
+            if (userMoney >= Config.payMoney && userMoney != 0) {
+              if (o.enoughMoney) o.enoughMoney();
             } else {
               _this.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
             }
+            if (o.always) o.always();
           } else {
             _this.handRetCode(D.retCode, D.retMsg);
           }
         });
-
     };
 
     /**
-     * [showTips 拟态框]
+     * showTips 全局通用拟态框
      * @param  {Object} obj tips's HTML {title:'title', html:'html'}
      * @return {null}
      */
@@ -165,7 +227,6 @@ define(['jquery'], function($) {
 
       $('#myModal').on('show.bs.modal', _this.centerModal);
 
-      //if($('#myModal').hasClass('in')){
       $('#myModal').modal('show');
 
     };
@@ -181,10 +242,33 @@ define(['jquery'], function($) {
       $dialog.css("margin-top", offset);
     };
 
+    /**
+     * Ajax ServiceFial ShowTips
+     * @return {null}
+     */
+    app.prototype.onServiceFail = function() {
+      this.showTips(this.getConfirmHtml('服务器繁忙,请稍后再试!'));
+    };
+
+    app.prototype.init = function() {
+
+      $('#choseCai').hover(function() {
+        var m = $(this);
+        m.find('#hdMask').toggle();
+        m.find('a').toggleClass('on');
+      }, function() {
+        var m = $(this);
+        m.find('#hdMask').toggle();
+        m.find('a').toggleClass('on');
+      });
+
+    };
+
     return app;
 
   }());
 
   var a = new app();
+  a.init();
   return a;
 });

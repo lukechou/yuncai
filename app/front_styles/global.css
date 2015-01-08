@@ -51,11 +51,12 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .w40 { width: 40px; }
 .w50 { width: 50px; }
 .w70 { width: 70px; }
+.w120{ width: 120px;}
 /* 分页 */
-.pages { font-size: 14px; }
+.pages { font-size: 14px; margin-top: 10px; }
 .pages .back-page, .pages .next-page { margin: 0 0 0 15px; }
-.pages .govalue { border: 1px #c4c4c4 solid; width: 50px; padding: 0 5px; height: 25px; margin-left: 10px; }
-.pages button { border: 1px #c4c4c4 solid; height: 25px; line-height: 25px; padding: 0 4px; background: #f0efef; color: #428bca; margin: -2px 10px 0 -5px; }
+.pages .govalue { border: 1px #dfdfdf solid; width: 50px; padding: 0 5px; height: 25px; margin-left: 10px; }
+.pages button { border: 1px #dfdfdf solid; height: 25px; line-height: 25px; padding: 0 4px; background: #f1f1f1; color: #333; margin: -2px 10px 0 -5px; }
 /* Icon */
 .icon { display: inline-block; }
 /* Input */
@@ -74,7 +75,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .btn-c1 { background: #f13c38; }
 .btn-c2 { background: #f1f1f1; }
 .btn-gray { background: #bdbcbc; color: #fff; }
-.btn-sear { background: #f88c35; }
+.btn-sear { background: #f88c35; color: #fff; }
 .btn-clean { padding: 0; width: 70px; height: 26px; line-height: 26px; }
 .btn-bind { background: #f13c38; color: #fff; padding: 6px 20px; }
 .btn-bind:hover, .btn-bind:focus { color: #fff; }
@@ -111,10 +112,10 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .m-tb-title { padding: 15px 20px 0; font-size: 12px; }
 /* m-tips-box */
 .m-tips-box { background: #fff; border: 1px #dfdfdf solid; margin-top: 10px; padding: 20px 40px; position: relative; }
-.tips-icon { background: url(../front_images/icon.png)no-repeat 0px -461px; width: 22px; height: 22px; display: block; position: absolute; top: 18px; left: 12px; }
+.tips-icon {display: block; position: absolute; top: 18px; left: 12px; }
 .tips-icon2 { top: 63px; }
 /* m-de-hd */
-.m-de-hd { padding: 0 20px 5px 0; font-size: 12px; }
+.m-de-hd { padding: 5px 20px 5px 0; font-size: 12px; }
 .m-de-hd>select { border: 1px #dfdfdf solid; margin-right: 20px; height: 26px; padding: 0 5px; width: 120px; }
 .m-de-hd>label { font-weight: normal; }
 .m-de-hd>.btn { height: 26px; width: 70px; padding: 0; background: #f88c35; }
@@ -148,10 +149,6 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 
 .tipbox .last{ margin:0;}
 .tipbox .last>.btn{ padding: 5px 35px;}
-
-
-
-
 
 
 

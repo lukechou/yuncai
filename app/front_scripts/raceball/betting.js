@@ -2,7 +2,6 @@ define(['jquery'], function($) {
   'use strict';
 
   var bet = (function() {
-    'use strict';
 
     function bet(args) {
       // enforces new
@@ -25,9 +24,44 @@ define(['jquery'], function($) {
     };
 
     bet.prototype.init = function() {
+
+      this.beishu = $('#j-qiucksub-bei').val();
+      this.zhushu = null;
+      this.isAgreen = true;
+      this.match = [];
+      this.bunch = [];
+      this.dd = null;
+      this.maxBonus = null;
+      this.tab = 'spf';
       this.bindMain();
       this.bindRight();
-      this.bindHdnav();
+
+    };
+
+    bet.prototype.updateCount = function(m, c) {
+      var v = parseInt(m.val(), 10);
+      if (c == 1) {
+        v++;
+      } else {
+        v--;
+      }
+      v = (v >= 1) ? v : 1;
+      v = v > 99999 ? 99999 : v;
+      this.beishu = v;
+      m.val(v);
+    };
+
+    bet.prototype.filterNum = function(v) {
+      var n = parseInt(v, 10);
+
+      if (isNaN(n)) {
+        n = 1;
+      } else {
+        n = (n >= 1) ? n : 1;
+        n = n;
+      }
+      n = n > 99999 ? 99999 : n;
+      return n;
     };
 
     bet.prototype.getOtherEm = function(el, i) {
@@ -42,6 +76,9 @@ define(['jquery'], function($) {
 
       if (h) {
         this.bunch.push(method);
+        this.bunch = _.uniq(this.bunch).sort(function(a, b) {
+          return a.slice(0, 1) - b.slice(0, 1);
+        });
       } else {
         _.remove(this.bunch, function(b) {
           return b == method;
@@ -54,7 +91,8 @@ define(['jquery'], function($) {
       var _this = this;
       var m = ['胜', '平', '负'];
       var code = dd.attr('matchcode');
-      var compiled = null;
+      var compiled = _.template('<tr matchcode="<%= matchcode%>" class="gameTitle"><th class="t1"><a class="icoDel" href="javascript:;">&times;</a><%= matchnumcn%></th><th class="t2"><%= hostname%> <%= guestname%></th></tr><tr class="gameOption" matchcode="<%= matchcode%>"><td colspan="5" class="betList"><a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a></td></tr>');
+      var oneMatchHTML = '';
       var fill = {
         i: i,
         gametype: _this.tab,
@@ -64,7 +102,7 @@ define(['jquery'], function($) {
         hostname: dd.attr('hostname'),
         guestname: dd.attr('guestname')
       };
-
+      var linkHTML = '';
       var hasMatch = _.find(_this.match, {
         'matchcode': code
       });
@@ -76,13 +114,45 @@ define(['jquery'], function($) {
         sp: sp
       });
 
+      _this.match = _this.match.sort(function(a, b) {
+        return a.index - b.index;
+      });
+
+      var selectMatch = _.uniq(_this.match, function(n) {
+        return n.matchcode;
+      });
+
+      selectMatch = _this.match.sort(function(a, b) {
+        return a.matchcode - b.matchcode;
+      });
+
       if (hasMatch) {
-        compiled = _.template('<a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a>');
-        $('#selectGamePool .gameOption[matchcode=' + code + '] .betList').append(compiled(fill));
+        _.each(_this.match, function(matchs) {
+          if (matchs.matchcode == code) {
+            linkHTML += '<a index="' + matchs.index + '" gametype="' + matchs.type + '" matchcode="' + matchs.matchcode + '" href="javascript:;" class="block' + matchs.index + '">' + m[matchs.index] + '</a>';
+          }
+        });
+        $('#selectGamePool .gameOption[matchcode=' + code + '] .betList').html(linkHTML);
       } else {
-        compiled = _.template('<tr matchcode="<%= matchcode%>" class="gameTitle"><th class="t1"><a class="icoDel" href="javascript:;"></a><%= matchnumcn%></th><th class="t2"><%= hostname%> <%= guestname%></th></tr><tr class="gameOption" matchcode="<%= matchcode%>"><td colspan="5" class="betList"><a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a></td></tr>');
-        $('#selectGamePool tbody').append(compiled(fill));
+        oneMatchHTML = compiled(fill);
+        if (selectMatch.length > 1) {
+          var selectMatchcodeArr = [];
+          for (var i = 0; i < selectMatch.length; i++) {
+            selectMatchcodeArr.push(selectMatch[i].matchcode);
+          };
+          var nextIndex = _.indexOf(selectMatchcodeArr, code) + 1;
+
+          if (nextIndex < selectMatchcodeArr.length) {
+            $('#selectGamePool tbody tr.gameTitle[matchcode=' + selectMatchcodeArr[nextIndex] + ']').before(oneMatchHTML);
+          } else {
+            $('#selectGamePool tbody').append(oneMatchHTML);
+          }
+        } else {
+          $('#selectGamePool tbody').append(oneMatchHTML);
+        }
+
       }
+
       $('#poolStep1 .scrollMoni').show();
       $('#poolStep1 .unSeleTips').hide();
       _this.setSecondBox();
@@ -90,6 +160,12 @@ define(['jquery'], function($) {
 
     };
 
+    /**
+     * Remove one Active Items
+     * @param  {string} i  index
+     * @param  {element} dd 选中的行
+     * @return {null}
+     */
     bet.prototype.removeOneItem = function(i, dd) {
 
       var _this = this;
@@ -116,6 +192,9 @@ define(['jquery'], function($) {
       _this.setAllTotal();
     };
 
+    /**
+     *  设置右侧第二个Box
+     */
     bet.prototype.setSecondBox = function() {
 
       var _this = this;
@@ -164,23 +243,19 @@ define(['jquery'], function($) {
 
     };
 
-    // 计算阶乘的函数
-    bet.prototype.combinations = function(numArr, choose) {
-
+    /**
+     *  获取组合数组
+     * @param  {Array}   numArr    选中的数组
+     * @param  {Number}   choose    几串几
+     * @param  {Function} callback 回调函数
+     * @return {null}
+     */
+    bet.prototype.combinations = function(numArr, choose, callback) {
       var n = numArr.length;
       var c = [];
-      var total = 0;
-
       var inner = function(start, choose_) {
-
-        var d = 1;
-
         if (choose_ == 0) {
-          d = 1;
-          for (var i = 0; i < c.length; i++) {
-            d *= c[i];
-          };
-          total += d;
+          callback(c);
         } else {
           for (var i = start; i <= n - choose_; ++i) {
             c.push(numArr[i]);
@@ -188,18 +263,18 @@ define(['jquery'], function($) {
             c.pop();
           }
         }
-
       };
-
       inner(0, choose);
-      return total;
     };
 
+    /**
+     *  获取投注总注数和最高奖金
+     * @return {null}
+     */
     bet.prototype.getTotalZhus = function() {
 
       var _this = this;
-
-      var groupTotalChange = [];
+      var matchkeys = [];
       var acTotalNum = 1;
       var method = null;
       var group = _.groupBy(_this.match, function(match) {
@@ -224,26 +299,34 @@ define(['jquery'], function($) {
           maxList.push(_.max(group[prop], 'sp'));
         }
       }
-
-
-
+      var matchkeySp = {};
+      var matchkeySpArr = [];
       if (chuanArr.length != 0) {
 
         for (var i = 0; i < ms.length; i++) {
-          groupTotalChange.push(group[ms[i].matchcode].length);
+          matchkeySpArr = [];
+          matchkeys.push(ms[i].matchcode);
+          var tem = group[ms[i].matchcode];
+          for (var k = tem.length - 1; k >= 0; k--) {
+            matchkeySpArr.push(tem[k].sp);
+          };
+          matchkeySp[ms[i].matchcode] = matchkeySpArr;
         };
 
         for (var i = 0; i < chuanArr.length; i++) {
+
           mb = 0;
           method = Number(chuanArr[i].slice(0, 1));
-
-          result.zhus += _this.combinations(groupTotalChange, method);
-
-          for (var k = 0; k < method; k++) {
-            mb += Number(maxList[k].sp);
-          };
-
-          result.maxBonus += mb;
+          _this.combinations(matchkeys, method, function(matchs) {
+            var _tmpZhushu = 1;
+            var _tmpMaxBonus = 1;
+            for (var i = 0; i < matchs.length; i++) {
+              _tmpZhushu *= matchkeySp[matchs[i]].length;
+              _tmpMaxBonus *= _.max(matchkeySp[matchs[i]]);
+            }
+            result.zhus += _tmpZhushu;
+            result.maxBonus += _tmpMaxBonus;
+          });
 
         };
 
@@ -255,7 +338,12 @@ define(['jquery'], function($) {
 
     };
 
+    /**
+     *  Clear Betting Object Data
+     * @return {null}
+     */
     bet.prototype.clearBetData = function() {
+      var _this = this;
       $('#selectGamePool tbody').html('');
       $('#poolStep1 .scrollMoni').hide();
       $('#poolStep1 .unSeleTips').fadeIn();
@@ -263,105 +351,40 @@ define(['jquery'], function($) {
 
       _this.match = [];
       _this.dd = null;
+      _this.beishu = $('#j-qiucksub-bei').val();
+      _this.zhushu = null;
+      _this.maxBonus = null;
       _this.bunch = [];
       _this.setSecondBox();
       _this.setAllTotal();
     };
 
+    /**
+     *  设置右侧第三个Box
+     */
     bet.prototype.setAllTotal = function() {
 
       var _this = this;
       var ms = _.uniq(_this.match, 'matchcode').length;
       var s = _this.getTotalZhus();
       var zhus = s.zhus || 0;
-      var totalMoney = zhus * 2;
+      var totalMoney = zhus * 2 * _this.beishu;
       var maxBonus = s.maxBonus;
       maxBonus = (maxBonus == 0) ? '0.00' : maxBonus;
       _this.maxBonus = maxBonus;
 
       _this.zhushu = zhus;
+      $('#j-no-method').hide();
       $('#gameNumber').html(ms);
       $('#gameZhu').html(zhus);
       $('#totalMoney').html(totalMoney);
       $('#maxbonus').html(maxBonus);
     };
 
-    bet.prototype.bindMain = function() {
-
-      var _this = this;
-      var a = 'active';
-      var h = 'hover';
-
-      _this.box.on('mousemove', 'dd', function(event) {
-        $(this).addClass('even');
-      });
-
-      _this.box.on('mouseout', 'dd', function(event) {
-        $(this).removeClass('even');
-      });
-
-      _this.box.on('mousemove', '.towLine em', function(event) {
-
-        var t = $(this);
-        var i = t.attr('index');
-        //var e = _this.getOtherEm(t, i);
-
-        if (!t.hasClass(a) && !t.hasClass('rq')) {
-          t.addClass(h);
-          // e.addClass(h);
-        };
-
-      });
-
-      _this.box.on('mouseout', '.towLine em', function(event) {
-
-        var t = $(this);
-        var i = t.attr('index');
-        //var e = _this.getOtherEm(t, i);
-
-        if (!t.hasClass(a) && !t.hasClass('rq')) {
-          t.removeClass(h);
-          // e.removeClass(h);
-        };
-
-      });
-
-      _this.box.on('click', '.towLine em', function(event) {
-        var t = $(this);
-        var i = t.attr('index');
-        var sp = t.attr('sp');
-        var gametype = t.attr('gametype');
-        //var e = _this.getOtherEm(t, i);
-        var dd = t.parents('dd');
-
-        if (t.hasClass('rq')) return;
-        if (t.hasClass(a)) {
-          t.removeClass();
-          // e.removeClass();
-          _this.removeOneItem(i, dd);
-        } else {
-          t.addClass(a);
-          //e.addClass(a);
-          _this.addOneItem(i, dd, sp);
-        }
-
-      });
-
-      // Toggle Buy Type
-      $('#j-vote-nav').on('click', 'a', function(event) {
-        var type = $(this).attr('data-type');
-        _this.tab = (type == 'onlySpf') ? 'spf' : 'rfspf';
-        _this.box.removeClass('onlySpf onlyRqSpf').addClass(type);
-        _this.clearBetData();
-      });
-
-      //  Buy Main Toggle
-      _this.box.on('click', '.j-dataBody-toggle', function(event) {
-        $(this).parents('dl').find('dd').toggle();
-      });
-
-    };
-
+    /**
+     *  提交表单,获取要提交的参数
+     * @return {object}
+     */
     bet.prototype.getSubmitParams = function() {
 
       var _this = this;
@@ -374,7 +397,6 @@ define(['jquery'], function($) {
       var c = [];
       var m = [];
       var f = [];
-
 
       // get Params
       m = _.uniq(_this.match, 'matchcode');
@@ -409,25 +431,125 @@ define(['jquery'], function($) {
 
     };
 
+    /**
+     *  购票主体事件绑定
+     * @return {null}
+     */
+    bet.prototype.bindMain = function() {
+
+      var _this = this;
+      var a = 'active';
+      var h = 'hover';
+
+      _this.box.on('mousemove', 'dd', function(event) {
+        $(this).addClass('even');
+      });
+
+      _this.box.on('mouseout', 'dd', function(event) {
+        $(this).removeClass('even');
+      });
+
+      _this.box.on('mousemove', '.towLine em', function(event) {
+
+        var t = $(this);
+        var i = t.attr('index');
+        //var e = _this.getOtherEm(t, i);
+
+        if (!t.hasClass(a) && !t.hasClass('rq')) {
+          t.addClass(h);
+          // e.addClass(h);
+        };
+
+      });
+
+      _this.box.on('mouseout', '.towLine em', function(event) {
+
+        var t = $(this);
+        var i = t.attr('index');
+
+        if (!t.hasClass(a) && !t.hasClass('rq')) {
+          t.removeClass(h);
+        };
+
+      });
+
+      _this.box.on('click', '.towLine em', function(event) {
+        var t = $(this);
+        var i = t.attr('index');
+        var sp = t.attr('sp');
+        var gametype = t.attr('gametype');
+        var dd = t.parents('dd');
+
+        if (t.hasClass('rq')) return;
+        if (t.hasClass(a)) {
+          t.removeClass();
+          _this.removeOneItem(i, dd);
+        } else {
+          t.removeClass(h).addClass(a);
+          _this.addOneItem(i, dd, sp);
+        }
+
+      });
+
+      // Toggle Buy Type
+      $('#j-vote-nav').on('click', 'a', function(event) {
+        var type = $(this).attr('data-type');
+        _this.tab = (type == 'onlySpf') ? 'spf' : 'rqspf';
+        _this.box.removeClass('onlySpf onlyRqSpf').addClass(type);
+        _this.clearBetData();
+      });
+
+      //  Buy Main Toggle
+      _this.box.on('click', '.j-dataBody-toggle', function(event) {
+
+        var t = $(this);
+        var s = t.attr('data-show');
+        var dd = t.parents('dl').find('dd');
+        var title = ['隐藏', '展开'];
+
+        if (s == 1) {
+          dd.hide();
+          t.attr('data-show', 0);
+        } else {
+          dd.show();
+          t.attr('data-show', 1);
+        }
+
+        t.html(title[s]);
+
+      });
+
+    };
+
+    /**
+     * 购票右侧时间绑定
+     * @return {null}
+     */
     bet.prototype.bindRight = function() {
 
       var _this = this;
 
       $('.j-coutn-total').on('click', '.j-count', function(event) {
+
         var m = $(this).siblings('.btn-results'),
           c = $(this).attr('data-c'),
           r = m.attr('data-r');
+
         _this.updateCount(m, c);
         _this.setAllTotal();
+
       });
 
-      $('.btn-results').on('keyup', function(event) {
+      $('.btn-results').on('keyup change', function(event) {
+
         var t = $(this);
         var r = t.attr('data-r');
         var v = _this.filterNum(t.val());
+
         t.val(v);
         _this.beishu = v;
         _this.setAllTotal();
+
       });
 
       $('#poolStep2').on('click', '.jtip', function(event) {
@@ -461,43 +583,50 @@ define(['jquery'], function($) {
         _this.clearBetData();
       });
 
-    };
+      // BetList Button remvoe match
+      $('#selectGamePool').on('click', '.betList a', function(event) {
 
-    bet.prototype.bindHdnav = function() {
-      $('#choseCai').hover(function() {
-        toggleMask($(this));
-      }, function() {
-        toggleMask($(this));
+        var code = $(this).attr('matchcode');
+        var i = $(this).attr('index');
+        var type = $(this).attr('gametype');
+        var actItem = $('#bettingBox dd[matchcode=' + code + ']').find('[gametype=' + type + '][index=' + i + ']');
+        var totalLinks = $(this).siblings('a');
+        var removeItem = '';
+
+        if (totalLinks.length == 0) {
+          removeItem = $('#selectGamePool tr[matchcode=' + code + ']');
+        } else {
+          removeItem = $(this);
+        }
+
+        removeItem.remove();
+        actItem.removeClass('active');
+
+        _.remove(_this.match, function(o) {
+          return (o.index == i && o.matchcode == code);
+        });
+        if (_this.match == 0) $('#poolStep1 .unSeleTips').show();
+        _this.setSecondBox();
+        _this.setAllTotal();
+
       });
 
-      function toggleMask(m) {
-        m.find('#hdMask').toggle();
-        m.find('a').toggleClass('on');
-      }
-    };
+      $('#selectGamePool').on('click', '.icoDel', function(event) {
+        var code = $(this).parents('tr').attr('matchcode');
+        var removeItem = $('#selectGamePool tr[matchcode=' + code + ']');
+        var actItem = $('#bettingBox dd[matchcode=' + code + ']').find('em.active');
 
-    bet.prototype.updateCount = function(m, c) {
-      var v = parseInt(m.val(), 10);
-      if (c == 1) {
-        v++;
-      } else {
-        v--;
-      }
-      v = (v >= 1) ? v : 1;
-      this.beishu = v;
-      m.val(v);
-    };
+        removeItem.remove();
+        actItem.removeClass('active');
 
-    bet.prototype.filterNum = function(v) {
-      var n = parseInt(v, 10);
+        _.remove(_this.match, function(o) {
+          return o.matchcode == code;
+        });
+        if (_this.match == 0) $('#poolStep1 .unSeleTips').show();
+        _this.setSecondBox();
+        _this.setAllTotal();
+      });
 
-      if (isNaN(n)) {
-        n = 1;
-      } else {
-        n = (n >= 1) ? n : 1;
-        n = n;
-      }
-      return n;
     };
 
     return bet;
@@ -505,5 +634,6 @@ define(['jquery'], function($) {
   }());
 
   var b = new bet();
+  b.init();
   return b;
 });

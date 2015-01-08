@@ -186,7 +186,7 @@ APP.onSubmitConfirm = function(callback, data, html) {
     })
     .done(function(D) {
       if (D.retCode === 100000) {
-        if (Number(D.retData.money.replace(/,/g, '')) > data.byNum) {
+        if (Number(D.retData.money.replace(/,/g, '')) >= data.byNum) {
           APP.showTips(html);
           $('#buyConfirm').on('click', function(event) {
             callback(data);
@@ -232,7 +232,7 @@ APP.submitHemai = function(obj) {
     .fail(function() {
       APP.onServerFail();
     });
-}
+};
 
 ////////////////////////////////////////////////////////////////////////////
 /**
@@ -252,5 +252,4 @@ $(function() {
     m.find('a').toggleClass('on');
   }
 
-  //APP.showLoginBox()
 });

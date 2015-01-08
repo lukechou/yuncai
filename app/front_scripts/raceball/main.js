@@ -1,99 +1,299 @@
 require.config({
-    paths: {
-        jquery: '../lib/jquery',
-        bootstrap: '../lib/bootstrap.min',
-        scroll: '../lib/jquery.mCustomScrollbar.concat.min',
-        lodash: '../lib/lodash.compat.min',
-        betting: 'betting',
-        app: 'app'
+  paths: {
+    jquery: '../lib/jquery',
+    lodash: '../lib/lodash.compat.min',
+    bootstrap: '../lib/bootstrap.min',
+    store: '../lib/store.min',
+    app: '../common/app',
+    scroll: '../lib/jquery.mCustomScrollbar.concat.min',
+    tipsy: '../lib/jquery.tipsy',
+    betting: 'betting',
+    hemai: 'hemai',
+  },
+  shim: {
+    bootstrap: {
+      deps: ['jquery'],
+      exports: 'jquery'
     },
-    shim: {
-        bootstrap: {
-            deps: ['jquery'],
-            exports: 'jquery'
-        },
-        scroll: {
-            deps: ['jquery'],
-            exports: 'jquery'
-        }
+    scroll: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
     }
+  }
 });
 
-require(['jquery', 'lodash', 'betting', 'app', 'bootstrap', 'scroll'], function($, _, BET, A) {
-    'use strict';
+require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy'], function($, _, BET, APP, store, H) {
+  'use strict';
 
-    BET.init();
+  Config.lotyName = 'jczq';
+  gameSeleListInit();
 
-    $("#poolStep1 .scrollMoni").mCustomScrollbar({
-        theme: "light",
+  $('.icon').tipsy({
+    fade: true,
+    gravity: 'nw',
+    html: true,
+    opacity: 1
+  });
+
+  var buyTicket = function(obj, type) {
+    $.ajax({
+        url: '/lottery/jingcai/' + type + '/jczq/' + BET.tab + '_gg',
+        type: 'POST',
+        dataType: 'json',
+        data: obj
+      })
+      .done(function(data) {
+        if (data.retCode == 100000) {
+          store.set('lotyName', Config.lotyName);
+          store.set('payMoney', Config.payMoney);
+          store.set('projectNo', data.retData.projectNo);
+          window.location.href = '/html/lottery/trade/success.html';
+        } else {
+          APP.handRetCode(data.retCode, data.retMsg);
+        }
+      })
+      .fail(function() {
+        APP.onServiceFail();
+      });
+  };
+
+  var showTipMask = function() {
+    var b = $('#j-game-method');
+    var top = b[0].offsetTop;
+    var m = $('#tipMark');
+    $('#j-no-method').show();
+    m.css({
+      display: 'block',
+      width: b.width(),
+      height: b.height(),
+      top: top,
+    });
+    var count = 0;
+    var times = function() {
+      m.fadeToggle('fast', function() {});
+      if (count > 5) {
+        clearInterval(f);
+      }
+      count++
+    };
+    var f = setInterval(times, 100);
+  };
+
+  var checkParams = function() {
+    if (_.uniq(BET.match, 'matchcode').length > 8) {
+      APP.showTips(APP.getConfirmHtml('您好，投注场次不得超过8场哦'))
+      return false;
+    }
+    if (!BET.isAgreen) {
+      APP.showTips(APP.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
+      return false;
+    }
+    if (!BET.zhushu) {
+      showTipMask();
+      return false;
+    }
+    return true;
+  };
+
+  // 部分ui 下拉框
+  $('#poolStep1 .scrollMoni').mCustomScrollbar({
+    theme: "light",
+  });
+
+  $('#j-ball-table').mCustomScrollbar({
+    theme: "light",
+  });
+
+  // 赛事筛选
+  $('#showOption').hover(function() {
+
+    $('#gameSeleList').show();
+
+  }, function() {
+    $('#gameSeleList').hide();
+  });
+
+  $('#gameSeleList').on('click', 'li', function(event) {
+
+    $(this).toggleClass('active');
+
+    var start = [];
+
+    $('#gameSeleList li.active').each(function(index, el) {
+      start.push($.trim($(this).text()));
     });
 
-    $('#fqhmBtn').on('click', function(event) {
-        var obj = BET.getSubmitParams();
-        var html ='';
-        var bunch = obj.bunch.replace(/\_/g,'串');
-        var t = $('#selectGamePool').html();
-        var tableHtml = '<table class="table table-bordered"><tbody><tr><th>场次</th><th class="gameTeam" colspan="2">主队 VS 客队</th></tr></tbody>'+t+'</table>';
-        // Confirm Buy
-        Config.payMoney = obj.zhushu * 2;
-
-
-        html = '<p>投注金额：总计<span id="j-total-money">'+obj.zhushu * 2+'</span>元,共<span id="j-total-zhu">'+obj.zhushu+'</span>注,投注<span id="j-total-bei">'+obj.beishu+'</span>倍</p><p>过关方式：<span id="j-total-bunch">'+bunch+'</span>,理论最高奖金<span id="j-lilu-award">'+BET.maxBonus+'</span>元</p>'+tableHtml+'<div class="br-together"><p class="clearfix"><span class="title"><span class="fc-3">*</span>我要认购</span><input type="text" class="br-input w70 j-rengou" value="1"><span class="fc-3d">元,所占比例</span><span class="fc-3 j-rengou-percentage">2.50</span><span class="fc-3">%</span></p><p class="clearfix"><span class="title">我要提成</span><select id="ipt_extraPercent" class="br-select"><option selected="selected" value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>%<span>提成比例不能高于认购比例.</span></p><p class="clearfix"><span class="title">我要保底</span><input type="checkbox" class="j-baodi-check"><span>最低保底为方案20%<input type="text" class="br-input w50 j-baodi-text" value="0" disabled="">元, 所占比例<span class="fc-3"><span class="j-baodi-percent">0.00</span>%</span>保底资金会冻结, 截止后最大限度促成方案.</span></p><p class="clearfix"><span class="title">方案设置</span><span class="br-set-group"><a href="javascript:;" class="br-set active">截止后公开</a><a href="javascript:;" class="br-set">立即公开</a><a href="javascript:;" class="br-set">截止前对跟单人公开</a></span></p><p class="clearfix"><span class="title">方案标题</span><input type="text" data-text="中奖福地，合买必中！" data-size="20" value="中奖福地，合买必中！" class="br-input j-project-title"><span>已输入<span class="j-btext-total">7</span>个字,最多20个</span></p><p class="clearfix m0"><span class="title">方案描述</span><textarea class="br-textarea" data-text="来参与我的合买，一起中大奖吧！" data-size="200" rows="3" cols="60">来参与我的合买，一起中大奖吧！</textarea><span class="br-textarea-tips">已输入<span class="j-btext-total">3</span>个字,最多200个</span></p></div>';
-        $('#j-modal-text').html(html);
-        $('#ballModal').modal('show');
-        // $.ajax({
-        //         url: '/lottery/jingcai/buy-self/jczq/' + BET.tab + '_gg',
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         data: obj
-        //     })
-        //     .done(function(data) {
-        //         if (data.retCode == 100000) {
-        //             window.location.href = '/html/lottery/trade/success.html';
-        //         } else {
-        //             A.handRetCode(data.retCode, data.retMsg);
-        //         }
-        //     })
-        //     .fail(function() {
-        //         A.showTips(A.getConfirmHtml('服务器繁忙,请稍后再试!'));
-        //     });
-
+    $('.gameSelect dd').each(function(index, el) {
+      if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
     });
 
+  });
 
-    $('#ljtzBtn').on('click', function(event) {
+  $('#gameSeleList').on('click', '.makeSure', function(event) {
 
-        var obj = BET.getSubmitParams();
-        var vote = {};
+    var start = [];
+
+    if ($('#gameSeleList .icon').hasClass('icon-cgou')) {
+      $('#gameSeleList li.active').each(function(index, el) {
+        start.push($.trim($(this).text()));
+      });
+      $('#gameSeleList').hide();
+      store.set('startArr', start);
+    }else{
+      store.clear('startArr');
+    }
 
 
-        // Confirm Buy
-        Config.payMoney = BET.zhushu * 2;
 
-        vote.confirmHtml = '<div class="frbox"><img src="' + Config.staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p>共需支付<span class="fc-3">' + Config.payMoney + '</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
+  });
 
-        vote.callback = function() {
-            $.ajax({
-                    url: '/lottery/jingcai/buy-self/jczq/' + BET.tab + '_gg',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: obj
-                })
-                .done(function(data) {
-                    if (data.retCode == 100000) {
-                        window.location.href = '/html/lottery/trade/success.html';
-                    } else {
-                        A.handRetCode(data.retCode, data.retMsg);
-                    }
-                })
-                .fail(function() {
-                    A.showTips(A.getConfirmHtml('服务器繁忙,请稍后再试!'));
-                });
+  $('#gameSeleList').on('click', '.icon', function(event) {
+    var t = $(this);
+    t.toggleClass('icon-cbox').toggleClass('icon-cgou');
+  });
 
+  function gameSeleListInit() {
+    var start = store.get('startArr');
+
+    if (start) {
+      $('#gameSeleList li').each(function(index, el) {
+        if (_.indexOf(start, $.trim($(this).text())) >= 0) {
+          $(this).addClass('active');
+        } else {
+          $(this).removeClass('active');
+        }
+      });
+
+      $('.gameSelect dd').each(function(index, el) {
+        if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
+          $(this).hide();
+        } else {
+          $(this).show();
+        }
+      });
+    }
+  }
+
+  // 截止时间
+  $('#changeTime').hover(function() {
+    $(this).find('.optionList').show();
+  }, function() {
+    $(this).find('.optionList').hide();
+  });
+
+  $('#changeTime .optionList').on('click', 'a', function(event) {
+
+    var type = $(this).attr('data-timeType');
+
+    $('.dataBody dd').each(function(index, el) {
+      var time = $(this).attr(type);
+      $(this).find('.co3 .jtip').html(time);
+    });
+
+  });
+
+  // 合买
+  $('#fqhmBtn').on('click', function(event) {
+
+    var obj = BET.getSubmitParams();
+    var c = null;
+    var html = '';
+    var bunch = obj.bunch.replace(/\_/g, '串');
+    var tr = $('#selectGamePool tbody tr');
+    var t = '';
+
+    tr.each(function(index, el) {
+      var e = tr.eq(index);
+      if (index % 2 == 0) {
+        t += '<tr><td>' + e.find('.t1').html() + '</td><td>' + e.find('.t2').html() + '</td>';
+      } else {
+        t += '<td>' + e.find('.betList').html() + '</td></tr>';
+      }
+    });
+
+    Config.payMoney = 1;
+    APP.checkLogin({
+      enoughMoney: function() {
+        c = checkParams();
+        if (c) {
+          html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元,共<span id="j-total-zhu">' + obj.zhushu + '</span>注,投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>,理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
+          $('#j-tips-table').html(t);
+          $('#j-modal-text').html(html);
+          H.setHeMaiTotal();
+          $('#ballModal').modal('show');
+        }
+      }
+    });
+
+  });
+
+  // 确认合买
+  $('#j-hemai').on('click', function(event) {
+
+    var obj = BET.getSubmitParams();
+    var type = 'buy-together';
+
+    obj.rengouMoney = $('#ballModal .j-rengou').val();
+    obj.tichengPercent = $('#ipt_extraPercent').val();
+    obj.baodiMoney = $('#ballModal .j-baodi-text').val();
+    obj.shareLevel = $('#ballModal .br-set.active').attr('data-set');
+    obj.projectTitle = $('#ballModal .j-project-title').val();
+    obj.projectText = $('#ballModal .br-textarea').val();
+    Config.payMoney = Number(obj.rengouMoney) + Number(obj.baodiMoney);
+
+    APP.checkLogin({
+      enoughMoney: function() {
+        buyTicket(obj, type);
+      }
+    });
+
+  });
+
+  // 立即购买
+  $('#ljtzBtn').on('click', function(event) {
+
+    var obj = BET.getSubmitParams();
+    var vote = {};
+    var c = null;
+    var type = 'buy-self';
+    var tr = $('#selectGamePool tbody tr');
+    var tbodyHtml = '';
+    var bunch = obj.bunch.replace(/\_/g, '串');
+
+    tr.each(function(index, el) {
+      var e = tr.eq(index);
+      if (index % 2 == 0) {
+        tbodyHtml += '<tr><td>' + e.find('.t1').html() + '</td><td>' + e.find('.t2').html() + '</td>';
+      } else {
+        tbodyHtml += '<td>' + e.find('.betList').html() + '</td></tr>';
+      }
+    });
+
+    Config.payMoney = BET.zhushu * 2 * BET.beishu;
+
+    vote.title = '投注信息确认';
+    vote.confirmHtml = '<div class="ljtz-box"><div class="text"><p>投注金额：总计<span class="fc-3">' + Config.payMoney + '</span>元，共' + obj.zhushu + '注，投注' + obj.beishu + '倍</p><table class="table table-bordered"><thead><tr><th>场次</th><th class="gameTeam">主队 VS 客队</th><th style="width:150px;">赛果</th></tr></thead><tbody>' + tbodyHtml + '</tbody></table><p>过关方式：' + bunch + ', 理论最高奖金：<span class="fc-3">' + BET.maxBonus + '</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
+    vote.callback = function() {
+      buyTicket(obj, type);
+    };
+
+    APP.checkLogin({
+      always: function() {
+        c = checkParams();
+        if (c) {
+          APP.onSubmitInit(vote);
         };
-
-        A.onSubmitInit(vote);
-
+      }
     });
+
+  });
 
 });
