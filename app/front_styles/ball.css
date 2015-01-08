@@ -30,9 +30,9 @@ body { background: #fff; }
 .dataHead .co6 .btnBox, .dataHead .co7 .btnBox { margin-left: -1px; white-space: nowrap; border: none; }
 .dataHead .co6 .btnBox em { width: 65px; }
 .dataHead .gameSeleList { position: absolute; z-index: 100; top: 60px; left: -1px; display: none; width: 285px; margin-left: -1px; border: 1px solid #dfdfdf; background: #f1f1f1; }
-.dataHead .optionList { position: absolute; z-index: 100; top: 60px; left: -2px; display: none; width: 100%; padding: 5px 0; border: 1px solid #dfdfdf; border-top: 0; background: #f1f1f1; }
-.dataHead .optionList a, .dataHead .optionList a:visited { line-height: 24px; display: block; height: 24px; color: #fff; }
-.dataHead .optionList a:hover { background: #3a3a3a; }
+.dataHead .optionList { position: absolute; z-index: 100; top: 60px; left: -1px; display: none; padding: 0; border: 1px solid #dfdfdf; border-top: 0; background: #fff; }
+.dataHead .optionList a, .dataHead .optionList a:visited { line-height: 24px; display: block; height: 24px; color: #333; }
+.dataHead .optionList a:hover { background: #0d67c4; color: #fff; text-decoration: none; }
 .dataHead .co7 .optionList { top: 29px; width: 100%; }
 .co1 { overflow: hidden; width: 45px; }
 .co2 { width: 110px; cursor: pointer; }
@@ -44,14 +44,21 @@ body { background: #fff; }
 .co7 { width: 124px; }
 .dataHead .co8, .dataBody .co8 { position: absolute; right: 0; float: none; width: 60px; }
 .closeData dd, .isOver { display: none; }
-.dataHead .gameSeleList { position: absolute; z-index: 100; top: 60px; left: -1px; display: none; width: 295px; background: #f1f1f1; }
+.dataHead .gameSeleList { position: absolute; z-index: 100; top: 58px; left: -1px; display: none; width: 295px; background: #f1f1f1; padding: 5px 0; }
+.dataHead .gameSeleList ul { overflow: hidden; }
 .dataHead .gameSeleList li { line-height: 30px; position: relative; float: left; overflow: hidden; zoom: 1; width: 95px; height: 30px; cursor: pointer; text-align: left; text-indent: 30px; color: #3d3d3d; }
-.dataHead .gameSeleList li i { position: absolute; top: 9px; left: 10px; display: block; width: 15px; height: 14px; background: url(http://pimg1.126.net/caipiao/img/lotteryBet/jczqNew/jczq_ico.png?v=134aa6773f0b565ad73b65615f4a07fe) -30px -181px no-repeat; }
+.dataHead .gameSeleList li:hover{ cursor: pointer;}
+.dataHead .gameSeleList li i { position: absolute; top: 9px; left: 10px; display: block; width: 15px; height: 14px; background: url(../front_images/jczq/restart.png)no-repeat;}
+.dataHead .gameSeleList li.active i{ background: url(../front_images/jczq/start.png)no-repeat;}
+.dataHead .gameSeleList .btnBox { height: 36px; line-height: 36px; float: right; margin-right: 15px; }
+.dataHead .gameSeleList .btnBox label { margin: 0; }
+.dataHead .gameSeleList .btnBox label .icon { position: relative; top: 4px; left: -5px; }
 .dataHead .gameSeleList .makeSure { font-size: 12px; color: #fff; background: #ef4b48; }
+.dataHead .arrow { background: url(../front_images/help-nav-icon.png) no-repeat; display: inline-block; width: 10px; height: 6px; position: relative; left: 5px; }
 /* 投注表格主体 */
 .onlySpf .dataBody .towLine .line2 { display: none; }
 .onlyRqSpf .dataBody .towLine .line1 { display: none; }
-.dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
+.dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d;}
 .dataBody dl { position: relative; width: 700px; margin-bottom: 0; border-bottom: 1px #dfdfdf solid; }
 .dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px; }
 .dataBody dt .cuspText { margin-right: 10px; cursor: pointer; }
@@ -116,8 +123,7 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 #poolStep1 a.block2:hover { background: url(../front_images/jczq/close.png) #448b3b no-repeat center center; }
 #poolStep2 .guoguanList { display: none; }
 .guoguanList { padding: 8px 0 8px 25px; }
-.guoguanList .jtip { line-height: 20px; float: left; width: 65px; margin: 0 5px 5px 0; cursor: pointer; text-align: center; color: #3d3d3d; border: 2px #dfdfdf solid; height: 24px;}
-
+.guoguanList .jtip { line-height: 20px; float: left; width: 65px; margin: 0 5px 5px 0; cursor: pointer; text-align: center; color: #3d3d3d; border: 2px #dfdfdf solid; height: 24px; }
 .guoguanList .jtip.active { border: none; background: url(../front_images/jczq/selected.png) no-repeat center center; line-height: 24px; }
 /* btn-Group */
 .unselect .btn-group { margin: 0 5px; }
@@ -161,52 +167,41 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .ljtz-box .block0, .ljtz-box .block1, .ljtz-box .block2 { width: 40px; }
 .ljtz-box .btns .btn { padding: 5px 35px; }
 .ljtz-box .btns .btn-danger { margin-right: 10px; }
-.ljtz-box .icoDel,.text .icoDel{ display: none;}
+.ljtz-box .icoDel, .text .icoDel { display: none; }
 .maskWrap { position: absolute; z-index: 10; overflow: hidden; border: 2px solid #e67c7c; left: 0px; display: none; }
 .maskWrap .mask { width: 100%; height: 100%; background: #f46b6b; filter: alpha(Opacity=20); -moz-opacity: .3; opacity: .3; }
-#j-no-method{ margin: 0; padding-bottom: 8px;}
-
+#j-no-method { margin: 0; padding-bottom: 8px; }
 /* 彩票模型 */
-.search-wrap{ background:#fff; width:100%; font-size:12px;}
-.search-detail-box{ border:1px solid #dfdfdf; border-bottom:none; background:#f1f1f1; padding:5px 10px;}
-.search-detail-box input{width:148px; border:1px solid #d5d2d2;  padding:5px;}
-.search-detail-box input.gray{color:#999;}
-.search-items-box{border:1px solid #dfdfdf; background:#f1f1f1; border-top:1px solid #dfdfdf; padding:10px 10px 0; +padding:10px;}
-.search-form-wrap{float:left; width:800px;}
-.search-form-wrap ul{margin:0 0 0 -10px;}
-.search-form-wrap li{float:left; height:24px; margin:0 0 8px 10px;}
-.search-form-wrap li input{width:34px; height:20px; padding:0 2px; border:1px solid #d5d2d2; line-height:20px;}
-.search-form-wrap li select{width:194px;}
-.search-opr{float:left; width:138px;}
-.search-result{margin:8px 0 0; padding:5px 12px; border-top:2px solid #f69100; color:#f69100; background:#f6f6f6;}
+.search-wrap, .search-result, .result-tip{ font-size: 12px;}
+.search-wrap { width: 100%; padding: 10px 25px; border: 1px solid #dfdfdf; background: #f1f1f1; }
+.search-detail-box { padding: 0 0 10px 0;}
+.search-detail-box .btn { padding: 5px; border: none; font-size: 12px; }
+.search-detail-box input { width: 148px; border: 1px solid #dfdfdf; padding: 5px; color: #848484; }
+.search-items-box { border-top: none; }
+.search-form-wrap { float: left; width: 834px; }
+.search-form-wrap ul { margin: 0 0 0 -10px; }
+.search-form-wrap li { float: left; height: 24px; margin: 0 0 8px 10px; }
+.search-form-wrap li input { width: 50px; height: 20px; padding: 0 2px; border: 1px solid #dfdfdf; line-height: 20px; }
+.search-form-wrap li select { width: 194px; height: 20px; border: 1px #dfdfdf solid; }
+.search-opr { float: right; width: 95px; }
+.search-opr .btn-sear { padding: 5px; }
+.search-result { padding: 10px 25px; }
 
-.sort-wrap{position:relative; margin:8px 0 0 5px; z-index:8;}
-.sort-box{position:absolute; width:280px; padding:10px; border:1px solid #f69100; right:61px; top:24px; margin:-2px 0 0; background:#fff; z-index:9;}
-.sort-box fieldset{border:1px solid #ccc; padding:0 10px 10px;}
-.sort-box legend{padding:0 5px; margin:0 0 10px;}
-.sort-box input{width:130px; height:20px; padding:0 2px; border:1px solid #d5d2d2; line-height:20px;}
-.sort-box label{margin:0 0 0 6px;}
-.sort-box h4{line-height:28px;}
-.sort-box ul{margin:0 0 0 -4px;}
-.sort-box li{float:left; width:106px; padding:0 20px 0 10px; height:24px;border:1px solid #ccc; margin:-1px 0 0 4px; +margin:-3px 0 0 4px; line-height:24px; position:relative;}
-.sort-box li.cur{background:#f4f4f4;}
-.sort-box li .i-close-gray{position:absolute; right:10px; top:10px;}
-.sort-box li .save-name{width:100px; height:22px; line-height:22px; overflow:hidden;}
+.result-table{ border: 1px #dfdfdf solid; padding-bottom: 25px;}
+.result-table .m-mn-table-bor{border-width: 0 0 1px 0;}
+.result-tip{ color: #848484; margin: 10px 25px 25px;}
+.result-table .pages{ margin: auto; width: 300px;}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.sort-wrap { position: relative; margin: 8px 0 0 5px; z-index: 8; }
+.sort-box { position: absolute; width: 280px; padding: 10px; border: 1px solid #f69100; right: 61px; top: 24px; margin: -2px 0 0; background: #fff; z-index: 9; }
+.sort-box fieldset { border: 1px solid #ccc; padding: 0 10px 10px; }
+.sort-box legend { padding: 0 5px; margin: 0 0 10px; font-size: 12px; }
+.sort-box input { width: 130px; height: 20px; padding: 0 2px; border: 1px solid #dfdfdf; line-height: 20px; }
+.sort-box label { margin: 0 0 0 6px; }
+.sort-box h4 { line-height: 28px; font-size: 12px; }
+.sort-box ul { margin: 0 0 0 -4px; }
+.sort-box li { float: left; width: 106px; padding: 0 20px 0 10px; height: 24px; border: 1px solid #ccc; margin: -1px 0 0 4px; +margin: -3px 0 0 4px; line-height: 24px; position: relative; }
+.sort-box li.cur { background: #f4f4f4; }
+.sort-box li .i-close-gray { position: absolute; right: 10px; top: 10px; }
+.sort-box li .save-name { width: 100px; height: 22px; line-height: 22px; overflow: hidden; }

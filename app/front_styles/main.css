@@ -43,6 +43,7 @@ body { background: #fff; color: #3d3d3d; }
 .ft-list>li>ul>li>a { color: #545454; line-height: 1.9; }
 .ft-img { padding-left: 140px; }
 /* Login Alert */
+#j-login-modal{ z-index: 100;}
 #j-login-modal .modal-dialog { height: 227px; width: 451px; border: 8px solid rgba(0, 0, 0, 0.3); }
 #j-login-modal .modal-content { border: none; }
 #j-login-modal .modal-header { background: #f13c38; color: #fff; height: 40px; padding: 0 15px; line-height: 40px; }

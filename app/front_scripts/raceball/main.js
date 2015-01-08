@@ -6,6 +6,7 @@ require.config({
     store: '../lib/store.min',
     app: '../common/app',
     scroll: '../lib/jquery.mCustomScrollbar.concat.min',
+    tipsy: '../lib/jquery.tipsy',
     betting: 'betting',
     hemai: 'hemai',
   },
@@ -17,16 +18,26 @@ require.config({
     scroll: {
       deps: ['jquery'],
       exports: 'jquery'
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
     }
   }
 });
 
-require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll'], function($, _, BET, APP, store, H) {
+require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy'], function($, _, BET, APP, store, H) {
   'use strict';
 
-  //初始化竞彩足球, 合买
-  BET.init();
   Config.lotyName = 'jczq';
+  gameSeleListInit();
+
+  $('.icon').tipsy({
+    fade: true,
+    gravity: 'nw',
+    html: true,
+    opacity: 1
+  });
 
   var buyTicket = function(obj, type) {
     $.ajax({
@@ -98,8 +109,95 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 赛事筛选
-  $('#showOption').on('click', function(event) {
+  $('#showOption').hover(function() {
+
     $('#gameSeleList').show();
+
+  }, function() {
+    $('#gameSeleList').hide();
+  });
+
+  $('#gameSeleList').on('click', 'li', function(event) {
+
+    $(this).toggleClass('active');
+
+    var start = [];
+
+    $('#gameSeleList li.active').each(function(index, el) {
+      start.push($.trim($(this).text()));
+    });
+
+    $('.gameSelect dd').each(function(index, el) {
+      if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    });
+
+  });
+
+  $('#gameSeleList').on('click', '.makeSure', function(event) {
+
+    var start = [];
+
+    if ($('#gameSeleList .icon').hasClass('icon-cgou')) {
+      $('#gameSeleList li.active').each(function(index, el) {
+        start.push($.trim($(this).text()));
+      });
+      $('#gameSeleList').hide();
+      store.set('startArr', start);
+    }else{
+      store.clear('startArr');
+    }
+
+
+
+  });
+
+  $('#gameSeleList').on('click', '.icon', function(event) {
+    var t = $(this);
+    t.toggleClass('icon-cbox').toggleClass('icon-cgou');
+  });
+
+  function gameSeleListInit() {
+    var start = store.get('startArr');
+
+    if (start) {
+      $('#gameSeleList li').each(function(index, el) {
+        if (_.indexOf(start, $.trim($(this).text())) >= 0) {
+          $(this).addClass('active');
+        } else {
+          $(this).removeClass('active');
+        }
+      });
+
+      $('.gameSelect dd').each(function(index, el) {
+        if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
+          $(this).hide();
+        } else {
+          $(this).show();
+        }
+      });
+    }
+  }
+
+  // 截止时间
+  $('#changeTime').hover(function() {
+    $(this).find('.optionList').show();
+  }, function() {
+    $(this).find('.optionList').hide();
+  });
+
+  $('#changeTime .optionList').on('click', 'a', function(event) {
+
+    var type = $(this).attr('data-timeType');
+
+    $('.dataBody dd').each(function(index, el) {
+      var time = $(this).attr(type);
+      $(this).find('.co3 .jtip').html(time);
+    });
+
   });
 
   // 合买

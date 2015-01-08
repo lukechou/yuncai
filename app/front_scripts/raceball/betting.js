@@ -91,7 +91,8 @@ define(['jquery'], function($) {
       var _this = this;
       var m = ['胜', '平', '负'];
       var code = dd.attr('matchcode');
-      var compiled = null;
+      var compiled = _.template('<tr matchcode="<%= matchcode%>" class="gameTitle"><th class="t1"><a class="icoDel" href="javascript:;">&times;</a><%= matchnumcn%></th><th class="t2"><%= hostname%> <%= guestname%></th></tr><tr class="gameOption" matchcode="<%= matchcode%>"><td colspan="5" class="betList"><a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a></td></tr>');
+      var oneMatchHTML = '';
       var fill = {
         i: i,
         gametype: _this.tab,
@@ -102,7 +103,6 @@ define(['jquery'], function($) {
         guestname: dd.attr('guestname')
       };
       var linkHTML = '';
-
       var hasMatch = _.find(_this.match, {
         'matchcode': code
       });
@@ -118,6 +118,14 @@ define(['jquery'], function($) {
         return a.index - b.index;
       });
 
+      var selectMatch = _.uniq(_this.match, function(n) {
+        return n.matchcode;
+      });
+
+      selectMatch = _this.match.sort(function(a, b) {
+        return a.matchcode - b.matchcode;
+      });
+
       if (hasMatch) {
         _.each(_this.match, function(matchs) {
           if (matchs.matchcode == code) {
@@ -126,9 +134,25 @@ define(['jquery'], function($) {
         });
         $('#selectGamePool .gameOption[matchcode=' + code + '] .betList').html(linkHTML);
       } else {
-        compiled = _.template('<tr matchcode="<%= matchcode%>" class="gameTitle"><th class="t1"><a class="icoDel" href="javascript:;">&times;</a><%= matchnumcn%></th><th class="t2"><%= hostname%> <%= guestname%></th></tr><tr class="gameOption" matchcode="<%= matchcode%>"><td colspan="5" class="betList"><a index="<%= i%>" gametype="<%= gametype%>" matchcode="<%= matchcode%>" href="javascript:;" class="block<%= i%>"><%= text%></a></td></tr>');
-        $('#selectGamePool tbody').append(compiled(fill));
+        oneMatchHTML = compiled(fill);
+        if (selectMatch.length > 1) {
+          var selectMatchcodeArr = [];
+          for (var i = 0; i < selectMatch.length; i++) {
+            selectMatchcodeArr.push(selectMatch[i].matchcode);
+          };
+          var nextIndex = _.indexOf(selectMatchcodeArr, code) + 1;
+
+          if (nextIndex < selectMatchcodeArr.length) {
+            $('#selectGamePool tbody tr.gameTitle[matchcode=' + selectMatchcodeArr[nextIndex] + ']').before(oneMatchHTML);
+          } else {
+            $('#selectGamePool tbody').append(oneMatchHTML);
+          }
+        } else {
+          $('#selectGamePool tbody').append(oneMatchHTML);
+        }
+
       }
+
       $('#poolStep1 .scrollMoni').show();
       $('#poolStep1 .unSeleTips').hide();
       _this.setSecondBox();
@@ -610,5 +634,6 @@ define(['jquery'], function($) {
   }());
 
   var b = new bet();
+  b.init();
   return b;
 });

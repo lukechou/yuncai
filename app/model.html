@@ -157,9 +157,11 @@
           返奖率高达69% , 过关固定赔率
     </h2>
     <div class="g-hd-group">
-      <a href="raceball.html">过关投注</a><a href="he.html">参与合买</a><a href="#" class="active">模型中心</a>
+      <a href="raceball.html">过关投注</a>
+      <a href="he.html">参与合买</a>
+      <a href="#" class="active">模型中心</a>
     </div>
-    <div class="g-hd-time">投注截止时间：赛前或官方截止前10分钟</div>
+    <div class="g-hd-time">当前期号:141215</div>
   </div>
   <div class="vote-nav">
     <ul class="nav nav-tabs" role="tablist" id="j-vote-nav">
@@ -183,7 +185,7 @@
         <input type="hidden" name="showlast" value="0">
         <input type="text" name="model_id" class="gray j-id-input" value="输入模型编号精确查找">
         &nbsp;
-        <button class="btn btn-sear w120">按模型编号搜索</button>
+        <button class="btn btn-sear w120" type="button">按模型编号搜索</button>
       </form>
     </div>
     <div class="search-items-box clearfix">
@@ -256,10 +258,7 @@
         </div>
         <div class="search-opr">
           <div>
-            <button class="btn-g btn-gray-h25 w80 j-submit" type="submit">
-              <span>按参数筛选</span>
-            </button>
-            <a href="/trade/statistic/index" target="_blank" class="his-btn">历史模拟</a>
+            <button class="btn btn-sear w80" type="button">按参数筛选</button>
           </div>
           <div class="sort-wrap">
             <a href="#none" class="sort-btn j-sort-btn">
@@ -308,15 +307,79 @@
       </div>
     </form>
   </div>
-  <div class="search-result">
-    <p>
-      <span class="bold">150105</span>
-      期的所有彩票模型（共有
-      <span class="red bold">2408</span>
-      个）：
-    </p>
-  </div>
 </div>
+<p class="search-result">
+  按参数筛选的彩票模型： <b class="fc-3">741</b>
+  个
+</p>
+<div class="result-table mb30">
+  <table class="table table-striped m-mn-table m-mn-table-bor">
+    <thead>
+      <tr>
+        <th>序号</th>
+        <th>模型编号</th>
+        <th>趋势指数</th>
+        <th>彩胜指数</th>
+        <th>命中指数</th>
+        <th>平均回报</th>
+        <th>上轮遗漏</th>
+        <th>当前遗漏</th>
+        <th>当前截止时间</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody id="track_detail_list">
+      <tr>
+        <td>1</td>
+        <td>CD_322222</td>
+        <td>-45.23</td>
+        <td>0.99</td>
+        <td>89.12</td>
+        <td>3.25</td>
+        <td>5</td>
+        <td>16</td>
+        <td>12-15 23：30</td>
+        <td>
+          <a href="#">详情</a>
+          <a href="#" class="ml8">修改收藏</a>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>CD_322222</td>
+        <td>-45.23</td>
+        <td>0.99</td>
+        <td>89.12</td>
+        <td>3.25</td>
+        <td>5</td>
+        <td>16</td>
+        <td class="fc-3">已截止</td>
+        <td>
+          <a href="#">详情</a>
+          <a href="#" class="ml8">收藏</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- /.table-->
+
+  <p class="result-tip">列表中趋势指数、彩胜指数、命中指数、平均回报、上轮遗漏、当前遗漏和</p>
+
+  <div class="j-page-box clearfix">
+    <div class="pages">
+      1/
+      <span class="j-days">5</span>
+      页
+      <a href="javascript:;" class="back-page">上一页</a>
+      <a href="javascript:;" class="next-page">下一页</a>
+      <input type="text" value="1" class="govalue j-pages-value">
+      <button class="btn j-pages-go" type="button">Go</button>
+      页
+    </div>
+  </div>
+
+</div>
+<!-- /.result-table-->
 
 </div>
 <!-- /.raceball-->
