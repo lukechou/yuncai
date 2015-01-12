@@ -74,13 +74,15 @@ define(['jquery'], function($) {
 
     bet.prototype.toggleBunch = function(h, method) {
 
+      var _this = this;
+
       if (h) {
-        this.bunch.push(method);
-        this.bunch = _.uniq(this.bunch).sort(function(a, b) {
+        _this.bunch.push(method);
+        _this.bunch = _.uniq(_this.bunch).sort(function(a, b) {
           return a.slice(0, 1) - b.slice(0, 1);
         });
       } else {
-        _.remove(this.bunch, function(b) {
+        _.remove(_this.bunch, function(b) {
           return b == method;
         });
       }
@@ -209,14 +211,17 @@ define(['jquery'], function($) {
       var list = $('#j-method-ls');
       var html = '';
       var jtip = list.find('.jtip');
-
+      var jtipLen = jtip.length;
       if (len > 8) return;
 
       if (len >= 2) {
 
         if ($('#j-me-' + len)[0]) {
-          if ((jtip.length + 1) > len) {
-            jtip.eq(jtip.length - 1).remove();
+          if ((jtipLen + 1) > len) {
+            _.remove(_this.bunch, function(b) {
+              return b.slice(0, 1) == (jtipLen+1);
+            });
+            jtip.eq(jtipLen - 1).remove();
           }
         } else {
 
@@ -236,6 +241,7 @@ define(['jquery'], function($) {
           tips.hide();
           list.show().append(html(obj));
         }
+
       } else {
         list.hide().html('');
         tips.show();

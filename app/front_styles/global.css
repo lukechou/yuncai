@@ -15,6 +15,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 /* font */
 h1, h2, h3, h4, h5, h6 { font-family: 'Microsoft Yahei'; }
 address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-weight: 500; }
+textarea { word-wrap: break-word; resize: none; }
 .fs-12 { font-size: 12px; }
 .fs-16 { font-size: 16px; }
 .fs-20 { font-size: 20px; }
@@ -43,6 +44,7 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .ml8 { margin-left: 8px; }
 .ml50 { margin-left: 50px; }
 .ml70 { margin-left: 70px; }
+.mlr5{ margin: 0 5px;}
 .w985 { width: 985px; margin: auto; }
 .w180 { width: 180px; }
 .ps-t2 { position: relative; top: 2px; }
@@ -102,7 +104,10 @@ address, caption, cite, code, dfn, em, th, var, i, b { font-style: normal; font-
 .m-tab-nav>li.active>a, .m-tab-nav>li>a:hover, .m-tab-nav>li.active>a:hover, .m-tab-nav>li.active>a:focus { border-radius: 0; background: #fff; border-top: 2px #f13c38 solid; border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; border-bottom: none; }
 /* MN Table */
 .m-mn-table { border-top: 1px #dfdfdf solid; text-align: center; font-size: 12px; margin-bottom: 0; }
-.m-mn-table>thead>tr>th { font-weight: normal; text-align: center; background: #f1f1f1; }
+.m-mn-table>thead>tr>th { font-weight: normal;
+text-align: center;
+background: #f1f1f1;
+border-bottom: 1px solid #dfdfdf; }
 .m-mn-table>tbody>tr:nth-child(odd) { background: #fff; }
 .m-mn-table>tbody>tr { background: #f1f1f1; }
 .m-mn-table-bor { border: 1px #dfdfdf solid; }

@@ -137,7 +137,10 @@ define(['jquery'], function($) {
           _this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
           break;
         default:
-          _this.showTips('<div class="tipbox"><p>' + retMsg + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>');
+          _this.showTips({
+            onlyConfirm: true,
+            text: retMsg
+          });
           break;
       }
     };
@@ -193,6 +196,19 @@ define(['jquery'], function($) {
         });
     };
 
+    app.prototype.checkUserLoginStatus = function() {
+
+      var _this = this;
+      var user = $('#myname');
+
+      if (user.length) {
+        return true;
+      } else {
+        return false;
+      }
+
+    };
+
     /**
      * showTips 全局通用拟态框
      * @param  {Object} obj tips's HTML {title:'title', html:'html'}
@@ -201,18 +217,28 @@ define(['jquery'], function($) {
     app.prototype.showTips = function(o) {
 
       var _this = this;
-      var obj = {
+      var config = {
         title: '友情提示',
-        html: ''
+        html: '',
+        onlyConfirm: false,
+        text: ''
       };
+      var obj = config;
 
       if (typeof o == 'string') {
         obj.html = o;
       } else {
-        obj = o;
-        if (!o.title) {
-          obj.title = '友情提示';
+        for (var prop in o) {
+          if (o.hasOwnProperty(prop)) {
+            if (o[prop] != '') {
+              obj[prop] = o[prop]
+            }
+          }
         }
+      }
+
+      if (obj.onlyConfirm) {
+        obj.html = '<div class="tipbox"><p>' + obj.text + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
       }
 
       if (!$('#myModal')[0]) {
@@ -248,6 +274,26 @@ define(['jquery'], function($) {
      */
     app.prototype.onServiceFail = function() {
       this.showTips(this.getConfirmHtml('服务器繁忙,请稍后再试!'));
+    };
+
+    /**
+     * 输入框获取丢失焦点element 监听
+     * @return {[type]} [description]
+     */
+    app.prototype.bindInputPlace = function() {
+
+      $('.j-input-place').on('focus', function(event) {
+        var _this = $(this);
+        var t = _this.attr('data-place');
+        if (t == _this.val()) $(this).val('');
+      });
+
+      $('.j-input-place').on('blur', function(event) {
+        var _this = $(this);
+        var t = _this.attr('data-place');
+        if ('' == _this.val()) $(this).val(t);
+      });
+
     };
 
     app.prototype.init = function() {

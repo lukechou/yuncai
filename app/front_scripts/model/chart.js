@@ -1,4 +1,5 @@
-define(['lib/jquery'], function($) {
+define(['jquery'], function($) {
+	'use strict';
 	//https://github.com/highslide-software/highcharts.com/
 	var Graph = (function() {
 
@@ -293,16 +294,13 @@ define(['lib/jquery'], function($) {
 				});
 			};
 
-		};
-
-		return Graph;
-
+			return Graph;
 	}());
 
 var c = new Graph({
 	width: 985,
 	chartEl: $('#chart'),
 });
-return c;
 
+return c;
 });
