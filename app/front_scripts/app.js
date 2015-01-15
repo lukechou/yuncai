@@ -232,7 +232,10 @@ APP.onSubmitConfirm = function(callback, data, html) {
             callback(data);
           });
         } else {
-          APP.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+          _this.showTips({
+            html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>',
+            title: '余额不足'
+          });
         }
       } else {
         APP.handRetCode(D.retCode, D.retMsg);

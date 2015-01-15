@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>彩胜网-竞彩足球</title>
+  <title>彩胜网-彩票模型</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <meta name="apple-touch-fullscreen" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes"  />
@@ -12,522 +12,782 @@
   <meta name="Keywords" content="彩胜网">
   <meta name="Description" content="彩胜网">
   <meta name="author" content="彩胜网">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <link rel="Shortcut Icon" href="favicon.ico" type="image/ico" />
   <link rel="Bookmark" href="favicon.ico" type="image/ico" />
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <link rel="stylesheet" href="front_styles/bootstrap.min.css">
   <link rel="stylesheet" href="front_styles/global.css">
   <link rel="stylesheet" href="front_styles/icon.css">
-  <link rel="stylesheet" href="front_styles/jquery.mCustomScrollbar.min.css">
   <link rel="stylesheet" href="front_styles/main.css">
-  <link rel="stylesheet" href="front_styles/ball.css"></head>
+  <link rel="stylesheet" href="front_styles/tipsy.css">
+  <link rel="stylesheet" href="front_styles/ball.css?version=1.0.0"></head>
 <body>
   <div class="hd">
     <div class="hd-top">
       <div class="w985" id="hd-top">
-        <span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <a href="login.html" class="active">登录</a>
-        <a href="register.html">免费注册</a>
-        <!--span>
-        seven       账户余额:
-        <span id="userMoney">81,400.89</span>
+        <span>
+          欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;
+          <img src="front_images/bor.png" alt="bor"/>
+        </span>
+        <span id="myname">seven</span>
+        账户余额:
+        <span id="userMoney">51,029.89</span>
         元
-      </span>
-      <a href="/account/top-up" class="active">充值</a>
-      <img src="front_images/bor.png" alt="bor">
-      <a href="#">退出</a-->
-      <img src="front_images/bor.png" alt="bor">
-      <a href="account.html" class="last">我的账户</a>
-      <img src="front_images/top-down.png" alt="bor"></div>
+        <a href="/account/top-up" class="active">充值</a>
+        <img src="front_images/bor.png" alt="bor"/>
+        <a href="/account/logout">退出</a>
+        <img src="front_images/bor.png" alt="bor"/>
+        <a href="/account/index" class="last">我的账户</a>
+        <img src="front_images/top-down.png" alt="bor"/>
 
-  </div>
-  <!-- /.hd-top-->
-  <div class="hd-mn w985">
-    <div class="hd-logo">
-      <a href="/index.html">
-        <img src="front_images/logo.png" alt="彩胜网"/>
-      </a>
+      </div>
     </div>
-    <!-- /.hd-logo-->
-    <ul class="hd-nav">
-      <li id="choseCai">
-        <a href="#" class="active">
-          选择彩种
-          <img src="front_images/h-down.png" alt="down" />
+    <!-- /.hd-top-->
+    <div class="hd-mn w985">
+      <div class="hd-logo">
+        <a href="/index.html">
+          <img src="front_images/logo.png" alt="彩胜网"/>
         </a>
-        <ul class="hd-mask" id="hdMask">
-          <li>
-            <a href="#">
-              <div class="hd-mask-icon">
-                <img src="front_images/hd-b1.png" alt="竞彩足球"/>
-              </div>
-              竞彩足球
-              <span>9.27大加奖</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div class="hd-mask-icon">
-                <img src="front_images/hd-b1.png" alt="竞彩足球"/>
-              </div>
-              竞彩足球
-              <span>9.27大加奖</span>
-            </a>
-          </li>
-          <li>
-            <a href="/lottery/buy/ssq" class="active">
-              <div class="hd-mask-icon">
-                <img src="front_images/hd-b2.png" alt="双色球"/>
-              </div>
-              双色球
-              <span>奖池超X亿</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div class="hd-mask-icon">
-                <img src="front_images/hd-b3.png" alt="竞彩足球"/>
-              </div>
-              广东快乐10分
-              <span>奖池超X亿</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <div class="hd-mask-icon">
-                <img src="front_images/hd-b3.png" alt="竞彩足球"/>
-              </div>
-              广东快乐10分
-              <span>奖池超X亿</span>
-            </a>
-          </li>
-          <li>
-            <ul class="hd-mask-list">
-              <li>
-                <a href="#">广东11选5</a>
-              </li>
-              <li>
-                <a href="#">老11选5</a>
-              </li>
-              <li>
-                <a href="#">好运11选5</a>
-              </li>
-              <li>
-                <a href="#">重庆11选5</a>
-              </li>
-              <li>
-                <a href="#">易乐11选5</a>
-              </li>
-              <li>
-                <a href="#">辽宁11选5</a>
-              </li>
-              <li>
-                <a href="#">快乐8</a>
-              </li>
-              <li>
-                <a href="#">新时时彩</a>
-              </li>
-              <li>
-                <a href="#">老时时彩</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="index.html" class="active">首页</a>
-      </li>
-
-      <li>
-        <a href="hall.html">投注大厅</a>
-      </li>
-
-      <li>
-        <a href="he.html">合买大厅</a>
-      </li>
-    </ul>
-    <!-- /.hd-nav--> </div>
-</div>
-<!-- /.hd-->
-<div class="raceball clearfix w985">
-  <div class="g-hd clearfix">
-    <img src="front_images/jc.png" alt="竞彩足球" class="pull-left g-hd-logo" />
-    <h2 class="g-hd-title"> <b>竞彩足球</b>
-      &nbsp;
-          返奖率高达69% , 过关固定赔率
-    </h2>
-    <div class="g-hd-group">
-      <a href="raceball.html">过关投注</a><a href="he.html">参与合买</a><a href="#" class="active">模型中心</a>
-    </div>
-    <div class="g-hd-time">当前期号:141215</div>
-  </div>
-  <div class="vote-nav">
-    <ul class="nav nav-tabs" role="tablist" id="j-vote-nav">
-      <li role="presentation" class="active">
-        <a href="#home" data-type="onlySpf" role="tab" data-toggle="tab" aria-expanded="false">彩票模型</a>
-      </li><li role="presentation" class="">
-        <a href="#together" data-type="onlyRqSpf" role="tab" data-toggle="tab" aria-expanded="true">我的模型</a>
-      </li><li role="presentation" class="">
-        <a href="#together" data-type="onlyRqSpf" role="tab" data-toggle="tab" aria-expanded="true">我的收藏</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="search-wrap">
-    <div class="search-detail-box">
-      <form method="get" action="/trade/super/newIndex" id="detail-form">
-        <input type="hidden" name="condition" value="2">
-        <input type="hidden" name="submit" value="1">
-        <input type="hidden" name="showlast" value="0">
-        <input type="text" name="model_id" class="gray j-id-input" value="输入模型编号精确查找">
-        &nbsp;
-        <button class="btn btn-sear w120" type="button">按模型编号搜索</button>
-      </form>
-    </div>
-    <div class="search-items-box clearfix">
-      <form method="get" action="/trade/super/newIndex" name="search-form" class="j-search-form">
-        <div class="search-form-wrap clearfix">
-          <input type="hidden" name="condition" value="1">
-          <input type="hidden" name="submit" value="1">
-          <input type="hidden" name="order" value="TI">
-          <input type="hidden" name="type" value="asc">
-          <input type="hidden" name="showlast" value="0">
-          <ul>
-            <li class="j-qszs">
-              <label>趋势指数：</label>
-              <input maxlength="6" type="text" name="TI1" class="j-qszs-1" value="">
-              <span class="gray">—</span>
-              <input maxlength="6" type="text" name="TI2" class="j-qszs-2" value=""></li>
-            <li class="j-cszs">
-              <label>彩胜指数：</label>
-              <input maxlength="6" type="text" name="GI1" class="j-cszs-1" value="">
-              <span class="gray">—</span>
-              <input maxlength="6" type="text" name="GI2" class="j-cszs-2" value=""></li>
-            <li class="j-slyl">
-              <label>上轮遗漏：</label>
-              <input maxlength="6" type="text" name="lastOD1" class="j-slyl-1" value="">
-              <span class="gray">—</span>
-              <input maxlength="6" type="text" name="lastOD2" class="j-slyl-2" value=""></li>
+      </div>
+      <!-- /.hd-logo-->
+      <ul class="hd-nav">
+        <li id="choseCai">
+          <a href="#" class="active">
+            选择彩种
+            <img src="front_images/h-down.png" alt="down" />
+          </a>
+          <ul class="hd-mask" id="hdMask">
             <li>
-              <label>特殊筛选：</label>
-              <select name="GI_special" class="j-tssx">
-                <option value="1">所有</option>
-                <option value="0">只显示.00的彩胜指数模型</option>
-                <option value="9">只显示.99的彩胜指数模型</option>
-                <option value="10">显示非.00的彩胜指数模型</option>
-                <option value="19">显示非.99的彩胜指数模型</option>
-              </select>
+              <a href="#">
+                <div class="hd-mask-icon">
+                  <img src="front_images/hd-b1.png" alt="竞彩足球"/>
+                </div>
+                竞彩足球
+                <span>9.27大加奖</span>
+              </a>
             </li>
-            <li class="j-mzzs">
-              <label>命中指数：</label>
-              <input maxlength="6" type="text" name="HI1" class="j-mzzs-1" value="">
-              <span class="gray">—</span>
-              <input maxlength="6" type="text" name="HI2" class="j-mzzs-2" value=""></li>
-            <li class="j-pjhb">
-              <label>平均回报：</label>
-              <input maxlength="6" type="text" name="AR1" class="j-pjhb-1" value="">
-              <span class="gray">—</span>
-              <input maxlength="6" type="text" name="AR2" class="j-pjhb-2" value=""></li>
-            <li class="j-pjhb">
-              <label>当前遗漏：</label>
-              <input maxlength="6" type="text" name="thisOD1" class="j-dqyl-1" value="">
-              <span class="gray">—</span>
-              <input maxlength="6" type="text" name="thisOD2" class="j-dqyl-2" value=""></li>
             <li>
-              <label>排序方式：</label>
-              <select name="sort_type" class="j-pxfs">
-                <option value="1">按命中指数从高到低排序</option>
-                <option value="2">按命中指数从低到高排序</option>
-                <option value="3">按趋势指数从高到低排序</option>
-                <option value="4">按趋势指数从低到高排序</option>
-                <option value="5">按彩胜指数从高到低排序</option>
-                <option value="6">按彩胜指数从低到高排序</option>
-                <option value="7">按平均回报从高到低排序</option>
-                <option value="8">按平均回报从低到高排序</option>
-                <option value="9">按上轮遗漏从高到低排序</option>
-                <option value="10">按上轮遗漏从低到高排序</option>
-                <option value="11">按当前遗漏从高到低排序</option>
-                <option value="12">按当前遗漏从低到高排序</option>
-              </select>
+              <a href="#">
+                <div class="hd-mask-icon">
+                  <img src="front_images/hd-b1.png" alt="竞彩足球"/>
+                </div>
+                竞彩足球
+                <span>9.27大加奖</span>
+              </a>
+            </li>
+            <li>
+              <a href="/lottery/buy/ssq" class="active">
+                <div class="hd-mask-icon">
+                  <img src="front_images/hd-b2.png" alt="双色球"/>
+                </div>
+                双色球
+                <span>奖池超X亿</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="hd-mask-icon">
+                  <img src="front_images/hd-b3.png" alt="竞彩足球"/>
+                </div>
+                广东快乐10分
+                <span>奖池超X亿</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <div class="hd-mask-icon">
+                  <img src="front_images/hd-b3.png" alt="竞彩足球"/>
+                </div>
+                广东快乐10分
+                <span>奖池超X亿</span>
+              </a>
+            </li>
+            <li>
+              <ul class="hd-mask-list">
+                <li>
+                  <a href="#">广东11选5</a>
+                </li>
+                <li>
+                  <a href="#">老11选5</a>
+                </li>
+                <li>
+                  <a href="#">好运11选5</a>
+                </li>
+                <li>
+                  <a href="#">重庆11选5</a>
+                </li>
+                <li>
+                  <a href="#">易乐11选5</a>
+                </li>
+                <li>
+                  <a href="#">辽宁11选5</a>
+                </li>
+                <li>
+                  <a href="#">快乐8</a>
+                </li>
+                <li>
+                  <a href="#">新时时彩</a>
+                </li>
+                <li>
+                  <a href="#">老时时彩</a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </div>
-        <div class="search-opr">
-          <div>
-            <button class="btn btn-sear w80" type="button">按参数筛选</button>
+        </li>
+        <li>
+          <a href="/index.html" class="active">首页</a>
+        </li>
+        <li>
+          <a href="/lottery/hall/index">投注大厅</a>
+        </li>
+        <li>
+          <a href="/lottery/project-center/ssq/">合买大厅</a>
+        </li>
+      </ul>
+      <!-- /.hd-nav--> </div>
+  </div>
+  <!-- /.hd-->
+  <div class="raceball clearfix w985">
+    <div class="g-hd clearfix">
+      <img src="front_images/jc.png" alt="竞彩足球" class="pull-left g-hd-logo" />
+      <h2 class="g-hd-title"> <b>竞彩足球</b>
+        &nbsp;
+          返奖率高达69% , 过关固定赔率
+      </h2>
+      <div class="g-hd-group">
+        <a href="/lottery/buy/jczq">过关投注</a>
+        <a href="/lottery/project-center/jczq">参与合买</a>
+        <a href="#" class="active">模型中心</a>
+      </div>
+      <div class="g-hd-time">当前期号：150115</div>
+    </div>
+    <div class="vote-nav">
+      <ul class="nav nav-tabs">
+        <li class="active">
+          <a href="model.html">彩票模型</a>
+        </li>
+        <li class="">
+          <a href="mymodel.html">我的模型</a>
+        </li>
+        <li class="">
+          <a href="mycollect.html">我的收藏</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="search-wrap">
+      <div class="search-detail-box">
+        <form method="get" action="/lottery/trade/model-index" id="detail-form">
+          <input type="hidden" name="condition" value="2">
+          <input type="hidden" name="submit" value="1">
+          <input type="hidden" name="showlast" value="0">
+          <input type="text" name="model_id" class="j-input-place" data-place="输入模型编号精确查找" value="输入模型编号精确查找" id="j-input-id">
+          &nbsp;
+          <button class="btn btn-sear w120" type="submit">按模型编号搜索</button>
+        </form>
+      </div>
+      <div class="search-items-box clearfix">
+        <form method="get" action="/lottery/trade/model-index" name="search-form" class="j-search-form">
+          <div class="search-form-wrap clearfix">
+            <input type="hidden" name="condition" value="1">
+            <input type="hidden" name="submit" value="1">
+            <input type="hidden" name="order" value="TI">
+            <input type="hidden" name="type" value="asc">
+            <input type="hidden" name="showlast" value="0">
+            <ul>
+              <li class="j-qszs">
+                <label>趋势指数：</label>
+                <input maxlength="6" type="text" name="TI1" class="j-qszs-1" value="">
+                <span class="gray">—</span>
+                <input maxlength="6" type="text" name="TI2" class="j-qszs-2" value=""></li>
+              <li class="j-cszs">
+                <label>彩胜指数：</label>
+                <input maxlength="6" type="text" name="GI1" class="j-cszs-1" value="">
+                <span class="gray">—</span>
+                <input maxlength="6" type="text" name="GI2" class="j-cszs-2" value=""></li>
+              <li class="j-slyl">
+                <label>上轮遗漏：</label>
+                <input maxlength="6" type="text" name="lastOD1" class="j-slyl-1" value="">
+                <span class="gray">—</span>
+                <input maxlength="6" type="text" name="lastOD2" class="j-slyl-2" value=""></li>
+              <li>
+                <label>特殊筛选：</label>
+                <select name="GI_special" class="j-tssx">
+                  <option value="1" >所有</option>
+                  <option value="0"  >只显示.00的彩胜指数模型</option>
+                  <option value="9" >只显示.99的彩胜指数模型</option>
+                  <option value="10"  >显示非.00的彩胜指数模型</option>
+                  <option value="19"  >显示非.99的彩胜指数模型</option>
+                </select>
+              </li>
+              <li class="j-mzzs">
+                <label>命中指数：</label>
+                <input maxlength="6" type="text" name="HI1" class="j-mzzs-1" value="">
+                <span class="gray">—</span>
+                <input maxlength="6" type="text" name="HI2" class="j-mzzs-2" value=""></li>
+              <li class="j-pjhb">
+                <label>平均回报：</label>
+                <input maxlength="6" type="text" name="AR1" class="j-pjhb-1" value="">
+                <span class="gray">—</span>
+                <input maxlength="6" type="text" name="AR2" class="j-pjhb-2" value=""></li>
+              <li class="j-pjhb">
+                <label>当前遗漏：</label>
+                <input maxlength="6" type="text" name="thisOD1" class="j-dqyl-1" value="">
+                <span class="gray">—</span>
+                <input maxlength="6" type="text" name="thisOD2" class="j-dqyl-2" value=""></li>
+              <li>
+                <label>排序方式：</label>
+                <select name="sort_type" class="j-pxfs">
+                  <option value="1" >按命中指数从高到低排序</option>
+                  <option value="2" >按命中指数从低到高排序</option>
+                  <option value="3" >按趋势指数从高到低排序</option>
+                  <option value="4" >按趋势指数从低到高排序</option>
+                  <option value="5" >按彩胜指数从高到低排序</option>
+                  <option value="6" >按彩胜指数从低到高排序</option>
+                  <option value="7" >按平均回报从高到低排序</option>
+                  <option value="8" >按平均回报从低到高排序</option>
+                  <option value="9" >按上轮遗漏从高到低排序</option>
+                  <option value="10" >按上轮遗漏从低到高排序</option>
+                  <option value="11" >按当前遗漏从高到低排序</option>
+                  <option value="12" >按当前遗漏从低到高排序</option>
+                </select>
+              </li>
+            </ul>
           </div>
-          <div class="sort-wrap">
-            <a href="#none" class="sort-btn j-sort-btn">
-              我的筛选 <i class="i-down"></i>
-            </a>
-            <div class="sort-box hide j-sort-box">
-              <fieldset>
-                <legend>保存当前条件到我的筛选</legend>
+          <div class="search-opr">
+            <button class="btn btn-sear w80" type="submit">按参数筛选</button>
+            <div class="sort-wrap">
+              <a href="#none" class="sort-btn j-sort-btn">
+                我的筛选 <i class="i-down"></i>
+              </a>
+              <div class="sort-box hide j-sort-box">
+                <div class="title">
+                  <p>保存当前条件到我的筛选</p>
+                  <div class="line"></div>
+                </div>
                 <label>备注名：</label>
                 <input type="text" class="text-input w100 j-save-input" maxlength="15">
-                &nbsp;
-                <button class="btn-g btn-gray-h25 w50 j-save-btn" type="button">
-                  <span>保 存</span>
-                </button>
-              </fieldset>
-              <div class="my-sort">
-                <h4>
-                  我保存的筛选条件
-                  <span class="gray f-normal">(单击可载入所选记录参数)</span>
-                  ：
-                </h4>
-                <div class="my-sort-box">
-                  <ul class="j-save-wrap">
-                    <!--<li class="clearfix">
-                    <a href="#none" class="j-save-name save-name show" data-name="saveName" title="saveName">saveName</a>
-                    <a href="#none" class="j-save-del i-close-gray" data-id="json.search_id"></a>
-                  </li>
-                  <li class="clearfix">
-                    <a href="#none" class="j-save-name save-name show" data-name="saveName" title="saveName">saveName</a>
-                    <a href="#none" class="j-save-del i-close-gray" data-id="json.search_id"></a>
-                  </li>
-                  <li class="clearfix">
-                    <a href="#none" class="j-save-name save-name show" data-name="saveName" title="saveName">saveName</a>
-                    <a href="#none" class="j-save-del i-close-gray" data-id="json.search_id"></a>
-                  </li>
-                  -->
-                </ul>
-                <p class="hide j-without-tip gray">
-                  您还未登录&nbsp;
-                  <a href="#none" class="j-login">立即登录</a>
-                </p>
+                <button class="btn btn-danger j-save-btn" type="button">保 存</button>
+                <div class="my-sort">
+                  <h4> <b>我保存的筛选条件</b>
+                    <span class="fc-84">(单击可载入所选记录参数)</span>
+                  </h4>
+                  <div class="my-sort-box">
+                    <ul class="j-save-wrap" id="j-save-wrap"></ul>
+                    <p class="fc-84" id="j-load-tips">正在加载....</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
-  </div>
-</div>
-<p class="search-result">
-  按参数筛选的彩票模型： <b class="fc-3">741</b>
-  个
-</p>
-<div class="result-table mb30">
-  <table class="table table-striped m-mn-table m-mn-table-bor">
-    <thead>
-      <tr>
-        <th>序号</th>
-        <th>模型编号</th>
-        <th>趋势指数</th>
-        <th>彩胜指数</th>
-        <th>命中指数</th>
-        <th>平均回报</th>
-        <th>上轮遗漏</th>
-        <th>当前遗漏</th>
-        <th>当前截止时间</th>
-        <th>操作</th>
-      </tr>
-    </thead>
-    <tbody id="track_detail_list">
-      <tr>
-        <td>1</td>
-        <td>CD_322222</td>
-        <td>-45.23</td>
-        <td>0.99</td>
-        <td>89.12</td>
-        <td>3.25</td>
-        <td>5</td>
-        <td>16</td>
-        <td>12-15 23：30</td>
-        <td>
-          <a href="#">详情</a>
-          <a href="#" class="ml8">修改收藏</a>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>CD_322222</td>
-        <td>-45.23</td>
-        <td>0.99</td>
-        <td>89.12</td>
-        <td>3.25</td>
-        <td>5</td>
-        <td>16</td>
-        <td class="fc-3">已截止</td>
-        <td>
-          <a href="#">详情</a>
-          <a href="#" class="ml8">收藏</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- /.table-->
-
-  <p class="result-tip">列表中趋势指数、彩胜指数、命中指数、平均回报、上轮遗漏、当前遗漏和</p>
-
-  <div class="j-page-box clearfix">
-    <div class="pages">
-      1/
-      <span class="j-days">5</span>
-      页
-      <a href="javascript:;" class="back-page">上一页</a>
-      <a href="javascript:;" class="next-page">下一页</a>
-      <input type="text" value="1" class="govalue j-pages-value">
-      <button class="btn j-pages-go" type="button">Go</button>
-      页
     </div>
-  </div>
+    <p class="search-result">
+      150115            期的所有彩票模型（共有
+      <b class="fc-3">616</b>
+      个）
+    </p>
+    <div class="result-table mb30">
+      <table class="table m-mn-table m-table-middle">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>
+              <span class="data-tip" original-title="每个模型都有唯一的编号">模型编号</span>
+              <a href="/lottery/trade/model-index?order=modelnum&amp;showlast=0&amp;type=desc"> <i class="icon icon-m4 ps-t2"></i>
+              </a>
+            </th>
+            <th>
+              <span class="data-tip" original-title="反映该模型在一个阶段内的动态走势。当指数为负时，表示此时该模型近期中奖额低于历史均值；指数越低说明与均值背离越大，反转的机率越大。">趋势指数</span>
+              <a href="/lottery/trade/model-index?order=TI&amp;showlast=0&amp;type=desc">
+                <i class="icon icon-m4 ps-t2"></i>
+              </a>
+            </th>
+            <th>
+              <span class="data-tip" original-title="反映该模型近期的命中频率间隔情况及风险警示，数值越大预示下一阶段命中间隔缩小频率增大。当小数部分为.99时预示该模型可能进入风险区请谨慎投注。">彩胜指数</span>
+              <a href="/lottery/trade/model-index?order=GI&amp;showlast=0&amp;type=desc">
+                <i class="icon icon-m4 ps-t2"></i>
+              </a>
+            </th>
+            <th>
+              <span class="data-tip" original-title="反映模型阶段命中率的偏离情况，阶段命中率越低回归的可能性越大，<br/>
+              反之存在较大的投注风险。">命中指数
+            </span>
+            <a href="/lottery/trade/model-index?order=HI&amp;showlast=0&amp;type=desc">
+              <i class="icon icon-m4 ps-t2"></i>
+            </a>
+          </th>
+          <th>
+            <span class="data-tip" original-title="模型单期命中奖金与当期投入比的历史平均值，粗略反映一个模型单期命中后时的回报率。">平均回报</span>
+            <a href="/lottery/trade/model-index?order=AR&amp;showlast=0&amp;type=desc">
+              <i class="icon icon-m4 ps-t2"></i>
+            </a>
+          </th>
+          <th>
+            <span class="data-tip" original-title="指模型最近一次中出前的遗漏值。">上轮遗漏</span>
+            <a href="/lottery/trade/model-index?order=lastOD&amp;showlast=0&amp;type=desc">
+              <i class="icon icon-m4 ps-t2"></i>
+            </a>
+          </th>
+          <th>
+            <span class="data-tip" original-title="指模型从最近一次中出后到当前的遗漏值。">当前遗漏</span>
+            <a href="/lottery/trade/model-index?order=thisOD&amp;showlast=0&amp;type=desc">
+              <i class="icon icon-m4 ps-t2"></i>
+            </a>
+          </th>
+          <th>
+            当期截止时间
+            <a href="/lottery/trade/model-index?order=MT&amp;showlast=0&amp;type=desc">
+              <i class="icon icon-m4 ps-t2"></i>
+            </a>
+          </th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="track_detail_list">
+        <tr class="j-show-chart" data-modelId="CG_14104">
+          <td>
+            1
+            <!--<i class="icon icon-ding"></i>
+          -->
+        </td>
+        <td>CG_14104</td>
+        <td>-53.08</td>
+        <td>1.99</td>
+        <td>76.18</td>
+        <td>3.19</td>
+        <td>14</td>
+        <td>12</td>
+        <td>
+          <!--TODO 待修复-->
+          <b class="fc-3">已截止</b>
+        </td>
+        <td class="t-links">
+          <a href="modeldetail.html">详情</a>
+          <a href="javascript:;" data-modelId="CG_14104" data-modify="0" class="ml8 j-collect-show">收藏</a>
+        </td>
+      </tr>
+      <tr class="j-show-chart" data-modelId="CN_10480">
+        <td>
+          2
+          <!--<i class="icon icon-ding"></i>
+        -->
+      </td>
+      <td>CN_10480</td>
+      <td>-52.68</td>
+      <td>0.99</td>
+      <td>69.78</td>
+      <td>2.32</td>
+      <td>1</td>
+      <td>7</td>
+      <td>
+        <!--TODO 待修复-->
+        <b class="fc-3">已截止</b>
+      </td>
+      <td class="t-links">
+        <a href="modeldetail.html">详情</a>
+        <a href="javascript:;" data-modelId="CN_10480" data-modify="0" class="ml8 j-collect-show">收藏</a>
+      </td>
+    </tr>
+    <tr class="j-show-chart" data-modelId="CG_14175">
+      <td>
+        3
+        <!--<i class="icon icon-ding"></i>
+      -->
+    </td>
+    <td>CG_14175</td>
+    <td>-49.06</td>
+    <td>0.99</td>
+    <td>94.13</td>
+    <td>2.60</td>
+    <td>3</td>
+    <td>8</td>
+    <td>
+      <!--TODO 待修复-->
+      <b class="fc-3">已截止</b>
+    </td>
+    <td class="t-links">
+      <a href="modeldetail.html">详情</a>
+      <a href="javascript:;" data-modelId="CG_14175" data-modify="0" class="ml8 j-collect-show">收藏</a>
+    </td>
+  </tr>
+  <tr class="j-show-chart" data-modelId="CK_10453">
+    <td>
+      4
+      <!--<i class="icon icon-ding"></i>
+    -->
+  </td>
+  <td>CK_10453</td>
+  <td>-48.45</td>
+  <td>1.00</td>
+  <td>56.69</td>
+  <td>2.42</td>
+  <td>14</td>
+  <td>0</td>
+  <td>
+    <!--TODO 待修复-->
+    <b class="fc-3">已截止</b>
+  </td>
+  <td class="t-links">
+    <a href="modeldetail.html">详情</a>
+    <a href="javascript:;" data-modelId="CK_10453" data-modify="0" class="ml8 j-collect-show">收藏</a>
+  </td>
+</tr>
+<tr class="j-show-chart" data-modelId="CN_10353">
+  <td>
+    5
+    <!--<i class="icon icon-ding"></i>
+  -->
+</td>
+<td>CN_10353</td>
+<td>-46.18</td>
+<td>0.99</td>
+<td>65.78</td>
+<td>2.78</td>
+<td>1</td>
+<td>7</td>
+<td>
+  <!--TODO 待修复-->
+  <b class="fc-3">已截止</b>
+</td>
+<td class="t-links">
+  <a href="modeldetail.html">详情</a>
+  <a href="javascript:;" data-modelId="CN_10353" data-modify="0" class="ml8 j-collect-show">收藏</a>
+</td>
+</tr>
+<tr class="j-show-chart" data-modelId="CN_10349">
+<td>
+  6
+</td>
+<td>CN_10349</td>
+<td>-45.45</td>
+<td>0.99</td>
+<td>65.45</td>
+<td>3.34</td>
+<td>1</td>
+<td>7</td>
+<td>
+<!--TODO 待修复-->
+<b class="fc-3">已截止</b>
+</td>
+<td class="t-links">
+<a href="modeldetail.html">详情</a>
+<a href="javascript:;" data-modelId="CN_10349" data-modify="0" class="ml8 j-collect-show">收藏</a>
+</td>
+</tr>
+<tr class="j-show-chart" data-modelId="CK_10454">
+<td>
+7
+<!--<i class="icon icon-ding"></i>
+-->
+</td>
+<td>CK_10454</td>
+<td>-44.36</td>
+<td>1.00</td>
+<td>62.32</td>
+<td>2.50</td>
+<td>14</td>
+<td>0</td>
+<td>
+<!--TODO 待修复-->
+<b class="fc-3">已截止</b>
+</td>
+<td class="t-links">
+<a href="modeldetail.html">详情</a>
+<a href="javascript:;" data-modelId="CK_10454" data-modify="0" class="ml8 j-collect-show">收藏</a>
+</td>
+</tr>
+<tr class="j-show-chart" data-modelId="CN_10484">
+<td>
+8
+<!--<i class="icon icon-ding"></i>
+-->
+</td>
+<td>CN_10484</td>
+<td>-44.25</td>
+<td>0.99</td>
+<td>89.19</td>
+<td>2.39</td>
+<td>1</td>
+<td>7</td>
+<td>
+<!--TODO 待修复-->
+<b class="fc-3">已截止</b>
+</td>
+<td class="t-links">
+<a href="modeldetail.html">详情</a>
+<a href="javascript:;" data-modelId="CN_10484" data-modify="0" class="ml8 j-collect-show">收藏</a>
+</td>
+</tr>
+
+</tbody>
+</table>
+<!-- /.table-->
+
+<p class="result-tip">列表中趋势指数、彩胜指数、命中指数、平均回报、上轮遗漏、当前遗漏和当期截止时间均为最新数据。</p>
+
+<div class="j-page-box clearfix">
+<div class="pages">
+<div class="page black" style="background:#fff; float:right;">
+<span>1/77页</span>
+<a href="#none" class="btn-g btn-gray-h25 btn-w60 btn-disabled pre">
+<span>上一页</span>
+</a>
+<a href="/lottery/trade/model-index?page=2&order=TI&type=asc&showlast=0" class="btn-g btn-gray-h25 btn-w60 next">
+<span>下一页</span>
+</a>
+<span>跳到第</span>
+&nbsp;&nbsp;
+<select onchange="window.location.href=this.value">
+<option  selected value="/lottery/trade/model-index?page=1&order=TI&type=asc&showlast=0">1</option>
+<option   value="/lottery/trade/model-index?page=2&order=TI&type=asc&showlast=0">2</option>
+<option   value="/lottery/trade/model-index?page=3&order=TI&type=asc&showlast=0">3</option>
+<option   value="/lottery/trade/model-index?page=4&order=TI&type=asc&showlast=0">4</option>
+<option   value="/lottery/trade/model-index?page=5&order=TI&type=asc&showlast=0">5</option>
+<option   value="/lottery/trade/model-index?page=6&order=TI&type=asc&showlast=0">6</option>
+<option   value="/lottery/trade/model-index?page=7&order=TI&type=asc&showlast=0">7</option>
+<option   value="/lottery/trade/model-index?page=8&order=TI&type=asc&showlast=0">8</option>
+<option   value="/lottery/trade/model-index?page=9&order=TI&type=asc&showlast=0">9</option>
+<option   value="/lottery/trade/model-index?page=10&order=TI&type=asc&showlast=0">10</option>
+<option   value="/lottery/trade/model-index?page=11&order=TI&type=asc&showlast=0">11</option>
+<option   value="/lottery/trade/model-index?page=12&order=TI&type=asc&showlast=0">12</option>
+<option   value="/lottery/trade/model-index?page=13&order=TI&type=asc&showlast=0">13</option>
+<option   value="/lottery/trade/model-index?page=14&order=TI&type=asc&showlast=0">14</option>
+<option   value="/lottery/trade/model-index?page=15&order=TI&type=asc&showlast=0">15</option>
+<option   value="/lottery/trade/model-index?page=16&order=TI&type=asc&showlast=0">16</option>
+<option   value="/lottery/trade/model-index?page=17&order=TI&type=asc&showlast=0">17</option>
+<option   value="/lottery/trade/model-index?page=18&order=TI&type=asc&showlast=0">18</option>
+<option   value="/lottery/trade/model-index?page=19&order=TI&type=asc&showlast=0">19</option>
+<option   value="/lottery/trade/model-index?page=20&order=TI&type=asc&showlast=0">20</option>
+<option   value="/lottery/trade/model-index?page=21&order=TI&type=asc&showlast=0">21</option>
+<option   value="/lottery/trade/model-index?page=22&order=TI&type=asc&showlast=0">22</option>
+<option   value="/lottery/trade/model-index?page=23&order=TI&type=asc&showlast=0">23</option>
+<option   value="/lottery/trade/model-index?page=24&order=TI&type=asc&showlast=0">24</option>
+<option   value="/lottery/trade/model-index?page=25&order=TI&type=asc&showlast=0">25</option>
+<option   value="/lottery/trade/model-index?page=26&order=TI&type=asc&showlast=0">26</option>
+<option   value="/lottery/trade/model-index?page=27&order=TI&type=asc&showlast=0">27</option>
+<option   value="/lottery/trade/model-index?page=28&order=TI&type=asc&showlast=0">28</option>
+<option   value="/lottery/trade/model-index?page=29&order=TI&type=asc&showlast=0">29</option>
+<option   value="/lottery/trade/model-index?page=30&order=TI&type=asc&showlast=0">30</option>
+<option   value="/lottery/trade/model-index?page=31&order=TI&type=asc&showlast=0">31</option>
+<option   value="/lottery/trade/model-index?page=32&order=TI&type=asc&showlast=0">32</option>
+<option   value="/lottery/trade/model-index?page=33&order=TI&type=asc&showlast=0">33</option>
+<option   value="/lottery/trade/model-index?page=34&order=TI&type=asc&showlast=0">34</option>
+<option   value="/lottery/trade/model-index?page=35&order=TI&type=asc&showlast=0">35</option>
+<option   value="/lottery/trade/model-index?page=36&order=TI&type=asc&showlast=0">36</option>
+<option   value="/lottery/trade/model-index?page=37&order=TI&type=asc&showlast=0">37</option>
+<option   value="/lottery/trade/model-index?page=38&order=TI&type=asc&showlast=0">38</option>
+<option   value="/lottery/trade/model-index?page=39&order=TI&type=asc&showlast=0">39</option>
+<option   value="/lottery/trade/model-index?page=40&order=TI&type=asc&showlast=0">40</option>
+<option   value="/lottery/trade/model-index?page=41&order=TI&type=asc&showlast=0">41</option>
+<option   value="/lottery/trade/model-index?page=42&order=TI&type=asc&showlast=0">42</option>
+<option   value="/lottery/trade/model-index?page=43&order=TI&type=asc&showlast=0">43</option>
+<option   value="/lottery/trade/model-index?page=44&order=TI&type=asc&showlast=0">44</option>
+<option   value="/lottery/trade/model-index?page=45&order=TI&type=asc&showlast=0">45</option>
+<option   value="/lottery/trade/model-index?page=46&order=TI&type=asc&showlast=0">46</option>
+<option   value="/lottery/trade/model-index?page=47&order=TI&type=asc&showlast=0">47</option>
+<option   value="/lottery/trade/model-index?page=48&order=TI&type=asc&showlast=0">48</option>
+<option   value="/lottery/trade/model-index?page=49&order=TI&type=asc&showlast=0">49</option>
+<option   value="/lottery/trade/model-index?page=50&order=TI&type=asc&showlast=0">50</option>
+<option   value="/lottery/trade/model-index?page=51&order=TI&type=asc&showlast=0">51</option>
+<option   value="/lottery/trade/model-index?page=52&order=TI&type=asc&showlast=0">52</option>
+<option   value="/lottery/trade/model-index?page=53&order=TI&type=asc&showlast=0">53</option>
+<option   value="/lottery/trade/model-index?page=54&order=TI&type=asc&showlast=0">54</option>
+<option   value="/lottery/trade/model-index?page=55&order=TI&type=asc&showlast=0">55</option>
+<option   value="/lottery/trade/model-index?page=56&order=TI&type=asc&showlast=0">56</option>
+<option   value="/lottery/trade/model-index?page=57&order=TI&type=asc&showlast=0">57</option>
+<option   value="/lottery/trade/model-index?page=58&order=TI&type=asc&showlast=0">58</option>
+<option   value="/lottery/trade/model-index?page=59&order=TI&type=asc&showlast=0">59</option>
+<option   value="/lottery/trade/model-index?page=60&order=TI&type=asc&showlast=0">60</option>
+<option   value="/lottery/trade/model-index?page=61&order=TI&type=asc&showlast=0">61</option>
+<option   value="/lottery/trade/model-index?page=62&order=TI&type=asc&showlast=0">62</option>
+<option   value="/lottery/trade/model-index?page=63&order=TI&type=asc&showlast=0">63</option>
+<option   value="/lottery/trade/model-index?page=64&order=TI&type=asc&showlast=0">64</option>
+<option   value="/lottery/trade/model-index?page=65&order=TI&type=asc&showlast=0">65</option>
+<option   value="/lottery/trade/model-index?page=66&order=TI&type=asc&showlast=0">66</option>
+<option   value="/lottery/trade/model-index?page=67&order=TI&type=asc&showlast=0">67</option>
+<option   value="/lottery/trade/model-index?page=68&order=TI&type=asc&showlast=0">68</option>
+<option   value="/lottery/trade/model-index?page=69&order=TI&type=asc&showlast=0">69</option>
+<option   value="/lottery/trade/model-index?page=70&order=TI&type=asc&showlast=0">70</option>
+<option   value="/lottery/trade/model-index?page=71&order=TI&type=asc&showlast=0">71</option>
+<option   value="/lottery/trade/model-index?page=72&order=TI&type=asc&showlast=0">72</option>
+<option   value="/lottery/trade/model-index?page=73&order=TI&type=asc&showlast=0">73</option>
+<option   value="/lottery/trade/model-index?page=74&order=TI&type=asc&showlast=0">74</option>
+<option   value="/lottery/trade/model-index?page=75&order=TI&type=asc&showlast=0">75</option>
+<option   value="/lottery/trade/model-index?page=76&order=TI&type=asc&showlast=0">76</option>
+<option   value="/lottery/trade/model-index?page=77&order=TI&type=asc&showlast=0">77</option>
+</select>
+<span>页</span>
+</div>
+</div>
+</div>
 
 </div>
 <!-- /.result-table-->
 
 </div>
 <!-- /.raceball-->
-
 <div class="ft">
 <div class="ft-mn w985">
-  <div class="ft-l clearfix">
-    <ul>
-      <li>
-        <img src="front_images//ft-1.png" alt="购彩方便">
-        <a href="#">购彩方便</a>
-      </li>
-      <li>
-        <img src="front_images//ft-2.png" alt="账户安全">
-        <a href="#">账户安全</a>
-      </li>
-      <li>
-        <img src="front_images//ft-3.png" alt="领奖无忧">
-        <a href="#">领奖无忧</a>
-      </li>
-      <li>
-        <img src="front_images//ft-4.png" alt="无手续费">
-        <a href="#">无手续费</a>
-      </li>
-    </ul>
-  </div>
-  <!-- /.ft-l-->
-  <div class="ft-r ">
-    <ul class="ft-list clearfix">
-      <li>
-        <h4>新手上路</h4>
-        <ul>
-          <li>
-            <a href="#">购彩流程</a>
-          </li>
-          <li>
-            <a href="#">领奖流程</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <h4>支付方式</h4>
-        <ul>
-          <li>
-            <a href="#">网银支付</a>
-          </li>
-          <li>
-            <a href="#">支付宝支付</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <h4>帮助中心</h4>
-        <ul>
-          <li>
-            <a href="#">常见问题</a>
-          </li>
-          <li>
-            <a href="#">功能指引</a>
-          </li>
-          <li>
-            <a href="#">彩种介绍</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <h4>友情链接</h4>
-        <ul>
-          <li>
-            <a href="#">关于我们</a>
-          </li>
-          <li>
-            <a href="#">联系我们</a>
-          </li>
-          <li>
-            <a href="#">产品介绍</a>
-          </li>
-          <li>
-            <a href="#">服务热线</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
-    <div class="ft-img">
-      <img src="front_images/ft-biao.png" alt="公共信息安全网络监管" />
-    </div>
-  </div>
-  <!-- /.ft-r-->
+<div class="ft-l clearfix">
+<ul>
+<li>
+<img src="front_images//ft-1.png" alt="购彩方便">
+<a href="#">购彩方便</a>
+</li>
+<li>
+<img src="front_images//ft-2.png" alt="账户安全">
+<a href="#">账户安全</a>
+</li>
+<li>
+<img src="front_images//ft-3.png" alt="领奖无忧">
+<a href="#">领奖无忧</a>
+</li>
+<li>
+<img src="front_images//ft-4.png" alt="无手续费">
+<a href="#">无手续费</a>
+</li>
+</ul>
+</div>
+<!-- /.ft-l-->
+<div class="ft-r ">
+<ul class="ft-list clearfix">
+<li>
+<h4>新手上路</h4>
+<ul>
+<li>
+<a href="#">购彩流程</a>
+</li>
+<li>
+<a href="#">领奖流程</a>
+</li>
+</ul>
+</li>
+<li>
+<h4>支付方式</h4>
+<ul>
+<li>
+<a href="#">网银支付</a>
+</li>
+<li>
+<a href="#">支付宝支付</a>
+</li>
+</ul>
+</li>
+<li>
+<h4>帮助中心</h4>
+<ul>
+<li>
+<a href="#">常见问题</a>
+</li>
+<li>
+<a href="#">功能指引</a>
+</li>
+<li>
+<a href="#">彩种介绍</a>
+</li>
+</ul>
+</li>
+<li>
+<h4>友情链接</h4>
+<ul>
+<li>
+<a href="#">关于我们</a>
+</li>
+<li>
+<a href="#">联系我们</a>
+</li>
+<li>
+<a href="#">产品介绍</a>
+</li>
+<li>
+<a href="#">服务热线</a>
+</li>
+</ul>
+</li>
+</ul>
+<p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
+<div class="ft-img">
+<img src="front_images/ft-biao.png" alt="公共信息安全网络监管" />
+</div>
+</div>
+<!-- /.ft-r-->
 </div>
 <!-- /.ft-mn-->
 </div>
 <!-- /.ft-->
-<div class="friend-modal agreement-modal modal fade" id="tradeModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="friend-modal collect-modal modal fade" id="collect" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 <div class="modal-backdrop fade"></div>
 <div class="modal-dialog">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">
-      <span aria-hidden="true">×</span>
-      <span class="sr-only">Close</span>
-    </button>
-    <h4 class="modal-title" id="myModalLabel">投注规则</h4>
-  </div>
-  <div class="modal-body text-center fc-84" id="tip-content">
-    <div class="agreement">
-      <div class="head">彩胜网服务协议</div>
-      <div class="mn">
-        <p>
-          彩胜网的各项基于互联网以及通信网的相关服务（以下简称“服务”）的所有权及经营运作权，归深圳海铭创达科技有限公司所有。购买“数字化竞彩投注决策系统”生成的彩票投注方案（以下简称“彩票投注方案”）之前，您应当阅读并遵守《彩胜网服务协议》。彩胜网提供的服务将完全按照其发布的章程、服务条款和操作规则严格执行，您使用彩胜网的服务即视为您已阅读并同意本协议的约束。
-        </p>
-        <p>1、彩胜网所提供的彩票投注服务均为经国家财政部批准发行的彩票品种，彩胜网的所有信息所显示的日期与时间均以北京时间为准。</p>
-        <p>2、彩票投注方案的截止时间会提前于彩票终端系统的彩票销售截止时间，具体提前时间量根据不同彩票品种而定。</p>
-        <p>3、彩胜网通过独有的算法并以模型的方式为用户提供相应的投注组合，用户可以通过选择模型的方式参与竟彩的投注。</p>
-        <p>
-          4、为保障用户的合法权益，避免在中奖时因用户的所有账户安全信息与真实情况不符而发生纠纷，请用户注册之后认真填写账户安全信息项，请按照真实、准确、全面的原则填写，在账户安全信息中必须提供真实姓名、身份证号码及手机号码等。对因用户自身原因而造成的不能充值、不能兑奖、不能提取现金等情况，由用户承担一切责任。如果用户提供的账户安全资料包含有不真实的信息，彩胜网保留终止该用户继续使用彩胜网服务资格的权利。
-        </p>
-        <p>5、根据国家规定，禁止未满18周岁(未成年)者利用本平台购买彩票。同时，彩胜网不提倡学生购买彩票，包括在校大学生。</p>
-        <p>6、彩胜网立足于服务彩民，所有注册用户购买彩票投注方案，彩胜网均不收取任何手续费，方案中奖获取的奖金亦为用户所有。</p>
-        <p>7、彩胜网用户须同意代理购买、保管彩票、领取奖金和派发奖金的有关事宜。</p>
-        <p>
-          8、购买彩票投注方案中奖奖金以彩票中心最终公布的开奖奖金为准；投注奖金为固定奖金。投注方案成功出票后，彩胜网会根据本站业务规则在投注记录中注明该方案投注详情、中奖情况及奖金供用户查询。
-        </p>
-        <p>
-          9、用户登录彩胜网之后选择彩票投注方案，并自主选择投注金额（不能低于最低投注金额），彩胜网对彩票投注方案不保证100%中奖。
-        </p>
-        <p>
-          10、为了加强对“竞彩”的销售管理，在销售过程中，根据投注额问题或突发事件等因素，彩票管理中心销售系统可能撤消或提前截止某场比赛的某些特定过关组合、特定结果选项的投注，暂停或提前截止针对某场比赛的所有投注。此种情况下，彩胜网对暂停或提前截止销售不承担任何责任。
-        </p>
-        <p>
-          11、因出票系统升级、官方停售、突然停电、网络异常等意外因素导致未能够出票完毕，彩胜网保有调整销售截止时间的权利，且不承担其他责任。
-        </p>
-        <p>
-          12、如遇用户投注的方案撤单，撤单金额为此投注方案未出票的全部金额，撤单金额将在官方销售截止前陆续返还至该用户的彩胜网资金账户。
-        </p>
-        <p>13、用户根据自愿原则，使用彩胜网“彩胜数字化竞彩决策系统”及投注服务，并对自己所提供的账户安全信息的真实性负责。</p>
-        <p>14、彩胜网保留变更本协议条款的权利。</p>
-        <p>
-          免责条款：本站模型提供的投注组合是以提高中奖率为宗旨，虽通过独有算法设计，并非提供盈利担保，仅供用户购买时参考，通过模型购买的投注组合是用户的自主选择，因投注而产生的一切收益和亏损由用户自行享有和承担。
-        </p>
-      </div>
-      <!-- /.mn-->
-      <div class="foot">
-        <button class="btn btn-danger" data-dismiss="modal">同意协议</button>
-      </div>
-    </div>
-    <!-- /.agreement--> </div>
-  <!-- /.modal-body-->
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<i class="icon icon-close"></i>
+</button>
+<h4 class="modal-title j-apptips-title" id="myModalLabel">收藏详情</h4>
+</div>
+<div class="modal-body fc-84">
+<div class="alert alert-warning" role="alert">您可以在这里对收藏的模型进行星级评定，同时可以备注星级和模型。</div>
+<table class="table-collect" style="width:100%;">
+<colgroup>
+<col width="20%">
+<col width="80%"></colgroup>
+<tbody>
+<tr>
+<td class="td-label">模型编号:</td>
+<td class="last-td">
+<span class="or" data-modalid="" id="j-modal-id"></span>
+<span class="hide ml30" id="j-isModify">
+<a href="javascript:;" class="btn-cancel-collect j-collect-cancel">取消收藏</a>
+<i class="icon icon-warm ps-t2" data-tip="可以到我的收藏页面批量取消收藏"></i>
+<span class="ml30">
+收藏时间:
+<b id="j-collect-date"></b>
+</span>
+</span>
+</td>
+</tr>
+<tr>
+<td class="td-label">星级评定:</td>
+<td class="td-star-level last-td">
+<a href="javascript:;" class="i-collect-star-y"></a>
+<a href="javascript:;" class="i-collect-star-g"></a>
+<a href="javascript:;" class="i-collect-star-g"></a>
+<a href="javascript:;" class="i-collect-star-g"></a>
+<a href="javascript:;" class="i-collect-star-g"></a>
+<input name="star_level" type="hidden" value="1"></td>
+</tr>
+<tr>
+<td class="td-label">星级备注:</td>
+<td class="last-td">
+<div class="mb8">
+<!--a href="javascript:;" class="j-modify-comment mr5">编辑备注</a-->
+<span class="fc-84">该操作将对所有同星级的备注修改!</span>
+</div>
+<textarea id="j-star_comment" class="star-comment limit-count"></textarea>
+</td>
+</tr>
+<tr>
+<td class="td-label">模型备注:</td>
+<td class="last-td">
+<div class="mb8">
+<!--a href="javascript:;" class="j-modify-comment mr5">编辑备注</a-->
+<span class="fc-84">该操作仅对当前模型有效。</span>
+</div>
+<textarea class="click-textarea limit-count" id="j-model_comment"></textarea>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="popup-btn-box" style="margin-top:-9px;">
+<button class="btn btn-danger btn-collect-submit" id="j-collect-submit" type="submit">确认</button>
 </div>
 </div>
-
+</div>
+</div>
+<!-- /.collect-modal-->
 <script>var Config ={"staticHostURI":"http://static3.yuncai.com"};</script>
 <script data-main="front_scripts/model/main" src="front_scripts/lib/require.js"></script>
-
 </body>
 </html>

@@ -1,12 +1,13 @@
 var G_BUY = {
 	lotyName: '',
-	lotyCNName : '排列5',
+	lotyCNName: '排列5',
 	playName: '',
 	codes: [],
 	zhushu: 0,
 	mutiple: 1,
 	money: 0,
 	qihaoId: 0,
+	isManual: false,
 	qihao: 0,
 	partnerBuy: {
 		projectTitle: '排列5合买方案', // 方案标题
@@ -22,10 +23,10 @@ var G_BUY = {
 		issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
 		trackStopMoney: 0, // 中奖急停金额
 	},
-	proxyBuy:{
-		betNum : 2,
-		mutiple : 1,
-		issueSize : 10,
+	proxyBuy: {
+		betNum: 2,
+		mutiple: 1,
+		issueSize: 10,
 	},
 
 	init: function() {
@@ -35,26 +36,27 @@ var G_BUY = {
 		this.zhushu = 0;
 		this.mutiple = 1;
 		this.money = 0;
+		this.isManual = false;
 		this.qihaoId = $('#qihaoId').val();
 		this.qihao = $('#qihao').val();
 		this.partnerBuy = {
-			projectTitle: '排列5合买方案', // 方案标题
-			projectDescription: '排列5', // 方案标题
-			partBuyMoney: 0, // 合买认购金额
-			partAegisMoney: 0, // 合买认购金额
-			commissionPercent: 0, // 合买提成
-			shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
-		},
-		this.rowIndex = 0;
+				projectTitle: '排列5合买方案', // 方案标题
+				projectDescription: '排列5', // 方案标题
+				partBuyMoney: 0, // 合买认购金额
+				partAegisMoney: 0, // 合买认购金额
+				commissionPercent: 0, // 合买提成
+				shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
+			},
+			this.rowIndex = 0;
 		this.buyType = 1; // 1, 自购。 2， 追号， 3合买
-//		this.trackData = {
-//			issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
-//			trackStopMoney: 0 // 中奖急停金额
-//		};
+		//		this.trackData = {
+		//			issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
+		//			trackStopMoney: 0 // 中奖急停金额
+		//		};
 		this.proxyBuy = {
-			betNum : 2,
-			multiple : 1,
-			issueSize : 10,
+			betNum: 2,
+			multiple: 1,
+			issueSize: 10,
 		};
 	},
 };
@@ -72,33 +74,39 @@ var G_CHOOSE = {
 };
 
 var G_MODIFY_CODE_OBJ = {
-	codeKey:-1,
-	codeObj :{},
+	codeKey: -1,
+	codeObj: {},
 };
 
 function init() {
-	G_BUY.init();
-	G_CHOOSE.init();
-}
+		G_BUY.init();
+		G_CHOOSE.init();
+	}
 	// myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
 $(document).ready(function() {
 	init();
+	$('#choose_to_buy').removeClass('active');
+	$('#choose_to_buy').attr('disabled', 'disabled');
 	$(".j-num-group").on('click', 'a', function(event) {
 		event.preventDefault();
 		/* Act on the event */
-		var dataBit = Number.parseInt($(this).parents('.j-row-code').attr('data-bit'));
-		if(typeof G_CHOOSE.codes[0] === 'undefined') {
+		var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
+		var arr = null;
+		var num = $(this).html();
+		if (typeof G_CHOOSE.codes[0] === 'undefined') {
 			G_CHOOSE.codes[0] = [];
 		}
-		if(typeof G_CHOOSE.codes[0][dataBit] === 'undefined') {
+		if (typeof G_CHOOSE.codes[0][dataBit] === 'undefined') {
 			G_CHOOSE.codes[0][dataBit] = [];
 		}
+		arr = G_CHOOSE.codes[0][dataBit].concat();
 		if ($(this).hasClass('active')) {
 			// 删除元素,依赖：Lo-Dash.js库
-			_.pull(G_CHOOSE.codes[0][dataBit], $(this).html());
+			_.pull(arr, num);
 		} else {
-			G_CHOOSE.codes[0][dataBit].push($(this).html());
+			arr.push(num);
 		}
+		G_CHOOSE.codes[0][dataBit] = arr;
 		G_CHOOSE.codes[0][dataBit].sort();
 		$(this).toggleClass('active');
 		calculateChooseCodes();
@@ -113,8 +121,8 @@ $(document).ready(function() {
 		event.preventDefault();
 		/* Act on the event */
 		$(this).toggleClass('active');
-		var dataBit = Number.parseInt($(this).parents('.j-row-code').attr('data-bit'));
-		if(typeof G_CHOOSE.codes[0] === 'undefined') {
+		var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
+		if (typeof G_CHOOSE.codes[0] === 'undefined') {
 			G_CHOOSE.codes[0] = [];
 		}
 		G_CHOOSE.codes[0][dataBit] = [];
@@ -125,7 +133,7 @@ $(document).ready(function() {
 					$(this).removeClass('active');
 					if (index % 2 != 0) {
 						$(this).toggleClass('active');
-						G_CHOOSE.codes[0][dataBit].push($(this).html());
+						G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
 					}
 				});
 				break;
@@ -136,7 +144,7 @@ $(document).ready(function() {
 					$(this).removeClass('active');
 					if (index % 2 == 0) {
 						$(this).toggleClass('active');
-						G_CHOOSE.codes[0][dataBit].push($(this).html());
+						G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
 					}
 				});
 				break;
@@ -147,7 +155,7 @@ $(document).ready(function() {
 					$(this).removeClass('active');
 					if (index >= 5) {
 						$(this).toggleClass('active');
-						G_CHOOSE.codes[0][dataBit].push($(this).html());
+						G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
 					}
 				});
 				break;
@@ -158,7 +166,7 @@ $(document).ready(function() {
 					$(this).removeClass('active');
 					if (index <= 4) {
 						$(this).toggleClass('active');
-						G_CHOOSE.codes[0][dataBit].push($(this).html());
+						G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
 					}
 				});
 				break;
@@ -167,7 +175,7 @@ $(document).ready(function() {
 			case 'all':
 				$(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
 					$(this).addClass('active');
-					G_CHOOSE.codes[0][dataBit].push($(this).html());
+					G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
 				});
 				break;
 
@@ -189,7 +197,7 @@ $(document).ready(function() {
 	 */
 	$('#choose_to_buy').on('click', function(event) {
 		var bool = false;
-		switch(parseInt($('#choose_to_buy').attr('data-add'))){
+		switch (parseInt($('#choose_to_buy').attr('data-add'))) {
 			case 0:
 				var myriabCodes = G_CHOOSE.codes[0][0] || [];
 				var thousandCodes = G_CHOOSE.codes[0][1] || [];
@@ -204,13 +212,16 @@ $(document).ready(function() {
 						G_BUY.codes[key].value = G_CHOOSE.codes[0];
 					}
 				}
-				var html = '<div class="br-zhu-item clearfix" databit="'+G_MODIFY_CODE_OBJ.codeKey+'"><b>[常规投注]</b><div class="list"><span data-c="0">'+G_CHOOSE.codes[0][0].join('')+'</span><span data-c="0">'+G_CHOOSE.codes[0][1].join('')+'</span><span data-c="0">'+G_CHOOSE.codes[0][2].join('')+'</span><span data-c="0">'+G_CHOOSE.codes[0][3].join('')+'</span><span data-c="0">'+G_CHOOSE.codes[0][4].join('')+'</span></div><div class="pull-right"><b><i class="money" data-m="1">'+G_CHOOSE.money+'</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
+				if (G_CHOOSE.money > PL5.maxOneBetMoney) {
+					APP.showTips('您好，单个投注的金额应小于' + PL5.maxOneBetMoney + '元，请返回重新选择');
+					return false;
+				}
+				var html = '<div class="br-zhu-item clearfix" databit="' + G_MODIFY_CODE_OBJ.codeKey + '"><b>[常规投注]</b><div class="list"><span data-c="0">' + G_CHOOSE.codes[0][0].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][1].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][2].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][3].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][4].join('') + '</span></div><div class="pull-right"><b><i class="money" data-m="1">' + G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
 				G_MODIFY_CODE_OBJ.codeObj.replaceWith(html);
 				bool = true;
 				break;
 
 			case 1:
-
 				for (var i = G_CHOOSE.codes.length - 1; i >= 0; i--) {
 					if (!(G_CHOOSE.codes[i][0].length > 0 && G_CHOOSE.codes[i][1].length > 0 && G_CHOOSE.codes[i][2].length > 0 && G_CHOOSE.codes[i][3].length > 0 && G_CHOOSE.codes[i][4].length > 0)) {
 						return;
@@ -219,7 +230,7 @@ $(document).ready(function() {
 				bool = makeChooseCodeHtml(G_CHOOSE.codes);
 				break;
 		}
-		if(bool){
+		if (bool) {
 			calculateBuyCodes();
 			$("#choose_zhushu").html(0);
 			$("#choose_money").html(0);
@@ -229,6 +240,8 @@ $(document).ready(function() {
 			G_CHOOSE.init();
 			$('#choose_to_buy_tip').html('添加到投注列表');
 			$('#choose_to_buy').attr('data-add', 1);
+			$('#choose_to_buy').removeClass('active');
+			$('#choose_to_buy').attr('disabled', 'disabled');
 		}
 	});
 
@@ -241,9 +254,8 @@ $(document).ready(function() {
 		event.preventDefault();
 		/* Act on the event */
 		var betNum = parseInt($(this).attr('data-zhu'));
-		if(G_BUY.codes.length+betNum > PL5.maxBuyCodeLength)
-		{
-			APP.showTips('您的投注号码多于'+PL5.maxBuyCodeLength+'行，请返回重新选择');
+		if (G_BUY.codes.length + betNum > PL5.maxBuyCodeLength) {
+			APP.showTips('您的投注号码多于' + PL5.maxBuyCodeLength + '行，请返回重新选择');
 			return;
 		}
 		for (var i = betNum - 1; i >= 0; i--) {
@@ -263,7 +275,10 @@ $(document).ready(function() {
 	 */
 	$('.br-zhu-l').on('click', '.br-zhu-item', function(event) {
 		event.preventDefault();
-		if(event.target.tagName == "A"){
+		if (G_BUY.isManual) {
+			return;
+		}
+		if (event.target.tagName == "A") {
 			return;
 		}
 		reflectChooseCode($(this).attr('databit'));
@@ -278,6 +293,11 @@ $(document).ready(function() {
 	$('.br-zhu-l').on('click', '.br-zhu-del', function(event) {
 		// event.preventDefault();
 		/* Act on the event */
+		// alert($(this).parents('.br-zhu-item')[0] == G_MODIFY_CODE_OBJ.codeObj[0]);
+		if ($(this).parents('.br-zhu-item')[0] == G_MODIFY_CODE_OBJ.codeObj[0]) {
+			$('#choose_to_buy').attr('data-add', 1);
+			$('#choose_to_buy_tip').html('添加到投注列表');
+		}
 		var dataBit = $(this).parents('.br-zhu-item').attr('dataBit');
 		_.remove(G_BUY.codes, function(n) {
 			return n.key == dataBit;
@@ -298,7 +318,10 @@ $(document).ready(function() {
 		$('#choose_to_buy').addClass('active');
 		$('#choose_to_buy').attr('data-add', 0);
 		$('#choose_to_buy_tip').html('修改投注号码');
-		G_MODIFY_CODE_OBJ = {codeKey:objectKey, codeObj:$(this).parents('.br-zhu-item')};
+		G_MODIFY_CODE_OBJ = {
+			codeKey: objectKey,
+			codeObj: $(this).parents('.br-zhu-item')
+		};
 	});
 
 	/**
@@ -327,11 +350,11 @@ $(document).ready(function() {
 		var currentMultiple = parseInt(mutipleObj.val());
 		currentMultiple--;
 		// G_BUY.mutiple = (currentMutiple <= 0) ? 1 : currentMutiple;
-		if(currentMultiple < PL5.minMultiple){
+		if (currentMultiple < PL5.minMultiple) {
 			G_BUY.mutiple = PL5.minMultiple;
-		}else if(currentMultiple > PL5.maxMultiple){
+		} else if (currentMultiple > PL5.maxMultiple) {
 			G_BUY.mutiple = PL5.maxMultiple;
-		}else{
+		} else {
 			G_BUY.mutiple = currentMultiple;
 		}
 		mutipleObj.val(G_BUY.mutiple);
@@ -348,11 +371,11 @@ $(document).ready(function() {
 		event.preventDefault();
 		/* Act on the event */
 		var currentMultiple = parseInt($(this).val()) || 0;
-		if(currentMultiple < PL5.minMultiple){
+		if (currentMultiple < PL5.minMultiple) {
 			G_BUY.mutiple = PL5.minMultiple;
-		}else if(currentMultiple > PL5.maxMultiple){
+		} else if (currentMultiple > PL5.maxMultiple) {
 			G_BUY.mutiple = PL5.maxMultiple;
-		}else{
+		} else {
 			G_BUY.mutiple = currentMultiple;
 		}
 		$(this).val(G_BUY.mutiple);
@@ -372,11 +395,11 @@ $(document).ready(function() {
 		var currentMultiple = parseInt(mutipleObj.val());
 		currentMultiple++;
 		// G_BUY.mutiple = (currentMutiple <= 0) ? 1 : currentMutiple;
-		if(currentMultiple < PL5.minMultiple){
+		if (currentMultiple < PL5.minMultiple) {
 			G_BUY.mutiple = PL5.minMultiple;
-		}else if(currentMultiple > PL5.maxMultiple){
+		} else if (currentMultiple > PL5.maxMultiple) {
 			G_BUY.mutiple = PL5.maxMultiple;
-		}else{
+		} else {
 			G_BUY.mutiple = currentMultiple;
 		}
 		mutipleObj.val(G_BUY.mutiple);
@@ -406,12 +429,15 @@ $(document).ready(function() {
 	 * @param  {Object} event) {		event.preventDefault();				G_BUY.trackData.issueMutipleMap [description]
 	 * @return {[type]}        [description]
 	 */
-	$('#buy_type').on('click', 'li', function(event) {
+	$('#buy_type').on('click', 'a', function(event) {
 		event.preventDefault();
 		/* Act on the event */
 		G_BUY.trackData.issueMutipleMap = {}; // clean
 		$('#buy_mutiple_span').show();
-		G_BUY.partnerBuy = {projectTitle:'排列5合买方案', projectDescription:'排列5'}; // clean partner buy
+		G_BUY.partnerBuy = {
+			projectTitle: '排列5合买方案',
+			projectDescription: '排列5'
+		}; // clean partner buy
 		G_BUY.buyType = parseInt($(this).attr('data-buytype'));
 		switch (G_BUY.buyType) {
 			case 1: // 自购
@@ -426,10 +452,10 @@ $(document).ready(function() {
 
 			case 3: // 合买
 				$('#track_desc').addClass('hide');
-				calculateBuyCodes();
 				updateCreatePartProjectParame();
 				break;
 		}
+		calculateBuyCodes();
 	});
 
 	$('#issue_size').on('change', function(event) {
@@ -439,9 +465,9 @@ $(document).ready(function() {
 	});
 
 	$('.br-details thead .br-zhui-c').on('change', function(event) {
-		//	    var checked = $(this)[0].checked;
+		var checked = $(this)[0].checked;
 		$(this).parents('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
-			el.checked = 'checked';
+			el.checked = checked;
 		});
 		// ZHUI.setZhuiHaoTotal(Config.box);
 		G_BUY.trackData.issueMutipleMap = {}; // clean
@@ -550,7 +576,7 @@ $(document).ready(function() {
 			$('#part_aegis_money').removeAttr('disabled');
 			updateCreatePartProjectParame();
 		} else {
-			$('#part_aegis_money').attr('disabled','disabled');
+			$('#part_aegis_money').attr('disabled', 'disabled');
 			$('#part_aegis_money').val(0);
 			$('#part_aegis_percent').html('0.00');
 		}
@@ -560,6 +586,8 @@ $(document).ready(function() {
 	$('#part_aegis_money').on('change', function(event) {
 		event.preventDefault();
 		/* Act on the event */
+		var _aegisMoney = parseInt($(this).val()) || 0;
+		$(this).val(_aegisMoney);
 		updateCreatePartProjectParame();
 	});
 
@@ -594,7 +622,7 @@ $(document).ready(function() {
 		var projectTitleLength = projectTitle.length;
 		G_BUY.partnerBuy.projectTitle = projectTitle;
 		var max = 20;
-		if(projectTitleLength >= max){
+		if (projectTitleLength >= max) {
 			projectDescLength = max;
 			G_BUY.partnerBuy.projectTitle = projectTitle.substring(0, max);
 			$(this).val(G_BUY.partnerBuy.projectTitle);
@@ -608,7 +636,7 @@ $(document).ready(function() {
 		var projectTitleLength = projectTitle.length;
 		G_BUY.partnerBuy.projectTitle = projectTitle;
 		var max = 20;
-		if(projectTitleLength >= max){
+		if (projectTitleLength >= max) {
 			projectDescLength = max;
 			G_BUY.partnerBuy.projectTitle = projectTitle.substring(0, max);
 			$(this).val(G_BUY.partnerBuy.projectTitle);
@@ -628,7 +656,7 @@ $(document).ready(function() {
 		var projectDescLength = projectDesc.length;
 		G_BUY.partnerBuy.projectDesc = projectDesc;
 		var max = 200;
-		if(projectDescLength >= max){
+		if (projectDescLength >= max) {
 			projectDescLength = max;
 			G_BUY.partnerBuy.projectDescription = projectDesc.substring(0, max);
 			$(this).val(G_BUY.partnerBuy.projectDescription);
@@ -642,7 +670,7 @@ $(document).ready(function() {
 		var projectDescLength = projectDesc.length;
 		G_BUY.partnerBuy.projectDesc = projectDesc;
 		var max = 200;
-		if(projectDescLength >= max){
+		if (projectDescLength >= max) {
 			projectDescLength = max;
 			G_BUY.partnerBuy.projectDescription = projectDesc.substring(0, max);
 			$(this).val(G_BUY.partnerBuy.projectDescription);
@@ -657,17 +685,22 @@ $(document).ready(function() {
 	});
 
 	// 是否保底
-	$('.is_end_zhongjiang').on('change', function(event) {
+	$('#is_end_zhongjiang').on('change', function(event) {
 		event.preventDefault();
 		/* Act on the event */
 		if ($(this)[0].checked) {
-			$('.end_min_money').removeAttr('disabled');
-			updateCreatePartProjectParame();
+			$('#track_stop_money').removeAttr('disabled');
+			// updateCreatePartProjectParame();
 		} else {
-			$('.end_min_money').attr('disabled');
+			$('#track_stop_money').attr('disabled', 'disabled');
 			$('#part_aegis_money').val(0);
-			// G_BUY.
 		}
+	});
+	$('#track_stop_money').on('change', function() {
+		event.preventDefault();
+		/* Act on the event */
+		var trackStopMoney = parseInt($(this).val()) || 3000;
+		$(this).val(trackStopMoney);
 	});
 
 	//手动输入Mask
@@ -680,6 +713,13 @@ $(document).ready(function() {
 	// 更新手动输入注数
 	$('#sd_number').on('blur', function(event) {
 		var iptCodes = $(this).val().replace(/，/ig, ',').split("\n");
+		if (iptCodes == '') {
+			return;
+		}
+		if (iptCodes.length > PL5.maxBuyCodeLength) {
+			APP.showTips('您的投注号码多于' + PL5.maxBuyCodeLength + '行，请返回重新选择');
+			return;
+		}
 		G_CHOOSE.init();
 		for (var i = 0; i < iptCodes.length; i++) {
 			var validate = PL5.isIllegalCode(iptCodes[i], function(code, zhushu) {
@@ -692,10 +732,13 @@ $(document).ready(function() {
 				return;
 			}
 		}
-		if(G_CHOOSE.zhushu > 0){
+		if (G_CHOOSE.zhushu > 0) {
 			$('#choose_to_buy').addClass('active');
-		}else{
+			$('#choose_to_buy').removeAttr('disabled');
+			G_BUY.isManual = true;
+		} else {
 			$('#choose_to_buy').removeClass('active');
+			$('#choose_to_buy').attr('disabled', 'disabled');
 		}
 		$('#choose_zhushu').html(G_CHOOSE.zhushu);
 		$('#choose_money').html(G_CHOOSE.money);
@@ -722,21 +765,28 @@ $(document).ready(function() {
 
 		switch (pagetype) {
 			case 0:
-				$('#auto_produce').show();
+				$("li[name='auto_produce']").show();
+				//				$('#auto_produce').show();
 				$('#j-box-right').show();
 				$('#j-box-bottom').show();
+				$('#choose_to_buy').removeClass('active');
+				$('#choose_to_buy').attr('disabled', 'disabled');
 				$('#j-box-left').removeClass('multiphase-box');
 				break;
 			case 1:
-				$('#auto_produce').hide();
+				$("li[name='auto_produce']").hide();
+				//				$('auto_produce').hide();
 				$('#j-box-right').show();
 				$('#j-box-bottom').show();
+				$('#choose_to_buy').removeClass('active');
+				$('#choose_to_buy').attr('disabled', 'disabled');
 				$('#j-box-left').removeClass('multiphase-box');
 				break;
 			case 2:
 				G_BUY.buyType = 4;
 				calculateProxyBuy();
-				$('#auto_produce').show();
+				$("li[name='auto_produce']").show();
+				//				$('#auto_produce').show();
 				$('#j-box-right').hide();
 				$('#j-box-bottom').hide();
 				$('#j-box-left').addClass('multiphase-box');
@@ -752,24 +802,24 @@ $(document).ready(function() {
 		var betNumObj = $("#bet_num_proxy");
 		var currentBetNum = parseInt(betNumObj.val());
 		currentBetNum--;
-		if(currentBetNum < PL5.minBetNum){
+		if (currentBetNum < PL5.minBetNum) {
 			G_BUY.proxyBuy.betNum = PL5.minBetNum;
-		}else if(currentBetNum > PL5.maxBetNum){
+		} else if (currentBetNum > PL5.maxBetNum) {
 			G_BUY.proxyBuy.betNum = PL5.maxBetNum;
-		}else{
+		} else {
 			G_BUY.proxyBuy.betNum = currentBetNum;
 		}
-		mutipleObj.val(G_BUY.proxyBuy.betNum);
+		betNumObj.val(G_BUY.proxyBuy.betNum);
 		calculateProxyBuy();
 	});
-	$('#bet_num_proxy').on('change', function () {
+	$('#bet_num_proxy').on('change', function() {
 		// bet_num_proxy
 		var currentBetNum = parseInt($(this).val()) || 0;
-		if(currentBetNum < PL5.minBetNum){
+		if (currentBetNum < PL5.minBetNum) {
 			G_BUY.proxyBuy.betNum = PL5.minBetNum;
-		}else if(currentBetNum > PL5.maxBetNum){
+		} else if (currentBetNum > PL5.maxBetNum) {
 			G_BUY.proxyBuy.betNum = PL5.maxBetNum;
-		}else{
+		} else {
 			G_BUY.proxyBuy.betNum = currentBetNum;
 		}
 		$(this).val(G_BUY.proxyBuy.betNum);
@@ -781,11 +831,11 @@ $(document).ready(function() {
 		var betNumObj = $("#bet_num_proxy");
 		var currentBetNum = parseInt(betNumObj.val());
 		currentBetNum++;
-		if(currentBetNum < PL5.minBetNum){
+		if (currentBetNum < PL5.minBetNum) {
 			G_BUY.proxyBuy.betNum = PL5.minBetNum;
-		}else if(currentBetNum > PL5.maxBetNum){
+		} else if (currentBetNum > PL5.maxBetNum) {
 			G_BUY.proxyBuy.betNum = PL5.maxBetNum;
-		}else{
+		} else {
 			G_BUY.proxyBuy.betNum = currentBetNum;
 		}
 		betNumObj.val(G_BUY.proxyBuy.betNum);
@@ -799,24 +849,24 @@ $(document).ready(function() {
 		var betMultipleObj = $("#mutiple_proxy");
 		var currentMultipleNum = parseInt(betMultipleObj.val());
 		currentMultipleNum--;
-		if(currentMultipleNum < PL5.minMultiple){
+		if (currentMultipleNum < PL5.minMultiple) {
 			G_BUY.proxyBuy.multiple = PL5.minMultiple;
-		}else if(currentMultipleNum > PL5.maxMultiple){
+		} else if (currentMultipleNum > PL5.maxMultiple) {
 			G_BUY.proxyBuy.multiple = PL5.maxMultiple;
-		}else{
+		} else {
 			G_BUY.proxyBuy.multiple = currentMultipleNum;
 		}
 		betMultipleObj.val(G_BUY.proxyBuy.multiple);
 		calculateProxyBuy();
 	});
-	$('#mutiple_proxy').on('change', function () {
+	$('#mutiple_proxy').on('change', function() {
 		// mutiple_proxy
 		var currentMultipleNum = parseInt($(this).val()) || 0;
-		if(currentMultipleNum < PL5.minMultiple){
+		if (currentMultipleNum < PL5.minMultiple) {
 			G_BUY.proxyBuy.multiple = PL5.minMultiple;
-		}else if(currentMultipleNum > PL5.maxMultiple){
+		} else if (currentMultipleNum > PL5.maxMultiple) {
 			G_BUY.proxyBuy.multiple = PL5.maxMultiple;
-		}else{
+		} else {
 			G_BUY.proxyBuy.multiple = currentMultipleNum;
 		}
 		$(this).val(G_BUY.proxyBuy.multiple);
@@ -828,11 +878,11 @@ $(document).ready(function() {
 		var betMultipleObj = $("#mutiple_proxy");
 		var currentMultipleNum = parseInt(betMultipleObj.val());
 		currentMultipleNum++;
-		if(currentMultipleNum < PL5.minMultiple){
+		if (currentMultipleNum < PL5.minMultiple) {
 			G_BUY.proxyBuy.multiple = PL5.minMultiple;
-		}else if(currentMultipleNum > PL5.maxMultiple){
+		} else if (currentMultipleNum > PL5.maxMultiple) {
 			G_BUY.proxyBuy.multiple = PL5.maxMultiple;
-		}else{
+		} else {
 			G_BUY.proxyBuy.multiple = currentMultipleNum;
 		}
 		betMultipleObj.val(G_BUY.proxyBuy.multiple);
@@ -844,25 +894,25 @@ $(document).ready(function() {
 		/* Act on the event */
 		var betIssueNumObj = $("#qihao_num_proxy");
 		var currentIssueNum = parseInt(betIssueNumObj.val());
-		currentIssueNum++;
-		if(currentIssueNum < PL5.minIssueNum){
+		currentIssueNum--;
+		if (currentIssueNum < PL5.minIssueNum) {
 			G_BUY.proxyBuy.issueSize = PL5.minIssueNum;
-		}else if(currentIssueNum > PL5.maxIssueNum){
+		} else if (currentIssueNum > PL5.maxIssueNum) {
 			G_BUY.proxyBuy.issueSize = PL5.maxIssueNum;
-		}else{
+		} else {
 			G_BUY.proxyBuy.issueSize = currentIssueNum;
 		}
 		betIssueNumObj.val(G_BUY.proxyBuy.issueSize);
 		calculateProxyBuy();
 	});
-	$('#qihao_num_proxy').on('change', function () {
+	$('#qihao_num_proxy').on('change', function() {
 		// qihao_num_proxy
 		var currentIssueNum = parseInt($(this).val()) || 0;
-		if(currentIssueNum < PL5.minIssueNum){
+		if (currentIssueNum < PL5.minIssueNum) {
 			G_BUY.proxyBuy.issueSize = PL5.minIssueNum;
-		}else if(currentIssueNum > PL5.maxIssueNum){
+		} else if (currentIssueNum > PL5.maxIssueNum) {
 			G_BUY.proxyBuy.issueSize = PL5.maxIssueNum;
-		}else{
+		} else {
 			G_BUY.proxyBuy.issueSize = currentIssueNum;
 		}
 		$(this).val(G_BUY.proxyBuy.issueSize);
@@ -874,17 +924,16 @@ $(document).ready(function() {
 		var betIssueNumObj = $("#qihao_num_proxy");
 		var currentIssueNum = parseInt(betIssueNumObj.val());
 		currentIssueNum++;
-		if(currentIssueNum < PL5.minIssueNum){
+		if (currentIssueNum < PL5.minIssueNum) {
 			G_BUY.proxyBuy.issueSize = PL5.minIssueNum;
-		}else if(currentIssueNum > PL5.maxIssueNum){
+		} else if (currentIssueNum > PL5.maxIssueNum) {
 			G_BUY.proxyBuy.issueSize = PL5.maxIssueNum;
-		}else{
+		} else {
 			G_BUY.proxyBuy.issueSize = currentIssueNum;
 		}
 		betIssueNumObj.val(G_BUY.proxyBuy.issueSize);
 		calculateProxyBuy();
 	});
-
 
 	//////////////////////////function/////////////////////////////////////////
 
@@ -937,8 +986,8 @@ $(document).ready(function() {
 	 * @return {[type]} [description]
 	 */
 	function calculateChooseCodes() {
-		G_CHOOSE.zhushu=0;
-		G_CHOOSE.money=0;
+		G_CHOOSE.zhushu = 0;
+		G_CHOOSE.money = 0;
 		// 计算注数
 		for (var i = 0, len = G_CHOOSE.codes.length; i < len; i++) {
 			var myriabCodes = G_CHOOSE.codes[i][0] || [];
@@ -952,10 +1001,12 @@ $(document).ready(function() {
 				G_CHOOSE.money += zhushu * 2;
 			}
 		}
-		if(G_CHOOSE.zhushu > 0){
+		if (G_CHOOSE.zhushu > 0) {
 			$('#choose_to_buy').addClass('active');
-		}else{
+			$('#choose_to_buy').removeAttr('disabled');
+		} else {
 			$('#choose_to_buy').removeClass('active');
+			$('#choose_to_buy').attr('disabled', 'disabled');
 		}
 		$("#choose_zhushu").html(G_CHOOSE.zhushu);
 		$("#choose_money").html(G_CHOOSE.money);
@@ -992,59 +1043,65 @@ $(document).ready(function() {
 			$('#track_issue_num').html(trackIssueSize);
 			$('#track_money').html(G_BUY.money);
 		}
-		if(G_BUY.money > 0){
+		if (G_BUY.money > 0) {
 			$('#buy-submit').removeAttr("disabled");
-		}else{
-			$('#buy-submit').attr("disabled","disabled");
+		} else {
+			$('#buy-submit').attr("disabled", "disabled");
 		}
 	}
 
 	function makeChooseCodeHtml(codes) {
+		var newCodes = codes;
 		var html = '';
 		var totalMoney = 0;
-		for (var i = 0; i < codes.length; i++) {
+		for (var i = 0; i < newCodes.length; i++) {
 			G_BUY.rowIndex++;
 			html += '<div class="br-zhu-item clearfix" dataBit=' + G_BUY.rowIndex + '><b>[常规投注]</b><div class="list">';
-			for (var m = 0; m < codes[i].length; m++) {
-				html += '<span data-c="0">' + codes[i][m].join('') + '</span>';
+			for (var m = 0; m < newCodes[i].length; m++) {
+				html += '<span data-c="0">' + newCodes[i][m].join('') + '</span>';
 			};
-			var money = 2 * PL5.getZhiXuanZhushu(codes[i][0], codes[i][1], codes[i][2], codes[i][3], codes[i][4]);
+			var money = 2 * PL5.getZhiXuanZhushu(newCodes[i][0], newCodes[i][1], newCodes[i][2], newCodes[i][3], newCodes[i][4]);
 			totalMoney += money;
-			html += '</div><div class="pull-right"><b><i class="money" data-m="1">' + money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
+			var mdfBtn = (G_BUY.isManual) ? '' : '<a href="javascript:;" class="br-zhu-set">修改</a>';
+			html += '</div><div class="pull-right"><b><i class="money" data-m="1">' + money + '</i>元</b>' + mdfBtn + '<a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
 			G_BUY.codes.push({
 				key: G_BUY.rowIndex,
-				value: codes[i]
+				value: newCodes[i]
 			});
 		}
-		if(totalMoney > PL5.maxOneBetMoney){
-			APP.showTips('您好，单个投注的金额应小于'+PL5.maxOneBetMoney+'万元，请返回重新选择');
+		if (totalMoney > PL5.maxOneBetMoney) {
+			APP.showTips('您好，单个投注的金额应小于' + PL5.maxOneBetMoney + '元，请返回重新选择');
 			return false;
+		}
+		if (G_BUY.codes.length > PL5.maxBuyCodeLength) {
+			APP.showTips('您的投注号码多于' + PL5.maxBuyCodeLength + '行，请返回重新选择');
+			return;
 		}
 		$("#code_list").append(html);
 		return true;
 	};
 
-	function reflectChooseCode(buyIndex){
+	function reflectChooseCode(buyIndex) {
 		$('#j_normal_choose_code').find('.j-num-group a').removeClass('active');
-		var codes={};
+		var codes = {};
 		for (var index in G_BUY.codes) {
 			if (G_BUY.codes[index].key == buyIndex) {
-				codes = G_BUY.codes[index];
+				codes = G_BUY.codes[index].value.concat();
 				break;
 			}
 		}
 		G_CHOOSE.init();
-		G_CHOOSE.codes[0]=codes.value;
+		G_CHOOSE.codes[0] = codes;
 		var baseobj = $('#j_normal_choose_code').find('.j-row-code');
 		for (var i = 0; i < 5; i++) {
-			var placeArr=codes.value[i];
+			var placeArr = codes[i];
 			var len = placeArr.length;
 			baseobj.each(function(index, el) {
-				if(index == i){
+				if (index == i) {
 					// alert(index);
 					for (var m = 0; m < len; m++) {
 						$(this).find('.j-num-group a').each(function(index) {
-							if(parseInt($(this).html()) == placeArr[m]){
+							if (parseInt($(this).html()) == placeArr[m]) {
 								$(this).addClass('active');
 							}
 						});
@@ -1076,47 +1133,50 @@ $(document).ready(function() {
 		var html = '';
 		$('.br-details thead .br-zhui-bei').val(1);
 		$.ajax({
-			url: '/lottery/digital/query-track-issue/' + G_BUY.lotyName + '?num=' + num,
-			type: 'GET',
-			dataType: 'json',
-			// data: {param1: 'value1'},
-		})
-		.done(function(data) {
-			if (data.retCode == 100000) {
-				for (var i = 0; i < data.retData.length; i++) {
-					var m = i + 1;
-					var unitPrice = 2 * G_BUY.zhushu;
-					G_BUY.trackData.issueMutipleMap[data.retData[i].id] = ({qihao: data.retData[i].qihao,mutiple: 1});
-					html += '<tr><td>' + m + '</td><td><input type="checkbox" class="br-zhui-c" data-qihaoid="' + data.retData[i].id + '"data-qi="' + data.retData[i].qihao + '" checked="">' + data.retData[i].qihao + '期</td><td><input type="text" class="br-input br-zhui-bei" value="1">倍</td><td><span class="j-money">' + unitPrice + '</span>元</td><td>' + data.retData[i].awardTime.slice(0, 10) + '<span class="ml15">' + data.retData[i].awardTime.slice(10) + '</span></td></tr>';
-				};
-				//
-			} else {
+				url: '/lottery/digital/query-track-issue/' + G_BUY.lotyName + '?num=' + num,
+				type: 'GET',
+				dataType: 'json',
+				// data: {param1: 'value1'},
+			})
+			.done(function(data) {
+				if (data.retCode == 100000) {
+					for (var i = 0; i < data.retData.length; i++) {
+						var m = i + 1;
+						var unitPrice = 2 * G_BUY.zhushu;
+						G_BUY.trackData.issueMutipleMap[data.retData[i].id] = ({
+							qihao: data.retData[i].qihao,
+							mutiple: 1
+						});
+						html += '<tr><td>' + m + '</td><td><input type="checkbox" class="br-zhui-c" data-qihaoid="' + data.retData[i].id + '"data-qi="' + data.retData[i].qihao + '" checked="">' + data.retData[i].qihao + '期</td><td><input type="text" class="br-input br-zhui-bei" value="1">倍</td><td><span class="j-money">' + unitPrice + '</span>元</td><td>' + data.retData[i].awardTime.slice(0, 10) + '<span class="ml15">' + data.retData[i].awardTime.slice(10) + '</span></td></tr>';
+					};
+					//
+				} else {
+					html = '<tr><td colspan="5">系统繁忙， 请稍候再试</td></tr>';
+				}
+				$('#track_issue_list').html(html);
+				calculateBuyCodes();
+			})
+			.fail(function() {
 				html = '<tr><td colspan="5">系统繁忙， 请稍候再试</td></tr>';
-			}
-			$('#track_issue_list').html(html);
-			calculateBuyCodes();
-		})
-		.fail(function() {
-			html = '<tr><td colspan="5">系统繁忙， 请稍候再试</td></tr>';
-			$('#track_issue_list').html(html);
-		});
+				$('#track_issue_list').html(html);
+			});
 	};
 
 	/**
 	 * 机选计算
 	 * @return {[type]} [description]
 	 */
-	function calculateProxyBuy () {
+	function calculateProxyBuy() {
 		$('#buy_bet_num_proxy').html(G_BUY.proxyBuy.betNum);
 		$('#buy_multiple_proxy').html(G_BUY.proxyBuy.multiple);
 		$('#buy_issue_num_proxy').html(G_BUY.proxyBuy.issueSize);
-		G_BUY.money = G_BUY.proxyBuy.betNum*G_BUY.proxyBuy.multiple*G_BUY.proxyBuy.issueSize;
+		G_BUY.money = 2 * G_BUY.proxyBuy.betNum * G_BUY.proxyBuy.multiple * G_BUY.proxyBuy.issueSize;
 		G_BUY.mutiple = G_BUY.proxyBuy.multiple;
 		$('#buy_money_proxy').html(G_BUY.money);
-		if(G_BUY.money > 0){
+		if (G_BUY.money > 0) {
 			$('#buy_button_proxy').removeAttr("disabled");
-		}else{
-			$('#buy_button_proxy').attr("disabled","disabled");
+		} else {
+			$('#buy_button_proxy').attr("disabled", "disabled");
 		}
 	}
 
@@ -1150,7 +1210,11 @@ $(document).ready(function() {
 				for (var qihaoId in G_BUY.trackData.issueMutipleMap) {
 					postIssueParameter.push(qihaoId + '|' + G_BUY.trackData.issueMutipleMap[qihaoId].qihao + '|' + G_BUY.trackData.issueMutipleMap[qihaoId].mutiple);
 				}
-				if($('#is_end_zhongjiang')[0].checked){
+				if (postIssueParameter.length < 1) {
+					APP.showTips("追号最少购买一期");
+					return;
+				}
+				if ($('#is_end_zhongjiang')[0].checked) {
 					G_BUY.trackData.trackStopMoney = $('#track_stop_money').val();
 				}
 				parameter.endminmoney = G_BUY.trackData.trackStopMoney;
@@ -1169,8 +1233,12 @@ $(document).ready(function() {
 				parameter.baodiText = G_BUY.partnerBuy.partAegisMoney;
 				parameter.extraPercent = G_BUY.partnerBuy.commissionPercent;
 				parameter.set = G_BUY.partnerBuy.shareLevel;
+				if (parameter.rengouMoney < 1) {
+					APP.showTips("合买至少认购一元");
+					return;
+				}
 				// function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyPrice, aegisPrice, trackSize, trackMoney){
-				comfirmHtml = makeConfirmHtml(3, G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, G_BUY.money, parameter.rengouMoney, parameter.baodiText, 0,0);
+				comfirmHtml = makeConfirmHtml(3, G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, G_BUY.money, parameter.rengouMoney, parameter.baodiText, 0, 0);
 				break;
 
 			case 4:
@@ -1183,77 +1251,80 @@ $(document).ready(function() {
 		}
 
 		$.ajax({
-	        url: '/account/islogin',
-	        type: 'get',
-	        dataType: 'json',
-		})
-		.done(function(D) {
-			if (D.retCode === 100000) {
-				if (Number(D.retData.money.replace(/,/g, '')) >= G_BUY.money) {
-					APP.showTips(comfirmHtml);
-					$('#buyConfirm').on('click', function(event) {
-						$.ajax({
-							url: url,
-							type: 'POST',
-							dataType: 'json',
-							data: parameter,
-						})
-						.done(function(data) {
-							buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, G_BUY.money, G_BUY.lotyName, G_BUY.lotyCNName);
-						})
-						.fail(function() {
-							buyFailure( G_BUY.lotyName, G_BUY.lotyCNName);
+				url: '/account/islogin',
+				type: 'get',
+				dataType: 'json',
+			})
+			.done(function(D) {
+				if (D.retCode === 100000) {
+					if (Number(D.retData.money.replace(/,/g, '')) >= G_BUY.money) {
+						APP.showTips({
+							html: comfirmHtml,
+							title: '投注确认'
 						});
-					});
+						$('#buyConfirm').on('click', function(event) {
+							$.ajax({
+									url: url,
+									type: 'POST',
+									dataType: 'json',
+									data: parameter,
+								})
+								.done(function(data) {
+									buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, G_BUY.money, G_BUY.lotyName, G_BUY.lotyCNName);
+								})
+								.fail(function() {
+									buyFailure(G_BUY.lotyName, G_BUY.lotyCNName);
+								});
+						});
+					} else {
+						APP.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+					}
 				} else {
-					APP.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+					APP.handRetCode(D.retCode, D.retMsg);
 				}
-			} else {
-				APP.handRetCode(D.retCode, D.retMsg);
-			}
-      });
+			});
 	};
 
-	function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyPrice, aegisPrice, trackSize, trackMoney){
-		var commHtml = '<div class="frbox"><img src="'+staticHostURI+'/front_images/fail.png" alt="success" class="icon"><div class="text">';
-		switch(buyType){
+	function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyPrice, aegisPrice, trackSize, trackMoney) {
+		var commHtml = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text">';
+		switch (buyType) {
 			case 1: // 自购
-				commHtml += '<p>'+LotyCNName+' 第<span>'+issueNum+'</span>期</p><p>共<span>'+betNum+'</span>注, 投注<span>'+mutiple+'</span>倍</p><p>本次需支付<span class="fc-3">'+projectPrice.toFixed(2)+'</span>元</p>';
-			break;
+				commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>共<span>' + betNum + '</span>注, 投注<span>' + mutiple + '</span>倍</p><p>本次需支付<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>';
+				break;
 			case 2: // 追号
-				commHtml+='<p>追号<span>'+trackSize+'</span>期</p><p>本次需支付<span class="fc-3">'+trackMoney+'</span>元</p>';
+				commHtml += '<p>追号<span>' + trackSize + '</span>期</p><p>本次需支付<span class="fc-3">' + trackMoney + '</span>元</p>';
 			case 4: // 机选
-			break;
+				break;
 			case 3: // 合买
-			if(aegisPrice > 0){
-				commHtml+='<p>'+LotyCNName+' 第<span>'+issueNum+'</span>期</p><p>方案总金额<span class="fc-3">'+projectPrice.toFixed(2)+'</span>元</p><p>您认购<span>'+buyPrice.toFixed(2)+'</span>元, 保底<span>'+aegisPrice.toFixed(2)+'</span>元</p><p>共需支付<span class="fc-3">'+(buyPrice+aegisPrice).toFixed(2)+'</span>元</p>';
-			}else{
-				commHtml+='<p>'+LotyCNName+' 第<span>'+issueNum+'</span>期</p><p>方案总金额<span class="fc-3">'+projectPrice.toFixed(2)+'</span>元</p><p>您认购<span>'+buyPrice.toFixed(2)+'</span>元</p><p>共需支付<span class="fc-3">'+(buyPrice+aegisPrice).toFixed(2)+'</span>元</p>';
-			}
-			break;
+				if (aegisPrice > 0) {
+					commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p><p>您认购<span>' + buyPrice.toFixed(2) + '</span>元, 保底<span>' + aegisPrice.toFixed(2) + '</span>元</p><p>共需支付<span class="fc-3">' + (buyPrice + aegisPrice).toFixed(2) + '</span>元</p>';
+				} else {
+					commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p><p>您认购<span>' + buyPrice.toFixed(2) + '</span>元</p><p>共需支付<span class="fc-3">' + (buyPrice + aegisPrice).toFixed(2) + '</span>元</p>';
+				}
+				break;
 		}
-		commHtml+='<div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
+		commHtml += '<div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
 		return commHtml;
 	}
 
-	function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName){
-	  if (retCode == 100000) {
-	    store.clear();
-	    store.set('lotyName', lotyName);
-	    store.set('lotyCNName', lotyCNName);
-	    store.set('payMoney', buyMoney);
-	    store.set('projectNo', projectNo);
-	    store.set('trackId', trackId);
-	    window.location.href = '/html/lottery/trade/success.html';
-	  } else {
-	    APP.handRetCode(retCode, retMsg);
-	  }
+	function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName) {
+		if (retCode == 100000) {
+			store.clear();
+			store.set('lotyName', lotyName);
+			store.set('lotyCNName', lotyCNName);
+			store.set('payMoney', buyMoney);
+			store.set('projectNo', projectNo);
+			store.set('trackId', trackId);
+			window.location.href = '/html/lottery/trade/success.html';
+		} else {
+			APP.handRetCode(retCode, retMsg);
+		}
 	}
 
 	function buyFailure(lotyName, lotyCNName) {
 		store.clear();
-	    store.set('lotyName', lotyName);
-	    store.set('lotyCNName', lotyCNName);
+		store.set('lotyName', lotyName);
+		store.set('lotyCNName', lotyCNName);
 		window.location.href = '/html/lottery/trade/fail.html';
 	}
 });

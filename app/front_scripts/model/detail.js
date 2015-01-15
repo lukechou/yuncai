@@ -46,7 +46,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
   var $prize = $('#j-prize');
   // 最小投注金额
   var minBuy = Number($('#j-minBuy').val());
-  var maxBuy = 20000;
+  var maxBuy = 500000;
   //计算投注数，预计奖金
   var contentArr = []; //投注内容数组
   var numArr = []; //投注数数组
@@ -152,57 +152,78 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
   $('#j-buy').on('click', function(event) {
     event.preventDefault();
-    var money = Number($('#j-money').val());
-    if (money <= 0) return;
 
+    window.Config = {};
+    var money = Number($('#j-money').val());
     var obj = {
       project_issue: _.escape($.trim($('#j-issue').val())),
       model_id: _.escape($.trim($('#j-module-id').val())),
       money: money
     };
+
     var html = getConfirmHTML(obj);
 
-    APP.showTips({
-      title:'投注确认',
-      html:html,
-      callback: function() {
-        $('#buyConfirm').unbind('click');
-        $('#buyConfirm').on('click', function(event) {
-          event.preventDefault();
-          $.ajax({
-              url: '/lottery/trade/model-fast-buy',
-              type: 'post',
-              dataType: 'json',
-              data: obj,
-            })
-            .done(function(D) {
-              if (D.retCode === 100000) {
-                APP.showTips({
-                  type: 1,
-                  text: '\u8d2d\u4e70\u6210\u529f',
-                  callback: function() {
-                    $('#j-reload').on('click', function(event) {
-                      event.preventDefault();
-                      window.location.reload();
-                    });
-                  }
-                });
-              } else {
-                APP.handRetCode(D.retCode, D.retMsg);
-              }
-            })
-            .fail(function() {
-              APP.onServiceFail();
-            });
-        });
+    if (money <= 0) {
+      APP.showTips('亲,投注金额不能低于 ' + minBuy + ' 元');
+      return;
+    }
+    if (money % 2 !== 0) {
+      APP.showTips('请输入偶数的金额');
+      return;
+    }
+    if (money > maxBuy) {
+      APP.showTips('亲,单次投注金额最大限制为 500000 元');
+      return;
+    }
+
+    Config.payMoney = money;
+
+    APP.checkLogin({
+        enoughMoney: function() {
+          APP.showTips({
+            title: '投注确认',
+            html: html,
+            callback: function() {
+              $('#buyConfirm').unbind('click');
+              $('#buyConfirm').on('click', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '/lottery/trade/model-fast-buy',
+                    type: 'post',
+                    dataType: 'json',
+                    data: obj,
+                  })
+                  .done(function(D) {
+                    if (D.retCode === 100000) {
+                      APP.showTips({
+                        type: 1,
+                        text: '\u8d2d\u4e70\u6210\u529f',
+                        callback: function() {
+                          $('#j-reload').on('click', function(event) {
+                            event.preventDefault();
+                            window.location.reload();
+                          });
+                        }
+                      });
+                    } else {
+                      APP.handRetCode(D.retCode, D.retMsg);
+                    }
+                  })
+                  .fail(function() {
+                    APP.onServiceFail();
+                  });
+              });
+            }
+          });
+        }
       }
-    });
+    );
 
   });
 
   function getConfirmHTML(o) {
     var html = '';
-    html = '<div class="m-detail-box"><p>您对模型编号<span class="mlr-8 fc-3">'+o.model_id+'</span>投注<span class="mlr-8 fc-3">'+o.money+'</span>元，请确认</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div>';
+    html = '<div class="m-detail-box"><p>您对模型编号<span class="mlr-8 fc-3">' + o.model_id + '</span>投注<span class="mlr-8 fc-3">' + o.money + '</span>元，请确认</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div>';
     return html;
   }
 

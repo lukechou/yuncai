@@ -5,6 +5,7 @@ require.config({
     lodash: '../lib/lodash.compat.min',
     store: '../lib/store.min',
     bootstrap: '../lib/bootstrap.min',
+    tipsy: '../lib/jquery.tipsy',
     app: '../common/app',
     model: 'model',
     chart: 'chart',
@@ -14,25 +15,16 @@ require.config({
     bootstrap: {
       deps: ['jquery'],
       exports: 'jquery'
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
     }
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function($, _, store, chart, APP, model) {
   'use strict';
-
-  APP.bindInputPlace();
-
-  model.init({
-    modal: $('#collect'),
-    starList: $('.td-star-level a'),
-    starLevel: null,
-    modelId: null,
-    starComment: '',
-    modelComment: ''
-  });
-
-  model.bindCollectEvent();
 
   /**
    * 彩票模型
@@ -44,9 +36,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
    * 提交检测
    */
   $('#detail-form').submit(function() {
-    var val = $('.j-id-input').val();
-    if ('' == val || '输入模型编号精确查找' == val) {
-      APP.showTip('请输入模型编号再查询');
+    var el = $('#j-input-id');
+    var val = el.val();
+    var tips = el.attr('data-place');
+    if ('' == val || tips == val) {
+      APP.showTips('请输入模型编号再查询');
       return false;
     }
   });
@@ -301,7 +295,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
       var chartHTML = '<div class="chart-box"><a href="/lottery/model/history-data" class="his-link" title="查看历史数据">查看历史数据</a><div class="chart-loading" id="j-chart-loder"><img src="' + Config.staticHostURI + '/front_images/loader.gif" alt="Logding.."/></div><div class="chart" id="chart"></div></div>';
       var tr = '<tr id="chart-tr"><td colspan="' + colspan + '" style="padding:0;">' + chartHTML + '</td></tr>';
 
-      if(!id) return;
+      if (!id) return;
       if (!$(this).hasClass(a)) {
         $('.j-show-chart').removeClass(a);
         $(this).addClass(a);
@@ -317,4 +311,47 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
   });
 
+  function init() {
+
+    APP.bindInputPlace();
+
+    model.init({
+      modal: $('#collect'),
+      starList: $('.td-star-level a'),
+      starLevel: null,
+      modelId: null,
+      starComment: '',
+      modelComment: ''
+    });
+
+    model.bindCollectEvent();
+
+    $('.data-tip').tipsy({
+      fade: true,
+      gravity: 's',
+      html: true,
+      opacity: 1
+    });
+
+    var query = APP.parseQueryString();
+    var iconList = $('.result-table thead th .icon');
+    var i = 1;
+    var order = query.order || false;
+    if (order) {
+      $('.result-table thead th a').each(function(index, el) {
+        if ($(this).attr('href').indexOf(order) >= 0) {
+          i = index;
+        }
+      });
+    }
+    iconList.eq(i).toggleClass('icon-m4 icon-m5');
+    var d = new Date().getHours();
+    if ($('#j-less-tips').length && d < 11) {
+      APP.showTips({
+        title: '温馨提示',
+        text: '预计今天10：30左右公布150115期的彩票模型数据。'
+      })
+    }
+  }
+  init();
 });

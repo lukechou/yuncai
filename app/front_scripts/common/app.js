@@ -189,12 +189,16 @@ define(['jquery'], function($) {
           dataType: 'json',
         })
         .done(function(D) {
+
           if (D.retCode === 100000) {
             var userMoney = Number(D.retData.money.replace(/,/g, ''));
             if (userMoney >= Config.payMoney && userMoney != 0) {
               if (o.enoughMoney) o.enoughMoney();
             } else {
-              _this.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+              _this.showTips({
+                html:'<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>',
+                title:'余额不足'
+              });
             }
             if (o.always) o.always();
           } else {

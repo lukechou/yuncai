@@ -11,12 +11,41 @@ define(['jquery', 'app'], function($, APP) {
     }
 
     model.prototype.init = function(args) {
+
       for (var prop in args) {
         if (args.hasOwnProperty(prop)) {
           this[prop] = args[prop];
         }
       }
       this.bindCollectEvent();
+
+      var _this = this;
+
+      /**
+       * Star Click Event
+       * @return null
+       */
+      _this.starList.on('click', function(event) {
+        event.preventDefault();
+        var index = _this.starList.index(this);
+        var dataTip = $(this).data('tip');
+
+        if ($(this).hasClass('i-collect-star-g')) {
+          _this.starList.slice(0, (index + 1)).removeClass('i-collect-star-g').addClass('i-collect-star-y');
+        } else {
+          if (index === 0) {
+            index = 1;
+          } else {
+            dataTip = $(this).prev('.i-collect-star-y').data('tip');
+          }
+          _this.starList.slice(index, _this.starList.length).removeClass('i-collect-star-y').addClass('i-collect-star-g');
+        }
+
+        $('.star-comment').val('');
+        _this.starLevel = _this.starList.filter('.i-collect-star-y').length;
+
+      });
+
     };
 
     model.prototype.controlStar = function() {
@@ -58,31 +87,6 @@ define(['jquery', 'app'], function($, APP) {
 
     model.prototype.bindCollectEvent = function() {
       var _this = this;
-
-      /**
-       * Star Click Event
-       * @return null
-       */
-      _this.starList.on('click', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        var index = _this.starList.index(this);
-        var dataTip = $(this).data('tip');
-
-        if ($(this).hasClass('i-collect-star-g')) {
-          _this.starList.slice(0, (index + 1)).removeClass('i-collect-star-g').addClass('i-collect-star-y');
-
-        } else {
-          if (index === 0) {
-            index = 1;
-          } else {
-            dataTip = $(this).prev('.i-collect-star-y').data('tip');
-          }
-          _this.starList.slice(index, _this.starList.length).removeClass('i-collect-star-y').addClass('i-collect-star-g');
-        }
-        $('.star-comment').val('');
-        _this.starLevel = _this.starList.filter('.i-collect-star-y').length;
-      });
 
       /**
        * 显示收藏提示框

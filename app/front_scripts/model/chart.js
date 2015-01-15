@@ -168,17 +168,15 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 				text: '平均值博（' + parseFloat(_this.avg).toFixed(2) + '）',
 				style: {
 					fontSize: '12px',
-					color: '#fff'
+					color: '#f0f009'
 				}
 			};
 
 			// 图表样式
 			Highcharts.theme = {
-				colors: ["#FF0000", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee",
-					"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"
-				],
+				colors: ["#FF0000", "#f0f009"],
 				chart: {
-					backgroundColor: '#000',
+					backgroundColor: '#041226',
 					style: {
 						fontFamily: "'Unica One', sans-serif"
 					},
@@ -256,7 +254,7 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 					backgroundColor: 'rgba(0, 0, 0, 0.50)',
 					borderWidth: 0,
 					style: {
-						color: '#ccc'
+						color: '#fff'
 					}
 				},
 				plotOptions: {
@@ -272,10 +270,10 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 						fillColor: '#505053'
 					},
 					candlestick: {
-						lineColor: 'white'
+						lineColor: '#fff'
 					},
 					errorbar: {
-						color: 'white'
+						color: '#fff'
 					}
 				},
 
@@ -294,24 +292,24 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 					}
 				},
 
-				// scroll charts
+				// 右上角button
 				rangeSelector: {
 					buttonTheme: {
-						fill: '#505053',
+						fill: '#adadad',
 						stroke: '#000',
 						style: {
-							color: '#ccc'
+							color: '#3d3d3d'
 						},
 						states: {
 							hover: {
-								fill: '#707073',
+								fill: '#f5f5f5',
 								stroke: '#000',
 								style: {
-									color: '#fff'
+									color: '#3d3d3d'
 								}
 							},
 							select: {
-								fill: '#000003',
+								fill: '#f13c38',
 								stroke: '#000',
 								style: {
 									color: '#fff'
@@ -347,14 +345,14 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 
 				// 滚动条样式
 				scrollbar: {
-					barBackgroundColor: '#808083',
-					barBorderColor: '#808083',
+					barBackgroundColor: '#0354a2',
+					barBorderColor: '#04285a',
 					buttonArrowColor: '#CCC',
-					buttonBackgroundColor: '#606063',
-					buttonBorderColor: '#606063',
+					buttonBackgroundColor: '#0355a5',
+					buttonBorderColor: '#0355a5',
 					rifleColor: '#FFF',
-					trackBackgroundColor: '#404043',
-					trackBorderColor: '#404043'
+					trackBackgroundColor: '#01183d',
+					trackBorderColor: '#01183d'
 				},
 
 				// special colors for some of the demo examples

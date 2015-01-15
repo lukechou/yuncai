@@ -70,7 +70,7 @@ var PL5={
 	 */
 	isIllegalCode: function(code, callback){
 		if(!this.ZhiXuanNormal.codeRegex.test(code)){
-			this.errorMsg = "投注号码格式错误";
+			this.errorMsg = "投注号码格式错误, 参考格式:12,34,56,78,90或者12，34，56，78，90";
 			return false;
 		}
 		var returnZhushu = 0;
