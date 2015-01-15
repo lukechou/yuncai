@@ -95,7 +95,7 @@ $(function() {
         }
       })
       .fail(function() {
-        APP.onServerFail();
+        APP.onServiceFail();
       });
   });
 
@@ -145,7 +145,7 @@ $(function() {
         }
       })
       .fail(function() {
-        APP.onServerFail();
+        APP.onServiceFail();
       });
 
   });

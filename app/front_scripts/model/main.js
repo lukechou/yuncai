@@ -1,4 +1,5 @@
 require.config({
+  urlArgs: "bust=" + (new Date()).getTime(),
   paths: {
     jquery: '../lib/jquery',
     lodash: '../lib/lodash.compat.min',
@@ -7,6 +8,7 @@ require.config({
     app: '../common/app',
     model: 'model',
     chart: 'chart',
+    highcharts: 'highcharts'
   },
   shim: {
     bootstrap: {
@@ -131,11 +133,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     }
 
     APP.showTips({
-      type: 1,
       text: '【' + name + '】筛选条件已成功载入<br />您可以单击“按参数筛选”按钮查看筛选结果',
-      callback: function(){
-
-      }
     });
 
   });
@@ -158,12 +156,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
         if (D.retCode === 100000) {
           _this.parents('li').remove();
           for (var prop in saveData) {
-            if (saveData.hasOwnProperty(prop)) {
+            if (saveData.hasOwnProperty(prop) && saveData[prop]) {
               if (saveData[prop]['search_id'] == id) saveData[prop] = null;
             }
           }
           APP.showTips({
-            onlyConfirm: true,
             text: '恭喜你成功删除该筛选条件'
           });
         } else {
@@ -172,9 +169,6 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
       })
       .fail(function() {
         APP.onServiceFail();
-      })
-      .always(function() {
-        console.log("complete");
       });
 
   });
@@ -251,7 +245,6 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
     if (params.search_name == '') {
       APP.showTips({
-        onlyConfirm: true,
         text: '请输入长度为1~15个字符的备注名'
       });
     } else {
@@ -284,7 +277,6 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
             'search_id': D.retData.search_id
           };
           APP.showTips({
-            onlyConfirm: true,
             text: D.retMsg
           });
 
@@ -299,39 +291,30 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
       });
   }
 
-  //显示曲线图
-  // $('.j-show-chart').on('click', function(event) {
-  //   event.preventDefault();
+  // 显示曲线图
+  $('#track_detail_list').on('click', '.j-show-chart', function(event) {
 
-  //   var $this = $(this);
+    if (event.target.tagName !== 'A') {
+      var a = 'active';
+      var id = $(this).attr('data-modelId');
+      var colspan = $(this).find('td').length;
+      var chartHTML = '<div class="chart-box"><a href="/lottery/model/history-data" class="his-link" title="查看历史数据">查看历史数据</a><div class="chart-loading" id="j-chart-loder"><img src="' + Config.staticHostURI + '/front_images/loader.gif" alt="Logding.."/></div><div class="chart" id="chart"></div></div>';
+      var tr = '<tr id="chart-tr"><td colspan="' + colspan + '" style="padding:0;">' + chartHTML + '</td></tr>';
 
-  //   var parentList = $(this).parents('.j-stretch-wrap');
-  //   if ($this.hasClass('c')) {
-  //     $this.removeClass('c');
-  //   } else {
-  //     parentList.find('tr').removeClass('c');
-  //     $this.addClass('c');
-  //   }
-  //   var nextId = $(this).next().attr('id');
+      if(!id) return;
+      if (!$(this).hasClass(a)) {
+        $('.j-show-chart').removeClass(a);
+        $(this).addClass(a);
+        $('#chart-tr').remove();
+        $(this).after(tr);
 
-  //   $('#chart-tr').remove();
-  //   if ('chart-tr' != nextId) {
-  //     var modelId = $(this).find('.j-model-id').val();
-  //     var projectIssue = $(this).find('.j-project-issue').val();
-  //     $(this).after('<tr id="chart-tr"><td colspan="12" style="background:#000; height:240px;" class="relative">' + '<div class="chart-des">' + '<a href="/trade/super/newhistory?day=30&type=0&model_id=' + modelId + '&project_issue=' + projectIssue + '&t=' + $.now() + '#last" target="_blank" style="text-decoration:underline;">查看历史数据</a>' +
-  //       '</div>' +
-  //       '<div id="chart_box" class="list-chart-box" style=""><div class="i-loading-black-32"></div></div>' +
-  //       '</td></tr>');
-  //     Do('highstock-theme-gray', function() {
-  //       var chartOption = {
-  //         url: '/trade/super/getpicdata?model_id=' + modelId + '&t=' + $.now(),
-  //         id: 'chart_box',
-  //         width: 940
-  //       }
-  //       Yuncai.chart(chartOption);
-  //     });
-  //   }
+        chart.init({
+          chartEl: $('#chart')
+        });
+        chart.getChartData(id);
+      }
+    }
 
-  // });
+  });
 
 });

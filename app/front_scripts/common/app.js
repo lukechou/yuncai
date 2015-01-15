@@ -31,8 +31,9 @@ define(['jquery'], function($) {
       $('#user-login').unbind();
 
       $('#user-login').on('click', function(event) {
-        var user = _this.regStr($('#login-username').val())
-        var pwd = _this.regStr($('#login-password').val())
+
+        var user = _this.filterStr($('#login-username').val())
+        var pwd = _this.filterStr($('#login-password').val())
 
         if (user && pwd) {
           $.ajax({
@@ -48,33 +49,37 @@ define(['jquery'], function($) {
               if (data.retCode == 100000) {
                 window.location.href = data.retData.redirectURL;
               } else {
-                _this.showTips(_this.getConfirmHtml(data.retMsg));
+                _this.showTips({
+                  text: data.retMsg
+                });
               }
             })
             .fail(function() {
-              _this.showTips('Server has some error!')
+              _this.onServiceFail();
             });
         } else {
-          _this.showTips(_this.getConfirmHtml('帐号密码不能为空'));
+          _this.showTips({
+            text: '帐号密码不能为空'
+          });
           return;
         }
 
       });
+
     };
 
     /**
      * 过滤字符串
-     * @param  {String} s 字符串
+     * @param  {String} str 字符串
      * @return {String}   过滤后的字符串
      */
-    app.prototype.regStr = function(s) {
-
+    app.prototype.filterStr = function(str) {
+      str = $.trim(str);
       var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——| {}【】‘；：”“'。，、？]")
       var rs = "";
-      for (var i = 0; i < s.length; i++) {
-        rs = rs + s.substr(i, 1).replace(pattern, '');
+      for (var i = 0; i < str.length; i++) {
+        rs = rs + str.substr(i, 1).replace(pattern, '');
       }
-
       return rs;
     };
 
@@ -134,11 +139,12 @@ define(['jquery'], function($) {
           _this.showLoginBox();
           break;
         case 120001:
-          _this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+          _this.showTips({
+            html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>'
+          });
           break;
         default:
           _this.showTips({
-            onlyConfirm: true,
             text: retMsg
           });
           break;
@@ -151,6 +157,7 @@ define(['jquery'], function($) {
      * @return {null}
      */
     app.prototype.onSubmitInit = function(vote) {
+
       var _this = this;
 
       _this.checkLogin({
@@ -209,6 +216,38 @@ define(['jquery'], function($) {
 
     };
 
+    app.prototype.createShowTipsHTML = function(obj) {
+      var html = '';
+      var type = Number(obj.type);
+      if (obj.html === '') {
+        html = '<div class="tipbox"><p>' + obj.text + '</p></div>';
+
+        switch (type) {
+          case 1:
+            html += '<p class="last"><button class="btn modal-sure-btn" id="j-reload">确定</button></p>';
+            break;
+          default:
+            html += '<p class="last"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></p>';
+            break;
+        }
+      } else {
+        html = obj.html;
+      }
+
+      if (!$('#myModal')[0]) {
+        var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
+        $('body').append(compiled);
+
+      } else {
+
+        $('.j-apptips-title').html(obj.title);
+        $('#apptips-content').html(html);
+      }
+
+      if (obj.callback) obj.callback();
+
+    };
+
     /**
      * showTips 全局通用拟态框
      * @param  {Object} obj tips's HTML {title:'title', html:'html'}
@@ -217,17 +256,15 @@ define(['jquery'], function($) {
     app.prototype.showTips = function(o) {
 
       var _this = this;
-      var config = {
+
+      var obj = {
         title: '友情提示',
         html: '',
-        onlyConfirm: false,
+        type: 0,
         text: ''
       };
-      var obj = config;
 
-      if (typeof o == 'string') {
-        obj.html = o;
-      } else {
+      if (typeof o == 'object' && o !== null) {
         for (var prop in o) {
           if (o.hasOwnProperty(prop)) {
             if (o[prop] != '') {
@@ -235,24 +272,13 @@ define(['jquery'], function($) {
             }
           }
         }
-      }
-
-      if (obj.onlyConfirm) {
-        obj.html = '<div class="tipbox"><p>' + obj.text + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
-      }
-
-      if (!$('#myModal')[0]) {
-        var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + obj.html + '</div></div></div>';
-        $('body').append(compiled);
-
       } else {
-
-        $('.j-apptips-title').html(obj.title);
-        $('#apptips-content').html(obj.html);
+        obj.text = o;
       }
+
+      _this.createShowTipsHTML(obj);
 
       $('#myModal').on('show.bs.modal', _this.centerModal);
-
       $('#myModal').modal('show');
 
     };
@@ -262,10 +288,16 @@ define(['jquery'], function($) {
      * @return {[type]} null
      */
     app.prototype.centerModal = function() {
+
       $(this).css('display', 'block');
       var $dialog = $(this).find(".modal-dialog");
-      var offset = ($(window).height() - $dialog.height()) / 2;
-      $dialog.css("margin-top", offset);
+      var top = ($(window).height() - $dialog.height()) / 2;
+      var left = ($(window).width() - $dialog.width()) / 2;
+      $dialog.css({
+        "margin-top": top,
+        "margin-left": left
+      });
+
     };
 
     /**
@@ -273,7 +305,9 @@ define(['jquery'], function($) {
      * @return {null}
      */
     app.prototype.onServiceFail = function() {
-      this.showTips(this.getConfirmHtml('服务器繁忙,请稍后再试!'));
+      this.showTips({
+        text: '服务器繁忙,请稍后再试!'
+      });
     };
 
     /**
@@ -296,8 +330,24 @@ define(['jquery'], function($) {
 
     };
 
+    /**
+     * 输入框只允许输入整数
+     * @return null
+     */
+    app.prototype.bindInputOnlyInt = function() {
+      $('.j-only-int').on('keyup paste', function(event) {
+        event.preventDefault();
+        $(this).val($(this).val().replace(/\D|^0/g, ''));
+      });
+    };
+
+    /**
+     * 初始化头部 导航 切换
+     * @return null
+     */
     app.prototype.init = function() {
 
+      var _this = this;
       $('#choseCai').hover(function() {
         var m = $(this);
         m.find('#hdMask').toggle();
@@ -307,6 +357,8 @@ define(['jquery'], function($) {
         m.find('#hdMask').toggle();
         m.find('a').toggleClass('on');
       });
+
+      $('.modal').on('show.bs.modal', _this.centerModal);
 
     };
 

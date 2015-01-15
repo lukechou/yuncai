@@ -31,6 +31,24 @@
 > http://kp2.yuncai.com/lottery/model/cancel-search
 - search_id=251155
 
-### 模型批量取消收藏接口
+### 模型快速投注接口
 > http://kp2.yuncai.com/lottery/trade/model-fast-buy
-- project_issue=141030&model_id=CG_21799&money=10
+- project_issue=141030&
+- model_id=CG_21799
+- money=10
+
+### 图表数据接口
+> http://kp2.yuncai.com/lottery/trade/fetch-icon-data
+- model_id=BD_55067
+- t=1421051263982
+
+### 模型投注记录
+> http://kp2.yuncai.com/account/record/ajax
+- type=3
+- days=30
+- page=1
+- pageSize=10
+
+### 查看模型详情接口
+> http://kp2.yuncai.com/lottery/trade/view-detail
+- order_no

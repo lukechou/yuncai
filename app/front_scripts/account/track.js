@@ -42,7 +42,6 @@ $(function() {
   };
 
   var track = (function() {
-    'use strict';
 
     var track = {
       page: 1,

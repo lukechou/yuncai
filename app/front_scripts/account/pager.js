@@ -91,57 +91,6 @@ var PAGE = (function() {
 
 }());
 
-
-//投注记录
-PAGE.loadOrderRecord = function(obj) {
-
-  PAGE.config = obj;
-  var url = window.location.pathname + '/ajax';
-  $.ajax({
-      url: url,
-      type: 'GET',
-      dataType: 'json',
-      data: {
-        type: obj.type,
-        days: obj.days,
-        page: obj.page,
-        pageSize: obj.pageSize,
-      },
-    })
-    .done(function(data) {
-      if (data.retCode == 100000) {
-        var dataSize = data.retData.data.length;
-        var html = "";
-        if (dataSize > 0) {
-          var detailData = data.retData.data;
-          for (var i = 0; i < detailData.length; i++) {
-            dataItem = detailData[i];
-            var projectDetailUrl = '';
-            var continueBuy = '';
-            if (dataItem.show == 1) {
-              var projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
-              var continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
-            }
-            html += "<tr><td>" + dataItem.lotyCNName + "</td><td>" + dataItem.createTime + "</td><td>" + dataItem.money + "元</td><td>" + dataItem.status + "</td><td>" + projectDetailUrl + continueBuy + "</td></tr>";
-          };
-          // 中奖列表才有汇总功能
-          if (obj.type == '1') {
-            $('#summary_bonus_sum').html(data.retData.summary.bonusSum);
-            $('#summary_bonus_size').html(data.retData.summary.bonusSize);
-          }
-        } else {
-          html = "<tr><td colspan='6'>没有数据</td></tr>";
-        }
-        PAGE.config.pageNum = Math.ceil(data.retData.totalRecord / obj.pageSize);
-        PAGE.makePageHtml(obj['innerHtmlObj'].parents('.table').siblings('.j-page-box'));
-        PAGE.bindPageEvent(PAGE.loadOrderRecord);
-      } else {
-        html = "<tr><td colspan='6'>" + data.retMsg + "</td></tr>";
-      }
-      obj['innerHtmlObj'].html(html);
-    });
-};
-
 // 详情分页
 PAGE.loadDetailRecord = function(obj) {
 
@@ -153,6 +102,7 @@ PAGE.loadDetailRecord = function(obj) {
       dataType: 'json',
       data: {
         type: obj.type,
+        tradeType:obj.tradeType,
         days: obj.days,
         page: obj.page,
         pageSize: obj.pageSize,
@@ -169,6 +119,9 @@ PAGE.loadDetailRecord = function(obj) {
             dataItem = detailData[i];
 
             switch (parseInt(obj.type)) {
+              case 0:
+            	html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td class='fc-3'>" + dataItem.balanceInMoney + "</td><td class='fc-3'>" + dataItem.balanceOutMoney + "</td><td class='fc-3'>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+            	break;
               case 3:
                 html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td class='fc-3'>" + dataItem.tradeMoney + "</td><td>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
                 break;

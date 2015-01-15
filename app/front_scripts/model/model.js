@@ -16,29 +16,43 @@ define(['jquery', 'app'], function($, APP) {
           this[prop] = args[prop];
         }
       }
+      this.bindCollectEvent();
     };
 
     model.prototype.controlStar = function() {
 
       var _this = this;
-
+      var stared = 'i-collect-star-y';
+      var unStar = 'i-collect-star-g';
       if (_this.starLevel !== 0) {
-        _this.starList.slice(0, _this.starLevel).removeClass('i-collect-star-g').addClass('i-collect-star-y');
+        _this.starList.slice(0, _this.starLevel).removeClass(unStar).addClass(stared);
       } else {
-        _this.starList.eq(0).removeClass('i-collect-star-g').addClass('i-collect-star-y');
+        _this.starList.removeClass().addClass(unStar)
+        _this.starList.eq(0).removeClass(unStar).addClass(stared);
       }
 
     };
 
-    model.prototype.showModelModal = function() {
+    model.prototype.setModelModal = function() {
 
       var _this = this;
-
       _this.controlStar();
       $('#j-modal-id').html(_this.modelId).attr('data-modalid', _this.modelId);
       $('#j-star_comment').val(_this.starComment);
       $('#j-model_comment').val(_this.modelComment);
-      _this.modal.modal('show');
+
+    };
+
+    model.prototype.resetModelModal = function() {
+
+      var _this = this;
+      _this.userId = null;
+      _this.starLevel = 0;
+      _this.starComment = '';
+      _this.modelComment = '';
+      _this.controlStar();
+      $('#j-star_comment').val(_this.starComment);
+      $('#j-model_comment').val(_this.modelComment);
 
     };
 
@@ -85,6 +99,11 @@ define(['jquery', 'app'], function($, APP) {
           return;
         }
 
+        $('#j-isModify').addClass('hide');
+        $('#j-modal-id').html(_this.modelId).attr('data-modalid', _this.modelId);
+        _this.resetModelModal();
+        _this.modal.modal('show');
+
         if (isModify) {
           $.ajax({
               url: '/lottery/trade/get-model-collect-data',
@@ -102,20 +121,12 @@ define(['jquery', 'app'], function($, APP) {
                 _this.starLevel = D.retData.data.star_level;
                 _this.starComment = D.retData.data.star_comment;
                 _this.modelComment = D.retData.data.model_comment;
-                _this.showModelModal();
+                _this.setModelModal();
               }
-
             })
             .fail(function() {
-              APP.onServerFail();
+              APP.onServiceFail();
             });
-        } else {
-          $('#j-isModify').addClass('hide');
-          _this.userId = null;
-          _this.starLevel = 1;
-          _this.starComment = '';
-          _this.modelComment = '';
-          _this.showModelModal();
         }
 
       });
@@ -130,28 +141,7 @@ define(['jquery', 'app'], function($, APP) {
           model_comment: _.escape($.trim($('#j-model_comment').val()))
         };
 
-        $.ajax({
-            url: '/lottery/trade/model-collect',
-            type: 'get',
-            dataType: 'json',
-            data: obj,
-          })
-          .done(function(D) {
-            if (D.retCode === 100000) {
-              $('.j-collect-show[data-modelid=' + obj.model_id + ']').html('修改收藏').attr('data-modify', 1);
-              _this.modal.modal('hide');
-              APP.showTips({
-                onlyConfirm: true,
-                text: D.retMsg
-              });
-            } else {
-              APP.handRetCode(D.retCode, D.retMsg);
-            }
-
-          })
-          .fail(function() {
-            APP.onServerFail();
-          });
+        _this.saveCollect(obj);
 
       });
 
@@ -164,23 +154,68 @@ define(['jquery', 'app'], function($, APP) {
           user_id: _this.userId,
           t: $.now()
         };
-
-        $.ajax({
-            url: '/lottery/trade/model-cancel-collect',
-            type: 'get',
-            dataType: 'json',
-            data: obj,
-          })
-          .done(function() {
-            $('.j-collect-show[data-modelid=' + obj.model_id + ']').html('收藏').attr('data-modify', 0);
-            _this.modal.modal('hide');
-          })
-          .fail(function() {
-            APP.onServerFail();
-          });
-
+        _this.cancelCollect(obj);
       });
 
+    };
+
+    model.prototype.cancelCollect = function(obj) {
+      var _this = this;
+      $.ajax({
+          url: '/lottery/trade/model-cancel-collect',
+          type: 'get',
+          dataType: 'json',
+          data: obj,
+        })
+        .done(function() {
+          _this.onCollectCancel(obj.model_id);
+        })
+        .fail(function() {
+          APP.onServiceFail();
+        });
+
+    };
+
+    model.prototype.saveCollect = function(obj) {
+      var _this = this;
+      $.ajax({
+          url: '/lottery/trade/model-collect',
+          type: 'get',
+          dataType: 'json',
+          data: obj,
+        })
+        .done(function(D) {
+          if (D.retCode === 100000) {
+            $('.j-collect-show[data-modelid=' + obj.model_id + ']').html('修改收藏').attr('data-modify', 1);
+            _this.modal.on('hidden.bs.modal', function(e) {
+              APP.showTips({
+                text: D.retMsg
+              });
+            });
+            _this.modal.modal('hide');
+
+          } else {
+            APP.handRetCode(D.retCode, D.retMsg);
+          }
+
+        })
+        .fail(function() {
+          APP.onServiceFail();
+        });
+    };
+
+    model.prototype.onCollectCancel = function(id) {
+      var _this = this;
+      if (_this.isCollectPage) {
+        $('#track_detail_list tr[data-modelid=' + id + ']').remove();
+        $('#j-collect-table tbody .index').each(function(index, el) {
+          $(this).html(index + 1);
+        });
+      } else {
+        $('.j-collect-show[data-modelid=' + id + ']').html('收藏').attr('data-modify', 0);
+      }
+
+      _this.modal.modal('hide');
     };
 
     return model;

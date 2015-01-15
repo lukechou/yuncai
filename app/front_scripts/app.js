@@ -1,20 +1,18 @@
 // Common Module
 var APP = {};
-var FILTER = {};
 
 /**
- * Filter Decimal
+ * APP Decimal
  * @param  {Number}  num
  * @return {Boolean}     [description]
  */
-FILTER.isDecimal = function(num) {
+APP.isDecimal = function(num) {
   if (parseInt(num) == num) {
     return false;
   } else {
     return true;
   }
 };
-
 
 /**
  * HandRetCode for Ajax
@@ -55,10 +53,18 @@ APP.updateUserMoney = function() {
 
 };
 
+/**
+ * Update Head User Info
+ * @return {null}
+ */
+APP.updateHeadUserInfo = function() {
+
+};
+
 APP.showLoginBox = function() {
 
   if (!$('#user-login')[0]) {
-    var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+    var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
     $('body').append(html);
   }
 
@@ -104,11 +110,11 @@ APP.bindLoginEvent = function() {
           if (data.retCode == 100000) {
             window.location.href = data.retData.redirectURL;
           } else {
-            alert(data.retMsg);
+            APP.showTips(APP.getConfirmHtml(data.retMsg));
           }
         })
         .fail(function() {
-          APP.showTips('Server has some error!')
+          APP.showTips('Server has some error!');
         });
     } else {
       APP.showTips(APP.getConfirmHtml('帐号密码不能为空'));
@@ -119,6 +125,38 @@ APP.bindLoginEvent = function() {
 
 }
 
+APP.createShowTipsHTML = function(obj) {
+  var html = '';
+  var type = Number(obj.type);
+  if (obj.html === '') {
+    html = '<div class="tipbox"><p>' + obj.text + '</p></div>';
+
+    switch (type) {
+      case 1:
+        html += '<p class="last"><button class="btn modal-sure-btn" id="j-reload">确定</button></p>';
+        break;
+      default:
+        html += '<p class="last"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></p>';
+        break;
+    }
+  } else {
+    html = obj.html;
+  }
+
+  if (!$('#myModal')[0]) {
+    var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
+    $('body').append(compiled);
+
+  } else {
+
+    $('.j-apptips-title').html(obj.title);
+    $('#apptips-content').html(html);
+  }
+
+  if (obj.callback) obj.callback();
+
+};
+
 /**
  * [showTips 拟态框]
  * @param  {Object} obj tips's HTML {title:'title', html:'html'}
@@ -126,40 +164,43 @@ APP.bindLoginEvent = function() {
  */
 APP.showTips = function(o) {
 
+  var _this = APP;
+
   var obj = {
     title: '友情提示',
-    html: ''
+    html: '',
+    type: 0,
+    text: ''
   };
-  if (typeof o == 'string') {
-    obj.html = o;
-  } else {
-    obj = o;
-    if (!o.title) {
-      obj.title = '友情提示';
+
+  if (typeof o == 'object' && o !== null) {
+    for (var prop in o) {
+      if (o.hasOwnProperty(prop)) {
+        if (o[prop] != '') {
+          obj[prop] = o[prop]
+        }
+      }
     }
-  }
-
-  if (!$('#myModal')[0]) {
-    var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + obj.html + '</div></div></div>';
-    $('body').append(compiled);
   } else {
-    $('.j-apptips-title').html(obj.title);
-    $('#apptips-content').html(obj.html);
+    obj.text = o;
   }
 
-  $('#myModal').on('show.bs.modal', APP.centerModal);
+  _this.createShowTipsHTML(obj);
 
-  //if($('#myModal').hasClass('in')){
+  $('#myModal').on('show.bs.modal', _this.centerModal);
   $('#myModal').modal('show');
 
 };
 
-
 APP.centerModal = function() {
   $(this).css('display', 'block');
   var $dialog = $(this).find(".modal-dialog");
-  var offset = ($(window).height() - $dialog.height()) / 2;
-  $dialog.css("margin-top", offset);
+  var top = ($(window).height() - $dialog.height()) / 2;
+  var left = ($(window).width() - $dialog.width()) / 2;
+  $dialog.css({
+    "margin-top": top,
+    "margin-left": left
+  });
 };
 
 $('.Modal').on('show.bs.modal', APP.centerModal);
@@ -175,7 +216,6 @@ APP.getUrlPara = function(paraName) {
   re.exec(sUrl);
   return RegExp.$1;
 };
-
 
 APP.onSubmitConfirm = function(callback, data, html) {
 
@@ -201,7 +241,7 @@ APP.onSubmitConfirm = function(callback, data, html) {
 
 }
 
-APP.onServerFail = function() {
+APP.onServiceFail = function() {
   APP.showTips(APP.getConfirmHtml('服务器繁忙,请稍后再试!'));
 };
 
@@ -230,7 +270,7 @@ APP.submitHemai = function(obj) {
       }
     })
     .fail(function() {
-      APP.onServerFail();
+      APP.onServiceFail();
     });
 };
 

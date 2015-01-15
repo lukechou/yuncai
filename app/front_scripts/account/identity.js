@@ -167,7 +167,7 @@ $(function() {
 
       })
       .fail(function() {
-        APP.onServerFail();
+        APP.onServiceFail();
       });
   });
 });

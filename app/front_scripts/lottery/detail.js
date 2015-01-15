@@ -1,5 +1,11 @@
 'use strict';
 $(function() {
+
+  var rHd = $('.right-hd');
+  if (rHd.length) {
+    $('.left-hd').height(rHd[0].clientHeight);
+  }
+
   var HeMai = {
     max: $('#j-max').html(),
     dan: $('#j-dan').html(),
@@ -33,7 +39,7 @@ $(function() {
       return false;
     }
 
-    if (FILTER.isDecimal(buy.buyTotal.val())) {
+    if (APP.isDecimal(buy.buyTotal.val())) {
       APP.showTips(APP.getConfirmHtml('购买份数不能为小数'));
       return false;
     }
@@ -46,7 +52,12 @@ $(function() {
   }
 
   $('body').on('click', '#hemaiRefresh', function(event) {
-    window.history.go(0);
+    window.location.reload();
+  });
+
+  $('#j-buy').on('keyup', function(event) {
+    $(this).val($(this).val().replace(/\D|^0/g, ''));
+    updateBuyMoneyTotal();
   });
 
   $('#j-buy').on('change', function() {
@@ -56,9 +67,10 @@ $(function() {
       buy.buyTotal.val(HeMai.max);
     }
 
-    if (FILTER.isDecimal(buy.buyTotal.val())) {
+    if (APP.isDecimal(buy.buyTotal.val())) {
       buy.buyTotal.val(HeMai.max);
     }
+
     if (v > HeMai.max) {
       buy.buyTotal.val(HeMai.max);
     }
@@ -71,7 +83,7 @@ $(function() {
     var isAgreen = $('#j-isAgreen')[0].checked;
     var template = '';
     var h = '';
-    var b = buy.buyTotal.val();
+    var b = parseInt(buy.buyTotal.val());
     var mtotal = $('#j-total').html();
     var mid = $('#j-qihao').val();
     var midHtml = '';

@@ -226,6 +226,7 @@ COMMON.onSubmitDone = function(retCode, retMsg, projectNo, trackId) {
 };
 
 COMMON.onSubmitFail = function(retCode, retMsg) {
+  store.set('lotyName', Config.lotyName);
   window.location.href = '/html/lottery/trade/fail.html';
 };
 
@@ -994,7 +995,7 @@ ZHUI.getNewHtml = function(el) {
       }
     })
     .fail(function() {
-      APP.onServerFai();
+      APP.onServiceFail();
     });
 };
 

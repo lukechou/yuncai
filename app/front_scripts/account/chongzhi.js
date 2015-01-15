@@ -47,7 +47,7 @@ $(function() {
               }
             })
             .fail(function() {
-              APP.onServerFail();
+              APP.onServiceFail();
             });
         } else {
           $('.js-type-e').removeClass('hide');

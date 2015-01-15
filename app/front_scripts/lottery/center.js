@@ -54,7 +54,7 @@ $(function() {
       APP.showTips(APP.getConfirmHtml('请输入整数购买份数'));
       c = 0;
     }
-    if (num <= 0 || FILTER.isDecimal(num)) {
+    if (num <= 0 || APP.isDecimal(num)) {
       APP.showTips(APP.getConfirmHtml('请输入整数购买份数'));
       c = 0;
     }
@@ -66,7 +66,7 @@ $(function() {
   }
 
   $('body').on('click', '#hemaiRefresh', function(event) {
-    window.history.go(0);
+    window.location.reload();
   });
 
   $('#projectList').on('change', '.j-gou-count', function(event) {
