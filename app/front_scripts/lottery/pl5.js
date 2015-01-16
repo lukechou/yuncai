@@ -760,22 +760,47 @@ $(document).ready(function() {
 		$('#choose_money').html(G_CHOOSE.money);
 	});
 
+
 	/**
 	 * 玩法type切换
 	 */
-	$('#senior .br-nav').on('click', 'a', function(event) {
-		var pagetype = Number($(this).attr('data-pagetype'));
-		if (G_BUY.codes.length > 1) {
+	$('#j-nav').on('click', 'a', function(event) {
+		event.preventDefault();
+		var _this = $(this);
+		var pagetype = Number(_this.attr('data-pagetype'));
+		var newTab = $(this).attr('href');
+		var li = _this.parents('li');
+
+		if (G_BUY.codes.length >= 1) {
 			APP.showTips({
 				title: '友情提示',
-				html: '切换玩法将会清空您的号码'
+				text: '切换玩法将会清空您的号码',
+				type: 2,
+				onConfirm: function() {
+					$('#myModal').modal('hide');
+					// 清空追号数据
+					$('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+						_this.parents('tr').find('.j-money').html(0);
+					});
+					toggleTabs(newTab, li, pagetype);
+				}
 			});
-			// 清空追号数据
-			$('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
-				$(this).parents('tr').find('.j-money').html(0);
-			});
+		} else {
+			toggleTabs(newTab, li, pagetype);
 		}
-		// G_BUY.init();
+
+	});
+
+	function toggleTabs(newTab, li, pagetype) {
+
+		var oldTab = $('#j-nav li.active a').attr('href');
+
+		$(oldTab).removeClass('active');
+		$(newTab).addClass('active');
+		li.addClass('active');
+		li.siblings('.active').removeClass('active');
+
+
 		clean4CutBuyType();
 		calculateBuyCodes();
 		$('#buy-submit').attr("disabled", "disabled");
@@ -808,7 +833,9 @@ $(document).ready(function() {
 				$('#j-box-left').addClass('multiphase-box');
 				break;
 		}
-	});
+	}
+
+
 
 	/////////////////////////机选页面事件/////////////////////////////////////////
 	// 修改注数

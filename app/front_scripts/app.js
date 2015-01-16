@@ -126,6 +126,7 @@ APP.bindLoginEvent = function() {
 }
 
 APP.createShowTipsHTML = function(obj) {
+  // 生成对应HTML
   var html = '';
   var type = Number(obj.type);
   if (obj.html === '') {
@@ -133,10 +134,13 @@ APP.createShowTipsHTML = function(obj) {
 
     switch (type) {
       case 1:
-        html += '<div class="m-one-btn"><button class="btn modal-sure-btn" id="j-reload">确定</button></div>';
+        html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">确定</button></div>';
+        break;
+      case 2:
+        html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
         break;
       default:
-        html += '<div class="m-one-btn"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></div>';
+        html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">确定</button></div>';
         break;
     }
   } else {
@@ -151,6 +155,15 @@ APP.createShowTipsHTML = function(obj) {
 
     $('.j-apptips-title').html(obj.title);
     $('#apptips-content').html(html);
+  }
+
+  // 绑定确认按钮事件
+  $('#j-modal-confirm').unbind('click');
+  if (obj.onConfirm) {
+    $('#j-modal-confirm').on('click', function(event) {
+      event.preventDefault();
+      obj.onConfirm();
+    });
   }
 
   if (obj.callback) obj.callback();
@@ -170,7 +183,9 @@ APP.showTips = function(o) {
     title: '友情提示',
     html: '',
     type: 0,
-    text: ''
+    text: '',
+    onConfirm: null,
+    callback: null
   };
 
   if (typeof o == 'object' && o !== null) {
@@ -268,10 +283,8 @@ APP.submitHemai = function(obj) {
         APP.showTips({
           text: '合买成功!',
           type: 1,
-          callback: function() {
-            $('#j-reload').on('click', function(event) {
+          onConfirm: function() {
               window.location.reload();
-            });
           }
         });
         $('body').on('click', '.close', function(event) {

@@ -174,9 +174,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
       title: '删除确认',
       text: t,
       type: 2,
-      callback: function() {
-        $('#j-reload').unbind('click');
-        $('#j-reload').on('click', function(event) {
+      onConfirm: function() {
           $.ajax({
               url: '/lottery/model/cancel-search',
               type: 'post',
@@ -203,7 +201,6 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
             .fail(function() {
               APP.onServiceFail();
             });
-        });
       }
     });
 

@@ -26,19 +26,28 @@ $(function() {
             projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
             continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
 
-            if (obj.type == '3') {
-              projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
-              if (Number(dataItem.bonusMoney) > 0) {
-                isZhongJiang = 'fc-3';
-              } else {
-                isZhongJiang = '';
-              }
+            switch (obj.type) {
+              case 3:
+                projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
+                if (Number(dataItem.bonusMoney) > 0) {
+                  isZhongJiang = 'fc-3';
+                } else {
+                  isZhongJiang = '';
+                }
 
-              //模型投注记录
-              htmlOutput += '<tr><td>' + dataItem.createTime + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.projectNo + '</td><td>' + dataItem.money + '</td><td class="' + isZhongJiang + '">' + dataItem.bonusMoney + '</td><td class="' + isZhongJiang + '">' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                //模型投注记录
+                htmlOutput += '<tr><td>' + dataItem.createTime + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.projectNo + '</td><td>' + dataItem.money + '</td><td class="' + isZhongJiang + '">' + dataItem.bonusMoney + '</td><td class="' + isZhongJiang + '">' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                break;
+              case 0:
+                if(dataItem.lotyCNName=='模型'){
 
-            } else {
-              htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
+                }
+                htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                break;
+              default:
+                htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                break;
             }
 
           };
@@ -133,11 +142,28 @@ $(function() {
    * @return {String}
    */
   function craeteTdHTML(arr) {
+    var html = '';
+    for (var i = arr.length - 1; i >= 0; i--) {
+      arr[i] = '<span>' + arr[i] + '</span>';
+    };
+    html = arr.join('');
+    return html;
+  }
+
+  function craeteTdHTML2(tznr, sg) {
+
       var html = '';
-      for (var i = arr.length - 1; i >= 0; i--) {
-        arr[i] = '<span>' + arr[i] + '</span>';
+      var s = sg.join();
+
+      for (var i = tznr.length - 1; i >= 0; i--) {
+        if (tznr[i].join() == s) {
+          tznr[i] = '<span class="fc-3">' + tznr[i] + '</span>';
+        } else {
+          tznr[i] = '<span>' + tznr[i] + '</span>';
+        }
       };
-      html = arr.join('');
+
+      html = tznr.join('');
       return html;
     }
     // Read Model Record Detail
@@ -164,7 +190,7 @@ $(function() {
             html += '<td>' + craeteTdHTML(dataItem.ssbh) + '</td>';
             html += '<td>' + craeteTdHTML(dataItem.dz) + '</td>';
             html += '<td class="fc-3">' + dataItem.sg + '</td>';
-            html += '<td>' + craeteTdHTML(dataItem.tzNr) + '</td>';
+            html += '<td>' + craeteTdHTML2(dataItem.tzNr, dataItem.sg) + '</td>';
             html += '<td>' + craeteTdHTML(dataItem.tzZs) + '</td>';
             html += '<td>' + craeteTdHTML(dataItem.tzJe) + '</td>';
             html += '<td class="fc-3">' + dataItem.bonus + '</td>';

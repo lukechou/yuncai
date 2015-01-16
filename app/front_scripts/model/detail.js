@@ -198,11 +198,8 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
                       APP.showTips({
                         type: 1,
                         text: '\u8d2d\u4e70\u6210\u529f',
-                        callback: function() {
-                          $('#j-reload').on('click', function(event) {
-                            event.preventDefault();
+                        onConfirm: function() {
                             window.location.reload();
-                          });
                         }
                       });
                     } else {

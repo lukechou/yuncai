@@ -212,6 +212,8 @@ define(['jquery'], function($) {
     };
 
     app.prototype.createShowTipsHTML = function(obj) {
+
+      // 生成对应HTML
       var html = '';
       var type = Number(obj.type);
       if (obj.html === '') {
@@ -219,13 +221,13 @@ define(['jquery'], function($) {
 
         switch (type) {
           case 1:
-            html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-reload">确定</button></div>';
+            html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">确定</button></div>';
             break;
           case 2:
-            html += '<div class="m-btns"><button class="btn btn-danger" id="j-reload">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
+            html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
             break;
           default:
-            html += '<div class="m-onebtn"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></div>';
+            html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">确定</button></div>';
             break;
         }
       } else {
@@ -242,13 +244,26 @@ define(['jquery'], function($) {
         $('#apptips-content').html(html);
       }
 
-      if (obj.callback) obj.callback();
+      // 绑定确认按钮事件
+      $('#j-modal-confirm').unbind('click');
+      if(obj.onConfirm){
+        $('#j-modal-confirm').on('click', function(event) {
+          event.preventDefault();
+          obj.onConfirm();
+        });
+      }
 
+      if(obj.callback) obj.callback();
     };
 
     /**
      * showTips 全局通用拟态框
      * @param  {Object} obj tips's HTML {title:'title', html:'html'}
+     * o === String 通用弹出框,只有确定按钮
+     * type==null 参数 无默认按钮
+     * type==1 确定
+     * type==2 确定，取消
+     * onConfirm 确定按钮成功事件
      * @return {null}
      */
     app.prototype.showTips = function(o) {
@@ -259,7 +274,9 @@ define(['jquery'], function($) {
         title: '友情提示',
         html: '',
         type: 0,
-        text: ''
+        text: '',
+        onConfirm: null,
+        callback:null
       };
 
       if (typeof o == 'object' && o !== null) {
