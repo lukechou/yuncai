@@ -10,7 +10,7 @@ body { background: #fff; }
 .g-hd-title { font-size: 16px; margin: 0; }
 .g-hd-title > b { font-size: 22px; }
 .g-hd-group { position: absolute; bottom: 0; left: 109px; }
-.g-hd-group > a { font-family: 'Microsoft Yahei'; font-size: 16px; display: inline-block; height: 36px; padding: 8px 25px; color: #3d3d3d; background: #f5f5f5; }
+.g-hd-group > a { font-family: 'Microsoft Yahei'; font-size: 16px; height: 36px; padding: 8px 25px; color: #3d3d3d; background: #f5f5f5; float: left; }
 .g-hd-group > a.active, .g-hd-group > a:hover { text-decoration: none; color: #fff; background: #f13c38; }
 .g-hd-time { font-size: 12px; position: absolute; right: 10px; bottom: 8px; color: #848484; }
 .vote-nav { margin-bottom: 15px; }
@@ -149,8 +149,6 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .mlr-8 { margin: 0 8px; }
 .ballbox { color: #3d3d3d; }
 .ballbox .text b { font-weight: bold; }
-.ballbox .btns { width: 210px; margin: auto; }
-.ballbox .btns .btn { width: 90px; margin: 0 5px; }
 .br-together, .br-zhui { font-size: 12px; padding: 15px 20px 0 0; color: #3d3d3d; background: #fff; }
 .br-together .title { display: inline-block; float: left; width: 60px; margin-right: 5px; text-align: right; color: #3d3d3d; }
 .br-set { line-height: 21px; display: block; float: left; height: 21px; margin-right: 11px; padding: 0 6px; text-align: center; color: #333; border: 1px solid #ddd; }
@@ -215,6 +213,16 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .chart-box { position: relative; height: 240px; background: #041226; padding: 0 20px; }
 .his-link { position: absolute; z-index: 95; left: 200px; padding: 12px 0 0; color: #fff; font-size: 12px; text-decoration: underline; }
 .chart { height: 240px; background: #000; display: none; }
+.caret {
+display: inline-block;
+width: 0;
+height: 0;
+margin-left: 2px;
+vertical-align: middle;
+border-top: 4px solid;
+border-right: 4px solid transparent;
+border-left: 4px solid transparent;
+}
 /* 我的模型 */
 .u-modlezhus { height: 200px; line-height: 200px; font-size: 12px; text-align: center; }
 .u-line2 { border-top: 1px dashed #848484; padding-top: 10px; }

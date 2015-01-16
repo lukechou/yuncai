@@ -83,10 +83,15 @@ textarea { word-wrap: break-word; resize: none; }
 .btn-clean { padding: 0; width: 70px; height: 26px; line-height: 26px; }
 .btn-bind { background: #f13c38; color: #fff; padding: 6px 20px; }
 .btn-bind:hover, .btn-bind:focus { color: #fff; }
-
 /*弹出框 按钮组*/
-.btns { width: 210px; margin: auto; }
-.btns .btn { width: 90px; margin: 0 5px; }
+.m-btns { width: 210px; margin: auto; }
+.m-btns>.btn { width: 90px; margin: 0 5px; }
+
+.m-one-btn .btn {
+padding: 5px 35px;
+color: #fff;
+background-color: #f13c38;
+}
 /* Chose Ball Module */
 .m-num { color: #848484; }
 .m-num-tips { font-size: 12px; }

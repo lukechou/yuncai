@@ -272,7 +272,9 @@ COMMON.onSubmitInit = function(params, vote) {
               vote.callback();
             });
           } else {
-            APP.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+            APP.showTips({
+              html:'<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+            });
           }
         } else {
           APP.handRetCode(D.retCode, D.retMsg);

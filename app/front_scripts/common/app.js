@@ -117,15 +117,6 @@ define(['jquery'], function($) {
     };
 
     /**
-     * 获取通用弹出框 有确定按钮
-     * @param  {String} h 弹出框HTML
-     * @return {String}   弹出框HTML
-     */
-    app.prototype.getConfirmHtml = function(h) {
-      return '<div class="tipbox"><p>' + h + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
-    };
-
-    /**
      * HandRetCode for Ajax
      * @param  {retCode} retCode Ajax Respone Status
      * @param  {retMsg} retMsg  Ajaxa Respone Msg
@@ -140,7 +131,7 @@ define(['jquery'], function($) {
           break;
         case 120001:
           _this.showTips({
-            html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>'
+            html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
           });
           break;
         default:
@@ -196,8 +187,8 @@ define(['jquery'], function($) {
               if (o.enoughMoney) o.enoughMoney();
             } else {
               _this.showTips({
-                html:'<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>',
-                title:'余额不足'
+                html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>',
+                title: '余额不足'
               });
             }
             if (o.always) o.always();
@@ -228,10 +219,13 @@ define(['jquery'], function($) {
 
         switch (type) {
           case 1:
-            html += '<p class="last"><button class="btn modal-sure-btn" id="j-reload">确定</button></p>';
+            html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-reload">确定</button></div>';
+            break;
+          case 2:
+            html += '<div class="m-btns"><button class="btn btn-danger" id="j-reload">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
             break;
           default:
-            html += '<p class="last"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></p>';
+            html += '<div class="m-onebtn"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></div>';
             break;
         }
       } else {

@@ -23,19 +23,19 @@ $(function() {
       if (money != pay.max) {
         money = pay.max;
         pay.moneyEl.val(pay.max);
-        APP.showTips(APP.getConfirmHtml('账户余额小于10元，提款需一次性提清'));
+        APP.showTips('账户余额小于10元，提款需一次性提清');
         return;
       }
     }
     if (pay.max >= pay.min) {
       if (money < pay.min) {
         if (money != pay.max) {
-          APP.showTips(APP.getConfirmHtml('每次提款金额需大于等于' + pay.min + '元!'));
+          APP.showTips('每次提款金额需大于等于' + pay.min + '元!');
           return;
         }
       }
       if (money > pay.max) {
-        APP.showTips(APP.getConfirmHtml('超出最大可提取金额'));
+        APP.showTips('超出最大可提取金额');
         if (pay.max > pay.less) {
           pay.moneyEl.val(pay.less);
         } else {
@@ -44,14 +44,14 @@ $(function() {
         return;
       }
       if (money > pay.less) {
-        APP.showTips(APP.getConfirmHtml('提现金额每笔不可超过50000元'));
+        APP.showTips('提现金额每笔不可超过50000元');
         pay.moneyEl.val(pay.less);
         return;
       }
     }
 
     if (isNaN(money) || money == 0) {
-      APP.showTips(APP.getConfirmHtml('请先输入正确金额'));
+      APP.showTips('请先输入正确金额');
       pay.moneyEl.val(10);
       return;
     } else {
@@ -136,7 +136,7 @@ $(function() {
       })
       .done(function(D) {
         if (D.retCode == 100000) {
-          APP.showTips(APP.getConfirmHtml(D.retMsg));
+          APP.showTips(D.retMsg);
           _this.parents('tr').find('.j-status').html('提款取消');
           _this.remove();
           APP.updateUserMoney();

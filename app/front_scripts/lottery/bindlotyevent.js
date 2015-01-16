@@ -121,12 +121,12 @@ $(function() {
       eGroup = p.find('.ball-group .active');
 
     if (parseInt(total) > 20000) {
-      APP.showTips(APP.getConfirmHtml(tips[2]));
+      APP.showTips(tips[2]);
       return;
     }
 
     if (Config.box.find('.br-zhu-item').length >= Config.maxHang) {
-      APP.showTips(APP.getConfirmHtml('您的投注号码多于100行，请返回重新选择'));
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
       return;
     }
 
@@ -148,13 +148,13 @@ $(function() {
           Config.box.find('.br-zhu-l').append(html);
           COMMON.checkBallGroup($(this));
         } else {
-          APP.showTips(APP.getConfirmHtml(tips[1]));
+          APP.showTips(tips[1]);
         }
       } else {
         if (eGroup.length > 0) {
-          APP.showTips(APP.getConfirmHtml(tips[1]));
+          APP.showTips(tips[1]);
         } else {
-          APP.showTips(APP.getConfirmHtml(tips[0]));
+          APP.showTips(tips[0]);
         }
       }
     }
@@ -179,10 +179,10 @@ $(function() {
           $(this).attr('data-add', 1);
           $(this).find('span').html('添加到投注列表');
         } else {
-          APP.showTips(APP.getConfirmHtml(tips[1]));
+          APP.showTips(tips[1]);
         }
       } else {
-        APP.showTips(APP.getConfirmHtml(tips[0]));
+        APP.showTips(tips[0]);
       }
     }
 
@@ -276,18 +276,18 @@ $(function() {
             $(this).removeClass('active');
             COMMON.checkBallGroup($(this));
           } else {
-            APP.showTips(APP.getConfirmHtml('最多只能选择' + SEEDS[Config.lotyName].redMax + '个红球'));
+            APP.showTips('最多只能选择' + SEEDS[Config.lotyName].redMax + '个红球');
             COMMON.checkBallGroup($(this));
           }
         } else {
           $(this).toggleClass('active');
           COMMON.checkBallGroup($(this));
           if (redGroup.find('.active').length == SEEDS[Config.lotyName].redMax) {
-            APP.showTips(APP.getConfirmHtml('已经达到最大投注个数'));
+            APP.showTips('已经达到最大投注个数');
           }
         }
       } else {
-        APP.showTips(APP.getConfirmHtml('最多只能选择' + SEEDS[Config.lotyName].redMax + '个红球'));
+        APP.showTips('最多只能选择' + SEEDS[Config.lotyName].redMax + '个红球');
       }
 
     } else {
@@ -331,7 +331,7 @@ $(function() {
       box.find('.br-zhu-l').append(html);
       COMMON.updateTotalZhu($(this));
     } else {
-      APP.showTips(APP.getConfirmHtml('您的投注号码多于100行，请返回重新选择'));
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
       return;
     }
 
@@ -367,7 +367,7 @@ $(function() {
         if (len == max && $(this).hasClass('active')) {
           $(this).toggleClass('active');
         } else {
-          APP.showTips(APP.getConfirmHtml('最多只能有' + max + '个胆码'));
+          APP.showTips('最多只能有' + max + '个胆码');
         }
       }
     } else {
@@ -378,7 +378,7 @@ $(function() {
         if (len == tuoMax && $(this).hasClass('active')) {
           $(this).toggleClass('active');
         } else {
-          APP.showTips(APP.getConfirmHtml('最多只能有' + tuoMax + '个拖码'));
+          APP.showTips('最多只能有' + tuoMax + '个拖码');
         }
       }
     }
@@ -434,21 +434,21 @@ $(function() {
     var money = DLT.getZhuiJiaStatus();
 
     if (zhu.total * 2 > 20000) {
-      APP.showTips(APP.getConfirmHtml(tips[2]));
+      APP.showTips(tips[2]);
       return;
     }
     if (Config.box.find('.br-zhu-item').length >= Config.maxHang) {
-      APP.showTips(APP.getConfirmHtml('您的投注号码多于100行，请返回重新选择'));
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
       return;
     }
 
     // is Select Ball Enough
     if (zhu.code === -1) {
-      APP.showTips(APP.getConfirmHtml(tips[0]));
+      APP.showTips(tips[0]);
       return;
     }
     if (zhu.code === -2) {
-      APP.showTips(APP.getConfirmHtml(tips[1]));
+      APP.showTips(tips[1]);
       return;
     }
 
@@ -540,7 +540,7 @@ $(function() {
         if (len == max && $(this).hasClass('active')) {
           $(this).toggleClass('active');
         } else {
-          if (lotyName == 'dlt') APP.showTips(APP.getConfirmHtml('最多只能有1个胆码'));
+          if (lotyName == 'dlt') APP.showTips('最多只能有1个胆码');
         }
       }
     } else {
@@ -632,7 +632,7 @@ $(function() {
     var addZhuLen = 0;
 
     if (Config.box.find('.br-zhu-item').length >= Config.maxHang) {
-      APP.showTips(APP.getConfirmHtml('您的投注号码多于100行，请返回重新选择'));
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
       return;
     }
 
@@ -640,16 +640,16 @@ $(function() {
       formatZhus = MANUAL.sdFormat(str);
       addZhuLen = formatZhus.good.length;
       if ((boxZhuLen + addZhuLen) > Config.maxHang) {
-        APP.showTips(APP.getConfirmHtml('您的投注号码多于100行，请返回重新选择'));
+        APP.showTips('您的投注号码多于100行，请返回重新选择');
         return;
       }
     } else {
-      APP.showTips(APP.getConfirmHtml(tips[1]));
+      APP.showTips(tips[1]);
       return;
     }
 
     if (formatZhus && formatZhus.code == 0) {
-      APP.showTips(APP.getConfirmHtml(tips[0]));
+      APP.showTips(tips[0]);
     }
 
     for (var i = 0; i < formatZhus.good.length; i++) {
@@ -876,7 +876,7 @@ $(function() {
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
     vote.callback = function() {
       if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
-        APP.showTips(APP.getConfirmHtml('ERROR：认购金额和保底金额超过购买金额！'));
+        APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
       }
       $.ajax({
@@ -951,7 +951,7 @@ $(function() {
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
     vote.callback = function() {
       if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
-        APP.showTips(APP.getConfirmHtml('ERROR：认购金额和保底金额超过购买金额！'));
+        APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
       }
       $.ajax({
@@ -1010,7 +1010,7 @@ $(function() {
     vote.callback = function() {
 
       if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
-        APP.showTips(APP.getConfirmHtml('ERROR：认购金额和保底金额超过购买金额！'));
+        APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
       }
 

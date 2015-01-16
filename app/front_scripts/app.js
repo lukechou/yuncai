@@ -26,10 +26,14 @@ APP.handRetCode = function(retCode, retMsg) {
       this.showLoginBox();
       break;
     case 120001:
-      this.showTips('<div class="tipbox"><p>' + retMsg + ',购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
+      this.showTips({
+        html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+      });
       break;
     default:
-      this.showTips('<div class="tipbox"><p>' + retMsg + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>');
+      this.showTips({
+        text: retMsg
+      });
       break;
   }
 };
@@ -84,10 +88,6 @@ APP.regStr = function(s) {
   return rs;
 };
 
-APP.getConfirmHtml = function(h) {
-  return '<div class="tipbox"><p>' + h + '</p><p class="last"><button class="btn btn-danger" data-dismiss="modal">确定</button></p></div>';
-};
-
 APP.bindLoginEvent = function() {
 
   $('#user-login').on('click', function(event) {
@@ -110,14 +110,14 @@ APP.bindLoginEvent = function() {
           if (data.retCode == 100000) {
             window.location.href = data.retData.redirectURL;
           } else {
-            APP.showTips(APP.getConfirmHtml(data.retMsg));
+            APP.showTips(data.retMsg);
           }
         })
         .fail(function() {
           APP.showTips('Server has some error!');
         });
     } else {
-      APP.showTips(APP.getConfirmHtml('帐号密码不能为空'));
+      APP.showTips('帐号密码不能为空');
       return;
     }
 
@@ -133,10 +133,10 @@ APP.createShowTipsHTML = function(obj) {
 
     switch (type) {
       case 1:
-        html += '<p class="last"><button class="btn modal-sure-btn" id="j-reload">确定</button></p>';
+        html += '<div class="m-one-btn"><button class="btn modal-sure-btn" id="j-reload">确定</button></div>';
         break;
       default:
-        html += '<p class="last"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></p>';
+        html += '<div class="m-one-btn"><button class="btn modal-sure-btn" data-dismiss="modal">确定</button></div>';
         break;
     }
   } else {
@@ -232,8 +232,8 @@ APP.onSubmitConfirm = function(callback, data, html) {
             callback(data);
           });
         } else {
-          _this.showTips({
-            html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>',
+          APP.showTips({
+            html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>',
             title: '余额不足'
           });
         }
@@ -245,10 +245,11 @@ APP.onSubmitConfirm = function(callback, data, html) {
 }
 
 APP.onServiceFail = function() {
-  APP.showTips(APP.getConfirmHtml('服务器繁忙,请稍后再试!'));
+  APP.showTips('服务器繁忙,请稍后再试!');
 };
 
 APP.submitHemai = function(obj) {
+
   $.ajax({
       url: obj.joinURI,
       type: 'get',
@@ -264,7 +265,15 @@ APP.submitHemai = function(obj) {
           obj.onSuccess();
         }
         APP.updateUserMoney();
-        APP.showTips('<div class="tipbox"><p>合买成功!</p><p class="last"><button class="btn btn-danger" id="hemaiRefresh">确定</button></p></div>');
+        APP.showTips({
+          text: '合买成功!',
+          type: 1,
+          callback: function() {
+            $('#j-reload').on('click', function(event) {
+              window.location.reload();
+            });
+          }
+        });
         $('body').on('click', '.close', function(event) {
           window.history.go(0);
         });
@@ -275,6 +284,7 @@ APP.submitHemai = function(obj) {
     .fail(function() {
       APP.onServiceFail();
     });
+
 };
 
 ////////////////////////////////////////////////////////////////////////////

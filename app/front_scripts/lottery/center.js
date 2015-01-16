@@ -51,15 +51,15 @@ $(function() {
   function checkByNum(num, max) {
     var c = 1;
     if (_.isNaN(num)) {
-      APP.showTips(APP.getConfirmHtml('请输入整数购买份数'));
+      APP.showTips('请输入整数购买份数');
       c = 0;
     }
     if (num <= 0 || APP.isDecimal(num)) {
-      APP.showTips(APP.getConfirmHtml('请输入整数购买份数'));
+      APP.showTips('请输入整数购买份数');
       c = 0;
     }
     if (num > max) {
-      APP.showTips(APP.getConfirmHtml('超过最大可购买份额'));
+      APP.showTips('超过最大可购买份额');
       c = 0;
     }
     return c;

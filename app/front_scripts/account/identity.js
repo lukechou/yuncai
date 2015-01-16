@@ -117,7 +117,7 @@ $(function() {
     var cardInfo = getIdCardInfo(identityCardNo);
 
     if (!isUserName(username)) {
-      APP.showTips(APP.getConfirmHtml('请输入正确的姓名'));
+      APP.showTips('请输入正确的姓名');
       return;
     }
 
@@ -126,21 +126,21 @@ $(function() {
       var d2 = new Date(cardInfo.year + '-' + cardInfo.month + '-' + cardInfo.day).getTime();
       var age = (d1 - d2) / 1000 / 31558150;
       if (age < 18) {
-        APP.showTips(APP.getConfirmHtml('未满18岁不能注册！'));
+        APP.showTips('未满18岁不能注册！');
         return;
       }
 
     } else {
-      APP.showTips(APP.getConfirmHtml('输入的身份证不合法,请检查后再输入！'));
+      APP.showTips('输入的身份证不合法,请检查后再输入！');
       return;
     }
 
     if (username == '' || identityCardNo == '' || confirmIdentityCardNo == '' || password == '') {
-      APP.showTips(APP.getConfirmHtml('请先填写完整信息'));
+      APP.showTips('请先填写完整信息');
       return;
     }
     if (identityCardNo != confirmIdentityCardNo) {
-      APP.showTips(APP.getConfirmHtml('两次输入身份证号码不一致！'));
+      APP.showTips('两次输入身份证号码不一致！');
       return;
     }
 

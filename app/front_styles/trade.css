@@ -10,7 +10,7 @@
 .br-hd-title { font-size: 16px; margin: 0; }
 .br-hd-title>b { font-size: 22px; }
 .br-hd-group { position: absolute; bottom: 0; left: 109px; }
-.br-hd-group>a { background: #f5f5f5; padding: 8px 25px; color: #3d3d3d; font-family: 'Microsoft Yahei'; font-size: 16px; display: inline-block; height: 36px; }
+.br-hd-group>a { background: #f5f5f5; padding: 8px 25px; color: #3d3d3d; font-family: 'Microsoft Yahei'; font-size: 16px; height: 36px; float: left; }
 .br-hd-group>a.active, .br-hd-group>a:hover { text-decoration: none; background: #f13c38; color: #fff; }
 .br-hd-time, .br-hd-qi { position: absolute; right: 10px; font-size: 12px; }
 .br-hd-qi { top: 35px; }

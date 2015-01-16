@@ -79,9 +79,9 @@ var G_MODIFY_CODE_OBJ = {
 };
 
 function init() {
-	G_BUY.init();
-	G_CHOOSE.init();
-}
+		G_BUY.init();
+		G_CHOOSE.init();
+	}
 	// myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
 $(document).ready(function() {
 	init();
@@ -208,14 +208,16 @@ $(document).ready(function() {
 				if (!(myriabCodes.length > 0 && thousandCodes.length > 0 && hundredCodes.length > 0 && tenCodes.length > 0 && digitalCodes.length > 0)) {
 					return;
 				}
-				for (var key in G_BUY.codes) {
-					if (G_BUY.codes[key].key == G_MODIFY_CODE_OBJ.codeKey) {
-						G_BUY.codes[key].value = G_CHOOSE.codes[0];
-					}
-				}
+
 				if (G_CHOOSE.money > PL5.maxOneBetMoney) {
 					APP.showTips('您好，单个投注的金额应小于' + PL5.maxOneBetMoney + '元，请返回重新选择');
 					return false;
+				} else {
+					for (var key in G_BUY.codes) {
+						if (G_BUY.codes[key].key == G_MODIFY_CODE_OBJ.codeKey) {
+							G_BUY.codes[key].value = G_CHOOSE.codes[0];
+						}
+					}
 				}
 				var html = '<div class="br-zhu-item clearfix" databit="' + G_MODIFY_CODE_OBJ.codeKey + '"><b>[常规投注]</b><div class="list"><span data-c="0">' + G_CHOOSE.codes[0][0].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][1].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][2].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][3].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][4].join('') + '</span></div><div class="pull-right"><b><i class="money" data-m="1">' + G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
 				G_MODIFY_CODE_OBJ.codeObj.replaceWith(html);
@@ -244,6 +246,7 @@ $(document).ready(function() {
 			$('#choose_to_buy').removeClass('active');
 			$('#choose_to_buy').attr('disabled', 'disabled');
 		}
+
 	});
 
 	/**
@@ -416,7 +419,7 @@ $(document).ready(function() {
 	$('#buy-submit').on('click', function(event) {
 		event.preventDefault();
 		/* Act on the event */
-		if($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false){
+		if ($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false) {
 			APP.showTips("请先阅读并同意《委托投注规则》后才能继续");
 			return;
 		}
@@ -426,7 +429,7 @@ $(document).ready(function() {
 	$('#buy_button_proxy').on('click', function(event) {
 		event.preventDefault();
 		/* Act on the event */
-		if($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false){
+		if ($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false) {
 			APP.showTips("请先阅读并同意《委托投注规则》后才能继续");
 			return;
 		}
@@ -951,6 +954,7 @@ $(document).ready(function() {
 	//////////////////////////function/////////////////////////////////////////
 
 	function updateCreatePartProjectParame() {
+
 		switch (G_BUY.buyType) {
 			case 1: // 自购
 				break;
@@ -992,6 +996,7 @@ $(document).ready(function() {
 				}
 				break;
 		}
+
 	}
 
 	/**
@@ -1029,6 +1034,7 @@ $(document).ready(function() {
 	 * 计算已选中的投注号码
 	 */
 	function calculateBuyCodes() {
+
 		var zhushu = 0;
 		for (var i = G_BUY.codes.length - 1; i >= 0; i--) {
 			zhushu += PL5.getZhiXuanZhushu(G_BUY.codes[i].value[0], G_BUY.codes[i].value[1], G_BUY.codes[i].value[2], G_BUY.codes[i].value[3], G_BUY.codes[i].value[4]);
@@ -1056,6 +1062,7 @@ $(document).ready(function() {
 			$('#track_issue_num').html(trackIssueSize);
 			$('#track_money').html(G_BUY.money);
 		}
+
 		if (G_BUY.money > 0) {
 			$('#buy-submit').removeAttr("disabled");
 		} else {
@@ -1122,6 +1129,7 @@ $(document).ready(function() {
 				}
 			});
 		}
+
 		calculateChooseCodes();
 	}
 

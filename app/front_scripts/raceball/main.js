@@ -85,11 +85,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   var checkParams = function() {
     if (_.uniq(BET.match, 'matchcode').length > 8) {
-      APP.showTips(APP.getConfirmHtml('您好，投注场次不得超过8场哦'))
+      APP.showTips('您好，投注场次不得超过8场哦');
       return false;
     }
     if (!BET.isAgreen) {
-      APP.showTips(APP.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
+      APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
       return false;
     }
     if (!BET.zhushu) {

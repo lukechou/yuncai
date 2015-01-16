@@ -28,24 +28,24 @@ $(function() {
     var results = true;
 
     if (!buy.buyTotal.val()) {
-      APP.showTips(APP.getConfirmHtml('购买份数不能为空！'));
+      APP.showTips('购买份数不能为空！');
       return false;
     }
 
     if (isNaN(v)) {
       buy.buyTotal.val(HeMai.max);
       updateBuyMoneyTotal();
-      APP.showTips(APP.getConfirmHtml('请输入购买份数'));
+      APP.showTips('请输入购买份数');
       return false;
     }
 
     if (APP.isDecimal(buy.buyTotal.val())) {
-      APP.showTips(APP.getConfirmHtml('购买份数不能为小数'));
+      APP.showTips('购买份数不能为小数');
       return false;
     }
 
     if (v > HeMai.max) {
-      APP.showTips(APP.getConfirmHtml('现在最多可以购买' + HeMai.max + '份啊！'));
+      APP.showTips('现在最多可以购买' + HeMai.max + '份啊！');
       return false;
     }
     return results;
@@ -97,7 +97,7 @@ $(function() {
     var date = '';
 
     if (!isAgreen) {
-      APP.showTips(APP.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
+      APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
     } else {
       if (checkBuyTotal()) {
 

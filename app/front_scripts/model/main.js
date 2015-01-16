@@ -94,6 +94,12 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
   });
 
+  $('body').on('click', function(event) {
+    if ($('.j-sort-btn').hasClass('on')) {
+      $('.j-sort-btn').removeClass('on');
+      $('.j-sort-box').addClass('hide');
+    }
+  });
   /**
    * Delete 填充表单
    * @return null
@@ -167,7 +173,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     APP.showTips({
       title: '删除确认',
       text: t,
-      type: 1,
+      type: 2,
       callback: function() {
         $('#j-reload').unbind('click');
         $('#j-reload').on('click', function(event) {
@@ -207,9 +213,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
    * 切换我的筛选框
    * @return null
    */
-
+  $('.j-sort-box').on('click', function(event) {
+    event.stopPropagation();
+  });
   $('.j-sort-btn').on('click', function(event) {
-
+    event.stopPropagation();
     $('.j-sort-box').toggleClass('hide');
     $(this).toggleClass('on');
 
@@ -226,7 +234,9 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
         .done(function(D) {
           if (D.retCode === 100000) {
             hadQuerySort = true; //标记为已请求
-            saveData = D.retData[0];
+            if(D.retData[0]){
+              saveData = D.retData[0];
+            }
             createShaiLiHtml();
           } else {
             APP.handRetCode(D.retCode, D.retMsg);
@@ -273,9 +283,13 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     params.thisOD1 = _.escape($.trim($('.j-dqyl-1').val()));
     params.thisOD2 = _.escape($.trim($('.j-dqyl-2').val()));
 
-    if (saveData[params.search_name]) {
-      APP.showTips('您已经保存过条件为备注名：' + params.search_name);
-      return;
+    var arr = _.keys(saveData);
+
+    if (_.indexOf(arr, params.search_name) >= 0) {
+      if (saveData[params.search_name]) {
+        APP.showTips('您已经保存过条件为备注名：' + params.search_name);
+        return;
+      }
     }
 
     if (params.search_name == '') {
@@ -359,19 +373,19 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     var order = query.order || false;
     var type = query.type || '';
     var newType = '';
-    var newUrl =null;
+    var newUrl = null;
 
     if (order) {
       $('.result-table thead th a').each(function(index, el) {
 
         var href = $(this).attr('href');
         if (href.indexOf(order) >= 0) {
-          if(type){
-            newType = (type==='desc')?'asc':'desc';
-          }else{
+          if (type) {
+            newType = (type === 'desc') ? 'asc' : 'desc';
+          } else {
             newType = 'desc';
           }
-          newUrl = href.replace(type,newType);
+          newUrl = href.replace(type, newType);
           i = index;
 
           $(this).attr('href', newUrl);
@@ -380,9 +394,9 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
     }
     iconList.eq(i).removeClass('icon-m4')
-    if(type==='desc'){
+    if (type === 'desc') {
       iconList.eq(i).addClass('icon-m5')
-    }else{
+    } else {
       iconList.eq(i).addClass('icon-m6')
     }
 
