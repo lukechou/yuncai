@@ -79,14 +79,15 @@ var G_MODIFY_CODE_OBJ = {
 };
 
 function init() {
-		G_BUY.init();
-		G_CHOOSE.init();
-	}
+	G_BUY.init();
+	G_CHOOSE.init();
+}
 	// myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
 $(document).ready(function() {
 	init();
 	$('#choose_to_buy').removeClass('active');
 	$('#choose_to_buy').attr('disabled', 'disabled');
+	$('#buy-submit').attr("disabled", "disabled");
 	$(".j-num-group").on('click', 'a', function(event) {
 		event.preventDefault();
 		/* Act on the event */
@@ -415,12 +416,20 @@ $(document).ready(function() {
 	$('#buy-submit').on('click', function(event) {
 		event.preventDefault();
 		/* Act on the event */
+		if($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false){
+			APP.showTips("请先阅读并同意《委托投注规则》后才能继续");
+			return;
+		}
 		buy();
 	});
 
 	$('#buy_button_proxy').on('click', function(event) {
 		event.preventDefault();
 		/* Act on the event */
+		if($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false){
+			APP.showTips("请先阅读并同意《委托投注规则》后才能继续");
+			return;
+		}
 		buy();
 	});
 
@@ -654,7 +663,7 @@ $(document).ready(function() {
 		/* Act on the event */
 		var projectDesc = $(this).val();
 		var projectDescLength = projectDesc.length;
-		G_BUY.partnerBuy.projectDesc = projectDesc;
+		G_BUY.partnerBuy.projectDescription = projectDesc;
 		var max = 200;
 		if (projectDescLength >= max) {
 			projectDescLength = max;
@@ -668,7 +677,7 @@ $(document).ready(function() {
 		/* Act on the event */
 		var projectDesc = $(this).val();
 		var projectDescLength = projectDesc.length;
-		G_BUY.partnerBuy.projectDesc = projectDesc;
+		G_BUY.partnerBuy.projectDescription = projectDesc;
 		var max = 200;
 		if (projectDescLength >= max) {
 			projectDescLength = max;
@@ -714,6 +723,10 @@ $(document).ready(function() {
 	$('#sd_number').on('blur', function(event) {
 		var iptCodes = $(this).val().replace(/，/ig, ',').split("\n");
 		if (iptCodes == '') {
+			$('#choose_zhushu').html(0);
+			$('#choose_money').html(0);
+			$('#choose_to_buy').removeClass('active');
+			$('#choose_to_buy').attr('disabled', 'disabled');
 			return;
 		}
 		if (iptCodes.length > PL5.maxBuyCodeLength) {
@@ -762,7 +775,7 @@ $(document).ready(function() {
 		// G_BUY.init();
 		clean4CutBuyType();
 		calculateBuyCodes();
-
+		$('#buy-submit').attr("disabled", "disabled");
 		switch (pagetype) {
 			case 0:
 				$("li[name='auto_produce']").show();

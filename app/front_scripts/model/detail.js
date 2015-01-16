@@ -233,9 +233,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
   function updateStopTime() {
     var now = $.now();
-    var s = $('#j-stop-time').val().replace("年", "-").replace("月", "-")
-      .replace("日", "").replace(/-/g, "/").split(/\/|\:|\ /);
-    var stop = new Date(s[0], s[1], s[2], s[3], s[4]).getTime();
+    var stop = new Date($('#j-stop-time').val()*1000).getTime();
     var time = (stop - now) / 1000;
     var html = '';
     var h = '';
@@ -249,6 +247,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
       html = '本模型离当前投注截止还剩<span id="j-hour">' + h + '</span>小时<span id="j-minute">' + m + '</span>分<span id="j-second">' + s + '</span>秒';
     } else {
       html = '本模型当期已截止投注';
+      $('#j-stop-td').html('已截止');
       clearInterval(x);
       $('#j-ft-main').hide();
       $('#j-stop-box').removeClass('hide');

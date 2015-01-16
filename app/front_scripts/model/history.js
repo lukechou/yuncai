@@ -50,26 +50,10 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function($, APP, _) {
     window.location.href = url;
 
   });
-  /**
-   * Create Td HTML
-   * @param  {Array} arr
-   * @return {String}
-   */
-  function craeteTdHTML(arr) {
-      var html = '';
-      for (var i = arr.length - 1; i >= 0; i--) {
-        arr[i] = '<span>' + arr[i] + '</span>';
-      };
-      html = arr.join('');
-      return html;
-    }
-    //查看详情
-  $('.j-show-data').on('click', function(event) {
-    event.preventDefault();
-    var _this = $(this);
-    var TR = _this.parents('.j-stretch-t');
-    var no = TR.find('.j-order_no').val();
 
+
+
+  function getDetail(no, TR) {
     if (no !== $('#j-data .h-look').attr('data-no')) {
       $.ajax({
           url: '/lottery/trade/view-detail',
@@ -82,7 +66,7 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function($, APP, _) {
         .done(function(data) {
           if (data.retCode == 100000) {
             var dataItem = data.retData;
-            var html = '<tr class="h-look" data-no="'+no+'"><td  colspan="5"><div class="look-box"><table class="table m-mn-table m-table-border m-table-middle"><thead><tr><th>投注时间</th><th>赛事编号</th><th>对阵</th><th>赛果</th><th>投注内容</th><th>投注注数</th><th>投注金额（元）</th><th>奖金（元）</th><th>状态</th></tr></thead><tbody><tr>';
+            var html = '<tr class="h-look" data-no="' + no + '"><td  colspan="5"><div class="look-box"><table class="table m-mn-table m-table-border m-table-middle"><thead><tr><th>投注时间</th><th>赛事编号</th><th>对阵</th><th>赛果</th><th>投注内容</th><th>投注注数</th><th>投注金额（元）</th><th>奖金（元）</th><th>状态</th></tr></thead><tbody><tr>';
 
             html += '<td>' + dataItem.tzTime + '</td>';
             html += '<td>' + craeteTdHTML(dataItem.ssbh) + '</td>';
@@ -104,6 +88,38 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function($, APP, _) {
           APP.onServiceFail();
         });
     }
+  }
+
+
+  /**
+   * Create Td HTML
+   * @param  {Array} arr
+   * @return {String}
+   */
+  function craeteTdHTML(arr) {
+    var html = '';
+    for (var i = arr.length - 1; i >= 0; i--) {
+      arr[i] = '<span>' + arr[i] + '</span>';
+    };
+    html = arr.join('');
+    return html;
+  }
+
+
+  //查看详情
+  $('.j-show-data').on('click', function(event) {
+
+    event.preventDefault();
+    var _this = $(this);
+    var TR = _this.parents('.j-stretch-t');
+    var no = TR.find('.j-order_no').val();
+
+    if (!APP.checkUserLoginStatus()) {
+      APP.showLoginBox();
+    } else {
+      getDetail(no, TR)
+    }
+
   });
 
 });

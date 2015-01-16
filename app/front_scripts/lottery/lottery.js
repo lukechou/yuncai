@@ -234,18 +234,18 @@ COMMON.checkParamsStatus = function(p, v) {
   var c = 1;
 
   if (p.zhushu == 0) {
-    APP.showTips(APP.getConfirmHtml('请至少选择1注号码投注'));
+    APP.showTips('请至少选择1注号码投注');
     c = 0;
   }
 
   if (!v.isCheck) {
-    APP.showTips(APP.getConfirmHtml('请先阅读并同意《委托投注规则》后才能继续'));
+    APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
     c = 0;
   }
 
   if (p.zhuihaoqihao) {
     if (p.zhuihaoqihao == 0) {
-      APP.showTips(APP.getConfirmHtml('请至少选择1注号码投注'));
+      APP.showTips('请至少选择1注号码投注');
       c = 0;
     }
   }

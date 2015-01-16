@@ -33,6 +33,29 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
   var hadQuerySort = false; //是否已请求筛选
 
   /**
+   * 筛选条件输入限制
+   */
+  $('.j-less').on('keyup paste', function(event) {
+    event.preventDefault();
+    $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+  });
+
+  $('.j-bao').on('keyup paste', function(event) {
+    event.preventDefault();
+    var t = $(this);
+    t.val(t.val().replace(/[^0-9.]/g, ''));
+    var v = t.val();
+    if (v < 2) {
+      t.val(2)
+    }
+    if (v > 5) {
+      t.val(5)
+    }
+  });
+
+
+
+  /**
    * 提交检测
    */
   $('#detail-form').submit(function() {
@@ -136,34 +159,47 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
    * @return null
    */
   $('#j-save-wrap').on('click', '.j-save-del', function(event) {
+
     var _this = $(this);
     var id = $(this).attr('data-id');
-    $.ajax({
-        url: '/lottery/model/cancel-search',
-        type: 'post',
-        dataType: 'json',
-        data: {
-          search_id: id
-        },
-      })
-      .done(function(D) {
-        if (D.retCode === 100000) {
-          _this.parents('li').remove();
-          for (var prop in saveData) {
-            if (saveData.hasOwnProperty(prop) && saveData[prop]) {
-              if (saveData[prop]['search_id'] == id) saveData[prop] = null;
-            }
-          }
-          APP.showTips({
-            text: '恭喜你成功删除该筛选条件'
-          });
-        } else {
-          APP.handRetCode(D.retCode, D.retMsg);
-        }
-      })
-      .fail(function() {
-        APP.onServiceFail();
-      });
+    var t = '确定删除此筛选条件？';
+
+    APP.showTips({
+      title: '删除确认',
+      text: t,
+      type: 1,
+      callback: function() {
+        $('#j-reload').unbind('click');
+        $('#j-reload').on('click', function(event) {
+          $.ajax({
+              url: '/lottery/model/cancel-search',
+              type: 'post',
+              dataType: 'json',
+              data: {
+                search_id: id
+              },
+            })
+            .done(function(D) {
+              if (D.retCode === 100000) {
+                _this.parents('li').remove();
+                for (var prop in saveData) {
+                  if (saveData.hasOwnProperty(prop) && saveData[prop]) {
+                    if (saveData[prop]['search_id'] == id) saveData[prop] = null;
+                  }
+                }
+                APP.showTips({
+                  text: '恭喜你成功删除该筛选条件'
+                });
+              } else {
+                APP.handRetCode(D.retCode, D.retMsg);
+              }
+            })
+            .fail(function() {
+              APP.onServiceFail();
+            });
+        });
+      }
+    });
 
   });
 
@@ -211,7 +247,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     for (k in saveData) {
       k = _.escape($.trim(k));
       if (saveData[k]) {
-        saveWrapHtml += '<li><a href="javascrip:;" class="j-save-name save-name show" data-name="' + k + '" title="' + k + '">' + k + '</a> <a href="javascrip:;" class="j-save-del i-close-gray" data-id="' + saveData[k].search_id + '"></a></li>'
+        saveWrapHtml += '<li><a href="javascrip:;" class="j-save-name save-name show" data-name="' + k + '" title="' + k + '">' + k + '</a> <a href="javascript:;" class="j-save-del i-close-gray" data-id="' + saveData[k].search_id + '"></a></li>'
       }
     }
     $('#j-save-wrap').html(saveWrapHtml);
@@ -236,6 +272,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     params.lastOD2 = _.escape($.trim($('.j-slyl-2').val()));
     params.thisOD1 = _.escape($.trim($('.j-dqyl-1').val()));
     params.thisOD2 = _.escape($.trim($('.j-dqyl-2').val()));
+
+    if (saveData[params.search_name]) {
+      APP.showTips('您已经保存过条件为备注名：' + params.search_name);
+      return;
+    }
 
     if (params.search_name == '') {
       APP.showTips({
@@ -311,8 +352,43 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
   });
 
-  function init() {
+  function setTableThLink() {
+    var query = APP.parseQueryString();
+    var iconList = $('.result-table thead th .icon');
+    var i = 1;
+    var order = query.order || false;
+    var type = query.type || '';
+    var newType = '';
+    var newUrl =null;
 
+    if (order) {
+      $('.result-table thead th a').each(function(index, el) {
+
+        var href = $(this).attr('href');
+        if (href.indexOf(order) >= 0) {
+          if(type){
+            newType = (type==='desc')?'asc':'desc';
+          }else{
+            newType = 'desc';
+          }
+          newUrl = href.replace(type,newType);
+          i = index;
+
+          $(this).attr('href', newUrl);
+        }
+      });
+
+    }
+    iconList.eq(i).removeClass('icon-m4')
+    if(type==='desc'){
+      iconList.eq(i).addClass('icon-m5')
+    }else{
+      iconList.eq(i).addClass('icon-m6')
+    }
+
+  }
+
+  function modelInit() {
     APP.bindInputPlace();
 
     model.init({
@@ -332,26 +408,30 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
       html: true,
       opacity: 1
     });
+  }
 
-    var query = APP.parseQueryString();
-    var iconList = $('.result-table thead th .icon');
-    var i = 1;
-    var order = query.order || false;
-    if (order) {
-      $('.result-table thead th a').each(function(index, el) {
-        if ($(this).attr('href').indexOf(order) >= 0) {
-          i = index;
-        }
-      });
-    }
-    iconList.eq(i).toggleClass('icon-m4 icon-m5');
-    var d = new Date().getHours();
-    if ($('#j-less-tips').length && d < 11) {
+  function checkMorning() {
+    // 早上无数据提示
+    var page = $('#j-load-page').val();
+    var tip = $('#j-load-tip').val();
+    var issue = $('#j-load-issue').val();
+
+    if (page == 1 && tip == 1) {
       APP.showTips({
         title: '温馨提示',
-        text: '预计今天10：30左右公布150115期的彩票模型数据。'
+        text: '预计今天10：30左右公布' + issue + '期的彩票模型数据。'
       })
     }
   }
+
+  function init() {
+
+    modelInit();
+
+    setTableThLink();
+
+    checkMorning();
+  }
+
   init();
 });
