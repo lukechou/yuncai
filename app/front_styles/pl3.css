@@ -1,17 +1,14 @@
 .pl3 .touz_area_box_2 .red_area {
 	width: 100%;
 }
-
 .pl3 .m-num-title2 > p {
-    font-size: 12px;
-    padding: 0;
-    width: 550px;
+	font-size: 12px;
+	padding: 0;
+	width: 550px;
 }
-
 .pl3 .row-code {
 	margin: 0 auto;
 }
-
 .pl3 .row_num_title {
 	float: left;
 	font-size: 18px;
@@ -19,31 +16,25 @@
 	line-height: 40px;
 	margin: 5px 4px;
 }
-
 .pl3 .row-code  .m-num-group {
 	float: left;
 	width: 480px;
 	margin: 0 0 10px -5px;
 }
-
 .pl3 .row-code .m-num-group>a {
 	height: 40px;
 	width: 40px;
 	font-size: 16px;
 	line-height: 40px;
 }
-
-
 .pl3 .row-code .quick-method {
 	float: left;
 	margin: 0 0 0 16px;
 	width: 86px;
 }
-
 .pl3 .row-code .quick-method span {
-	background:
-		url("http://888pic.gtimg.com/images/trade/ssq/ssq_button_ver3.0.jpg")
-		no-repeat scroll -84px -212px rgba(0, 0, 0, 0);
+	background: url("http://888pic.gtimg.com/images/trade/ssq/ssq_button_ver3.0.jpg")
+	no-repeat scroll -84px -212px rgba(0, 0, 0, 0);
 	cursor: pointer;
 	display: inline-block;
 	float: left;
@@ -53,11 +44,10 @@
 	text-align: center;
 	width: 22px;
 }
-
 .pl3 .br-zhu-item b {
-float: left;
-width: 65px;
-color: #3d3d3d;
-font-weight: normal;
-margin-right: 3px;
+	float: left;
+	width: 65px;
+	color: #3d3d3d;
+	font-weight: normal;
+	margin-right: 3px;
 }

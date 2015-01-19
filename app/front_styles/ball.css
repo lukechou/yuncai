@@ -14,9 +14,6 @@ body { background: #fff; }
 .g-hd-group > a.active, .g-hd-group > a:hover { text-decoration: none; color: #fff; background: #f13c38; }
 .g-hd-time { font-size: 12px; position: absolute; right: 10px; bottom: 8px; color: #848484; }
 .vote-nav { margin-bottom: 15px; }
-.vote-nav > .nav { padding: 6px 0 0 30px; background: #f5f5f5; }
-.vote-nav > .nav > li > a { font-size: 12px; margin: 0; padding: 6px 15px; color: #3d3d3d; border: none; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f5f5f5; }
-.vote-nav > .nav > li.active > a, .vote-nav > .nav > li > a:hover, .vote-nav > .nav > li.active > a:hover, .vote-nav > .nav > li.active > a:focus { border-top: 2px #f13c38 solid; border-right: 1px #c4c4c4 solid; border-bottom: none; border-left: 1px #c4c4c4 solid; border-radius: 0; background: #fff; }
 /* left tips */
 .m-down-tips { margin: 12px auto; border: 1px #dfdfdf solid; border-bottom: none; }
 .m-down-tips > h3 { font-size: 14px; font-weight: bold; margin: 0; padding: 8px 20px; cursor: pointer; border-bottom: 1px #dfdfdf solid; background: #f5f5f5; }
@@ -213,16 +210,7 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .chart-box { position: relative; height: 240px; background: #041226; padding: 0 20px; }
 .his-link { position: absolute; z-index: 95; left: 200px; padding: 12px 0 0; color: #fff; font-size: 12px; text-decoration: underline; }
 .chart { height: 240px; background: #000; display: none; }
-.caret {
-display: inline-block;
-width: 0;
-height: 0;
-margin-left: 2px;
-vertical-align: middle;
-border-top: 4px solid;
-border-right: 4px solid transparent;
-border-left: 4px solid transparent;
-}
+.caret { display: inline-block; width: 0; height: 0; margin-left: 2px; vertical-align: middle; border-top: 4px solid; border-right: 4px solid transparent; border-left: 4px solid transparent; }
 /* 我的模型 */
 .u-modlezhus { height: 200px; line-height: 200px; font-size: 12px; text-align: center; }
 .u-line2 { border-top: 1px dashed #848484; padding-top: 10px; }
