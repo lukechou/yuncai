@@ -358,6 +358,9 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
           chartEl: $('#chart')
         });
         chart.getChartData(id);
+      }else{
+        $(this).removeClass('active');
+        $('#chart-tr').remove();
       }
     }
 

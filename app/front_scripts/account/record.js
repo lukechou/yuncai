@@ -8,57 +8,8 @@ $(function() {
 
     PAGE.onSuccess = function(data) {
       var htmlOutput = '';
-      var detailData = '';
-      var show = '';
-      var dataItem = '';
-
       if (data.retCode == 100000) {
-        var dataSize = data.retData.data.length;
-        var html = "";
-        if (dataSize > 0) {
-          var detailData = data.retData.data;
-
-          for (var i = 0; i < detailData.length; i++) {
-            dataItem = detailData[i];
-            var projectDetailUrl = '';
-            var continueBuy = '';
-            var isZhongJiang = '';
-            projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
-            continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
-
-            switch (obj.type) {
-              case 3:
-                projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
-                if (Number(dataItem.bonusMoney) > 0) {
-                  isZhongJiang = 'fc-3';
-                } else {
-                  isZhongJiang = '';
-                }
-
-                //模型投注记录
-                htmlOutput += '<tr><td>' + dataItem.createTime + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.projectNo + '</td><td>' + dataItem.money + '</td><td class="' + isZhongJiang + '">' + dataItem.bonusMoney + '</td><td class="' + isZhongJiang + '">' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
-                break;
-              case 0:
-                if(dataItem.lotyCNName=='模型'){
-
-                projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
-                }
-                htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
-                break;
-              default:
-                htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
-                break;
-            }
-
-          };
-          // 中奖列表才有汇总功能
-          if (obj.type == '1') {
-            $('#summary_bonus_sum').html(data.retData.summary.bonusSum);
-            $('#summary_bonus_size').html(data.retData.summary.bonusSize);
-          }
-        } else {
-          htmlOutput = "<tr><td colspan='6'>没有数据</td></tr>";
-        }
+        htmlOutput = craeteOutputHTML(data, obj.type);
         PAGE.config.pageNum = Math.ceil(data.retData.totalRecord / obj.pageSize);
         PAGE.makePageHtml();
         PAGE.bindPageEvent(PAGE.loadOrderRecord);
@@ -137,6 +88,67 @@ $(function() {
   });
 
   /**
+   * 创建Table HTML
+   * @param  {json} data
+   * @param  {String} type 0:全部记录 1:中奖记录  2:未开奖  3:模型投注记录
+   * @return {craeteOutputHTML}
+   */
+  function craeteOutputHTML(data, type) {
+
+    var dataSize = data.retData.data.length;
+    var detailData = data.retData.data;
+    var htmlOutput = '';
+    var projectDetailUrl = '';
+    var continueBuy = '';
+    var isZhongJiang = '';
+    var dataItem = '';
+
+    if (dataSize > 0) {
+      for (var i = 0; i < detailData.length; i++) {
+        dataItem = detailData[i];
+
+        continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
+
+        if (dataItem.lotyCNName == '模型') {
+          dataItem.lotyCNName = '竞彩足球<i class="icon-font icon-f7">模</i>';
+          projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
+        } else {
+          projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
+        }
+
+        switch (type) {
+          case 3:
+            if (Number(dataItem.bonusMoney) > 0) {
+              isZhongJiang = 'fc-3';
+            } else {
+              isZhongJiang = '';
+            }
+            htmlOutput += '<tr><td>' + dataItem.createTime + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.projectNo + '</td><td>' + dataItem.money + '</td><td class="' + isZhongJiang + '">' + dataItem.bonusMoney + '</td><td class="' + isZhongJiang + '">' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+            break;
+          case 0:
+            htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+            break;
+          default:
+            htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+            break;
+        }
+
+      };
+
+
+      // 中奖列表才有汇总功能
+      if (type == '1') {
+        $('#summary_bonus_sum').html(data.retData.summary.bonusSum);
+        $('#summary_bonus_size').html(data.retData.summary.bonusSize);
+      }
+
+    } else {
+      htmlOutput = "<tr><td colspan='6'>没有数据</td></tr>";
+    }
+    return htmlOutput;
+  }
+
+  /**
    * Create Td HTML
    * @param  {Array} arr
    * @return {String}
@@ -167,44 +179,45 @@ $(function() {
       return html;
     }
     // Read Model Record Detail
-  $('#settings').on('click', '.j-history-more', function(event) {
+  $('#j-table-main').on('click', '.j-history-more', function(event) {
     event.preventDefault();
 
     var _this = $(this);
     var TR = _this.parents('tr');
     var no = $(this).attr('data-order');
-    if (no !== $('#settings .h-look').attr('data-no')) {
-      $.ajax({
-          url: '/lottery/trade/view-detail',
-          type: 'get',
-          dataType: 'json',
-          data: {
-            order_no: no
-          },
-        })
-        .done(function(data) {
-          if (data.retCode == 100000) {
-            var dataItem = data.retData;
-            var html = '<tr class="h-look" data-no="' + no + '"><td  colspan="7"><div class="look-box"><table class="table m-mn-table m-table-border m-table-middle"><thead><tr><th>赛事编号</th><th>对阵</th><th>赛果</th><th>投注内容</th><th>投注注数</th><th>投注金额（元）</th><th>奖金（元）</th></tr></thead><tbody><tr>';
+    $('#j-look').remove();
+    TR.after('<tr id="j-look" class="h-look" data-no="' + no + '"><td colspan="7">正在加载..</td></tr>');
 
-            html += '<td>' + craeteTdHTML(dataItem.ssbh) + '</td>';
-            html += '<td>' + craeteTdHTML(dataItem.dz) + '</td>';
-            html += '<td class="fc-3">' + dataItem.sg + '</td>';
-            html += '<td>' + craeteTdHTML2(dataItem.tzNr, dataItem.sg) + '</td>';
-            html += '<td>' + craeteTdHTML(dataItem.tzZs) + '</td>';
-            html += '<td>' + craeteTdHTML(dataItem.tzJe) + '</td>';
-            html += '<td class="fc-3">' + dataItem.bonus + '</td>';
-            html += '</tr></tbody></table></div></td></tr>';
-            $('#settings .h-look').remove();
-            TR.after(html);
-          } else {
-            APP.handRetCode(data.retCode, data.retMsg);
-          }
-        })
-        .fail(function() {
-          APP.onServiceFail();
-        });
-    }
+    $.ajax({
+        url: '/lottery/trade/view-detail',
+        type: 'get',
+        dataType: 'json',
+        data: {
+          order_no: no
+        },
+      })
+      .done(function(data) {
+        if (data.retCode == 100000) {
+          var dataItem = data.retData;
+          var html = '<td colspan="7"><div class="look-box"><table class="table m-mn-table m-table-border m-table-middle"><thead><tr><th>赛事编号</th><th>对阵</th><th>赛果</th><th>投注内容</th><th>投注注数</th><th>投注金额（元）</th><th>奖金（元）</th></tr></thead><tbody><tr>';
+
+          html += '<td>' + craeteTdHTML(dataItem.ssbh) + '</td>';
+          html += '<td>' + craeteTdHTML(dataItem.dz) + '</td>';
+          html += '<td class="fc-3">' + dataItem.sg + '</td>';
+          html += '<td>' + craeteTdHTML2(dataItem.tzNr, dataItem.sg) + '</td>';
+          html += '<td>' + craeteTdHTML(dataItem.tzZs) + '</td>';
+          html += '<td>' + craeteTdHTML(dataItem.tzJe) + '</td>';
+          html += '<td class="fc-3">' + dataItem.bonus + '</td>';
+          html += '</tr></tbody></table></div></td>';
+          $('#j-look').html(html);
+
+        } else {
+          APP.handRetCode(data.retCode, data.retMsg);
+        }
+      })
+      .fail(function() {
+        APP.onServiceFail();
+      });
   });
   // Init Page
   record.init();

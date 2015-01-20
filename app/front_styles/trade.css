@@ -135,7 +135,7 @@
 .show-result-error, .ipt-upload-field, .ipt-browse { display: none; }
 /* 上传后状态 */
 .show-result { display: none; }
-.ic-upload, .ic-file, .ic-uperror { background-image: url("http://888.gtimg.com/images/trade/ssq/icon_upload.png"); background-repeat: no-repeat; display: inline-block; margin-right: 5px; vertical-align: middle; height: 16px; width: 14px; }
+.ic-upload, .ic-file, .ic-uperror { display: inline-block; margin-right: 5px; vertical-align: middle; height: 16px; width: 14px; }
 .ic-file { background-position: 0 -44px; width: 12px; height: 16px; }
 .ic-uperror { background-position: 0 -22px; width: 14px; }
 /* 上传后状态 */

@@ -233,15 +233,18 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     var stop = new Date($('#j-stop-time').val()*1000).getTime();
     var time = (stop - now) / 1000;
     var html = '';
+    var d = '';
     var h = '';
     var m = '';
     var s = '';
 
     if (time > 0) {
+      d = Math.floor(time / 60 / 60/24)
       h = (Math.floor(time / 60 / 60)) % 24;
       m = Math.floor(time / 60 % 60);
       s = Math.floor(time % 60);
-      html = '本模型离当前投注截止还剩<span id="j-hour">' + h + '</span>小时<span id="j-minute">' + m + '</span>分<span id="j-second">' + s + '</span>秒';
+
+      html = '本模型离当前投注截止还剩<span id="j-day">'+d+'</span>天<span id="j-hour">' + h + '</span>小时<span id="j-minute">' + m + '</span>分<span id="j-second">' + s + '</span>秒';
     } else {
       html = '本模型当期已截止投注';
       $('#j-stop-td').html('已截止');

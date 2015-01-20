@@ -511,11 +511,8 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 						_this.mzzsObj[second + ''] = hiObj[k] * 100;
 					}
 					_this.createChart();
-					console.log("success");
 				})
 				.fail(function() {
-					APP.onServiceFail();
-					console.log("error");
 				});
 
 		};

@@ -12,7 +12,7 @@ define(['jquery', 'app'], function($, APP) {
 
     model.prototype.init = function(args) {
 
-      for (var prop in args) {
+      for (var prop in args)  {
         if (args.hasOwnProperty(prop)) {
           this[prop] = args[prop];
         }
@@ -190,10 +190,17 @@ define(['jquery', 'app'], function($, APP) {
         })
         .done(function(D) {
           if (D.retCode === 100000) {
-            $('.j-collect-show[data-modelid=' + obj.model_id + ']').html('修改收藏').attr('data-modify', 1);
+            var el =$('.j-collect-show[data-modelid=' + obj.model_id + ']');
+            if(!el.hasClass('i-collect-star-y')){
+              el.html('修改收藏').attr('data-modify', 1);
+            }
             _this.modal.on('hidden.bs.modal', function(e) {
               APP.showTips({
-                text: D.retMsg
+                text: D.retMsg,
+                type:1,
+                onConfirm:function(){
+                  window.location.reload();
+                }
               });
             });
             _this.modal.modal('hide');

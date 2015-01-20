@@ -216,17 +216,20 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .u-line2 { border-top: 1px dashed #848484; padding-top: 10px; }
 .result-table .icon-m4, .result-table .icon-m5 { margin-left: 2px; }
 .icon-m4, .icon-m5, .icon-m6 { height: 12px; width: 10px; }
+.icon-m3 { width: 13px; height: 12px; }
+.icon-m3 { background: url(../front_images/jczq/m3.png) no-repeat; }
 .icon-m4 { background: url(../front_images/jczq/m4.png) no-repeat; }
 .icon-m5 { background: url(../front_images/jczq/m5.png) no-repeat; }
 .icon-m6 { background: url(../front_images/jczq/m6.png) no-repeat; }
 .data-tip { cursor: pointer; }
+
 /* 我的收藏 */
 .u-collect-hd { font-size: 12px; height: 36px; line-height: 36px; background: #f5f5f5; border-bottom: 1px #dfdfdf solid; }
 .u-collect-hd>span { padding: 0 3px 0 15px; }
 .u-pxfs { width: 100px; height: 26px; padding: 3px 5px; border: 1px #dfdfdf solid; }
 #j-del-manycollect { display: none; }
 .btn-del-collect { font-size: 16px; color: #fff; background: #c3c3c3; display: block; width: 135px; height: 38px; padding: 0; line-height: 38px; text-align: center; margin: 5px 0 8px 0; }
-.utd1 { width: 200px; text-align: left !important; padding: 5px !important; }
+.utd1 { width: 60px; text-align: left !important; padding: 5px !important; }
 .utd1 .icon { margin-right: 8px; }
 /* 模型详情页 */
 .u-top { margin: 10px 0; font-size: 12px; color: #242424; }
@@ -258,7 +261,7 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .icon-m2 { background: url(../front_images/jczq/m2.png) no-repeat; height: 14px; width: 12px; }
 .table>tbody>tr>td.s-zhu { padding: 0; }
 .table>tbody>tr>td.s-zhu>div { height: 27px; line-height: 27px; }
-.table>tbody>tr>td.s-zhu>div>span { border-left: 1px #dfdfdf solid; display: inline-block; font-weight: normal; width: 25%; float: left; }
+.table>tbody>tr>td.s-zhu>div>span { border-left: 1px #dfdfdf solid; display: inline-block; font-weight: normal; width: 35px; float: left; }
 .table>tbody>tr>td.s-zhu>div>span.first { border: none; }
 .main-hd .m-mn-table>tbody>tr { background: #fff; }
 /* 收藏弹出层 */

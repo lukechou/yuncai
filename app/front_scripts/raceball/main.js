@@ -174,12 +174,23 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
       $('.gameSelect dd').each(function(index, el) {
         if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
-          $(this).hide();
+          $(this).addClass('hide');
         } else {
-          $(this).show();
+          $(this).removeClass('hide');
         }
       });
     }
+
+    setToggleBtn();
+  }
+
+  function setToggleBtn(){
+    $('.gameSelect dl').each(function(index, el) {
+      var isHidden = true;
+      $(this).each(function(index, el) {
+
+      });
+    });
   }
 
   // 截止时间

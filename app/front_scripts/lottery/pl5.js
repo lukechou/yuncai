@@ -85,9 +85,6 @@ function init() {
 	// myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
 $(document).ready(function() {
 	init();
-	$('#choose_to_buy').removeClass('active');
-	$('#choose_to_buy').attr('disabled', 'disabled');
-	$('#buy-submit').attr("disabled", "disabled");
 	$(".j-num-group").on('click', 'a', function(event) {
 		event.preventDefault();
 		/* Act on the event */
@@ -308,6 +305,7 @@ $(document).ready(function() {
 		});
 		$(this).parents('.br-zhu-item').remove();
 		calculateBuyCodes();
+		updateCreatePartProjectParame();
 	});
 
 	/**
@@ -337,8 +335,10 @@ $(document).ready(function() {
 		// event.preventDefault();
 		// clean html
 		$("#code_list").html('');
+		var buyType = G_BUY.buyType;
 		G_BUY.init();
 		calculateBuyCodes();
+		G_BUY.buyType = buyType;
 		updateCreatePartProjectParame();
 	});
 
@@ -586,12 +586,12 @@ $(document).ready(function() {
 		/* Act on the event */
 		if ($(this)[0].checked) {
 			$('#part_aegis_money').removeAttr('disabled');
-			updateCreatePartProjectParame();
 		} else {
 			$('#part_aegis_money').attr('disabled', 'disabled');
 			$('#part_aegis_money').val(0);
 			$('#part_aegis_percent').html('0.00');
 		}
+		updateCreatePartProjectParame();
 	});
 
 	// 保底金额修改
@@ -799,9 +799,13 @@ $(document).ready(function() {
 		$(newTab).addClass('active');
 		li.addClass('active');
 		li.siblings('.active').removeClass('active');
-
-
+		$('#choose_to_buy').attr('data-add', '1');
+		$('#j_normal_choose_code').find('.j-num-group a').removeClass('active');
+		$('#sd_number').val('');
+		G_BUY.init();
+		G_CHOOSE.init();
 		clean4CutBuyType();
+		calculateChooseCodes();
 		calculateBuyCodes();
 		$('#buy-submit').attr("disabled", "disabled");
 		switch (pagetype) {
@@ -1011,7 +1015,6 @@ $(document).ready(function() {
 					var aegisMoney = parseInt($('#part_aegis_money').val());
 					G_BUY.partnerBuy.partAegisMoney = aegisMoney;
 					$('#part_aegis_percent').html((aegisMoney / G_BUY.money * 100).toFixed(2));
-
 					$('#buy_money_tips').html(G_BUY.partnerBuy.partBuyMoney);
 					$('#aegis_money_tips').html(aegisMoney);
 					$('#total_money_tips').html(aegisMoney + G_BUY.partnerBuy.partBuyMoney);
@@ -1280,7 +1283,7 @@ $(document).ready(function() {
 				parameter.rengouMoney = G_BUY.partnerBuy.partBuyMoney;
 				parameter.baodiText = G_BUY.partnerBuy.partAegisMoney;
 				parameter.extraPercent = G_BUY.partnerBuy.commissionPercent;
-				parameter.set = G_BUY.partnerBuy.shareLevel;
+				parameter.set = G_BUY.partnerBuy.shareLevel || 1;
 				if (parameter.rengouMoney < 1) {
 					APP.showTips("合买至少认购一元");
 					return;

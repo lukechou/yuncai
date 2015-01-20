@@ -291,7 +291,9 @@ a.list-group-item-2:hover, a.list-group-item-2.active { background: #dddedf; col
 .shai-select a:hover, .shai-select a.active { background: #f13c38; border-radius: 2px; color: #fff; text-decoration: none; }
 .record-shai .btn { width: 70px; height: 30px; padding: 0; }
 .record-shai-ft { background: #f5f5f5; border: 1px #dfdfdf solid; margin-top: 10px; padding: 20px 40px; }
-.table .h-look>td{ padding: 15px; background: #e3e3e3;}
+.table .h-look{ height: 145px;}
+.look-box{ height: 96px;}
+.table .h-look>td{ padding: 15px; background: #e3e3e3; vertical-align: middle;}
 .table .h-look>td td span{ display: block;}
 /* 个人中心-账户明细 */
 .detail { font-size: 12px; }

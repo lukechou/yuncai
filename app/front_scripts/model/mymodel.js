@@ -53,6 +53,9 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
           chartEl: $('#chart')
         });
         chart.getChartData(id);
+      }else{
+        $(this).removeClass('active');
+        $('#chart-tr').remove();
       }
     }
 

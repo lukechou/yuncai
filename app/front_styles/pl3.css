@@ -33,8 +33,6 @@
 	width: 86px;
 }
 .pl3 .row-code .quick-method span {
-	background: url("http://888pic.gtimg.com/images/trade/ssq/ssq_button_ver3.0.jpg")
-	no-repeat scroll -84px -212px rgba(0, 0, 0, 0);
 	cursor: pointer;
 	display: inline-block;
 	float: left;
@@ -53,6 +51,7 @@
 }
 
 
+.pl3 .multiphase-box{ width: 860px; height: 315px; margin: 25px auto;}
 
 
 /*排列三层级控制类*/
@@ -88,11 +87,11 @@
 /*粘贴上传切换*/
 .j-box-up .box-up{ display:block;}
 
-
 /* 多期机选切换 */
 .j-box-many .box-many{ display: block;}
 .j-box-many .box-left{ width: 100%; margin-left: 0;}
 .j-box-many .box-submit{ padding-left: 400px;}
+.j-box-many .box-right{ display: none;}
 
 /* 小类切换 */
 .j-box-zx .j-nav-dt,

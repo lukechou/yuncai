@@ -84,7 +84,9 @@ var PAGE = (function() {
 
     },
     onSuccess: null,
-    onFail: null,
+    onFail: function(){
+      APP.showTips('服务器繁忙,请稍后再试!');
+    },
   };
 
   return PAGE;
