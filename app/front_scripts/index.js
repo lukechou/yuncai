@@ -1,5 +1,7 @@
 $(function() {
-
+  $('#choseCai').unbind();
+  $('#hdMask').show();
+  $('#choseCai a').toggleClass('on');
   var SEEDS = {};
   SEEDS.ballNum = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
 
@@ -48,7 +50,7 @@ $(function() {
 
   //快速投注 投注
   $('#j-q-tou').on('click', '.btn-tou', function(event) {
-    debugger
+    return;
     //
     $.ajax({
         url: '/path/to/file',

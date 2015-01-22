@@ -3,17 +3,17 @@
 }
 .pl3 .m-num-title2 > p {
 	font-size: 12px;
-	padding: 0;
 	width: 550px;
+	padding: 0;
 }
 .pl3 .row-code {
 	margin: 0 auto;
 }
 .pl3 .row_num_title {
-	float: left;
 	font-size: 18px;
-	width: 50px;
 	line-height: 40px;
+	float: left;
+	width: 50px;
 	margin: 5px 4px;
 }
 .pl3 .row-code  .m-num-group {
@@ -21,82 +21,106 @@
 	width: 480px;
 	margin: 0 0 10px -5px;
 }
-.pl3 .row-code .m-num-group>a {
-	height: 40px;
-	width: 40px;
+.pl3 .row-code .m-num-group > a {
 	font-size: 16px;
 	line-height: 40px;
+	width: 40px;
+	height: 40px;
 }
 .pl3 .row-code .quick-method {
 	float: left;
-	margin: 0 0 0 16px;
 	width: 86px;
+	margin: 0 0 0 16px;
 }
 .pl3 .row-code .quick-method span {
-	cursor: pointer;
+	line-height: 22px;
 	display: inline-block;
 	float: left;
-	height: 22px;
-	line-height: 22px;
-	margin: 0 0 3px 3px;
-	text-align: center;
 	width: 22px;
+	height: 22px;
+	margin: 0 0 3px 3px;
+	cursor: pointer;
+	text-align: center;
+	border: 1px #dfdfdf solid;
+	border-radius: 2px;
 }
 .pl3 .br-zhu-item b {
+	font-weight: normal;
 	float: left;
 	width: 65px;
-	color: #3d3d3d;
-	font-weight: normal;
 	margin-right: 3px;
+	color: #3d3d3d;
+}
+.pl3 .multiphase-box {
+	width: 860px;
+	height: 315px;
+	margin: 25px auto;
 }
 
+/* 排列三层级控制类 */
+.box-zx-cgtz, .box-zx6-cgtz, .box-zx3-cgtz, .box-zx-hz, .box-zx6-hz, .box-zx3-hz, .box-zx6-dt, .box-zx3-dt, .box-up, .box-many {
+	display: none;
+}
 
-.pl3 .multiphase-box{ width: 860px; height: 315px; margin: 25px auto;}
+/* 常规投注切换 */
+.j-box-zx .j-box-cgtz .box-zx-cgtz {
+	display: block;
+}
+.j-box-zx6 .j-box-cgtz .box-zx6-cgtz {
+	display: block;
+}
+.j-box-zx3 .j-box-cgtz .box-zx3-cgtz {
+	display: block;
+}
 
+/* 投注区Bottom切换 */
+.box-bottom {
+	display: block;
+}
+.j-box-many .box-bottom {
+	display: none;
+}
 
-/*排列三层级控制类*/
-.box-zx-cgtz,
-.box-zx6-cgtz,
-.box-zx3-cgtz,
-.box-zx-hz,
-.box-zx6-hz,
-.box-zx3-hz,
-.box-zx6-dt,
-.box-zx3-dt,
-.box-up,
-.box-many{ display:none;}
+/* 和值切换 */
+.j-box-zx .j-box-hz .box-zx-hz {
+	display: block;
+}
+.j-box-zx6 .j-box-hz .box-zx6-hz {
+	display: block;
+}
+.j-box-zx3 .j-box-hz .box-zx3-hz {
+	display: block;
+}
 
-/*常规投注切换*/
-.j-box-zx .j-box-cgtz .box-zx-cgtz{ display:block;}
-.j-box-zx6 .j-box-cgtz .box-zx6-cgtz{ display:block;}
-.j-box-zx3 .j-box-cgtz .box-zx3-cgtz{ display:block;}
+/* 胆拖切换 */
+.j-box-zx3 .j-box-dt .box-zx3-dt {
+	display: block;
+}
+.j-box-zx6 .j-box-dt .box-zx6-dt {
+	display: block;
+}
 
-/*投注区Bottom切换*/
-.box-bottom{ display: block;}
-.j-box-many .box-bottom{ display: none;}
-
-/*和值切换*/
-.j-box-zx .j-box-hz .box-zx-hz{ display:block;}
-.j-box-zx6 .j-box-hz .box-zx6-hz{ display:block;}
-.j-box-zx3 .j-box-hz .box-zx3-hz{ display:block;}
-
-/*胆拖切换*/
-.j-box-zx3 .j-box-dt .box-zx3-dt{ display:block;}
-.j-box-zx6 .j-box-dt .box-zx6-dt{ display:block;}
-
-/*粘贴上传切换*/
-.j-box-up .box-up{ display:block;}
+/* 粘贴上传切换 */
+.j-box-up .box-up {
+	display: block;
+}
 
 /* 多期机选切换 */
-.j-box-many .box-many{ display: block;}
-.j-box-many .box-left{ width: 100%; margin-left: 0;}
-.j-box-many .box-submit{ padding-left: 400px;}
-.j-box-many .box-right{ display: none;}
+.j-box-many .box-many {
+	display: block;
+}
+.j-box-many .box-left {
+	width: 100%;
+	margin-left: 0;
+}
+.j-box-many .box-submit {
+	padding-left: 400px;
+}
+.j-box-many .box-right {
+	display: none;
+}
 
 /* 小类切换 */
-.j-box-zx .j-nav-dt,
-.j-box-zx6 .j-nav-many,
-.j-box-zx3 .j-nav-many{ display: none;}
-
-
-
+.j-box-zx .j-nav-dt, .j-box-zx6 .j-nav-many, .j-box-zx3 .j-nav-many {
+	display: none;
+}

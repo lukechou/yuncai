@@ -224,42 +224,14 @@ define(['jquery'], function ($) {
       return produceCodes;
     };
 
-    /**
-     * 检测选取号码是否符合条件
-     * @return {Boolean}
-     */
-    pl3.prototype.isLegalChoose = function () {
-      debugger
-      var b = this.nav.big;
-      var s = this.nav.small;
-      if (b === 'zx' && s === 'cgtz') {
-        for (var i = this.G_CHOOSE.codes.length - 1; i >= 0; i--) {
-          if (!(this.G_CHOOSE.codes[i][0].length > 0 && this.G_CHOOSE.codes[i][1].length > 0 && this.G_CHOOSE.codes[i][2].length > 0)) {
-
-            return true;
-          }
-        }
-      }
-
-      if (b === 'zx6' && s === 'cgtz') {
-        if (this.G_CHOOSE.codes[0][0]) {
-          return true;
-        }
-      }
-
-      if (b === 'zx3' && s === 'cgtz') {
-        debugger
-      }
-
-      return false;
-    }
-
     pl3.prototype.makeChooseCodeHtml = function (codes) {
 
       var newCodes = codes;
       var html = '';
       var totalMoney = 0;
       var _this = this;
+      var money = 0;
+      var mdfBtn = '';
 
       for (var i = 0; i < newCodes.length; i++) {
         _this.G_BUY.rowIndex++;
@@ -267,20 +239,21 @@ define(['jquery'], function ($) {
         for (var m = 0; m < newCodes[i].length; m++) {
           html += '<span data-c="0">' + newCodes[i][m].join('') + '</span>';
         };
-
-        var money = 2 * _this.getZhiXuanZhushu(newCodes[i][0], newCodes[i][1], newCodes[i][2]);
+        money = 2 * _this.G_CHOOSE.zhushu;
         totalMoney += money;
-        var mdfBtn = (_this.G_BUY.isManual) ? '' : '<a href="javascript:;" class="br-zhu-set">修改</a>';
+        mdfBtn = (_this.G_BUY.isManual) ? '' : '<a href="javascript:;" class="br-zhu-set">修改</a>';
         html += '</div><div class="pull-right"><b><i class="money" data-m="1">' + money + '</i>元</b>' + mdfBtn + '<a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
         _this.G_BUY.codes.push({
           key: _this.G_BUY.rowIndex,
           value: newCodes[i]
         });
       }
+
       if (totalMoney > _this.maxOneBetMoney) {
         APP.showTips('您好，单个投注的金额应小于' + _this.maxOneBetMoney + '元，请返回重新选择');
         return false;
       }
+
       if (_this.G_BUY.codes.length > _this.maxBuyCodeLength) {
         APP.showTips('您的投注号码多于' + _this.maxBuyCodeLength + '行，请返回重新选择');
         return;
@@ -288,7 +261,6 @@ define(['jquery'], function ($) {
 
       $("#code_list").append(html);
       return true;
-
     };
 
     return pl3;

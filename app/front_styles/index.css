@@ -28,6 +28,7 @@ body { background: #242424; color: #3d3d3d; }
 .hd-mask>li>a.active { background: #1d1d1d; }
 .hd-mask>li>a>span { color: #a5a5a5; font-size: 12px; padding-left: 15px; }
 .hd-mask-icon { display: inline-block; width: 51px; }
+.hd-mask-icon>img { width: 42px; height: 42px; margin: auto;}
 .hd-mask-list { overflow: hidden; width: 100%; padding: 8px 0; }
 .hd-mask-list>li { float: left; position: relative; display: block; text-align: center; width: 33%; line-height: 1.5; }
 .hd-mask-list>li>a { display: block; color: #a5a5a5; font-size: 12px; }
