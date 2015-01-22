@@ -71,7 +71,7 @@
 /* 右侧辅助功能区 */
 .box-left { position: relative; width: 700px; float: left; margin-left: 10px; display: inline; }
 .box-left2 { position: relative; display: block; margin: 0; float: none; width: 100%; }
-.box-right { float: right; width: 230px; margin: 10px 0 0; border-left: 1px #dfdfdf solid; color: #3d3d3d; display: inline; }
+.box-right { float: right; width: 230px; margin: 10px 0 0; color: #3d3d3d; display: inline; border-left: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid;}
 /* 标题样式 */
 .sub-title { background: #f5f5f5; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 10px; height: 34px; border-top: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid; }
 .more-detail { float: right; margin-right: 10px; font: 12px/34px '宋体'; }

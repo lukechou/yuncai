@@ -142,7 +142,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .mod-kj .num-list li.num-blue { color: #388bf1 }
 .mod-kj .links { font-size: 12px; text-align: right; }
 .mod-kj .links .lot-time { float: left; }
-.mod-kj .links a { color: #c1c1c1; display: inline-block; padding: 0 5px; border-left: 1px solid #c1c1c1; }
+.mod-kj .links a { color: #c1c1c1; display: inline-block; padding: 0 5px;/* border-left: 1px solid #c1c1c1; */}
 .mod-kj .links a.first-link { padding: 0 10px 0 0; border-left: 0 }
 /* Page count */
 .page-count { padding: 0 0 25px 0; }
@@ -155,7 +155,7 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .page-er { padding: 24px 0; font-family: 'Microsoft Yahei'; color: #c1c1c1; }
 .page-er li { float: left; width: 492px; }
 .mod-app .btn { background: #696969; font-size: 16px; color: #212121; margin-top: 11px; }
-.mod-app .qrcode-img { float: left; margin-right: 20px }
+.mod-app .qrcode-img { float: left; margin-right: 20px;  width: 112px; height: 112px;}
 .mod-app .app-info { float: left; color: #999; height: 112px; }
 .mod-app .app-info .app-title { font-size: 18px; font-weight: normal; margin: 0 0 10px; }
 .mod-app .app-info .txt { padding-bottom: 6px; }

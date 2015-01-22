@@ -1,7 +1,7 @@
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
   'use strict';
 
-  var app = (function() {
+  var app = (function () {
 
     function app(args) {
       // enforces new
@@ -17,20 +17,23 @@ define(['jquery'], function($) {
      * 全局通用登录弹出框
      * @return {null}
      */
-    app.prototype.showLoginBox = function() {
+    app.prototype.showLoginBox = function () {
 
       var _this = this;
+      var loginModal = null;
 
       if (!$('#user-login')[0]) {
         var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
         $('body').append(html);
       };
 
-      $('#j-login-modal').on('show.bs.modal', _this.centerModal);
-      $('#j-login-modal').modal('show');
+      loginModal = $('#j-login-modal');
+      loginModal.on('show.bs.modal', _this.centerModal);
+
+      loginModal.modal('show');
       $('#user-login').unbind();
 
-      $('#user-login').on('click', function(event) {
+      $('#user-login').on('click', function (event) {
 
         var user = _this.filterStr($('#login-username').val())
         var pwd = _this.filterStr($('#login-password').val())
@@ -45,16 +48,16 @@ define(['jquery'], function($) {
                 password: pwd
               },
             })
-            .done(function(data) {
+            .done(function (data) {
               if (data.retCode == 100000) {
-                window.location.href = data.retData.redirectURL;
+                loginModal.hide();
               } else {
                 _this.showTips({
                   text: data.retMsg
                 });
               }
             })
-            .fail(function() {
+            .fail(function () {
               _this.onServiceFail();
             });
         } else {
@@ -73,7 +76,7 @@ define(['jquery'], function($) {
      * @param  {String} str 字符串
      * @return {String}   过滤后的字符串
      */
-    app.prototype.filterStr = function(str) {
+    app.prototype.filterStr = function (str) {
       str = $.trim(str);
       var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——| {}【】‘；：”“'。，、？]")
       var rs = "";
@@ -87,13 +90,13 @@ define(['jquery'], function($) {
      * Update User Money
      * @return {null}
      */
-    app.prototype.updateUserMoney = function() {
+    app.prototype.updateUserMoney = function () {
       $.ajax({
           url: '/account/islogin',
           type: 'get',
           dataType: 'json',
         })
-        .done(function(data) {
+        .done(function (data) {
           if (data.retCode === 100000) {
             $('#userMoney').html(data.retData.money);
           }
@@ -105,7 +108,7 @@ define(['jquery'], function($) {
      * @param  {url} paraName 获取参数
      * @return {String}
      */
-    app.prototype.parseQueryString = function(url) {
+    app.prototype.parseQueryString = function (url) {
       var re = /[\?&]([^\?&=]+)=([^&]+)/g,
         matcher = null,
         items = {};
@@ -122,23 +125,23 @@ define(['jquery'], function($) {
      * @param  {retMsg} retMsg  Ajaxa Respone Msg
      * @return {null}
      */
-    app.prototype.handRetCode = function(retCode, retMsg) {
+    app.prototype.handRetCode = function (retCode, retMsg) {
       var _this = this;
 
       switch (retCode) {
-        case 120002:
-          _this.showLoginBox();
-          break;
-        case 120001:
-          _this.showTips({
-            html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
-          });
-          break;
-        default:
-          _this.showTips({
-            text: retMsg
-          });
-          break;
+      case 120002:
+        _this.showLoginBox();
+        break;
+      case 120001:
+        _this.showTips({
+          html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+        });
+        break;
+      default:
+        _this.showTips({
+          text: retMsg
+        });
+        break;
       }
     };
 
@@ -147,18 +150,18 @@ define(['jquery'], function($) {
      * @param  {Object} vote 回调对象
      * @return {null}
      */
-    app.prototype.onSubmitInit = function(vote) {
+    app.prototype.onSubmitInit = function (vote) {
 
       var _this = this;
 
       _this.checkLogin({
-        enoughMoney: function() {
+        enoughMoney: function () {
           _this.showTips({
             title: vote.title,
             html: vote.confirmHtml
           });
 
-          $('#buyConfirm').on('click', function(event) {
+          $('#buyConfirm').on('click', function (event) {
             vote.callback();
           });
         }
@@ -171,7 +174,7 @@ define(['jquery'], function($) {
      * @param  {Object} o 回调对象
      * @return {null}
      */
-    app.prototype.checkLogin = function(o) {
+    app.prototype.checkLogin = function (o) {
       var _this = this;
 
       $.ajax({
@@ -179,7 +182,7 @@ define(['jquery'], function($) {
           type: 'get',
           dataType: 'json',
         })
-        .done(function(D) {
+        .done(function (D) {
 
           if (D.retCode === 100000) {
             var userMoney = Number(D.retData.money.replace(/,/g, ''));
@@ -198,7 +201,7 @@ define(['jquery'], function($) {
         });
     };
 
-    app.prototype.checkUserLoginStatus = function() {
+    app.prototype.checkUserLoginStatus = function () {
 
       var _this = this;
       var user = $('#myname');
@@ -211,7 +214,7 @@ define(['jquery'], function($) {
 
     };
 
-    app.prototype.createShowTipsHTML = function(obj) {
+    app.prototype.createShowTipsHTML = function (obj) {
 
       // 生成对应HTML
       var html = '';
@@ -220,15 +223,15 @@ define(['jquery'], function($) {
         html = '<div class="tipbox"><p>' + obj.text + '</p></div>';
 
         switch (type) {
-          case 1:
-            html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">确定</button></div>';
-            break;
-          case 2:
-            html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
-            break;
-          default:
-            html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">确定</button></div>';
-            break;
+        case 1:
+          html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">确定</button></div>';
+          break;
+        case 2:
+          html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
+          break;
+        default:
+          html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">确定</button></div>';
+          break;
         }
       } else {
         html = obj.html;
@@ -246,14 +249,14 @@ define(['jquery'], function($) {
 
       // 绑定确认按钮事件
       $('#j-modal-confirm').unbind('click');
-      if(obj.onConfirm){
-        $('#j-modal-confirm').on('click', function(event) {
+      if (obj.onConfirm) {
+        $('#j-modal-confirm').on('click', function (event) {
           event.preventDefault();
           obj.onConfirm();
         });
       }
 
-      if(obj.callback) obj.callback();
+      if (obj.callback) obj.callback();
     };
 
     /**
@@ -266,7 +269,7 @@ define(['jquery'], function($) {
      * onConfirm 确定按钮成功事件
      * @return {null}
      */
-    app.prototype.showTips = function(o) {
+    app.prototype.showTips = function (o) {
 
       var _this = this;
 
@@ -276,7 +279,7 @@ define(['jquery'], function($) {
         type: 0,
         text: '',
         onConfirm: null,
-        callback:null
+        callback: null
       };
 
       if (typeof o == 'object' && o !== null) {
@@ -302,7 +305,7 @@ define(['jquery'], function($) {
      * Modal Center
      * @return {[type]} null
      */
-    app.prototype.centerModal = function() {
+    app.prototype.centerModal = function () {
 
       $(this).css('display', 'block');
       var $dialog = $(this).find(".modal-dialog");
@@ -319,7 +322,7 @@ define(['jquery'], function($) {
      * Ajax ServiceFial ShowTips
      * @return {null}
      */
-    app.prototype.onServiceFail = function() {
+    app.prototype.onServiceFail = function () {
       this.showTips({
         text: '服务器繁忙,请稍后再试!'
       });
@@ -329,18 +332,22 @@ define(['jquery'], function($) {
      * 输入框获取丢失焦点element 监听
      * @return {[type]} [description]
      */
-    app.prototype.bindInputPlace = function() {
+    app.prototype.bindInputPlace = function () {
 
-      $('.j-input-place').on('focus', function(event) {
+      $('.j-input-place').on('focus', function (event) {
         var _this = $(this);
         var t = _this.attr('data-place');
-        if (t == _this.val()) $(this).val('');
+        if (t == _this.val()) {
+          $(this).val('');
+        }
       });
 
-      $('.j-input-place').on('blur', function(event) {
+      $('.j-input-place').on('blur', function (event) {
         var _this = $(this);
         var t = _this.attr('data-place');
-        if ('' == _this.val()) $(this).val(t);
+        if ('' == _this.val()) {
+          $(this).val(t);
+        }
       });
 
     };
@@ -349,8 +356,8 @@ define(['jquery'], function($) {
      * 输入框只允许输入整数
      * @return null
      */
-    app.prototype.bindInputOnlyInt = function() {
-      $('.j-only-int').on('keyup paste', function(event) {
+    app.prototype.bindInputOnlyInt = function () {
+      $('.j-only-int').on('keyup paste', function (event) {
         event.preventDefault();
         $(this).val($(this).val().replace(/\D|^0/g, ''));
       });
@@ -360,14 +367,14 @@ define(['jquery'], function($) {
      * 初始化头部 导航 切换
      * @return null
      */
-    app.prototype.init = function() {
+    app.prototype.init = function () {
 
       var _this = this;
-      $('#choseCai').hover(function() {
+      $('#choseCai').hover(function () {
         var m = $(this);
         m.find('#hdMask').toggle();
         m.find('a').toggleClass('on');
-      }, function() {
+      }, function () {
         var m = $(this);
         m.find('#hdMask').toggle();
         m.find('a').toggleClass('on');

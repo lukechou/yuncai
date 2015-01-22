@@ -100,7 +100,9 @@ $(document).ready(function() {
 		arr = G_CHOOSE.codes[0][dataBit].concat();
 		if ($(this).hasClass('active')) {
 			// 删除元素,依赖：Lo-Dash.js库
-			_.pull(arr, num);
+			_.remove(arr, function(n){
+				return n == num;
+			});
 		} else {
 			arr.push(num);
 		}
@@ -438,8 +440,7 @@ $(document).ready(function() {
 
 	/**
 	 * 切换购买方式
-	 * @param  {Object} event) {		event.preventDefault();				G_BUY.trackData.issueMutipleMap [description]
-	 * @return {[type]}        [description]
+	 * @return null
 	 */
 	$('#buy_type').on('click', 'a', function(event) {
 		event.preventDefault();
@@ -451,23 +452,29 @@ $(document).ready(function() {
 			projectDescription: '排列5'
 		}; // clean partner buy
 		G_BUY.buyType = parseInt($(this).attr('data-buytype'));
+		G_BUY.mutiple =1;
+		$('#project_mutiple').val(G_BUY.mutiple);
 		switch (G_BUY.buyType) {
 			case 1: // 自购
 				$('#track_desc').addClass('hide');
+				calculateBuyCodes();
 				break;
 
 			case 2: // 追号
+
 				$('#buy_mutiple_span').hide();
 				$('#track_desc').removeClass('hide');
 				queryTrackIssueList(10);
+				calculateBuyCodes();
 				break;
 
 			case 3: // 合买
+				calculateBuyCodes();
 				$('#track_desc').addClass('hide');
 				updateCreatePartProjectParame();
 				break;
 		}
-		calculateBuyCodes();
+
 	});
 
 	$('#issue_size').on('change', function(event) {
@@ -994,6 +1001,7 @@ $(document).ready(function() {
 				break;
 
 			case 3: // 合买
+
 				if (G_BUY.money > 0) {
 					G_BUY.partnerBuy.partBuyMoney = parseInt($('#part_buy').val());
 					var partBuyPercent = G_BUY.partnerBuy.partBuyMoney / G_BUY.money * 100;
@@ -1283,7 +1291,7 @@ $(document).ready(function() {
 				parameter.rengouMoney = G_BUY.partnerBuy.partBuyMoney;
 				parameter.baodiText = G_BUY.partnerBuy.partAegisMoney;
 				parameter.extraPercent = G_BUY.partnerBuy.commissionPercent;
-				parameter.set = G_BUY.partnerBuy.shareLevel || 1;
+				parameter.set = (typeof G_BUY.partnerBuy.shareLevel === 'undefined') ? 1 : G_BUY.partnerBuy.shareLevel;
 				if (parameter.rengouMoney < 1) {
 					APP.showTips("合买至少认购一元");
 					return;

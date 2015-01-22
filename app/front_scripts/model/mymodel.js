@@ -1,5 +1,4 @@
 require.config({
-  urlArgs: "bust=" + (new Date()).getTime(),
   paths: {
     jquery: '../lib/jquery',
     lodash: '../lib/lodash.compat.min',

@@ -1,5 +1,4 @@
 require.config({
-  urlArgs: "bust=" + (new Date()).getTime(),
   paths: {
     jquery: '../lib/jquery',
     lodash: '../lib/lodash.compat.min',
@@ -49,9 +48,28 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
         var trTime = $(this).attr('data-time') * 1000;
         var now = $.now();
         var times = time * 25 * 60 * 60 * 1000;
-        var atTime = (now - trTime) <= times ? true : false;
+        var atTime = '';
         var atStar = (star == trStar) ? true : false;
         var isShow = true;
+
+        var d1 = new Date(trTime).getDate();
+        var d2 = new Date().getDate();
+
+        if ((now - trTime) <= times) {
+
+          if (time == 1) {
+            if (d1 === d2) {
+              atTime = true;
+            } else {
+              atTime = false;
+            }
+          } else {
+            atTime = true;
+          }
+
+        } else {
+          atTime = false;
+        }
 
         if (star == 0) {
           atStar = true;
@@ -128,31 +146,47 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
   $('#j-del-manycollect').on('click', '.btn-del-collect', function (event) {
     event.preventDefault();
 
-    var delId = getDelId();
-    var obj = {
-      model_id: delId.join(','),
-      rnd: $.now()
-    };
+    APP.showTips({
+      text: '是否删除该收藏？',
+      type: 2,
+      onConfirm: function () {
+        var delId = getDelId();
+        var obj = {
+          model_id: delId.join(','),
+          rnd: $.now()
+        };
 
-    $.ajax({
-        url: '/lottery/trade/model-batch-cancel-collect',
-        type: 'get',
-        dataType: 'json',
-        data: obj,
-      })
-      .done(function (D) {
-        if (D.retCode === 100000) {
-          for (var i = delId.length - 1; i >= 0; i--) {
-            $('#track_detail_list tr[data-modelid=' + delId[i] + ']').remove();
-            $('#j-del-manycollect').slideDown();
-          };
-          updateTableIndex();
-        }
-        APP.handRetCode(D.retCode, D.retMsg);
-      })
-      .fail(function () {
-        APP.onServiceFail();
-      });
+        $.ajax({
+            url: '/lottery/trade/model-batch-cancel-collect',
+            type: 'get',
+            dataType: 'json',
+            data: obj,
+          })
+          .done(function (D) {
+            if (D.retCode === 100000) {
+              for (var i = delId.length - 1; i >= 0; i--) {
+                $('#track_detail_list tr[data-modelid=' + delId[i] + ']').remove();
+                $('#j-del-manycollect').slideDown();
+              };
+              updateTableIndex();
+              APP.showTips({
+                text: '恭喜您，批量取消收藏成功！',
+                type: 1,
+                onConfirm: function () {
+                  window.location.reload();
+                }
+              })
+            } else {
+              APP.handRetCode(D.retCode, D.retMsg);
+            }
+
+          })
+          .fail(function () {
+            APP.onServiceFail();
+          });
+      }
+
+    });
 
   });
 
@@ -176,7 +210,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
           chartEl: $('#chart')
         });
         chart.getChartData(id);
-      }else{
+      } else {
         $(this).removeClass('active');
         $('#chart-tr').remove();
       }

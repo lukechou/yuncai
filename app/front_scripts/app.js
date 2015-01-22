@@ -6,7 +6,7 @@ var APP = {};
  * @param  {Number}  num
  * @return {Boolean}     [description]
  */
-APP.isDecimal = function(num) {
+APP.isDecimal = function (num) {
   if (parseInt(num) == num) {
     return false;
   } else {
@@ -15,26 +15,48 @@ APP.isDecimal = function(num) {
 };
 
 /**
+ * 输入框获取丢失焦点element 监听
+ * @return {[type]} [description]
+ * on PL5
+ */
+APP.bindInputPlace = function () {
+
+  $('.j-input-place').on('focus', function (event) {
+    var _this = $(this);
+    var t = _this.attr('data-place');
+    if (t == _this.val()) $(this).val('');
+  });
+
+  $('.j-input-place').on('blur', function (event) {
+    var _this = $(this);
+    var t = _this.attr('data-place');
+    if ('' == _this.val()) $(this).val(t);
+  });
+
+};
+APP.bindInputPlace();
+
+/**
  * HandRetCode for Ajax
  * @param  {retCode} retCode Ajax Respone Status
  * @param  {retMsg} retMsg  Ajaxa Respone Msg
  * @return {null}
  */
-APP.handRetCode = function(retCode, retMsg) {
+APP.handRetCode = function (retCode, retMsg) {
   switch (retCode) {
-    case 120002:
-      this.showLoginBox();
-      break;
-    case 120001:
-      this.showTips({
-        html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
-      });
-      break;
-    default:
-      this.showTips({
-        text: retMsg
-      });
-      break;
+  case 120002:
+    this.showLoginBox();
+    break;
+  case 120001:
+    this.showTips({
+      html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+    });
+    break;
+  default:
+    this.showTips({
+      text: retMsg
+    });
+    break;
   }
 };
 
@@ -42,14 +64,14 @@ APP.handRetCode = function(retCode, retMsg) {
  * Update User Money
  * @return {null}
  */
-APP.updateUserMoney = function() {
+APP.updateUserMoney = function () {
 
   $.ajax({
       url: '/account/islogin',
       type: 'get',
       dataType: 'json',
     })
-    .done(function(data) {
+    .done(function (data) {
       if (data.retCode === 100000) {
         $('#userMoney').html(data.retData.money);
       }
@@ -61,36 +83,38 @@ APP.updateUserMoney = function() {
  * Update Head User Info
  * @return {null}
  */
-APP.updateHeadUserInfo = function() {
+APP.updateHeadUserInfo = function () {
+
+  var html = '';
+  $.ajax({
+      url: '/account/islogin',
+      type: 'get',
+      dataType: 'json',
+    })
+    .done(function (data) {
+      if (data.retCode === 100000) {
+        html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="'+staticHostURI+'/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="http://static3.yuncai.com/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="http://static3.yuncai.com/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a><img src="http://static3.yuncai.com/front_images/top-down.png" alt="bor">';
+        $('#hd-top').html(html);
+      }
+    });
 
 };
 
-APP.showLoginBox = function() {
+APP.showLoginBox = function () {
+
+  var loginModal = null;
 
   if (!$('#user-login')[0]) {
     var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
     $('body').append(html);
   }
 
-  $('#j-login-modal').on('show.bs.modal', APP.centerModal);
-  $('#j-login-modal').modal('show');
+  loginModal = $('#j-login-modal');
+  loginModal.on('show.bs.modal', APP.centerModal);
+  loginModal.modal('show');
+
   $('#user-login').unbind();
-  this.bindLoginEvent();
-
-};
-
-APP.regStr = function(s) {
-  var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——| {}【】‘；：”“'。，、？]")
-  var rs = "";
-  for (var i = 0; i < s.length; i++) {
-    rs = rs + s.substr(i, 1).replace(pattern, '');
-  }
-  return rs;
-};
-
-APP.bindLoginEvent = function() {
-
-  $('#user-login').on('click', function(event) {
+  $('#user-login').on('click', function (event) {
     event.preventDefault();
 
     var user = APP.regStr($('#login-username').val())
@@ -106,14 +130,16 @@ APP.bindLoginEvent = function() {
             password: pwd
           },
         })
-        .done(function(data) {
+        .done(function (data) {
           if (data.retCode == 100000) {
-            window.location.href = data.retData.redirectURL;
+            loginModal.hide();
+            APP.updateHeadUserInfo();
+            APP.showTips('登录成功');
           } else {
             APP.showTips(data.retMsg);
           }
         })
-        .fail(function() {
+        .fail(function () {
           APP.showTips('Server has some error!');
         });
     } else {
@@ -122,10 +148,18 @@ APP.bindLoginEvent = function() {
     }
 
   });
+};
 
-}
+APP.regStr = function (s) {
+  var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——| {}【】‘；：”“'。，、？]")
+  var rs = "";
+  for (var i = 0; i < s.length; i++) {
+    rs = rs + s.substr(i, 1).replace(pattern, '');
+  }
+  return rs;
+};
 
-APP.createShowTipsHTML = function(obj) {
+APP.createShowTipsHTML = function (obj) {
   // 生成对应HTML
   var html = '';
   var type = Number(obj.type);
@@ -133,15 +167,15 @@ APP.createShowTipsHTML = function(obj) {
     html = '<div class="tipbox"><p>' + obj.text + '</p></div>';
 
     switch (type) {
-      case 1:
-        html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">确定</button></div>';
-        break;
-      case 2:
-        html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
-        break;
-      default:
-        html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">确定</button></div>';
-        break;
+    case 1:
+      html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">确定</button></div>';
+      break;
+    case 2:
+      html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
+      break;
+    default:
+      html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">确定</button></div>';
+      break;
     }
   } else {
     html = obj.html;
@@ -160,7 +194,7 @@ APP.createShowTipsHTML = function(obj) {
   // 绑定确认按钮事件
   $('#j-modal-confirm').unbind('click');
   if (obj.onConfirm) {
-    $('#j-modal-confirm').on('click', function(event) {
+    $('#j-modal-confirm').on('click', function (event) {
       event.preventDefault();
       obj.onConfirm();
     });
@@ -175,7 +209,7 @@ APP.createShowTipsHTML = function(obj) {
  * @param  {Object} obj tips's HTML {title:'title', html:'html'}
  * @return {null}
  */
-APP.showTips = function(o) {
+APP.showTips = function (o) {
 
   var _this = APP;
 
@@ -207,7 +241,7 @@ APP.showTips = function(o) {
 
 };
 
-APP.centerModal = function() {
+APP.centerModal = function () {
   $(this).css('display', 'block');
   var $dialog = $(this).find(".modal-dialog");
   var top = ($(window).height() - $dialog.height()) / 2;
@@ -220,11 +254,11 @@ APP.centerModal = function() {
 
 $('.Modal').on('show.bs.modal', APP.centerModal);
 
-$(window).on("resize", function() {
+$(window).on("resize", function () {
   $('.modal:visible').each(APP.centerModal);
 });
 
-APP.getUrlPara = function(paraName) {
+APP.getUrlPara = function (paraName) {
   var sUrl = window.location.href;
   var sReg = "(?:\\?|&){1}" + paraName + "=([^&]*)"
   var re = new RegExp(sReg, "gi");
@@ -232,18 +266,18 @@ APP.getUrlPara = function(paraName) {
   return RegExp.$1;
 };
 
-APP.onSubmitConfirm = function(callback, data, html) {
+APP.onSubmitConfirm = function (callback, data, html) {
 
   $.ajax({
       url: '/account/islogin',
       type: 'get',
       dataType: 'json',
     })
-    .done(function(D) {
+    .done(function (D) {
       if (D.retCode === 100000) {
         if (Number(D.retData.money.replace(/,/g, '')) >= data.byNum) {
           APP.showTips(html);
-          $('#buyConfirm').on('click', function(event) {
+          $('#buyConfirm').on('click', function (event) {
             callback(data);
           });
         } else {
@@ -259,11 +293,11 @@ APP.onSubmitConfirm = function(callback, data, html) {
 
 }
 
-APP.onServiceFail = function() {
+APP.onServiceFail = function () {
   APP.showTips('服务器繁忙,请稍后再试!');
 };
 
-APP.submitHemai = function(obj) {
+APP.submitHemai = function (obj) {
 
   $.ajax({
       url: obj.joinURI,
@@ -274,7 +308,7 @@ APP.submitHemai = function(obj) {
         buyNum: obj.byNum
       },
     })
-    .done(function(data) {
+    .done(function (data) {
       if (data.retCode == 100000) {
         if (obj.onSuccess) {
           obj.onSuccess();
@@ -283,18 +317,18 @@ APP.submitHemai = function(obj) {
         APP.showTips({
           text: '合买成功!',
           type: 1,
-          onConfirm: function() {
-              window.location.reload();
+          onConfirm: function () {
+            window.location.reload();
           }
         });
-        $('body').on('click', '.close', function(event) {
+        $('body').on('click', '.close', function (event) {
           window.history.go(0);
         });
       } else {
         APP.handRetCode(data.retCode, data.retMsg);
       }
     })
-    .fail(function() {
+    .fail(function () {
       APP.onServiceFail();
     });
 
@@ -304,12 +338,12 @@ APP.submitHemai = function(obj) {
 /**
  * ALL Page Common Event
  */
-$(function() {
+$(function () {
 
   // Header Nav Toggle
-  $('#choseCai').hover(function() {
+  $('#choseCai').hover(function () {
     toggleMask($(this));
-  }, function() {
+  }, function () {
     toggleMask($(this));
   });
 

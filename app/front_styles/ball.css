@@ -146,6 +146,7 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .mlr-8 { margin: 0 8px; }
 .ballbox { color: #3d3d3d; }
 .ballbox .text b { font-weight: bold; }
+.btns{ text-align: center;}
 .br-together, .br-zhui { font-size: 12px; padding: 15px 20px 0 0; color: #3d3d3d; background: #fff; }
 .br-together .title { display: inline-block; float: left; width: 60px; margin-right: 5px; text-align: right; color: #3d3d3d; }
 .br-set { line-height: 21px; display: block; float: left; height: 21px; margin-right: 11px; padding: 0 6px; text-align: center; color: #333; border: 1px solid #ddd; }
@@ -168,7 +169,7 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .ljtz-box .icoDel, .text .icoDel { display: none; }
 .maskWrap { position: absolute; z-index: 10; left: 0; display: none; overflow: hidden; border: 2px solid #e67c7c; }
 .maskWrap .mask { width: 100%; height: 100%; opacity: .3; background: #f46b6b; filter: alpha(Opacity=20); -moz-opacity: .3; }
-#j-no-method { margin: 0; padding-bottom: 8px; }
+#j-no-method { margin: 0; padding: 8px 0; }
 /* 彩票模型 */
 .search-wrap, .search-result, .result-tip { font-size: 12px; }
 .search-wrap { width: 100%; padding: 10px 25px; border: 1px solid #dfdfdf; background: #f5f5f5; }
@@ -216,8 +217,7 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .u-line2 { border-top: 1px dashed #848484; padding-top: 10px; }
 .result-table .icon-m4, .result-table .icon-m5 { margin-left: 2px; }
 .icon-m4, .icon-m5, .icon-m6 { height: 12px; width: 10px; }
-.icon-m3 { width: 13px; height: 12px; }
-.icon-m3 { background: url(../front_images/jczq/m3.png) no-repeat; }
+.icon-m3 { background: url(../front_images/jczq/m3.png) no-repeat; width: 13px; height: 12px;}
 .icon-m4 { background: url(../front_images/jczq/m4.png) no-repeat; }
 .icon-m5 { background: url(../front_images/jczq/m5.png) no-repeat; }
 .icon-m6 { background: url(../front_images/jczq/m6.png) no-repeat; }
@@ -249,8 +249,9 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .main-hd .text-title { font-size: 14px; }
 .main-hd .time-group { text-align: right; height: 23px; }
 .main-hd .time-group>span { background: #333; color: #f13c38; display: inline-block; padding: 3px 6px; margin: 0 3px; width: 26px; height: 23px; text-align: center; }
-.main-ft { background: #f5f5f5; height: 250px; padding: 10px 15px; }
+.main-ft { background: #f1f1f1; height: 250px; padding: 10px 15px; }
 .ft-hd { background: #fff; padding: 12px 10px; border: 1px #dfdfdf solid; }
+.ft-tou{ background: #fff; border: #dfdfdf; padding: 8px 15px;}
 .ft-main { width: 512px; margin: auto; }
 .ft-main .zhus { margin: 55px 0 20px; }
 .ft-main .zhus h4 { float: left; margin: 0; line-height: 38px; height: 38px; }
@@ -260,8 +261,14 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .icon-m1 { background: url(../front_images/jczq/m1.png) no-repeat; height: 14px; width: 15px; }
 .icon-m2 { background: url(../front_images/jczq/m2.png) no-repeat; height: 14px; width: 12px; }
 .table>tbody>tr>td.s-zhu { padding: 0; }
+.table>tbody>tr>td.s-zhu1{ width: 37px;}
+.table>tbody>tr>td.s-zhu2{ width: 72px;}
+.table>tbody>tr>td.s-zhu3{ width: 107px;}
+.table>tbody>tr>td.s-zhu4{ width: 142px;}
+.table>tbody>tr>td.s-zhu5{ width: 177px;}
+.table>tbody>tr>td.s-zhu6{ width: 212px;}
 .table>tbody>tr>td.s-zhu>div { height: 27px; line-height: 27px; }
-.table>tbody>tr>td.s-zhu>div>span { border-left: 1px #dfdfdf solid; display: inline-block; font-weight: normal; width: 35px; float: left; }
+.table>tbody>tr>td.s-zhu>div>span { border-left: 1px #dfdfdf solid; font-weight: normal; width: 35px; float: left; }
 .table>tbody>tr>td.s-zhu>div>span.first { border: none; }
 .main-hd .m-mn-table>tbody>tr { background: #fff; }
 /* 收藏弹出层 */
@@ -296,7 +303,6 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .history-main .table .bg-f4 { background: #f4f4f4 !important; }
 .no-datatips { height: 200px; line-height: 200px; }
 .history-main .table .h-look>td { background: #e3e3e3; padding: 15px; }
-.text-icon { display: inline-block; width: 18px; height: 18px; line-height: 18px; border-radius: 2px; font-size: 12px; color: #fff; }
 /* 投注确认 */
 .m-detail-box .btns { width: 210px; margin: auto; }
 .m-detail-box .btns .btn { width: 90px; margin: 0 5px; }

@@ -713,12 +713,12 @@ $(function() {
    *Bind Other Tabs Toggle Event
    */
   // Quick, senior toggle
-  $('#br-hd-group a').on('click', function(event) {
+  $('#j-brhd-group a').on('click', function(event) {
 
     if ($(this).hasClass('active')) {
       return;
     } else {
-      $('#br-hd-group .active').removeClass('active');
+      $('#j-brhd-group .active').removeClass('active');
       var t = parseInt($(this).attr('data-t'));
       if (t) {
         $('#quick').addClass('hidden');

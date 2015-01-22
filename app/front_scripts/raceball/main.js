@@ -26,7 +26,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy'], function($, _, BET, APP, store, H) {
+require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy'], function ($, _, BET, APP, store, H) {
   'use strict';
 
   Config.lotyName = 'jczq';
@@ -39,14 +39,14 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     opacity: 1
   });
 
-  var buyTicket = function(obj, type) {
+  var buyTicket = function (obj, type) {
     $.ajax({
         url: '/lottery/jingcai/' + type + '/jczq/' + BET.tab + '_gg',
         type: 'POST',
         dataType: 'json',
         data: obj
       })
-      .done(function(data) {
+      .done(function (data) {
         if (data.retCode == 100000) {
           store.set('lotyName', Config.lotyName);
           store.set('payMoney', Config.payMoney);
@@ -56,15 +56,16 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
           APP.handRetCode(data.retCode, data.retMsg);
         }
       })
-      .fail(function() {
+      .fail(function () {
         APP.onServiceFail();
       });
   };
 
-  var showTipMask = function() {
+  var showTipMask = function () {
     var b = $('#j-game-method');
     var top = b[0].offsetTop;
     var m = $('#tipMark');
+
     $('#j-no-method').show();
     m.css({
       display: 'block',
@@ -73,8 +74,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       top: top,
     });
     var count = 0;
-    var times = function() {
-      m.fadeToggle('fast', function() {});
+    var times = function () {
+      m.fadeToggle('fast', function () {});
       if (count > 5) {
         clearInterval(f);
       }
@@ -83,7 +84,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var f = setInterval(times, 100);
   };
 
-  var checkParams = function() {
+  var checkParams = function () {
     if (_.uniq(BET.match, 'matchcode').length > 8) {
       APP.showTips('您好，投注场次不得超过8场哦');
       return false;
@@ -92,7 +93,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
       return false;
     }
-    if (!BET.zhushu) {
+    if (!BET.match.length) {
+      APP.showTips('请在左侧至少选择2场比赛');
+      return false;
+    }
+    if (!BET.bunch.length) {
       showTipMask();
       return false;
     }
@@ -109,25 +114,26 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 赛事筛选
-  $('#showOption').hover(function() {
+  $('#showOption').hover(function () {
 
     $('#gameSeleList').show();
 
-  }, function() {
+  }, function () {
     $('#gameSeleList').hide();
   });
 
-  $('#gameSeleList').on('click', 'li', function(event) {
+  $('#gameSeleList').on('click', 'li', function (event) {
+
+    var start = [];
+    var isAllHide = false;
 
     $(this).toggleClass('active');
 
-    var start = [];
-
-    $('#gameSeleList li.active').each(function(index, el) {
+    $('#gameSeleList li.active').each(function (index, el) {
       start.push($.trim($(this).text()));
     });
 
-    $('.gameSelect dd').each(function(index, el) {
+    $('.gameSelect dd').each(function (index, el) {
       if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
         $(this).hide();
       } else {
@@ -137,25 +143,26 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   });
 
-  $('#gameSeleList').on('click', '.makeSure', function(event) {
+  $('#gameSeleList').on('click', '.makeSure', function (event) {
 
     var start = [];
 
     if ($('#gameSeleList .icon').hasClass('icon-cgou')) {
-      $('#gameSeleList li.active').each(function(index, el) {
+      $('#gameSeleList li.active').each(function (index, el) {
         start.push($.trim($(this).text()));
       });
       $('#gameSeleList').hide();
+
+      setToggleBtn(start);
+
       store.set('startArr', start);
-    }else{
+    } else {
       store.clear('startArr');
     }
 
-
-
   });
 
-  $('#gameSeleList').on('click', '.icon', function(event) {
+  $('#gameSeleList').on('click', '.icon', function (event) {
     var t = $(this);
     t.toggleClass('icon-cbox').toggleClass('icon-cgou');
   });
@@ -164,7 +171,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var start = store.get('startArr');
 
     if (start) {
-      $('#gameSeleList li').each(function(index, el) {
+      $('#gameSeleList li').each(function (index, el) {
         if (_.indexOf(start, $.trim($(this).text())) >= 0) {
           $(this).addClass('active');
         } else {
@@ -172,39 +179,40 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         }
       });
 
-      $('.gameSelect dd').each(function(index, el) {
+      $('.gameSelect dd').each(function (index, el) {
         if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
-          $(this).addClass('hide');
+          $(this).hide();
         } else {
-          $(this).removeClass('hide');
+          $(this).show();
         }
       });
+      setToggleBtn(start);
     }
 
-    setToggleBtn();
   }
 
-  function setToggleBtn(){
-    $('.gameSelect dl').each(function(index, el) {
-      var isHidden = true;
-      $(this).each(function(index, el) {
-
-      });
-    });
+  function setToggleBtn(start) {
+    var t = $('.j-dataBody-toggle');
+    if (start.length == 0) {
+      t.html('展开').attr('data-show', 0);
+    }else{
+      t.html('隐藏').attr('data-show', 1);
+    }
   }
 
   // 截止时间
-  $('#changeTime').hover(function() {
+  $('#j-changeTime').hover(function () {
     $(this).find('.optionList').show();
-  }, function() {
+  }, function () {
     $(this).find('.optionList').hide();
   });
 
-  $('#changeTime .optionList').on('click', 'a', function(event) {
+  $('#j-changeTime .optionList').on('click', 'a', function (event) {
 
     var type = $(this).attr('data-timeType');
+    $('#j-changeTimeText').html($(this).html());
 
-    $('.dataBody dd').each(function(index, el) {
+    $('.dataBody dd').each(function (index, el) {
       var time = $(this).attr(type);
       $(this).find('.co3 .jtip').html(time);
     });
@@ -212,7 +220,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 合买
-  $('#fqhmBtn').on('click', function(event) {
+  $('#j-fqhmBtn').on('click', function (event) {
 
     var obj = BET.getSubmitParams();
     var c = null;
@@ -221,7 +229,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var tr = $('#selectGamePool tbody tr');
     var t = '';
 
-    tr.each(function(index, el) {
+    tr.each(function (index, el) {
       var e = tr.eq(index);
       if (index % 2 == 0) {
         t += '<tr><td>' + e.find('.t1').html() + '</td><td>' + e.find('.t2').html() + '</td>';
@@ -231,23 +239,25 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     });
 
     Config.payMoney = 1;
-    APP.checkLogin({
-      enoughMoney: function() {
-        c = checkParams();
-        if (c) {
+    c = checkParams();
+    if (c) {
+      APP.checkLogin({
+        enoughMoney: function () {
+
           html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元,共<span id="j-total-zhu">' + obj.zhushu + '</span>注,投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>,理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
           $('#j-tips-table').html(t);
           $('#j-modal-text').html(html);
           H.setHeMaiTotal();
           $('#ballModal').modal('show');
+
         }
-      }
-    });
+      });
+    }
 
   });
 
   // 确认合买
-  $('#j-hemai').on('click', function(event) {
+  $('#j-hemai').on('click', function (event) {
 
     var obj = BET.getSubmitParams();
     var type = 'buy-together';
@@ -261,7 +271,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     Config.payMoney = Number(obj.rengouMoney) + Number(obj.baodiMoney);
 
     APP.checkLogin({
-      enoughMoney: function() {
+      enoughMoney: function () {
         buyTicket(obj, type);
       }
     });
@@ -269,7 +279,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 立即购买
-  $('#ljtzBtn').on('click', function(event) {
+  $('#j-ljtzBtn').on('click', function (event) {
 
     var obj = BET.getSubmitParams();
     var vote = {};
@@ -279,7 +289,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var tbodyHtml = '';
     var bunch = obj.bunch.replace(/\_/g, '串');
 
-    tr.each(function(index, el) {
+    tr.each(function (index, el) {
       var e = tr.eq(index);
       if (index % 2 == 0) {
         tbodyHtml += '<tr><td>' + e.find('.t1').html() + '</td><td>' + e.find('.t2').html() + '</td>';
@@ -292,18 +302,19 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     vote.title = '投注信息确认';
     vote.confirmHtml = '<div class="ljtz-box"><div class="text"><p>投注金额：总计<span class="fc-3">' + Config.payMoney + '</span>元，共' + obj.zhushu + '注，投注' + obj.beishu + '倍</p><table class="table table-bordered"><thead><tr><th>场次</th><th class="gameTeam">主队 VS 客队</th><th style="width:150px;">赛果</th></tr></thead><tbody>' + tbodyHtml + '</tbody></table><p>过关方式：' + bunch + ', 理论最高奖金：<span class="fc-3">' + BET.maxBonus + '</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
-    vote.callback = function() {
+    vote.callback = function () {
       buyTicket(obj, type);
     };
 
-    APP.checkLogin({
-      always: function() {
-        c = checkParams();
-        if (c) {
+    c = checkParams();
+
+    if (c) {
+      APP.checkLogin({
+        enoughMoney: function () {
           APP.onSubmitInit(vote);
-        };
-      }
-    });
+        }
+      });
+    };
 
   });
 

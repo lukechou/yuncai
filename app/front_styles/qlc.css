@@ -1,0 +1,81 @@
+.qlc .touz_area_box_2 .red_area {
+	width: 100%;
+}
+
+.qlc .m-num-group>a {
+	width: 37px;
+	height: 37px;
+	line-height: 37px;
+	font-size: 16px;
+}
+
+.qlc .m-num-group{
+	width: 580px;
+	margin: 0 auto;
+}
+
+.qlc .m-num-title2>p {
+	font-size: 12px;
+	padding: 0;
+	width: 550px;
+}
+
+.qlc .row-code {
+	margin: 0 auto;
+}
+
+.qlc .row_num_title {
+	float: left;
+	font-size: 18px;
+	width: 60px;
+	line-height: 40px;
+	margin: 5px 4px;
+}
+
+.qlc .row-code  .m-num-group {
+	float: left;
+	width: 480px;
+	margin: 0 0 10px -5px;
+}
+
+.qlc .row-code .m-num-group>a {
+	height: 40px;
+	width: 40px;
+	font-size: 16px;
+	line-height: 40px;
+}
+
+.qlc .row-code .quick-method {
+	float: left;
+	margin: 0 0 0 16px;
+	width: 86px;
+}
+
+.qlc .row-code .quick-method span {
+	background: url("http://888pic.gtimg.com/images/trade/ssq/ssq_button_ver3.0.jpg") no-repeat scroll -84px -212px rgba(0, 0, 0, 0);
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 3px 3px;
+	text-align: center;
+	width: 22px;
+}
+
+.qlc .br-zhu {
+	width: 610px;
+	margin: 30px auto;
+}
+
+.qlc .br-zhu-r {
+	width: 80px;
+}
+
+.qlc .br-zhu-item b {
+	float: left;
+	width: 65px;
+	color: #3d3d3d;
+	font-weight: normal;
+	margin-right: 3px;
+}

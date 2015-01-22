@@ -1,5 +1,4 @@
 require.config({
-  urlArgs: "bust=" + (new Date()).getTime(),
   paths: {
     jquery: '../lib/jquery',
     lodash: '../lib/lodash.compat.min',
@@ -18,27 +17,33 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function ($, _, store, chart, APP, model) {
   'use strict';
 
-  APP.bindInputPlace();
-  APP.bindInputOnlyInt();
+  function init() {
+    APP.bindInputPlace();
+    APP.bindInputOnlyInt();
 
-  // 初始化 收藏模块
-  model.init({
-    modal: $('#collect'),
-    starList: $('.td-star-level a'),
-    starLevel: null,
-    modelId: null,
-    starComment: '',
-    modelComment: '',
-  });
+    // 初始化 收藏模块
+    model.init({
+      modal: $('#collect'),
+      starList: $('.td-star-level a'),
+      starLevel: null,
+      modelId: null,
+      starComment: '',
+      modelComment: '',
+    });
 
-  // 初始化 图表
-  chart.init({
-    chartEl: $('#chart')
-  });
-  chart.getChartData('CK_30758');
+    model.bindCollectEvent();
+
+    // 初始化 图表
+    chart.init({
+      chartEl: $('#chart')
+    });
+    chart.getChartData('CK_30758');
+  }
+
+  init();
 
   //输入框
   var $fee = $('#j-money');
@@ -59,18 +64,21 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
   var buyArr = [];
 
   // 获取赔率
-  $('#track_detail_list tr').each(function(index, el) {
+  $('#track_detail_list tr').each(function (index, el) {
 
     var a = [];
-    $(this).find('.j-pei').each(function(i, el) {
-      a.push($(this).text().match(rRate)[0]);
+    var t = 0;
+    $(this).find('.j-pei').each(function (i, el) {
+      t = Number($(this).text());
+      a.push(t);
     });
     peiArr.push(a);
   });
+
   //获取投注内容
-  $('#track_detail_list .j-text').each(function(index, el) {
+  $('#track_detail_list .j-text').each(function (index, el) {
     var b = [];
-    $(this).find('span').each(function(i, el) {
+    $(this).find('span').each(function (i, el) {
       var t = '';
       if ($(this).text() === '胜') t = 0;
       if ($(this).text() === '平') t = 1;
@@ -129,7 +137,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
   }
 
   //未到时间又有键盘事件就取消原来要执行的函数
-  $fee.keyup(function() {
+  $fee.keyup(function () {
     if (feeTimer) {
       clearTimeout(feeTimer); //取消上次执行事件
     }
@@ -138,19 +146,19 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
   //输入金额
   var defaultVal = $fee.val();
-  $fee.focus(function() {
+  $fee.focus(function () {
     if (defaultVal == $fee.val()) {
       $fee.val('').removeClass('gray');
     }
   });
 
-  $fee.blur(function() {
+  $fee.blur(function () {
     if ('' == $fee.val()) {
       $fee.val(defaultVal).addClass('gray');
     }
   });
 
-  $('#j-buy').on('click', function(event) {
+  $('#j-buy').on('click', function (event) {
     event.preventDefault();
 
     window.Config = {};
@@ -163,7 +171,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
     var html = getConfirmHTML(obj);
 
-    if (money <= 0) {
+    if (money < minBuy) {
       APP.showTips('亲,投注金额不能低于 ' + minBuy + ' 元');
       return;
     }
@@ -179,42 +187,41 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     Config.payMoney = money;
 
     APP.checkLogin({
-        enoughMoney: function() {
-          APP.showTips({
-            title: '投注确认',
-            html: html,
-            callback: function() {
-              $('#buyConfirm').unbind('click');
-              $('#buyConfirm').on('click', function(event) {
-                event.preventDefault();
-                $.ajax({
-                    url: '/lottery/trade/model-fast-buy',
-                    type: 'post',
-                    dataType: 'json',
-                    data: obj,
-                  })
-                  .done(function(D) {
-                    if (D.retCode === 100000) {
-                      APP.showTips({
-                        type: 1,
-                        text: '\u8d2d\u4e70\u6210\u529f',
-                        onConfirm: function() {
-                            window.location.reload();
-                        }
-                      });
-                    } else {
-                      APP.handRetCode(D.retCode, D.retMsg);
-                    }
-                  })
-                  .fail(function() {
-                    APP.onServiceFail();
-                  });
-              });
-            }
-          });
-        }
+      enoughMoney: function () {
+        APP.showTips({
+          title: '投注确认',
+          html: html,
+          callback: function () {
+            $('#buyConfirm').unbind('click');
+            $('#buyConfirm').on('click', function (event) {
+              event.preventDefault();
+              $.ajax({
+                  url: '/lottery/trade/model-fast-buy',
+                  type: 'post',
+                  dataType: 'json',
+                  data: obj,
+                })
+                .done(function (D) {
+                  if (D.retCode === 100000) {
+                    APP.showTips({
+                      type: 1,
+                      text: '\u8d2d\u4e70\u6210\u529f',
+                      onConfirm: function () {
+                        window.location.reload();
+                      }
+                    });
+                  } else {
+                    APP.handRetCode(D.retCode, D.retMsg);
+                  }
+                })
+                .fail(function () {
+                  APP.onServiceFail();
+                });
+            });
+          }
+        });
       }
-    );
+    });
 
   });
 
@@ -224,13 +231,13 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     return html;
   }
 
-  var x = setInterval(function() {
+  var x = setInterval(function () {
     updateStopTime();
   }, 1000);
 
   function updateStopTime() {
     var now = $.now();
-    var stop = new Date($('#j-stop-time').val()*1000).getTime();
+    var stop = new Date($('#j-stop-time').val() * 1000).getTime();
     var time = (stop - now) / 1000;
     var html = '';
     var d = '';
@@ -239,12 +246,12 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     var s = '';
 
     if (time > 0) {
-      d = Math.floor(time / 60 / 60/24)
+      d = Math.floor(time / 60 / 60 / 24)
       h = (Math.floor(time / 60 / 60)) % 24;
       m = Math.floor(time / 60 % 60);
       s = Math.floor(time % 60);
 
-      html = '本模型离当前投注截止还剩<span id="j-day">'+d+'</span>天<span id="j-hour">' + h + '</span>小时<span id="j-minute">' + m + '</span>分<span id="j-second">' + s + '</span>秒';
+      html = '本模型离当前投注截止还剩<span id="j-day">' + d + '</span>天<span id="j-hour">' + h + '</span>小时<span id="j-minute">' + m + '</span>分<span id="j-second">' + s + '</span>秒';
     } else {
       html = '本模型当期已截止投注';
       $('#j-stop-td').html('已截止');
