@@ -22,7 +22,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
   function init() {
     APP.bindInputPlace();
-    APP.bindInputOnlyInt();
+    APP.bindInputOnlyInt('.j-only-int');
 
     // 初始化 收藏模块
     model.init({

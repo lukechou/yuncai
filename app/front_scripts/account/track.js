@@ -59,7 +59,7 @@ $(function() {
       makeLotyChoose: function(type) {
         switch (type) {
           case '1':
-            $("#j-all").html('<option value="">全部</option><option value="ssq">双色球</option><option value="dlt">大乐透</option><option value="pl5">排列5</option>');
+            $("#j-all").html('<option value="">全部</option><option value="ssq">双色球</option><option value="dlt">大乐透</option><option value="pl5">排列5</option><option value="pl3">排列3</option><option value="qxc">七星彩</option><option value="qlc">七乐彩</option><option value="fc3d">福彩3D</option>');
             break;
           case '2':
             $("#j-all").html('<option value="">全部</option><option value="gdx">粤11选5</option><option value="dlc">江西11选5</option><option value="syy">十一运夺金</option><option value="xjx">新疆11选5</option><option value="k3">江苏快3</option><option value="jk3">吉林快3</option><option value="hbk3">湖北快3</option><option value="jxssc">江西时时彩</option><option value="gkl">广东快乐十分</option><option value="klpk">快乐扑克3</option>');

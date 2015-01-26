@@ -42,10 +42,10 @@ APP.bindInputPlace();
  * @param  {retMsg} retMsg  Ajaxa Respone Msg
  * @return {null}
  */
-APP.handRetCode = function (retCode, retMsg) {
+APP.handRetCode = function (retCode, retMsg, callback) {
   switch (retCode) {
   case 120002:
-    this.showLoginBox();
+    this.showLoginBox(callback);
     break;
   case 120001:
     this.showTips({
@@ -100,8 +100,7 @@ APP.updateHeadUserInfo = function () {
 
 };
 
-APP.showLoginBox = function () {
-
+APP.showLoginBox = function (callback) {
   var loginModal = null;
 
   if (!$('#user-login')[0]) {
@@ -134,7 +133,11 @@ APP.showLoginBox = function () {
           if (data.retCode == 100000) {
             loginModal.hide();
             APP.updateHeadUserInfo();
-            APP.showTips('登录成功');
+//            APP.showTips('登录成功');
+            if(callback) {
+                callback();
+            }
+            return;
           } else {
             APP.showTips(data.retMsg);
           }

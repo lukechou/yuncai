@@ -175,3 +175,24 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
 .ft-list>li>ul { list-style: disc; font-size: 12px; padding: 0 0 0 16px; }
 .ft-list>li>ul>li>a { color: #545454; line-height: 1.9; }
 .ft-img { padding-left: 140px; }
+
+/* 默认弹出框 */
+.friend-modal .modal-header { padding: 10px 15px; color: #fff; background: #f13c38; }
+.friend-modal .modal-dialog { width: 450px; border: 8px solid rgba(0, 0, 0, .6); }
+.friend-modal .modal-header h4 { font-size: 14px; }
+.friend-modal .modal-header .close { margin-top: -2px; }
+.modal-header .close { font-weight: normal; margin-top: 5px; opacity: 1; color: #fff; }
+.friend-modal.modal.in .modal-dialog { background: #fff; }
+.modal-sure-btn { padding: 5px 35px; color: #fff; background-color: #f13c38; }
+
+/* Login Alert */
+#j-login-modal{ z-index: 100;}
+#j-login-modal .modal-dialog { height: 227px; width: 451px; border: 8px solid rgba(0, 0, 0, 0.3); }
+#j-login-modal .modal-content { border: none; }
+#j-login-modal .modal-header { background: #f13c38; color: #fff; height: 40px; padding: 0 15px; line-height: 40px; }
+#j-login-modal .modal-body { padding-top: 40px; font-size: 12px; }
+#j-login-modal .modal-body .login-form { width: 310px; margin: 0 auto 15px; }
+#j-login-modal .modal-body .login-form label { width: 70px; text-align: right; font-weight: normal; }
+#j-login-modal .modal-body .login-form input { border: 1px #dfdfdf solid; padding: 4px 10px; }
+#j-login-modal .modal-body .btn { padding: 5px 20px; margin-left: 123px; }
+#j-login-modal .modal-body .login-form a { color: #388bf1; margin-left: 5px; }

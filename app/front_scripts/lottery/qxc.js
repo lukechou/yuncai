@@ -208,7 +208,9 @@ $(document).ready(function() {
                 var thirdBitCodes = G_CHOOSE.codes[0][2] || [];
                 var fourthBitCodes = G_CHOOSE.codes[0][3] || [];
                 var fifthBitCodes = G_CHOOSE.codes[0][4] || [];
-                if (!(firstBitCodes.length > 0 && secondBitCodes.length > 0 && thirdBitCodes.length > 0 && fourthBitCodes.length > 0 && fifthBitCodes.length > 0)) {
+                var sixthBitCodes = G_CHOOSE.codes[0][5] || [];
+                var sevenBitCodes = G_CHOOSE.codes[0][6] || [];
+                if (!(firstBitCodes.length > 0 && secondBitCodes.length > 0 && thirdBitCodes.length > 0 && fourthBitCodes.length > 0 && fifthBitCodes.length > 0 && sixthBitCodes.length > 0 && sevenBitCodes.length > 0)) {
                     return;
                 }
 
@@ -222,7 +224,7 @@ $(document).ready(function() {
                         }
                     }
                 }
-                var html = '<div class="br-zhu-item clearfix" databit="' + G_MODIFY_CODE_OBJ.codeKey + '"><b>[常规投注]</b><div class="list"><span data-c="0">' + G_CHOOSE.codes[0][0].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][1].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][2].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][3].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][4].join('') + '</span></div><div class="pull-right"><b><i class="money" data-m="1">' + G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
+                var html = '<div class="br-zhu-item clearfix" databit="' + G_MODIFY_CODE_OBJ.codeKey + '"><b>[常规投注]</b><div class="list"><span data-c="0">' + G_CHOOSE.codes[0][0].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][1].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][2].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][3].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][4].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][5].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][6].join('') + '</span></div><div class="pull-right"><b><i class="money" data-m="1">' + G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
                 G_MODIFY_CODE_OBJ.codeObj.replaceWith(html);
                 bool = true;
                 break;
@@ -498,8 +500,8 @@ $(document).ready(function() {
 
             case 3: // 合买
                 $('#track_desc').addClass('hide');
-                updateCreatePartProjectParame();
                 calculateBuyCodes();
+                updateCreatePartProjectParame();
                 break;
         }
     });
@@ -764,7 +766,7 @@ $(document).ready(function() {
 
     // 更新手动输入注数
     $('#sd_number').on('blur', function(event) {
-        var iptCodes = $(this).val().replace(/，/ig, ',').split("\n");
+        var iptCodes = _.compact($(this).val().replace(/，/ig, ',').split("\n"));
         if (iptCodes == '') {
             $('#choose_zhushu').html(0);
             $('#choose_money').html(0);
@@ -822,6 +824,8 @@ $(document).ready(function() {
                     _this.parents('tr').find('.j-money').html(0);
                 });
                 toggleTabs(newTab, li, pagetype);
+                $('#choose_to_buy_tip').html('添加到投注列表');
+                $('#choose_to_buy').attr('data-add', 1);
             }
             });
         } else {
@@ -1279,7 +1283,8 @@ $(document).ready(function() {
         }
     }
 
-    function buy() {
+    
+    var buy = function() {
         var url = '';
         var codeArr = [];
         for ( var i = 0; i < G_BUY.codes.length; i++) {
@@ -1292,9 +1297,9 @@ $(document).ready(function() {
         }
         ;
         var parameter = {
-        zhushu : G_BUY.zhushu,
-        beishu : G_BUY.mutiple,
-        codes : codeArr.join('$')
+            zhushu : G_BUY.zhushu,
+            beishu : G_BUY.mutiple,
+            codes : codeArr.join('$')
         };
         var comfirmHtml = '';
         switch (G_BUY.buyType) {
@@ -1356,22 +1361,22 @@ $(document).ready(function() {
         }
 
         $.ajax({
-        url : '/account/islogin',
-        type : 'get',
-        dataType : 'json',
+            url : '/account/islogin',
+            type : 'get',
+            dataType : 'json',
         }).done(function(D) {
             if (D.retCode === 100000) {
                 if (Number(D.retData.money.replace(/,/g, '')) >= G_BUY.money) {
                     APP.showTips({
-                    html : comfirmHtml,
-                    title : '投注确认'
+                        html : comfirmHtml,
+                        title : '投注确认'
                     });
                     $('#buyConfirm').on('click', function(event) {
                         $.ajax({
-                        url : url,
-                        type : 'POST',
-                        dataType : 'json',
-                        data : parameter,
+                            url : url,
+                            type : 'POST',
+                            dataType : 'json',
+                            data : parameter,
                         }).done(function(data) {
                             buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, G_BUY.money, G_BUY.lotyName, G_BUY.lotyCNName);
                         }).fail(function() {
@@ -1382,7 +1387,7 @@ $(document).ready(function() {
                     APP.showTips('<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>');
                 }
             } else {
-                APP.handRetCode(D.retCode, D.retMsg);
+                APP.handRetCode(D.retCode, D.retMsg, buy);
             }
         });
     }

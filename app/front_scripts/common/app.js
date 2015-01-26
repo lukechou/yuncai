@@ -72,21 +72,6 @@ define(['jquery'], function ($) {
     };
 
     /**
-     * 过滤字符串
-     * @param  {String} str 字符串
-     * @return {String}   过滤后的字符串
-     */
-    app.prototype.filterStr = function (str) {
-      str = $.trim(str);
-      var pattern = new RegExp("[%--`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——| {}【】‘；：”“'。，、？]")
-      var rs = "";
-      for (var i = 0; i < str.length; i++) {
-        rs = rs + str.substr(i, 1).replace(pattern, '');
-      }
-      return rs;
-    };
-
-    /**
      * Update User Money
      * @return {null}
      */
@@ -101,22 +86,6 @@ define(['jquery'], function ($) {
             $('#userMoney').html(data.retData.money);
           }
         });
-    };
-
-    /**
-     * 获取参数
-     * @param  {url} paraName 获取参数
-     * @return {String}
-     */
-    app.prototype.parseQueryString = function (url) {
-      var re = /[\?&]([^\?&=]+)=([^&]+)/g,
-        matcher = null,
-        items = {};
-      url = url || window.location.search;
-      while (null != (matcher = re.exec(url))) {
-        items[matcher[1]] = decodeURIComponent(matcher[2]);
-      }
-      return items;
     };
 
     /**
@@ -353,14 +322,57 @@ define(['jquery'], function ($) {
     };
 
     /**
-     * 输入框只允许输入整数
-     * @return null
+     * 输入框输入限制 只允许整数
+     * @param  {String} str 输入框 Selector
+     * @return {null}
      */
-    app.prototype.bindInputOnlyInt = function () {
-      $('.j-only-int').on('keyup paste', function (event) {
-        event.preventDefault();
-        $(this).val($(this).val().replace(/\D|^0/g, ''));
-      });
+    app.prototype.bindInputOnlyInt = function (str) {
+
+      if (typeof str === 'string') {
+
+        $(str).on('keyup paste', function (event) {
+          event.preventDefault();
+          $(this).val($(this).val().replace(/\D|^0/g, ''));
+        });
+
+      } else {
+
+        console.log();
+        return;
+
+      }
+
+    };
+
+    /**
+     * 过滤文本内容中含有的脚本等危险信息
+     * @param  {String} str 需要过滤的字符串
+     * @return {String}
+     */
+    app.prototype.filterStr = function (str) {
+      str = str || '';
+      str = decodeURIComponent(str);
+      str = str.replace(/<.*>/g, ''); // 过滤标签注入
+      str = str.replace(/(java|vb|action)script/gi, ''); // 过滤脚本注入
+      str = str.replace(/[\"\'][\s ]*([^=\"\'\s ]+[\s ]*=[\s ]*[\"\']?[^\"\']+[\"\']?)+/gi, ''); // 过滤HTML属性注入
+      str = str.replace(/[\s ]/g, '&nbsp;'); // 替换空格
+      return str;
+    };
+
+    /**
+     * 获取参数
+     * @param  {url} paraName 获取参数
+     * @return {String}
+     */
+    app.prototype.parseQueryString = function (url) {
+      var re = /[\?&]([^\?&=]+)=([^&]+)/g,
+        matcher = null,
+        items = {};
+      url = url || window.location.search;
+      while (null != (matcher = re.exec(url))) {
+        items[matcher[1]] = decodeURIComponent(matcher[2]);
+      }
+      return items;
     };
 
     /**

@@ -7,7 +7,7 @@ require.config({
 		store: '../lib/store.min',
 		app: '../common/app',
 		core: '../lib/core',
-		PL3: '../lottery/pl3_core'
+		PL3: '../lottery/fc3d_core'
 	},
 	shim: {
 		bootstrap: {
@@ -24,7 +24,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	PL3.init({
 		G_BUY: {
 			lotyName: '',
-			lotyCNName: '排列3',
+			lotyCNName: '福彩3D',
 			codes: [],
 			zhushu: 0,
 			mutiple: 1,
@@ -34,8 +34,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			isManual: false,
 			qihao: 0,
 			partnerBuy: {
-				projectTitle: '排列3合买方案', // 方案标题
-				projectDescription: '排列3', // 方案标题
+				projectTitle: '福彩3D合买方案', // 方案标题
+				projectDescription: '福彩3D', // 方案标题
 				partBuyMoney: 0, // 合买认购金额
 				partAegisMoney: 0, // 合买认购金额
 				commissionPercent: 0, // 合买提成
@@ -63,8 +63,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 				this.qihaoId = $('#qihaoId').val();
 				this.qihao = $('#qihao').val();
 				this.partnerBuy = {
-						projectTitle: '排列3合买方案', // 方案标题
-						projectDescription: '排列3', // 方案标题
+						projectTitle: '福彩3D合买方案', // 方案标题
+						projectDescription: '福彩3D', // 方案标题
 						partBuyMoney: 0, // 合买认购金额
 						partAegisMoney: 0, // 合买认购金额
 						commissionPercent: 0, // 合买提成
@@ -810,8 +810,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 			$('#buy_mutiple_span').show();
 
-			PL3.G_BUY.partnerBuy.projectTitle = '排列3合买方案';
-			PL3.G_BUY.partnerBuy.projectDescription = '排列3';
+			PL3.G_BUY.partnerBuy.projectTitle = '福彩3D合买方案';
+			PL3.G_BUY.partnerBuy.projectDescription = '福彩3D';
 
 			// clean partner buy
 			PL3.G_BUY.buyType = parseInt($(this).attr('data-buytype'));

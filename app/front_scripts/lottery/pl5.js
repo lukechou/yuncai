@@ -466,7 +466,6 @@ $(document).ready(function () {
 			break;
 
 		case 2: // 追号
-
 			$('#buy_mutiple_span').hide();
 			$('#track_desc').removeClass('hide');
 			queryTrackIssueList(10);
@@ -479,7 +478,6 @@ $(document).ready(function () {
 			updateCreatePartProjectParame();
 			break;
 		}
-
 	});
 
 	$('#issue_size').on('change', function (event) {
@@ -736,7 +734,7 @@ $(document).ready(function () {
 
 	// 更新手动输入注数
 	$('#sd_number').on('blur', function (event) {
-		var iptCodes = $(this).val().replace(/，/ig, ',').split("\n");
+	    var iptCodes = _.compact($(this).val().replace(/，/ig, ',').split("\n"));
 		if (iptCodes == '') {
 			$('#choose_zhushu').html(0);
 			$('#choose_money').html(0);
@@ -755,7 +753,6 @@ $(document).ready(function () {
 				G_CHOOSE.zhushu += zhushu;
 				G_CHOOSE.money += zhushu * 2;
 			});
-
 			if (!validate) {
 				APP.showTips("第" + (i + 1) + "行：" + PL5.getLastErrorMsg());
 				return;
@@ -795,6 +792,8 @@ $(document).ready(function () {
 						_this.parents('tr').find('.j-money').html(0);
 					});
 					toggleTabs(newTab, li, pagetype);
+					$('#choose_to_buy_tip').html('添加到投注列表');
+			        $('#choose_to_buy').attr('data-add', 1);
 				}
 			});
 		} else {

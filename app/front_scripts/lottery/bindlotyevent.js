@@ -734,7 +734,7 @@ $(function() {
     }
   });
 
-  $('#senior .br-nav').on('click', 'a', function(event) {
+  $('#senior .m-br-nav').on('click', 'a', function(event) {
     var i = $(this).parents('li').index();
     Config.box = $('#senior .box-left').eq(i);
   });
