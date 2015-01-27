@@ -1,0 +1,16 @@
+/* 排列三层级控制类 */
+.box-gdx-1, .box-gdx-2, .box-gdx-3, .box-gdx-4, .box-gdx-5, .box-gdx-6, .box-gdx-7, .box-gdx-8, .box-gdx-9, .box-gdx-10, .box-gdx-11, .box-gdx-12{ display: none; }
+/* 常规投注切换 */
+.j-box-1 .box-gdx-1 { display: block; }
+.j-box-2 .box-gdx-2 { display: block; }
+.j-box-3 .box-gdx-3 { display: block; }
+.j-box-4 .box-gdx-4 { display: block; }
+.j-box-5 .box-gdx-5 { display: block; }
+.j-box-6 .box-gdx-6 { display: block; }
+.j-box-7 .box-gdx-7 { display: block; }
+.j-box-8 .box-gdx-8 { display: block; }
+.j-box-9 .box-gdx-9 { display: block; }
+.j-box-10 .box-gdx-10 { display: block; }
+.j-box-11 .box-gdx-11 { display: block; }
+.j-box-12 .box-gdx-12 { display: block; }
+

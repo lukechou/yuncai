@@ -300,43 +300,6 @@ APP.onServiceFail = function () {
   APP.showTips('服务器繁忙,请稍后再试!');
 };
 
-APP.submitHemai = function (obj) {
-
-  $.ajax({
-      url: obj.joinURI,
-      type: 'get',
-      dataType: 'json',
-      data: {
-        pid: obj.prjctId,
-        buyNum: obj.byNum
-      },
-    })
-    .done(function (data) {
-      if (data.retCode == 100000) {
-        if (obj.onSuccess) {
-          obj.onSuccess();
-        }
-        APP.updateUserMoney();
-        APP.showTips({
-          text: '合买成功!',
-          type: 1,
-          onConfirm: function () {
-            window.location.reload();
-          }
-        });
-        $('body').on('click', '.close', function (event) {
-          window.history.go(0);
-        });
-      } else {
-        APP.handRetCode(data.retCode, data.retMsg);
-      }
-    })
-    .fail(function () {
-      APP.onServiceFail();
-    });
-
-};
-
 ////////////////////////////////////////////////////////////////////////////
 /**
  * ALL Page Common Event

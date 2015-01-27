@@ -1,16 +1,16 @@
-$(function() {
+$(function () {
 
   // Bind  tab change event
-  $('#j-tab').on('click', 'a', function(event) {
-    if($(this).attr('data-x')==0){
+  $('#j-tab').on('click', 'a', function (event) {
+    if ($(this).attr('data-x') == 0) {
       $('#j-total-zhu').show()
-    }else{
+    } else {
       $('#j-total-zhu').hide()
     }
   });
 
   // Bind Input Change Event
-  $('#j-buy').on('change', function() {
+  $('#j-buy').on('change', function () {
 
     var buy = parseInt($(this).val())
     var buyMoney = $('#j-buy-total')
@@ -45,11 +45,11 @@ $(function() {
   });
 
   // 投注
-  $('#buy-submit').on('click', function() {
+  $('#buy-submit').on('click', function () {
     var isAgreen = $('#j-isAgreen')[0].checked
-    if(isAgreen){
+    if (isAgreen) {
       var buy = $('#j-buy').val()
-      if(buy){
+      if (buy) {
         debugger
         // $.ajax({
         //   url: '/path/to/file',
@@ -63,16 +63,16 @@ $(function() {
         // .fail(function() {
         //   console.log("error");
         // });
-      }else{
+      } else {
         APP.showTips('请先填写需要购买份数!')
       }
-    }else{
+    } else {
       APP.showTips('请先阅读委托投注规则,并同意！')
     }
 
   });
 
-  $('#j-ttil').find('input:radio').on('change', function(event) {
+  $('#j-ttil').find('input:radio').on('change', function (event) {
     var type = $(this).val()
     var html = ''
     var table = $('#j-ttil').siblings('.table').find('tbody')

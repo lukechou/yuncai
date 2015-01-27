@@ -1,5 +1,43 @@
 'use strict';
-$(function() {
+$(function () {
+
+  var submitHemai = function (obj) {
+
+    $.ajax({
+        url: obj.joinURI,
+        type: 'get',
+        dataType: 'json',
+        data: {
+          pid: obj.prjctId,
+          buyNum: obj.byNum
+        },
+      })
+      .done(function (data) {
+        if (data.retCode == 100000) {
+          if (obj.onSuccess) {
+            obj.onSuccess();
+          }
+          APP.updateUserMoney();
+          APP.showTips({
+            text: '合买成功!',
+            type: 1,
+            onConfirm: function () {
+              window.location.reload();
+            }
+          });
+          $('body').on('click', '.close', function (event) {
+            window.history.go(0);
+          });
+        } else {
+          APP.handRetCode(data.retCode, data.retMsg);
+        }
+      })
+      .fail(function () {
+        APP.onServiceFail();
+      });
+
+  };
+
 
   var rHd = $('.right-hd');
   if (rHd.length) {
@@ -51,16 +89,16 @@ $(function() {
     return results;
   }
 
-  $('body').on('click', '#hemaiRefresh', function(event) {
+  $('body').on('click', '#hemaiRefresh', function (event) {
     window.location.reload();
   });
 
-  $('#j-buy').on('keyup', function(event) {
+  $('#j-buy').on('keyup', function (event) {
     $(this).val($(this).val().replace(/\D|^0/g, ''));
     updateBuyMoneyTotal();
   });
 
-  $('#j-buy').on('change', function() {
+  $('#j-buy').on('change', function () {
     var v = parseInt(buy.buyTotal.val());
 
     if (isNaN(v)) {
@@ -79,7 +117,7 @@ $(function() {
 
   });
 
-  $('#buy-submit').on('click', function() {
+  $('#buy-submit').on('click', function () {
     var isAgreen = $('#j-isAgreen')[0].checked;
     var template = '';
     var h = '';
@@ -105,7 +143,7 @@ $(function() {
           byNum: b,
           joinURI: $('#j-joinURI').val(),
           prjctId: $('#j-projectId').val(),
-          onSuccess: function() {
+          onSuccess: function () {
 
             v = parseInt(buy.buyTotal.val());
             max = parseInt(HeMai.max);
@@ -146,7 +184,7 @@ $(function() {
         html = {
           html: h,
         };
-        APP.onSubmitConfirm(APP.submitHemai, data, html);
+        APP.onSubmitConfirm(submitHemai, data, html);
       }
     }
 

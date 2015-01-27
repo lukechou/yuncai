@@ -1,6 +1,44 @@
 'use strict';
-$(function() {
-  $('#j-gou').on('click', '.j-gou-btn', function() {
+$(function () {
+
+  var submitHemai = function (obj) {
+
+    $.ajax({
+        url: obj.joinURI,
+        type: 'get',
+        dataType: 'json',
+        data: {
+          pid: obj.prjctId,
+          buyNum: obj.byNum
+        },
+      })
+      .done(function (data) {
+        if (data.retCode == 100000) {
+          if (obj.onSuccess) {
+            obj.onSuccess();
+          }
+          APP.updateUserMoney();
+          APP.showTips({
+            text: '合买成功!',
+            type: 1,
+            onConfirm: function () {
+              window.location.reload();
+            }
+          });
+          $('body').on('click', '.close', function (event) {
+            window.history.go(0);
+          });
+        } else {
+          APP.handRetCode(data.retCode, data.retMsg);
+        }
+      })
+      .fail(function () {
+        APP.onServiceFail();
+      });
+
+  };
+
+  $('#j-gou').on('click', '.j-gou-btn', function () {
 
     var tr = $(this).parents('tr');
     var count = tr.find('.j-gou-count');
@@ -25,7 +63,7 @@ $(function() {
         byNum: b,
         joinURI: tr.find('.joinUrl').val(),
         prjctId: tr.find('.pid').val(),
-        onSuccess: function(d) {
+        onSuccess: function (d) {
           max = max - b;
           count.attr({
             'placeholder': '最多' + max,
@@ -44,7 +82,7 @@ $(function() {
       html = {
         html: h,
       };
-      APP.onSubmitConfirm(APP.submitHemai, data, html);
+      APP.onSubmitConfirm(submitHemai, data, html);
     }
   });
 
@@ -65,11 +103,11 @@ $(function() {
     return c;
   }
 
-  $('body').on('click', '#hemaiRefresh', function(event) {
+  $('body').on('click', '#hemaiRefresh', function (event) {
     window.location.reload();
   });
 
-  $('#projectList').on('change', '.j-gou-count', function(event) {
+  $('#projectList').on('change', '.j-gou-count', function (event) {
     var max = $(this).attr('data-max');
     var v = Number($(this).val());
     if (isNaN(v)) {
@@ -94,7 +132,7 @@ $(function() {
     page: 1
   });
 
-  $('#searchBtn').on('click', function(event) {
+  $('#searchBtn').on('click', function (event) {
     event.preventDefault(); /* Act on the event */
     var status = $('#status').val();
     var tc = $('#tc').val();
