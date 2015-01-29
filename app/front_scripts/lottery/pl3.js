@@ -1843,7 +1843,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 		function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName) {
 			if (retCode == 100000) {
-				debugger
+
 				store.clear();
 				store.set('lotyName', lotyName);
 				store.set('lotyCNName', lotyCNName);

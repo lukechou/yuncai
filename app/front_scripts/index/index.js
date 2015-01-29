@@ -7,7 +7,7 @@ define(['jquery'], function ($) {
       if (!(this instanceof index)) {
         return new index(args);
       }
-      // constructor body
+      // consindetructor body
     }
 
     index.prototype = {
@@ -41,46 +41,60 @@ define(['jquery'], function ($) {
       $('#choseCai a').toggleClass('on');
 
       _this.getQuickStopTime();
-      _this.getHeadStatu();
+      _this.updateHeadUserInfo();
 
       var i = setInterval(function () {
-        _this.timer4lottery(_this.currLotyName);
+        _this.timer4lottery();
         _this.systemTime++;
       }, 1000);
 
-      _this.timer4lottery(_this.currLotyName);
+      _this.timer4lottery();
 
     };
 
     index.prototype.timer4lottery = function () {
 
       var _this = this;
+
       var lotyDomObj = $('#j-quick-buy-loty-detail').find('#' + _this.currLotyName);
-      var issueSellEndTime, diffTime, hours, hour, minute, seconds, redGroup, blueGroup, num;
+
+      var issueSellEndTime, diffTime, hours, day, hour, minute, seconds, redGroup, blueGroup, num;
+      var rightHTML = '';
 
       if (_this.systemTime > 0) {
 
-        issueSellEndTime = lotyDomObj.find('.j-qihao-sell-endtime').val();
+        issueSellEndTime = Number(lotyDomObj.find('.j-qihao-sell-endtime').val());
 
         diffTime = Math.floor((issueSellEndTime - _this.systemTime));
 
         if (diffTime > 0) {
 
           hours = diffTime / 60 / 60;
-          lotyDomObj.find('.j-day').html(Math.floor(hours / 24));
+          day = Math.floor(hours / 24);
           hour = Math.floor(hours % 24);
-          lotyDomObj.find('.j-hour').html((hour < 10) ? '0' + hour : hour);
           minute = Math.floor(diffTime / 60 % 60);
-          lotyDomObj.find('.j-minute').html((minute < 10) ? '0' + minute : minute);
           seconds = diffTime % 60;
-          lotyDomObj.find('.j-second').html((seconds < 10) ? '0' + seconds : seconds);
+
+          if (day > 0) {
+            rightHTML += '<span class="j-day">' + day + '</span>天';
+          }
+
+          if (!(day === 0 && hour === 0)) {
+            rightHTML += '<span class="j-hour">' + hour + '</span>小时';
+          }
+
+          if (!(day === 0 && hour === 0 && minute === 0)) {
+            rightHTML += '<span class="j-minute">' + minute + '</span>分';
+          }
+
+          rightHTML += '<span class="j-second">' + seconds + '</span>秒后截止</span>';
 
         } else {
 
-          $('.pull-right').html('销售时间截止');
+          rightHTML = '销售时间截止';
 
         }
-
+        $('.pull-right').html(rightHTML);
       }
 
       if (false === _this.hasCreate[_this.currLotyName]) {
@@ -131,7 +145,7 @@ define(['jquery'], function ($) {
 
     };
 
-    index.prototype.getHeadStatu = function () {
+    index.prototype.updateHeadUserInfo = function () {
 
       var html = '';
       $.ajax({
@@ -140,7 +154,7 @@ define(['jquery'], function ($) {
         dataType: 'json',
       }).done(function (data) {
         if (data.retCode === 100000) {
-          html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="' + staticHostURI + '/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="http://static3.yuncai.com/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="http://static3.yuncai.com/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a><img src="http://static3.yuncai.com/front_images/top-down.png" alt="bor">';
+          html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="' + staticHostURI + '/front_images/bor.png" alt="bor"/></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"/><a href="/account/logout">退出</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"/><a href="/account/index" class="last">我的账户</a>';
           $('#hd-top').html(html);
         }
       });

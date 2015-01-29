@@ -22,8 +22,9 @@ $(function () {
       dlt: '大乐透',
       jczq: '竞彩足球',
     };
-    var type = lotyNameObj[loty];
-
+//    var type = lotyNameObj[loty];
+    var type = store.get('lotyCNName') || lotyNameObj[loty];
+    
     if (!store.enabled) {
       alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
       return

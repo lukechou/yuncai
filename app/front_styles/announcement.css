@@ -1,47 +1,56 @@
 /* All */
-body { background: #fff; color: #3d3d3d; }
+body { color: #3d3d3d; background: #fff; }
 /* header */
 .hd { width: 100%; background: #212121; }
-.hd-top { background: #3c3d3f; color: #c1c1c1; padding: 2px 0 3px 0; text-align: right; font-size: 12px; }
-.hd-top>div>a { color: #c1c1c1; padding: 0 10px; }
-.hd-top>div>a.last { padding: 0 3px 0 10px; }
-.hd-top>div>a.active { color: #fff; }
+.hd-top { font-size: 12px; padding: 2px 0 3px 0; text-align: right; color: #c1c1c1; background: #3c3d3f; }
+.hd-top > div > a { padding: 0 10px; color: #c1c1c1; }
+.hd-top > div > a.last { padding: 0 12px 0 10px; background: url(../front_images/index/top-down.png) no-repeat center right; }
+.hd-top > div > a.last:hover { background: url(../front_images/index/top-up.png) no-repeat center right; }
+.hd-top > div > a.active { color: #fff; }
 .hd-mn { position: relative; }
-.hd-logo { padding: 15px 0 8px; margin-left: -1px; }
-.hd-nav { height: 40px; }
-.hd-nav>li { position: relative; display: block; float: left; }
-.hd-nav>li>a { position: relative; display: block; padding: 8px 30px 4px; text-decoration: none; color: #fff; font-size: 18px; font-family: 'Microsoft Yahei'; border-bottom: 3px #212121 solid; }
-.hd-nav>li>a.active { border-bottom: 3px #f13c38 solid; }
-.hd-nav>li>a:hover { border-bottom: 3px #f13c38 solid; }
-.hd-nav>li:first-child>a { background: #f13c38; }
-.hd-nav>li:first-child>a>img { float: right; display: block; padding: 9px 0; transition: .3s; }
-.hd-nav>li:first-child>a.on>img { transform: rotate(180deg); }
-.hd-nav>li:first-child>a, .hd-mask>li>a { width: 265px; padding: 6px 20px 6px 15px; }
-.hd-mask { position: absolute; left: 0; background: #212121; display: none; z-index: 101; }
-.hd-mask>li { width: 265px; }
-.hd-mask>li>a { color: #fff; display: block; font-size: 16px; font-family: 'Microsoft Yahei'; border-bottom: 1px #191919 dashed; }
-.hd-mask>li>a:hover { text-decoration: none; background: #1d1d1d; cursor: pointer; }
-.hd-mask>li>a.active { background: #1d1d1d; }
-.hd-mask>li>a>span { color: #a5a5a5; font-size: 12px; padding-left: 15px; }
-.hd-mask-icon { display: inline-block; width: 51px; }
-.hd-mask-list { overflow: hidden; width: 100%; padding-bottom: 8px; }
-.hd-mask-list>li { float: left; position: relative; display: block; text-align: center; width: 33%; }
-.hd-mask-list>li>a { display: block; color: #a5a5a5; font-size: 12px; }
+.hd-logo { margin-left: -1px; padding: 15px 0 8px; }
+.hd-nav, .hd-nav > li > a { height: 36px; }
+.hd-nav > li { position: relative; display: block; float: left; }
+.hd-nav > li > a { font-family: 'Microsoft Yahei'; font-size: 18px; position: relative; display: block; padding: 8px 30px 4px; text-decoration: none; color: #fff; border-bottom: 3px #212121 solid; }
+.hd-nav > li > a.active { border-bottom: 3px #f13c38 solid; }
+.hd-nav > li > a:hover { border-bottom: 3px #f13c38 solid; }
+/* 彩种导航 */
+.hd-nav .seed-nav > a { background: #2b2b2b; *height: 20px; }
+.hd-nav .seed-nav > a > img { display: block; float: right; padding: 9px 0; transition: .3s; }
+.hd-nav .seed-nav > a.on > img { transform: rotate(180deg); }
+.hd-nav .seed-nav > a, .hd-mask > li > a { width: 265px; padding: 6px 20px 6px 15px; }
+.hd-nav .seed-nav > a:hover { border-color: #2b2b2b; }
+.hd-nav .seed-nav li>a.invalid { opacity: 0.5; color: #8a8a8a; }
+.hd-nav .seed-nav li>a.invalid:hover { cursor: default; background: #212121; }
+.hd-mask { position: absolute; z-index: 101; left: 0; display: none; background: #212121; height: 360px; }
+.hd-mask > li { width: 265px; }
+.hd-mask > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; display: block; color: #fff; border-bottom: 1px #2f3032 dashed; }
+.hd-mask > li > a:hover { cursor: pointer; text-decoration: none; background: #1d1d1d; }
+.hd-mask > li > a.active { background: #1d1d1d; }
+.hd-mask > li > a > span { font-size: 12px; padding-left: 11px; color: #a5a5a5; }
+.hd-mask-icon { display: inline-block; width: 50px; }
+.hd-mask-icon > img { width: 42px; height: 42px; margin: auto; }
+.hd-mask-list { overflow: hidden; width: 100%; padding: 10px 20px 6px 15px; }
+.hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 33%; text-align: left; }
+.hd-mask-list > li > a { font-size: 12px; display: block; color: #a5a5a5; }
 /* footer */
-.ft { width: 100%; background: #f5f5f5; padding: 30px 0 50px 0; overflow: hidden; color: #545454; }
-.ft-l { float: left; width: 230px; height: 228px; }
-.ft-l>ul { width: 100%; }
-.ft-l>ul>li { float: left; display: block; width: 50%; text-align: center; font-size: 12px; height: 114px; position: relative; }
-.ft-l>ul>li>img { display: block; margin: auto; }
-.ft-l>ul>li>a { position: absolute; bottom: 10px; left: 40px; color: #a6a7a9; }
-.ft-r { float: left; padding-left: 80px; }
-.ft-list { padding-bottom: 20px; }
-.ft-list>li { float: left; width: 190px; }
-.ft-list>li:last-child { width: 90px; }
-.ft-list>li>h4 { font-size: 20px; }
-.ft-list>li>ul { list-style: disc; font-size: 12px; padding: 0 0 0 16px; }
-.ft-list>li>ul>li>a { color: #545454; line-height: 1.9; }
-.ft-img { padding-left: 140px; }
+.ft { overflow: hidden; width: 100%; padding: 30px 0 50px 0; color: #545454; background: #f5f5f5; }
+.ft-mn { padding-top: 25px; }
+.ft-l { float: left; width: 250px; height: 228px; padding-left: 20px; }
+.ft-l > ul { width: 100%; }
+.ft-l > ul > li { font-size: 12px; position: relative; float: left; width: 100px; height: 105px; text-align: center; }
+.ft-l > ul > li.mb-25 { margin-bottom: 25px; }
+.ft-l > ul > li.mr-30 { margin-right: 30px; }
+.ft-l > ul > li > img { display: block; margin: auto; }
+.ft-l > ul > li > a { position: absolute; bottom: 0; left: 35px; color: #4e4e4e; }
+.ft-r { float: left; width: 720px; padding-left: 80px; *width: 640px; }
+.ft-list { width: 640px; padding-bottom: 20px; }
+.ft-list > li { float: left; width: 183px; }
+.ft-list > li.last { width: 90px; }
+.ft-list > li > h4 { font-size: 20px; }
+.ft-list > li > ul { font-size: 12px; padding: 0 0 0 16px; list-style: disc; }
+.ft-list > li > ul > li > a { line-height: 1.9; color: #545454; }
+.ft-service { font-size: 16px; font-family: '微软雅黑'; font-weight: bold; }
 /* Help Nav */
 .m-help { margin-top: 15px; }
 .m-help-left { width: 220px; float: left; margin-right: 15px; }

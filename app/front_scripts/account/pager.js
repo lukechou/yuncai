@@ -251,7 +251,7 @@ PAGE.loadPrjctLst = function(obj) {
               htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
               break
             default:
-              htmlStatu = '<input type="text" class="u-ci w50 j-gou-count" placeholder="最多' + dataItem.lessNum + '" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
+              htmlStatu = '<input type="text" class="u-ci w50 j-gou-count" placeholder="剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
               htmlUse = '<button data-type="1" class="btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
               break;
           }

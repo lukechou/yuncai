@@ -93,7 +93,7 @@ APP.updateHeadUserInfo = function () {
     })
     .done(function (data) {
       if (data.retCode === 100000) {
-        html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="'+staticHostURI+'/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="http://static3.yuncai.com/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="http://static3.yuncai.com/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a><img src="http://static3.yuncai.com/front_images/top-down.png" alt="bor">';
+        html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="' + staticHostURI + '/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a>';
         $('#hd-top').html(html);
       }
     });
@@ -104,7 +104,7 @@ APP.showLoginBox = function (callback) {
   var loginModal = null;
 
   if (!$('#user-login')[0]) {
-    var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+    var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="javascript:;" id="j-find-pwd">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
     $('body').append(html);
   }
 
@@ -113,11 +113,16 @@ APP.showLoginBox = function (callback) {
   loginModal.modal('show');
 
   $('#user-login').unbind();
+  $('#j-find-pwd').unbind();
+  $('#j-find-pwd').on('click', function (event) {
+    APP.showTips('请致电客服，由客服人员为您解决。<br>客服中心电话：4008-898-310');
+  });
+
   $('#user-login').on('click', function (event) {
     event.preventDefault();
 
-    var user = APP.regStr($('#login-username').val())
-    var pwd = APP.regStr($('#login-password').val())
+    var user = APP.regStr($('#login-username').val());
+    var pwd = APP.regStr($('#login-password').val());
 
     if (user && pwd) {
       $.ajax({
@@ -133,9 +138,8 @@ APP.showLoginBox = function (callback) {
           if (data.retCode == 100000) {
             loginModal.hide();
             APP.updateHeadUserInfo();
-//            APP.showTips('登录成功');
-            if(callback) {
-                callback();
+            if (callback) {
+              callback();
             }
             return;
           } else {
@@ -185,7 +189,7 @@ APP.createShowTipsHTML = function (obj) {
   }
 
   if (!$('#myModal')[0]) {
-    var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
+    var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
     $('body').append(compiled);
 
   } else {
@@ -316,6 +320,16 @@ $(function () {
   function toggleMask(m) {
     m.find('#hdMask').toggle();
     m.find('a').toggleClass('on');
+  }
+
+  var u = window.location.href;
+  if (u.indexOf('hall') >= 0) {
+    $('.hd-nav li a.active').removeClass('active');
+    $('.j-nav-hall').addClass('active');
+  }
+  if (u.indexOf('project-center') >= 0) {
+    $('.hd-nav li a.active').removeClass('active');
+    $('.j-nav-center').addClass('active');
   }
 
 });

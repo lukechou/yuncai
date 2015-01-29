@@ -1,0 +1,71 @@
+.I1x5 .touz_area_box_2 .red_area {
+	width: 100%;
+}
+
+.I1x5 .m-num-title2 > p {
+    font-size: 12px;
+    padding: 0;
+    width: 550px;
+}
+
+.I1x5 .row-code {
+	margin: 0 auto;
+}
+
+.I1x5 .row_num_title {
+	float: left;
+	font-size: 14px;
+	width: 62px;
+	line-height: 40px;
+	margin: 5px 4px;
+}
+
+.I1x5 .row-code  .m-num-group {
+	float: left;
+	/* width: 528px; */
+	margin: 0 0 10px 1px;
+}
+
+.I1x5 .row-code .m-num-group>a {
+	height: 38px;
+	width: 38px;
+	font-size: 15px;
+	line-height: 38px;
+	margin: 5px 4px;
+}
+
+.I1x5 .row-code .quick-method {
+	float: left;
+	margin: 0 0 0 5px;
+	width: 86px;
+}
+
+.I1x5 .row-code .quick-method span {
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 3px 3px;
+	text-align: center;
+	width: 22px;
+	border: 1px solid #dfdfdf;
+	border-radius: 4px;
+}
+
+
+.I1x5 .br-zhu{ width: 610px; margin: 30px auto;}
+.I1x5 .br-zhu-r{ width: 80px;}
+.I1x5 .br-zhu-item b {
+	float: left;
+	width: 65px;
+	color: #3d3d3d;
+	font-weight: normal;
+	margin-right: 3px;
+}
+
+
+.I1x5 .m-br-nav>li>a {
+	position: relative;
+	display: block;
+	padding: 10px 10px;

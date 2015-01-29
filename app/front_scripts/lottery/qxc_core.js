@@ -58,12 +58,18 @@ var QXC={
 	 * @return {[type]}            [description]
 	 */
 	produceCode: function(callback) {
-		var produceCodes = [];
-		for (var m = this.ZhiXuanNormal.oneBetCodeNum-1; m >= 0; m--) {
-			produceCodes[m]=[];
-			produceCodes[m].push(Math.getRandomInt(this.ZhiXuanNormal.minCode,this.ZhiXuanNormal.maxCode));
-		}
-		callback(produceCodes);
+        var produceCodes = [];
+        for (var m = this.ZhiXuanNormal.oneBetCodeNum-1; m >= 0;) {
+            produceCodes[m]=[];
+            var currentCode = Math.getRandomInt(this.ZhiXuanNormal.minCode,this.ZhiXuanNormal.maxCode);
+//            currentCode = currentCode.toString();
+            if($.inArray(currentCode, produceCodes[m]) < 0){
+                produceCodes[m].push(currentCode);
+                m--;
+            }
+        }
+        
+		callback(produceCodes);//.sort()
 		return;
 	},
 

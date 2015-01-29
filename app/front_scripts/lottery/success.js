@@ -27,7 +27,7 @@ $(function () {
       dlt: '大乐透',
       jczq: '竞彩足球',
     };
-    var type = store.get('lotyCNName') || lotyNameObj[loty];
+    var type = store.get('lotyCNName');
     var url = '';
 
     if (!store.enabled) {

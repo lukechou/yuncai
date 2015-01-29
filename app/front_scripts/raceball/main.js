@@ -51,6 +51,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
           store.set('lotyName', Config.lotyName);
           store.set('payMoney', Config.payMoney);
           store.set('projectNo', data.retData.projectNo);
+          store.set('lotyCNName', '竞彩足球');
           window.location.href = '/html/lottery/trade/success.html';
         } else {
           APP.handRetCode(data.retCode, data.retMsg);
@@ -195,7 +196,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var t = $('.j-dataBody-toggle');
     if (start.length == 0) {
       t.html('展开').attr('data-show', 0);
-    }else{
+    } else {
       t.html('隐藏').attr('data-show', 1);
     }
   }
@@ -268,6 +269,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     obj.shareLevel = $('#ballModal .br-set.active').attr('data-set');
     obj.projectTitle = $('#ballModal .j-project-title').val();
     obj.projectText = $('#ballModal .br-textarea').val();
+
     Config.payMoney = Number(obj.rengouMoney) + Number(obj.baodiMoney);
 
     APP.checkLogin({
@@ -297,7 +299,6 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         tbodyHtml += '<td>' + e.find('.betList').html() + '</td></tr>';
       }
     });
-
     Config.payMoney = BET.zhushu * 2 * BET.beishu;
 
     vote.title = '投注信息确认';

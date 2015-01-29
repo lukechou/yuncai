@@ -41,9 +41,6 @@
 }
 
 .pl5 .row-code .quick-method span {
-	background:
-		url("http://888pic.gtimg.com/images/trade/ssq/ssq_button_ver3.0.jpg")
-		no-repeat scroll -84px -212px rgba(0, 0, 0, 0);
 	cursor: pointer;
 	display: inline-block;
 	float: left;
@@ -52,6 +49,8 @@
 	margin: 0 0 3px 3px;
 	text-align: center;
 	width: 22px;
+	border: 1px solid #dfdfdf;
+	border-radius: 4px;
 }
 
 

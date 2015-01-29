@@ -17,26 +17,29 @@ define(['jquery'], function ($) {
      * 全局通用登录弹出框
      * @return {null}
      */
-    app.prototype.showLoginBox = function () {
+    app.prototype.showLoginBox = function (callback) {
 
       var _this = this;
       var loginModal = null;
 
       if (!$('#user-login')[0]) {
-        var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="#">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+        var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="javascript:;" id="j-find-pwd">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
         $('body').append(html);
       };
 
       loginModal = $('#j-login-modal');
       loginModal.on('show.bs.modal', _this.centerModal);
-
       loginModal.modal('show');
-      $('#user-login').unbind();
 
+      $('#user-login').unbind();
+      $('#j-find-pwd').unbind();
+      $('#j-find-pwd').on('click', function (event) {
+        _this.showTips('请致电客服，由客服人员为您解决。<br>客服中心电话：4008-898-310');
+      });
       $('#user-login').on('click', function (event) {
 
-        var user = _this.filterStr($('#login-username').val())
-        var pwd = _this.filterStr($('#login-password').val())
+        var user = _this.filterStr($('#login-username').val());
+        var pwd = _this.filterStr($('#login-password').val());
 
         if (user && pwd) {
           $.ajax({
@@ -51,10 +54,13 @@ define(['jquery'], function ($) {
             .done(function (data) {
               if (data.retCode == 100000) {
                 loginModal.hide();
+                _this.updateHeadUserInfo();
+                if (callback) {
+                  callback();
+                }
+                return;
               } else {
-                _this.showTips({
-                  text: data.retMsg
-                });
+                _this.showTips(data.retMsg);
               }
             })
             .fail(function () {
@@ -69,6 +75,21 @@ define(['jquery'], function ($) {
 
       });
 
+    };
+
+    app.prototype.updateHeadUserInfo = function () {
+      var html = '';
+      $.ajax({
+          url: '/account/islogin',
+          type: 'get',
+          dataType: 'json',
+        })
+        .done(function (data) {
+          if (data.retCode === 100000) {
+            html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="' + staticHostURI + '/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="'+staticHostURI+'/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="'+staticHostURI+'/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a>';
+            $('#hd-top').html(html);
+          }
+        });
     };
 
     /**
@@ -94,12 +115,12 @@ define(['jquery'], function ($) {
      * @param  {retMsg} retMsg  Ajaxa Respone Msg
      * @return {null}
      */
-    app.prototype.handRetCode = function (retCode, retMsg) {
+    app.prototype.handRetCode = function (retCode, retMsg, callback) {
       var _this = this;
 
       switch (retCode) {
       case 120002:
-        _this.showLoginBox();
+        _this.showLoginBox(callback);
         break;
       case 120001:
         _this.showTips({
@@ -207,7 +228,7 @@ define(['jquery'], function ($) {
       }
 
       if (!$('#myModal')[0]) {
-        var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
+        var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
         $('body').append(compiled);
 
       } else {
@@ -337,7 +358,7 @@ define(['jquery'], function ($) {
 
       } else {
 
-        console.log();
+        console.log('error');
         return;
 
       }

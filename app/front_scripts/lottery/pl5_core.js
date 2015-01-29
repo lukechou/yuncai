@@ -39,11 +39,11 @@ var PL5={
 	 * @return {[type]}               [description]
 	 */
 	getZhiXuanZhushu : function(myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes) {
-		var myriabNum = Math.getCombineNum(myriabCodes.length, 1, 'C');
-		var thousandNum = Math.getCombineNum(thousandCodes.length, 1, 'C');
-		var hundredNum = Math.getCombineNum(hundredCodes.length, 1, 'C');
-		var tenNum = Math.getCombineNum(tenCodes.length, 1, 'C');
-		var digitalNum = Math.getCombineNum(digitalCodes.length, 1, 'C');
+		var myriabNum = Math.getCombineNum(myriabCodes.length, 1);
+		var thousandNum = Math.getCombineNum(thousandCodes.length, 1);
+		var hundredNum = Math.getCombineNum(hundredCodes.length, 1);
+		var tenNum = Math.getCombineNum(tenCodes.length, 1);
+		var digitalNum = Math.getCombineNum(digitalCodes.length, 1);
 		return myriabNum * thousandNum * hundredNum * tenNum * digitalNum;
 	},
 
@@ -54,13 +54,18 @@ var PL5={
 	 * @return {[type]}            [description]
 	 */
 	produceCode: function(callback) {
-		var produceCodes = [];
-		for (var m = this.ZhiXuanNormal.oneBetCodeNum-1; m >= 0; m--) {
-			produceCodes[m]=[];
-			produceCodes[m].push(Math.getRandomInt(this.ZhiXuanNormal.minCode,this.ZhiXuanNormal.maxCode));
-		}
-		callback(produceCodes);
-		return;
+        var produceCodes = [];
+        for (var m = this.ZhiXuanNormal.oneBetCodeNum-1; m >= 0;) {
+            produceCodes[m]=[];
+            var currentCode = Math.getRandomInt(this.ZhiXuanNormal.minCode, this.ZhiXuanNormal.maxCode);
+//            currentCode = currentCode.toString();
+            if($.inArray(currentCode, produceCodes[m]) < 0){
+                produceCodes[m].push(currentCode);
+                m--;
+            }
+        }
+        callback(produceCodes.sort());
+        return;
 	},
 
 	/**

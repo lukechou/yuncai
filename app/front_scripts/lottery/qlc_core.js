@@ -68,7 +68,7 @@ var QLC = {
                 produceCodes.push(currentCode);
             }
         }
-        return produceCodes;
+        return produceCodes.sort();
     },
 
     /**
@@ -80,7 +80,7 @@ var QLC = {
      */
     isIllegalCode : function(code, callback) {
         if (!this.Normal.codeRegex.test(code)) {
-            this.errorMsg = "投注号码格式错误, 参考格式:01,02,03,04,05,06,07,08";
+            this.errorMsg = "投注号码格式错误, 参考格式:01,02,03,04,05,06,07, 最多15个号码";
             return false;
         }
         var returnZhushu = 0;
