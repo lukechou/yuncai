@@ -1,43 +1,22 @@
-'use strict';
-$(function () {
+require.config({
+  paths: {
+    jquery: '../lib/jquery',
+    lodash: '../lib/lodash.compat.min',
+    bootstrap: '../lib/bootstrap.min',
+    store: '../lib/store.min',
+    app: '../common/app',
+  },
+  shim: {
+    bootstrap: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
+  }
+});
 
-  var submitHemai = function (obj) {
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store, APP) {
 
-    $.ajax({
-        url: obj.joinURI,
-        type: 'get',
-        dataType: 'json',
-        data: {
-          pid: obj.prjctId,
-          buyNum: obj.byNum
-        },
-      })
-      .done(function (data) {
-        if (data.retCode == 100000) {
-          if (obj.onSuccess) {
-            obj.onSuccess();
-          }
-          APP.updateUserMoney();
-          APP.showTips({
-            text: '合买成功!',
-            type: 1,
-            onConfirm: function () {
-              window.location.reload();
-            }
-          });
-          $('body').on('click', '.close', function (event) {
-            window.history.go(0);
-          });
-        } else {
-          APP.handRetCode(data.retCode, data.retMsg);
-        }
-      })
-      .fail(function () {
-        APP.onServiceFail();
-      });
-
-  };
-
+  'use strict';
 
   var rHd = $('.right-hd');
   if (rHd.length) {
@@ -118,6 +97,7 @@ $(function () {
   });
 
   $('#buy-submit').on('click', function () {
+
     var isAgreen = $('#j-isAgreen')[0].checked;
     var template = '';
     var h = '';
@@ -184,9 +164,57 @@ $(function () {
         html = {
           html: h,
         };
-        APP.onSubmitConfirm(submitHemai, data, html);
+
+        APP.checkLogin(b, {
+          enoughMoney: function () {
+            APP.showTips(html);
+            $('#buyConfirm').one('click', function (event) {
+              submitHemai(data);
+            });
+          }
+        });
+
       }
     }
 
-  })
+  });
+
+  var submitHemai = function (obj) {
+
+    $.ajax({
+        url: obj.joinURI,
+        type: 'get',
+        dataType: 'json',
+        data: {
+          pid: obj.prjctId,
+          buyNum: obj.byNum,
+          unikey:$.now()
+        },
+      })
+      .done(function (data) {
+        if (data.retCode == 100000) {
+          if (obj.onSuccess) {
+            obj.onSuccess();
+          }
+          APP.updateUserMoney();
+          APP.showTips({
+            text: '合买成功!',
+            type: 1,
+            onConfirm: function () {
+              window.location.reload();
+            }
+          });
+          $('body').on('click', '.close', function (event) {
+            window.history.go(0);
+          });
+        } else {
+          APP.handRetCode(data.retCode, data.retMsg);
+        }
+      })
+      .fail(function () {
+        APP.onServiceFail();
+      });
+
+  };
+
 });

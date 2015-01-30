@@ -87,25 +87,25 @@ var Core11x5={
     	getBetNum : function(playType, code) {
     	    switch(playType){
     	        case this.playType.R1:
-    	            return Math.getCombineNum(code[0].length, this.RX.ONE.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.ONE.oneBetCodeNum) : 0;
     	        case this.playType.R2:
-    	            return Math.getCombineNum(code[0].length, this.RX.TWO.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.TWO.oneBetCodeNum) : 0;
     	        case this.playType.R3:
-    	            return Math.getCombineNum(code[0].length, this.RX.THREE.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.THREE.oneBetCodeNum) : 0;
     	        case this.playType.R4:
-    	            return Math.getCombineNum(code[0].length, this.RX.FOUR.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.FOUR.oneBetCodeNum) : 0;
     	        case this.playType.R5:
-    	            return Math.getCombineNum(code[0].length, this.RX.FIVE.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.FIVE.oneBetCodeNum) : 0;
     	        case this.playType.R6:
-    	            return Math.getCombineNum(code[0].length, this.RX.SIX.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.SIX.oneBetCodeNum) : 0;
     	        case this.playType.R7:
-    	            return Math.getCombineNum(code[0].length, this.RX.SEVEN.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.SEVEN.oneBetCodeNum) : 0;
     	        case this.playType.R8:
-    	            return Math.getCombineNum(code[0].length, this.RX.EIGHT.oneBetCodeNum);
+    	            return code[0] ? Math.getCombineNum(code[0].length, this.RX.EIGHT.oneBetCodeNum) : 0;
     	        case this.playType.Z2:
-                    return Math.getCombineNum(code[0].length, this.Z2.oneBetCodeNum);
+                    return code[0] ? Math.getCombineNum(code[0].length, this.Z2.oneBetCodeNum) : 0;
     	        case this.playType.Z3:
-                    return Math.getCombineNum(code[0].length, this.Z3.oneBetCodeNum);
+                    return code[0] ? Math.getCombineNum(code[0].length, this.Z3.oneBetCodeNum) : 0;
     	        case this.playType.Q2:
     	            if(code[0] && code[1]){
     	                return Math.getCombineNum(code[0].length, 1) * Math.getCombineNum(code[1].length, 1);
@@ -168,25 +168,25 @@ var Core11x5={
 
                 case this.playType.Z2:
                     var produceCodes = [];
-                    produceCodes[0]=_.sample(this.baseCode, this.RX.Z2.oneBetCodeNum).sort();
+                    produceCodes[0]=_.sample(this.baseCode, this.Z2.oneBetCodeNum).sort();
                     return produceCodes;
 
                 case this.playType.Z3:
                     var produceCodes = [];
-                    produceCodes[0] = _.sample(this.baseCode, this.RX.Z3.oneBetCodeNum).sort();
+                    produceCodes[0] = _.sample(this.baseCode, this.Z3.oneBetCodeNum).sort();
                     return produceCodes;
 
                 case this.playType.Q2:
                     var produceCodes = [];
-                    produceCodes[0] = _.sample(this.baseCode, this.RX.Q2.oneBetCodeNum).sort();
-                    produceCodes[1] = _.sample(this.baseCode, this.RX.Q2.oneBetCodeNum).sort();
+                    produceCodes[0] = _.sample(this.baseCode, this.Q2.oneBetCodeNum).sort();
+                    produceCodes[1] = _.sample(this.baseCode, this.Q2.oneBetCodeNum).sort();
                     return produceCodes;
 
                 case this.playType.Q3:
                     var produceCodes = [];
-                    produceCodes[0] = _.sample(this.baseCode, this.RX.Q3.oneBetCodeNum).sort();
-                    produceCodes[1] = _.sample(this.baseCode, this.RX.Q3.oneBetCodeNum).sort();
-                    produceCodes[2] = _.sample(this.baseCode, this.RX.Q3.oneBetCodeNum).sort();
+                    produceCodes[0] = _.sample(this.baseCode, this.Q3.oneBetCodeNum).sort();
+                    produceCodes[1] = _.sample(this.baseCode, this.Q3.oneBetCodeNum).sort();
+                    produceCodes[2] = _.sample(this.baseCode, this.Q3.oneBetCodeNum).sort();
                     return produceCodes;
 
                 default:

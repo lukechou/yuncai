@@ -82,13 +82,19 @@ define(['jquery'], function ($) {
         return false;
       }
 
+      if (this.nav.big === 'zx3' || this.nav.big === 'zx6') {
+
+        if (_.uniq(allDigitalCodes).length !== 3) {
+          return false;
+        }
+      }
+
       for (var m = 0; m < allDigitalCodes.length; m++) {
         digitalCodes = allDigitalCodes[m].split('');
         hash = {};
         returnCodes[m] = digitalCodes;
         for (var n = 0; n < digitalCodes.length; n++) {
           if (hash[digitalCodes[n]]) {
-            // this.errorMsg = this.digitalDescMap[m] + "重复投注了:" + digitalCodes[n];
             return false;
           }
           hash[digitalCodes[n]] = true;
@@ -179,10 +185,10 @@ define(['jquery'], function ($) {
     pl3.prototype.getZuXuan3DanTuoZhushu = function (danCodes, tuoCodes) {
       var danLen = danCodes.length;
       var tuoLen = tuoCodes.length;
-      if(danLen===0 || tuoLen ===0){
+      if (danLen === 0 || tuoLen === 0) {
         return 0;
       }
-      var total = Math.getCombineNum(tuoLen, this.ZiXuan3Normal.oneBetCodeNum - danLen)*2;
+      var total = Math.getCombineNum(tuoLen, this.ZiXuan3Normal.oneBetCodeNum - danLen) * 2;
       return total;
     }
 
@@ -219,7 +225,7 @@ define(['jquery'], function ($) {
       var danLen = danCodes.length;
       var tuoLen = tuoCodes.length;
 
-      if(danLen===0 || tuoLen ===0){
+      if (danLen === 0 || tuoLen === 0) {
         return 0;
       }
 
@@ -228,7 +234,6 @@ define(['jquery'], function ($) {
       return total;
 
     };
-
 
     /**
      * 生成直选常规投注号码
@@ -252,6 +257,39 @@ define(['jquery'], function ($) {
       return produceCodes;
     };
 
+    pl3.prototype.getBuyZhuListTitle = function () {
+
+      var title = '';
+
+      var b = {
+        zx: '直选',
+        zx3: '组选三',
+        zx6: '组选六',
+      };
+
+      var t = b[this.nav.big];
+
+      if (this.nav.small === 'cgtz') {
+        if (this.nav.big === 'zx') {
+          title = '普通投注';
+        } else {
+          title = t + '复式';
+        }
+      }
+      if (this.nav.small === 'dt') {
+        title = t + '胆拖';
+      }
+      if (this.nav.small === 'hz') {
+        title = t + '和值';
+      }
+
+      if (this.nav.small === 'up') {
+        title = '手动录入';
+      }
+
+      return title;
+    };
+
     pl3.prototype.makeChooseCodeHtml = function (codes) {
 
       var newCodes = codes;
@@ -260,22 +298,27 @@ define(['jquery'], function ($) {
       var _this = this;
       var money = 0;
       var mdfBtn = '';
-
+      var title = _this.getBuyZhuListTitle();
+      var isHz = _this.nav.small === 'hz' ? ' ' : ',';
       for (var i = 0; i < newCodes.length; i++) {
 
         _this.G_BUY.rowIndex++;
 
-        html += '<div class="br-zhu-item clearfix" dataBit=' + _this.G_BUY.rowIndex + '><b>[常规投注]</b><div class="list">';
+        html += '<div class="br-zhu-item clearfix" dataBit=' + _this.G_BUY.rowIndex + '><b>[' + title + ']</b><div class="list">';
 
         for (var m = 0; m < newCodes[i].length; m++) {
-          html += '<span data-c="0">' + newCodes[i][m].join('') + '</span>';
+          html += '<span data-c="0">' + newCodes[i][m].sort(function (a, b) {
+            return a - b;
+          }).join(isHz) + '</span>';
         };
 
         money = _this.addMoney;
 
         totalMoney += money;
 
-        mdfBtn = (_this.G_BUY.isManual) ? '' : '<a href="javascript:;" class="br-zhu-set">修改</a>';
+        if (_this.nav.small !== 'up') {
+          mdfBtn = (_this.G_BUY.isManual) ? '' : '<a href="javascript:;" class="br-zhu-set">修改</a>';
+        }
 
         html += '</div><div class="pull-right"><b><i class="money" data-m="1">' + money + '</i>元</b>' + mdfBtn + '<a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
 

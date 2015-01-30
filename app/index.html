@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +10,14 @@
   <meta name="Keywords" content="彩胜网">
   <meta name="Description" content="彩胜网">
   <meta name="author" content="彩胜网">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link rel="stylesheet" href="front_styles/lib/lrkf/skin.css">
   <link rel="stylesheet" href="front_styles/bootstrap.min.css">
   <link rel="stylesheet" href="front_styles/icon.css">
   <link rel="stylesheet" href="front_styles/index.css?version=1.2.0"></head>
 <body>
-  <div class="hd">
+    <div class="hd">
     <div class="hd-top">
       <div class="w985" id="hd-top">
         <span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;请</span>
@@ -19,7 +26,6 @@
         <a href="/account/register">免费注册</a>
         <img src="front_images/bor.png" alt="bor"/>
         <a href="/account/index" class="last">我的账户</a>
-        <img src="front_images/top-down.png" alt="bor"/>
       </div>
     </div>
     <div class="hd-mn w985">
@@ -30,7 +36,7 @@
       </div>
       <!-- /.hd-logo-->
       <ul class="hd-nav">
-        <li id="choseCai">
+        <li id="choseCai" class="seed-nav">
           <a href="javascript:;">
             选择彩种
             <img src="front_images/h-down.png" alt="down" />
@@ -42,7 +48,7 @@
                   <img src="front_images/lottery/jczq_home_logo.png" alt="竞彩足球"/>
                 </div>
                 竞彩足球
-                <span>返奖率69%</span>
+                <span>返奖率73%</span>
               </a>
             </li>
             <li>
@@ -73,12 +79,12 @@
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="/lottery/buy/qlc">
                 <div class="hd-mask-icon">
-                  <img src="front_images/lottery/pl3_home_logo.png" alt="排列3"/>
+                  <img src="front_images/lottery/qlc_home_logo.png" alt="七乐彩"/>
                 </div>
-                排列3
-                <span>猜三位数赢千元</span>
+                七乐彩
+                <span>30选7猜中赢百万</span>
               </a>
             </li>
             <li>
@@ -124,41 +130,30 @@
           <a href="/lottery/project-center/ssq/">合买大厅</a>
         </li>
       </ul>
-    </div>
+  </div>
   </div>
   <div class="page">
-    <div class="section bg-0">
+    <div class="section bg-5">
       <div class="page-hd">
         <div id="owl-example" class="owl-carousel">
-          <div class="carousel">
-            <img data-src="front_images/banner.jpg" class="er lazyOwl" alt="Banner"/>
-          </div>
-          <div class="carousel">
-            <img data-src="front_images/banner.jpg" class="er lazyOwl" alt="Banner"/>
-          </div>
-          <div class="carousel">
-            <img data-src="front_images/banner.jpg" class="er lazyOwl" alt="Banner"/>
-          </div>
-          <div class="carousel">
-            <img data-src="front_images/banner.jpg" class="er lazyOwl" alt="Banner"/>
+          <div class="carousel bn2-bg">
+            <a href="/lottery/buy/jczq"><img data-src="front_images/index/banner-2.jpg" class="small lazyOwl" alt="Banner"/></a></div>
+          <div class="carousel bn3-bg">
+            <a href="/lottery/trade/model-index"><img data-src="front_images/index/banner-3.jpg" class="small lazyOwl" alt="Banner"/></a>
+            <div class="bn3-left"></div>
           </div>
         </div>
         <div class="sticky">
           <div class="mask"></div>
           <div class="main">
-            <img src="http://static3.yuncai.com
-            /front_images/bei.png" alt="奖杯" class="bei">
+            <img src="front_images/bei.png" alt="奖杯" class="bei">
             <p>本站累计中奖</p>
-            <p class="fs-18"> <b>100亿3894万</b>
+            <p class="fs-18"> <b id="j-week-total"></b>
             </p>
-            <img src="http://static3.yuncai.com
-            /front_images/index-hd.png" alt="头像" class="head">
+            <img src="front_images/index-hd.png" alt="头像" class="head">
             <p>本周中奖小明星</p>
-            <p class="fs-14 fs-yh">超级小霸王啊..</p>
-            <p class="bottom">
-              我心爱..中奖
-              <span>199</span>
-              元
+            <p class="fs-14 fs-yh" id="j-week-start"></p>
+            <p class="bottom" id="j-week-text">
             </p>
           </div>
         </div>
@@ -166,246 +161,190 @@
     </div>
     <!-- /.page-hd-->
     <div class="section bg-3">
-      <div class="page-new">
+        <div class="page-new">
         <div class="m-title"> <i class="icon icon-dot"></i>
-          <span>公告</span>
-          <ul class="new-ls clearfix">
-            <li>
-              <a href="/announcement?id=9" title="【01-21】11111111111111111111">【01-21】111111111111...</a>
-            </li>
-            <li>
-              <a href="/announcement?id=6" title="【01-19】签间隔请用逗号分隔开来,">【01-19】签间隔请用逗号分隔开来,</a>
-            </li>
-            <li>
-              <a href="/announcement?id=5" title="【01-19】标签间隔请用逗号分隔开来,3">【01-19】标签间隔请用逗号分隔开来...</a>
-            </li>
-            <li>
-              <a href="/announcement?id=1" title="【01-19】最多20个字最多20个字最多20个字">【01-19】最多20个字最多20个字...</a>
-            </li>
-          </ul>
-          <a href="/announcement" class="more">更多</a>
-        </div>
+        <span>公告</span>
+        <ul class="new-ls clearfix"><li><a href="/announcement?id=9" title="【01-21】11111111111111111111">【01-21】111111111111...</a></li><li><a href="/announcement?id=6" title="【01-19】签间隔请用逗号分隔开来,">【01-19】签间隔请用逗号分隔开来,</a></li><li><a href="/announcement?id=5" title="【01-19】标签间隔请用逗号分隔开来,3">【01-19】标签间隔请用逗号分隔开来...</a></li><li><a href="/announcement?id=1" title="【01-19】最多20个字最多20个字最多20个字">【01-19】最多20个字最多20个字...</a></li>
+      </ul>
+      <a href="/announcement" class="more">更多</a>
       </div>
-    </div>
+      </div>
+      </div>
     <div class="section bg-1">
       <div class="page-quick clearfix">
         <div class="box-left">
-          <div class="m-title"> <i class="icon icon-dot"></i>
-            <span>快速投注</span>
-            <ul class="nav m-title-ls clearfix" id="j-quick-buy-loty-type" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#ssq" role="tab" data-toggle="tab" data-seed="ssq">双色球</a>
-              </li>
-              <li role="presentation">
-                <a href="#dlt" role="tab" data-toggle="tab" data-seed="dlt">大乐透</a>
-              </li>
-              <li role="presentation">
-                <a href="#pl5" role="tab" data-toggle="tab" data-seed="pl5">排列5</a>
-              </li>
-            </ul>
-            <a href="/lottery/buy/ssq" target="_black" class="more" id="j-go-buy-page">自选号码</a>
-          </div>
-          <!-- /.m-title-->
-          <!-- Tab panes -->
-          <div class="tab-content" id="j-quick-buy-loty-detail">
-            <div role="tabpanel" class="tab-pane fade in active" id="ssq">
-              <div class="tou">
-                <div class="tou-hd clearfix">
-                  <img src="front_images/ssq-title.png" alt="双色球" class="ball">
-                  <ul class="tou-ls clearfix">
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li class="blue">00</li>
-                  </ul>
-                  <button class="btn btn-change">换一注</button>
-                  <button class="btn btn-tou">立即投注</button>
-                </div>
-                <p class="tips">
-                  15013期
-                  <span class="ml-30">双色球平均每期能诞生11个千万富豪哦~</span>
-                  <span class="pull-right">
-                    <span class="j-day">-</span>
-                    天
-                    <span class="j-hour">--</span>
-                    小时
-                    <span class="j-minute">--</span>
-                    分
-                    <span class="j-second">--</span>
-                    秒后截止
-                  </span>
-                </p>
-              </div>
-              <input type="hidden" class="j-qihao-id"  name="qihao_id" value="60" />
-              <input type="hidden" class="j-qihao"  name="qihao" value="15013" />
-              <input type="hidden" id="playName" name="playName" value="0" />
-              <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1422531900" />
-            </div>
-            <div role="tabpanel" class="tab-pane fade in " id="dlt">
-              <div class="tou">
-                <div class="tou-hd clearfix">
-                  <img src="front_images/dlt-title.png" alt="大乐透" class="ball">
-                  <ul class="tou-ls clearfix">
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li class="blue">00</li>
-                    <li class="blue">00</li>
-                  </ul>
-                  <button class="btn btn-change">换一注</button>
-                  <button class="btn btn-tou">立即投注</button>
-                </div>
-                <p class="tips">
-                  15010期
-                  <span class="ml-30">0元滚存</span>
-                  <span class="pull-right">
-                    <span class="j-day">-</span>
-                    天
-                    <span class="j-hour">--</span>
-                    小时
-                    <span class="j-minute">--</span>
-                    分
-                    <span class="j-second">--</span>
-                    秒后截止
-                  </span>
-                </p>
-              </div>
-              <input type="hidden" class="j-qihao-id"  name="qihao_id" value="42" />
-              <input type="hidden" class="j-qihao"  name="qihao" value="15010" />
-              <input type="hidden" id="playName" name="playName" value="0" />
-              <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1422099900" />
-            </div>
-            <div role="tabpanel" class="tab-pane fade in " id="pl5">
-              <div class="tou">
-                <div class="tou-hd clearfix">
-                  <img src="front_images/pl5-title.png" alt="排列5" class="ball">
-                  <ul class="tou-ls clearfix">
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                    <li>00</li>
-                  </ul>
-                  <button class="btn btn-change">换一注</button>
-                  <button class="btn btn-tou">立即投注</button>
-                </div>
-                <p class="tips">
-                  15023期
-                  <span class="ml-30">0元滚存，天天开奖</span>
-                  <span class="pull-right">
-                    <span class="j-day">-</span>
-                    天
-                    <span class="j-hour">--</span>
-                    小时
-                    <span class="j-minute">--</span>
-                    分
-                    <span class="j-second">--</span>
-                    秒后截止
-                  </span>
-                </p>
-              </div>
-              <input type="hidden" class="j-qihao-id"  name="qihao_id" value="18" />
-              <input type="hidden" class="j-qihao"  name="qihao" value="15023" />
-              <input type="hidden" id="playName" name="playName" value="10" />
-              <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1422025200" />
-            </div>
-          </div>
-        </div>
+  <div class="m-title">
+    <i class="icon icon-dot"></i>
+    <span>快速投注</span>
+    <ul class="nav m-title-ls clearfix" id="j-quick-buy-loty-type" role="tablist">
+      <li role="presentation" class="active"><a href="#ssq" role="tab" data-toggle="tab" data-seed="ssq">双色球</a></li>
+      <li role="presentation"><a href="#dlt" role="tab" data-toggle="tab" data-seed="dlt">大乐透</a></li>
+      <li role="presentation"><a href="#pl5" role="tab" data-toggle="tab" data-seed="pl5">排列5</a></li>
+    </ul>
+    <a href="/lottery/buy/ssq" target="_black" class="more" id="j-go-buy-page">自选号码</a>
+  </div>
+  <!-- /.m-title-->
+  <!-- Tab panes -->
+  <div class="tab-content" id="j-quick-buy-loty-detail">
+    <div role="tabpanel" class="tab-pane fade in active" id="ssq">
+          <div class="tou">
+            <div class="tou-hd clearfix">
+              <img src="front_images/ssq-title.png" alt="双色球" class="ball">
+              <ul class="tou-ls clearfix">  <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li class="blue">00</li>
+      </ul>
+      <button class="btn btn-change">换一注</button>
+      <button class="btn btn-tou">立即投注</button>
+      </div>
+      <p class="tips">15013期<span class="ml-30">双色球平均每期能诞生11个千万富豪哦~</span>
+      <span class="pull-right">
+      <span class="j-day">-</span>天<span class="j-hour">--</span>小时<span class="j-minute">--</span>分<span class="j-second">--</span>秒后截止
+      </span>
+      </p>
+      </div>
+      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="60" />
+      <input type="hidden" class="j-qihao"  name="qihao" value="15013" /><input type="hidden" id="playName" name="playName" value="0" />
+      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1422531900" />
+    </div>
+    <div role="tabpanel" class="tab-pane fade in " id="dlt">
+          <div class="tou">
+            <div class="tou-hd clearfix">
+              <img src="front_images/dlt-title.png" alt="大乐透" class="ball">
+              <ul class="tou-ls clearfix">  <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li class="blue">00</li>
+              <li class="blue">00</li>
+      </ul>
+      <button class="btn btn-change">换一注</button>
+      <button class="btn btn-tou">立即投注</button>
+      </div>
+      <p class="tips">15013期<span class="ml-30">0元滚存 </span>
+      <span class="pull-right">
+      <span class="j-day">-</span>天<span class="j-hour">--</span>小时<span class="j-minute">--</span>分<span class="j-second">--</span>秒后截止
+      </span>
+      </p>
+      </div>
+      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="45" />
+      <input type="hidden" class="j-qihao"  name="qihao" value="15013" /><input type="hidden" id="playName" name="playName" value="0" />
+      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1422704700" />
+    </div>
+    <div role="tabpanel" class="tab-pane fade in " id="pl5">
+          <div class="tou">
+            <div class="tou-hd clearfix">
+              <img src="front_images/pl5-title.png" alt="排列5" class="ball">
+              <ul class="tou-ls clearfix">  <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li>00</li>
+              <li>00</li>
+      </ul>
+      <button class="btn btn-change">换一注</button>
+      <button class="btn btn-tou">立即投注</button>
+      </div>
+      <p class="tips">15023期<span class="ml-30">0元滚存，天天开奖</span>
+      <span class="pull-right">
+      <span class="j-day">-</span>天<span class="j-hour">--</span>小时<span class="j-minute">--</span>分<span class="j-second">--</span>秒后截止
+      </span>
+      </p>
+      </div>
+      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="18" />
+      <input type="hidden" class="j-qihao"  name="qihao" value="15023" /><input type="hidden" id="playName" name="playName" value="10" />
+      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1422025200" />
+    </div>
+  </div>
+</div>
 
         <!-- /.box-left-->
         <div class="box-right">
-          <div class="m-title">
-            <ul class="nav m-title-ls clearfix" id="j-tou" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#home" role="tab" data-toggle="tab" data-type="0">模型推荐</a>
-              </li>
-              <li role="presentation">
-                <a href="#profile" role="tab" data-toggle="tab" data-type="1">单场决胜</a>
-              </li>
-              <li role="presentation">
-                <a href="#messages" role="tab" data-toggle="tab" data-type="2">幸运投注</a>
-              </li>
-            </ul>
-            <a href="javascript:;" id="j-huan-one" class="more">换一场</a>
-          </div>
-          <!-- /.m-title-->
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="home">
-              <div class="map">
-                <img src="http://static3.yuncai.com
-        /front_images/map.jpg" alt="走势图"/>
-                <p>模型编号：[CD_60275]</p>
-                <p>
-                  最近30天,27投
-                  <span>12</span>
-                  中，回报率
-                  <span>295.23%</span>
-                  <a class="btn" href="/lottery/trade/model-detail?model_id=CD_60275&status=1">点击查看详情</a>
-                </p>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane fade d-tou" id="profile">
-              <div class="head clearfix">
-                <div class="text">
-                  <p>切塞切塞纳 VS 切塞纳切</p>
-                  <p>比赛时间：09-28 21:00</p>
-                </div>
-                <img src="http://static3.yuncai.com
-        /front_images/team.jpg" alt="team" class="pull-left">
-                <img src="http://static3.yuncai.com
-        /front_images/team.jpg" alt="team" class="pull-right"></div>
-              <ul class="mid clearfix" id="j-d-tou">
-                <li class="first active">胜5.70</li>
-                <li>平5.70</li>
-                <li>负5.70</li>
-              </ul>
-              <div class="foot">
-                投注金额：
-                <select name="" id="">
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                </select>
-                元
-                <button class="btn btn-tou">立即投注</button>
-              </div>
-            </div>
-            <div role="tabpanel" class="tab-pane fade x-tou" id="messages">
-              <div class="pull-left">
-                <img src="http://static3.yuncai.com
-        /front_images/now.png" alt="金牛座"/>
-                <p>金牛座</p>
-                <p>4.21-5.20</p>
-              </div>
-              <div class="pull-right">
-                <ul>
-                  <li>
-                    幸运数字：
-                    <span class="fs-18" id="luckyNum">10</span>
-                  </li>
-                  <li>今日运程：有意外财运，可能是</li>
-                  <li>升职、奖金、礼物。</li>
-                  <li>
-                    <button class="btn btn-tou">立即投注</button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+  <div class="m-title">
+    <ul class="nav m-title-ls clearfix m0" id="j-tou" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#home" role="tab" data-toggle="tab" data-type="0">模型推荐</a>
+      </li>
+      <!--li role="presentation">
+        <a href="#profile" role="tab" data-toggle="tab" data-type="1">单场决胜</a>
+      </li-->
+      <!--li role="presentation">
+        <a href="#messages" role="tab" data-toggle="tab" data-type="2">幸运投注</a>
+      </li-->
+    </ul>
+    <a href="javascript:;" id="j-huan-one" class="more">换一场</a>
+  </div>
+  <!-- /.m-title-->
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="home">
+      <div class="map">
+        <img src="front_images/map.jpg" alt="走势图"/>
+                <p>模型编号：[CD_60275]</p><p>最近30天,27投<span>12</span>中，回报率<span>295.23%</span><a class="btn" href="/lottery/trade/model-detail?model_id=CD_60275&status=1">点击查看详情</a></p>
+      </div>
+    </div>
+    <!--div role="tabpanel" class="tab-pane fade d-tou" id="profile">
+      <div class="head clearfix">
+        <div class="text">
+          <p>切塞切塞纳 VS 切塞纳切</p>
+          <p>比赛时间：09-28 21:00</p>
         </div>
-        <!-- /.box-right--> </div>
-      <!-- /.quick--> </div>
+        <img src="http://static3.yuncai.com
+        /front_images/team.jpg" alt="team" class="pull-left">
+        <img src="http://static3.yuncai.com
+        /front_images/team.jpg" alt="team" class="pull-right">
+      </div>
+      <ul class="mid clearfix" id="j-d-tou">
+        <li class="first active">胜5.70</li>
+        <li>平5.70</li>
+        <li>负5.70</li>
+      </ul>
+      <div class="foot">
+        投注金额：
+        <select name="" id="">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+        元
+        <button class="btn btn-tou">立即投注</button>
+      </div>
+    </div-->
+    <!--div role="tabpanel" class="tab-pane fade x-tou" id="messages">
+      <div class="pull-left">
+        <img src="http://static3.yuncai.com
+        /front_images/now.png" alt="金牛座"/>
+        <p>金牛座</p>
+        <p>4.21-5.20</p>
+      </div>
+      <div class="pull-right">
+        <ul>
+          <li>
+            幸运数字：
+            <span class="fs-18" id="luckyNum">10</span>
+          </li>
+          <li>今日运程：有意外财运，可能是</li>
+          <li>升职、奖金、礼物。</li>
+          <li>
+            <button class="btn btn-tou">立即投注</button>
+          </li>
+        </ul>
+      </div>
+    </div-->
+  </div>
+</div>
+        <!-- /.box-right-->
+      </div>
+      <!-- /.quick-->
+    </div>
     <div class="section bg-2">
       <div class="page-he clearfix">
         <div class="box-left">
-          <div class="m-title">
-            <i class="icon icon-dot"></i>
+          <div class="m-title"> <i class="icon icon-dot"></i>
             <span>合买</span>
             <ul class="nav m-title-ls clearfix" id="j-model-nav">
               <li class="active" data-loty="jczq">
@@ -418,19 +357,17 @@
                 <a href="javascript:;">双色球</a>
               </li>
             </ul>
-            <a href="#" class="more">更多跟买</a>
+            <a href="/lottery/project-center/jczq" class="more" id="j-model-more" target="_blank">更多合买</a>
           </div>
           <div id="owl-demo" class="owl-carousel owl-theme"></div>
           <div class="model-tips" id="j-model-tips">
 
-            <img src="http://static3.yuncai.com
-            /front_images/loader.gif" alt="loadding" class="loader" id="j-model-loader">
+            <img src="front_images/loader.gif" alt="loadding" class="loader" id="j-model-loader">
             <div class="model-box fs-12" id="j-model-box">
-              <img src="http://static3.yuncai.com
-              /front_images/index/model-tip.png" alt="暂无合买方案">
+              <img src="front_images/index/model-tip.png" alt="暂无合买方案">
               <p>
                 当前暂无合买方案。亲，
-                <a href="/lottery/project-center/jczq/">马上去发起</a>
+                <a href="/lottery/buy/jczq/" target="_blank" id="j-model-link">马上去发起</a>
                 ，您就是今天的彩胜第一发起人
               </p>
             </div>
@@ -438,257 +375,240 @@
         </div>
         <!-- /.box-left-->
         <div class="box-right">
-          <div class="page-item">
-            <div class="m-title">
-              <i class="icon icon-dot"></i>
-              <span>开奖号码</span>
-            </div>
-            <div class="kj-cont">
-              <div id="js_prize_loading" style="display: none;" class="load-img"></div>
-              <ul class="mod-ls">
+  <div class="page-item">
+    <div class="m-title">
+      <i class="icon icon-dot"></i>
+      <span>开奖号码</span>
+    </div>
+    <div class="kj-cont">
+      <div id="js_prize_loading" style="display: none;" class="load-img"></div>
+      <ul class="mod-ls">
 
-                <li class="first-list">
-                  <div class="mod-kj">
-                    <div class="lot-title">
-                      <span class="lot-name">双色球</span>
-                      <span class="lot-issue">15006期</span>
-                    </div>
-                    <ul class="num-list clearfix">
-                      <li>01</li>
-                      <li>02</li>
-                      <li>03</li>
-                      <li>04</li>
-                      <li>05</li>
-                      <li>06</li>
-                      <li class="num-blue">08</li>
-                    </ul>
-                    <div class="links">
-                      <span class="lot-time">
-                        开奖
-                        <span>01-13 19:45 21:40</span>
-                      </span>
-                      <!--
+      <li class="first-list">
+        <div class="mod-kj">
+          <div class="lot-title">
+            <span class="lot-name">双色球</span>
+            <span class="lot-issue">15006期</span>
+          </div>
+          <ul class="num-list clearfix"><li>01</li>
+            <li>02</li>
+            <li>03</li>
+            <li>04</li>
+            <li>05</li>
+            <li>06</li>
+            <li class="num-blue">08</li></ul>
+          <div class="links">
+            <span class="lot-time">开奖<span>01-13 19:45 21:40</span></span>
+            <!--
             <a title="开奖信息" class="first-link" data-bctag="40094.11.2" id="rss_ssq" data-type="ssq" href="###">订阅</a>
-                    <a target="_blank" href="#">走势</a>
-                    -->
-                    <a target="_blank" href="/lottery/buy/ssq">我要投注</a>
-                  </div>
-                </div>
-              </li>
+            <a target="_blank" href="#">走势</a>-->
+            <a target="_blank" href="/lottery/buy/ssq">我要投注</a>
+          </div>
+        </div>
+      </li>
 
-              <li class="first-list">
-                <div class="mod-kj">
-                  <div class="lot-title">
-                    <span class="lot-name">大乐透</span>
-                    <span class="lot-issue">15008期</span>
-                  </div>
-                  <ul class="num-list clearfix">
-                    <li>07</li>
-                    <li>10</li>
-                    <li>11</li>
-                    <li>15</li>
-                    <li>17</li>
-                    <li class="num-blue">03</li>
-                    <li class="num-blue">10</li>
-                  </ul>
-                  <div class="links">
-                    <span class="lot-time">
-                      开奖
-                      <span>01-19 20:40</span>
-                    </span>
-                    <!--
+      <li class="first-list dlt-item">
+        <div class="mod-kj">
+          <div class="lot-title">
+            <span class="lot-name">大乐透</span>
+            <span class="lot-issue">15012期</span>
+          </div>
+          <ul class="num-list clearfix"><li>01</li>
+            <li>02</li>
+            <li>03</li>
+            <li>04</li>
+            <li>05</li>
+            <li class="num-blue">06</li>
+            <li class="num-blue">08</li></ul>
+          <div class="links">
+            <span class="lot-time">开奖<span>01-28 20:40</span></span>
+            <!--
             <a title="开奖信息" class="first-link" data-bctag="40094.11.2" id="rss_ssq" data-type="ssq" href="###">订阅</a>
-                  <a target="_blank" href="#">走势</a>
-                  -->
-                  <a target="_blank" href="/lottery/buy/dlt">我要投注</a>
-                </div>
-              </div>
-            </li>
+            <a target="_blank" href="#">走势</a>-->
+            <a target="_blank" href="/lottery/buy/dlt">我要投注</a>
+          </div>
+        </div>
+      </li>
 
-            <li class="first-list">
-              <div class="mod-kj">
-                <div class="lot-title">
-                  <span class="lot-name">排列5</span>
-                  <span class="lot-issue">15015期</span>
-                </div>
-                <ul class="num-list clearfix">
-                  <li>1</li>
-                  <li>2</li>
-                  <li>3</li>
-                  <li>4</li>
-                  <li>5</li>
-                </ul>
-                <div class="links">
-                  <span class="lot-time">
-                    开奖
-                    <span>01-15 23:00 20:35</span>
-                  </span>
-                  <!--
+      <li class="first-list">
+        <div class="mod-kj">
+          <div class="lot-title">
+            <span class="lot-name">排列5</span>
+            <span class="lot-issue">15015期</span>
+          </div>
+          <ul class="num-list clearfix"><li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li></ul>
+          <div class="links">
+            <span class="lot-time">开奖<span>01-15 23:00 20:35</span></span>
+            <!--
             <a title="开奖信息" class="first-link" data-bctag="40094.11.2" id="rss_ssq" data-type="ssq" href="###">订阅</a>
-                <a target="_blank" href="#">走势</a>
-                -->
-                <a target="_blank" href="/lottery/buy/pl5">我要投注</a>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+            <a target="_blank" href="#">走势</a>-->
+            <a target="_blank" href="/lottery/buy/pl5">我要投注</a>
+          </div>
+        </div>
+      </li>
+      </ul>
     </div>
   </div>
-  <!-- /.box-right-->
 </div>
-</div>
-<!--div class="section bg-4">
-<div class="page-count">
-<div class="m-title">
-  <i class="icon icon-dot"></i>
-  <span>热门统计</span>
-  <a href="#" class="more">更多</a>
-</div>
-<ul class="count-ls clearfix">
-  <li class="first">
-    <span class="tips">计划1</span>
-    <img src="<#echo var="my_static_host" >
-    /front_images/ying.png" alt="计划" class="ying">
-    <ul>
-      <li>
-        历史盈利：
-        <span class="money">11,685</span>
-        元
-      </li>
-      <li>当前回报：11倍</li>
-      <li>最近15天：15投1中</li>
-      <li>历史模型排行：第一名</li>
-    </ul>
-    <a href="#" class="btn look-link">查看计划详情</a>
-  </li>
-  <li></li>
-  <li></li>
-  <li></li>
-</ul>
-</div>
-</div-->
-<div class="section bg-2">
-<div class="page-er">
-<ul class="clearfix">
-  <li>
-    <div class="mod-app clearfix">
-      <img class="qrcode-img scrollLoading" src="http://static3.yuncai.com
-            /front_images/kuaipin_king_app_qrcode.png" alt="二维码">
-      <div class="app-info">
-        <h3 class="app-title">快频王彩票APP</h3>
-        <p class="txt">与快频王互动，了解更多内容</p>
-        <a href="https://itunes.apple.com/cn/app/kuai-pin-wang/id917136176?l=en&mt=8" target="_blank" class="btn">下载到手机</a>
+        <!-- /.box-right-->
       </div>
     </div>
-  </li>
-  <li class="last-item">
-    <div class="mod-app clearfix">
-      <img class="qrcode-img scrollLoading" src="http://static3.yuncai.com
-            /front_images/poker_king_app_qrcode.png" alt="二维码">
-      <div class="app-info">
-        <h3 class="app-title">德扑王扑克APP</h3>
-        <p class="txt">与德扑王互动，了解跟多内容</p>
-        <a href="https://itunes.apple.com/cn/app/de-pu-wang/id923964745?l=en&mt=8" target="_blank" class="btn">下载到手机</a>
+    <!--div class="section bg-4">
+    <div class="page-count">
+      <div class="m-title"> <i class="icon icon-dot"></i>
+        <span>热门统计</span>
+        <a href="#" class="more">更多</a>
       </div>
+      <ul class="count-ls clearfix">
+        <li class="first">
+          <span class="tips">计划1</span>
+          <img src="<#echo var="my_static_host" >
+          /front_images/ying.png" alt="计划" class="ying">
+          <ul>
+            <li>
+              历史盈利：
+              <span class="money">11,685</span>
+              元
+            </li>
+            <li>当前回报：11倍</li>
+            <li>最近15天：15投1中</li>
+            <li>历史模型排行：第一名</li>
+          </ul>
+          <a href="#" class="btn look-link">查看计划详情</a>
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
     </div>
-  </li>
-</ul>
-</div>
-<!-- /.page-er-->
-</div>
-<!-- /.section-->
+  </div-->
+  <div class="section bg-2">
+    <div class="page-er">
+      <ul class="clearfix">
+        <li>
+          <div class="mod-app clearfix">
+            <img class="qrcode-img scrollLoading" src="front_images/kuaipin_king_app_qrcode.png" alt="二维码">
+            <div class="app-info">
+              <h3 class="app-title">快频王彩票APP</h3>
+              <p class="txt">与快频王互动，了解更多内容</p>
+              <a href="https://itunes.apple.com/cn/app/kuai-pin-wang/id917136176?l=en&mt=8" target="_blank" class="btn">下载到手机</a>
+            </div>
+          </div>
+        </li>
+        <li class="last-item">
+          <div class="mod-app clearfix">
+            <img class="qrcode-img scrollLoading" src="front_images/poker_king_app_qrcode.png" alt="二维码">
+            <div class="app-info">
+              <h3 class="app-title">德扑王扑克APP</h3>
+              <p class="txt">与德扑王互动，了解跟多内容</p>
+              <a href="https://itunes.apple.com/cn/app/de-pu-wang/id923964745?l=en&mt=8" target="_blank" class="btn">下载到手机</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- /.page-er-->
+  </div>
+  <!-- /.section-->
 </div>
 <!-- /.page-->
 
+
+
 <div class="ft">
-<div class="ft-mn w985">
-<div class="ft-l clearfix">
-<ul>
-  <li>
-    <img src="front_images//index-ft-1.png" alt="购彩方便">
-    <a href="#">购彩方便</a>
-  </li>
-  <li>
-    <img src="front_images//index-ft-2.png" alt="账户安全">
-    <a href="#">账户安全</a>
-  </li>
-  <li>
-    <img src="front_images//index-ft-3.png" alt="领奖无忧">
-    <a href="#">领奖无忧</a>
-  </li>
-  <li>
-    <img src="front_images//index-ft-4.png" alt="无手续费">
-    <a href="#">无手续费</a>
-  </li>
-</ul>
-</div>
-<!-- /.ft-l-->
-<div class="ft-r ">
-<ul class="ft-list clearfix">
-  <li>
-    <h4>新手上路</h4>
-    <ul>
-      <li>
-        <a href="#">购彩流程</a>
-      </li>
-      <li>
-        <a href="#">领奖流程</a>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <h4>支付方式</h4>
-    <ul>
-      <li>
-        <a href="#">网银支付</a>
-      </li>
-      <li>
-        <a href="#">支付宝支付</a>
-      </li>
-    </ul>
-  </li>
-  <li>
-    <h4>帮助中心</h4>
-    <ul>
-      <li>
-        <a href="/html/help/help.html" target="_black">常见问题</a>
-      </li>
-      <li>
-        <a href="/html/help/help.html" target="_black">功能指引</a>
-      </li>
-      <li>
-        <a href="/html/lottery/help/play/ssq.html" target="_black">彩种介绍</a>
-      </li>
-    </ul>
-  </li>
-  <li class="last">
-    <h4>友情链接</h4>
-    <ul>
-      <li>
-        <a href="http://www.yuncaitech.com#part3" target="_black">关于我们</a>
-      </li>
-      <li>
-        <a href="http://www.yuncaitech.com#part7" target="_black">联系我们</a>
-      </li>
-      <li>
-        <a href="http://www.yuncaitech.com#part2" target="_black">产品介绍</a>
-      </li>
-      <li>
-        <a href="http://www.yuncaitech.com#part7" target="_black">服务热线</a>
-      </li>
-    </ul>
-  </li>
-</ul>
-<p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
-<div class="ft-img">
-  <img src="front_images/ft-biao.png" alt="公共信息安全网络监管" />
-</div>
-</div>
-</div>
+    <div class="ft-mn w985">
+      <div class="ft-l clearfix">
+        <ul>
+          <li class="mr-30 mb-25">
+            <img src="front_images//index-ft-1.png" alt="购彩方便">
+            <a href="#">购彩方便</a>
+          </li>
+          <li class="mb-25">
+            <img src="front_images//index-ft-2.png" alt="账户安全">
+            <a href="#">账户安全</a>
+          </li>
+          <li class="mr-30">
+            <img src="front_images//index-ft-3.png" alt="领奖无忧">
+            <a href="#">领奖无忧</a>
+          </li>
+          <li>
+            <img src="front_images//index-ft-4.png" alt="无手续费">
+            <a href="#">无手续费</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.ft-l-->
+      <div class="ft-r ">
+        <ul class="ft-list clearfix">
+          <li>
+            <h4>新手上路</h4>
+            <ul>
+              <li>
+                <a href="/html/help/help.html?page=11">购彩流程</a>
+              </li>
+              <li>
+                <a href="/html/help/help.html?page=14">领奖流程</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h4>支付方式</h4>
+            <ul>
+              <li>
+                <a href="javascript:;">网银支付</a>
+              </li>
+              <li>
+                <a href="javascript:;">支付宝支付</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <h4>帮助中心</h4>
+            <ul>
+              <li>
+                <a href="/html/help/help.html" target="_black">常见问题</a>
+              </li>
+              <li>
+                <a href="/html/help/help.html?page=ssq" target="_black">功能指引</a>
+              </li>
+              <li>
+                <a href="/html/help/help.html?page=ssq" target="_black">彩种介绍</a>
+              </li>
+            </ul>
+          </li>
+          <li class="last">
+            <h4>友情链接</h4>
+            <ul>
+              <li>
+                <a href="http://www.yuncaitech.com#part3" target="_black">关于我们</a>
+              </li>
+              <li>
+                <a href="http://www.yuncaitech.com#part7" target="_black">联系我们</a>
+              </li>
+              <li>
+                <a href="http://www.yuncaitech.com#part2" target="_black">产品介绍</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="ft-text text-center">
+          <p class="ft-service">服务热线:400-8898-310</p>
+          <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
+          <div class="ft-img">
+            <a href="http://www.sznet110.gov.cn/netalarm/index.jsp" class="wg-link1" title="公共信息安全网络监管"></a>
+            <a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101901353" class="wg-link2" title="公共信息安全网络监管"></a>
+          </div>
+        </div>
+      </div>
+  </div>
 </div>
 </body>
 <script src="front_scripts/lib/jquery.js"></script>
+<script src="front_scripts/lib/lrkf.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
   var html = '';
@@ -702,6 +622,24 @@ $(document).ready(function() {
         html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="'+staticHostURI+'/front_images/bor.png" alt="bor"></span>'+data.retData.username+'       账户余额:<span id="userMoney">'+data.retData.money+'</span>元<a href="/account/top-up" class="active">充值</a><img src="front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a><img src="front_images/top-down.png" alt="bor">';
         $('#hd-top').html(html);
       }
+    });
+});
+$(function(){
+    $("#lrkfwarp").lrkf({
+    root:'http://static3.yuncai.com', //客服代码文件夹的路径，例如: '/qqkefu/'
+        skin:'skin',
+        kfTop:'200',
+        defShow:false,
+        qqs:[
+            {'name':'客服小彩','qq':'2264990340'},      //注意逗号是英文的逗号
+            {'name':'客服小胜','qq':'123520260'},
+        ],
+        tel:[
+            {'name':'客服电话','tel':'4008-898-310'},   //注意逗号是英文的逗号
+        ],
+    qrCode:'',  //二维码的路径，自行修改
+        more:"/html/help/help.html",        //>>更多方式
+        foot:"00:00-24:00"                                  //底部在线时间，有些风格里面没有给这个预留位置
     });
 });
 </script>

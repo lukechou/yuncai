@@ -2,6 +2,7 @@ require.config({
   paths: {
     jquery: '../lib/jquery',
     lodash: '../lib/lodash.compat.min',
+    store: '../lib/store.min',
     bootstrap: '../lib/bootstrap.min',
     owl: '../lib/owl.carousel.min',
     app: '../common/app',
@@ -20,7 +21,7 @@ require.config({
 
 });
 
-require(['jquery', 'lodash', 'app', 'index', 'owl', 'bootstrap'], function ($, _, APP, index) {
+require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], function ($, _, store, APP, index) {
 
   index.seeds.ballNum = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
   index.seeds.digitalBallNum = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -124,17 +125,18 @@ require(['jquery', 'lodash', 'app', 'index', 'owl', 'bootstrap'], function ($, _
 
   function showBuyLotyConfirmMask() {
 
-    var h, template, qihao = '',cName='';
+    var h, template, qihao = '',
+      cName = '';
 
-    switch (index.currLotyName){
-      case 'ssq':
-        cName = '双色球';
+    switch (index.currLotyName) {
+    case 'ssq':
+      cName = '双色球';
       break;
-      case 'dlt':
-        cName = '大乐透';
+    case 'dlt':
+      cName = '大乐透';
       break;
-      case 'pl5':
-        cName = '排列5';
+    case 'pl5':
+      cName = '排列5';
       break;
     }
 
@@ -452,8 +454,45 @@ require(['jquery', 'lodash', 'app', 'index', 'owl', 'bootstrap'], function ($, _
 
   }
 
-  function pageInit() {
+  function showMask() {
 
+    var html = '<div class="m-mask pullDown" id="j-first-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><img src="front_images/index/mask-close.png" alt="close" class="m-mask-close" id="j-mask-close"><img src="front_images/index/mask-main.png" alt="mask-main"></div></div>';
+    $('body').append(html);
+    $('#j-first-mask').addClass('animated');
+    $('#j-mask-close').one('click', function (event) {
+      $('#j-first-mask').remove();
+    });
+
+  }
+
+  function getMask(newMask) {
+
+    if(!newMask){
+      newMask = 'lock';
+    }
+
+    var backVar = 'lock';
+    var f = store.get('firstVisit');
+
+    if (f) {
+
+      if (f === newMask) {
+        return;
+      } else {
+        store.set('firstVisit', newMask);
+        showMask();
+      }
+
+    } else {
+      store.set('firstVisit', 'lock');
+      showMask();
+    }
+
+  }
+
+  function pageInit() {
+    store.clear();
+    getMask();
     //依赖快速投注期号
     index.modelLotyName = 'jczq';
     index.modelLoty = {

@@ -1,4 +1,5 @@
 define(['jquery', 'app', 'highcharts'], function($, APP) {
+
 	'use strict';
 	//https://github.com/highslide-software/highcharts.com/
 	var Graph = (function() {

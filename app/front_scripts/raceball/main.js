@@ -242,7 +242,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     Config.payMoney = 1;
     c = checkParams();
     if (c) {
-      APP.checkLogin({
+      APP.checkLogin(Config.payMoney, {
         enoughMoney: function () {
 
           html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元,共<span id="j-total-zhu">' + obj.zhushu + '</span>注,投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>,理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
@@ -272,7 +272,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     Config.payMoney = Number(obj.rengouMoney) + Number(obj.baodiMoney);
 
-    APP.checkLogin({
+    APP.checkLogin(Config.payMoney, {
       enoughMoney: function () {
         buyTicket(obj, type);
       }
@@ -310,9 +310,17 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     c = checkParams();
 
     if (c) {
-      APP.checkLogin({
+      APP.checkLogin(Config.payMoney, {
         enoughMoney: function () {
-          APP.onSubmitInit(vote);
+          APP.showTips({
+            html: vote.confirmHtml,
+            title: vote.title
+          });
+
+          $('#buyConfirm').one('click', function (event) {
+            vote.callback();
+          });
+
         }
       });
     };

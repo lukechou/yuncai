@@ -586,9 +586,8 @@ $(document).ready(function () {
     if (val > rengouPercent) {
       $("#part_buy").val(Math.ceil($("#commission_percent").val() / 100 * G_BUY.money));
       updateCreatePartProjectParame();
-      // $(this).val(rengouPercent);
     }
-    // (val > G_BUY.money) && (val = G_BUY.money);
+    G_BUY.partnerBuy.commissionPercent = val;
   });
 
   // 是否保底
@@ -724,12 +723,6 @@ $(document).ready(function () {
     /* Act on the event */
     var trackStopMoney = parseInt($(this).val()) || 3000;
     $(this).val(trackStopMoney);
-  });
-
-  $('#commission_percent').on('change', function () {
-    event.preventDefault();
-    /* Act on the event */
-    G_BUY.partnerBuy.commissionPercent = $(this).val();
   });
 
   //手动输入Mask
@@ -1081,7 +1074,6 @@ $(document).ready(function () {
    * 计算已选中的投注号码
    */
   function calculateBuyCodes() {
-
     var zhushu = 0;
     for (var i = G_BUY.codes.length - 1; i >= 0; i--) {
       zhushu += PL5.getZhiXuanZhushu(G_BUY.codes[i].value[0], G_BUY.codes[i].value[1], G_BUY.codes[i].value[2], G_BUY.codes[i].value[3], G_BUY.codes[i].value[4]);
@@ -1109,7 +1101,6 @@ $(document).ready(function () {
       $('#track_issue_num').html(trackIssueSize);
       $('#track_money').html(G_BUY.money);
     }
-
     if (G_BUY.money > 0) {
       $('#buy-submit').removeAttr("disabled");
     } else {
@@ -1118,7 +1109,6 @@ $(document).ready(function () {
   }
 
   function makeChooseCodeHtml(codes) {
-
     var newCodes = codes;
     var html = '';
     if ((G_BUY.codes.length + G_CHOOSE.codes.length) > PL5.maxBuyCodeLength) {
@@ -1176,7 +1166,6 @@ $(document).ready(function () {
         }
       });
     }
-
     calculateChooseCodes();
   }
 
@@ -1261,10 +1250,12 @@ $(document).ready(function () {
     var parameter = {
       zhushu: G_BUY.zhushu,
       beishu: G_BUY.mutiple,
-      codes: codeArr.join('$')
+      codes: codeArr.join('$'),
+      unikey: (new Date()).valueOf(),
     };
     var comfirmHtml = '';
     var costRealMoney = 0;
+
     switch (G_BUY.buyType) {
     case 1:
       url = '/lottery/digital/buy-self/' + G_BUY.lotyName + '/' + G_BUY.playName;
@@ -1320,7 +1311,6 @@ $(document).ready(function () {
       costRealMoney = G_BUY.money;
       break;
     }
-
     $.ajax({
         url: '/account/islogin',
         type: 'get',
@@ -1333,19 +1323,24 @@ $(document).ready(function () {
               html: comfirmHtml,
               title: '投注确认'
             });
-            $('#buyConfirm').on('click', function (event) {
+            $('#buyConfirm').one('click', function (event) {
               $.ajax({
-                  url: url,
-                  type: 'POST',
-                  dataType: 'json',
-                  data: parameter,
-                })
-                .done(function (data) {
-                  buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, costRealMoney, G_BUY.lotyName, G_BUY.lotyCNName);
-                })
-                .fail(function () {
-                  buyFailure(G_BUY.lotyName, G_BUY.lotyCNName);
-                });
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                data: parameter,
+              })
+              .done(function (data) {
+                if(data.retCode === 100000){
+                    buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, costRealMoney, G_BUY.lotyName, G_BUY.lotyCNName);                    
+                }else{
+                    APP.showTips(data.retMsg);
+                    return;
+                }
+              })
+              .fail(function () {
+                buyFailure(G_BUY.lotyName, G_BUY.lotyCNName);
+              })
             });
           } else {
             APP.showTips({

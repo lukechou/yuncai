@@ -270,7 +270,7 @@ COMMON.onSubmitInit = function (params, vote) {
         if (D.retCode === 100000) {
           if (Number(D.retData.money.replace(/,/g, '')) >= Config.payMoney) {
             APP.showTips(vote.confirmHtml);
-            $('#buyConfirm').on('click', function (event) {
+            $('#buyConfirm').one('click', function (event) {
               vote.callback();
             });
           } else {
@@ -299,13 +299,14 @@ COMMON.getCommonParams = function () {
     var params = {
       lotyName: $('#lotyName').val(),
       playName: $('#playName').val(),
-      unikey: $('#unikey').val(),
+//      unikey: $('#unikey').val(),
       qihaoId: $('#qihaoId').val(),
       qihao: $('#qihao').val(),
       zhushu: box.find('.j-quick-zhu').html(),
       beishu: box.find('.j-quick-bei').val(),
       qishu: 1,
-      codes: COMMON.formarFormSub(box.find('.br-gou .br-zhu-item'))
+      codes: COMMON.formarFormSub(box.find('.br-gou .br-zhu-item')),
+      unikey: (new Date()).valueOf(),//Math.floor(Math.random() * 100000),
     };
     if (Config.box.find('.j-zj-check')[0]) {
       params.isZhuiJia = Config.box.find('.j-zj-check')[0].checked;

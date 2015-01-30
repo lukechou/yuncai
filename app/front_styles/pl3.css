@@ -8,12 +8,11 @@
 .pl3 .row-code .quick-method span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border: 1px #dfdfdf solid; border-radius: 2px; }
 .pl3 .br-zhu { width: 610px; margin: 30px 20px 30px 60px; }
 .pl3 .br-zhu-r { width: 80px; }
-.pl3 .br-zhu-item b { float: left; width: 65px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
+.pl3 .br-zhu-item b { float: left; width: 75px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
 .pl3 .multiphase-box { width: 860px; height: 315px; margin: 25px auto; }
 
 .pl3 .j-box-hz .m-num-group{ width: 606px; margin: 0 auto; float: none; height: 95px;}
 .pl3 .j-box-hz .m-num-group > a{ width: 35px; height: 35px; line-height: 35px;}
-
 
 
 /* 排列三层级控制类 */

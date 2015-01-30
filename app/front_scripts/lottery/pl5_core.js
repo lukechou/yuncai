@@ -64,7 +64,7 @@ var PL5={
                 m--;
             }
         }
-        callback(produceCodes.sort());
+        callback(produceCodes);
         return;
 	},
 

@@ -811,10 +811,15 @@ $(function() {
           data: params,
         })
         .done(function(data) {
-          COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+            if(data.retCode === 100000){
+                COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+            }else{
+                APP.showTips(data.retMsg);
+                return;
+            }
         })
         .fail(function() {
-          COMMON.onSubmitFail()
+          COMMON.onSubmitFail();
         });
     };
 

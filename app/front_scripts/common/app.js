@@ -14,6 +14,20 @@ define(['jquery'], function ($) {
     app.prototype = {};
 
     /**
+     * APP Decimal
+     * @param  {Number}  num
+     * @return {Boolean}     [description]
+     */
+    app.prototype.isDecimal = function (num) {
+      if (parseInt(num) == num) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+
+    /**
      * 全局通用登录弹出框
      * @return {null}
      */
@@ -23,7 +37,7 @@ define(['jquery'], function ($) {
       var loginModal = null;
 
       if (!$('#user-login')[0]) {
-        var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="javascript:;" id="j-find-pwd">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+        var html = '<div id="j-login-modal" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="javascript:;" id="j-find-pwd">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
         $('body').append(html);
       };
 
@@ -86,7 +100,7 @@ define(['jquery'], function ($) {
         })
         .done(function (data) {
           if (data.retCode === 100000) {
-            html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="' + staticHostURI + '/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="'+staticHostURI+'/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="'+staticHostURI+'/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a>';
+            html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="' + staticHostURI + '/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a>';
             $('#hd-top').html(html);
           }
         });
@@ -136,36 +150,19 @@ define(['jquery'], function ($) {
     };
 
     /**
-     * Buy ticket Submit Init
-     * @param  {Object} vote 回调对象
-     * @return {null}
-     */
-    app.prototype.onSubmitInit = function (vote) {
-
-      var _this = this;
-
-      _this.checkLogin({
-        enoughMoney: function () {
-          _this.showTips({
-            title: vote.title,
-            html: vote.confirmHtml
-          });
-
-          $('#buyConfirm').on('click', function (event) {
-            vote.callback();
-          });
-        }
-      });
-
-    };
-
-    /**
      * Check User Status And Has Enougth Money
-     * @param  {Object} o 回调对象
+     * @param {Number} money
+     * @param  {Object} o.enoughMoney,
      * @return {null}
      */
-    app.prototype.checkLogin = function (o) {
+    app.prototype.checkLogin = function (money, o) {
+
       var _this = this;
+
+      // check money type
+      if ((typeof money) !== 'number') {
+        return;
+      }
 
       $.ajax({
           url: '/account/islogin',
@@ -175,20 +172,32 @@ define(['jquery'], function ($) {
         .done(function (D) {
 
           if (D.retCode === 100000) {
+
             var userMoney = Number(D.retData.money.replace(/,/g, ''));
-            if (userMoney >= Config.payMoney && userMoney != 0) {
-              if (o.enoughMoney) o.enoughMoney();
+
+            if (userMoney != 0 && userMoney >= money) {
+
+              if (o.enoughMoney) {
+                o.enoughMoney();
+              }
+
             } else {
+
               _this.showTips({
                 html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>',
                 title: '余额不足'
               });
+
             }
+
             if (o.always) o.always();
+
           } else {
-            _this.handRetCode(D.retCode, D.retMsg);
+            _this.handRetCode(D.retCode, D.retMsg, o.enoughMoney);
+
           }
         });
+
     };
 
     app.prototype.checkUserLoginStatus = function () {
@@ -228,7 +237,7 @@ define(['jquery'], function ($) {
       }
 
       if (!$('#myModal')[0]) {
-        var compiled = '<div class="friend-modal modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
+        var compiled = '<div class="friend-modal modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button><h4 class="modal-title j-apptips-title" id="myModalLabel">' + obj.title + '</h4></div><div class="modal-body text-center fc-84" id="apptips-content">' + html + '</div></div></div>';
         $('body').append(compiled);
 
       } else {

@@ -65,7 +65,7 @@
                         $kfList.append("<li class=hr></li><li class=qrcode><img src='"+opts.qrCode+"'/></li>");
                      }
                      if(opts.more){
-                        $kfList.append("<li class=hr></li><li class=more><a href='"+opts.more+"' target=_blank>>>更多方式</a></li>");
+                        $kfList.append("<li class=hr></li><li class=more><a href='"+opts.more+"' target=_blank>>>常见问题</a></li>");
                      }
                 }else{
                     $lrKf_con.html(opts.diyCon);

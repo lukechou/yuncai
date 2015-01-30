@@ -26,7 +26,7 @@
 .br-zhu-item { padding: 5px 10px; color: #f13c38; border-bottom: 1px #dfdfdf dashed; cursor: pointer; }
 .br-zhu-item:hover, .br-zhu-item.active { background: #fcead3; }
 .br-zhu-item b { float: left; width: 65px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
-.br-zhu-item .list { float: left; display: inline; width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.br-zhu-item .list { float: left; display: inline; width: 245px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .br-zhu-item span { margin: 2px; }
 .br-zhu-item a { color: #848484; margin-right: 5px; }
 .br-zhu-item a:hover { color: #0d67c4; text-decoration: none; }

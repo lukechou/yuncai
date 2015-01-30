@@ -1,5 +1,23 @@
-'use strict';
-$(function () {
+require.config({
+  paths: {
+    jquery: '../lib/jquery',
+    lodash: '../lib/lodash.compat.min',
+    bootstrap: '../lib/bootstrap.min',
+    store: '../lib/store.min',
+    app: '../common/app',
+    pager: '../account/pager'
+  },
+  shim: {
+    bootstrap: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
+  }
+});
+
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($, _, store, APP) {
+
+  'use strict';
 
   var submitHemai = function (obj) {
 
@@ -82,7 +100,14 @@ $(function () {
       html = {
         html: h,
       };
-      APP.onSubmitConfirm(submitHemai, data, html);
+      APP.checkLogin(b, {
+        enoughMoney: function () {
+          APP.showTips(html);
+          $('#buyConfirm').one('click', function (event) {
+            submitHemai(data);
+          });
+        }
+      });
     }
   });
 

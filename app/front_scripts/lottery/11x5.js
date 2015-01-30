@@ -90,15 +90,43 @@ $(document).ready(function() {
     loadCurrentIssue();
     function loadCurrentIssue(){
         $.ajax({
-            url: '/lottery/issue/get-cur-issue?lottery_id=1',
+            url: '/lottery/issue/get-cur-issue?lottery_id='+lotyId,
             type: 'GET',
             dataType: 'json',
         })
         .done(function(data) {
             if(data.retCode === 100000){
-                lessSeconds = Math.floor((data.retData[0].company_sell_stime - data.retData[0].sys_time));
+                lessSeconds = Math.floor((data.retData[0].company_sell_etime - data.retData[0].sys_time));
+                console.log(lessSeconds);
                 G_BUY.qihao = data.retData[0].issue_num;
                 G_BUY.qihaoId = data.retData[0].id;
+            }
+        })
+        .fail(function() {
+            console.log("error");
+        });
+        loadNewestAward();
+    }
+
+    function loadNewestAward(){
+        $.ajax({
+            url: '/lottery/issue/get-last-award-info?lotteryId='+lotyId,
+            type: 'GET',
+            dataType: 'json',
+        })
+        .done(function(data) {
+            if(data.retCode === 100000){
+                var html = '';
+                for ( var int = 0; int < data.retData.length; int++) {
+                    if(int > 5) break;
+                    html += "<tr>";
+                    html += "<td>" + data.retData[int].username + "</td>";
+                    html += "<td>" + data.retData[int].bonus_before_tax + "</td>";
+                    html += "</tr>";
+                }
+                $('#j-new-bonus-list').html((html=='') ? '<tr><td colspan="2">暂无相关中奖纪录</td></tr>' : html);
+            }else{
+                $('#j-new-bonus-list').html('<tr><td colspan="2">系统繁忙</td></tr>');
             }
         })
         .fail(function() {
@@ -116,6 +144,9 @@ $(document).ready(function() {
             $('#j-less-info').html('<span id="j-less-minute">'+minute+'</span>分<span id="j-less-second">'+seconds+'</span>秒');
         }else{
             $('#j-less-info').html('销售时间截止');
+            if(G_BUY.qihao){
+                APP.showTips("您好，第 "+G_BUY.qihao+" 期已截止，投注时请确认您选择的期号。");
+            }
         }
     }
     timer4Sale();
@@ -244,7 +275,7 @@ $(document).ready(function() {
                 } else {
                     for ( var key in G_BUY.codes) {
                         if (G_BUY.codes[key].key == G_MODIFY_CODE_OBJ.codeKey) {
-                            G_BUY.codes[key].value = G_CHOOSE.codes[0];
+                            G_BUY.codes[key].value = G_CHOOSE.codes;
                         }
                     }
                 }
@@ -948,7 +979,8 @@ $(document).ready(function() {
         var parameter = {
             zhushu : G_BUY.zhushu,
             beishu : G_BUY.mutiple,
-            codes : codeArr.join('$')
+            codes : codeArr.join('$'),
+            unikey: (new Date()).valueOf(),
         };
 
         var comfirmHtml = '';
@@ -978,9 +1010,9 @@ $(document).ready(function() {
         }
 
         $.ajax({
-        url : '/account/islogin',
-        type : 'get',
-        dataType : 'json',
+            url : '/account/islogin',
+            type : 'get',
+            dataType : 'json',
         }).done(function(D) {
             if (D.retCode === 100000) {
                 if (Number(D.retData.money.replace(/,/g, '')) >= G_BUY.money) {
@@ -988,14 +1020,19 @@ $(document).ready(function() {
                     html : comfirmHtml,
                     title : '投注确认'
                     });
-                    $('#buyConfirm').on('click', function(event) {
+                    $('#buyConfirm').one('click', function(event) {
                         $.ajax({
-                        url : url,
-                        type : 'POST',
-                        dataType : 'json',
-                        data : parameter,
+                            url : url,
+                            type : 'POST',
+                            dataType : 'json',
+                            data : parameter,
                         }).done(function(data) {
-                            buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, G_BUY.money, G_BUY.lotyName, G_BUY.lotyCNName);
+                            if(data.retCode === 100000){
+                                buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, G_BUY.money, G_BUY.lotyName, G_BUY.lotyCNName);                    
+                            }else{
+                                APP.showTips(data.retMsg);
+                                return;
+                            }
                         }).fail(function() {
                             buyFailure(G_BUY.lotyName, G_BUY.lotyCNName);
                         });

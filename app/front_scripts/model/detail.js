@@ -186,7 +186,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
     Config.payMoney = money;
 
-    APP.checkLogin({
+    APP.checkLogin(money, {
       enoughMoney: function () {
         APP.showTips({
           title: '投注确认',

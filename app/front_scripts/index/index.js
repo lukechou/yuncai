@@ -99,8 +99,13 @@ define(['jquery'], function ($) {
 
       if (false === _this.hasCreate[_this.currLotyName]) {
 
-        redGroup = _.sample(_this.seeds[_this.currLotyName].redBall, _this.seeds[_this.currLotyName].redTotal).sort();
-        blueGroup = _.sample(_this.seeds[_this.currLotyName].blueBall, _this.seeds[_this.currLotyName].blueTotal).sort();
+        redGroup = _.sample(_this.seeds[_this.currLotyName].redBall, _this.seeds[_this.currLotyName].redTotal);
+        blueGroup = _.sample(_this.seeds[_this.currLotyName].blueBall, _this.seeds[_this.currLotyName].blueTotal);
+
+        if(_this.currLotyName!=='pl5'){
+          redGroup.sort();
+          blueGroup.sort();
+        }
         num = 0;
 
         switch (_this.currLotyName) {

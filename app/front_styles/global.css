@@ -6,7 +6,7 @@
 /* List */
 ul, ol { margin: 0; padding: 0; list-style: none; }
 .nobor { border: none !important; }
-.graybor { border: 1px #c4c4c4 solid; }
+.graybor { border: 1px #dfdfdf solid; }
 .panel { border-radius: 0; }
 .m-list { overflow: hidden; width: 230px; padding: 10px 0; }
 .m-list li { font: 12px/20px Arial, '宋体'; display: inline-block; float: left; overflow: hidden; width: 63px; height: 20px; margin: 0 6px; text-indent: 15px; }
@@ -133,13 +133,14 @@ textarea { resize: none; word-wrap: break-word; }
 .m-num-title > p > b { padding-right: 10px; }
 .m-num-group { position: relative; margin: 0 0 40px -5px; }
 .m-num-group > a { font-size: 16px; font-weight: bold; line-height: 35px; display: block; float: left; width: 35px; height: 35px; margin: 5px 4px; text-align: center; color: #3d3d3d; border: 1px #dfdfdf solid; border-radius: 50%; background: #f5f5f5; }
+.m-num-group > a:hover{ text-decoration: none;}
 .m-num-group-red > a.active { text-decoration: none; color: #fff; border: none; background: #f13c38; }
 .m-num-group-blue > a.active { text-decoration: none; color: #fff; border: none; background: #5198f1; }
 .m-num-fun { font-size: 12px; position: absolute; right: 10px; bottom: 10px; }
 .m-num-fun > select { width: 45px; padding: 3px; border: 1px #c4c4c4 solid; background: #fff; }
 .m-num-sui { margin: 0 5px; }
 .m-num-clean { color: #3d3d3d; }
-.m-num-sui:hover, .m-num-clean:hover { cursor: pointer; text-decoration: underline; }
+.m-num-sui:hover, .m-num-clean:hover { cursor: pointer;}
 /* 通用表格样式 */
 .m-mn-table { font-size: 12px; margin-bottom: 0; text-align: center; border-top: 1px #dfdfdf solid; }
 .m-mn-table > thead > tr > th { font-weight: normal; text-align: center; border-bottom: 1px solid #dfdfdf; background: #f5f5f5; }
