@@ -174,6 +174,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .model-box { font-size: 12px; display: none; padding-top: 60px; text-align: center; }
 .model-box p { padding-top: 20px; color: #c1c1c1; }
 .model-tips .loader { display: block; margin: 0 auto; padding-top: 80px; }
+.page-he{ height: 394px; }
 .page-he .m-title { padding: 30px 0 20px; }
 .page-he .box-left .item { background: #242424; }
 .page-he .m-he-box { font-size: 12px; position: relative; color: #c1c1c1; background: #242424; }
@@ -193,10 +194,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .mod-kj .lot-title span { margin-right: 10px; }
 .mod-kj .lot-title .lot-name { font-weight: bold; }
 .kj-cont { background: #202020; }
-.mod-ls > li { padding: 10px 15px; }
+.mod-ls > li { padding: 10px 15px; height: 100px; }
 .mod-ls > li.dlt-item { background: #252525; }
 .mod-kj .num-list { font-family: 'Tahoma'; font-size: 20px; color: #f13c38; }
-.mod-kj .num-list li { line-height: 39px; float: left; margin-right: 15px; font-size: 18px; }
+.mod-kj .num-list li { float: left; margin-right: 15px; font-size: 18px; padding: 12px 0;}
 .mod-kj .num-list li.num-blue { color: #388bf1; }
 .mod-kj .links { font-size: 12px; text-align: right; }
 .mod-kj .links .lot-time { float: left; }

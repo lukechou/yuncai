@@ -65,7 +65,7 @@ var G_CHOOSE = {
     codes : [],
     zhushu : 0,
     money : 0,
-    playType : 'R2',
+    playType : 'R1',
     init : function() {
         this.codes = [];
         this.zhushu = 0;
@@ -100,6 +100,7 @@ $(document).ready(function() {
                 console.log(lessSeconds);
                 G_BUY.qihao = data.retData[0].issue_num;
                 G_BUY.qihaoId = data.retData[0].id;
+                loadYiLou();
             }
         })
         .fail(function() {
@@ -127,6 +128,59 @@ $(document).ready(function() {
                 $('#j-new-bonus-list').html((html=='') ? '<tr><td colspan="2">暂无相关中奖纪录</td></tr>' : html);
             }else{
                 $('#j-new-bonus-list').html('<tr><td colspan="2">系统繁忙</td></tr>');
+            }
+        })
+        .fail(function() {
+            console.log("error");
+        });
+    }
+
+    function loadYiLou(){
+        $.ajax({
+            url: '/statistics/issue/yilou?lottery_id='+lotyId + '&issue=' + G_BUY.qihao,
+            type: 'GET',
+            dataType: 'json',
+        })
+        .done(function(data) {
+            if(data.retCode === 100000){
+                // 前一 // "1": "24|8|0|5|19|3|7|2|30|12|1",
+                var arrQ1 = data.retData['1'].split('|');
+                $('.j-row-q1').find('span').each(function(index, el) {
+                    $(this).html(arrQ1[index]);
+                });
+                // 任选 // "2": "0|0|0|0|1|3|1|2|0|1|1",
+                var arrRX = data.retData['2'].split('|');
+                $('.j-row-rx').each(function(index, el) {
+                    $(this).find('span').each(function(index2, el) {
+                        $(this).html(arrRX[index2]);
+                    });
+                });
+                // 前二组选 // "9": "0|8|0|4|3|3|2|2|1|12|1",
+                var arrQ2ZUX = data.retData['9'].split('|');
+                $('.j-row-z2').find('span').each(function(index, el) {
+                    $(this).html(arrQ2ZUX[index]);
+                });
+                // 前三组选 // "10": "0|0|0|4|3|3|2|2|1|1|1",
+                var arrQ3ZUX = data.retData['10'].split('|');
+                $('.j-row-z3').find('span').each(function(index, el) {
+                    $(this).html(arrQ3ZUX[index]);
+                });
+                // 前三直选 // "12": "24|8|0|5|19|3|7|2|30|12|1$0|24|10|4|3|8|2|6|1|13|5$3|0|26|38|7|13|11|8|5|1|2",
+                var arrQ2ZHX = data.retData['11'].split('$');;
+                $('.j-row-zx2').each(function(index, el) {
+                    var arrQ2DigitalZHX = arrQ2ZHX[index].split('|');
+                    $(this).find('.data-bit-'+index).find('span').each(function(index2, el) {
+                        $(this).html(arrQ2DigitalZHX[index2]);
+                    });
+                });
+                // 前三直选 // "12": "24|8|0|5|19|3|7|2|30|12|1$0|24|10|4|3|8|2|6|1|13|5$3|0|26|38|7|13|11|8|5|1|2",
+                var arrQ3ZHX = data.retData['12'].split('$');;
+                $('.j-row-zx3').each(function(index, el) {
+                    var arrQ3DigitalZHX = arrQ3ZHX[index].split('|');
+                    $(this).find('.data-bit-'+index).find('span').each(function(index2, el) {
+                        $(this).html(arrQ3DigitalZHX[index2]);
+                    });
+                });
             }
         })
         .fail(function() {
@@ -1028,7 +1082,7 @@ $(document).ready(function() {
                             data : parameter,
                         }).done(function(data) {
                             if(data.retCode === 100000){
-                                buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, G_BUY.money, G_BUY.lotyName, G_BUY.lotyCNName);                    
+                                buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, G_BUY.money, G_BUY.lotyName, G_BUY.lotyCNName);
                             }else{
                                 APP.showTips(data.retMsg);
                                 return;

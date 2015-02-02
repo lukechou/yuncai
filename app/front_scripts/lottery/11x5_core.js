@@ -178,15 +178,15 @@ var Core11x5={
 
                 case this.playType.Q2:
                     var produceCodes = [];
-                    produceCodes[0] = _.sample(this.baseCode, this.Q2.oneBetCodeNum).sort();
-                    produceCodes[1] = _.sample(this.baseCode, this.Q2.oneBetCodeNum).sort();
+                    produceCodes[0] = _.sample(this.baseCode, 1).sort();
+                    produceCodes[1] = _.sample(this.baseCode, 1).sort();
                     return produceCodes;
 
                 case this.playType.Q3:
                     var produceCodes = [];
-                    produceCodes[0] = _.sample(this.baseCode, this.Q3.oneBetCodeNum).sort();
-                    produceCodes[1] = _.sample(this.baseCode, this.Q3.oneBetCodeNum).sort();
-                    produceCodes[2] = _.sample(this.baseCode, this.Q3.oneBetCodeNum).sort();
+                    produceCodes[0] = _.sample(this.baseCode, 1).sort();
+                    produceCodes[1] = _.sample(this.baseCode, 1).sort();
+                    produceCodes[2] = _.sample(this.baseCode, 1).sort();
                     return produceCodes;
 
                 default:

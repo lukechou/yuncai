@@ -77,16 +77,25 @@ define(['jquery'], function ($) {
       var allDigitalCodes = code.split(this.digitalCodeConnector);
       var digitalCodes = null;
       var hash = {};
+      var codeLen = _.uniq(allDigitalCodes).length;
+      var regCode = /^([0-9]{1,10}[,]){2}([0-9]{1,10})$/;
 
-      if (!/^([0-9]{1,10}[,]){2}([0-9]{1,10})$/.test(code)) {
-        return false;
+      if (this.nav.big === 'zx3') {
+        if (codeLen === 3 || codeLen === 2) {
+          regCode = /^([0-9]{1,10}[,]){1,2}([0-9]{1,10})$/;
+        } else {
+          return;
+        }
       }
 
-      if (this.nav.big === 'zx3' || this.nav.big === 'zx6') {
-
-        if (_.uniq(allDigitalCodes).length !== 3) {
+      if (this.nav.big === 'zx6') {
+        if (codeLen !== 3) {
           return false;
         }
+      }
+
+      if (!regCode.test(code)) {
+        return false;
       }
 
       for (var m = 0; m < allDigitalCodes.length; m++) {
@@ -101,7 +110,9 @@ define(['jquery'], function ($) {
         }
       }
 
-      return returnCodes;
+      return returnCodes.sort(function (a, b) {
+        return a - b;
+      });
 
     }
 
@@ -300,6 +311,7 @@ define(['jquery'], function ($) {
       var mdfBtn = '';
       var title = _this.getBuyZhuListTitle();
       var isHz = _this.nav.small === 'hz' ? ' ' : ',';
+
       for (var i = 0; i < newCodes.length; i++) {
 
         _this.G_BUY.rowIndex++;

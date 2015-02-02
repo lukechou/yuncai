@@ -107,11 +107,13 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   // 部分ui 下拉框
   $('#poolStep1 .scrollMoni').mCustomScrollbar({
-    theme: "light",
+    theme: "light-3",
+    mouseWheelPixels: 200
   });
 
   $('#j-ball-table').mCustomScrollbar({
-    theme: "light",
+    theme: "light-3",
+    mouseWheelPixels: 200
   });
 
   // 赛事筛选

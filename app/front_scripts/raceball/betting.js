@@ -1,7 +1,7 @@
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
   'use strict';
 
-  var bet = (function() {
+  var bet = (function () {
 
     function bet(args) {
       // enforces new
@@ -23,7 +23,7 @@ define(['jquery'], function($) {
       tab: 'spf',
     };
 
-    bet.prototype.init = function() {
+    bet.prototype.init = function () {
 
       this.beishu = $('#j-qiucksub-bei').val();
       this.zhushu = null;
@@ -38,7 +38,7 @@ define(['jquery'], function($) {
 
     };
 
-    bet.prototype.updateCount = function(m, c) {
+    bet.prototype.updateCount = function (m, c) {
       var v = parseInt(m.val(), 10);
       if (c == 1) {
         v++;
@@ -51,20 +51,7 @@ define(['jquery'], function($) {
       m.val(v);
     };
 
-    bet.prototype.filterNum = function(v) {
-      var n = parseInt(v, 10);
-
-      if (isNaN(n)) {
-        n = 1;
-      } else {
-        n = (n >= 1) ? n : 1;
-        n = n;
-      }
-      n = n > 99999 ? 99999 : n;
-      return n;
-    };
-
-    bet.prototype.getOtherEm = function(el, i) {
+    bet.prototype.getOtherEm = function (el, i) {
       if (el.parents().hasClass('bidCounts')) {
         return this.box.find('.even em[index="' + i + '"]');
       } else {
@@ -72,24 +59,24 @@ define(['jquery'], function($) {
       }
     };
 
-    bet.prototype.toggleBunch = function(h, method) {
+    bet.prototype.toggleBunch = function (h, method) {
 
       var _this = this;
 
       if (h) {
         _this.bunch.push(method);
-        _this.bunch = _.uniq(_this.bunch).sort(function(a, b) {
+        _this.bunch = _.uniq(_this.bunch).sort(function (a, b) {
           return a.slice(0, 1) - b.slice(0, 1);
         });
       } else {
-        _.remove(_this.bunch, function(b) {
+        _.remove(_this.bunch, function (b) {
           return b == method;
         });
       }
 
     };
 
-    bet.prototype.addOneItem = function(i, dd, sp) {
+    bet.prototype.addOneItem = function (i, dd, sp) {
       var _this = this;
       var m = ['胜', '平', '负'];
       var code = dd.attr('matchcode');
@@ -116,20 +103,20 @@ define(['jquery'], function($) {
         sp: sp
       });
 
-      _this.match = _this.match.sort(function(a, b) {
+      _this.match = _this.match.sort(function (a, b) {
         return a.index - b.index;
       });
 
-      var selectMatch = _.uniq(_this.match, function(n) {
+      var selectMatch = _.uniq(_this.match, function (n) {
         return n.matchcode;
       });
 
-      selectMatch = _this.match.sort(function(a, b) {
+      selectMatch = _this.match.sort(function (a, b) {
         return a.matchcode - b.matchcode;
       });
 
       if (hasMatch) {
-        _.each(_this.match, function(matchs) {
+        _.each(_this.match, function (matchs) {
           if (matchs.matchcode == code) {
             linkHTML += '<a index="' + matchs.index + '" gametype="' + matchs.type + '" matchcode="' + matchs.matchcode + '" href="javascript:;" class="block' + matchs.index + '">' + m[matchs.index] + '</a>';
           }
@@ -168,14 +155,14 @@ define(['jquery'], function($) {
      * @param  {element} dd 选中的行
      * @return {null}
      */
-    bet.prototype.removeOneItem = function(i, dd) {
+    bet.prototype.removeOneItem = function (i, dd) {
 
       var _this = this;
       var code = dd.attr('matchcode');
       var hasMatch = null;
       var matchTotal = 0;
 
-      _.remove(_this.match, function(o) {
+      _.remove(_this.match, function (o) {
         return (o.index == i && o.matchcode == code);
       });
 
@@ -197,7 +184,7 @@ define(['jquery'], function($) {
     /**
      *  设置右侧第二个Box
      */
-    bet.prototype.setSecondBox = function() {
+    bet.prototype.setSecondBox = function () {
 
       var _this = this;
       var len = _.uniq(_this.match, 'matchcode').length;
@@ -218,8 +205,8 @@ define(['jquery'], function($) {
 
         if ($('#j-me-' + len)[0]) {
           if ((jtipLen + 1) > len) {
-            _.remove(_this.bunch, function(b) {
-              return b.slice(0, 1) == (jtipLen+1);
+            _.remove(_this.bunch, function (b) {
+              return b.slice(0, 1) == (jtipLen + 1);
             });
             jtip.eq(jtipLen - 1).remove();
           }
@@ -256,10 +243,10 @@ define(['jquery'], function($) {
      * @param  {Function} callback 回调函数
      * @return {null}
      */
-    bet.prototype.combinations = function(numArr, choose, callback) {
+    bet.prototype.combinations = function (numArr, choose, callback) {
       var n = numArr.length;
       var c = [];
-      var inner = function(start, choose_) {
+      var inner = function (start, choose_) {
         if (choose_ == 0) {
           callback(c);
         } else {
@@ -277,13 +264,13 @@ define(['jquery'], function($) {
      *  获取投注总注数和最高奖金
      * @return {null}
      */
-    bet.prototype.getTotalZhus = function() {
+    bet.prototype.getTotalZhus = function () {
 
       var _this = this;
       var matchkeys = [];
       var acTotalNum = 1;
       var method = null;
-      var group = _.groupBy(_this.match, function(match) {
+      var group = _.groupBy(_this.match, function (match) {
         return match.matchcode;
       });
       var ms = _.uniq(_this.match, 'matchcode');
@@ -296,7 +283,7 @@ define(['jquery'], function($) {
         maxBonus: 0,
       };
 
-      $('#j-method-ls .jtip[data-check="true"]').each(function(index, el) {
+      $('#j-method-ls .jtip[data-check="true"]').each(function (index, el) {
         chuanArr.push(el.attributes['data-method'].value);
       });
 
@@ -323,7 +310,7 @@ define(['jquery'], function($) {
 
           mb = 0;
           method = Number(chuanArr[i].slice(0, 1));
-          _this.combinations(matchkeys, method, function(matchs) {
+          _this.combinations(matchkeys, method, function (matchs) {
             var _tmpZhushu = 1;
             var _tmpMaxBonus = 1;
             for (var i = 0; i < matchs.length; i++) {
@@ -348,7 +335,7 @@ define(['jquery'], function($) {
      *  Clear Betting Object Data
      * @return {null}
      */
-    bet.prototype.clearBetData = function() {
+    bet.prototype.clearBetData = function () {
       var _this = this;
       $('#selectGamePool tbody').html('');
       $('#poolStep1 .scrollMoni').hide();
@@ -368,7 +355,7 @@ define(['jquery'], function($) {
     /**
      *  设置右侧第三个Box
      */
-    bet.prototype.setAllTotal = function() {
+    bet.prototype.setAllTotal = function () {
 
       var _this = this;
       var ms = _.uniq(_this.match, 'matchcode').length;
@@ -391,7 +378,7 @@ define(['jquery'], function($) {
      *  提交表单,获取要提交的参数
      * @return {object}
      */
-    bet.prototype.getSubmitParams = function() {
+    bet.prototype.getSubmitParams = function () {
 
       var _this = this;
       var matchs = [];
@@ -441,21 +428,21 @@ define(['jquery'], function($) {
      *  购票主体事件绑定
      * @return {null}
      */
-    bet.prototype.bindMain = function() {
+    bet.prototype.bindMain = function () {
 
       var _this = this;
       var a = 'active';
       var h = 'hover';
 
-      _this.box.on('mousemove', 'dd', function(event) {
+      _this.box.on('mousemove', 'dd', function (event) {
         $(this).addClass('even');
       });
 
-      _this.box.on('mouseout', 'dd', function(event) {
+      _this.box.on('mouseout', 'dd', function (event) {
         $(this).removeClass('even');
       });
 
-      _this.box.on('mousemove', '.towLine em', function(event) {
+      _this.box.on('mousemove', '.towLine em', function (event) {
 
         var t = $(this);
         var i = t.attr('index');
@@ -468,7 +455,7 @@ define(['jquery'], function($) {
 
       });
 
-      _this.box.on('mouseout', '.towLine em', function(event) {
+      _this.box.on('mouseout', '.towLine em', function (event) {
 
         var t = $(this);
         var i = t.attr('index');
@@ -479,7 +466,7 @@ define(['jquery'], function($) {
 
       });
 
-      _this.box.on('click', '.towLine em', function(event) {
+      _this.box.on('click', '.towLine em', function (event) {
         var t = $(this);
         var i = t.attr('index');
         var sp = t.attr('sp');
@@ -498,7 +485,7 @@ define(['jquery'], function($) {
       });
 
       // Toggle Buy Type
-      $('#j-vote-nav').on('click', 'a', function(event) {
+      $('#j-vote-nav').on('click', 'a', function (event) {
         var type = $(this).attr('data-type');
         _this.tab = (type == 'onlySpf') ? 'spf' : 'rqspf';
         _this.box.removeClass('onlySpf onlyRqSpf').addClass(type);
@@ -506,7 +493,7 @@ define(['jquery'], function($) {
       });
 
       //  Buy Main Toggle
-      _this.box.on('click', '.j-dataBody-toggle', function(event) {
+      _this.box.on('click', '.j-dataBody-toggle', function (event) {
 
         var t = $(this);
         var s = t.attr('data-show');
@@ -527,15 +514,33 @@ define(['jquery'], function($) {
 
     };
 
+    bet.prototype.filterNum = function (v) {
+
+      if (v === '') {
+        return v;
+      }
+
+      var n = parseInt(v, 10);
+
+      if (isNaN(n)) {
+        n = 1;
+      } else {
+        n = (n >= 1) ? n : 1;
+        n = n;
+      }
+      n = n > 99999 ? 99999 : n;
+      return n;
+    };
+
     /**
      * 购票右侧时间绑定
      * @return {null}
      */
-    bet.prototype.bindRight = function() {
+    bet.prototype.bindRight = function () {
 
       var _this = this;
 
-      $('.j-coutn-total').on('click', '.j-count', function(event) {
+      $('.j-coutn-total').on('click', '.j-count', function (event) {
 
         var m = $(this).siblings('.btn-results'),
           c = $(this).attr('data-c'),
@@ -546,7 +551,7 @@ define(['jquery'], function($) {
 
       });
 
-      $('.btn-results').on('keyup change', function(event) {
+      $('#j-qiucksub-bei').on('keyup', function (event) {
 
         var t = $(this);
         var r = t.attr('data-r');
@@ -558,7 +563,20 @@ define(['jquery'], function($) {
 
       });
 
-      $('#poolStep2').on('click', '.jtip', function(event) {
+      $('#j-qiucksub-bei').on('change', function(event) {
+
+        var t = $(this);
+        var r = t.attr('data-r');
+        var v = _this.filterNum(t.val());
+        v = v || 1;
+
+        t.val(v);
+        _this.beishu = v;
+        _this.setAllTotal();
+
+      });
+
+      $('#poolStep2').on('click', '.jtip', function (event) {
 
         var t = $(this);
         var a = 'active';
@@ -574,23 +592,23 @@ define(['jquery'], function($) {
 
       });
 
-      $('#orderRule').on('click', '.icon', function(event) {
+      $('#orderRule').on('click', '.icon', function (event) {
         var t = $(this);
         t.toggleClass('icon-cbox').toggleClass('icon-cgou');
         _this.isAgreen = t.hasClass('icon-cgou');
       });
 
-      $('#j-touzhu-tips').on('click', function(event) {
+      $('#j-touzhu-tips').on('click', function (event) {
         $('#j-touzhu-tipstext').toggle();
         $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
       });
 
-      $('#btnclear').on('click', function(event) {
+      $('#btnclear').on('click', function (event) {
         _this.clearBetData();
       });
 
       // BetList Button remvoe match
-      $('#selectGamePool').on('click', '.betList a', function(event) {
+      $('#selectGamePool').on('click', '.betList a', function (event) {
 
         var code = $(this).attr('matchcode');
         var i = $(this).attr('index');
@@ -608,7 +626,7 @@ define(['jquery'], function($) {
         removeItem.remove();
         actItem.removeClass('active');
 
-        _.remove(_this.match, function(o) {
+        _.remove(_this.match, function (o) {
           return (o.index == i && o.matchcode == code);
         });
         if (_this.match == 0) $('#poolStep1 .unSeleTips').show();
@@ -617,7 +635,7 @@ define(['jquery'], function($) {
 
       });
 
-      $('#selectGamePool').on('click', '.icoDel', function(event) {
+      $('#selectGamePool').on('click', '.icoDel', function (event) {
         var code = $(this).parents('tr').attr('matchcode');
         var removeItem = $('#selectGamePool tr[matchcode=' + code + ']');
         var actItem = $('#bettingBox dd[matchcode=' + code + ']').find('em.active');
@@ -625,7 +643,7 @@ define(['jquery'], function($) {
         removeItem.remove();
         actItem.removeClass('active');
 
-        _.remove(_this.match, function(o) {
+        _.remove(_this.match, function (o) {
           return o.matchcode == code;
         });
         if (_this.match == 0) $('#poolStep1 .unSeleTips').show();

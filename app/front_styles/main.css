@@ -34,7 +34,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 33%; text-align: left; }
 .hd-mask-list > li > a { font-size: 12px; display: block; color: #a5a5a5; }
 /* footer */
-.ft { overflow: hidden; width: 100%; padding: 30px 0 50px 0; color: #545454; background: #f5f5f5; margin-top: 100px;}
+.ft { overflow: hidden; width: 100%; padding: 30px 0 50px 0; color: #545454; background: #f5f5f5; margin-top: 100px; }
 .ft-mn { padding-top: 25px; }
 .ft-l { float: left; width: 250px; height: 228px; padding-left: 20px; }
 .ft-l > ul { width: 100%; }
@@ -51,12 +51,10 @@ body { color: #3d3d3d; background: #fff; }
 .ft-list > li > ul { font-size: 12px; padding: 0 0 0 16px; list-style: disc; }
 .ft-list > li > ul > li > a { line-height: 1.9; color: #545454; }
 .ft-service { font-size: 16px; font-family: '微软雅黑'; font-weight: bold; }
-
-.ft-img{ width: 228px; height: 47px; position: relative; margin: auto;}
-.ft-img .wg-link1,.ft-img .wg-link2{ position: absolute; top: 0; height: 47px; width: 114px; background: url(../front_images/ft-biao.png) no-repeat;}
-.ft-img .wg-link1{ left: 0; background-position: 0 0;}
-.ft-img .wg-link2{ right: 0; background-position: -114px 0;}
-
+.ft-img { width: 228px; height: 47px; position: relative; margin: auto; }
+.ft-img .wg-link1, .ft-img .wg-link2 { position: absolute; top: 0; height: 47px; width: 114px; background: url(../front_images/ft-biao.png) no-repeat; }
+.ft-img .wg-link1 { left: 0; background-position: 0 0; }
+.ft-img .wg-link2 { right: 0; background-position: -114px 0; }
 /* Login Alert */
 #j-login-modal { z-index: 100; }
 #j-login-modal .modal-dialog { width: 451px; height: 227px; border: 8px solid rgba(0, 0, 0, .3); }
@@ -110,7 +108,7 @@ body { color: #3d3d3d; background: #fff; }
 .m-he-nav ul { border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; }
 .m-he-nav ul > li.title { font-weight: bold; padding: 5px 20px; }
 .m-he-nav ul > li > a { display: block; padding: 5px 20px; color: #3d3d3d; }
-.m-he-nav ul > li > a:hover { text-decoration: none; color: #0c67c4; background: #dddedf; }
+.m-he-nav ul > li > a:hover { text-decoration: none; color: #fff; background: #f13c38; }
 .m-he-nav ul.last { border-bottom: 1px #dfdfdf solid; }
 .m-he-nav .line { width: 90%; margin: auto; border-bottom: 1px #dfdfdf dashed; }
 /* 定制跟单-右侧头部 */

@@ -456,7 +456,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
 
   function showMask() {
 
-    var html = '<div class="m-mask pullDown" id="j-first-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><img src="front_images/index/mask-close.png" alt="close" class="m-mask-close" id="j-mask-close"><img src="front_images/index/mask-main.png" alt="mask-main"></div></div>';
+    var html = '<div class="m-mask pullDown" id="j-first-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><img src="../front_images/index/mask-close.png" alt="close" class="m-mask-close" id="j-mask-close"><img src="../front_images/index/mask-main.png" alt="mask-main"></div></div>';
     $('body').append(html);
     $('#j-first-mask').addClass('animated');
     $('#j-mask-close').one('click', function (event) {
@@ -491,7 +491,6 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
   }
 
   function pageInit() {
-    store.clear();
     getMask();
     //依赖快速投注期号
     index.modelLotyName = 'jczq';

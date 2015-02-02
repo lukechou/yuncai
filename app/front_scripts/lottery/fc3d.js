@@ -259,7 +259,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		}
 
 		if (s === 'up') {
-			PL3.playName = 10;
 			PL3.G_BUY.isManual = true;
 		} else {
 			PL3.G_BUY.isManual = false;
@@ -269,18 +268,21 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			if (s === 'cgtz') PL3.playName = 10;
 			if (s === 'hz') PL3.playName = 12;
 			if (s === 'many') PL3.playName = 10;
+			if (s === 'up') PL3.playName = 10;
 		}
 
 		if (b === 'zx3') {
 			if (s === 'cgtz') PL3.playName = 20;
 			if (s === 'dt') PL3.playName = 21;
 			if (s === 'hz') PL3.playName = 22;
+			if (s === 'up') PL3.playName = 20;
 		}
 
 		if (b === 'zx6') {
 			if (s === 'cgtz') PL3.playName = 30;
 			if (s === 'dt') PL3.playName = 31;
 			if (s === 'hz') PL3.playName = 32;
+			if (s === 'up') PL3.playName = 30;
 		}
 
 		$('#buy-submit').attr("disabled", "disabled");
@@ -536,7 +538,12 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 					validata = PL3.getIllegalCode(iptCodes[i]);
 					uploadArr.push(validata);
-					PL3.addMoney = PL3.getZxZhushu(validata) * 2;
+
+					if (PL3.nav.big === 'zx3') {
+						PL3.addMoney = PL3.getZuXuan3NormalZhushu(validata) * 2;
+					} else {
+						PL3.addMoney = PL3.getZxZhushu(validata) * 2;
+					}
 					PL3.makeChooseCodeHtml([validata]);
 					removeArr.push(iptCodes[i]);
 				}
@@ -552,6 +559,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			};
 
 			$('#sd_number').val(iptCodes.join('\n'));
+
 			if (iptCodes.length === 0) {
 				PL3.chooseBuyBtn.removeClass('active');
 				PL3.chooseBuyBtn.attr('disabled', 'disabled');
@@ -585,6 +593,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			$('#choose_to_buy_tip').html('添加到投注列表');
 
 		}
+
 		updateCreatePartProjectParame();
 
 	});
@@ -1363,6 +1372,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 			} else {
 
+				$('#part_aegis_money').val(0);
+				$('#part_aegis_percent').html('0.00');
 				$('#part_buy_percent').html(0);
 				$('#buy_money_tips').html(0);
 				$('#aegis_money_tips').html(0);
@@ -1678,9 +1689,15 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		}
 
 		if (s === 'dt') {
-			dantuoArr.push(PL3.G_BUY.codes[0].value[0].join(','));
-			dantuoArr.push(PL3.G_BUY.codes[0].value[1].join(','));
-			returnCodes = dantuoArr.join('@');
+
+			for (var i = PL3.G_BUY.codes.length - 1; i >= 0; i--) {
+				dantuoArr = [];
+				dantuoArr.push(PL3.G_BUY.codes[i].value[0].join(','));
+				dantuoArr.push(PL3.G_BUY.codes[i].value[1].join(','));
+				dantuoArrTotal.push(dantuoArr.join('@'));
+			};
+
+			returnCodes = dantuoArrTotal.join('$');
 		}
 
 		return returnCodes;
@@ -1773,7 +1790,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 			break;
 		}
-
+		debugger
 		APP.checkLogin(PL3.G_BUY.payMoney, {
 			enoughMoney: function () {
 
