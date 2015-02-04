@@ -541,9 +541,16 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 					if (PL3.nav.big === 'zx3') {
 						PL3.addMoney = PL3.getZuXuan3NormalZhushu(validata) * 2;
-					} else {
+					}
+
+					if (PL3.nav.big === 'zx6') {
+						PL3.addMoney = PL3.getZuXuan6NormalZhushu(validata) * 2;
+					}
+
+					if (PL3.nav.big === 'zx') {
 						PL3.addMoney = PL3.getZxZhushu(validata) * 2;
 					}
+
 					PL3.makeChooseCodeHtml([validata]);
 					removeArr.push(iptCodes[i]);
 				}
@@ -600,41 +607,55 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	function updateZhuMain() {
 
-		var hundredCodes = PL3.G_CHOOSE.codes[0][0] || [];
-		var tenCodes = PL3.G_CHOOSE.codes[0][1] || [];
-		var digitalCodes = PL3.G_CHOOSE.codes[0][2] || [];
 		var b = PL3.nav.big;
 		var s = PL3.nav.small;
 		var html = '';
+		var title = PL3.getBuyZhuListTitle();
+
 		if (PL3.G_CHOOSE.zhushu < 0) {
 			return;
 		}
 
-		if (PL3.G_CHOOSE.money > PL3.maxOneBetMoney) {
-			APP.showTips('您好，单个投注的金额应小于' + PL3.maxOneBetMoney + '元，请返回重新选择');
-			return false;
-		} else {
-			for (var key in PL3.G_BUY.codes) {
-				if (PL3.G_BUY.codes[key].key == PL3.G_MODIFY_CODE_OBJ.codeKey) {
-					PL3.G_BUY.codes[key].value = PL3.G_CHOOSE.codes[0];
-				}
+		for (var i = PL3.G_CHOOSE.codes[0].length - 1; i >= 0; i--) {
+			PL3.G_CHOOSE.codes[0][i] = PL3.G_CHOOSE.codes[0][i].sort(function (a, b) {
+				return a - b;
+			});
+		};
+
+		for (var key in PL3.G_BUY.codes) {
+			if (PL3.G_BUY.codes[key].key == PL3.G_MODIFY_CODE_OBJ.codeKey) {
+				PL3.G_BUY.codes[key].value = PL3.G_CHOOSE.codes[0];
 			}
 		}
 
-		html += '<div class="br-zhu-item clearfix" databit="' + PL3.G_MODIFY_CODE_OBJ.codeKey + '"><b>[常规投注]</b><div class="list">';
+		html += '<div class="br-zhu-item clearfix" databit="' + PL3.G_MODIFY_CODE_OBJ.codeKey + '"><b>[' + title + ']</b><div class="list">';
 
-		html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join('') + '</span>';
+		if (s === 'cgtz') {
 
-		if (tenCodes.length > 0) {
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join('') + '</span>';
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(',') + '</span>';
+
+			if (PL3.G_CHOOSE.codes[0][1].length > 0) {
+				html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
+			}
+
+			if (PL3.G_CHOOSE.codes[0][1].length > 0) {
+				html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join(',') + '</span>';
+			}
 		}
 
-		if (digitalCodes.length > 0) {
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join('') + '</span>';
+		if (s === 'hz') {
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(' ') + '</span>';
+		}
+
+		if (s === 'dt') {
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(',') + '</span>';
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
 		}
 
 		html += '</div><div class="pull-right"><b><i class="money" data-m="1">' + PL3.G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
+
 		PL3.G_MODIFY_CODE_OBJ.codeObj.replaceWith(html);
+
 	}
 
 	/**
@@ -1656,6 +1677,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		var codeArr = [];
 		var unitCodeArr = [];
 		var dantuoArr = [];
+		var dantuoArrTotal = [];
 		var s = PL3.nav.small;
 		var b = PL3.nav.big;
 		var returnCodes = null;
@@ -1790,7 +1812,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 			break;
 		}
-		debugger
+
 		APP.checkLogin(PL3.G_BUY.payMoney, {
 			enoughMoney: function () {
 

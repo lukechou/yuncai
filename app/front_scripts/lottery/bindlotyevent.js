@@ -1,12 +1,34 @@
-'use strict';
-// Bind loty Common Event
-$(function() {
+require.config({
+  paths: {
+    jquery: '../lib/jquery',
+    lodash: '../lib/lodash.compat.min',
+    bootstrap: '../lib/bootstrap.min',
+    store: '../lib/store.min',
+    app: '../common/app',
+    lottery: 'lottery'
+  },
+  shim: {
+    bootstrap: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
+    lottery: {
+      deps: ['jquery', 'app'],
+      exports: 'lottery'
+    },
+  }
+});
+
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'lottery'], function ($, _, store, APP) {
+
+  'use strict';
+  // Bind loty Common Event
 
   /**
    *  Common Event
    */
   // 绑定加减输入框事件
-  $('.br-count-item').on('click', '.j-count', function(event) {
+  $('.br-count-item').on('click', '.j-count', function (event) {
     event.preventDefault();
     /* Act on the event */
     var m = $(this).siblings('.btn-results'),
@@ -48,7 +70,7 @@ $(function() {
   });
 
   // 绑定加减总数输入框事件
-  $('.btn-results').on('change', function(event) {
+  $('.btn-results').on('change', function (event) {
     var r = $(this).attr('data-r');
     var v = parseInt($(this).val(), 10);
 
@@ -92,7 +114,7 @@ $(function() {
     COMMON.setZhuTotal();
   });
 
-  $('.j-zj-check').on('change', function(event) {
+  $('.j-zj-check').on('change', function (event) {
 
     Config.isZhuiJia = $(this)[0]['checked'];
     DLT.updateZhuList(Config.box);
@@ -104,7 +126,7 @@ $(function() {
    */
 
   // 添加到投注列表 or 修改投注号码
-  $('.btn-add').on('click', function(event) {
+  $('.btn-add').on('click', function (event) {
 
     var p = Config.box.find('.j-touz-area'),
       a = parseInt($(this).attr('data-add')),
@@ -132,12 +154,12 @@ $(function() {
 
     if (a == 1) {
       if (h) {
-        eRed.each(function(index, el) {
+        eRed.each(function (index, el) {
           var e = el.getElementsByTagName('span')[0].innerHTML;
           rNums.push(e);
         });
 
-        eBlue.each(function(index, el) {
+        eBlue.each(function (index, el) {
           var e = el.getElementsByTagName('span')[0].innerHTML;
           bNums.push(e);
         });
@@ -161,12 +183,12 @@ $(function() {
 
     if (a == 0) {
       if (h) {
-        eRed.each(function(index, el) {
+        eRed.each(function (index, el) {
           var e = el.getElementsByTagName('span')[0].innerHTML;
           rNums.push(e);
         });
 
-        eBlue.each(function(index, el) {
+        eBlue.each(function (index, el) {
           var e = el.getElementsByTagName('span')[0].innerHTML;
           bNums.push(e);
         });
@@ -191,7 +213,7 @@ $(function() {
   });
 
   //选中当前列
-  $('.j-br-zhu').on('click', '.br-zhu-item', function(event) {
+  $('.j-br-zhu').on('click', '.br-zhu-item', function (event) {
 
     var r = [],
       b = [],
@@ -221,7 +243,7 @@ $(function() {
   });
 
   // 列表修改当前注
-  $('.j-br-zhu').on('click', '.br-zhu-set', function(event) {
+  $('.j-br-zhu').on('click', '.br-zhu-set', function (event) {
 
     var p = $(this).parents('.br-zhu-item'),
       p1 = $(this).parents('.br-zhu').find('.br-zhu-item'),
@@ -247,14 +269,14 @@ $(function() {
   });
 
   // 快捷投注随机选球
-  $('.jxredball').on('click', function(event) {
+  $('.jxredball').on('click', function (event) {
     var v = $(this).siblings('.jxRedBall_Num').val();
     var sr = $(this).parents('.area_select').siblings('#ball_red');
     COMMON.randomNum(sr, 'redBall', v);
     COMMON.checkBallGroup($(this));
   });
 
-  $('.jxblueball').on('click', function(event) {
+  $('.jxblueball').on('click', function (event) {
     var v = $(this).siblings('.jxBlueBall_Num').val();
     var sb = $(this).parents('.area_select').siblings('#ball_blue');
     COMMON.randomNum(sb, 'blueBall', v);
@@ -262,7 +284,7 @@ $(function() {
   });
 
   // 快捷投注 选球
-  $('.ball-group').on('click', 'li', function(event) {
+  $('.ball-group').on('click', 'li', function (event) {
 
     var redGroup = $(this).parents('.ball_red');
     var redGroupAc = redGroup.find('.active');
@@ -300,18 +322,18 @@ $(function() {
   });
 
   // 快捷投注 清空投注列表
-  $('.clearredball').on('click', function(event) {
+  $('.clearredball').on('click', function (event) {
     $(this).parents('.area_select').siblings('.ball_red').find('.active').removeClass();
     COMMON.checkBallGroup($(this));
   });
 
-  $('.clearblueball').on('click', function(event) {
+  $('.clearblueball').on('click', function (event) {
     $(this).parents('.area_select').siblings('.ball_blue').find('.active').removeClass();
     COMMON.checkBallGroup($(this));
   });
 
   // 删除当前注
-  $('.j-br-zhu').on('click', '.br-zhu-del', function(event) {
+  $('.j-br-zhu').on('click', '.br-zhu-del', function (event) {
 
     var c = $(this).parents('.br-zhu');
     $(this).parents('.br-zhu-item').remove();
@@ -321,7 +343,7 @@ $(function() {
   });
 
   // 机选N注
-  $('.j-zhu-adds').on('click', function(event) {
+  $('.j-zhu-adds').on('click', function (event) {
     var box = Config.box;
     var len = parseInt($(this).attr('data-zhu'));
     var html = COMMON.getManyZhu(len);
@@ -338,7 +360,7 @@ $(function() {
   });
 
   // 清空列表
-  $('.j-zhu-clean').on('click', function(event) {
+  $('.j-zhu-clean').on('click', function (event) {
 
     $(this).parents('.br-zhu-r').siblings('.br-zhu-l').html('');
     COMMON.updateTotalZhu($(this));
@@ -349,7 +371,7 @@ $(function() {
    */
 
   // 拖胆投注-选号红区
-  $('.m-num-group-red').on('click', 'a', function(event) {
+  $('.m-num-group-red').on('click', 'a', function (event) {
 
     var i = $(this).index(),
       parent = '.m-num-group-red',
@@ -387,7 +409,7 @@ $(function() {
   });
 
   // 拖胆投注-随机选球
-  $('.j-random-tuo').on('click', function(event) {
+  $('.j-random-tuo').on('click', function (event) {
 
     var _this = $(this),
       g = '.m-num-group',
@@ -404,14 +426,14 @@ $(function() {
   });
 
   // 拖胆投注-清空选球区域
-  $('.m-num-group').on('click', '.m-num-clean', function(event) {
+  $('.m-num-group').on('click', '.m-num-clean', function (event) {
     $(this).parents('.m-num-group').find('a.active').removeClass('active');
     DRAG.checkBallAear();
     COMMON.setZhuTotal();
   });
 
   // 拖胆投注-删除当前注
-  $('#j-tuo-zhu').on('click', '.br-zhu-del', function(event) {
+  $('#j-tuo-zhu').on('click', '.br-zhu-del', function (event) {
 
     var c = $(this).parents('.br-zhu');
     $(this).parents('.br-zhu-item').remove();
@@ -423,7 +445,7 @@ $(function() {
   });
 
   // 拖胆注添加到列表
-  $('#tuo-sub').on('click', function(event) {
+  $('#tuo-sub').on('click', function (event) {
 
     var html = '';
     var zhuHtml = '';
@@ -486,7 +508,7 @@ $(function() {
   });
 
   // 拖胆投注-修改选中注
-  $('#j-tuo-zhu').on('click', '.br-zhu-set', function(event) {
+  $('#j-tuo-zhu').on('click', '.br-zhu-set', function (event) {
 
     var p = $(this).parents('.br-zhu-item'),
       br = $(this).parents('.br-gou'),
@@ -523,7 +545,7 @@ $(function() {
   });
 
   // 拖胆投注 选号 蓝区
-  $('.m-num-group-blue').on('click', 'a', function(event) {
+  $('.m-num-group-blue').on('click', 'a', function (event) {
 
     var i = $(this).index(),
       parent = '.m-num-group-blue',
@@ -551,7 +573,7 @@ $(function() {
   });
 
   //  拖胆投注-选中当前注
-  $('#j-tuo-zhu').on('click', '.br-zhu-item', function(event) {
+  $('#j-tuo-zhu').on('click', '.br-zhu-item', function (event) {
 
     var el = $(this).parents('.br-gou').siblings('.layout_select'),
       list = DRAG.getOneListNums($(this)),
@@ -615,7 +637,7 @@ $(function() {
   var sdStatus = true;
 
   // 粘贴上传-添加到投注列表
-  $('#sd_sub').on('click', function(event) {
+  $('#sd_sub').on('click', function (event) {
 
     var str = $.trim($('#sd_number').val());
     var formatZhus = '';
@@ -676,13 +698,13 @@ $(function() {
   });
 
   //手动输入Mask
-  $('#j-textarea-mask').on('click', function(event) {
+  $('#j-textarea-mask').on('click', function (event) {
     $(this).hide()
     $('#sd_number')[0].focus()
   });
 
   // 手动输入获取输入框焦点
-  $('#sd_number').on('focus', function(event) {
+  $('#sd_number').on('focus', function (event) {
     if (sdStatus) {
       sdNumberTips = $(this).val();
       $(this).val('');
@@ -692,19 +714,19 @@ $(function() {
   });
 
   // 更新手动输入注数
-  $('#sd_number').on('keyup blur', function(event) {
+  $('#sd_number').on('keyup blur', function (event) {
     MANUAL.totalSdNums();
   });
 
   // 删除当前注
-  $('#sd-list').on('click', '.br-zhu-del', function(event) {
+  $('#sd-list').on('click', '.br-zhu-del', function (event) {
     var c = $(this).parents('.br-zhu');
     $(this).parents('.br-zhu-item').remove();
     MANUAL.setSdTotal();
   });
 
   // 清空列表
-  $('#j-sd-clean').on('click', function(event) {
+  $('#j-sd-clean').on('click', function (event) {
     $(this).parents('.br-zhu-r').siblings('.br-zhu-l').html('');
     MANUAL.setSdTotal();
   });
@@ -713,7 +735,7 @@ $(function() {
    *Bind Other Tabs Toggle Event
    */
   // Quick, senior toggle
-  $('#j-brhd-group a').on('click', function(event) {
+  $('#j-brhd-group a').on('click', function (event) {
 
     if ($(this).hasClass('active')) {
       return;
@@ -734,20 +756,20 @@ $(function() {
     }
   });
 
-  $('#senior .m-br-nav').on('click', 'a', function(event) {
+  $('#senior .m-br-nav').on('click', 'a', function (event) {
     var i = $(this).parents('li').index();
     Config.box = $('#senior .box-left').eq(i);
   });
 
   // 方案设置
-  $('.br-set-group').on('click', '.br-set', function(event) {
+  $('.br-set-group').on('click', '.br-set', function (event) {
     event.preventDefault(); /* Act on the event */
     $(this).siblings('.active').removeClass('active');
     $(this).addClass('active');
   });
 
   // 右侧栏选项框
-  $('.tab-cut').on('mouseover', 'li', function(event) {
+  $('.tab-cut').on('mouseover', 'li', function (event) {
     event.preventDefault(); /* Act on the event */
     $('#lr_tab li.on').removeClass('on');
     $(this).addClass('on');
@@ -757,30 +779,30 @@ $(function() {
   });
 
   // br-type icon toggle
-  $('.j-br-type a[data-toggle="tab"]').on('click', function(e) {
+  $('.j-br-type a[data-toggle="tab"]').on('click', function (e) {
     var li = $(this).parents('li'),
       box = Config.box,
       qi = box.find('.j-qi-box'),
       he = box.find('.j-he-box'),
       buyType = parseInt(li.attr('data-buytype'));
     switch (buyType) {
-      case 1:
-        box.find('.j-bei-text').show()
-        qi.addClass('hide');
-        he.addClass('hide');
-        break;
-      case 2:
-        box.find('.j-bei-text .j-quick-bei').val(1)
-        COMMON.updateTotalZhu($(this))
-        box.find('.j-bei-text').hide()
-        qi.removeClass('hide');
-        he.addClass('hide');
-        break;
-      case 3:
-        box.find('.j-bei-text').show()
-        he.removeClass('hide');
-        qi.addClass('hide');
-        break;
+    case 1:
+      box.find('.j-bei-text').show()
+      qi.addClass('hide');
+      he.addClass('hide');
+      break;
+    case 2:
+      box.find('.j-bei-text .j-quick-bei').val(1)
+      COMMON.updateTotalZhu($(this))
+      box.find('.j-bei-text').hide()
+      qi.removeClass('hide');
+      he.addClass('hide');
+      break;
+    case 3:
+      box.find('.j-bei-text').show()
+      he.removeClass('hide');
+      qi.addClass('hide');
+      break;
     }
 
     $(this).parents('.j-br-type').find('.icon-y2').removeClass('icon-y2');
@@ -789,7 +811,7 @@ $(function() {
 
   // From Submit
   // 快捷投注 - 提交请求
-  $('#qiuck-sub').on('click', function(event) {
+  $('#qiuck-sub').on('click', function (event) {
 
     var box = Config.box;
     var vote = {};
@@ -803,22 +825,22 @@ $(function() {
     requestURL = (params.qishu == 1) ? '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName : '/lottery/digital/buy-track/' + params.lotyName + '/' + params.playName;
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
-    vote.callback = function() {
+    vote.callback = function () {
       $.ajax({
           url: requestURL,
           type: 'post',
           dataType: 'json',
           data: params,
         })
-        .done(function(data) {
-            if(data.retCode === 100000){
-                COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
-            }else{
-                APP.showTips(data.retMsg);
-                return;
-            }
+        .done(function (data) {
+          if (data.retCode === 100000) {
+            COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          } else {
+            APP.handRetCode(data.retCode, data.retMsg);
+            return;
+          }
         })
-        .fail(function() {
+        .fail(function () {
           COMMON.onSubmitFail();
         });
     };
@@ -827,13 +849,24 @@ $(function() {
       html: COMMON.getAlertHtml(params),
     };
 
-    COMMON.onSubmitInit(params, vote);
+    var c = COMMON.checkParamsStatus(params, vote);
+    if (!c) return false;
+
+
+    APP.checkLogin(Config.payMoney, {
+      enoughMoney: function () {
+        APP.showTips(vote.confirmHtml);
+        $('#buyConfirm').one('click', function (event) {
+          vote.callback();
+        });
+      }
+    });
+
 
   });
 
-
   // 常规投注 - 提交请求
-  $('#buy-submit').on('click', function(event) {
+  $('#buy-submit').on('click', function (event) {
 
     var box = Config.box;
     var vote = {};
@@ -848,38 +881,38 @@ $(function() {
     buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
 
     switch (buytype) {
-      case 2:
-        if (box.find('.is_end_zhongjiang')[0].checked) {
-          params.endminmoney = box.find('.end_min_money').val()
-        }
-        var q = [];
-        var c = box.find('.br-details tbody .br-zhui-c:checked');
-        for (var i = 0; i < c.length; i++) {
-          q.push(c.eq(i).attr('data-qihaoid') + '|' + c.eq(i).attr('data-qi') + '|' + c.eq(i).parents('tr').find('.br-zhui-bei').val());
-        };
+    case 2:
+      if (box.find('.is_end_zhongjiang')[0].checked) {
+        params.endminmoney = box.find('.end_min_money').val()
+      }
+      var q = [];
+      var c = box.find('.br-details tbody .br-zhui-c:checked');
+      for (var i = 0; i < c.length; i++) {
+        q.push(c.eq(i).attr('data-qihaoid') + '|' + c.eq(i).attr('data-qi') + '|' + c.eq(i).parents('tr').find('.br-zhui-bei').val());
+      };
 
-        params.zhuihaoqihao = q;
-        params.qishu = q.length;
-        requestURL = '/lottery/digital/buy-track/' + params.lotyName + '/' + params.playName;
-        break;
+      params.zhuihaoqihao = q;
+      params.qishu = q.length;
+      requestURL = '/lottery/digital/buy-track/' + params.lotyName + '/' + params.playName;
+      break;
 
-      case 3:
-        params.rengouMoney = box.find('.j-rengou').val()
-        params.extraPercent = box.find('.br-select').val()
-        params.baodiText = box.find('.j-baodi-text').val()
-        params.title = box.find('.j-project-title').val()
-        params.textarea = box.find('.br-textarea').val()
-        params.set = box.find('.br-set-group .active').html()
-        requestURL = '/lottery/digital/buy-together/' + params.lotyName + '/' + params.playName;
-        break;
+    case 3:
+      params.rengouMoney = box.find('.j-rengou').val()
+      params.extraPercent = box.find('.br-select').val()
+      params.baodiText = box.find('.j-baodi-text').val()
+      params.title = box.find('.j-project-title').val()
+      params.textarea = box.find('.br-textarea').val()
+      params.set = box.find('.br-set-group .active').html()
+      requestURL = '/lottery/digital/buy-together/' + params.lotyName + '/' + params.playName;
+      break;
 
-      default:
-        requestURL = '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName;
-        break;
+    default:
+      requestURL = '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName;
+      break;
     }
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
-    vote.callback = function() {
+    vote.callback = function () {
       if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
         APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
@@ -890,10 +923,10 @@ $(function() {
           dataType: 'json',
           data: params,
         })
-        .done(function(data) {
+        .done(function (data) {
           COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
         })
-        .fail(function() {
+        .fail(function () {
           COMMON.onSubmitFail()
         });
     };
@@ -907,7 +940,7 @@ $(function() {
   });
 
   //拖胆上传
-  $('#j-tuodan-sub').on('click', function(event) {
+  $('#j-tuodan-sub').on('click', function (event) {
 
     var box = Config.box;
     var vote = {};
@@ -924,37 +957,37 @@ $(function() {
     buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
 
     switch (buytype) {
-      case 2:
-        if (box.find('.is_end_zhongjiang')[0].checked) {
-          params.endminmoney = box.find('.end_min_money').val();
-        }
-        var q = [];
-        var c = box.find('.br-details tbody .br-zhui-c:checked');
-        for (var i = 0; i < c.length; i++) {
-          q.push(c.eq(i).attr('data-qihaoid') + '|' + c.eq(i).attr('data-qi') + '|' + c.eq(i).parents('tr').find('.br-zhui-bei').val());
-        };
-        params.zhuihaoqihao = q;
-        params.qishu = q.length;
-        requestURL = '/lottery/digital/buy-track/' + params.lotyName + '/' + params.playName;
-        break;
+    case 2:
+      if (box.find('.is_end_zhongjiang')[0].checked) {
+        params.endminmoney = box.find('.end_min_money').val();
+      }
+      var q = [];
+      var c = box.find('.br-details tbody .br-zhui-c:checked');
+      for (var i = 0; i < c.length; i++) {
+        q.push(c.eq(i).attr('data-qihaoid') + '|' + c.eq(i).attr('data-qi') + '|' + c.eq(i).parents('tr').find('.br-zhui-bei').val());
+      };
+      params.zhuihaoqihao = q;
+      params.qishu = q.length;
+      requestURL = '/lottery/digital/buy-track/' + params.lotyName + '/' + params.playName;
+      break;
 
-      case 3:
-        params.rengouMoney = box.find('.j-rengou').val();
-        params.extraPercent = box.find('.br-select').val();
-        params.baodiText = box.find('.j-baodi-text').val();
-        params.title = box.find('.j-project-title').val();
-        params.textarea = box.find('.br-textarea').val();
-        params.set = box.find('.br-set-group .active').html();
-        requestURL = '/lottery/digital/buy-together/' + params.lotyName + '/' + params.playName;
-        break;
+    case 3:
+      params.rengouMoney = box.find('.j-rengou').val();
+      params.extraPercent = box.find('.br-select').val();
+      params.baodiText = box.find('.j-baodi-text').val();
+      params.title = box.find('.j-project-title').val();
+      params.textarea = box.find('.br-textarea').val();
+      params.set = box.find('.br-set-group .active').html();
+      requestURL = '/lottery/digital/buy-together/' + params.lotyName + '/' + params.playName;
+      break;
 
-      default:
-        requestURL = '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName;
-        break;
+    default:
+      requestURL = '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName;
+      break;
     }
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
-    vote.callback = function() {
+    vote.callback = function () {
       if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
         APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
@@ -965,10 +998,10 @@ $(function() {
           dataType: 'json',
           data: params,
         })
-        .done(function(data) {
+        .done(function (data) {
           COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
         })
-        .fail(function() {
+        .fail(function () {
           COMMON.onSubmitFail()
         });
     };
@@ -981,7 +1014,7 @@ $(function() {
   });
 
   //粘贴上传
-  $('#j-upload-sub').on('click', function(event) {
+  $('#j-upload-sub').on('click', function (event) {
 
     var box = Config.box;
     var vote = {};
@@ -997,22 +1030,22 @@ $(function() {
     var buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
 
     switch (buytype) {
-      case 3:
-        params.rengouMoney = box.find('.j-rengou').val();
-        params.extraPercent = box.find('.br-select').val();
-        params.baodiText = box.find('.j-baodi-text').val();
-        params.title = box.find('.j-project-title').val();
-        params.textarea = box.find('.br-textarea').val();
-        requestURL = '/lottery/digital/buy-together/' + params.lotyName + '/' + params.playName;
-        break;
+    case 3:
+      params.rengouMoney = box.find('.j-rengou').val();
+      params.extraPercent = box.find('.br-select').val();
+      params.baodiText = box.find('.j-baodi-text').val();
+      params.title = box.find('.j-project-title').val();
+      params.textarea = box.find('.br-textarea').val();
+      requestURL = '/lottery/digital/buy-together/' + params.lotyName + '/' + params.playName;
+      break;
 
-      default:
-        requestURL = '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName;
-        break;
+    default:
+      requestURL = '/lottery/digital/buy-self/' + params.lotyName + '/' + params.playName;
+      break;
     }
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
-    vote.callback = function() {
+    vote.callback = function () {
 
       if ((parseInt(params.rengouMoney) + parseInt(params.baodiText)) > (params.beishu * params.zhushu * money)) {
         APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
@@ -1025,10 +1058,10 @@ $(function() {
           dataType: 'json',
           data: params,
         })
-        .done(function(data) {
+        .done(function (data) {
           COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
         })
-        .fail(function() {
+        .fail(function () {
           COMMON.onSubmitFail()
         });
     };
@@ -1040,9 +1073,8 @@ $(function() {
 
   });
 
-
   // 多期投注 - Submit
-  $('#j-more-sub').on('click', function(event) {
+  $('#j-more-sub').on('click', function (event) {
 
     var box = $(this).parents('.tab-pane');
     var vote = {};
@@ -1054,17 +1086,17 @@ $(function() {
     params.qishu = $('#j-more-qi').val();
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
-    vote.callback = function() {
+    vote.callback = function () {
       $.ajax({
           url: '/lottery/digital/buy-rank/' + params.lotyName + '/' + params.playName,
           type: 'post',
           dataType: 'json',
           data: params,
         })
-        .done(function(data) {
+        .done(function (data) {
           COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId)
         })
-        .fail(function() {
+        .fail(function () {
           COMMON.onSubmitFail()
         });
     };
@@ -1076,19 +1108,18 @@ $(function() {
 
   });
 
-
   /**
    * Bind ZhuiHao And HeMai Module
    *
    */
-  $('.zh_issue_num').on('change', function(event) {
+  $('.zh_issue_num').on('change', function (event) {
     event.preventDefault();
     ZHUI.getNewHtml($(this));
   });
-  $('.br-details').on('click', '.br-zhui-btn', function(event) {
+  $('.br-details').on('click', '.br-zhui-btn', function (event) {
     ZHUI.getNewHtml($(this));
   });
-  $('.br-details').on('click', '.br-he-btn', function(event) {
+  $('.br-details').on('click', '.br-he-btn', function (event) {
     ZHUI.setHeMaiTotal(Config.box);
   });
   ZHUI.bindHeMaiEvent();

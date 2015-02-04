@@ -188,7 +188,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         data: {
           pid: obj.prjctId,
           buyNum: obj.byNum,
-          unikey:$.now()
+          unikey: (new Date()).valueOf(),
         },
       })
       .done(function (data) {

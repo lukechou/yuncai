@@ -44,9 +44,20 @@ input { padding: 3px 5px; width: 100%; border: 1px #dfdfdf solid; }
 .email-box .pull-right .btn{ margin-top: 15px;}
 .email-sure .m-tips-box{ font-size: 12px; width: 550px; margin:auto; text-align: left; }
 
-
-
-
+/* 手机号码绑定图标样式 */
+.mobile, .email{ width: 129px; height: 130px; margin: auto;}
+.mobile {
+	background-image:url(http://static2.360mao.com/front_images/find_pwd/mobile.png)
+}
+.mobile .active {
+	background-image:url(http://static2.360mao.com/front_images/find_pwd/mobile_active.png)
+}
+.email {
+	background-image:url(http://static2.360mao.com/front_images/find_pwd/email.png)
+}
+.email .active {
+	background-image:url(http://static2.360mao.com/front_images/find_pwd/email_active.png)
+}
 
 
 

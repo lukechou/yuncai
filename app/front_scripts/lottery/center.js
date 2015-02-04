@@ -27,7 +27,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
         dataType: 'json',
         data: {
           pid: obj.prjctId,
-          buyNum: obj.byNum
+          buyNum: obj.byNum,
+          unikey: (new Date()).valueOf()
         },
       })
       .done(function (data) {
@@ -73,6 +74,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       ssq: '双色球',
       dlt: '大乐透',
       jczq: '竞彩足球',
+      pl3: '排列3',
+      pl5: '排列5',
+      fc3d: '福彩3D',
+      qlc: '七乐彩',
+      qxc: '七星彩',
     };
     var mname = lotyNameObj[lotyName];
 

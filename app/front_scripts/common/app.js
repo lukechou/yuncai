@@ -138,7 +138,7 @@ define(['jquery'], function ($) {
         break;
       case 120001:
         _this.showTips({
-          html: '<div class="tipbox"><p>' + retMsg + ',购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+          html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
         });
         break;
       default:

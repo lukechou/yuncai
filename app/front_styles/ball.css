@@ -1,7 +1,7 @@
 body { background: #fff; }
 .ft { background: #f5f5f5; }
 /* RaceBall */
-.raceball { margin-top: 15px; }
+.raceball { margin: 15px auto 80px; }
 .raceball .g-left { float: left; width: 700px; }
 .raceball .g-right { float: right; width: 260px; border: 1px #dfdfdf solid; border-top: none; }
 /* hd */

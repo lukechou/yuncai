@@ -94,7 +94,7 @@ define(['jquery'], function ($) {
           rightHTML = '销售时间截止';
 
         }
-        $('.pull-right').html(rightHTML);
+        $('#j-quick-buy-loty-detail .pull-right').html(rightHTML);
       }
 
       if (false === _this.hasCreate[_this.currLotyName]) {

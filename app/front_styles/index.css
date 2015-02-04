@@ -57,7 +57,7 @@ body { color: #3d3d3d; background: #242424; }
 .ft-img .wg-link1 { left: 0; background-position: 0 0; }
 .ft-img .wg-link2 { right: 0; background-position: -114px 0; }
 /* Mask Alert */
-.m-mask { width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 101; }
+.m-mask { width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 101; display: none; }
 .m-mask-bg { width: 100%; height: 100%; background: #000; opacity: .4; filter: alpha(opacity=40); }
 .m-mask-main { width: 462px; height: 400px; position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; }
 .m-mask-close { position: absolute; right: 25px; top: 60px; cursor: pointer; }
@@ -137,7 +137,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .page-quick .box-right .new-ls { margin-left: 0; }
 .page-quick .box-right .new-ls li a { padding: 3px 5px; }
 .page-quick .tou { padding-bottom: 20px; }
-.tou .ball { float: left; padding: 0 15px; }
+.tou .ball { width: 108px; height: 78px; float: left; padding: 0 15px; }
 .tou .tou-ls { float: left; padding: 20px 10px 0 0; }
 .tou .tou-ls li { font-family: 'Microsoft Yahei'; font-size: 18px; line-height: 42px; float: left; width: 42px; height: 42px; margin-right: 12px; text-align: center; color: #fff; border-radius: 50%; background: #f13c38; }
 .tou .tou-ls li.blue { background: #388bf1; }
@@ -167,6 +167,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .x-tou .pull-left { padding-left: 15px; text-align: center; }
 .x-tou .pull-left img { padding-bottom: 10px; }
 .x-tou .pull-left p { margin-bottom: 5px; }
+.x-tou .pull-right{ width: 168px;}
 .x-tou .pull-right li { padding-bottom: 5px; }
 .x-tou .pull-right li .btn { margin-top: 10px; }
 /* Page he */
@@ -290,3 +291,13 @@ filter: Alpha(Opacity=50); /* IE7 fix */ }
 .m-btns { margin-left: 75px; }
 .m-btns .btn { padding: 5px 35px; }
 .m-btns .btn-danger { margin-right: 10px; }
+
+
+/* 星座运程*/
+.xz-modal .modal-dialog{ width: 695px;}
+.xz-modal .modal-header h4{ font-size: 18px; font-family: "Microsoft Yahei";}
+.xz-modal .modal-header h4 b{ font-size: 12px;}
+.xz-modal .modal-body{ padding: 15px 15px 20px;}
+
+.xz-box-l{ width: 300px; float: left;}
+.xz-box-r{ width: 300px; float: right;}

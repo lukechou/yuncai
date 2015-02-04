@@ -78,20 +78,29 @@ define(['jquery'], function ($) {
       var digitalCodes = null;
       var hash = {};
       var codeLen = _.uniq(allDigitalCodes).length;
-      var regCode = /^([0-9]{1,10}[,]){2}([0-9]{1,10})$/;
+      var regCode = null;
 
-      if (this.nav.big === 'zx3') {
-        if (codeLen === 3 || codeLen === 2) {
-          regCode = /^([0-9]{1,10}[,]){1,2}([0-9]{1,10})$/;
-        } else {
-          return;
-        }
+      switch (this.nav.big) {
+      case 'zx':
+        regCode = /^([0-9]{1,10}[,]){2}([0-9]{1,10})$/;
+        break;
+      case 'zx3':
+        regCode = /^([0-9][,]){1,9}([0-9])$/;
+        break;
+      case 'zx6':
+        regCode = /^([0-9][,]){2,9}([0-9])$/;
+        break;
+      default:
+        return;
+        break;
       }
 
-      if (this.nav.big === 'zx6') {
-        if (codeLen !== 3) {
-          return false;
-        }
+      if (this.nav.big === 'zx3' && codeLen !== allDigitalCodes.length) {
+        return;
+      }
+
+      if (this.nav.big === 'zx6' && codeLen !== allDigitalCodes.length) {
+        return false;
       }
 
       if (!regCode.test(code)) {

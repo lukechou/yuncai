@@ -256,36 +256,6 @@ COMMON.checkParamsStatus = function (p, v) {
 
 };
 
-// 彩票购买提交 初始化
-COMMON.onSubmitInit = function (params, vote) {
-  var c = this.checkParamsStatus(params, vote);
-
-  if (c) {
-    $.ajax({
-        url: '/account/islogin',
-        type: 'get',
-        dataType: 'json',
-      })
-      .done(function (D) {
-        if (D.retCode === 100000) {
-          if (Number(D.retData.money.replace(/,/g, '')) >= Config.payMoney) {
-            APP.showTips(vote.confirmHtml);
-            $('#buyConfirm').one('click', function (event) {
-              vote.callback();
-            });
-          } else {
-            APP.showTips({
-              html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
-            });
-          }
-        } else {
-          APP.handRetCode(D.retCode, D.retMsg);
-        }
-      });
-  }
-
-};
-
 /**
  * [getCommonParams 购买彩票,获取要提交的参数]
  * @param  {} el [.box-left 对象]
@@ -294,12 +264,10 @@ COMMON.onSubmitInit = function (params, vote) {
 COMMON.getCommonParams = function () {
 
   var params = (function () {
-    'use strict';
     var box = Config.box;
     var params = {
       lotyName: $('#lotyName').val(),
       playName: $('#playName').val(),
-//      unikey: $('#unikey').val(),
       qihaoId: $('#qihaoId').val(),
       qihao: $('#qihao').val(),
       zhushu: box.find('.j-quick-zhu').html(),

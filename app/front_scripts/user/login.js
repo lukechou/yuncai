@@ -31,10 +31,4 @@ $(function () {
         console.log("error");
       });
   });
-
-  $('#j-find-pwd').on('click', function (event) {
-    event.preventDefault();
-    APP.showTips('<p>请致电客服，由客服人员为您解决。<br>客服中心电话：4008-898-310</p>');
-  });
-
 });
