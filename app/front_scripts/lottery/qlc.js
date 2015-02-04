@@ -446,6 +446,7 @@ $(document).ready(function () {
 
     $('#issue_size').on('change', function (event) {
         event.preventDefault();
+        G_BUY.trackData.issueMutipleMap = {}; // clean
         /* Act on the event */
         queryTrackIssueList($(this).val());
     });
@@ -1327,7 +1328,7 @@ $(document).ready(function () {
 
     function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName) {
         if (retCode == 100000) {
-            store.clear();
+
             store.set('lotyName', lotyName);
             store.set('lotyCNName', lotyCNName);
             store.set('payMoney', buyMoney);
@@ -1340,7 +1341,7 @@ $(document).ready(function () {
     }
 
     function buyFailure(lotyName, lotyCNName) {
-        store.clear();
+
         store.set('lotyName', lotyName);
         store.set('lotyCNName', lotyCNName);
         window.location.href = '/html/lottery/trade/fail.html';

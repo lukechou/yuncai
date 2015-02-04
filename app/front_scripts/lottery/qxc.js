@@ -510,6 +510,7 @@ $(document).ready(function () {
     $('#issue_size').on('change', function (event) {
         event.preventDefault();
         /* Act on the event */
+        G_BUY.trackData.issueMutipleMap = {}; // clean
         queryTrackIssueList($(this).val());
     });
 
@@ -615,7 +616,7 @@ $(document).ready(function () {
         }
         G_BUY.partnerBuy.commissionPercent = val;
     });
-    
+
     // 是否保底
     $('#has_part_aegis').on('change', function (event) {
         event.preventDefault();
@@ -1413,7 +1414,7 @@ $(document).ready(function () {
 
     function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName) {
         if (retCode == 100000) {
-            store.clear();
+
             store.set('lotyName', lotyName);
             store.set('lotyCNName', lotyCNName);
             store.set('payMoney', buyMoney);
@@ -1426,7 +1427,7 @@ $(document).ready(function () {
     }
 
     function buyFailure(lotyName, lotyCNName) {
-        store.clear();
+
         store.set('lotyName', lotyName);
         store.set('lotyCNName', lotyCNName);
         window.location.href = '/html/lottery/trade/fail.html';

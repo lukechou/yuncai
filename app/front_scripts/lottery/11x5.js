@@ -1,7 +1,7 @@
 var G_BUY = {
     lotyName : '',
     lotyId : 1, // 快频接口需要
-    lotyCNName : '粤11选5',
+    lotyCNName : '11选5',
     playName : '',
     codes : [],
     zhushu : 0,
@@ -11,8 +11,8 @@ var G_BUY = {
     isManual : false,
     qihao : 0,
     partnerBuy : {
-        projectTitle : '粤11选5合买方案', // 方案标题
-        projectDescription : '粤11选5', // 方案标题
+        projectTitle : '11选5合买方案', // 方案标题
+        projectDescription : '11选5', // 方案标题
         partBuyMoney : 0, // 合买认购金额
         partAegisMoney : 0, // 合买认购金额
         commissionPercent : 0, // 合买提成
@@ -38,11 +38,11 @@ var G_BUY = {
         this.mutiple = 1;
         this.money = 0;
         this.isManual = false;
-        this.qihaoId = $('#qihaoId').val();
-        this.qihao = $('#qihao').val();
+        this.qihaoId = 0;//$('#qihaoId').val();
+        this.qihao = 0;//$('#qihao').val();
         this.partnerBuy = {
-            projectTitle : '粤11选5合买方案', // 方案标题
-            projectDescription : '粤11选5', // 方案标题
+            projectTitle : '11选5合买方案', // 方案标题
+            projectDescription : '11选5', // 方案标题
             partBuyMoney : 0, // 合买认购金额
             partAegisMoney : 0, // 合买认购金额
             commissionPercent : 0, // 合买提成
@@ -86,6 +86,7 @@ function init() {
 $(document).ready(function() {
     init();
     var lessSeconds = 0;
+    var stopSale = false;
     timer4Sale();
     loadCurrentIssue();
     function loadCurrentIssue(){
@@ -97,6 +98,7 @@ $(document).ready(function() {
         .done(function(data) {
             if(data.retCode === 100000){
                 lessSeconds = Math.floor((data.retData[0].company_sell_etime - data.retData[0].sys_time));
+                stopSale = (0===parseInt(data.retData[0].sell_status, 0));
                 console.log(lessSeconds);
                 G_BUY.qihao = data.retData[0].issue_num;
                 G_BUY.qihaoId = data.retData[0].id;
@@ -190,7 +192,9 @@ $(document).ready(function() {
 
     function timer4Sale(){
         $('#j-current-issue').html(G_BUY.qihao);
-        if(lessSeconds > 0){
+        if(stopSale){
+            $('#j-less-info').html('停止销售');
+        }else if(lessSeconds > 0){
             var minute = Math.floor(lessSeconds / 60 % 60);
             minute = (minute < 10) ? '0' + minute : minute;
             var seconds = lessSeconds % 60;
@@ -296,7 +300,7 @@ $(document).ready(function() {
             case 'all':
                 $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
                     cleanAnotherBitData($(this).html(), dataBit);
-                    $(this).toggleClass('active');
+                    $(this).addClass('active');
                     G_CHOOSE.codes[dataBit].push($(this).html());
                 });
                 break;
@@ -599,8 +603,8 @@ $(document).ready(function() {
         G_BUY.trackData.issueMutipleMap = {}; // clean
         $('#buy_mutiple_span').show();
         G_BUY.partnerBuy = {
-            projectTitle : '粤11选5合买方案',
-            projectDescription : '粤11选5'
+            projectTitle : '11选5合买方案',
+            projectDescription : '11选5'
         }; // clean partner buy
         G_BUY.buyType = parseInt($(this).attr('data-buytype'));
         G_BUY.mutiple = 1;
@@ -627,6 +631,7 @@ $(document).ready(function() {
     $('#issue_size').on('change', function(event) {
         event.preventDefault();
         /* Act on the event */
+        G_BUY.trackData.issueMutipleMap = {}; // clean
         queryTrackIssueList($(this).val());
     });
 
@@ -971,9 +976,9 @@ $(document).ready(function() {
         var html = '';
         $('.br-details thead .br-zhui-bei').val(1);
         $.ajax({
-        url : '/lottery/issue/get-issue-list?lottery_id=' + G_BUY.lotyId + '&issue_size=' + num,
-        type : 'GET',
-        dataType : 'json',
+            url : '/lottery/issue/get-issue-list?lottery_id=' + G_BUY.lotyId + '&issue_size=' + num,
+            type : 'GET',
+            dataType : 'json',
         }).done(function(data) {
             if (data.retCode == 100000) {
                 for ( var i = 0; i < data.retData.length; i++) {
@@ -1126,7 +1131,7 @@ $(document).ready(function() {
 
     function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName) {
         if (retCode == 100000) {
-            store.clear();
+
             store.set('lotyName', lotyName);
             store.set('lotyCNName', lotyCNName);
             store.set('payMoney', buyMoney);
@@ -1139,7 +1144,7 @@ $(document).ready(function() {
     }
 
     function buyFailure(lotyName, lotyCNName) {
-        store.clear();
+
         store.set('lotyName', lotyName);
         store.set('lotyCNName', lotyCNName);
         window.location.href = '/html/lottery/trade/fail.html';

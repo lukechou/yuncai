@@ -46,8 +46,27 @@ body { background: #fff; }
 .dataHead .gameSeleList .makeSure { font-size: 12px; color: #fff; background: #ef4b48; }
 .dataHead .arrow { position: relative; left: 5px; display: inline-block; width: 10px; height: 6px; background: url(../front_images/help-nav-icon.png) no-repeat; }
 /* 投注表格主体 */
-.onlySpf .dataBody .towLine .line2 { display: none; }
-.onlyRqSpf .dataBody .towLine .line1 { display: none; }
+.data-load{ margin: 100px auto;}
+
+/* 胜平负 数据主体样式
+.dataHead .co5,.dataHead .co6,.dataBody .towLine .line2,.dataBody .towLine .line1{ display: none; }
+
+
+.onlySpf .dataBody .towLine .line1 { display: block; }
+.onlyRqSpf .dataBody .towLine .line2 { display: block; }
+.onlyRqSpf .co5, .onlyRqSpf .co6,.onlySpf .co5, .onlySpf .co6{ display: block;}
+*/
+
+/* 半全场 */
+
+/* 比分 */
+
+/* 总进球 */
+
+
+
+
+
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
 .dataBody dl { position: relative; width: 700px; margin-bottom: 0; border-bottom: 1px #dfdfdf solid; }
 .dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px; }

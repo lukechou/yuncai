@@ -26,7 +26,6 @@ define(['jquery'], function ($) {
       }
     };
 
-
     /**
      * 全局通用登录弹出框
      * @return {null}
@@ -158,7 +157,7 @@ define(['jquery'], function ($) {
     app.prototype.checkLogin = function (money, o) {
 
       var _this = this;
-
+      money = Number(money);
       // check money type
       if ((typeof money) !== 'number') {
         return;
@@ -424,6 +423,61 @@ define(['jquery'], function ($) {
 
       $('.modal').on('show.bs.modal', _this.centerModal);
 
+    };
+
+    app.prototype.dateFormat = function (date, pattern, isFill) {
+
+      var Y = date.getFullYear();
+
+      var M = date.getMonth() + 1;
+
+      var d = date.getDate();
+
+      var h = date.getHours();
+
+      var m = date.getMinutes();
+
+      var s = date.getSeconds();
+
+      var w = date.getDay();
+
+      var week = ['日', '一', '二', '三', '四', '五', '六'];
+
+      w = week[w];
+
+      if (isFill) {
+
+        M = (M < 10) ? ('0' + M) : M;
+
+        d = (d < 10) ? ('0' + d) : d;
+
+        h = (h < 10) ? ('0' + h) : h;
+
+        m = (m < 10) ? ('0' + m) : m;
+
+        s = (s < 10) ? ('0' + s) : s;
+
+        w = w;
+
+      }
+
+      pattern = pattern || '%Y-%M-%d %h:%m:%s';
+
+      pattern = pattern.replace('%Y', Y);
+
+      pattern = pattern.replace('%M', M);
+
+      pattern = pattern.replace('%d', d);
+
+      pattern = pattern.replace('%h', h);
+
+      pattern = pattern.replace('%m', m);
+
+      pattern = pattern.replace('%s', s);
+
+      pattern = pattern.replace('%w', w);
+
+      return pattern;
     };
 
     return app;

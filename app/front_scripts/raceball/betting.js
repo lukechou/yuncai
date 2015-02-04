@@ -484,14 +484,6 @@ define(['jquery'], function ($) {
 
       });
 
-      // Toggle Buy Type
-      $('#j-vote-nav').on('click', 'a', function (event) {
-        var type = $(this).attr('data-type');
-        _this.tab = (type == 'onlySpf') ? 'spf' : 'rqspf';
-        _this.box.removeClass('onlySpf onlyRqSpf').addClass(type);
-        _this.clearBetData();
-      });
-
       //  Buy Main Toggle
       _this.box.on('click', '.j-dataBody-toggle', function (event) {
 

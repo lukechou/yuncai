@@ -634,12 +634,14 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(',') + '</span>';
 
-			if (PL3.G_CHOOSE.codes[0][1].length > 0) {
-				html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
-			}
+			if (b === 'zx') {
+				if (PL3.G_CHOOSE.codes[0][1].length > 0) {
+					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
+				}
 
-			if (PL3.G_CHOOSE.codes[0][1].length > 0) {
-				html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join(',') + '</span>';
+				if (PL3.G_CHOOSE.codes[0][1].length > 0) {
+					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join(',') + '</span>';
+				}
 			}
 		}
 
@@ -888,6 +890,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	// 追号期数切换
 	$('#issue_size').on('change', function (event) {
 		event.preventDefault();
+		PL3.G_BUY.trackData.issueMutipleMap = {}; // clean
 		queryTrackIssueList($(this).val());
 	});
 
@@ -1906,7 +1909,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName) {
 		if (retCode == 100000) {
-			store.clear();
+
 			store.set('lotyName', lotyName);
 			store.set('lotyCNName', lotyCNName);
 			store.set('payMoney', buyMoney);
@@ -1919,7 +1922,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	}
 
 	function buyFailure(lotyName, lotyCNName) {
-		store.clear();
+
 		store.set('lotyName', lotyName);
 		store.set('lotyCNName', lotyCNName);
 		window.location.href = '/html/lottery/trade/fail.html';

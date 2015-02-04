@@ -484,6 +484,7 @@ $(document).ready(function () {
   $('#issue_size').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
+    G_BUY.trackData.issueMutipleMap = {}; // clean
     queryTrackIssueList($(this).val());
   });
 
@@ -1332,7 +1333,7 @@ $(document).ready(function () {
               })
               .done(function (data) {
                 if(data.retCode === 100000){
-                    buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, costRealMoney, G_BUY.lotyName, G_BUY.lotyCNName);                    
+                    buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, costRealMoney, G_BUY.lotyName, G_BUY.lotyCNName);
                 }else{
                     APP.showTips(data.retMsg);
                     return;
@@ -1377,7 +1378,7 @@ $(document).ready(function () {
 
   function buySuccess(retCode, retMsg, projectNo, trackId, buyMoney, lotyName, lotyCNName) {
     if (retCode == 100000) {
-      store.clear();
+
       store.set('lotyName', lotyName);
       store.set('lotyCNName', lotyCNName);
       store.set('payMoney', buyMoney);
@@ -1390,7 +1391,7 @@ $(document).ready(function () {
   }
 
   function buyFailure(lotyName, lotyCNName) {
-    store.clear();
+
     store.set('lotyName', lotyName);
     store.set('lotyCNName', lotyCNName);
     window.location.href = '/html/lottery/trade/fail.html';

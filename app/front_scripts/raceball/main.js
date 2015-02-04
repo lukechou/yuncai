@@ -29,8 +29,121 @@ require.config({
 require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy'], function ($, _, BET, APP, store, H) {
   'use strict';
 
-  Config.lotyName = 'jczq';
+  function craeteDateBtn(type, sp) {
+
+    var h = '';
+    var spArr = sp.split('|');
+    var l = '';
+    var tab = BET.tab;
+
+    if (type == 1) {
+      for (var i = 0, len = spArr.length; i < len; i++) {
+        if (i === (len - 1)) l = 'lastOne';
+        h += '<em index="' + i + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + '">' + spArr[i] + '</em>';
+      };
+
+    } else {
+
+      h = '<b class="no-support">本场对阵不支持该玩法</b>';
+
+    }
+
+    return h;
+  }
+
+  function createDateMain(data) {
+
+    var arr = [];
+    var line = '';
+    var item = null;
+    var tab = BET.tab;
+
+    for (var i = 0; i < data.length; i++) {
+
+      item = data[i];
+      line = craeteDateBtn(item[tab], item[tab + '_gg_sp']);
+      arr.push('<dd isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="league_36">');
+
+      arr.push('<span class="co1"><i class="jtip" inf="' + item.week + item.game_order + '">' + item.game_order + '</i></span>');
+
+      arr.push('<span class="co2" style="background:' + item.league_color + ';">' + item.league + '</span>');
+
+      arr.push('<span class="co3 gameTime"><i class="jtip">' + item.end_time + '</i></span>');
+
+      arr.push('<span class="co4"><em class="hostTeam" title="' + item.home_short + '"><b>' + item.home_short + '</b></em><em class="guestTeam" title="' + item.away_short + '"><b>' + item.away_short + '</b></em></span>');
+
+      switch (tab) {
+      case 'spf':
+        arr.push('<span class="co6_1 btnBox towLine "><div class="line1 "><em class="rq">0</em>' + line + '</div></span></dd>');
+        break;
+      case 'rqspf':
+        arr.push('<span class="co6_1 btnBox towLine "><div class="line1 "><em class="rq">' + item['rqspf_rangqiu_num'] + '</em>' + line + '</div></span></dd>');
+        break;
+      case 'bf':
+        break;
+      case 'bqc':
+        break;
+      case 'zjq':
+        break;
+      default:
+        return;
+        break;
+      }
+
+    };
+    return arr.join('');
+  }
+
+  function createDataBody(data, d) {
+
+    var time = APP.dateFormat(new Date(d * 1000), '%Y-%M-%d', true) + ' ' + data[0].week;
+    var dataCount = data.length;
+
+    var h = '';
+
+    // head
+    h += '<dl><dt>' + time + '<span class="cuspText fc-84 j-dataBody-toggle pull-right" data-show="1">隐藏</span>(12:00 -- 次日12:00)<span class="matchSize">' + dataCount + '</span>场比赛可投注</dt>';
+
+    // main
+    h += createDateMain(data);
+
+    // foot
+    h += '</dl>'
+    return h;
+  }
+
+  function initDataBody() {
+
+    var dataBodyHTML = '';
+
+    for (var key in jczqData) {
+      if (jczqData.hasOwnProperty(key)) {
+        dataBodyHTML += createDataBody(jczqData[key], key);
+      }
+    }
+
+    $('#j-data-body').html(dataBodyHTML);
+  }
+
+  initDataBody();
   gameSeleListInit();
+  Config.lotyName = 'jczq';
+
+  // Toggle Buy Type
+  $('#j-vote-nav').on('click', 'a', function (event) {
+
+    $('#j-vote-nav .active').removeClass('active');
+    $(this).parents('li').addClass('active');
+
+    var type = $(this).attr('data-type');
+    var tab = $(this).attr('data-game');
+
+    BET.tab = $(this).attr('data-game');
+    BET.box.removeClass().addClass('bettingBox clearfix ' + type);
+    BET.clearBetData();
+
+    initDataBody();
+  });
 
   $('.icon').tipsy({
     fade: true,

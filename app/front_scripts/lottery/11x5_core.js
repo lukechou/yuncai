@@ -178,15 +178,29 @@ var Core11x5={
 
                 case this.playType.Q2:
                     var produceCodes = [];
-                    produceCodes[0] = _.sample(this.baseCode, 1).sort();
-                    produceCodes[1] = _.sample(this.baseCode, 1).sort();
+                    var newArrCodes = this.baseCode.concat();
+                    var firstCode = _.sample(newArrCodes, 1).sort();
+                    produceCodes[0] = firstCode;
+                    _.remove(newArrCodes, function(currentCode) {
+                        return firstCode == currentCode;
+                    });
+                    produceCodes[1] = _.sample(newArrCodes, 1).sort();
                     return produceCodes;
 
                 case this.playType.Q3:
                     var produceCodes = [];
-                    produceCodes[0] = _.sample(this.baseCode, 1).sort();
-                    produceCodes[1] = _.sample(this.baseCode, 1).sort();
-                    produceCodes[2] = _.sample(this.baseCode, 1).sort();
+                    var newArrCodes = this.baseCode.concat();
+                    var firstCode = _.sample(newArrCodes, 1).sort();
+                    _.remove(newArrCodes, function(currentCode) {
+                        return firstCode == currentCode;
+                    });
+                    produceCodes[0] = firstCode;
+                    var secondCode = _.sample(newArrCodes, 1).sort();
+                    produceCodes[1] = secondCode;
+                    _.remove(newArrCodes, function(currentCode) {
+                        return secondCode == currentCode;
+                    });
+                    produceCodes[2] = _.sample(newArrCodes, 1).sort();
                     return produceCodes;
 
                 default:
