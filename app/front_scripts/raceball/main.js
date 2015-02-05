@@ -39,7 +39,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     if (type == 1) {
       for (var i = 0, len = spArr.length; i < len; i++) {
         if (i === (len - 1)) l = 'lastOne';
-        h += '<em index="' + i + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + '">' + spArr[i] + '</em>';
+        h += '<em index="' + i + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + ' j-sp-btn">' + spArr[i] + '</em>';
       };
 
     } else {
@@ -74,16 +74,19 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
       switch (tab) {
       case 'spf':
-        arr.push('<span class="co6_1 btnBox towLine "><div class="line1 "><em class="rq">0</em>' + line + '</div></span></dd>');
+        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">0</em>' + line + '</div></span></dd>');
         break;
       case 'rqspf':
-        arr.push('<span class="co6_1 btnBox towLine "><div class="line1 "><em class="rq">' + item['rqspf_rangqiu_num'] + '</em>' + line + '</div></span></dd>');
+        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + item['rqspf_rangqiu_num'] + '</em>' + line + '</div></span></dd>');
         break;
       case 'bf':
+      arr.push('<span class="row1 row1-1"><button class="btn btn-gray j-show-bf">展开</button></span></dd>');
         break;
       case 'bqc':
+      arr.push('<span class="row2 row2-1">'+line+'</span></dd>');
         break;
       case 'zjq':
+      arr.push('<span class="row3 row3-1">'+line+'</span></dd>');
         break;
       default:
         return;

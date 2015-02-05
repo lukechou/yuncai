@@ -30,7 +30,7 @@ body { background: #fff; }
 .co4 { width: 260px; }
 .co5 { width: 36px; }
 .co6 { overflow: hidden; width: 168px; white-space: nowrap; }
-.co6_1 { width: 204px; }
+.co6-1 { width: 204px; }
 .co7 { width: 124px; }
 .dataHead .co8, .dataBody .co8 { position: absolute; right: 0; float: none; width: 60px; }
 .closeData dd, .isOver { display: none; }
@@ -45,30 +45,9 @@ body { background: #fff; }
 .dataHead .gameSeleList .btnBox label .icon { position: relative; top: 4px; left: -5px; }
 .dataHead .gameSeleList .makeSure { font-size: 12px; color: #fff; background: #ef4b48; }
 .dataHead .arrow { position: relative; left: 5px; display: inline-block; width: 10px; height: 6px; background: url(../front_images/help-nav-icon.png) no-repeat; }
-/* 投注表格主体 */
-.data-load{ margin: 100px auto;}
-
-/* 胜平负 数据主体样式
-.dataHead .co5,.dataHead .co6,.dataBody .towLine .line2,.dataBody .towLine .line1{ display: none; }
-
-
-.onlySpf .dataBody .towLine .line1 { display: block; }
-.onlyRqSpf .dataBody .towLine .line2 { display: block; }
-.onlyRqSpf .co5, .onlyRqSpf .co6,.onlySpf .co5, .onlySpf .co6{ display: block;}
-*/
-
-/* 半全场 */
-
-/* 比分 */
-
-/* 总进球 */
-
-
-
-
-
+/* dataBody */
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
-.dataBody dl { position: relative; width: 700px; margin-bottom: 0; border-bottom: 1px #dfdfdf solid; }
+.dataBody dl { position: relative; width: 700px; margin-bottom: 0; }
 .dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px; }
 .dataBody dt .cuspText { margin-right: 10px; cursor: pointer; }
 .dataBody dt .cusp { top: 15px; right: -12px; }
@@ -77,28 +56,107 @@ body { background: #fff; }
 .dataBody dd { position: relative; z-index: 2; zoom: 1; height: 39px; border-right: 1px #dfdfdf solid; }
 .dataBody dd span { line-height: 39px; float: left; height: 39px; text-align: center; border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
 .dataBody dd:hover { background: #f6f7f9; }
+.towLine { line-height: 38px; overflow: hidden; border: 0; border-bottom: none; }
+.towLine em { line-height: 38px; display: inline-block; width: 39px; height: 38px; }
+.towLine em a { padding: 3px; color: #3d3d3d; }
+.towLine em a:hover, .towLine em a:focus { text-decoration: none; }
+.line1, .line2 { line-height: 38px; overflow: hidden; zoom: 1; height: 38px; white-space: nowrap; }
+.co7 em.hover a { background: #f13c38; }
+.co7 em.active a { background: #f13c38; }
+.dataBody dl dd .co7 .line1, .dataBody dl dd .co7 .line2 { border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
 /* touZhu area */
-.dataBody .towLine { line-height: 38px; overflow: hidden; border: 0; border-bottom: none; }
-.dataBody .towLine em { line-height: 38px; display: inline-block; width: 39px; height: 38px; }
-.dataBody .towLine em a { padding: 3px; color: #3d3d3d; }
-.dataBody .towLine em a:hover, .dataBody .towLine em a:focus { text-decoration: none; }
 .dataBody .co2 { overflow: hidden; color: #fff; border-width: 1px 0 0; background: #f13c38; }
 .dataBody dd .hostTeam, .dataBody dd .guestTeam { float: left; overflow: hidden; width: 46%; text-align: right; white-space: nowrap; }
 .dataBody dd .guestTeam { float: right; text-align: left; }
 .dataBody .btnBox { position: relative; border: 0; }
 .dataBody .btnBox em { line-height: 39px; display: block; float: left; width: 56px; height: 39px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-right: none; }
-.dataBody .co6_1 em { background: url(../front_images/jczq/default.png); }
 .dataBody .btnBox .rq { width: 36px; background: 0 0; }
 .dataBody .btnBox .rq.active { color: #3d3d3d; }
-.dataBody .no-support { line-height: 39px; display: block; float: left; width: 168px; height: 39px; text-align: center; vertical-align: top; border: 1px solid #dfdfdf; border-right: none; }
+.dataBody .no-support { line-height: 39px; float: left; width: 168px; height: 39px; text-align: center; vertical-align: top; border: 1px solid #dfdfdf; border-right: none; }
 .dataBody dd span.btnBox .block { line-height: 39px; width: 100%; height: 39px; margin-left: -1px; }
-.line1, .line2 { line-height: 38px; overflow: hidden; zoom: 1; height: 38px; white-space: nowrap; }
-.co6_1 em.hover, .co6_1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
-.co6_1 em.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
-.co6_1 em.active { color: #fff; background: url(../front_images/jczq/active.png) #f13c38; }
-.co7 em.hover a { background: #f13c38; }
-.co7 em.active a { background: #f13c38; }
-.dataBody dl dd .co7 .line1, .dataBody dl dd .co7 .line2 { border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
+
+
+
+/* btn background */
+.dataBody .co6-1 em,.row2-1 em,.row3-1 em { background: url(../front_images/jczq/default.png); }
+.co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
+.co6-1 em.hover,.row2-1 em.hover,.row3-1 em.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
+.co6-1 em.active,.row2-1 em.active,.row3-1 em.active { color: #fff; background: url(../front_images/jczq/active.png) #f13c38; }
+
+
+
+
+/* 投注表格主体 */
+.data-load { margin: 100px auto; }
+.dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3 { display: none; }
+.row2 .btnBox, .row3 .btnBox { border: none; }
+.onlyBf .co4, .onlyBqc .co4, .onlyZjq .co4 { width: 170px; }
+.onlyBf .co2, .onlyBqc .co2, .onlyZjq .co2 { width: 80px; }
+/* 胜平负 数据主体样式 */
+.onlySpf .dataBody .towLine .line1 { display: block; }
+.onlyRqSpf .dataBody .towLine .line1 { display: block; }
+.onlyRqSpf .co5, .onlyRqSpf .co6, .onlySpf .co5, .onlySpf .co6 { display: block; }
+/* 比分 */
+/* 半全场 */
+/* 总进球 */
+.onlyBf .row1, .onlyZjq .row3, .onlyBqc .row2 { display: block; width: 324px; }
+.row1-1, .row2-1, .row3-1 { border: 1px #dfdfdf solid; }
+.row2 em,.row3 em{ border-right: 1px #dfdfdf solid; float: left; }
+.row2 em { width: 35px;  }
+.row3 em { width: 40px;  }
+.row1-1 { }
+.row2-1 { }
+.row3-1 { }
+
+.row3-1 em,.row2-1 em {
+line-height: 39px;
+float: left;
+height: 39px;
+cursor: pointer;
+text-align: center;
+vertical-align: top;
+color: #3d3d3d;
+border: 1px solid #dfdfdf;
+border-width: 0 1px 0 0;
+}
+.row2-1 em{ width: 35px; }
+.row3-1 em{ width: 40px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Right */
 .unselect, .unselect a { color: #3d3d3d; }
 /* .unselect */
@@ -311,7 +369,7 @@ a.block0:focus, a.block1:focus, a.block2:focus { text-decoration: none; }
 .m-detail-box .btns { width: 210px; margin: auto; }
 .m-detail-box .btns .btn { width: 90px; margin: 0 5px; }
 /* Icon */
-.icon-bdown, .icon-bup, .icon-crestart, .icon-cstart, .icon-m1, .icon-m2, .icon-m3, .icon-m4, .icon-m5, .icon-m6{ background-image: url(../front_images/jczq/jczqicon.png); }
+.icon-bdown, .icon-bup, .icon-crestart, .icon-cstart, .icon-m1, .icon-m2, .icon-m3, .icon-m4, .icon-m5, .icon-m6 { background-image: url(../front_images/jczq/jczqicon.png); }
 .icon-bdown { background-position: 0px -14px; width: 18px; height: 10px; }
 .icon-bup { background-position: 0px -24px; width: 18px; height: 10px; }
 .icon-crestart { background-position: 0px -157px; width: 20px; height: 19px; }

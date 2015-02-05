@@ -1,7 +1,8 @@
+var G_LOTY_CNNAME_MAP = {'gdx':'广东11选5', 'dlc':'江西11选5', 'syy':'十一运夺金', 'xjx':'新疆11选5'}
 var G_BUY = {
     lotyName : '',
     lotyId : 1, // 快频接口需要
-    lotyCNName : '11选5',
+    lotyCNName : '',
     playName : '',
     codes : [],
     zhushu : 0,
@@ -33,6 +34,7 @@ var G_BUY = {
     init : function() {
         this.lotyName = $('#lotyName').val();
         this.playName = $('#playName').val();
+        this.lotyCNName = G_LOTY_CNNAME_MAP[this.lotyName];
         this.codes = [];
         this.zhushu = 0;
         this.mutiple = 1;
@@ -745,9 +747,7 @@ $(document).ready(function() {
         var objCurrentSelectCodeArea = $("#j-box-left .j-choose-code-" + G_CHOOSE.playType);
         objCurrentSelectCodeArea.show();
         objCurrentSelectCodeArea.siblings().hide();
-        $('#choose_to_buy').attr('data-add', '1');
-        $('.j-num-group a.active').removeClass();
-        $('#sd_number').val('');
+
         G_BUY.init();
         G_CHOOSE.init();
         clean4CutBuyType();
@@ -755,12 +755,20 @@ $(document).ready(function() {
         displayChooseInfo();
         calculateBuyCodes();
         displayBuyInfo();
+
+        $("#choose_zhushu").html(0);
+        $("#choose_money").html(0);
+        $("#sd_number").val('');
+        $('#choose_to_buy_tip').html('添加到投注列表');
+        $('#choose_to_buy').attr('data-add', 1);
+        $('#choose_to_buy').removeClass('active');
+        $('#choose_to_buy').attr('disabled', 'disabled');
+        $('#choose_to_buy').attr('data-add', '1');
+        $('.j-num-group a.active').removeClass();
         $('#buy-submit').attr("disabled", "disabled");
         $("li[name='auto_produce']").show();
         $('#j-box-right').show();
         $('#j-box-bottom').show();
-        $('#choose_to_buy').removeClass('active');
-        $('#choose_to_buy').attr('disabled', 'disabled');
         $('#j-box-left').removeClass('multiphase-box');
     });
 

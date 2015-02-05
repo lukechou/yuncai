@@ -340,7 +340,7 @@ define(['jquery'], function ($) {
       $('#selectGamePool tbody').html('');
       $('#poolStep1 .scrollMoni').hide();
       $('#poolStep1 .unSeleTips').fadeIn();
-      _this.box.find('.towLine em').removeClass('active hover');
+      _this.box.find('.j-sp-btn').removeClass('active hover');
 
       _this.match = [];
       _this.dd = null;
@@ -442,20 +442,18 @@ define(['jquery'], function ($) {
         $(this).removeClass('even');
       });
 
-      _this.box.on('mousemove', '.towLine em', function (event) {
+      _this.box.on('mousemove', '.j-sp-btn', function (event) {
 
         var t = $(this);
         var i = t.attr('index');
-        //var e = _this.getOtherEm(t, i);
 
         if (!t.hasClass(a) && !t.hasClass('rq')) {
           t.addClass(h);
-          // e.addClass(h);
         };
 
       });
 
-      _this.box.on('mouseout', '.towLine em', function (event) {
+      _this.box.on('mouseout', '.j-sp-btn', function (event) {
 
         var t = $(this);
         var i = t.attr('index');
@@ -466,7 +464,7 @@ define(['jquery'], function ($) {
 
       });
 
-      _this.box.on('click', '.towLine em', function (event) {
+      _this.box.on('click', '.j-sp-btn', function (event) {
         var t = $(this);
         var i = t.attr('index');
         var sp = t.attr('sp');

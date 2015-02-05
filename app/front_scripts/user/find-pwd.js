@@ -92,25 +92,26 @@ require(['jquery', 'lodash', 'app', 'bootstrap'], function($, _, APP) {
       .done(function(data) {
         if (data.retCode == 100000) {
           lessActiveSeconds = 120;
+          var itv = setInterval(function() {
+              lessActiveSeconds--;
+              if(lessActiveSeconds <=0){
+                  lessActiveSeconds = 0;
+                  $('#j-get-mobile-code').html("重新获取验证码");
+                  $('#j-get-mobile-code').attr('disabled', false);
+                  clearInterval(itv);
+              }else{
+                  time4NextCode();
+              }
+          }, 1000);
           $('#j-get-mobile-code').attr('disabled', true);
         } else {
           APP.showTips(data.retMsg);
+          $('#j-get-mobile-code').attr('disabled', false);
         }
       })
       .fail(function() {
           APP.showTips("系统繁忙，请联系客服");
       });
-    
-    setInterval(function() {
-        lessActiveSeconds--;
-        if(lessActiveSeconds <=0){
-            lessActiveSeconds = 0;
-            $('#j-get-mobile-code').html("重新获取验证码");
-            $('#j-get-mobile-code').attr('disabled', false);
-        }else{
-            time4NextCode();
-        }
-    }, 1000);
   });
 
    function time4NextCode(){
@@ -235,7 +236,7 @@ require(['jquery', 'lodash', 'app', 'bootstrap'], function($, _, APP) {
     var newPassword = $('#new_password').val();
     var oldPassword = $('#ensure_password').val();
     if (newPassword != oldPassword) {
-//      APP.showTips("两次输入的密码不一致！");
+      $('#j-modify-tips').html("两次输入的密码不一致！");
       $('#j-password-tips').show();
       return;
     }
@@ -268,7 +269,8 @@ require(['jquery', 'lodash', 'app', 'bootstrap'], function($, _, APP) {
             window.location.href = '/account/login';
           }, 1500);
         } else {
-          APP.showTips(data.retMsg);
+          $('#j-modify-tips').html(data.retMsg);
+          $('#j-password-tips').show();
         }
       })
       .fail(function() {

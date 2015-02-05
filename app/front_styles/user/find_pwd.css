@@ -2,6 +2,11 @@
 	padding: 8px 0 130px 0;
 }
 
+label {
+	padding: 2px;
+	font-size: 12px;
+}
+
 .find-pwd .form-group {
 	margin-bottom: 40px
 }
@@ -28,12 +33,14 @@
 	background: #f13c38;
 	padding: 5px 30px;
 	color: #fff;
+	font-size: 12px;
 }
 
 .btn-next {
 	background: #dfdfdf;
 	color: #3d3d3d;
 	padding: 5px 30px;
+	font-size: 12px;
 }
 
 .btn-next:hover,.btn-get:hover {
@@ -50,10 +57,10 @@
 	position: absolute;
 	top: 0;
 	border: 1px #f13c38 solid;
-	padding: 5px;
 	font-size: 12px;
-	line-height: 1.8;
+	line-height: 28px;
 	display: none;
+	height: 27px;
 }
 
 .send_resut {
@@ -63,7 +70,7 @@
 
 .f-tips i {
 	float: left;
-	margin-right: 5px;
+	margin: 3px 5px;
 }
 
 .f-step,.mobile-way,.email-way,.reset-pwd,.reg-success,.email-sure {
@@ -72,6 +79,7 @@
 
 input {
 	padding: 3px 5px;
+	width: 158px;
 	border: 1px #dfdfdf solid;
 }
 /* 输入用户名 */
@@ -87,12 +95,12 @@ input {
 
 .f-setuser .pull-right .btn {
 	margin-top: 15px;
+	font-size: 12px;
 }
 
 .f-settips {
-	right: -135px;
+	right: -126px;
 	width: 151px;
-	top: -3px;
 }
 /* 选择找回密码方式 */
 .f-step-ls {
@@ -140,7 +148,7 @@ input {
 .mobile-tips {
 	right: -145px;
 	width: 135px;
-	top: 30px;
+	top: 33px;
 }
 
 /* 重置密码输入 */
@@ -168,9 +176,9 @@ input {
 }
 
 .reset-box .reset-tips {
-	right: -150px;
-	width: 140px;
-	top: 33px;
+	right: -104px;
+	width: 167px;
+	top: 37px;
 }
 
 /* 发送邮件成功*/
@@ -191,15 +199,8 @@ input {
 }
 
 .mail-tips {
-	position: absolute;
-	top: -2px;
-	border: 1px #f13c38 solid;
-	padding: 5px;
-	font-size: 12px;
-	line-height: 1.8;
-	display: none;
 	width: 150px;
-	left: 171px;
+	left: 164px;
 }
 
 .email-box .pull-right .btn {
