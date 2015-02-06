@@ -35,11 +35,24 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var spArr = sp.split('|');
     var l = '';
     var tab = BET.tab;
+    var item = [];
 
-    if (type == 1) {
+    switch (tab) {
+    case 'zjq':
+      item = ['0', '1', '2', '3', '4', '5', '6', '7+'];
+      break;
+    case 'bqc':
+      item = ['胜胜', '胜平', '胜负', '平胜', '平平', '平负', '负胜', '负平', '负负'];
+      break;
+    default:
+      item = ['胜', '平', '负'];
+      break;
+    }
+
+    if (type ==1) {
       for (var i = 0, len = spArr.length; i < len; i++) {
         if (i === (len - 1)) l = 'lastOne';
-        h += '<em index="' + i + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + ' j-sp-btn">' + spArr[i] + '</em>';
+        h += '<em index="' + i + '" data-item="' + item[i] + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + ' j-sp-btn sp-btn">' + spArr[i] + '</em>';
       };
 
     } else {
@@ -57,12 +70,29 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var line = '';
     var item = null;
     var tab = BET.tab;
+    var lastDd = '';
+    var bfLine = '';
 
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0, len = data.length; i < len; i++) {
+
+      lastDd = '';
+
+
+
+      if (i === data.length - 1) {
+        lastDd = 'last'
+      }
 
       item = data[i];
+
+      if(item[tab]==1){
+        bfLine = '<button class="btn j-show-bf"><b>展开</b></button>';
+      }else{
+        bfLine = '<b class="no-support">本场对阵不支持该玩法</b>';
+      }
+
       line = craeteDateBtn(item[tab], item[tab + '_gg_sp']);
-      arr.push('<dd isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="league_36">');
+      arr.push('<dd isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="league_36 ' + lastDd + '">');
 
       arr.push('<span class="co1"><i class="jtip" inf="' + item.week + item.game_order + '">' + item.game_order + '</i></span>');
 
@@ -80,13 +110,13 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + item['rqspf_rangqiu_num'] + '</em>' + line + '</div></span></dd>');
         break;
       case 'bf':
-      arr.push('<span class="row1 row1-1"><button class="btn btn-gray j-show-bf">展开</button></span></dd>');
+        arr.push('<span class="row1 row1-1">'+bfLine+'</span></dd>');
         break;
       case 'bqc':
-      arr.push('<span class="row2 row2-1">'+line+'</span></dd>');
+        arr.push('<span class="row2 row2-1">' + line + '</span></dd>');
         break;
       case 'zjq':
-      arr.push('<span class="row3 row3-1">'+line+'</span></dd>');
+        arr.push('<span class="row3 row3-1">' + line + '</span></dd>');
         break;
       default:
         return;
@@ -105,7 +135,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var h = '';
 
     // head
-    h += '<dl><dt>' + time + '<span class="cuspText fc-84 j-dataBody-toggle pull-right" data-show="1">隐藏</span>(12:00 -- 次日12:00)<span class="matchSize">' + dataCount + '</span>场比赛可投注</dt>';
+    h += '<dl><dt>' + time + '(12:00 -- 次日12:00)<span class="matchSize">' + dataCount + '</span>场比赛可投注<span class="cuspText fc-84 j-dataBody-toggle pull-right" data-show="1">隐藏</span></dt>';
 
     // main
     h += createDateMain(data);
@@ -149,13 +179,13 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   $('.icon').tipsy({
-    fade: true,
     gravity: 'nw',
     html: true,
     opacity: 1
   });
 
   var buyTicket = function (obj, type) {
+
     $.ajax({
         url: '/lottery/jingcai/' + type + '/jczq/' + BET.tab + '_gg',
         type: 'POST',
@@ -164,6 +194,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       })
       .done(function (data) {
         if (data.retCode == 100000) {
+          debugger
           store.set('lotyName', Config.lotyName);
           store.set('payMoney', Config.payMoney);
           store.set('projectNo', data.retData.projectNo);
@@ -417,26 +448,26 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         tbodyHtml += '<td>' + e.find('.betList').html() + '</td></tr>';
       }
     });
+
     Config.payMoney = BET.zhushu * 2 * BET.beishu;
 
     vote.title = '投注信息确认';
     vote.confirmHtml = '<div class="ljtz-box"><div class="text"><p>投注金额：总计<span class="fc-3">' + Config.payMoney + '</span>元，共' + obj.zhushu + '注，投注' + obj.beishu + '倍</p><table class="table table-bordered"><thead><tr><th>场次</th><th class="gameTeam">主队 VS 客队</th><th style="width:150px;">赛果</th></tr></thead><tbody>' + tbodyHtml + '</tbody></table><p>过关方式：' + bunch + ', 理论最高奖金：<span class="fc-3">' + BET.maxBonus + '</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
-    vote.callback = function () {
-      buyTicket(obj, type);
-    };
 
     c = checkParams();
 
     if (c) {
+
       APP.checkLogin(Config.payMoney, {
         enoughMoney: function () {
+
           APP.showTips({
             html: vote.confirmHtml,
             title: vote.title
           });
 
           $('#buyConfirm').one('click', function (event) {
-            vote.callback();
+            buyTicket(obj, type);
           });
 
         }

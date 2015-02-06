@@ -184,3 +184,12 @@ textarea { resize: none; word-wrap: break-word; }
 .m-brhd-time, .m-brhd-qi { font-size: 12px; position: absolute; right: 10px; }
 .m-brhd-qi { top: 35px; }
 .m-brhd-time { bottom: 15px; color: #848484; }
+/*右侧客服咨询*/
+.side, .icon-text { background-image: url(../front_images/lrkf/lrkf.png); height: 37px; }
+.side { position: fixed; width: 45px; right: 0; top: 214px; z-index: 100; background-position: 0px -37px; cursor: pointer; }
+.side:hover { background-position: 0px 0px; }
+.side .icon-text { background-position: -45px 0px; width: 69px; position: absolute; top: 0; left:-100px; opacity: 0;
+filter: alpha(opacity=0);}
+
+
+

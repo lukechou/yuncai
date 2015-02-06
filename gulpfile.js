@@ -9,17 +9,23 @@ gulp.task('clean', function(cb) {
 gulp.task('sprite', ['clean'],function () {
 
   var spriteData = gulp.src('./app/front_images/index/xz-btn/*.png').pipe(spritesmith({
-    imgName: 'xz.png',
-    cssName: 'xz.css'
+    imgName: 'front_images/xz.png',
+    cssName: 'front_styles/xz.css'
+  }));
+
+  var spriteDataLrkf = gulp.src('./app/front_images/lrkf/*.png').pipe(spritesmith({
+    imgName: 'front_images/lrkf.png',
+    cssName: 'front_styles/lrkf.css'
   }));
 
   var spriteDataIcon = gulp.src('./app/front_images/icon/*.png').pipe(spritesmith({
-    imgName: 'icon.png',
-    cssName: 'icon.css'
+    imgName: 'front_images/icon.png',
+    cssName: 'front_styles/icon.css'
   }));
 
   spriteData.pipe(gulp.dest('dist'));
   spriteDataIcon.pipe(gulp.dest('dist'));
+  spriteDataLrkf.pipe(gulp.dest('dist'));
 });
 
 gulp.task('default', ['sprite']);

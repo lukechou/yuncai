@@ -304,6 +304,29 @@ APP.onServiceFail = function () {
   APP.showTips('服务器繁忙,请稍后再试!');
 };
 
+APP.initLrkf = function () {
+      var qq = ['123520260', '2264990340'];
+      var tel = '4008-898-310';
+      var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
+
+      $('body').append(side);
+
+      var link = $('#j-side .icon-text');
+      $("#j-side").hover(function () {
+        // link.show();
+        link.animate({
+          'left': '-64px',
+          'opacity': '1',
+        }, 200)
+      }, function () {
+        // link.hide();
+        link.animate({
+          'left': '-70px',
+          'opacity': '0',
+        }, 200)
+      });
+    };
+
 ////////////////////////////////////////////////////////////////////////////
 /**
  * ALL Page Common Event
@@ -317,6 +340,7 @@ $(function () {
     toggleMask($(this));
   });
 
+  APP.initLrkf();
   function toggleMask(m) {
     m.find('#hdMask').toggle();
     m.find('a').toggleClass('on');

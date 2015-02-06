@@ -208,11 +208,13 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
 
     switch ($(this).attr('data-buy-type')) {
     case '0':
+      $('#j-model-more').html('更多模型').attr('href', '/lottery/trade/model-index');
       $('#j-noproject-tips').html('当前期暂时还无人投注。亲，<a href="/lottery/trade/model-index" target="_blank" id="j-model-link">马上投注去</a>，您就是今天的彩胜第一人！');
       getModelBuy(false);
       $('#j-model-nav').addClass('hide');
       break;
     case '1':
+      $('#j-model-more').html('更多合买').attr('href', '/lottery/project-center/jczq');
       $('#j-noproject-tips').html('当前暂无合买方案。亲，<a href="/lottery/buy/jczq" target="_blank" id="j-model-link">马上去发起</a>，您就是今天的彩胜第一发起人');
       getModelBuy(true);
       $('#j-model-nav').removeClass('hide');
@@ -325,9 +327,25 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
 
     if (t.attr('data-gm')) {
       var min = Number(t.attr('data-gm'));
+      var maxBuy = 500000;
+
+      if (isNaN(buyNum) || buyNum ==='') {
+        APP.showTips('请输入要投注的金额');
+        return;
+      }
+
+      if (buyNum % 2 !== 0) {
+        APP.showTips('请输入偶数的金额');
+        return;
+      }
 
       if (buyNum < min) {
         APP.showTips('亲,投注金额不能低于<span>' + min + '</span>元');
+        return;
+      }
+
+      if (buyNum > maxBuy) {
+        APP.showTips('亲,单次投注金额最大限制为 ' + maxBuy + ' 元');
         return;
       }
 
@@ -420,12 +438,12 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
             for (var i = dataItem.length - 1; i >= 0; i--) {
               if (isHemai) {
                 percent = (1 - (dataItem[i].lessNum / Number(dataItem[i].price))).toFixed(2) * 100;
-                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + index.modelLoty[index.modelLotyName].cnName + '</div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen">每份' + dataItem[i].unitPrice + '元<input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button><a href="' + dataItem[i].detailURI + '" class="link">详情</a></div></div></div>');
+                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + index.modelLoty[index.modelLotyName].cnName + '</div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen">每份' + dataItem[i].unitPrice + '元<input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-tou" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button><a href="' + dataItem[i].detailURI + '" class="link">详情</a></div></div></div>');
               } else {
 
                 dataArr.push('<div class="item m-he-box">\
                           <div class="top">\
-                              <img src="http://static2.360mao.com/front_images/he-head.png" alt="head" class="head">\
+                              <img src="/front_images/index/index-hd.png" alt="head" class="head">\
                               <p>' + dataItem[i].username + '</p>\
                               <p class="zj">\
                                   最近30天盈利金额：<br/>\
@@ -442,7 +460,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
                                   投注\
                                   <input type="text" class="j-input-place" data-place="最低投注' + dataItem[i].minMoney + '" value="最低投注' + dataItem[i].minMoney + '" />\
                                   元\
-                                  <button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy">确定</button>\
+                                  <button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy btn-tou">确定</button>\
                               </div>\
                           </div>\
                       </div>');

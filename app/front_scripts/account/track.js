@@ -23,6 +23,8 @@ $(function() {
             dataItem = detailData[i - 1];
             if (dataItem.show == 1) {
               show = '<a href="' + dataItem.detailURI + '">查看详细</a><a href="' + dataItem.buyURI + '" class="ml8">继续投注</a>';
+            }else{
+              show = '';
             }
             htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.price + '</td><td>' + dataItem.lessIssueNum + '</td><td>' + dataItem.finishIssueNum + '</td><td>' + dataItem.status + '</td><td>' + show + '</td></tr>';
           }

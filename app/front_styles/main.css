@@ -55,7 +55,7 @@ body { color: #3d3d3d; background: #fff; }
 .ft-img .wg-link1 { left: 0; background-position: 0 0; }
 .ft-img .wg-link2 { right: 0; background-position: -114px 0; }
 /* Login Alert */
-#j-login-modal { z-index: 100; }
+#j-login-modal { z-index: 1050; }
 #j-login-modal .modal-dialog { width: 451px; height: 227px; border: 8px solid rgba(0, 0, 0, .3); }
 #j-login-modal .modal-content { border: none; }
 #j-login-modal .modal-header { line-height: 40px; height: 40px; padding: 0 15px; color: #fff; background: #f13c38; }
@@ -88,10 +88,13 @@ body { color: #3d3d3d; background: #fff; }
 .hall-list-4 > li a:hover { text-decoration: none; }
 .hall-list-4 > li a.disabled > img { cursor: not-allowed; opacity: .5; }
 .hall-list-4 > li img { width: 134px; }
-.hall-list-4 > li h4 { font-size: 16px; font-weight: bold; margin: 15px 0 10px; }
+.hall-list-4 > li h4 { font-size: 16px; font-weight: bold; margin: 9px 0 5px; }
 .hall-list-4 > li h4 > .tips { font-size: 12px; font-weight: normal; display: inline-block; margin: 0 0 0 5px; padding: 2px 5px; color: #fff; border-radius: 2px; background: #db2b28; }
 .hall-list-4 > li a.disabled .tips { display: none; }
 .hall-list-4 > li p { font-size: 12px; }
+
+.hall-list-4 > li img.mt13{ margin-top: 13px;}
+.hall-list-4 > li h4.mt23{ margin-top: 23px;}
 /* 定制跟单-Page */
 .customize { overflow: hidden; padding: 15px 0; }
 .customize-l { float: left; width: 185px; }

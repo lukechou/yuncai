@@ -1,0 +1,61 @@
+<!--#if expr="$SERVER_NAME=kp2.yuncai.com"-->
+<!--#set var="my_static_host" value="http://static3.yuncai.com" -->
+<!--#elif expr="$SERVER_NAME=kp.yuncai.com"-->
+<!--#set var="my_static_host" value="http://teststatic.yuncai.com" -->
+<!--#else-->
+<!--#set var="my_static_host" value="http://static2.360mao.com" -->
+<!--#endif-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>彩胜网-购买失败</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="apple-touch-fullscreen" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes"  />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"  />
+  <meta name="format-detection" content="telephone=no , email = no"  />
+  <meta name="Keywords" content="彩胜网">
+  <meta name="Description" content="彩胜网">
+  <meta name="author" content="彩胜网">
+  <link rel="Shortcut Icon" href="<!--#echo var="my_static_host" -->/favicon.ico" type="image/ico" />
+  <link rel="Bookmark" href="<!--#echo var="my_static_host" -->/favicon.ico" type="image/ico" />
+  <link rel="stylesheet" href="<!--#echo var="my_static_host" -->/front_styles/bootstrap.min.css">
+  <link rel="stylesheet" href="<!--#echo var="my_static_host" -->/front_styles/icon.css">
+  <link rel="stylesheet" href="<!--#echo var="my_static_host" -->/front_styles/global.css">
+  <link rel="stylesheet" href="<!--#echo var="my_static_host" -->/front_styles/owl.carousel.css">
+  <link rel="stylesheet" href="<!--#echo var="my_static_host" -->/front_styles/owl.theme.css">
+  <link rel="stylesheet" href="<!--#echo var="my_static_host" -->/front_styles/main.css?version=1.2.0"></head>
+<body>
+  <!--# include virtual="/html/common/header.html" -->
+  <div class="buyok w985">
+    <p class="top-title">
+      您的位置:
+      <a href="/index.html">彩胜网</a>
+      &gt;
+      <a href="#" id="j-type"></a>
+      &gt;
+      <a href="#">付款失败</a>
+    </p>
+    <div class="main">
+      <div class="m-box">
+        <img src="<!--#echo var="my_static_host" -->/front_images/fail.png" alt="success" class="icon">
+        <div class="text">
+          <h4>亲，您支付订单失败，小胜表示非常抱歉！</h4>
+          <p>系统繁忙，请稍后再试</p>
+          <div class="linkLine">
+            <a href="#" class="first" id="j-jixu">返回购买页面</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--# include virtual="/html/common/footer.html" -->
+  <script src="<!--#echo var="my_static_host" -->/front_scripts/lib/jquery.js"></script>
+  <script src="<!--#echo var="my_static_host" -->/front_scripts/lib/store.min.js"></script>
+  <script src="<!--#echo var="my_static_host" -->/front_scripts/app.js"></script>
+  <script src="<!--#echo var="my_static_host" -->/front_scripts/lottery/fail.js"></script>
+</body>
+</html>

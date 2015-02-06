@@ -68,9 +68,13 @@ define(['jquery'], function ($) {
               if (data.retCode == 100000) {
                 loginModal.hide();
                 _this.updateHeadUserInfo();
-                if (callback) {
-                  callback();
-                }
+                _this.checkLogin(_this.checkBuyMoney, {
+                  enoughMoney: function () {
+                    if (callback) {
+                      callback();
+                    }
+                  }
+                });
                 return;
               } else {
                 _this.showTips(data.retMsg);
@@ -158,6 +162,8 @@ define(['jquery'], function ($) {
 
       var _this = this;
       money = Number(money);
+      _this.checkBuyMoney = money;
+
       // check money type
       if ((typeof money) !== 'number') {
         return;
@@ -336,7 +342,7 @@ define(['jquery'], function ($) {
         var _this = $(this);
         var t = _this.attr('data-place');
         if (t == _this.val()) {
-          $(this).val('');
+          $(this).val('').addClass('active');
         }
       });
 
@@ -344,7 +350,7 @@ define(['jquery'], function ($) {
         var _this = $(this);
         var t = _this.attr('data-place');
         if ('' == _this.val()) {
-          $(this).val(t);
+          $(this).val(t).removeClass('active');
         }
       });
 
@@ -421,8 +427,32 @@ define(['jquery'], function ($) {
         m.find('a').toggleClass('on');
       });
 
+      _this.initLrkf();
       $('.modal').on('show.bs.modal', _this.centerModal);
 
+    };
+
+    app.prototype.initLrkf = function () {
+      var qq = ['123520260', '2264990340'];
+      var tel = '4008-898-310';
+      var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
+
+      $('body').append(side);
+
+      var link = $('#j-side .icon-text');
+      $("#j-side").hover(function () {
+        // link.show();
+        link.animate({
+          'left': '-64px',
+          'opacity': '1',
+        }, 200)
+      }, function () {
+        // link.hide();
+        link.animate({
+          'left': '-70px',
+          'opacity': '0',
+        }, 200)
+      });
     };
 
     app.prototype.dateFormat = function (date, pattern, isFill) {
