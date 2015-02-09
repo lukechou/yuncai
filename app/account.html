@@ -3,38 +3,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>彩胜网-个人中心</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <meta name="apple-touch-fullscreen" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes"  />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"  />
-  <meta name="format-detection" content="telephone=no , email = no"  />
+  <title>彩胜网- 我的账户</title>
   <meta name="Keywords" content="彩胜网">
-  <meta name="Description" content="彩胜网">
-  <meta name="author" content="彩胜网">
-  <link rel="stylesheet" href="front_styles/bootstrap.min.css">
-  <link rel="stylesheet" href="front_styles/icon.css">
-  <link rel="stylesheet" href="front_styles/global.css">
-  <link rel="stylesheet" href="front_styles/main.css"></head>
+<meta name="Description" content="彩胜网">
+<meta name="author" content="彩胜网">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="Shortcut Icon" href="favicon.ico" type="image/ico" />
+<link rel="Bookmark" href="favicon.ico" type="image/ico" />
+<link rel="stylesheet" href="front_styles/bootstrap.min.css">
+<link rel="stylesheet" href="front_styles/global.css">
+<link rel="stylesheet" href="front_styles/icon.css">
+<link rel="stylesheet" href="front_styles/main.css">
+<link rel="stylesheet" href="front_styles/lib/lrkf/skin.css"></head>
 <body>
   <div class="hd">
-    <div class="hd-top">
-      <div class="w985" id="hd-top">
-        <span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <a href="login.html" class="active">登录</a>
-        <a href="register.html">免费注册</a>
-        <!--span>
-        seven       账户余额:
-        <span id="userMoney">81,400.89</span>
-        元
-      </span>
-      <a href="/account/top-up" class="active">充值</a>
-      <img src="front_images/bor.png" alt="bor">
-      <a href="#">退出</a-->
-      <img src="front_images/bor.png" alt="bor">
-      <a href="account.html" class="last">我的账户</a>
-      <img src="front_images/top-down.png" alt="bor"></div>
+  <div class="hd-top">
+    <div class="w985" id="hd-top">
+          <span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="front_images/bor.png" alt="bor"/></span>
+    <span id="myname">seven</span>
+    账户余额:<span id="userMoney">2,000,003,414.89</span>元
+        <a href="/account/top-up" class="active">充值</a>
+        <img src="front_images/bor.png" alt="bor"/>
+        <a href="/account/logout">退出</a>
+        <img src="front_images/bor.png" alt="bor"/>
+        <a href="/account/index" class="last">我的账户</a>
 
+    </div>
   </div>
   <!-- /.hd-top-->
   <div class="hd-mn w985">
@@ -45,80 +42,81 @@
     </div>
     <!-- /.hd-logo-->
     <ul class="hd-nav">
-      <li id="choseCai">
-        <a href="#" class="active">
+      <li id="choseCai" class="seed-nav">
+        <a href="#">
           选择彩种
           <img src="front_images/h-down.png" alt="down" />
         </a>
         <ul class="hd-mask" id="hdMask">
           <li>
-            <a href="#">
+            <a href="/lottery/buy/jczq">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b1.png" alt="竞彩足球"/>
+                <img src="front_images/lottery/jczq_home_logo.png" alt="竞彩足球"/>
               </div>
               竞彩足球
-              <span>9.27大加奖</span>
+              <span>返奖率73%</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/lottery/buy/ssq">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b1.png" alt="竞彩足球"/>
-              </div>
-              竞彩足球
-              <span>9.27大加奖</span>
-            </a>
-          </li>
-          <li>
-            <a href="/lottery/buy/ssq" class="active">
-              <div class="hd-mask-icon">
-                <img src="front_images/hd-b2.png" alt="双色球"/>
+                <img src="front_images/lottery/ssq_home_logo.png" alt="双色球"/>
               </div>
               双色球
-              <span>奖池超X亿</span>
+              <span>2元赢取1000万</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/lottery/buy/dlt">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b3.png" alt="竞彩足球"/>
+                <img src="front_images/lottery/dlt_home_logo.png" alt="大乐透"/>
               </div>
-              广东快乐10分
-              <span>奖池超X亿</span>
+              大乐透
+              <span>3元赢取1600万</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/lottery/buy/pl5">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b3.png" alt="竞彩足球"/>
+                <img src="front_images/lottery/pl5_home_logo.png" alt="排列5"/>
               </div>
-              广东快乐10分
-              <span>奖池超X亿</span>
+              排列5
+              <span>每日一注赢10万</span>
             </a>
           </li>
+          <li>
+            <a href="/lottery/buy/qlc">
+              <div class="hd-mask-icon">
+                <img src="front_images/lottery/qlc_home_logo.png" alt="七乐彩"/>
+              </div>
+              七乐彩
+              <span>30选7猜中赢百万</span>
+            </a>
+          </li>
+
           <li>
             <ul class="hd-mask-list">
-              <li>
-                <a href="#">广东11选5</a>
-              </li>
-              <li>
-                <a href="#">老11选5</a>
-              </li>
-              <li>
-                <a href="#">好运11选5</a>
-              </li>
-              <li>
-                <a href="#">重庆11选5</a>
-              </li>
-              <li>
-                <a href="#">易乐11选5</a>
-              </li>
-              <li>
-                <a href="#">辽宁11选5</a>
-              </li>
-              <li>
-                <a href="#">快乐8</a>
-              </li>
+                <li>
+                  <a href="/lottery/buy/qxc" target="_blank">七星彩</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/pl3" target="_blank">排列3</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/fc3d" target="_blank">福彩3D</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/gdx" target="_blank">粤11选5</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/dlc" target="_blank">赣11选5</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/syy" target="_blank">十一运夺金</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/xjx" target="_blank">新疆11选5</a>
+                </li>
               <li>
                 <a href="#">新时时彩</a>
               </li>
@@ -130,238 +128,247 @@
         </ul>
       </li>
       <li>
-        <a href="index.html" class="active">首页</a>
+        <a href="/index.html">首页</a>
       </li>
-
       <li>
-        <a href="hall.html">投注大厅</a>
+        <a href="/lottery/hall/index" class="j-nav-hall">投注大厅</a>
       </li>
-
       <li>
-        <a href="he.html">合买大厅</a>
+        <a href="/lottery/project-center/ssq/" class="j-nav-center">合买大厅</a>
       </li>
     </ul>
     <!-- /.hd-nav--> </div>
 </div>
 <!-- /.hd-->
-<div class="personal clearfix">
-  <div class="ps-nav">
-    <ul class="m-nav-t nav">
-      <li>
-        <a href="account.html" class="active">我的账户</a>
-      </li>
-      <li>
-        <a href="record.html"  >投注记录</a>
-      </li>
-      <li>
-        <a href="detail.html">账户明细</a>
-      </li>
-    </ul>
-    <ul class="m-nav-l">
-      <li>
-        <a href="chongzhi.html">充&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值</a> <i class="bor"></i>
-      </li>
-      <li>
-        <a href="draw.html">提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款</a>
-      </li>
-      <li>
-        <a href="safe.html">帐号安全</a>
-      </li>
-      <li>
-        <a href="info.html">基本资料</a>
-      </li>
-      <li>
-        <a href="follow.html">跟买管理</a>
-      </li>
-      <li class="active">
-        <a href="customizegd.html" >定制信息</a>
-      </li>
-    </ul>
-    <ul class="m-nav-l">
-      <li>
-        <a href="rebates.html">返点收益</a>
-      </li>
-      <li>
-        <a href="lowlevel.html">下级管理</a>
-      </li>
-      <li>
-        <a href="agent.html">发展代理</a>
-      </li>
-    </ul>
-  </div>
-  <div class="ps-mn">
-    <div class="ps-mn-info clearfix">
-      <img src="front_images/head.png" alt="个人头像" class="pull-left ps-mn-info-img">
+<!-- Toogle Nav Active-->
 
-      <div class="pull-left ps-mn-box">
-        <p>
-          <span class="hi">您好 , seven</span>
-          <a href="#">账户资料</a>
-        </p>
-        <p class="fs-16 fs-yh">
-          <span>可用余额：</span> <b class="money fc-3">94.00</b>
-          元
-        </p>
-        <p class="last">
-          <span class="mr5">
-            账户类型：高级会员 <i class="icon icon-warm"></i>
-          </span>
-          <span>
-            账户状态
-              ：
-            <i class="icon icon-suc"></i>
-          </span>
-        </p>
-      </div>
-      <div class="pull-left ps-mn-box ps-mn-box2">
-        <div  class="second">
-          <a href="#" class="btn">充值</a>
-          <a href="#" class="btn">提款</a>
-        </div>
-        <div>
-        <b class="near">
-          <a href="record.html?type=2">未开奖投注记录(0)</a>
-          <a href="record.html?type=1" class="ml8">最近30天中奖记录(0)</a>
-        </b>
-        </div>
-      </div>
 
+
+  <div class="personal clearfix">
+    <div class="ps-nav">
+      <ul class="m-nav-t nav">
+        <li>
+          <a href="/account/index"  class="active" >我的账户</a>
+        </li>
+        <li>
+          <a href="/account/record" >投注记录</a>
+        </li>
+        <li>
+          <a href="/account/detail" >账户明细</a>
+        </li>
+      </ul>
+      <ul class="m-nav-l">
+        <li>
+          <a href="/account/top-up" >充&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;值</a>
+          <i class="bor"></i>
+        </li>
+        <li>
+          <a href="/account/draw" >提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款</a>
+        </li>
+        <li>
+          <a href="/account/safe" >帐号安全</a>
+        </li>
+        <li>
+          <a href="/account/info" >基本资料</a>
+        </li>
+        <!--li>
+          <a href="/account/follow" >跟买管理</a>
+        </li-->
+        <li>
+          <a href="/account/customizegd" >跟单设置</a>
+        </li>
+        <li>
+          <a href="/account/track" >追号管理</a>
+        </li>
+      </ul>
+      <!--
+      <ul class="m-nav-l">
+        <li>
+          <a href="/account/my-agent-profit" >返点收益</a>
+        </li>
+        <li>
+          <a href="/account/my-agent-user" >下级管理</a>
+        </li>
+        <li>
+          <a href="/account/my-agent-url" >发展代理</a>
+        </li>
+      </ul>
+       -->
+    </div>    <div class="ps-mn">
+      <div class="ps-mn-info clearfix">
+        <img src="front_images/head-2.png" alt="个人头像" class="pull-left ps-mn-info-img" />
+        <div class="pull-left ps-mn-box">
+          <p>
+            <span class="hi">您好 , seven</span>
+            <a href="/account/info">账户资料</a>
+          </p>
+
+          <p class="fs-16 fs-yh">
+            <span>可用余额:</span> <b class="money fc-3">2,000,003,414.89</b>
+            元
+          </p>
+          <p class="last">
+            <span class="mr5">账户类型:高级会员 <i class="icon icon-warm"></i></span>
+            <span>账户状态: <i class="icon icon-suc"></i></span>
+          </p>
+        </div>
+        <div class="pull-left ps-mn-box ps-mn-box2">
+          <div  class="second">
+            <a href="/account/top-up" class="btn btn-red">充值</a>
+            <a href="/account/draw" class="btn btn-red">提款</a>
+          </div>
+          <div>
+            <b class="near">
+            <a href="/account/record?type=2">未开奖投注记录(589)</a>
+            <a href="/account/record?type=1" class="ml8">最近30天中奖记录(0)</a>
+            </b>
+          </div>
+        </div>
+      </div>
+      <h4 class="ps-mn-more">
+        我最近的投注记录
+        <a href="/account/record" class="pull-right">更多</a>
+      </h4>
+      <table class="table table-striped ps-table" id="j-table-main">
+        <thead>
+          <tr>
+            <th>彩种</th>
+            <th>投注时间</th>
+            <th>投注金额</th>
+            <th>当前状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+                    <tr>
+            <td>大乐透</td>
+            <td>15-02-09 17:23:17</td>
+            <td>4.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=dlt&project_no=DLT15017PBH0BB930">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/dlt">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>七星彩</td>
+            <td>15-02-08 20:15:00</td>
+            <td>8.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=qxc&project_no=QXC15018PBI09ECB3">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/qxc">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>七星彩</td>
+            <td>15-02-08 20:15:00</td>
+            <td>40.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=qxc&project_no=QXC15018PBI05BFB3">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/qxc">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>七星彩</td>
+            <td>15-02-06 20:15:00</td>
+            <td>8.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=qxc&project_no=QXC15017PBH0273A0">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/qxc">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>七星彩</td>
+            <td>15-02-06 20:15:00</td>
+            <td>40.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=qxc&project_no=QXC15017PBH0FBD21">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/qxc">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>竞彩足球</td>
+            <td>15-02-06 18:24:48</td>
+            <td>34,496.00元</td>
+            <td>
+              已出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=jczq&project_no=JCZQZJQ_GGD15EB">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/jczq">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>竞彩足球</td>
+            <td>15-02-06 16:03:13</td>
+            <td>1.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=jczq&project_no=JCZQSPF_GG34A6E">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/jczq">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>竞彩足球</td>
+            <td>15-02-06 16:03:03</td>
+            <td>18.00元</td>
+            <td>
+              已出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=jczq&project_no=JCZQSPF_GGFA57E">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/jczq">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>竞彩足球</td>
+            <td>15-02-06 15:32:51</td>
+            <td>1.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=jczq&project_no=JCZQSPF_GG768AA">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/jczq">继续投注</a>
+                                              </td>
+            </tr>
+                    <tr>
+            <td>竞彩足球</td>
+            <td>15-02-06 15:31:57</td>
+            <td>1.00元</td>
+            <td>
+              待出票           </td>
+            <td class="oper">
+                                                                    <a target="_blank" href="/lottery/project-detail/index?loty_name=jczq&project_no=JCZQSPF_GG21E72">查看详情</a>
+                        <a target="_blank" href="/lottery/buy/jczq">继续投注</a>
+                                              </td>
+            </tr>
+                </tbody>
+      </table>
     </div>
-
-    <h4 class="ps-mn-more">
-      我最近的投注记录
-      <a href="#" class="pull-right">更多</a>
-    </h4>
-    <table class="table table-striped m-mn-table m-mn-table-bor">
-      <thead>
-        <tr>
-          <th>彩种</th>
-          <th>投注时间</th>
-          <th>投注金额</th>
-          <th>当前状态</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL327554C6" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL327A230F" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL328D0711" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL3293E62D" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL32ACBA06" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL32B14A06" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL32CBAF3F" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL32DF2CDB" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL32EFD0D7" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-        <tr>
-          <td>广东11选5</td>
-          <td>14-11-28 15:24:46</td>
-          <td>2.00元</td>
-          <td>待出票</td>
-          <td>
-            <a href="/lottery/detail/gdx?project_no=GDXR5OL32FF8D7B" class="mr5">查看详情</a>
-            <a href="/lottery/buy/gdx">继续投注</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- /.ps-mn-->
   </div>
-  <!-- /.ps-mn-->
-</div>
-<!-- /.personal-->
-<div class="ft">
+  <!-- /.personal-->
+  <div class="ft">
   <div class="ft-mn w985">
     <div class="ft-l clearfix">
       <ul>
-        <li>
+        <li class="mr-30 mb-25">
           <img src="front_images//ft-1.png" alt="购彩方便">
           <a href="#">购彩方便</a>
         </li>
-        <li>
+        <li class="mb-25">
           <img src="front_images//ft-2.png" alt="账户安全">
           <a href="#">账户安全</a>
         </li>
-        <li>
+        <li class="mr-30">
           <img src="front_images//ft-3.png" alt="领奖无忧">
           <a href="#">领奖无忧</a>
         </li>
@@ -378,10 +385,10 @@
           <h4>新手上路</h4>
           <ul>
             <li>
-              <a href="#">购彩流程</a>
+              <a href="/html/help/help.html?page=11">购彩流程</a>
             </li>
             <li>
-              <a href="#">领奖流程</a>
+              <a href="/html/help/help.html?page=14">领奖流程</a>
             </li>
           </ul>
         </li>
@@ -389,62 +396,57 @@
           <h4>支付方式</h4>
           <ul>
             <li>
-              <a href="#">网银支付</a>
+              <a href="javascript:;">网银支付</a>
             </li>
             <li>
-              <a href="#">支付宝支付</a>
+              <a href="javascript:;">支付宝支付</a>
             </li>
           </ul>
         </li>
         <li>
-          <h4>帮助中心</h4>
-          <ul>
-            <li>
-              <a href="#">常见问题</a>
-            </li>
-            <li>
-              <a href="#">功能指引</a>
-            </li>
-            <li>
-              <a href="#">彩种介绍</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h4>友情链接</h4>
-          <ul>
-            <li>
-              <a href="#">关于我们</a>
-            </li>
-            <li>
-              <a href="#">联系我们</a>
-            </li>
-            <li>
-              <a href="#">产品介绍</a>
-            </li>
-            <li>
-              <a href="#">服务热线</a>
-            </li>
-          </ul>
-        </li>
+            <h4>帮助中心</h4>
+            <ul>
+              <li>
+                <a href="/html/help/help.html" target="_black">常见问题</a>
+              </li>
+              <li>
+                <a href="/html/help/help.html?page=ssq" target="_black">功能指引</a>
+              </li>
+              <li>
+                <a href="/html/help/help.html?page=ssq" target="_black">彩种介绍</a>
+              </li>
+            </ul>
+          </li>
+          <li class="last">
+            <h4>友情链接</h4>
+            <ul>
+              <li>
+                <a href="http://www.yuncaitech.com#part3" target="_black">关于我们</a>
+              </li>
+              <li>
+                <a href="http://www.yuncaitech.com#part7" target="_black">联系我们</a>
+              </li>
+              <li>
+                <a href="http://www.yuncaitech.com#part2" target="_black">产品介绍</a>
+              </li>
+            </ul>
+          </li>
       </ul>
-      <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
-      <div class="ft-img">
-        <img src="front_images/ft-biao.png" alt="公共信息安全网络监管" />
-      </div>
+      <div class="ft-text text-center">
+          <p class="ft-service">服务热线:400-8898-310</p>
+          <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
+          <div class="ft-img">
+            <a href="http://www.sznet110.gov.cn/netalarm/index.jsp" class="wg-link1" title="公共信息安全网络监管"></a>
+            <a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101901353" class="wg-link2" title="公共信息安全网络监管"></a>
+          </div>
+        </div>
     </div>
     <!-- /.ft-r--> </div>
   <!-- /.ft-mn-->
 </div>
-<!-- /.ft-->
-<!-- Plugin -->
-<script src="front_scripts/jquery.js"></script>
-<script src="front_scripts/bootstrap.min.js"></script>
-<script src="front_scripts/app.js"></script>
-<script>
-  $(function () {
-    $('#myTab a:last').tab('show')
-  })
-</script>
+<!-- /.ft-->  <!-- Plugin -->
+  <script src="front_scripts/lib/jquery.js"></script>
+  <script src="front_scripts/app.js"></script>
+  <script src="front_scripts/account/personal.js"></script>
 </body>
 </html>

@@ -9,12 +9,14 @@
 <meta name="author" content="彩胜网">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 <meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="Shortcut Icon" href="favicon.ico" type="image/ico" />
 <link rel="Bookmark" href="favicon.ico" type="image/ico" />
 <link rel="stylesheet" href="front_styles/bootstrap.min.css">
 <link rel="stylesheet" href="front_styles/global.css">
 <link rel="stylesheet" href="front_styles/icon.css">
-<link rel="stylesheet" href="front_styles/main.css">  <link rel="stylesheet" href="front_styles/trade.css">
+<link rel="stylesheet" href="front_styles/main.css">
+<link rel="stylesheet" href="front_styles/lib/lrkf/skin.css">  <link rel="stylesheet" href="front_styles/trade.css">
   <link rel="stylesheet" href="front_styles/pl3.css">
   </head>
 <body>
@@ -26,8 +28,7 @@
         <img src="front_images/bor.png" alt="bor"/>
         <a href="/account/register">免费注册</a>
         <img src="front_images/bor.png" alt="bor"/>
-        <a href="/account/index" class="last">我的账户</a>
-        <img src="front_images/top-down.png" alt="bor"/>
+        <a href="/account/index" class="last">我的账户<i class="icon-indextop"></i></a>
 
     </div>
   </div>
@@ -40,80 +41,81 @@
     </div>
     <!-- /.hd-logo-->
     <ul class="hd-nav">
-      <li id="choseCai">
-        <a href="#" class="active">
+      <li id="choseCai" class="seed-nav">
+        <a href="#">
           选择彩种
           <img src="front_images/h-down.png" alt="down" />
         </a>
         <ul class="hd-mask" id="hdMask">
           <li>
-            <a href="#">
+            <a href="/lottery/buy/jczq">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b1.png" alt="竞彩足球"/>
+                <img src="front_images/lottery/jczq_home_logo.png" alt="竞彩足球"/>
               </div>
               竞彩足球
-              <span>9.27大加奖</span>
+              <span>返奖率73%</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/lottery/buy/ssq">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b1.png" alt="竞彩足球"/>
-              </div>
-              竞彩足球
-              <span>9.27大加奖</span>
-            </a>
-          </li>
-          <li>
-            <a href="/lottery/buy/ssq" class="active">
-              <div class="hd-mask-icon">
-                <img src="front_images/hd-b2.png" alt="双色球"/>
+                <img src="front_images/lottery/ssq_home_logo.png" alt="双色球"/>
               </div>
               双色球
-              <span>奖池超X亿</span>
+              <span>2元赢取1000万</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/lottery/buy/dlt">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b3.png" alt="竞彩足球"/>
+                <img src="front_images/lottery/dlt_home_logo.png" alt="大乐透"/>
               </div>
-              广东快乐10分
-              <span>奖池超X亿</span>
+              大乐透
+              <span>3元赢取1600万</span>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="/lottery/buy/pl5">
               <div class="hd-mask-icon">
-                <img src="front_images/hd-b3.png" alt="竞彩足球"/>
+                <img src="front_images/lottery/pl5_home_logo.png" alt="排列5"/>
               </div>
-              广东快乐10分
-              <span>奖池超X亿</span>
+              排列5
+              <span>每日一注赢10万</span>
             </a>
           </li>
+          <li>
+            <a href="/lottery/buy/qlc">
+              <div class="hd-mask-icon">
+                <img src="front_images/lottery/qlc_home_logo.png" alt="七乐彩"/>
+              </div>
+              七乐彩
+              <span>30选7猜中赢百万</span>
+            </a>
+          </li>
+
           <li>
             <ul class="hd-mask-list">
-              <li>
-                <a href="#">广东11选5</a>
-              </li>
-              <li>
-                <a href="#">老11选5</a>
-              </li>
-              <li>
-                <a href="#">好运11选5</a>
-              </li>
-              <li>
-                <a href="#">重庆11选5</a>
-              </li>
-              <li>
-                <a href="#">易乐11选5</a>
-              </li>
-              <li>
-                <a href="#">辽宁11选5</a>
-              </li>
-              <li>
-                <a href="#">快乐8</a>
-              </li>
+                <li>
+                  <a href="/lottery/buy/qxc" target="_blank">七星彩</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/pl3" target="_blank">排列3</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/fc3d" target="_blank">福彩3D</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/gdx" target="_blank">粤11选5</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/dlc" target="_blank">赣11选5</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/syy" target="_blank">十一运夺金</a>
+                </li>
+                <li>
+                  <a href="/lottery/buy/xjx" target="_blank">新疆11选5</a>
+                </li>
               <li>
                 <a href="#">新时时彩</a>
               </li>
@@ -125,30 +127,35 @@
         </ul>
       </li>
       <li>
-        <a href="/index.html" class="active">首页</a>
+        <a href="/index.html">首页</a>
       </li>
       <li>
-        <a href="/lottery/hall/index">投注大厅</a>
+        <a href="/lottery/hall/index" class="j-nav-hall">投注大厅</a>
       </li>
       <li>
-        <a href="/lottery/project-center/ssq/">合买大厅</a>
+        <a href="/lottery/project-center/ssq/" class="j-nav-center">合买大厅</a>
       </li>
     </ul>
     <!-- /.hd-nav--> </div>
 </div>
-<!-- /.hd-->  <div class="brings w985 pl3">
+<!-- /.hd-->
+<!-- Toogle Nav Active-->
+
+
+
+  <div class="brings w985 pl3">
     <div class="brings-mn">
       <div class="m-brhd clearfix">
-        <img src="front_images/pl5-title.png" alt="排列5" class="pull-left m-brhd-logo" />
-        <h2 class="m-brhd-title"> <b>排列三</b><span class="ml15">固定奖天天开</span></h2>
+        <img src="front_images/lottery/pl3_logo.png" alt="排列3" class="pull-left m-brhd-logo" />
+        <h2 class="m-brhd-title"> <b>排列三</b><span class="ml15">天天开奖，3位数赢千元</span></h2>
         <div class="m-brhd-group" id="j-hd-nav">
           <a href="javascript:;" data-type="zx" class="active">直选</a>
           <a href="javascript:;" data-type="zx6">组选六</a>
           <a href="javascript:;" data-type="zx3">组选三</a>
-          <a href="/lottery/project-center/pl5/" target="_blank">参与合买</a>
+          <a href="/lottery/project-center/pl3/">参与合买</a>
         </div>
-        <b class="m-brhd-qi">第15012期</b>
-        <div class="m-brhd-time">投注截止时间：2015-01-12 20:00</div>
+        <b class="m-brhd-qi">第15034期</b>
+        <div class="m-brhd-time">投注截止时间：2015-02-03 20:00</div>
       </div>
       <!-- /.brings-hd-->
 
@@ -180,7 +187,7 @@
 <div class="box-zx-cgtz">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
             所选号码与开奖号码按位数全部相同即中
@@ -188,7 +195,7 @@
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='2'>
+        <div class="row-code clearfix j-row-code" data-bit="0">
           <div class="row_num_title">百位</div>
           <div class="m-num-group m-num-group-red j-num-group">
             <a href="javascript:;">0</a>
@@ -203,15 +210,15 @@
             <a href="javascript:;">9</a>
           </div>
           <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <span data-type="odd">奇</span>
+            <span data-type="big">大</span>
+            <span data-type="all">全</span>
+            <span data-type="even">偶</span>
+            <span data-type="small">小</span>
+            <span data-type="clean">清</span>
           </div>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='3'>
+        <div class="row-code clearfix j-row-code" data-bit="1">
           <div class="row_num_title">十位</div>
           <div class="m-num-group m-num-group-red j-num-group">
             <a href="javascript:;">0</a>
@@ -226,15 +233,15 @@
             <a href="javascript:;">9</a>
           </div>
           <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <span data-type="odd">奇</span>
+            <span data-type="big">大</span>
+            <span data-type="all">全</span>
+            <span data-type="even">偶</span>
+            <span data-type="small">小</span>
+            <span data-type="clean">清</span>
           </div>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
+        <div class="row-code clearfix j-row-code" data-bit="2">
           <div class="row_num_title">个位</div>
           <div class="m-num-group m-num-group-red j-num-group">
             <a href="javascript:;">0</a>
@@ -249,12 +256,12 @@
             <a href="javascript:;">9</a>
           </div>
           <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <span data-type="odd">奇</span>
+            <span data-type="big">大</span>
+            <span data-type="all">全</span>
+            <span data-type="even">偶</span>
+            <span data-type="small">小</span>
+            <span data-type="clean">清</span>
           </div>
         </div>
       </div>
@@ -269,7 +276,7 @@
 <div class="box-zx6-cgtz">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
             至少选3个号码，开奖号码为组六（3个开奖号码均不相同）且包含在选号中，即中
@@ -277,8 +284,7 @@
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
-          <div class="row_num_title">个位</div>
+        <div class="row-code clearfix j-row-code" data-bit="0">
           <div class="m-num-group m-num-group-red j-num-group">
             <a href="javascript:;">0</a>
             <a href="javascript:;">1</a>
@@ -292,12 +298,12 @@
             <a href="javascript:;">9</a>
           </div>
           <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <span data-type="odd">奇</span>
+            <span data-type="big">大</span>
+            <span data-type="all">全</span>
+            <span data-type="even">偶</span>
+            <span data-type="small">小</span>
+            <span data-type="clean">清</span>
           </div>
         </div>
       </div>
@@ -312,7 +318,7 @@
 <div class="box-zx3-cgtz">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
             至少选2个号码，开奖号码为组三（即开奖号码中有对子）且包含在选号中，即中
@@ -320,8 +326,7 @@
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
-          <div class="row_num_title">个位</div>
+        <div class="row-code clearfix j-row-code" data-bit="0">
           <div class="m-num-group m-num-group-red j-num-group">
             <a href="javascript:;">0</a>
             <a href="javascript:;">1</a>
@@ -335,12 +340,12 @@
             <a href="javascript:;">9</a>
           </div>
           <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <span data-type="odd">奇</span>
+            <span data-type="big">大</span>
+            <span data-type="all">全</span>
+            <span data-type="even">偶</span>
+            <span data-type="small">小</span>
+            <span data-type="clean">清</span>
           </div>
         </div>
       </div>
@@ -355,16 +360,16 @@
 <div class="box-zx-hz">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
-            所选号码与开奖号码按位数全部相同即中
+            和值玩法至少选择1个和值，所选和值与开奖号码和值一致即中奖
             <span class="fc-3 mlr5">1,040</span>
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
-          <div class="row_num_title">个位</div>
+        <div class="row-code clearfix j-row-code" data-bit="0">
+
           <div class="m-num-group m-num-group-red j-num-group">
             <a href="javascript:;">0</a>
             <a href="javascript:;">1</a>
@@ -376,14 +381,24 @@
             <a href="javascript:;">7</a>
             <a href="javascript:;">8</a>
             <a href="javascript:;">9</a>
-          </div>
-          <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <a href="javascript:;">10</a>
+            <a href="javascript:;">11</a>
+            <a href="javascript:;">12</a>
+            <a href="javascript:;">13</a>
+            <a href="javascript:;">14</a>
+            <a href="javascript:;">15</a>
+            <a href="javascript:;">16</a>
+            <a href="javascript:;">17</a>
+            <a href="javascript:;">18</a>
+            <a href="javascript:;">19</a>
+            <a href="javascript:;">20</a>
+            <a href="javascript:;">21</a>
+            <a href="javascript:;">22</a>
+            <a href="javascript:;">23</a>
+            <a href="javascript:;">24</a>
+            <a href="javascript:;">25</a>
+            <a href="javascript:;">26</a>
+            <a href="javascript:;">27</a>
           </div>
         </div>
       </div>
@@ -398,20 +413,16 @@
 <div class="box-zx6-hz">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
-            至少选3个号码，开奖号码为组六（3个开奖号码均不相同）且包含在选号中，即中
+            组六和值玩法至少选择1个和值，所选和值与开奖号码和值一致，且开奖号为组六即中奖
             <span class="fc-3 mlr5">173</span>
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
-          <div class="row_num_title">个位</div>
+        <div class="row-code clearfix j-row-code" data-bit="0">
           <div class="m-num-group m-num-group-red j-num-group">
-            <a href="javascript:;">0</a>
-            <a href="javascript:;">1</a>
-            <a href="javascript:;">2</a>
             <a href="javascript:;">3</a>
             <a href="javascript:;">4</a>
             <a href="javascript:;">5</a>
@@ -419,14 +430,21 @@
             <a href="javascript:;">7</a>
             <a href="javascript:;">8</a>
             <a href="javascript:;">9</a>
-          </div>
-          <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <a href="javascript:;">10</a>
+            <a href="javascript:;">11</a>
+            <a href="javascript:;">12</a>
+            <a href="javascript:;">13</a>
+            <a href="javascript:;">14</a>
+            <a href="javascript:;">15</a>
+            <a href="javascript:;">16</a>
+            <a href="javascript:;">17</a>
+            <a href="javascript:;">18</a>
+            <a href="javascript:;">19</a>
+            <a href="javascript:;">20</a>
+            <a href="javascript:;">21</a>
+            <a href="javascript:;">22</a>
+            <a href="javascript:;">23</a>
+            <a href="javascript:;">24</a>
           </div>
         </div>
       </div>
@@ -441,18 +459,16 @@
 <div class="box-zx3-hz">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
-            至少选2个号码，开奖号码为组三（即开奖号码中有对子）且包含在选号中，即中
+            组三和值玩法至少选择1个和值，所选和值与开奖号码和值一致，且开奖号为组三即中奖
             <span class="fc-3 mlr5">346</span>
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
-          <div class="row_num_title">个位</div>
+        <div class="row-code clearfix j-row-code" data-bit="0">
           <div class="m-num-group m-num-group-red j-num-group">
-            <a href="javascript:;">0</a>
             <a href="javascript:;">1</a>
             <a href="javascript:;">2</a>
             <a href="javascript:;">3</a>
@@ -462,14 +478,23 @@
             <a href="javascript:;">7</a>
             <a href="javascript:;">8</a>
             <a href="javascript:;">9</a>
-          </div>
-          <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <a href="javascript:;">10</a>
+            <a href="javascript:;">11</a>
+            <a href="javascript:;">12</a>
+            <a href="javascript:;">13</a>
+            <a href="javascript:;">14</a>
+            <a href="javascript:;">15</a>
+            <a href="javascript:;">16</a>
+            <a href="javascript:;">17</a>
+            <a href="javascript:;">18</a>
+            <a href="javascript:;">19</a>
+            <a href="javascript:;">20</a>
+            <a href="javascript:;">21</a>
+            <a href="javascript:;">22</a>
+            <a href="javascript:;">23</a>
+            <a href="javascript:;">24</a>
+            <a href="javascript:;">25</a>
+            <a href="javascript:;">26</a>
           </div>
         </div>
       </div>
@@ -484,7 +509,7 @@
 <div class="box-zx6-dt">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
             所选胆码＋拖码组成的单注号码，与组选六形态的开奖号码相同，即中奖，单注奖金
@@ -492,29 +517,47 @@
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
-          <div class="row_num_title">个位</div>
+
+        <div class="row-code clearfix j-row-code" data-bit="0" data-dt="1">
+          <p class="fs-12"><span class="fc-3 mr5">胆码区</span>选择 1-2 个胆码</p>
           <div class="m-num-group m-num-group-red j-num-group">
-            <a href="javascript:;">0</a>
-            <a href="javascript:;">1</a>
-            <a href="javascript:;">2</a>
-            <a href="javascript:;">3</a>
-            <a href="javascript:;">4</a>
-            <a href="javascript:;">5</a>
-            <a href="javascript:;">6</a>
-            <a href="javascript:;">7</a>
-            <a href="javascript:;">8</a>
-            <a href="javascript:;">9</a>
-          </div>
-          <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <a href="javascript:;" data-num="0">0</a>
+            <a href="javascript:;" data-num="1">1</a>
+            <a href="javascript:;" data-num="2">2</a>
+            <a href="javascript:;" data-num="3">3</a>
+            <a href="javascript:;" data-num="4">4</a>
+            <a href="javascript:;" data-num="5">5</a>
+            <a href="javascript:;" data-num="6">6</a>
+            <a href="javascript:;" data-num="7">7</a>
+            <a href="javascript:;" data-num="8">8</a>
+            <a href="javascript:;" data-num="9">9</a>
           </div>
         </div>
+
+        <div class="row-code clearfix j-row-code" data-bit="1">
+          <p class="fs-12"><span class="fc-3 mr5">拖码区</span>选择 1-9 个拖码，胆码+拖码 ≥ 3 个</p>
+          <div class="m-num-group m-num-group-red j-num-group">
+            <a href="javascript:;" data-num="0">0</a>
+            <a href="javascript:;" data-num="1">1</a>
+            <a href="javascript:;" data-num="2">2</a>
+            <a href="javascript:;" data-num="3">3</a>
+            <a href="javascript:;" data-num="4">4</a>
+            <a href="javascript:;" data-num="5">5</a>
+            <a href="javascript:;" data-num="6">6</a>
+            <a href="javascript:;" data-num="7">7</a>
+            <a href="javascript:;" data-num="8">8</a>
+            <a href="javascript:;" data-num="9">9</a>
+          </div>
+          <div data-id="0" class="quick-method j-quick-method">
+            <span data-type="odd">奇</span>
+            <span data-type="big">大</span>
+            <span data-type="all">全</span>
+            <span data-type="even">偶</span>
+            <span data-type="small">小</span>
+            <span data-type="clean">清</span>
+          </div>
+        </div>
+
       </div>
       <div title="遗漏是指该号码上次开出至本次开出未出现的期数" id="layout_yl_icon" class="yl_icon" style="display: block;"></div>
     </div>
@@ -527,7 +570,7 @@
 <div class="box-zx3-dt">
   <div class="layout_select">
     <div class="touz_area_box touz_area_box_2 j-touz-area">
-      <div class="red_area pull-left" id="j_normal_choose_code">
+      <div class="red_area pull-left j_normal_choose_code">
         <div class="m-num-title m-num-title2">
           <p>
             所选胆码＋拖码组成的单注号码，与组选三形态的开奖号码相同，即中奖，单注奖金
@@ -535,27 +578,43 @@
             元。
           </p>
         </div>
-        <div class="row-code clearfix j-row-code" data-bit='4'>
-          <div class="row_num_title">个位</div>
+        <div class="row-code clearfix j-row-code" data-bit="0" data-dt="1">
+          <p class="fs-12"><span class="fc-3 mr5">胆码区</span>选择 1 个胆码</p>
           <div class="m-num-group m-num-group-red j-num-group">
-            <a href="javascript:;">0</a>
-            <a href="javascript:;">1</a>
-            <a href="javascript:;">2</a>
-            <a href="javascript:;">3</a>
-            <a href="javascript:;">4</a>
-            <a href="javascript:;">5</a>
-            <a href="javascript:;">6</a>
-            <a href="javascript:;">7</a>
-            <a href="javascript:;">8</a>
-            <a href="javascript:;">9</a>
+            <a href="javascript:;" data-num="0">0</a>
+            <a href="javascript:;" data-num="1">1</a>
+            <a href="javascript:;" data-num="2">2</a>
+            <a href="javascript:;" data-num="3">3</a>
+            <a href="javascript:;" data-num="4">4</a>
+            <a href="javascript:;" data-num="5">5</a>
+            <a href="javascript:;" data-num="6">6</a>
+            <a href="javascript:;" data-num="7">7</a>
+            <a href="javascript:;" data-num="8">8</a>
+            <a href="javascript:;" data-num="9">9</a>
+          </div>
+        </div>
+
+        <div class="row-code clearfix j-row-code" data-bit="1">
+          <p class="fs-12"><span class="fc-3 mr5">拖码区</span>选择 1-9 个拖码，胆码+拖码 ≥ 2 个</p>
+          <div class="m-num-group m-num-group-red j-num-group">
+            <a href="javascript:;" data-num="0">0</a>
+            <a href="javascript:;" data-num="1">1</a>
+            <a href="javascript:;" data-num="2">2</a>
+            <a href="javascript:;" data-num="3">3</a>
+            <a href="javascript:;" data-num="4">4</a>
+            <a href="javascript:;" data-num="5">5</a>
+            <a href="javascript:;" data-num="6">6</a>
+            <a href="javascript:;" data-num="7">7</a>
+            <a href="javascript:;" data-num="8">8</a>
+            <a href="javascript:;" data-num="9">9</a>
           </div>
           <div data-id="0" class="quick-method j-quick-method">
-            <span data-bctag="70095.2.1" data-type="odd">奇</span>
-            <span data-bctag="70095.2.1" data-type="big">大</span>
-            <span data-bctag="70095.2.1" data-type="all">全</span>
-            <span data-bctag="70095.2.1" data-type="even">偶</span>
-            <span data-bctag="70095.2.1" data-type="small">小</span>
-            <span data-bctag="70095.2.1" data-type="clean">清</span>
+            <span data-type="odd">奇</span>
+            <span data-type="big">大</span>
+            <span data-type="all">全</span>
+            <span data-type="even">偶</span>
+            <span data-type="small">小</span>
+            <span data-type="clean">清</span>
           </div>
         </div>
       </div>
@@ -580,8 +639,20 @@
       <textarea id="sd_number" class="sd-number" rows="10" cols="10"></textarea>
       <div class="textarea-mask" id="j-textarea-mask">
         <p>
-          粘贴上传投注截止时间：2015-01-12 20:00        </p>
+          粘贴上传投注截止时间：2015-02-03 20:00        </p>
         <p>说明：手动输入或粘贴单式方案</p>
+                  <div class="j-upload-zx">
+            <p>玩法说明：所选号码与开奖号码按位数全部相同即中1,040元。</p>
+            <p>格式：5,8,9</p>
+          </div>
+          <div class="j-upload-zx3">
+            <p>玩法说明：所选号码与开奖号码一致，顺序不限，即中奖。若当期的开奖号码三个数字各不相同，即中得组选6，奖金173元；若当期开奖号码三个数中有两个数是一样的，即中得组选3，奖金346元。 </p>
+            <p>格式：5,5,8</p>
+          </div>
+          <div class="j-upload-zx6">
+            <p>玩法说明：所选号码与开奖号码一致，顺序不限，即中奖。若当期的开奖号码三个数字各不相同，即中得组选6，奖金173元；若当期开奖号码三个数中有两个数是一样的，即中得组选3，奖金346元。 </p>
+            <p>格式：5,8,9</p>
+          </div>
               </div>
     </div>
   </div>
@@ -640,7 +711,7 @@
       <span class="fc-3" id="buy_money_proxy">40</span>
       元
         </p>
-    <button class="btn btn-sub center-block" id="buy_button_proxy">立即投注</button>
+    <button class="btn btn-red fs-yh btn-big center-block" id="buy_button_proxy">立即投注</button>
     <div class="checkbox text-center fs-12 fc-84">
       <label>
         <input type="checkbox" checked class="ps-t-2 j-sub-agreed" />
@@ -672,13 +743,13 @@
   <div class="br-zhu-l pull-left" id="code_list"></div>
   <div class="br-zhu-r pull-right">
     <ul class="pull-left">
-      <li name="auto_produce">
+      <li class="j-jx-zhus">
         <a href="javascript:;" data-zhu="1" class="btn j-zhu-adds">机选1注</a>
       </li>
-      <li name="auto_produce">
+      <li class="j-jx-zhus">
         <a href="javascript:;" data-zhu="5" class="btn j-zhu-adds">机选5注</a>
       </li>
-      <li name="auto_produce">
+      <li class="j-jx-zhus">
         <a href="javascript:;" data-zhu="10" class="btn j-zhu-adds">机选10注</a>
       </li>
       <li id="clean_code_list">
@@ -826,25 +897,26 @@
   </p>
   <p class="clearfix">
     <span class="title">方案标题</span>
-    <input id="title" type="text" data-text="排列3合买方案" data-size="20" value="排列3合买方案" class="br-input">
+    <input id="title" type="text" data-text="排列3合买方案" data-size="20" value="排列3合买方案" class="br-input j-input-place" data-place="排列3合买方案">
     <span>已输入<span class="j-btext-total" id="title_font_size">7</span>个字,最多20个</span>
   </p>
   <p class="clearfix">
     <span class="title">方案描述</span>
-    <textarea id="desc" class="br-textarea" data-text="排列3" data-size="200" rows="3" cols="60">排列3</textarea>
+    <textarea id="desc" class="br-textarea j-input-place" data-text="排列3" data-size="200" rows="3" cols="60" data-place="排列3">排列3</textarea>
     <span class="br-textarea-tips">已输入<span class="j-btext-total" id="desc_font_size">3</span>个字,最多200个</span>
   </p>
 </div>
 <!-- /.br-together-->
 <p class="text-center fs-12 j-he-box mt10">
   认购<span id="buy_money_tips">0</span>元+保底<span id="aegis_money_tips">0</span>元, 共需支付:<span class="fc-3" id="total_money_tips">0</span>元
-</p></div>
+</p>
+</div>
       </div>
     </div>
     <!-- /.br-details--> </div>
   <!-- /.br-gou-->
   <div class="br-tou">
-    <button href="#" class="btn btn-sub center-block" disabled id="buy-submit">立即投注</button>
+    <button class="btn btn-red fs-yh btn-big center-block" disabled id="buy-submit">立即投注</button>
     <div class="checkbox text-center fs-12 fc-84">
       <label>
         <input class="j-sub-agreed" type="checkbox" checked/>
@@ -867,63 +939,80 @@
       开奖公告
     </div>
     <div class="sub-content">
-      </div>
+        <p>排列3第15033期 02-02 (周一)</p>
+<p class="sub-content-num">
+</p>
+        </div>
   </div>
   <!-- /.box-sub-->
-  <div class="box-sub">
-    <div class="sub-content">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>期次</th>
-            <th>开奖号码</th>
-          </tr>
-        </thead>
-        <tbody>
-                 <tr>
-            <td>15011期</td>
-            <td>
+    <div class="box-sub">
+  <div class="sub-content">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>期次</th>
+          <th>开奖号码</th>
+        </tr>
+      </thead>
+      <tbody>
+         <tr>
+          <td>15033期</td>
+          <td>
         等待开奖            </td>
-          </tr>
+        </tr>
                  <tr>
-            <td>15010期</td>
-            <td>
+          <td>15032期</td>
+          <td>
         等待开奖            </td>
-          </tr>
+        </tr>
                  <tr>
-            <td>15009期</td>
-            <td>
-        等待开奖            </td>
-          </tr>
+          <td>15031期</td>
+          <td>
+        <span class="fc-3">1 2 3</span>            </td>
+        </tr>
                  <tr>
-            <td>15008期</td>
-            <td>
+          <td>15030期</td>
+          <td>
         等待开奖            </td>
-          </tr>
+        </tr>
                  <tr>
-            <td>15007期</td>
-            <td>
+          <td>15029期</td>
+          <td>
         等待开奖            </td>
-          </tr>
+        </tr>
                 </tbody>
-      </table>
-    </div>
-    <div class="sub-content">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>奖项</th>
-                        <th>中奖注数</th>
-            <th>每注金额</th>
-          </tr>
-        </thead>
-        <tbody>
-
-                        </tbody>
-      </table>
-    </div>
+    </table>
   </div>
-  <!-- /.box-sub-->
+  <div class="sub-content">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>奖项</th>
+          <th>中奖注数</th>
+          <th>每注金额</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>直选</td>
+          <td>0</td>
+          <td>1040</td>
+        </tr>
+        <tr>
+          <td>组选3</td>
+          <td>0</td>
+          <td>346</td>
+        </tr>
+        <tr>
+          <td>组选6</td>
+          <td>0</td>
+          <td>173</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+    <!-- /.box-sub-->
   <div class="box-sub hmtj" style="display: none">
     <div class="sub-title">
       <span class="more-detail">
@@ -1189,7 +1278,7 @@
   </div>
   <!-- /.box-sub-->
 
-  <div class="box-sub zstb">
+  <!--div class="box-sub zstb">
     <div class="sub-title">
       <span class="more-detail">
         <a href="#" target="_blank">更多</a>
@@ -1223,10 +1312,10 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div-->
   <!-- /.box-sub-->
 
-  <div class="box-sub zstb">
+  <!--div class="box-sub zstb">
     <div class="sub-title">
       <span class="more-detail">
         <a href="#" target="_blank">更多</a>
@@ -1248,7 +1337,7 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div-->
   <!-- /.box-sub-->
 
   <div class="box-sub zstb">
@@ -1262,13 +1351,13 @@
       <div class="tab-con">
         <ul class="m-list m-list2 clearfix">
           <li>
-            <a href="#" target="_blank">排列3玩法规则说明</a>
+                        <a href="/html/lottery/help/play/plx.html" target="_blank">排列3玩法规则说明</a>
           </li>
           <li>
-            <a href="#" target="_blank">排列3玩法介绍</a>
+            <a href="/html/lottery/help/play/plx.html" target="_blank">排列3玩法介绍</a>
           </li>
           <li>
-            <a href="#" target="_blank">排列3奖项规则</a>
+            <a href="/html/lottery/help/play/plx.html" target="_blank">排列3奖项规则</a>
           </li>
         </ul>
       </div>
@@ -1282,40 +1371,40 @@
           <!-- /.box-main-->
         </div><!-- /#j-content-->
     </div><!-- /.brings-mn-->
-    <div class="brings-tips">
+
+  </div>
+  <!-- /.brings-->
+  <div class="brings-tips">
       <h3>投注提示</h3>
       <ul>
         <li>1、"排列三"是体彩中心发行的彩种，每天销售1期，每天开奖；</li>
-        <li>
-          2、投注因网络阻塞、系统故障、彩票机故障、国家动态限号以及其它原因，造成出票未成功则视为投注失败，将在国家开奖前对投注进行撤单处理，并在撤单后再进行返款，除此之外，网站不承担任何责任；
-        </li>
-        <li>3、投注成功与否以出票状态为准，"已出票"表示投注成功，"等待出票"表示正在出票中，"已撤单"表示投注失败；</li>
-        <li>4、为了保证您能投注成功，请您尽早投注；</li>
-        <li>5、感谢您支持社会公益事业，彩市有风险，投注需谨慎。未满18岁不得购买彩票。</li>
+        <li>2、投注因网络阻塞、系统故障、彩票机故障、国家动态限号以及其它原因，造成出票未成功则视为投注失败，将在国家开奖前对投注进行撤单处理，并在撤单后再进行返款，除此之外，网站不承担任何责任；</li>
+        <li>3、排列三的胆拖投注将被拆分成单注号码进行出票，出票时若出现第2点所罗列的状况，则有可能出现胆拖投注的某几注号码投注失败，将在国家开奖前对该部分投注进行撤单处理，并在撤单后再进行返款，除此之外，网站不承担任何责任；</li>
+        <li>4、投注成功与否以出票状态为准，"已出票"表示投注成功，"等待出票"表示正在出票中，"已撤单"表示投注失败；</li>
+        <li>5、为了保证您能投注成功，请您尽早投注；</li>
+        <li>6、感谢您支持社会公益事业，彩市有风险，投注需谨慎。未满18岁不得购买彩票。</li>
       </ul>
     </div>
     <!-- /.brings-tips-->
-  </div>
-  <!-- /.brings-->
 </div>
   <input type="hidden" value="pl3" id="lotyName">
   <input type="hidden" value="10" id="playName">
-  <input type="hidden" value="9" id="qihaoId">
-  <input type="hidden" value="15012" id="qihao">
-  <input type="hidden" value="4" id="maxqishu">
+  <input type="hidden" value="34" id="qihaoId">
+  <input type="hidden" value="15034" id="qihao">
+  <input type="hidden" value="7" id="maxqishu">
   <div class="ft">
   <div class="ft-mn w985">
     <div class="ft-l clearfix">
       <ul>
-        <li>
+        <li class="mr-30 mb-25">
           <img src="front_images//ft-1.png" alt="购彩方便">
           <a href="#">购彩方便</a>
         </li>
-        <li>
+        <li class="mb-25">
           <img src="front_images//ft-2.png" alt="账户安全">
           <a href="#">账户安全</a>
         </li>
-        <li>
+        <li class="mr-30">
           <img src="front_images//ft-3.png" alt="领奖无忧">
           <a href="#">领奖无忧</a>
         </li>
@@ -1332,10 +1421,10 @@
           <h4>新手上路</h4>
           <ul>
             <li>
-              <a href="#">购彩流程</a>
+              <a href="/html/help/help.html?page=11">购彩流程</a>
             </li>
             <li>
-              <a href="#">领奖流程</a>
+              <a href="/html/help/help.html?page=14">领奖流程</a>
             </li>
           </ul>
         </li>
@@ -1343,49 +1432,50 @@
           <h4>支付方式</h4>
           <ul>
             <li>
-              <a href="#">网银支付</a>
+              <a href="javascript:;">网银支付</a>
             </li>
             <li>
-              <a href="#">支付宝支付</a>
+              <a href="javascript:;">支付宝支付</a>
             </li>
           </ul>
         </li>
         <li>
-          <h4>帮助中心</h4>
-          <ul>
-            <li>
-              <a href="#">常见问题</a>
-            </li>
-            <li>
-              <a href="#">功能指引</a>
-            </li>
-            <li>
-              <a href="#">彩种介绍</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h4>友情链接</h4>
-          <ul>
-            <li>
-              <a href="#">关于我们</a>
-            </li>
-            <li>
-              <a href="#">联系我们</a>
-            </li>
-            <li>
-              <a href="#">产品介绍</a>
-            </li>
-            <li>
-              <a href="#">服务热线</a>
-            </li>
-          </ul>
-        </li>
+            <h4>帮助中心</h4>
+            <ul>
+              <li>
+                <a href="/html/help/help.html" target="_black">常见问题</a>
+              </li>
+              <li>
+                <a href="/html/help/help.html?page=ssq" target="_black">功能指引</a>
+              </li>
+              <li>
+                <a href="/html/help/help.html?page=ssq" target="_black">彩种介绍</a>
+              </li>
+            </ul>
+          </li>
+          <li class="last">
+            <h4>友情链接</h4>
+            <ul>
+              <li>
+                <a href="http://www.yuncaitech.com#part3" target="_black">关于我们</a>
+              </li>
+              <li>
+                <a href="http://www.yuncaitech.com#part7" target="_black">联系我们</a>
+              </li>
+              <li>
+                <a href="http://www.yuncaitech.com#part2" target="_black">产品介绍</a>
+              </li>
+            </ul>
+          </li>
       </ul>
-      <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
-      <div class="ft-img">
-        <img src="front_images/ft-biao.png" alt="公共信息安全网络监管" />
-      </div>
+      <div class="ft-text text-center">
+          <p class="ft-service">服务热线:400-8898-310</p>
+          <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
+          <div class="ft-img">
+            <a href="http://www.sznet110.gov.cn/netalarm/index.jsp" class="wg-link1" title="公共信息安全网络监管"></a>
+            <a href="http://www.sznet110.gov.cn/webrecord/innernet/Welcome.jsp?bano=4403101901353" class="wg-link2" title="公共信息安全网络监管"></a>
+          </div>
+        </div>
     </div>
     <!-- /.ft-r--> </div>
   <!-- /.ft-mn-->
@@ -1430,13 +1520,6 @@
     var lotyName = 'pl3';
     var staticHostURI = 'http://static3.yuncai.com';
   </script>
-  <script src="front_scripts/lib/jquery.js"></script>
-  <script src="front_scripts/lib/lodash.compat.min.js"></script>
-  <script src="front_scripts/lib/bootstrap.min.js"></script>
-  <script src="front_scripts/lib/store.min.js"></script>
-  <script src="front_scripts/app.js"></script>
-  <script src="front_scripts/lib/core.js"></script>
-  <script src="front_scripts/lottery/pl3_core.js"></script>
-  <script src="front_scripts/lottery/pl3.js"></script>
+  <script data-main="front_scripts/lottery/pl3" src="front_scripts/lib/require.js"></script>
 </body>
 </html>
