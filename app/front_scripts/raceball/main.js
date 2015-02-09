@@ -7,6 +7,7 @@ require.config({
     app: '../common/app',
     scroll: '../lib/jquery.mCustomScrollbar.concat.min',
     tipsy: '../lib/jquery.tipsy',
+    core: '../lib/core',
     betting: 'betting',
     hemai: 'hemai',
   },
@@ -26,7 +27,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy'], function ($, _, BET, APP, store, H) {
+require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core'], function ($, _, BET, APP, store, H) {
   'use strict';
 
   function craeteDateBtn(type, sp) {
@@ -49,7 +50,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       break;
     }
 
-    if (type ==1) {
+    if (type == 1) {
       for (var i = 0, len = spArr.length; i < len; i++) {
         if (i === (len - 1)) l = 'lastOne';
         h += '<em index="' + i + '" data-item="' + item[i] + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + ' j-sp-btn sp-btn">' + spArr[i] + '</em>';
@@ -77,17 +78,15 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
       lastDd = '';
 
-
-
       if (i === data.length - 1) {
         lastDd = 'last'
       }
 
       item = data[i];
 
-      if(item[tab]==1){
-        bfLine = '<button class="btn j-show-bf"><b>展开</b></button>';
-      }else{
+      if (item[tab] == 1) {
+        bfLine = '<button class="btn j-show-bf"></button>';
+      } else {
         bfLine = '<b class="no-support">本场对阵不支持该玩法</b>';
       }
 
@@ -110,7 +109,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + item['rqspf_rangqiu_num'] + '</em>' + line + '</div></span></dd>');
         break;
       case 'bf':
-        arr.push('<span class="row1 row1-1">'+bfLine+'</span></dd>');
+        arr.push('<span class="row1 row1-1">' + bfLine + '</span></dd>');
         break;
       case 'bqc':
         arr.push('<span class="row2 row2-1">' + line + '</span></dd>');
@@ -194,7 +193,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       })
       .done(function (data) {
         if (data.retCode == 100000) {
-          debugger
+
           store.set('lotyName', Config.lotyName);
           store.set('payMoney', Config.payMoney);
           store.set('projectNo', data.retData.projectNo);
@@ -233,8 +232,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   };
 
   var checkParams = function () {
-    if (_.uniq(BET.match, 'matchcode').length > 8) {
-      APP.showTips('您好，投注场次不得超过8场哦');
+    if (_.uniq(BET.match, 'matchcode').length > 15) {
+      APP.showTips('您好，投注场次不得超过15场哦');
       return false;
     }
     if (!BET.isAgreen) {
@@ -245,6 +244,12 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       APP.showTips('请在左侧至少选择2场比赛');
       return false;
     }
+
+    if (BET.zhushu > 10000) {
+      APP.showTips('方案注数已超过<span class="fc-3 mlr-8">10000</span>注<br/><p class="fs-12">理性购彩,可适当减少投注</p>');
+      return false;
+    }
+
     if (!BET.bunch.length) {
       showTipMask();
       return false;
@@ -452,7 +457,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     Config.payMoney = BET.zhushu * 2 * BET.beishu;
 
     vote.title = '投注信息确认';
-    vote.confirmHtml = '<div class="ljtz-box"><div class="text"><p>投注金额：总计<span class="fc-3">' + Config.payMoney + '</span>元，共' + obj.zhushu + '注，投注' + obj.beishu + '倍</p><table class="table table-bordered"><thead><tr><th>场次</th><th class="gameTeam">主队 VS 客队</th><th style="width:150px;">赛果</th></tr></thead><tbody>' + tbodyHtml + '</tbody></table><p>过关方式：' + bunch + ', 理论最高奖金：<span class="fc-3">' + BET.maxBonus + '</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
+    vote.confirmHtml = '<div class="ljtz-box"><div class="text"><p>投注金额：总计<span class="fc-3">' + Config.payMoney + '</span>元，共' + obj.zhushu + '注，投注' + obj.beishu + '倍</p><div id="j-ljtz-box"><table class="table table-bordered"><thead><tr><th>场次</th><th class="gameTeam">主队 VS 客队</th><th style="width:150px;">赛果</th></tr></thead><tbody>' + tbodyHtml + '</tbody></table></div><p>过关方式：' + bunch + ', 理论最高奖金：<span class="fc-3">' + BET.maxBonus + '</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
 
     c = checkParams();
 
@@ -464,6 +469,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
           APP.showTips({
             html: vote.confirmHtml,
             title: vote.title
+          });
+
+          $('#j-ljtz-box').mCustomScrollbar({
+            theme: "light-3",
+            mouseWheelPixels: 200
           });
 
           $('#buyConfirm').one('click', function (event) {

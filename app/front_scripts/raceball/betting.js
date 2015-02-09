@@ -88,7 +88,9 @@ define(['jquery'], function ($) {
       var _this = this;
       var code = dd.attr('matchcode');
 
-      if(_.find(_this.match, function(chr){return (chr.index==i && chr.matchcode==code);})){
+      if (_.find(_this.match, function (chr) {
+          return (chr.index == i && chr.matchcode == code);
+        })) {
         return;
       }
 
@@ -129,15 +131,16 @@ define(['jquery'], function ($) {
         return n.matchcode;
       });
 
-      selectMatch = _this.match.sort(function (a, b) {
-        return a.matchcode - b.matchcode;
-      });
-
       _this.match = _this.match.sort(function (a, b) {
         return Number(a.index) - Number(b.index);
       });
 
+      selectMatch = _this.match.concat().sort(function (a, b) {
+        return Number(a.matchcode) - Number(b.matchcode);
+      });
+
       if (hasMatch) {
+
         _.each(_this.match, function (matchs) {
 
           if (matchs.matchcode == code) {
@@ -147,11 +150,15 @@ define(['jquery'], function ($) {
             } else {
               color = 'block' + matchs.index;
             }
+
             linkHTML += '<a index="' + matchs.index + '" gametype="' + matchs.type + '" matchcode="' + matchs.matchcode + '" href="javascript:;" class="' + color + '">' + matchs.title + '</a>';
           }
         });
+
         $('#selectGamePool .gameOption[matchcode=' + code + '] .betList').html(linkHTML);
+
       } else {
+
         oneMatchHTML = compiled(fill);
         if (selectMatch.length > 1) {
           var selectMatchcodeArr = [];
@@ -173,6 +180,7 @@ define(['jquery'], function ($) {
 
       $('#poolStep1 .scrollMoni').show();
       $('#poolStep1 .unSeleTips').hide();
+
       _this.setSecondBox();
       _this.setAllTotal();
 
@@ -373,7 +381,7 @@ define(['jquery'], function ($) {
       $('#selectGamePool tbody').html('');
       $('#poolStep1 .scrollMoni').hide();
       $('#poolStep1 .unSeleTips').fadeIn();
-      _this.box.find('.j-sp-btn').removeClass('active hover');
+      _this.box.find('.j-sp-btn,.j-bf-all').removeClass('active hover');
 
       _this.match = [];
       _this.dd = null;
@@ -567,7 +575,7 @@ define(['jquery'], function ($) {
             dd.after(newDd);
           }
 
-          t.find('b').html('隐藏');
+          t.removeClass('has').addClass('active');
 
         } else {
 
@@ -575,7 +583,12 @@ define(['jquery'], function ($) {
             _this.box.find('[data-newdd=' + matchcode + ']').hide();
           }
 
-          t.find('b').html('展开');
+          if(_.find(_this.match, function(chr){return chr.matchcode === matchcode;})){
+            t.addClass('has');
+          }else{
+            t.removeClass('active has');
+          }
+
         }
 
       });
@@ -762,7 +775,7 @@ define(['jquery'], function ($) {
         $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
       });
 
-      $('#btnclear').on('click', function (event) {
+      $('#j-btn-clear').on('click', function (event) {
         _this.clearBetData();
       });
 
@@ -793,7 +806,7 @@ define(['jquery'], function ($) {
         _this.setSecondBox();
         _this.setAllTotal();
 
-        if(_this.tab==='bf'){
+        if (_this.tab === 'bf') {
           removeItem.siblings('.j-bf-all').removeClass(a);
         }
 
@@ -803,10 +816,10 @@ define(['jquery'], function ($) {
 
         var code = $(this).parents('tr').attr('matchcode');
         var removeItem = $('#selectGamePool tr[matchcode=' + code + ']');
-        var actItem = $('#bettingBox dd[matchcode=' + code + ']').find('em.active');
+        var actItem = $('#bettingBox dd[matchcode=' + code + ']').find('.j-sp-btn.active,.j-bf-all');
 
         removeItem.remove();
-        actItem.removeClass('active');
+        actItem.removeClass('active hover');
 
         _.remove(_this.match, function (o) {
           return o.matchcode == code;

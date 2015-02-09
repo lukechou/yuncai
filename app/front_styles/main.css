@@ -33,7 +33,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 33%; text-align: left; }
 .hd-mask-list > li > a { font-size: 12px; display: block; color: #a5a5a5; }
 /* footer */
-.ft { overflow: hidden; width: 100%; padding: 30px 0 50px 0; color: #545454; background: #f5f5f5;}
+.ft { overflow: hidden; width: 100%; padding: 30px 0 50px 0; color: #545454; background: #f5f5f5; }
 .ft-mn { padding-top: 25px; }
 .ft-l { float: left; width: 250px; height: 228px; padding-left: 20px; }
 .ft-l > ul { width: 100%; }
@@ -65,36 +65,6 @@ body { color: #3d3d3d; background: #fff; }
 #j-login-modal .modal-body .login-form input { padding: 4px 10px; border: 1px #dfdfdf solid; }
 #j-login-modal .modal-body .btn { margin-left: 123px; padding: 5px 20px; }
 #j-login-modal .modal-body .login-form a { margin-left: 5px; color: #388bf1; }
-/* 投注大厅 */
-.hall-box { padding-bottom: 40px; background: #fff; }
-.hall-box > h2 { font-size: 28px; font-weight: bold; line-height: 50px; margin: 0; padding-bottom: 40px; text-align: center; background: url(../../front_images/hall/bg-title.png) no-repeat top center; }
-.hall-list { width: 985px; margin: auto; padding: 0 58px; }
-.hall-list > li { position: relative; display: block; float: left; margin-left: 80px; text-align: center; }
-.hall-list > li > .text { position: absolute; top: 150px; right: 0; left: 0; margin: auto; }
-.hall-list > li > .text > h5, .hall-list > li > .text > p { font-weight: bold; }
-.hall-list > li > .text > h5 { font-size: 20px; margin-bottom: 6px; }
-.hall-list > li > .text > p { font-family: 'Microsoft Yahei'; }
-.hall-list > li.first, .hall-list > li.ml0 { margin-left: 0; }
-.hall-list > li > img { display: block; margin: auto; }
-.hall-box1 > li { width: 236px; }
-.hall-box2 { background: #f7f7f7; }
-.hall-list .l-group { font-size: 12px; display: none; width: 120px; height: 17px; margin: auto; }
-.hall-list .l-group > a { display: block; float: left; width: 50%; color: #0d67c4; }
-.hall-list .li-disabled .btn-ligou { background: #bdbcbc; }
-.hall-list .li-disabled .l-group > a { color: #bdbcbc; }
-.hall-list .li-disabled a:hover { cursor: not-allowed; text-decoration: none; }
-.hall-list-4 > li { width: 134px; height: 205px; margin-left: 111px; }
-.hall-list-4 > li a { color: #3d3d3d; }
-.hall-list-4 > li a:hover { text-decoration: none; }
-.hall-list-4 > li a.disabled > img { cursor: not-allowed; opacity: .5; }
-.hall-list-4 > li img { width: 134px; }
-.hall-list-4 > li h4 { font-size: 16px; font-weight: bold; margin: 9px 0 5px; }
-.hall-list-4 > li h4 > .tips { font-size: 12px; font-weight: normal; display: inline-block; margin: 0 0 0 5px; padding: 2px 5px; color: #fff; border-radius: 2px; background: #db2b28; }
-.hall-list-4 > li a.disabled .tips { display: none; }
-.hall-list-4 > li p { font-size: 12px; }
-
-.hall-list-4 > li img.mt13{ margin-top: 13px;}
-.hall-list-4 > li h4.mt23{ margin-top: 23px;}
 /* 定制跟单-Page */
 .customize { overflow: hidden; padding: 15px 0; }
 .customize-l { float: left; width: 185px; }
@@ -120,7 +90,7 @@ body { color: #3d3d3d; background: #fff; }
 .m-cs-rtbox .title { font-size: 16px; margin: 10px 0 15px; }
 .m-cs-rtbox .title > b { font-size: 22px; margin-right: 20px; }
 .m-cs-rtbox .title > span { margin: 0 3px; }
-.m-cs-rtbox .links .btn { font-size: 12px; padding: 4px 12px; color: #fff; background: #f13c38; }
+.m-cs-rtbox .links .btn { padding: 4px 12px; }
 .m-cs-rtbox .text { position: absolute; right: 0; bottom: 0; color: #848484; }
 .m-cs-rtbox .text .qi { display: block; margin-bottom: 15px; text-align: right; color: #3d3d3d; }
 .m-cs-rtbox .text .qi > span { margin: 0 5px; }
@@ -180,7 +150,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .m-hm-fi { padding: 5px 20px; background: #f5f5f5; }
 .m-hm-fi select, .m-hm-fi input { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; }
 .m-hm-fi input { width: 90px; }
-.m-hm-fi .btn { position: relative; top: -1px; padding: 3px 14px; color: #fff; background: #f88c35; }
+.m-hm-fi .btn { position: relative; top: -1px; padding: 0; width: 54px; height: 28px; }
 /* 方案详情页 */
 .xiang .tab-content { margin-bottom: 10px; border: 1px #dfdfdf solid; border-top: none; }
 .xiang .tab-content .ttil { font-size: 12px; padding: 8px 20px; }
@@ -257,7 +227,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .ps-mn-box .near > a { color: #3d3d3d; }
 .ps-mn-box .money { font-size: 30px; }
 .ps-mn-box .second { font-size: 16px; margin-bottom: 20px; }
-.ps-mn-box .second .btn { width: 100px; margin-right: 5px; padding: 5px 0; color: #fff; background: #f13c38; }
+.ps-mn-box .second .btn { width: 100px; margin-right: 5px; padding: 5px 0; font-size: 14px; }
 .ps-mn-box .last { margin-top: 20px; }
 .ps-mn-box .last .icon { position: relative; top: 4px; }
 .ps-mn-box2 { margin: 40px 0 0 12px; }
@@ -334,7 +304,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .info-list .value { margin-left: 5px; }
 .info-list .value > input[type=radio] { position: relative; top: 2px; width: 10px; margin: 0 3px; }
 .info-list .value > input { width: 200px; background: #fff; }
-.info-list .value .btn-sub { font-size: 14px; padding: 5px 0; \width: 100px; }
+.info-list .value .btn-red { font-size: 14px; padding: 5px 0; \width: 100px; }
 .info-list .value > input, .info-list .value > select { padding: 5px 10px; border: 1px #dfdfdf solid; }
 .pwd-tips { display: none; }
 .pwd-tips i { position: relative; top: 6px; margin: 0 6px; }
@@ -412,6 +382,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .bank-style20 { background-position: 23px -597px; }
 .btn-next { color: #fff; background: #b3b3b3; }
 .btn-next.selected { background: #f13c38; }
+.btn-next.selected:hover { background: #ff4a46; }
 .cz-sure { display: none; padding: 30px 20px 20px; }
 .cz-surehd { position: relative; height: 170px; }
 .cz-surehd .cz-surehd-right { position: absolute; top: 5px; left: 70px; width: 350px; }
@@ -420,6 +391,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .cz-surehd-ft { margin-left: 63px; }
 .cz-sureft .item { display: none; }
 .btn-sure { font-size: 16px; margin: 20px 0; padding: 7px 32px; color: #fff; background: #f13c38; }
+.btn-sure:hover { background: #ff4a46; }
 .cz-surehd-ft > p { color: #848484; }
 .cz-sure .table > tbody > tr > td.td-row-2, .cz-sure .table > tbody > tr > td.td-row-3, .cz-sure .table > tbody > tr > td.td-row-4 { padding: 0 5px; vertical-align: middle; }
 /* 个人中心-提款 */

@@ -1,0 +1,174 @@
+.jxssc .touz_area_box_2 .red_area {
+	width: 100%;
+}
+.jxssc .m-radio-group{
+	padding: 0 42px;
+}
+.jxssc .m-radio-group .icon{ position: relative; top: 2px;}
+.jxssc .m-radio-group span{margin: 0 18px 0 5px;}
+.jxssc .m-num-title2>p {
+	font-size: 12px;
+	padding: 0;
+	width: 630px;
+}
+
+.jxssc .row-code {
+	margin: 0 auto;
+}
+
+.jxssc .m-brhd {
+	padding: 6px 0;
+}
+
+.jxssc .m-brhd-title>b {
+	font-size: 22px;
+	font-family: "微软雅黑";
+	font-weight: 900;
+}
+
+.jxssc .m-br-nav>li>a>b {
+	font-size: 14px;
+	font-family: "宋体";
+	font-weight: bold;
+}
+
+.jxssc .m-br-nav>li.active>a,.m-br-nav>li>a:hover,.m-br-nav>li.active>a:hover,.m-br-nav>li.active>a:focus {
+	border-bottom: 1px #000 solid;
+	border-radius: 0;
+	border-right-color: #f5f5f5;
+}
+
+.jxssc .m-br-nav>li.active>a,.m-br-nav>li>a:hover,.m-br-nav>li.active>a:hover,.m-br-nav>li.active>a:focus {
+	background: #3d3d3d;
+	color: #fff;
+}
+
+.jxssc .m-br-nav>li>a {
+	border-right: 1px #dfdfdf solid;
+	text-align: center;
+}
+
+.jxssc .m-br-nav {
+	padding: 0;
+	background: #f5f5f5;
+}
+
+.jxssc .m-br-nav>li>a>span {
+	font-size: 12px;
+	font-family: "宋体";
+}
+
+.jxssc .row_num_title {
+	float: left;
+	font-size: 12px;
+	width: 80px;
+	margin-top: 5px;
+}
+
+.jxssc .row-code  .m-num-group {
+	float: left;
+	margin: 0;
+}
+
+.jxssc .row-code .m-num-group>a {
+	height: 33px;
+	width: 33px;
+	font-size: 16px;
+	font-family: Arial;
+	line-height: 33px;
+	margin: 0 5px;
+}
+
+.jxssc .row-code .quick-method {
+	float: left;
+	margin: 0 0 0 25px;
+	font-size: 12px;
+	width: 86px;
+}
+
+.jxssc .mlr5 {
+	font-weight: bold;
+}
+
+.jxssc .row-code .quick-method span {
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 0 0 3px 3px;
+	text-align: center;
+	width: 22px;
+	border: 1px solid #dfdfdf;
+	border-radius: 4px;
+}
+
+.jxssc .br-zhu {
+	width: 610px;
+	margin: 30px auto;
+}
+
+.jxssc .br-zhu-r {
+	width: 80px;
+}
+
+.jxssc .br-zhu-item b {
+	float: left;
+	width: 65px;
+	color: #3d3d3d;
+	font-weight: normal;
+	margin-right: 3px;
+}
+/* 玩法tab卡样式 */
+.jxssc .m-br-nav>li>a {
+	position: relative;
+	display: block;
+	padding: 10px 0;
+	width: 53px;
+}
+
+.jxssc .m-br-nav>li>a.four_word_length {
+	width: 66px;
+}
+
+.jxssc .m-br-nav>li>a.two_word_length {
+	width: 38px;
+}
+
+.jxssc .m-br-nav>li>a.rx {
+	width: 61px;
+}
+
+.jxssc .m-br-nav>li>a.rx {
+	width: 61px;
+}
+
+.jxssc .sub-content .table>thead>tr>th.alignleft {
+	text-align: left;
+	padding-left: 20px;
+	font-weight: bold;
+}
+/* 遗漏样式 */
+.jxssc .m-row-miss {
+	font-size: 12px;
+	color: #848484;
+	margin: auto;
+	position: relative;
+	top: -12px;
+}
+
+.jxssc .m-row-miss-title {
+	float: left;
+	width: 80px;
+	text-align: center;
+	background: url(http://static2.360mao.com/front_images/icon/yilou_bgd.png) 25px 2px no-repeat;
+	color: #717171;
+}
+
+.jxssc .m-row-miss-code span {
+	width: 33px;
+	margin: 0 5px;
+	display: inline-block;
+	text-align: center;
+	float: left;
+}

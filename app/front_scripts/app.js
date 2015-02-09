@@ -305,27 +305,51 @@ APP.onServiceFail = function () {
 };
 
 APP.initLrkf = function () {
-      var qq = ['123520260', '2264990340'];
-      var tel = '4008-898-310';
-      var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
+  var qq = ['123520260', '2264990340'];
+  var tel = '4008-898-310';
+  var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
 
-      $('body').append(side);
+  $('body').append(side);
 
-      var link = $('#j-side .icon-text');
-      $("#j-side").hover(function () {
-        // link.show();
-        link.animate({
-          'left': '-64px',
-          'opacity': '1',
-        }, 200)
-      }, function () {
-        // link.hide();
-        link.animate({
-          'left': '-70px',
-          'opacity': '0',
-        }, 200)
-      });
-    };
+  var link = $('#j-side .icon-text');
+  $("#j-side").hover(function () {
+    // link.show();
+    link.animate({
+      'left': '-64px',
+      'opacity': '1',
+    }, 200)
+  }, function () {
+    // link.hide();
+    link.animate({
+      'left': '-70px',
+      'opacity': '0',
+    }, 200)
+  });
+};
+
+APP.init = function () {
+
+  var menu = {
+    el: $('#choseCai'),
+    mask: $('#hdMask'),
+    link: $('#choseCai a'),
+  };
+
+  var checkTopMenu = setInterval(function () {
+
+  }, 300);
+
+  menu.el.hover(function () {
+    menu.mask.toggle();
+    menu.el.toggleClass('on');
+  }, function () {
+    menu.mask.toggle();
+    menu.el.toggleClass('on');
+  });
+
+  APP.initLrkf();
+
+};
 
 ////////////////////////////////////////////////////////////////////////////
 /**
@@ -333,18 +357,7 @@ APP.initLrkf = function () {
  */
 $(function () {
 
-  // Header Nav Toggle
-  $('#choseCai').hover(function () {
-    toggleMask($(this));
-  }, function () {
-    toggleMask($(this));
-  });
-
-  APP.initLrkf();
-  function toggleMask(m) {
-    m.find('#hdMask').toggle();
-    m.find('a').toggleClass('on');
-  }
+  APP.init();
 
   var u = window.location.href;
   if (u.indexOf('hall') >= 0) {

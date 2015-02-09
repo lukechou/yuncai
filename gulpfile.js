@@ -23,9 +23,16 @@ gulp.task('sprite', ['clean'],function () {
     cssName: 'front_styles/icon.css'
   }));
 
-  spriteData.pipe(gulp.dest('dist'));
-  spriteDataIcon.pipe(gulp.dest('dist'));
-  spriteDataLrkf.pipe(gulp.dest('dist'));
+  var spriteJczqBf = gulp.src('./app/front_images/jczq/bf/*.png').pipe(spritesmith({
+    imgName: 'front_images/jczq/bf.png',
+    cssName: 'front_styles/bf.css'
+  }));
+
+
+  // spriteData.pipe(gulp.dest('dist'));
+  // spriteDataIcon.pipe(gulp.dest('dist'));
+  // spriteDataLrkf.pipe(gulp.dest('dist'));
+  spriteJczqBf.pipe(gulp.dest('dist'));
 });
 
 gulp.task('default', ['sprite']);

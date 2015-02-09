@@ -9,6 +9,11 @@
 .I1x5 .m-br-nav>li>a { border-right: 1px #dfdfdf solid; text-align: center; }
 .I1x5 .m-br-nav { padding: 0; background: #f5f5f5; }
 .I1x5 .m-br-nav>li>a>span { font-size: 12px; font-family: "宋体"; }
+.m-brhd-qi { top: 21px; }
+.m-brhd-time { color: #212121; bottom: 5px; height: 34px; line-height: 34px; }
+.m-brhd-time>span { float: right; }
+.m-brhd-time>span>span { display: block; float: left; }
+.m-brhd-time .m-time-djs { background: #212121; color: #00f50b; font-size: 30px; font-family: 'Arial'; font-weight: bold; margin: 0 2px 0 0; width: 23px; text-align: center; height: 34px; border-radius: 2px; }
 .I1x5 .row_num_title { float: left; font-size: 12px; width: 80px; margin-top: 5px; }
 .I1x5 .row-code  .m-num-group { float: left; margin: 0; }
 .I1x5 .row-code .m-num-group>a { height: 33px; width: 33px; font-size: 16px; font-family: Arial; line-height: 33px; margin: 0 5px; }
@@ -21,8 +26,11 @@
 .I1x5 .m-br-nav>li>a { position: relative; display: block; padding: 10px 10px; width: 53px; }
 .I1x5 .m-br-nav>li>a.middle-weight { width: 82px; }
 .I1x5 .sub-content .table>thead>tr>th.alignleft { text-align: left; padding-left: 20px; font-weight: bold; }
-.I1x5 .m-br-nav>li>a.second-weight {width: 56px;}
+.I1x5 .m-br-nav>li>a.second-weight { width: 56px; }
 /* 遗漏样式 */
 .m-row-miss { font-size: 12px; color: #848484; margin: auto; position: relative; top: -12px; }
-.m-row-miss-title { float: left; width: 80px; text-align: center;	background: url(http://static2.360mao.com/front_images/icon/yilou_bgd.png) 25px 2px no-repeat; color: #717171;}
+.m-row-miss-title { float: left; width: 80px; text-align: center; background: url(http://static2.360mao.com/front_images/icon/yilou_bgd.png) 25px 2px no-repeat; color: #717171; }
 .m-row-miss-code span { width: 33px; margin: 0 5px; display: inline-block; text-align: center; float: left; }
+
+
+

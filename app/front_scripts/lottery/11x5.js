@@ -119,12 +119,15 @@ $(document).ready(function() {
         })
         .done(function(data) {
             if(data.retCode==100000){
-                // data
+
                 var html = '';
                 for (var i = 0, len=data.retData.length; i < len; i++) {
                     var kjhmHtml = ('' == data.retData[i]['kjhm']) ? '等待开奖' : '<span class="fc-3">'+data.retData[i]['kjhm']+'</span>';
                     html += '<tr><td>'+data.retData[i]['no']+'期</td><td>'+kjhmHtml+'</td></tr>';
                 };
+                $('#j-new-num').html(('' == data.retData[0]['kjhm']) ? '等待开奖' : '<span class="fc-3">'+data.retData[0]['kjhm']+'</span>');
+                $('#j-last-issue-no').html(data.retData[0]['no']);
+
                 $('#j-last-issue-n').html(html);
             }
         })
@@ -220,11 +223,14 @@ $(document).ready(function() {
         if(stopSale){
             $('#j-less-info').html('停止销售');
         }else if(lessSeconds > 0){
+
             var minute = Math.floor(lessSeconds / 60 % 60);
-            minute = (minute < 10) ? '0' + minute : minute;
             var seconds = lessSeconds % 60;
-            seconds = (seconds < 10) ? '0' + seconds : seconds;
-            $('#j-less-info').html('<span id="j-less-minute">'+minute+'</span>分<span id="j-less-second">'+seconds+'</span>秒');
+
+            minute = String((minute < 10) ? '0' + minute : minute);
+            seconds = String((seconds < 10) ? '0' + seconds : seconds);
+
+            $('#j-less-info').html('<span class="m-time-djs" >'+minute.slice(0,1)+'</span><span class="m-time-djs" >'+minute.slice(1,2)+'</span><span>分</span><span class="m-time-djs" >'+seconds.slice(0,1)+'</span><span class="m-time-djs" >'+seconds.slice(1,2)+'</span><span>秒</span>');
         }else{
             $('#j-less-info').html('销售时间截止');
             if(G_BUY.qihao){

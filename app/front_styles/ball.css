@@ -14,10 +14,10 @@ body { background: #fff; }
 /* 投注表格头部 */
 .bettingBox { border-bottom: 1px #dfdfdf solid; }
 .dataHead { font-size: 12px; line-height: 60px; position: relative; z-index: 10; zoom: 1; width: 700px; height: 60px; margin-bottom: 0; text-align: center; color: #3d3d3d; border: 1px solid #dfdfdf; border-left: none; background: #f5f5f5; }
-.dataHead .icon-warm{ cursor: pointer;}
-.datahead-tips{ text-align: left;}
-.datahead-tips p{ margin:0!important; padding: 0;}
-.datahead-tips p b{ margin-left: 10px; font-weight: bold;}
+.dataHead .icon-warm { cursor: pointer; }
+.datahead-tips { text-align: left; }
+.datahead-tips p { margin: 0 !important; padding: 0; }
+.datahead-tips p b { margin-left: 10px; font-weight: bold; }
 .dataHead a { color: #3d3d3d; }
 .dataHead dd { position: relative; float: left; height: 60px; border-left: 1px solid #dfdfdf; }
 .dataHead span { line-height: 29px; display: block; height: 29px; border-bottom: 1px solid #dfdfdf; }
@@ -77,7 +77,6 @@ body { background: #fff; }
 .dataBody .btnBox .rq { width: 36px; background: 0 0; }
 .dataBody .btnBox .rq.active { color: #3d3d3d; }
 .dataBody .no-support { line-height: 39px; float: left; width: 168px; height: 39px; text-align: center; vertical-align: top; border: 1px solid #dfdfdf; border-right: none; }
-
 .dataBody dd span.btnBox .block { line-height: 39px; width: 100%; height: 39px; margin-left: -1px; }
 /* btn background */
 .dataBody .sp-btn { background: url(../front_images/jczq/default.png); }
@@ -102,23 +101,23 @@ body { background: #fff; }
 .analyMoreTable td { padding: 3px 0; line-height: 16px; border: 1px solid #dfdfdf; cursor: pointer; }
 /* 半全场 */
 /* 总进球 */
-.onlyBf .no-support,.onlyZjq .no-support,.onlyBqc .no-support{ border:none; width: 100%;}
-.onlyBf .row1, .onlyZjq .row3, .onlyBqc .row2 { display: block;  }
-.onlyBf .row1{ width: 316px;}
-.onlyBqc .row2{ width: 316px;}
-.onlyZjq .row3{ width: 314px;}
-.onlyBf .co2,.onlyBqc .co2{ width: 78px;}
-.onlyZjq .co2{ width: 80px;}
-
+.onlyBf .no-support, .onlyZjq .no-support, .onlyBqc .no-support { border: none; width: 100%; }
+.onlyBf .row1, .onlyZjq .row3, .onlyBqc .row2 { display: block; }
+.onlyBf .row1 { width: 316px; }
+.onlyBqc .row2 { width: 316px; }
+.onlyZjq .row3 { width: 314px; }
+.onlyBf .co2, .onlyBqc .co2 { width: 78px; }
+.onlyZjq .co2 { width: 80px; }
 .row1-1, .row2-1, .row3-1 { border: 1px #dfdfdf solid; }
-.dataBody .lastOne{ border-right:none;}
+.dataBody .lastOne { border-right: none; }
 .row2 em, .row3 em { border-right: 1px #dfdfdf solid; float: left; }
-.row2 em,.row2-1 em { width: 35px; }
-.row3 em,.row3-1 em { width:39px; }
+.row2 em, .row2-1 em { width: 35px; }
+.row3 em, .row3-1 em { width: 39px; }
 .row1-1.on { background: #e3e3e3; }
-.row2-1 { }
-.row3-1 { }
-.row1-1 .btn { background: #f13c38; color: #fff; font-size: 12px; width: 130px; height: 29px;}
+.row1-1 .btn { background-image: url(../front_images/jczq/bf.png); background-position: 0px -29px; color: #fff; font-size: 12px; width: 130px; height: 29px; border: none; padding: 0; }
+.row1-1 .btn:hover { background-position: 0px -87px; }
+.row1-1 .btn.active { background-position: 0px 0px; }
+.row1-1 .btn.has { background-position: 0px -58px; }
 .row3-1 em, .row2-1 em { line-height: 39px; float: left; height: 39px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
 /* Right */
 .icoDel, .qrtz-box a { color: #3d3d3d; }
@@ -142,13 +141,13 @@ body { background: #fff; }
 .scrollMoni .icoDan:focus { color: #f13c38; border-color: #f13c38; }
 .scrollMoni .icoDan.disable { color: #dfdfdf; }
 .scrollMoni .table .gameOption .betList { padding: 0 0 5px 25px; }
-.block,.block2, .block0, .block1, .blockYel, .block2:visited, .block0:visited, .block1:visited, .blockYel:visited { line-height: 24px; float: left; width: 65px; height: 24px; margin: 0 5px 3px 0; text-align: center; color: #fff; }
-.block{ background: #f13c38;}
+.block, .block2, .block0, .block1, .blockYel, .block2:visited, .block0:visited, .block1:visited, .blockYel:visited { line-height: 24px; float: left; width: 65px; height: 24px; margin: 0 5px 3px 0; text-align: center; color: #fff; }
+.block { background: #f13c38; }
 .block0 { background-color: #f13c38; }
 .block1 { background-color: #f88c35; }
 .block2 { background-color: #448b3b; }
 .block0:focus, .block1:focus, .block2:focus { text-decoration: none; }
-#poolStep1 .block:hover,#poolStep1 .block0:hover, #poolStep1 .block1:hover, #poolStep1 .block2:hover { text-decoration: none; text-indent: 9999px; }
+#poolStep1 .block:hover, #poolStep1 .block0:hover, #poolStep1 .block1:hover, #poolStep1 .block2:hover { text-decoration: none; text-indent: 9999px; }
 #poolStep1 .block0:hover { background: url(../front_images/jczq/close.png) #f13c38 no-repeat center center; }
 #poolStep1 .block1:hover { background: url(../front_images/jczq/close.png) #f88c35 no-repeat center center; }
 #poolStep1 .block2:hover { background: url(../front_images/jczq/close.png) #448b3b no-repeat center center; }
@@ -162,8 +161,8 @@ body { background: #fff; }
 .i-collect-star-g { background: url(../front_images/jczq/crestart.png)no-repeat; }
 /* btn-Group */
 .unselect .btn-group { margin: 0 5px; }
-.unselect .btn { height: 26px; padding: 2px 8px; border: 1px #dfdfdf solid; background: #f5f5f5; }
-.unselect .btn-results { width: 50px; padding: 2px 5px; background: #fff; }
+.dott .btn { height: 26px; padding: 2px 8px; border: 1px #dfdfdf solid; background: #f5f5f5; }
+.dott .btn-results { width: 50px; padding: 2px 5px; background: #fff; }
 /* unselect last box */
 .qrtz-box { font-size: 12px; padding: 0 10px 5px; }
 .qrtz-box p { margin: 8px 0; }
@@ -173,9 +172,8 @@ body { background: #fff; }
 .qrtz-box .orderRule, .qrtz-box .orderRule a { color: #848484; }
 .qrtz-box .orderRule .icon { position: relative; top: 3px; margin-right: 5px; cursor: pointer; }
 .tzBtnBox { margin: 10px 0; }
-.tzBtnBox .ljtzBtn, .tzBtnBox .fqhmBtn { line-height: 38px; width: 48%; height: 38px; padding: 0; color: #fff; border: none; }
-.tzBtnBox .ljtzBtn { margin-right: 5px; background: #f13c38; }
-.tzBtnBox .fqhmBtn { background: #f88c35; }
+.tzBtnBox .ljtzBtn, .tzBtnBox .fqhmBtn { line-height: 38px; width: 48%; height: 38px; padding: 0; color: #fff; border: none; font-size: 14px; }
+.tzBtnBox .ljtzBtn { margin-right: 5px; }
 /* Tips */
 .ball-modal .modal-dialog { font-size: 12px; width: 720px; }
 .mlr-8 { margin: 0 8px; }
@@ -196,10 +194,11 @@ body { background: #fff; }
 .ball-table thead tr th { border-bottom: none; background: #f5f5f5; }
 #j-ball-table { max-height: 150px; }
 .ljtz-box { font-size: 12px; }
+#j-ljtz-box { max-height: 350px; }
 .ljtz-box thead tr th, .ljtz-box tbody tr td, .ljtz-box tbody tr th { line-height: 24px; text-align: center; border-color: #dfdfdf; }
 .ljtz-box thead tr th { border-bottom: none; background: #f5f5f5; }
 .ljtz-box .block0, .ljtz-box .block1, .ljtz-box .block2 { width: 40px; }
-.ljtz-box .block{ width: 40px;}
+.ljtz-box .block { width: 40px; }
 .ljtz-box .btns .btn { padding: 5px 35px; }
 .ljtz-box .btns .btn-danger { margin-right: 10px; }
 .ljtz-box .icoDel, .text .icoDel { display: none; }

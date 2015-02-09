@@ -1,6 +1,24 @@
 define(['jquery'], function ($) {
   'use strict';
 
+  var ConstructorName = (function () {
+    'use strict';
+
+    function ConstructorName(args) {
+      // enforces new
+      if (!(this instanceof ConstructorName)) {
+        return new ConstructorName(args);
+      }
+      // constructor body
+    }
+
+    ConstructorName.prototype.methodName = function (args) {
+      // method body
+    };
+
+    return ConstructorName;
+
+  }());
   var app = (function () {
 
     function app(args) {
@@ -417,14 +435,37 @@ define(['jquery'], function ($) {
     app.prototype.init = function () {
 
       var _this = this;
-      $('#choseCai').hover(function () {
-        var m = $(this);
-        m.find('#hdMask').toggle();
-        m.find('a').toggleClass('on');
-      }, function () {
-        var m = $(this);
-        m.find('#hdMask').toggle();
-        m.find('a').toggleClass('on');
+      var menu = {
+        el: $('#choseCai'),
+        mask: $('#hdMask'),
+        checkTopMenu: function () {
+
+          // var checkTopMenu = setInterval(function () {
+          //   console.log(menu.el.is());
+          // }, 300);
+        },
+        init: function (args) {
+          var _this = this;
+          for (var key in args) {
+            if (args.hasOwnProperty(key)) {
+              _this[key] = args[key];
+            }
+          }
+          _this.bindEvent();
+        },
+        bindEvent: function () {
+          var _this = this;
+          _this.el.hover(function () {
+            _this.mask.toggle();
+          }, function () {
+            _this.mask.toggle();
+          });
+        }
+      };
+
+      menu.init({
+        el: $('#choseCai'),
+        mask: $('#hdMask')
       });
 
       _this.initLrkf();

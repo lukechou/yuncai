@@ -1,0 +1,32 @@
+/* Hall */
+.hall-box { padding-bottom: 40px; background: #fff; }
+.hall-box > h2 { font-size: 28px; font-weight: bold; line-height: 50px; margin: 0; padding-bottom: 40px; text-align: center; background: url(../../front_images/hall/bg-title.png) no-repeat top center; }
+.hall-box2 { background: #f7f7f7; }
+/* All Lists Common Styles */
+.hall-list { width: 985px; margin: auto; padding: 0 58px; }
+.hall-list > li { position: relative; display: block; float: left; margin-left: 80px; text-align: center; }
+.hall-list > li > .text { position: absolute; top: 150px; right: 0; left: 0; margin: auto; }
+.hall-list > li > .text > h5, .hall-list > li > .text > p { font-weight: bold; }
+.hall-list > li > .text > h5 { font-size: 20px; margin-bottom: 6px; }
+.hall-list > li.first, .hall-list > li.ml0 { margin-left: 0; }
+.hall-list > li > img { display: block; margin: auto; }
+.hall-list > li a { color: #3d3d3d; }
+.hall-list .btn-red { font-size: 20px; line-height: 47px; width: 134px; height: 47px; margin: 15px auto 10px; padding: 0; color: #fff; }
+.hall-list .l-group { font-size: 12px; display: none; width: 120px; height: 17px; margin: auto; }
+.hall-list .l-group > a { display: block; float: left; width: 50%; color: #0d67c4; }
+.hall-list .li-disabled .btn-red { background: #bdbcbc; }
+.hall-list .li-disabled .l-group > a { color: #bdbcbc; }
+.hall-list > li a:hover { text-decoration: none; }
+.hall-list .li-disabled a:hover { cursor: not-allowed; text-decoration: none; }
+.hall-list > li a.disabled > img { cursor: not-allowed; opacity: .5; }
+.hall-list > li a.disabled .tips { display: none; }
+.hall-list > li h4 { font-size: 16px; font-weight: bold; margin: 9px 0 5px; }
+.hall-list > li h4 > .tips { font-size: 12px; font-weight: normal; position: relative; top: -1px; display: inline-block; margin: 0; padding: 2px 5px; color: #fff; border-radius: 2px; background: #db2b28; }
+/* List-1 */
+.hall-list1 > li { width: 236px; }
+/* List-4 */
+.hall-list-4 > li { width: 158px; height: 205px; margin-left: 79px; }
+.hall-list-4 > li img { width: 134px; }
+.hall-list-4 > li p { font-size: 12px; }
+.hall-list-4 > li img.mt13 { margin-top: 13px; }
+.hall-list-4 > li h4.mt23 { margin-top: 23px; }
