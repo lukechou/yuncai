@@ -435,9 +435,11 @@ define(['jquery'], function ($) {
     app.prototype.init = function () {
 
       var _this = this;
+
       var menu = {
         el: $('#choseCai'),
         mask: $('#hdMask'),
+
         checkTopMenu: function () {
 
           // var checkTopMenu = setInterval(function () {
@@ -474,7 +476,7 @@ define(['jquery'], function ($) {
     };
 
     app.prototype.initLrkf = function () {
-      var qq = ['123520260', '2264990340'];
+      var qq = ['2726429522'];
       var tel = '4008-898-310';
       var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
 

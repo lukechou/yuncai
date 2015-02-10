@@ -91,7 +91,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       }
 
       line = craeteDateBtn(item[tab], item[tab + '_gg_sp']);
-      arr.push('<dd isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="league_36 ' + lastDd + '">');
+      arr.push('<dd isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="j-data-dd ' + lastDd + '">');
 
       arr.push('<span class="co1"><i class="jtip" inf="' + item.week + item.game_order + '">' + item.game_order + '</i></span>');
 
@@ -232,7 +232,10 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   };
 
   var checkParams = function () {
-    if (_.uniq(BET.match, 'matchcode').length > 15) {
+
+    var matchLen = _.uniq(BET.match, 'matchcode').length;
+
+    if ( matchLen > 15) {
       APP.showTips('您好，投注场次不得超过15场哦');
       return false;
     }
@@ -240,7 +243,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
       return false;
     }
-    if (!BET.match.length) {
+    if (matchLen<2) {
       APP.showTips('请在左侧至少选择2场比赛');
       return false;
     }
@@ -254,6 +257,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       showTipMask();
       return false;
     }
+
     return true;
   };
 
@@ -425,6 +429,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     obj.projectText = $('#ballModal .br-textarea').val();
 
     Config.payMoney = Number(obj.rengouMoney) + Number(obj.baodiMoney);
+
 
     APP.checkLogin(Config.payMoney, {
       enoughMoney: function () {

@@ -109,3 +109,44 @@ YC.Unit.getCombineNum = function(totalNum, selectNum) {
     }
     return maxs / mins;
 };
+
+// 10, 7 => 5
+// 10, 9 => 10
+// 10, 6 => 5
+
+/**
+ * 最大公约数
+ */
+YC.Unit.getMaxDivisor = function(a, b) {
+    return (a % b) ? this.getMaxDivisor(b, a % b) : b;
+}
+/**
+ * 获取最大整除数
+ * @param  {[type]} a [description]
+ * @param  {[type]} b [description]
+ * @return {[type]}   [description]
+ */
+YC.Unit.getMaxDivisible = function(a, b) {
+    var iMaxDivisibleNo = 0;
+    for (var i = 1; i <= a; i++) {
+        if(a % i===0){
+            if(i > b){
+                return ((b - iMaxDivisibleNo) > (a - b)) ? a : iMaxDivisibleNo;
+            }
+            iMaxDivisibleNo = i;
+        }
+    }
+}
+YC.Unit.getReasonableNo = function(maxNo, iptNo){
+    if(maxNo <= iptNo){
+        return maxNo;
+    }
+    if(iptNo <= 1) {
+        return iptNo;
+    }
+    var iMaxDivisor = this.getMaxDivisor(maxNo, iptNo);
+    if((maxNo - iptNo) > (iptNo-iMaxDivisor)){
+        return iMaxDivisor;
+    }
+    return maxNo;
+}

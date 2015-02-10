@@ -1,4 +1,4 @@
-var PAGE = (function() {
+var PAGE = (function () {
   'use strict';
 
   var PAGE = {
@@ -8,10 +8,10 @@ var PAGE = (function() {
     },
     pageElement: null,
     pageTable: null,
-    appendTable: function(html) {
+    appendTable: function (html) {
       this.pageTable.html(html);
     },
-    makePageHtml: function(pageHtmlNode) {
+    makePageHtml: function (pageHtmlNode) {
       if (this.pageElement || !pageHtmlNode) {
         pageHtmlNode = this.pageElement;
       }
@@ -21,7 +21,7 @@ var PAGE = (function() {
       }
       pageHtmlNode.html('<div class="pull-right pages">' + this.config.page + '/<span class="j-days">' + this.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="' + this.config.page + '" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>');
     },
-    initAjax: function(obj) {
+    initAjax: function (obj) {
       var _this = this;
       _this.config = obj;
 
@@ -31,16 +31,16 @@ var PAGE = (function() {
           dataType: 'json',
           data: _this.config,
         })
-        .done(function(data) {
+        .done(function (data) {
           _this.onSuccess(data);
         })
-        .fail(function() {
+        .fail(function () {
           _this.onFail();
         });
     },
-    bindPageEvent: function(callback) {
+    bindPageEvent: function (callback) {
 
-      $('.next-page').on('click', function(event) {
+      $('.next-page').on('click', function (event) {
         PAGE.config.page = parseInt(PAGE.config.page)
         if (PAGE.config.page < PAGE.config.pageNum) {
           PAGE.config.page += 1;
@@ -48,7 +48,7 @@ var PAGE = (function() {
         }
       });
 
-      $('.back-page').on('click', function(event) {
+      $('.back-page').on('click', function (event) {
         PAGE.config.page = parseInt(PAGE.config.page)
         PAGE.config.page -= 1;
         if (PAGE.config.page <= 0) {
@@ -57,7 +57,7 @@ var PAGE = (function() {
         callback(PAGE.config);
       });
 
-      $('.j-pages-value').on('change', function(event) {
+      $('.j-pages-value').on('change', function (event) {
 
         var max = $(this).siblings('.j-days').html();
         var go = parseInt($(this).val());
@@ -77,14 +77,14 @@ var PAGE = (function() {
         $(this).val(go);
       });
 
-      $('.j-pages-go').on('click', function(event) {
+      $('.j-pages-go').on('click', function (event) {
         PAGE.config.page = $(this).siblings('.j-pages-value').val() || 1;
         callback(PAGE.config);
       });
 
     },
     onSuccess: null,
-    onFail: function(){
+    onFail: function () {
       APP.showTips('服务器繁忙,请稍后再试!');
     },
   };
@@ -94,7 +94,7 @@ var PAGE = (function() {
 }());
 
 // 详情分页
-PAGE.loadDetailRecord = function(obj) {
+PAGE.loadDetailRecord = function (obj) {
 
   PAGE.config = obj;
   var url = window.location.pathname + '/ajax';
@@ -104,13 +104,13 @@ PAGE.loadDetailRecord = function(obj) {
       dataType: 'json',
       data: {
         type: obj.type,
-        tradeType:obj.tradeType,
+        tradeType: obj.tradeType,
         days: obj.days,
         page: obj.page,
         pageSize: obj.pageSize,
       },
     })
-    .done(function(data) {
+    .done(function (data) {
       if (data.retCode == 100000) {
         var dataSize = data.retData.data.length;
         var html = "";
@@ -121,22 +121,22 @@ PAGE.loadDetailRecord = function(obj) {
             dataItem = detailData[i];
 
             switch (parseInt(obj.type)) {
-              case 0:
-            	html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td class='fc-3'>" + dataItem.balanceInMoney + "</td><td class='fc-3'>" + dataItem.balanceOutMoney + "</td><td class='fc-3'>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
-            	break;
-              case 3:
-                html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td class='fc-3'>" + dataItem.tradeMoney + "</td><td>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
-                break;
-              case 4:
-                html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
-                break;
-              case 5:
-                var tkStaus = '提款完成';
-                html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + tkStaus + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
-                break;
-              default:
-                html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
-                break;
+            case 0:
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td class='fc-3'>" + dataItem.balanceInMoney + "</td><td class='fc-3'>" + dataItem.balanceOutMoney + "</td><td class='fc-3'>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+              break;
+            case 3:
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td class='fc-3'>" + dataItem.tradeMoney + "</td><td>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+              break;
+            case 4:
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+              break;
+            case 5:
+              var tkStaus = '提款完成';
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + tkStaus + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+              break;
+            default:
+              html += "<tr><td>" + dataItem.tradeTime + "</td><td>" + dataItem.tradeType + "</td><td>" + dataItem.orderNo + "</td><td>" + dataItem.tradeMoney + "</td><td>" + dataItem.restMoney + "</td><td>" + dataItem.tradeRemark + "</td></tr>";
+              break;
             }
 
           };
@@ -161,9 +161,8 @@ PAGE.loadDetailRecord = function(obj) {
     });
 };
 
-
 // 提款记录分页
-PAGE.getDrawRecord = function(obj) {
+PAGE.getDrawRecord = function (obj) {
   PAGE.config = obj;
   var url = '/account/draw/record/ajax';
   $.ajax({
@@ -177,7 +176,7 @@ PAGE.getDrawRecord = function(obj) {
         status: $('#status').val()
       }
     })
-    .done(function(data) {
+    .done(function (data) {
       var htmlOutput = "";
       if (data.retCode == 100000) {
         var dataSize = data.retData.data.length;
@@ -204,13 +203,13 @@ PAGE.getDrawRecord = function(obj) {
       }
       $('#tkRecordList').html(htmlOutput);
     })
-    .fail(function() {
+    .fail(function () {
       console.log("error");
     });
 };
 
 // 合买大厅分页
-PAGE.loadPrjctLst = function(obj) {
+PAGE.loadPrjctLst = function (obj) {
 
   PAGE.config = obj;
   var htmlOutput = '';
@@ -226,13 +225,14 @@ PAGE.loadPrjctLst = function(obj) {
         qid: obj.qid,
         status: obj.status,
         tc: obj.tc,
+        sort: obj.sort,
         aegis: obj.aegis,
         username: obj.username,
         page: obj.page,
         pageSize: obj.pageSize
       },
     })
-    .done(function(data) {
+    .done(function (data) {
       if (data.retCode != 100000) {
         APP.showTips(data.retMsg);
       }
@@ -242,18 +242,18 @@ PAGE.loadPrjctLst = function(obj) {
           dataItem = detailData[i - 1];
 
           switch (obj.status) {
-            case '2':
-              htmlStatu = '已满员';
-              htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-              break;
-            case '3':
-              htmlStatu = '已撤单';
-              htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-              break
-            default:
-              htmlStatu = '<input type="text" class="u-ci w50 j-gou-count" placeholder="剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
-              htmlUse = '<button data-type="1" class="btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-              break;
+          case '2':
+            htmlStatu = '已满员';
+            htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
+            break;
+          case '3':
+            htmlStatu = '已撤单';
+            htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
+            break
+          default:
+            htmlStatu = '<input type="text" class="u-ci w50 j-gou-count" placeholder="剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
+            htmlUse = '<button data-type="1" class="btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
+            break;
           }
           htmlOutput += '<tr><td>' + i + '</td><td>' + dataItem.username + '</td><td>' + dataItem.schedule + ' %</td><td class="text-right fc-3 j-mtotal">' + dataItem.price + '元</td><td>' + dataItem.unitPrice + '</td><td>' + htmlStatu + '</td><td>' + htmlUse + '</td></tr>';
         }
@@ -266,7 +266,7 @@ PAGE.loadPrjctLst = function(obj) {
       PAGE.bindPageEvent(PAGE.loadPrjctLst);
       $('#projectList').html(htmlOutput);
     })
-    .fail(function() {
+    .fail(function () {
       htmlOutput = '<td colspan="6">系统繁忙，请稍后再试</td>';
       $('#projectList').html(htmlOutput);
     })

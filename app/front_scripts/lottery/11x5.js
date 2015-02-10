@@ -125,7 +125,17 @@ $(document).ready(function() {
                     var kjhmHtml = ('' == data.retData[i]['kjhm']) ? '等待开奖' : '<span class="fc-3">'+data.retData[i]['kjhm']+'</span>';
                     html += '<tr><td>'+data.retData[i]['no']+'期</td><td>'+kjhmHtml+'</td></tr>';
                 };
-                $('#j-new-num').html(('' == data.retData[0]['kjhm']) ? '等待开奖' : '<span class="fc-3">'+data.retData[0]['kjhm']+'</span>');
+//                <span class="bg-3">
+                var kjHTML = '等待开奖'; 
+                if('' != data.retData[0]['kjhm'])
+                {
+                    kjHTML = '';
+                    var arrKJHM = data.retData[0]['kjhm'].split(' ');
+                    for(var i=0, len=arrKJHM.length; i<len; i++){
+                        kjHTML += '<span class="bg-3">'+arrKJHM[i]+'</span>';
+                    }
+                }
+                $('#j-new-num').html(kjHTML);
                 $('#j-last-issue-no').html(data.retData[0]['no']);
 
                 $('#j-last-issue-n').html(html);

@@ -183,7 +183,10 @@ textarea { resize: none; word-wrap: break-word; }
 .m-brhd-title > b { font-size: 22px; }
 .m-brhd-group { position: absolute; bottom: 0; left: 109px; }
 .m-brhd-group > a { font-family: 'Microsoft Yahei'; font-size: 16px; float: left; height: 36px; padding: 8px 25px; color: #3d3d3d; background: #f5f5f5; }
-.m-brhd-group > a.active, .m-brhd-group > a:hover { text-decoration: none; color: #fff; background: #f13c38; }
+.m-brhd-group > a.active {color: #fff; background: #f13c38; }
+.m-brhd-group > a:hover{
+  text-decoration: none;
+}
 .m-brhd-time, .m-brhd-qi { font-size: 12px; position: absolute; right: 10px; }
 .m-brhd-qi { font-family: 'simsun'; font-size: 14px; font-weight: bold; top: 35px; }
 .m-brhd-time { bottom: 15px; color: #848484; }

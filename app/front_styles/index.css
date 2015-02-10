@@ -131,7 +131,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .page-hd .sticky .bei, .page-hd .sticky .head { margin-bottom: 6px; }
 .page-hd .head { width: 96px; height: 96px; margin-top: 15px; border-radius: 50%; }
 .page-hd p { margin-bottom: 3px; }
-.page-hd .bottom { line-height: 30px; position: absolute; bottom: 0; width: 100%; height: 30px; margin-bottom: 0; background: rgba(0, 0, 0, .1); }
+.page-hd .bottom { line-height: 30px; position: absolute; bottom: 0; width: 100%; height: 30px; margin-bottom: 0; background: rgba(0, 0, 0, .1); overflow: hidden;}
+.page-hd .bottom ul li{ height: 30px;}
 .page-hd .bottom span { color: #fedd00; }
 /* Page new */
 .page-new { padding: 10px 0; color: #999; }

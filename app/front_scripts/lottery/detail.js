@@ -151,7 +151,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           }
         };
 
-        if (mid) midHtml = '第<span>' + mid + '</span>期';
+        // if (mid) midHtml = '第<span>' + mid + '</span>期';
 
         template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
 

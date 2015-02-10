@@ -14,6 +14,9 @@
 	margin: 0 auto;
 }
 
+.qlc .sub-content{
+	padding: 5px 13px;
+}
 .qlc .m-num-title2>p {
 	font-size: 12px;
 	padding: 0;

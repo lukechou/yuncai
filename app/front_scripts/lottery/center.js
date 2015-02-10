@@ -15,11 +15,11 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function($, _, store, APP) {
 
   'use strict';
 
-  var submitHemai = function (obj) {
+  var submitHemai = function(obj) {
 
     $.ajax({
         url: obj.joinURI,
@@ -31,7 +31,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           unikey: (new Date()).valueOf()
         },
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode == 100000) {
           if (obj.onSuccess) {
             obj.onSuccess();
@@ -40,24 +40,24 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           APP.showTips({
             text: '合买成功!',
             type: 1,
-            onConfirm: function () {
+            onConfirm: function() {
               window.location.reload();
             }
           });
-          $('body').on('click', '.close', function (event) {
+          $('body').on('click', '.close', function(event) {
             window.history.go(0);
           });
         } else {
           APP.handRetCode(data.retCode, data.retMsg);
         }
       })
-      .fail(function () {
+      .fail(function() {
         APP.onServiceFail();
       });
 
   };
 
-  $('#j-gou').on('click', '.j-gou-btn', function () {
+  $('#j-gou').on('click', '.j-gou-btn', function() {
 
     var tr = $(this).parents('tr');
     var count = tr.find('.j-gou-count');
@@ -81,13 +81,22 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       qxc: '七星彩',
     };
     var mname = lotyNameObj[lotyName];
+    var tabIndex = tr.find('.joinUrl').val().split('/');
+    var tab = {
+      'bqc_gg': '半全场',
+      'spf_gg': '胜平负',
+      'rqspf_gg': '让球胜平负',
+      'zjq_gg': '总进球',
+      'bf_gg': '比分'
+    };
+    var tabHtml = tab[tabIndex[tabIndex.length - 1]] || '';
 
     if (checkByNum(b, max)) {
       data = {
         byNum: b,
         joinURI: tr.find('.joinUrl').val(),
         prjctId: tr.find('.pid').val(),
-        onSuccess: function (d) {
+        onSuccess: function(d) {
           max = max - b;
           count.attr({
             'placeholder': '最多' + max,
@@ -95,9 +104,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           });
         }
       };
+
       if (mid) midHtml = '第<span>' + mid + '</span>期';
 
-      template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
+      template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + tabHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
       h = template({
         lotyName: mname,
         total: mtotal,
@@ -107,9 +117,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
         html: h,
       };
       APP.checkLogin(b, {
-        enoughMoney: function () {
+        enoughMoney: function() {
           APP.showTips(html);
-          $('#buyConfirm').one('click', function (event) {
+          $('#buyConfirm').one('click', function(event) {
             submitHemai(data);
           });
         }
@@ -134,11 +144,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     return c;
   }
 
-  $('body').on('click', '#hemaiRefresh', function (event) {
+  $('body').on('click', '#hemaiRefresh', function(event) {
     window.location.reload();
   });
 
-  $('#projectList').on('change', '.j-gou-count', function (event) {
+  $('#projectList').on('change', '.j-gou-count', function(event) {
     var max = $(this).attr('data-max');
     var v = Number($(this).val());
     if (isNaN(v)) {
@@ -163,8 +173,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     page: 1
   });
 
-  $('#searchBtn').on('click', function (event) {
+  $('#searchBtn').on('click', function(event) {
     event.preventDefault(); /* Act on the event */
+
+    // icon icon-down-active
     var status = $('#status').val();
     var tc = $('#tc').val();
     var aegis = $('#aegis').val();
@@ -182,4 +194,99 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     PAGE.loadPrjctLst(obj);
   });
 
+  $('.j-sort-schedule').on('click', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    var sortType = 1;
+    if ($(this).hasClass('icon-down') || $(this).hasClass('icon-down-active')) {
+      initIcon();
+      $(this).removeClass();
+      $(this).addClass('icon icon-up-active j-sort-schedule');
+      sortType = 2;
+    }else{
+      initIcon();
+      $(this).removeClass();
+      $(this).addClass('icon icon-down-active j-sort-schedule');
+    }
+    PAGE.loadPrjctLst({
+      qid: $('#qid').val(),
+      status: '',
+      tc: '',
+      aegis: '',
+      username: '',
+      pageSize: 10,
+      sort:sortType,
+      innerHtmlObj: $('.m-pager'),
+      page: 1
+    });
+  });
+
+  $('.j-sort-project-price').on('click', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    var sortType = 3;
+    if ($(this).hasClass('icon-down') || $(this).hasClass('icon-down-active')) {
+      initIcon();
+      $(this).removeClass();
+      $(this).addClass('icon icon-up-active j-sort-project-price');
+      sortType = 4;
+    }else{
+      initIcon();
+      $(this).removeClass();
+      $(this).addClass('icon icon-down-active j-sort-project-price');
+    }
+    PAGE.loadPrjctLst({
+      qid: $('#qid').val(),
+      status: '',
+      tc: '',
+      aegis: '',
+      username: '',
+      pageSize: 10,
+      sort:sortType,
+      innerHtmlObj: $('.m-pager'),
+      page: 1
+    });
+  });
+
+  $('.j-sort-unit-price').on('click', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    var sortType = 5;
+    if ($(this).hasClass('icon-down') || $(this).hasClass('icon-down-active')) {
+      initIcon();
+      $(this).removeClass();
+      $(this).addClass('icon icon-up-active j-sort-unit-price');
+      sortType = 6;
+    }else{
+      initIcon();
+      $(this).removeClass();
+      $(this).addClass('icon icon-down-active j-sort-unit-price');
+    }
+    PAGE.loadPrjctLst({
+      qid: $('#qid').val(),
+      status: '',
+      tc: '',
+      aegis: '',
+      username: '',
+      pageSize: 10,
+      sort:sortType,
+      innerHtmlObj: $('.m-pager'),
+      page: 1
+    });
+  });
+
+  function initIcon(){
+    var objSchedule = $('.j-sort-schedule');
+    var objProjectPrice = $('.j-sort-project-price');
+    var objUnitPrice = $('.j-sort-unit-price');
+    objSchedule.removeClass();
+    objSchedule.addClass('icon icon-down j-sort-schedule');
+    // objSchedule.addClass('icon-down');
+    objProjectPrice.removeClass();
+    objProjectPrice.addClass('icon icon-down j-sort-project-price');
+    // objProjectPrice.addClass('icon-down');
+    objUnitPrice.removeClass();
+    objUnitPrice.addClass('icon icon-down j-sort-unit-price');
+    // objUnitPrice.addClass('icon-down');
+  }
 });

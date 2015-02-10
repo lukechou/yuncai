@@ -29,9 +29,9 @@ gulp.task('sprite', ['clean'],function () {
   }));
 
 
-  // spriteData.pipe(gulp.dest('dist'));
-  // spriteDataIcon.pipe(gulp.dest('dist'));
-  // spriteDataLrkf.pipe(gulp.dest('dist'));
+  spriteData.pipe(gulp.dest('dist'));
+  spriteDataIcon.pipe(gulp.dest('dist'));
+  spriteDataLrkf.pipe(gulp.dest('dist'));
   spriteJczqBf.pipe(gulp.dest('dist'));
 });
 

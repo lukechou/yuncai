@@ -305,7 +305,7 @@ APP.onServiceFail = function () {
 };
 
 APP.initLrkf = function () {
-  var qq = ['123520260', '2264990340'];
+  var qq = ['2726429522'];
   var tel = '4008-898-310';
   var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
 
@@ -332,19 +332,35 @@ APP.init = function () {
   var menu = {
     el: $('#choseCai'),
     mask: $('#hdMask'),
-    link: $('#choseCai a'),
+
+    checkTopMenu: function () {
+
+      // var checkTopMenu = setInterval(function () {
+      //   console.log(menu.el.is());
+      // }, 300);
+    },
+    init: function (args) {
+      var _this = this;
+      for (var key in args) {
+        if (args.hasOwnProperty(key)) {
+          _this[key] = args[key];
+        }
+      }
+      _this.bindEvent();
+    },
+    bindEvent: function () {
+      var _this = this;
+      _this.el.hover(function () {
+        _this.mask.toggle();
+      }, function () {
+        _this.mask.toggle();
+      });
+    }
   };
 
-  var checkTopMenu = setInterval(function () {
-
-  }, 300);
-
-  menu.el.hover(function () {
-    menu.mask.toggle();
-    menu.el.toggleClass('on');
-  }, function () {
-    menu.mask.toggle();
-    menu.el.toggleClass('on');
+  menu.init({
+    el: $('#choseCai'),
+    mask: $('#hdMask')
   });
 
   APP.initLrkf();

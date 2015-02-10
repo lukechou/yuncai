@@ -1,4 +1,4 @@
-define(['jquery'], function ($) {
+define(['jquery', 'app'], function ($, APP) {
   'use strict';
 
   var bet = (function () {
@@ -268,6 +268,7 @@ define(['jquery'], function ($) {
         }
 
       } else {
+        _this.bunch = [];
         list.hide().html('');
         tips.show();
       }
@@ -382,7 +383,7 @@ define(['jquery'], function ($) {
       $('#poolStep1 .scrollMoni').hide();
       $('#poolStep1 .unSeleTips').fadeIn();
       _this.box.find('.j-sp-btn,.j-bf-all').removeClass('active hover');
-
+      _this.box.find('.j-show-bf').removeClass('has');
       _this.match = [];
       _this.dd = null;
       _this.beishu = $('#j-qiucksub-bei').val();
@@ -462,7 +463,9 @@ define(['jquery'], function ($) {
       var uniqMatch = null;
 
       // get Params
-      uniqMatch = _.uniq(_this.match, 'matchcode');
+      uniqMatch = _.uniq(_this.match, 'matchcode').sort(function (a, b) {
+        return a.matchcode - b.matchcode;
+      });
 
       for (var i = 0; i < uniqMatch.length; i++) {
         matchs.push(uniqMatch[i].matchcode);
@@ -499,7 +502,7 @@ define(['jquery'], function ($) {
       for (var key in jczqData) {
         if (jczqData.hasOwnProperty(key)) {
           for (var i = jczqData[key].length - 1; i >= 0; i--) {
-            if (jczqData[key][i].match_key === matchcode) {
+            if (String(jczqData[key][i].match_key) === String(matchcode)) {
               data = jczqData[key][i];
             }
           };
@@ -571,7 +574,7 @@ define(['jquery'], function ($) {
           if (hasNewDd) {
             _this.box.find('[data-newdd=' + matchcode + ']').show();
           } else {
-            newDd = dd.clone().removeClass().addClass('bf-box').attr('data-newdd', matchcode).html(html);
+            newDd = dd.clone().removeClass().addClass('bf-box j-bf-box').attr('data-newdd', matchcode).html(html);
             dd.after(newDd);
           }
 
@@ -583,9 +586,11 @@ define(['jquery'], function ($) {
             _this.box.find('[data-newdd=' + matchcode + ']').hide();
           }
 
-          if(_.find(_this.match, function(chr){return chr.matchcode === matchcode;})){
-            t.addClass('has');
-          }else{
+          if (_.find(_this.match, function (chr) {
+              return chr.matchcode === matchcode;
+            })) {
+            t.addClass('has').removeClass('active');
+          } else {
             t.removeClass('active has');
           }
 
@@ -650,16 +655,40 @@ define(['jquery'], function ($) {
         var sp = t.attr('sp');
         var title = t.attr('data-item');
         var dd = t.parents('dd');
+        var matchcode = dd.attr('matchcode')
+        var allSp = true;
+        var lock = true;
+        var matchLen = _.uniq(_this.match, 'matchcode').length;
+        var hasMatch = _.find(_this.match, function(chr){
+          return chr.matchcode === matchcode;
+        });
+
+        if (matchLen >= 15 && !hasMatch) {
+          APP.showTips('您好，投注场次不得超过15场哦');
+          return false;
+        }
 
         if (t.hasClass('rq')) return;
 
         if (t.hasClass(a)) {
-          t.siblings('.j-bf-all').removeClass(a);
+          t.siblings('.j-bf-all').removeClass(a + ' ' + h);
           t.removeClass(a);
           _this.removeOneItem(i, dd);
         } else {
           t.removeClass(h).addClass(a);
           _this.addOneItem(i, dd, sp, title);
+
+          t.siblings('.j-sp-btn').each(function (index, el) {
+            if (!$(this).hasClass(a) && lock) {
+              allSp = false;
+              lock = false;
+            }
+          });
+
+          if (allSp) {
+            t.siblings('.j-bf-all').addClass(a);
+          }
+
         }
 
       });
@@ -669,14 +698,32 @@ define(['jquery'], function ($) {
 
         var t = $(this);
         var s = t.attr('data-show');
-        var dd = t.parents('dl').find('dd');
+        var dl = t.parents('dl');
+        var allDd = dl.find('dd');
+        var listDd = dl.find('.j-data-dd');
+        var bfDd = dl.find('.j-bf-box');
         var title = ['隐藏', '展开'];
 
         if (s == 1) {
-          dd.hide();
+          allDd.hide();
+          if (_this.tab === 'bf') {
+            bfDd.each(function (index, el) {
+              if ($(this).find('.j-sp-btn.active').length > 0) {
+                var matchcode = $(this).attr('matchcode');
+                var bfNearBox = dl.find('.j-data-dd[matchcode=' + matchcode + ']');
+                bfNearBox.find('.j-show-bf').addClass('has');
+              }
+            });
+
+          }
           t.attr('data-show', 0);
         } else {
-          dd.show();
+          listDd.show();
+
+          if (_this.tab === 'bf') {
+            listDd.find('.j-show-bf').removeClass('active');
+            listDd.find('.row1-1').removeClass('on');
+          }
           t.attr('data-show', 1);
         }
 
@@ -807,7 +854,12 @@ define(['jquery'], function ($) {
         _this.setAllTotal();
 
         if (_this.tab === 'bf') {
-          removeItem.siblings('.j-bf-all').removeClass(a);
+          actItem.siblings('.j-bf-all').removeClass('active hover');
+          if (_.filter(_this.match, function (chr) {
+              return chr.matchcode === code;
+            }).length === 0) {
+            $('#bettingBox dd[matchcode=' + code + '] .j-show-bf').removeClass('has');
+          }
         }
 
       });
@@ -821,12 +873,16 @@ define(['jquery'], function ($) {
         removeItem.remove();
         actItem.removeClass('active hover');
 
+        $('#bettingBox dd[matchcode=' + code + ']').find('.j-show-bf').removeClass('has');
         _.remove(_this.match, function (o) {
           return o.matchcode == code;
         });
+
         if (_this.match == 0) $('#poolStep1 .unSeleTips').show();
+
         _this.setSecondBox();
         _this.setAllTotal();
+
       });
 
     };

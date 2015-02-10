@@ -1,6 +1,6 @@
-define(['jquery'], function($) {
+define(['jquery'], function ($) {
   'use strict';
-  var hemai = (function() {
+  var hemai = (function () {
     'use strict';
 
     function hemai(args) {
@@ -15,92 +15,145 @@ define(['jquery'], function($) {
       box: $('#ballModal'),
     };
 
-    hemai.prototype.setHeMaiTotal = function() {
+    hemai.prototype.updateHemai = function (copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies) {
+
+      var _this = this;
+      var box = _this.box;
+
+      // 更新份数,每份金额,认购份数,提成百分比,认购百分比
+      box.find('.j-share-num').val(copies);
+      box.find('.j-unit-price').html(oneCopiesMoney);
+      box.find('.j-rengou').val(rengouCopies);
+      box.find('.br-select').val(ticheng);
+      box.find('.j-rengou-percentage').html(rengouPercent);
+
+      // 保底金额,保底百分比,认购
+      box.find('.j-baodi-text').val(baodiCopies);
+      box.find('.j-baodi-percent').html(baodiPercent);
+      box.find('.j-rengou-tip').html(rengouCopies * oneCopiesMoney);
+      box.find('.j-baidi-tip').html(baodiCopies * oneCopiesMoney);
+      box.find('.j-totalm-tip').html((rengouCopies + baodiCopies) * oneCopiesMoney);
+
+    };
+
+    hemai.prototype.setHeMaiTotal = function () {
 
       var _this = this;
       var box = _this.box;
 
       // 方案总金额
-      var m = box.find('#j-total-money').html() * 1;
+      var totalMoney = box.find('#j-total-money').html() * 1;
+
+      // 获取份数
+      var copies = box.find('.j-share-num').val() * 1;
+
+      // 单份金额
+      var oneCopiesMoney = '';
+
+      // 认购金额
       var rengouMoney = '';
-      var ticheng = '';
 
-      var conf = {
-        minRengouMoney: Math.ceil(m * .05),
-        RemgouMoneyVal: box.find('.j-rengou').val() * 1,
-      }
+      // 认购份数
+      var rengouCopies = box.find('.j-rengou').val() * 1 || 1;
 
-      rengouMoney = (conf.RemgouMoneyVal < conf.minRengouMoney) ? conf.minRengouMoney : conf.RemgouMoneyVal;
+      // 认购百分比
+      var rengouPercent = '';
 
-      ticheng = box.find('.br-select').val() * 1 || 0;
+      // 提成
+      var ticheng = box.find('.br-select').val() * 1 || 0;
 
-      if (rengouMoney > m) {
-        rengouMoney = m
-      } else {
-        if (rengouMoney <= 0) {
-          rengouMoney = m
-        }
-      }
-
-      // 对比 认购百分比 和 我要提成
-      if (ticheng < (rengouMoney / m * 100)) {} else {
-        rengouMoney = Math.ceil(ticheng * 0.01 * m);
-      }
-
-      //我要保底金额
-      var baodiMoney = '';
+      // 保底金额 b-用户输入保底份数
+      var baodiCopies = '';
       var baodiPercent = '';
-      var b = '';
+      var b = parseInt(box.find('.j-baodi-text').val()) || 0;
       var isBaodi = true;
       var isFullBao = box.find('#j-full-bao')[0].checked;
 
-      if (isFullBao && m != 0) {
-        baodiMoney = m - rengouMoney;
-        baodiPercent = (baodiMoney / m * 100).toFixed(2);
-      } else {
-
-        b = parseInt(box.find('.j-baodi-text').val()) || 0;
-
-        if (b == 0) {
-          baodiMoney = 0;
-          baodiPercent = '0.00';
-        } else {
-          if ((b + rengouMoney) < m) {
-            baodiMoney = b
-            baodiPercent = (baodiMoney / m * 100).toFixed(2);
-          } else {
-            baodiMoney = m - rengouMoney;
-            baodiPercent = (baodiMoney / m * 100).toFixed(2);
-          }
+      if(isFullBao){
+          box.find('.j-baodi-text').attr('readonly',true);
+        }else{
+          box.find('.j-baodi-text').removeAttr('readonly');
         }
 
+      // 无购买总金额
+      if (totalMoney === 0) {
+        ZHUI.updateHemai(0, ticheng, 0, 0, 0);
+        return;
       }
 
-      box.find('.j-rengou').val(rengouMoney);
-      box.find('.br-select').val(ticheng);
-      if (m === 0) {
-        box.find('.j-rengou-percentage').html(0);
+      // 生成对应份数
+      if (totalMoney % copies === 0) {
+        oneCopiesMoney = totalMoney / copies;
       } else {
-        box.find('.j-rengou-percentage').html((rengouMoney / m * 100).toFixed(2));
+        oneCopiesMoney = 2;
+        copies = totalMoney / 2;
       }
 
-      //如果要保底 更新保底金额
-      box.find('.j-baodi-text').val(baodiMoney);
-      box.find('.j-baodi-percent').html(baodiPercent);
-      box.find('.j-rengou-tip').html(rengouMoney);
-      box.find('.j-baidi-tip').html(baodiMoney);
-      box.find('.j-totalm-tip').html(rengouMoney + baodiMoney);
+      // 认购份数小于0 或大于总份数时
+      if (copies < rengouCopies || rengouCopies <= 0) {
+        rengouCopies = copies;
+      }
+
+      if(rengouCopies/copies <.05){
+        rengouCopies = Math.ceil(copies*.05);
+      }
+
+      // 认购金额必须大于提成金额
+      if (ticheng > (rengouCopies / copies * 100)) {
+        rengouCopies = Math.ceil(copies * ticheng * 0.01);
+      }
+      rengouMoney = rengouCopies * oneCopiesMoney;
+
+      // 是否保底
+      if (box.find('.j-baodi-check')[0]) {
+        isBaodi = box.find('.j-baodi-check')[0].checked;
+      }
+
+      // 设置保底份数
+      if (isBaodi) {
+
+        box.find('.j-baodi-text')[0].disabled = false;
+
+        if ((b + rengouCopies) < copies) {
+
+          baodiCopies = b;
+
+        } else {
+
+          baodiCopies = copies - rengouCopies;
+
+        }
+
+        if(isFullBao){
+          baodiCopies = copies - rengouCopies;
+        }
+
+        baodiPercent = (baodiCopies / copies * 100).toFixed(2);
+
+      } else {
+        box.find('.j-baodi-text')[0].disabled = true;
+        baodiCopies = 0;
+        baodiPercent = '0.00';
+      }
+
+      if (totalMoney === 0) {
+        rengouPercent = 0;
+      } else {
+        rengouPercent = (rengouCopies / copies * 100).toFixed(2);
+      }
+
+      _this.updateHemai(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies);
 
     };
 
-    hemai.prototype.inputOnfocus = function(el) {
+    hemai.prototype.inputOnfocus = function (el) {
       if ($.trim(el.val()) == el.attr('data-text')) {
         el.parents('p').find('.j-btext-total').html(0)
         el.val('')
       }
     };
 
-    hemai.prototype.inputOnblur = function(el) {
+    hemai.prototype.inputOnblur = function (el) {
       var text = el.attr('data-text');
       if ($.trim(el.val()) == '') {
         el.val(text);
@@ -108,7 +161,7 @@ define(['jquery'], function($) {
       }
     };
 
-    hemai.prototype.reSetStrsize = function(t) {
+    hemai.prototype.reSetStrsize = function (t) {
 
       var len = t.val().length;
       var size = parseInt(t.attr('data-size'));
@@ -122,51 +175,27 @@ define(['jquery'], function($) {
 
     };
 
-    hemai.prototype.init = function() {
+    hemai.prototype.init = function () {
 
       var _this = this;
 
-      $('.j-rengou').on('change', function(event) {
+      $('.j-rengou,.br-select,#j-full-bao,.j-baodi-text,.j-share-num').on('change', function (event) {
         _this.setHeMaiTotal();
       });
 
-      $('.br-select').on('change', function(event) {
-        _this.setHeMaiTotal();
-      });
-
-      $('#j-full-bao').on('change', function(event) {
-        _this.setHeMaiTotal();
-      });
-
-      $('.j-baodi-text').on('change', function(event) {
-        _this.setHeMaiTotal();
-      });
-
-      $('.br-textarea').on('focus', function(event) {
+      $('.br-textarea,.j-project-title').on('focus', function (event) {
         _this.inputOnfocus($(this));
       });
 
-      $('.j-project-title').on('focus', function(event) {
-        _this.inputOnfocus($(this));
-      });
-
-      $('.br-textarea').on('blur', function(event) {
+      $('.br-textarea,.j-project-title').on('blur', function (event) {
         _this.inputOnblur($(this));
       });
 
-      $('.j-project-title').on('blur', function(event) {
-        _this.inputOnblur($(this));
-      });
-
-      $('.br-textarea').on('keyup', function(event) {
+      $('.br-textarea,.j-project-title').on('keyup', function (event) {
         _this.reSetStrsize($(this));
       });
 
-      $('.j-project-title').on('keyup', function(event) {
-        _this.reSetStrsize($(this));
-      });
-
-      $('.br-set-group').on('click', '.br-set', function(event) {
+      $('.br-set-group').on('click', '.br-set', function (event) {
         $(this).siblings('.active').removeClass('active');
         $(this).addClass('active');
       });

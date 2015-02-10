@@ -329,7 +329,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
       var min = Number(t.attr('data-gm'));
       var maxBuy = 500000;
 
-      if (isNaN(buyNum) || buyNum ==='') {
+      if (isNaN(buyNum) || buyNum === '') {
         APP.showTips('请输入要投注的金额');
         return;
       }
@@ -533,9 +533,6 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
       .done(function (data) {
         if (data.retCode === 100000) {
           runStartList(data.retData);
-          setInterval(function () {
-            runStartList()
-          }, 3000);
         }
       })
       .fail(function () {
@@ -546,18 +543,42 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
 
   function runStartList(d) {
 
+    var delay = 300;
+    var html = '';
+    var item = '';
+
     if (d) {
       index.startList = d;
     }
 
-    var html = index.startList[index.startIndex].username.slice(0, 3) + '...中奖<span>' + index.startList[index.startIndex].bonus_money + '</span>元';
+    html += '<ul id="j-run-list">';
+
+    for (var i = index.startList.length - 1; i >= 0; i--) {
+      item = index.startList[i];
+      html += '<li>'+item.username.slice(0, 3) + '...中奖<span>' + item.bonus_money + '</span>元</li>';
+    };
+
+    html += '</ul>';
+
     $('#j-week-text').html(html);
 
-    if (index.startIndex < index.startList.length - 1) {
-      index.startIndex++;
-    } else {
-      index.startIndex = 0;
-    }
+    setInterval(function(){
+      var ul = $('#j-run-list');
+      var newLi
+      ul.animate({
+        marginTop:  '-60px'},
+        300, function() {
+          ul.first()
+          console.log(index.startIndex);
+        /* stuff to do after animation is complete */
+      });
+    }, 1000);
+
+    // if (index.startIndex < index.startList.length - 1) {
+    //   index.startIndex++;
+    // } else {
+    //   index.startIndex = 0;
+    // }
 
   }
 

@@ -35,9 +35,11 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			partnerBuy: {
 				projectTitle: '排列3合买方案', // 方案标题
 				projectDescription: '排列3', // 方案标题
-				partBuyMoney: 0, // 合买认购金额
-				partAegisMoney: 0, // 合买认购金额
-				commissionPercent: 0, // 合买提成
+		    shareNum: 0, // 分成多少份
+		    partBuyNum: 0, // 合买认购份数
+		    partAegisNum: 0, // 合买保底份数
+		    commissionPercent: 0, // 合买提成
+		    unitPrice : 0, // 单价
 				shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
 			}, // 合买
 			rowIndex: 0,
@@ -64,9 +66,11 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 				this.partnerBuy = {
 						projectTitle: '排列3合买方案', // 方案标题
 						projectDescription: '排列3', // 方案标题
-						partBuyMoney: 0, // 合买认购金额
-						partAegisMoney: 0, // 合买认购金额
-						commissionPercent: 0, // 合买提成
+				    shareNum: 0, // 分成多少份
+				    partBuyNum: 0, // 合买认购份数
+				    partAegisNum: 0, // 合买保底份数
+				    commissionPercent: 0, // 合买提成
+				    unitPrice : 0, // 单价
 						shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
 					},
 					this.rowIndex = 0;
@@ -978,6 +982,20 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		calculateBuyCodes();
 	});
 
+	// 我要分成多少份，最少一份，最多购买金额的数量
+  $("#share-num").on('change', function (event) {
+    event.preventDefault();
+    var val = parseInt($(this).val()) || PL3.G_BUY.money;
+    if (isNaN(val) || val < 1) {
+      val = 1;
+    } else {
+      val = Math.ceil(val);
+      (val > PL3.G_BUY.money) && (val = PL3.G_BUY.money);
+    }
+    $(this).val(val);
+    updateCreatePartProjectParame();
+  });
+
 	// 我要认购的份数
 	$("#part_buy").on('change', function (event) {
 
@@ -987,7 +1005,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			val = 1;
 		} else {
 			val = Math.ceil(val);
-			(val > PL3.G_BUY.money) && (val = PL3.G_BUY.money);
+			// (val > PL3.G_BUY.money) && (val = PL3.G_BUY.money);
+			(val > PL3.G_BUY.partnerBuy.shareNum) && (val = PL3.G_BUY.partnerBuy.shareNum);
 		}
 		$(this).val(val);
 
@@ -1011,17 +1030,17 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	$('#has_part_aegis').on('change', function (event) {
 
 		if ($(this)[0].checked) {
-			$('#part_aegis_money').removeAttr('disabled');
+			$('#part_aegis_num').removeAttr('disabled');
 			updateCreatePartProjectParame();
 		} else {
-			$('#part_aegis_money').attr('disabled', 'disabled');
-			$('#part_aegis_money').val(0);
+			$('#part_aegis_num').attr('disabled', 'disabled');
+			$('#part_aegis_num').val(0);
 			$('#part_aegis_percent').html('0.00');
 		}
 	});
 
 	// 保底金额修改
-	$('#part_aegis_money').on('change', function (event) {
+	$('#part_aegis_num').on('change', function (event) {
 
 		var _aegisMoney = parseInt($(this).val()) || 0;
 		$(this).val(_aegisMoney);
@@ -1130,7 +1149,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			$('#track_stop_money').removeAttr('disabled');
 		} else {
 			$('#track_stop_money').attr('disabled', 'disabled');
-			$('#part_aegis_money').val(0);
+			$('#part_aegis_num').val(0);
 		}
 
 	});
@@ -1358,41 +1377,53 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		case 3:
 
 			if (PL3.G_BUY.money > 0) {
+        // 分成多少份
 
-				PL3.G_BUY.partnerBuy.partBuyMoney = parseInt($('#part_buy').val());
+        var shareNum = parseInt($("#share-num").val());
+				if (PL3.G_BUY.money % shareNum !== 0) {
+					shareNum = YC.Unit.getMaxDivisible(PL3.G_BUY.money, shareNum);
+				}
+				$("#share-num").val(shareNum);
+				PL3.G_BUY.partnerBuy.shareNum = shareNum;
 
-				var partBuyPercent = PL3.G_BUY.partnerBuy.partBuyMoney / PL3.G_BUY.money * 100;
+        $('.j-unit-price').html(PL3.G_BUY.money / PL3.G_BUY.partnerBuy.shareNum);
+        if($('#part_buy').val() > PL3.G_BUY.partnerBuy.shareNum)
+        {
+          $('#part_buy').val(PL3.G_BUY.partnerBuy.shareNum);
+        }
+        // 购买的份数
+        PL3.G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
+        // 单价
+        var iUnitPrice = parseInt($('.j-unit-price').html());
+        PL3.G_BUY.partnerBuy.unitPrice = iUnitPrice;
+        // 认购的比例
+        var partBuyPercent = PL3.G_BUY.partnerBuy.partBuyNum / PL3.G_BUY.partnerBuy.shareNum * 100;
 
-				$('#part_buy_percent').html(partBuyPercent.toFixed(2));
-
-				$('#commission_percent').val(function (index, value) {
-					return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
-				});
-
-				PL3.G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
-
-				var minBaodiMoney = Math.ceil(PL3.G_BUY.money * 0.2);
-				var lessPartBuyMoney = PL3.G_BUY.money - PL3.G_BUY.partnerBuy.partBuyMoney;
-
-				$('#part_aegis_money').val(function (index, value) {
-					if ($('#has_part_aegis')[0].checked && $(this).val() < minBaodiMoney) {
-						return minBaodiMoney;
-					}
-					return $(this).val() > lessPartBuyMoney ? lessPartBuyMoney : $(this).val();
-				});
-
-				var aegisMoney = parseInt($('#part_aegis_money').val());
-
-				PL3.G_BUY.partnerBuy.partAegisMoney = aegisMoney;
-
-				$('#part_aegis_percent').html((aegisMoney / PL3.G_BUY.money * 100).toFixed(2));
-				$('#buy_money_tips').html(PL3.G_BUY.partnerBuy.partBuyMoney);
-				$('#aegis_money_tips').html(aegisMoney);
-				$('#total_money_tips').html(aegisMoney + PL3.G_BUY.partnerBuy.partBuyMoney);
-
+        $('#part_buy_percent').html(partBuyPercent.toFixed(2));
+        // 提成比例
+        $('#commission_percent').val(function (index, value) {
+          return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
+        });
+        PL3.G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
+        // 保底数据
+        var iMinBaodiNum = Math.ceil(PL3.G_BUY.partnerBuy.shareNum * 0.2);
+        // 剩余
+        var iLessBuyNum = PL3.G_BUY.partnerBuy.shareNum - PL3.G_BUY.partnerBuy.partBuyNum;
+        $('#part_aegis_num').val(function (index, value) {
+          if ($('#has_part_aegis')[0].checked && $(this).val() < iMinBaodiNum) {
+            return iMinBaodiNum;
+          }
+          return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
+        });
+        var aegisNum = parseInt($('#part_aegis_num').val());
+        PL3.G_BUY.partnerBuy.partAegisNum = aegisNum;
+        $('#part_aegis_percent').html((aegisNum / PL3.G_BUY.partnerBuy.shareNum * 100).toFixed(2));
+        $('#buy_money_tips').html(PL3.G_BUY.partnerBuy.partBuyNum * iUnitPrice);
+        $('#aegis_money_tips').html(aegisNum * iUnitPrice);
+        $('#total_money_tips').html((aegisNum + PL3.G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
 			} else {
 
-				$('#part_aegis_money').val(0);
+				$('#part_aegis_num').val(0);
 				$('#part_aegis_percent').html('0.00');
 				$('#part_buy_percent').html(0);
 				$('#buy_money_tips').html(0);
@@ -1776,28 +1807,26 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			comfirmHtml = makeConfirmHtml(2, PL3.G_BUY.lotyCNName, 0, 0, 0, 0, 0, 0, postIssueParameter.length, PL3.G_BUY.money);
 			break;
 		case 3:
-
 			url = '/lottery/digital/buy-together/' + PL3.G_BUY.lotyName + '/' + PL3.playName;
-
 			parameter.qihaoId = PL3.G_BUY.qihaoId;
 			parameter.qihao = PL3.G_BUY.qihao;
 			parameter.title = PL3.G_BUY.partnerBuy.projectTitle;
 			parameter.textarea = PL3.G_BUY.partnerBuy.projectDescription;
-			parameter.rengouMoney = PL3.G_BUY.partnerBuy.partBuyMoney;
-			parameter.baodiText = PL3.G_BUY.partnerBuy.partAegisMoney;
-			parameter.extraPercent = PL3.G_BUY.partnerBuy.commissionPercent;
-			parameter.set = PL3.G_BUY.partnerBuy.shareLevel;
-
-			PL3.G_BUY.payMoney = parameter.rengouMoney + parameter.baodiText;
-
-			if (parameter.rengouMoney < 1) {
-				APP.showTips("合买至少认购一元");
-				return;
-			}
-
-			comfirmHtml = makeConfirmHtml(3, PL3.G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, PL3.G_BUY.money, parameter.rengouMoney, parameter.baodiText, 0, 0);
-
+      parameter.shareNum = PL3.G_BUY.partnerBuy.shareNum;
+      parameter.buyNum = PL3.G_BUY.partnerBuy.partBuyNum;
+      parameter.aegisNum = PL3.G_BUY.partnerBuy.partAegisNum;
+      parameter.extraPercent = PL3.G_BUY.partnerBuy.commissionPercent;
+      parameter.set = PL3.G_BUY.partnerBuy.shareLevel;
+      if (parameter.buyNum < 1) {
+        APP.showTips("合买至少认购1份");
+        return;
+      }
+			var buyMoney = PL3.G_BUY.partnerBuy.unitPrice * parameter.buyNum;
+			var aegisMoney = PL3.G_BUY.partnerBuy.unitPrice * parameter.aegisNum;
+			PL3.G_BUY.payMoney = buyMoney + aegisMoney;
+			comfirmHtml = makeConfirmHtml(3, PL3.G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, PL3.G_BUY.money, buyMoney, aegisMoney, 0, 0);
 			break;
+
 		case 4:
 
 			url = '/lottery/digital/buy-rank/' + PL3.G_BUY.lotyName + '/' + PL3.playName;
