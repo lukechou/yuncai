@@ -493,11 +493,12 @@ define(['jquery', 'app'], function ($, APP) {
       var sArr = ['1:0', '2:0', '2:1', '3:0', '3:1', '3:2', '4:0', '4:1', '4:2', '5:0', '5:1', '5:2', '胜其他'];
       var pArr = ['0:0', '1:1', '2:2', '3:3', '平其他'];
       var fArr = ['0:1', '0:2', '1:2', '0:3', '1:3', '2:3', '0:4', '1:4', '2:4', '0:5', '1:5', '2:5', '负其他'];
-      var common = 'class="sp-btn j-sp-btn" gametype="bf"';
+      var common = '';
       var hArr = sArr.concat(pArr, fArr);
       var shtml = [];
       var phtml = [];
       var fhtml = [];
+      var noSp = '';
 
       for (var key in jczqData) {
         if (jczqData.hasOwnProperty(key)) {
@@ -511,7 +512,15 @@ define(['jquery', 'app'], function ($, APP) {
 
       spArr = data.bf_gg_sp.split('|');
 
-      for (var i = 0, len = spArr.length; i < len; i++) {
+      for (var i = 0, len = sArr.length + pArr.length + fArr.length; i < len; i++) {
+
+        if (spArr[i]) {
+          noSp = 'j-sp-btn';
+        } else {
+          spArr[i] = '--';
+          noSp = '';
+        }
+        common = 'class="sp-btn ' + noSp + '" gametype="bf"';
 
         if (0 <= i && i <= 12) {
           shtml.push('<td data-item="' + hArr[i] + '" sp="' + spArr[i] + '" index="' + i + '"' + common + '>' + hArr[i] + '<div>' + spArr[i] + '</div></td>');
@@ -659,7 +668,7 @@ define(['jquery', 'app'], function ($, APP) {
         var allSp = true;
         var lock = true;
         var matchLen = _.uniq(_this.match, 'matchcode').length;
-        var hasMatch = _.find(_this.match, function(chr){
+        var hasMatch = _.find(_this.match, function (chr) {
           return chr.matchcode === matchcode;
         });
 

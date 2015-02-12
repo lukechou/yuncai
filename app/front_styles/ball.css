@@ -6,14 +6,14 @@ body { background: #fff; }
 .raceball .g-right { float: right; width: 260px; border: 1px #dfdfdf solid; border-top: none; }
 /* hd */
 .raceball .m-brhd { border: 1px #dfdfdf solid; border-bottom: 3px #f13c38 solid; }
-.raceball .vote-nav { border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; margin-bottom: 15px; }
+.raceball .vote-nav { border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; margin-bottom: 12px; }
 /* left tips */
 .m-down-tips { margin: 12px auto; border: 1px #dfdfdf solid; border-bottom: none; }
 .m-down-tips > h3 { font-size: 14px; font-weight: bold; margin: 0; padding: 8px 20px; cursor: pointer; border-bottom: 1px #dfdfdf solid; background: #f5f5f5; }
 .m-down-tips > ul { font-size: 12px; line-height: 2.2; padding: 10px 20px; border-bottom: 1px #dfdfdf solid; }
 /* 投注表格头部 */
 .bettingBox { border-bottom: 1px #dfdfdf solid; }
-.dataHead { font-size: 12px; line-height: 60px; position: relative; z-index: 10; zoom: 1; width: 700px; height: 60px; margin-bottom: 0; text-align: center; color: #3d3d3d; border: 1px solid #dfdfdf; border-left: none; background: #f5f5f5; }
+.dataHead { font-size: 12px; line-height: 60px; position: relative; z-index: 10; zoom: 1; width: 700px; height: 60px; margin-bottom: 0; text-align: center; color: #3d3d3d; border: 1px solid #dfdfdf; background: #f5f5f5; border-width: 1px 1px 0 0; }
 .dataHead .icon-warm { cursor: pointer; }
 .datahead-tips { text-align: left; }
 .datahead-tips p { margin: 0 !important; padding: 0; }
@@ -52,19 +52,20 @@ body { background: #fff; }
 /* dataBody */
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
 .dataBody dl { position: relative; width: 700px; margin-bottom: 0; }
-.dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; }
-.dataBody dt .cuspText { margin-right: 10px; cursor: pointer; height: 39px; }
+.dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 1px 0 1px; }
+.dataBody dt .cuspText { margin-right: 10px; cursor: pointer; height: 38px; }
 .dataBody dt .cusp { top: 15px; right: -12px; }
 .dataBody dt .matchSize { margin-left: 10px; }
 /* All dd */
-.dataBody dd { position: relative; z-index: 2; zoom: 1; height: 39px; border-right: 1px #dfdfdf solid; }
-.dataBody dd span { line-height: 39px; float: left; height: 39px; text-align: center; border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
+.dataBody dd, .dataBody dd span, .towLine em, .dataBody .btnBox em, .dataBody .no-support, .dataBody dd span.btnBox .block, .analyMoreTable th, .row3-1 em, .row2-1 em { height: 38px; line-height: 38px; }
+.dataBody dd { position: relative; z-index: 2; zoom: 1; border-right: 1px #dfdfdf solid; }
+.dataBody dd span { float: left; text-align: center; border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
 .dataBody dd:hover { background: #f6f7f9; }
-.towLine { line-height: 38px; overflow: hidden; border: 0; border-bottom: none; }
-.towLine em { line-height: 38px; display: inline-block; width: 39px; height: 38px; }
+.towLine { overflow: hidden; border: 0; border-bottom: none; }
+.towLine em { display: inline-block; width: 38px; }
 .towLine em a { padding: 3px; color: #3d3d3d; }
 .towLine em a:hover, .towLine em a:focus { text-decoration: none; }
-.line1, .line2 { line-height: 38px; overflow: hidden; zoom: 1; height: 38px; white-space: nowrap; }
+.line1, .line2 { overflow: hidden; zoom: 1; white-space: nowrap; }
 .co7 em.hover a { background: #f13c38; }
 .co7 em.active a { background: #f13c38; }
 .dataBody dl dd .co7 .line1, .dataBody dl dd .co7 .line2 { border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
@@ -73,18 +74,19 @@ body { background: #fff; }
 .dataBody dd .hostTeam, .dataBody dd .guestTeam { float: left; overflow: hidden; width: 48%; text-align: right; white-space: nowrap; }
 .dataBody dd .guestTeam { float: right; text-align: left; }
 .dataBody .btnBox { position: relative; border: 0; }
-.dataBody .btnBox em { line-height: 39px; display: block; float: left; width: 56px; height: 39px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-right: none; }
+.dataBody .btnBox em { display: block; float: left; width: 56px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
 .dataBody .btnBox .rq { width: 36px; background: 0 0; }
 .dataBody .btnBox .rq.active { color: #3d3d3d; }
-.dataBody .no-support { line-height: 39px; float: left; width: 168px; height: 39px; text-align: center; vertical-align: top; border: 1px solid #dfdfdf; border-right: none; }
-.dataBody dd span.btnBox .block { line-height: 39px; width: 100%; height: 39px; margin-left: -1px; }
+.dataBody .no-support { float: left; width: 168px; text-align: center; vertical-align: top; border: 1px solid #dfdfdf; border-right: none; }
+.dataBody dd span.btnBox .block { width: 100%; margin-left: -1px; }
 /* btn background */
 .dataBody .sp-btn { background: url(../front_images/jczq/default.png); }
 .co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
 .dataBody .sp-btn.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
 .dataBody .sp-btn.active { color: #fff; background: url(../front_images/jczq/active.png) #f13c38; }
 /* 投注表格主体 */
-.data-load { margin: 100px auto; }
+.data-load { margin: auto; }
+.data-loadbox { width: 100%; border: 1px #dfdfdf solid; height: 200px; padding-top: 100px; border-width: 1px 1px 0; }
 .dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3 { display: none; }
 .row2 .btnBox, .row3 .btnBox { border: none; }
 .onlyBf .co4, .onlyBqc .co4, .onlyZjq .co4 { width: 180px; }
@@ -97,7 +99,7 @@ body { background: #fff; }
 .dataBody .bf-box { border: 1px #dfdfdf solid; border-width: 1px 0 0 1px; background: #e3e3e3; height: 150px; }
 .dataBody .bf-box:hover { background: #e3e3e3; }
 .analyMoreTable { background: #fff; table-layout: fixed; text-align: center; border: 1px solid #dfdfdf; width: 680px; margin: 15px auto 0; }
-.analyMoreTable th { height: 39px; line-height: 39px; border: 1px solid #dfdfdf; font-weight: 700; text-align: center; }
+.analyMoreTable th { border: 1px solid #dfdfdf; font-weight: 700; text-align: center; }
 .analyMoreTable td { padding: 3px 0; line-height: 16px; border: 1px solid #dfdfdf; cursor: pointer; }
 /* 半全场 */
 /* 总进球 */
@@ -118,7 +120,7 @@ body { background: #fff; }
 .row1-1 .btn:hover { background-position: 0px -87px; }
 .row1-1 .btn.active { background-position: 0px 0px; }
 .row1-1 .btn.has { background-position: 0px -58px; }
-.row3-1 em, .row2-1 em { line-height: 39px; float: left; height: 39px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
+.row3-1 em, .row2-1 em { float: left; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
 /* Right */
 .icoDel, .qrtz-box a { color: #3d3d3d; }
 /* .unselect */

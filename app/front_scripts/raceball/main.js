@@ -29,6 +29,9 @@ require.config({
 
 require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core'], function ($, _, BET, APP, store, H) {
   'use strict';
+  if (serverTime == 1) {
+    APP.showStopSellModal("竞彩足球");
+  }
 
   function craeteDateBtn(type, sp) {
 
@@ -37,6 +40,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var l = '';
     var tab = BET.tab;
     var item = [];
+    var noSp = '';
 
     switch (tab) {
     case 'zjq':
@@ -51,9 +55,15 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     }
 
     if (type == 1) {
-      for (var i = 0, len = spArr.length; i < len; i++) {
+      for (var i = 0, len = item.length; i < len; i++) {
+        if (!spArr[i]) {
+          spArr[i] = '--';
+          noSp = '';
+        } else {
+          noSp = 'j-sp-btn';
+        }
         if (i === (len - 1)) l = 'lastOne';
-        h += '<em index="' + i + '" data-item="' + item[i] + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + ' j-sp-btn sp-btn">' + spArr[i] + '</em>';
+        h += '<em index="' + i + '" data-item="' + item[i] + '" gametype="' + tab + '" sp="' + spArr[i] + '" class="' + l + ' ' + noSp + ' sp-btn">' + spArr[i] + '</em>';
       };
 
     } else {
@@ -235,7 +245,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     var matchLen = _.uniq(BET.match, 'matchcode').length;
 
-    if ( matchLen > 15) {
+    if (matchLen > 15) {
       APP.showTips('您好，投注场次不得超过15场哦');
       return false;
     }
@@ -243,7 +253,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
       return false;
     }
-    if (matchLen<2) {
+    if (matchLen < 2) {
       APP.showTips('请在左侧至少选择2场比赛');
       return false;
     }
@@ -387,7 +397,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var bunch = obj.bunch.replace(/\_/g, '串');
     var tr = $('#selectGamePool tbody tr');
     var t = '';
-
+    $('.j-share-num').val(obj.zhushu * 2 * obj.beishu);
     tr.each(function (index, el) {
       var e = tr.eq(index);
       if (index % 2 == 0) {
@@ -421,15 +431,16 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var obj = BET.getSubmitParams();
     var type = 'buy-together';
 
-    obj.rengouMoney = $('#ballModal .j-rengou').val();
+    obj.shareNum = $('#ballModal .j-share-num').val();
+    obj.buyNum = Number($('#ballModal .j-rengou').val());
+    obj.aegisNum = Number($('#ballModal .j-baodi-text').val());
+
     obj.tichengPercent = $('#ipt_extraPercent').val();
-    obj.baodiMoney = $('#ballModal .j-baodi-text').val();
     obj.shareLevel = $('#ballModal .br-set.active').attr('data-set');
     obj.projectTitle = $('#ballModal .j-project-title').val();
     obj.projectText = $('#ballModal .br-textarea').val();
 
-    Config.payMoney = Number(obj.rengouMoney) + Number(obj.baodiMoney);
-
+    Config.payMoney = obj.zhushu * 2 * obj.beishu / obj.shareNum * (obj.buyNum + obj.aegisNum);
 
     APP.checkLogin(Config.payMoney, {
       enoughMoney: function () {

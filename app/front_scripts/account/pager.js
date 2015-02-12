@@ -1,6 +1,18 @@
 var PAGE = (function () {
   'use strict';
 
+  /***
+    @Config  Request必须参数  必要
+    @PageTable 数据展示表格Element 必要
+    @ajaxUrl Request-Data-Url 必要
+    @initAjax 发送Ajax 请求 必要
+    @onSuccess 数据请求成功后回到函数,主要用于组织返回数据的HTML 必要
+    @onFail  数据请求失败回调 可选
+    @makePageHtml  组织分页栏HTML 默认
+    @bindPageEvent  绑定分页事件 默认
+    @Config.pageNum 分页页数 默认
+   ***/
+
   var PAGE = {
     ajaxUrl: '',
     config: {
@@ -8,6 +20,10 @@ var PAGE = (function () {
     },
     pageElement: null,
     pageTable: null,
+    pageNext:'j-next-page',
+    pageBack:'j-next-page',
+    pageValue:'j-next-page',
+    pageGo:'j-pages-go',
     appendTable: function (html) {
       this.pageTable.html(html);
     },
@@ -22,6 +38,7 @@ var PAGE = (function () {
       pageHtmlNode.html('<div class="pull-right pages">' + this.config.page + '/<span class="j-days">' + this.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="' + this.config.page + '" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>');
     },
     initAjax: function (obj) {
+
       var _this = this;
       _this.config = obj;
 
@@ -206,68 +223,4 @@ PAGE.getDrawRecord = function (obj) {
     .fail(function () {
       console.log("error");
     });
-};
-
-// 合买大厅分页
-PAGE.loadPrjctLst = function (obj) {
-
-  PAGE.config = obj;
-  var htmlOutput = '';
-  var htmlStatu = '';
-  var htmlUse = '';
-  var dataItem = '';
-
-  $.ajax({
-      url: '/lottery/project-center/' + lotyName + '/ajax',
-      type: 'get',
-      dataType: 'json',
-      data: {
-        qid: obj.qid,
-        status: obj.status,
-        tc: obj.tc,
-        sort: obj.sort,
-        aegis: obj.aegis,
-        username: obj.username,
-        page: obj.page,
-        pageSize: obj.pageSize
-      },
-    })
-    .done(function (data) {
-      if (data.retCode != 100000) {
-        APP.showTips(data.retMsg);
-      }
-      if (data.retData && data.retData.data.length > 0) {
-        var detailData = data.retData.data;
-        for (var i = 1; i <= detailData.length; i++) {
-          dataItem = detailData[i - 1];
-
-          switch (obj.status) {
-          case '2':
-            htmlStatu = '已满员';
-            htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-            break;
-          case '3':
-            htmlStatu = '已撤单';
-            htmlUse = '<a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-            break
-          default:
-            htmlStatu = '<input type="text" class="u-ci w50 j-gou-count" placeholder="剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
-            htmlUse = '<button data-type="1" class="btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-            break;
-          }
-          htmlOutput += '<tr><td>' + i + '</td><td>' + dataItem.username + '</td><td>' + dataItem.schedule + ' %</td><td class="text-right fc-3 j-mtotal">' + dataItem.price + '元</td><td>' + dataItem.unitPrice + '</td><td>' + htmlStatu + '</td><td>' + htmlUse + '</td></tr>';
-        }
-
-      } else {
-        htmlOutput = '<td colspan="6">暂无相关记录</td>';
-      }
-      PAGE.config.pageNum = Math.ceil(data.retData.totalRecord / obj.pageSize);
-      PAGE.makePageHtml(obj['innerHtmlObj']);
-      PAGE.bindPageEvent(PAGE.loadPrjctLst);
-      $('#projectList').html(htmlOutput);
-    })
-    .fail(function () {
-      htmlOutput = '<td colspan="6">系统繁忙，请稍后再试</td>';
-      $('#projectList').html(htmlOutput);
-    })
 };

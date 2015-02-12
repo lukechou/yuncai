@@ -319,7 +319,7 @@ define(['jquery'], function ($) {
       var money = 0;
       var mdfBtn = '';
       var title = _this.getBuyZhuListTitle();
-      var isHz = _this.nav.small === 'hz' ? ' ' : ',';
+      var isHz = _this.nav.small === 'hz' ? ' ' : '';
 
       for (var i = 0; i < newCodes.length; i++) {
 
@@ -327,10 +327,26 @@ define(['jquery'], function ($) {
 
         html += '<div class="br-zhu-item clearfix" dataBit=' + _this.G_BUY.rowIndex + '><b>[' + title + ']</b><div class="list">';
 
+
+
         for (var m = 0; m < newCodes[i].length; m++) {
-          html += '<span data-c="0">' + newCodes[i][m].sort(function (a, b) {
+
+          if(m===0 && _this.nav.small==='dt'){
+            html += '<span data-c="0">(';
+          }else{
+            html += '<span data-c="0">';
+          }
+
+          html += newCodes[i][m].sort(function (a, b) {
             return a - b;
-          }).join(isHz) + '</span>';
+          }).join(isHz);
+
+          if(m===0 && _this.nav.small==='dt'){
+            html += ')</span>';
+          }else{
+            html += '</span>';
+          }
+
         };
 
         money = _this.addMoney;

@@ -127,6 +127,9 @@ YC.Unit.getMaxDivisor = function(a, b) {
  * @return {[type]}   [description]
  */
 YC.Unit.getMaxDivisible = function(a, b) {
+    if(a <= b){
+        return a;
+    }
     var iMaxDivisibleNo = 0;
     for (var i = 1; i <= a; i++) {
         if(a % i===0){

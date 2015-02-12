@@ -22,7 +22,9 @@ require.config({
 require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store, APP) {
 
   'use strict';
-
+  if($('#saleStatus').val() == 1){
+      APP.showStopSellModal(($('#lotyName').val()=='ssq') ? '双色球' : '大乐透');
+  }
   /*
    *
    *  QUEUE  组合计算 取得排列的数目 Module
@@ -105,8 +107,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   TEMPLATE = {
     frbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>共<span><%= zs %></span>注, 投注<span><%= bs %></span>倍</p><p>本次需支付<span class="fc-3"><%= total %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
     zhbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p>追号<span><%= qs %></span>期</p><p>本次需支付<span class="fc-3"><%= total %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
-    rgbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %>.00</span>元</p><p>共需支付<span class="fc-3"><%= rengou %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
-    bdbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %>.00</span>元, 保底<span><%= baodi %>.00</span>元</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>'
+    rgbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %></span>份</p><p>共需支付<span class="fc-3"><%= rengou %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>',
+    bdbox: '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> 第<span><%= qihao%></span>期</p><p>方案总金额<span class="fc-3"><%= total %>.00</span>元</p><p>您认购<span><%= rengou %></span>份, 保底<span><%= baodi %></span>份</p><p>共需支付<span class="fc-3"><%= pay %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gra2y" data-dismiss="modal">取消</button></div></div></div>'
   };
 
   /**************QUEUE*************/
@@ -1025,7 +1027,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var totalMoney = box.find('.j-quick-total').html() * 1;
 
     // 获取份数
-    var copies = box.find('.j-share-num').val() * 1;
+    var copies = box.find('.j-share-num').val();
 
     // 单份金额
     var oneCopiesMoney = '';
@@ -1034,7 +1036,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var rengouMoney = '';
 
     // 认购份数
-    var rengouCopies = box.find('.j-rengou').val() * 1 || 1;
+    var rengouCopies = box.find('.j-rengou').val();
 
     // 认购百分比
     var rengouPercent = '';
@@ -1047,6 +1049,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var baodiPercent = '';
     var b = parseInt(box.find('.j-baodi-text').val()) || 0;
     var isBaodi = false;
+
+    copies = Number(copies.replace(/[^0-9]/g, ''));
+    rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
 
     // 无购买总金额
     if (totalMoney === 0) {
@@ -1542,7 +1547,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // toggle active
     p1.removeClass('active');
     p.addClass('active');
-
+    debugger
     // update add button
     br.find('.btn-add span').html(html);
     br.find('.btn-add').addClass('active').attr('data-add', 0);
@@ -1798,11 +1803,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var p = $(this).parents('.br-zhu-item'),
       br = $(this).parents('.br-gou'),
-      el = br.siblings('.layout_select'),
+      el = Config.box,
       list = DRAG.getOneListNums(p),
       next = $('#j-tuo-mintips'),
       n = ['rd', 'rt', 'dd', 'dt'],
-      group = el.find('.m-num-group'),
+      group = Config.box.find('.m-num-group'),
       ball = '';
 
     // clear near item style
@@ -1815,7 +1820,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     tuoDanSet = p;
 
     // create ball and update zhu middle
-    COMMON.clearAllBallActive(el);
+    COMMON.clearAllBallActive(group);
 
     // select ball
     for (var i = 0; i < group.length; i++) {

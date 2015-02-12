@@ -19,6 +19,9 @@ require.config({
 require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], function ($, _, store, APP, PL3) {
 
 	'use strict';
+	if ($('#saleStatus').val() == 1) {
+		APP.showStopSellModal('排列三');
+	}
 
 	PL3.init({
 		G_BUY: {
@@ -35,11 +38,11 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			partnerBuy: {
 				projectTitle: '排列3合买方案', // 方案标题
 				projectDescription: '排列3', // 方案标题
-		    shareNum: 0, // 分成多少份
-		    partBuyNum: 0, // 合买认购份数
-		    partAegisNum: 0, // 合买保底份数
-		    commissionPercent: 0, // 合买提成
-		    unitPrice : 0, // 单价
+				shareNum: 0, // 分成多少份
+				partBuyNum: 0, // 合买认购份数
+				partAegisNum: 0, // 合买保底份数
+				commissionPercent: 0, // 合买提成
+				unitPrice: 0, // 单价
 				shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
 			}, // 合买
 			rowIndex: 0,
@@ -66,11 +69,11 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 				this.partnerBuy = {
 						projectTitle: '排列3合买方案', // 方案标题
 						projectDescription: '排列3', // 方案标题
-				    shareNum: 0, // 分成多少份
-				    partBuyNum: 0, // 合买认购份数
-				    partAegisNum: 0, // 合买保底份数
-				    commissionPercent: 0, // 合买提成
-				    unitPrice : 0, // 单价
+						shareNum: 0, // 分成多少份
+						partBuyNum: 0, // 合买认购份数
+						partAegisNum: 0, // 合买保底份数
+						commissionPercent: 0, // 合买提成
+						unitPrice: 0, // 单价
 						shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
 					},
 					this.rowIndex = 0;
@@ -249,7 +252,9 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 		var b = PL3.nav.big;
 		var s = PL3.nav.small;
-
+		if (b === 'zx' && s === 'dt') {
+			s = 'cgtz';
+		}
 		PL3.ballAear = $('.box-' + b + '-' + s + ' .j_normal_choose_code');
 
 		if (b === 'zx' && s === 'cgtz') {
@@ -628,15 +633,15 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 		if (s === 'cgtz') {
 
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(',') + '</span>';
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join('') + '</span>';
 
 			if (b === 'zx') {
 				if (PL3.G_CHOOSE.codes[0][1].length > 0) {
-					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
+					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join('') + '</span>';
 				}
 
 				if (PL3.G_CHOOSE.codes[0][1].length > 0) {
-					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join(',') + '</span>';
+					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join('') + '</span>';
 				}
 			}
 		}
@@ -646,8 +651,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		}
 
 		if (s === 'dt') {
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(',') + '</span>';
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
+			html += '<span data-c="0">(' + PL3.G_CHOOSE.codes[0][0].join('') + ')</span>';
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join('') + '</span>';
 		}
 
 		html += '</div><div class="pull-right"><b><i class="money" data-m="1">' + PL3.G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
@@ -879,6 +884,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		case 3:
 			calculateBuyCodes();
 			$('#track_desc').addClass('hide');
+			$("#share-num").val(PL3.G_BUY.money);
 			updateCreatePartProjectParame();
 			break;
 		}
@@ -983,18 +989,18 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	});
 
 	// 我要分成多少份，最少一份，最多购买金额的数量
-  $("#share-num").on('change', function (event) {
-    event.preventDefault();
-    var val = parseInt($(this).val()) || PL3.G_BUY.money;
-    if (isNaN(val) || val < 1) {
-      val = 1;
-    } else {
-      val = Math.ceil(val);
-      (val > PL3.G_BUY.money) && (val = PL3.G_BUY.money);
-    }
-    $(this).val(val);
-    updateCreatePartProjectParame();
-  });
+	$("#share-num").on('change', function (event) {
+		event.preventDefault();
+		var val = parseInt($(this).val()) || PL3.G_BUY.money;
+		if (isNaN(val) || val < 1) {
+			val = 1;
+		} else {
+			val = Math.ceil(val);
+			(val > PL3.G_BUY.money) && (val = PL3.G_BUY.money);
+		}
+		$(this).val(val);
+		updateCreatePartProjectParame();
+	});
 
 	// 我要认购的份数
 	$("#part_buy").on('change', function (event) {
@@ -1015,12 +1021,10 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	// 我要提成比例
 	$('#commission_percent').on('change', function (event) {
-
 		var val = parseInt($(this).val()) || 0;
 		var rengouPercent = Math.floor($('#part_buy_percent').html());
-
 		if (val > rengouPercent) {
-			$("#part_buy").val(Math.ceil($("#commission_percent").val() / 100 * PL3.G_BUY.money));
+			$("#part_buy").val(Math.ceil($("#commission_percent").val() / 100 * ($('#share-num').val() || 0)));
 			updateCreatePartProjectParame();
 		}
 		PL3.G_BUY.partnerBuy.commissionPercent = val;
@@ -1028,7 +1032,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	// 是否保底
 	$('#has_part_aegis').on('change', function (event) {
-
 		if ($(this)[0].checked) {
 			$('#part_aegis_num').removeAttr('disabled');
 			updateCreatePartProjectParame();
@@ -1037,6 +1040,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			$('#part_aegis_num').val(0);
 			$('#part_aegis_percent').html('0.00');
 		}
+		updateCreatePartProjectParame();
 	});
 
 	// 保底金额修改
@@ -1375,52 +1379,60 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		case 2:
 			break;
 		case 3:
-
+			// 分成多少份
+			var shareNum = parseInt($("#share-num").val()) || 1;
+			if (PL3.G_BUY.money % shareNum !== 0) {
+				shareNum = YC.Unit.getMaxDivisible(PL3.G_BUY.money, shareNum);
+			}
+			$("#share-num").val(shareNum);
+			PL3.G_BUY.partnerBuy.shareNum = shareNum;
+			$('.j-unit-price').html(PL3.G_BUY.money / PL3.G_BUY.partnerBuy.shareNum);
 			if (PL3.G_BUY.money > 0) {
-        // 分成多少份
-
-        var shareNum = parseInt($("#share-num").val());
-				if (PL3.G_BUY.money % shareNum !== 0) {
-					shareNum = YC.Unit.getMaxDivisible(PL3.G_BUY.money, shareNum);
+				if ($('#part_buy').val() > PL3.G_BUY.partnerBuy.shareNum) {
+					$('#part_buy').val(PL3.G_BUY.partnerBuy.shareNum);
 				}
-				$("#share-num").val(shareNum);
-				PL3.G_BUY.partnerBuy.shareNum = shareNum;
+				// 购买的份数
+				PL3.G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
+				// 单价
+				var iUnitPrice = parseInt($('.j-unit-price').html());
+				PL3.G_BUY.partnerBuy.unitPrice = iUnitPrice;
+				// 认购的比例
+				var partBuyPercent = PL3.G_BUY.partnerBuy.partBuyNum / PL3.G_BUY.partnerBuy.shareNum * 100;
 
-        $('.j-unit-price').html(PL3.G_BUY.money / PL3.G_BUY.partnerBuy.shareNum);
-        if($('#part_buy').val() > PL3.G_BUY.partnerBuy.shareNum)
-        {
-          $('#part_buy').val(PL3.G_BUY.partnerBuy.shareNum);
-        }
-        // 购买的份数
-        PL3.G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
-        // 单价
-        var iUnitPrice = parseInt($('.j-unit-price').html());
-        PL3.G_BUY.partnerBuy.unitPrice = iUnitPrice;
-        // 认购的比例
-        var partBuyPercent = PL3.G_BUY.partnerBuy.partBuyNum / PL3.G_BUY.partnerBuy.shareNum * 100;
-
-        $('#part_buy_percent').html(partBuyPercent.toFixed(2));
-        // 提成比例
-        $('#commission_percent').val(function (index, value) {
-          return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
-        });
-        PL3.G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
-        // 保底数据
-        var iMinBaodiNum = Math.ceil(PL3.G_BUY.partnerBuy.shareNum * 0.2);
-        // 剩余
-        var iLessBuyNum = PL3.G_BUY.partnerBuy.shareNum - PL3.G_BUY.partnerBuy.partBuyNum;
-        $('#part_aegis_num').val(function (index, value) {
-          if ($('#has_part_aegis')[0].checked && $(this).val() < iMinBaodiNum) {
-            return iMinBaodiNum;
-          }
-          return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
-        });
-        var aegisNum = parseInt($('#part_aegis_num').val());
-        PL3.G_BUY.partnerBuy.partAegisNum = aegisNum;
-        $('#part_aegis_percent').html((aegisNum / PL3.G_BUY.partnerBuy.shareNum * 100).toFixed(2));
-        $('#buy_money_tips').html(PL3.G_BUY.partnerBuy.partBuyNum * iUnitPrice);
-        $('#aegis_money_tips').html(aegisNum * iUnitPrice);
-        $('#total_money_tips').html((aegisNum + PL3.G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
+				$('#part_buy_percent').html(partBuyPercent.toFixed(2));
+				// 提成比例
+				$('#commission_percent').val(function (index, value) {
+					return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
+				});
+				PL3.G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
+				// 保底数据
+				var iMinBaodiNum = Math.ceil(PL3.G_BUY.partnerBuy.shareNum * 0.2);
+				// 剩余
+				var iLessBuyNum = PL3.G_BUY.partnerBuy.shareNum - PL3.G_BUY.partnerBuy.partBuyNum;
+				//        $('#part_aegis_num').val(function (index, value) {
+				//          if ($('#has_part_aegis')[0].checked && $(this).val() < iMinBaodiNum) {
+				//            return iMinBaodiNum;
+				//          }
+				//          return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
+				//        });
+				if ($('#has_part_aegis')[0].checked) {
+					if (iLessBuyNum > iMinBaodiNum) {
+						$('#part_aegis_num').val(function (index, value) {
+							if ($(this).val() < iMinBaodiNum) {
+								return iMinBaodiNum;
+							}
+							return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
+						});
+					} else {
+						$('#part_aegis_num').val(iLessBuyNum);
+					}
+				}
+				var aegisNum = parseInt($('#part_aegis_num').val());
+				PL3.G_BUY.partnerBuy.partAegisNum = aegisNum;
+				$('#part_aegis_percent').html((aegisNum / PL3.G_BUY.partnerBuy.shareNum * 100).toFixed(2));
+				$('#buy_money_tips').html(PL3.G_BUY.partnerBuy.partBuyNum * iUnitPrice);
+				$('#aegis_money_tips').html(aegisNum * iUnitPrice);
+				$('#total_money_tips').html((aegisNum + PL3.G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
 			} else {
 
 				$('#part_aegis_num').val(0);
@@ -1812,44 +1824,36 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			parameter.qihao = PL3.G_BUY.qihao;
 			parameter.title = PL3.G_BUY.partnerBuy.projectTitle;
 			parameter.textarea = PL3.G_BUY.partnerBuy.projectDescription;
-      parameter.shareNum = PL3.G_BUY.partnerBuy.shareNum;
-      parameter.buyNum = PL3.G_BUY.partnerBuy.partBuyNum;
-      parameter.aegisNum = PL3.G_BUY.partnerBuy.partAegisNum;
-      parameter.extraPercent = PL3.G_BUY.partnerBuy.commissionPercent;
-      parameter.set = PL3.G_BUY.partnerBuy.shareLevel;
-      if (parameter.buyNum < 1) {
-        APP.showTips("合买至少认购1份");
-        return;
-      }
+			parameter.shareNum = PL3.G_BUY.partnerBuy.shareNum;
+			parameter.buyNum = PL3.G_BUY.partnerBuy.partBuyNum;
+			parameter.aegisNum = PL3.G_BUY.partnerBuy.partAegisNum;
+			parameter.extraPercent = PL3.G_BUY.partnerBuy.commissionPercent;
+			parameter.set = PL3.G_BUY.partnerBuy.shareLevel;
+			if (parameter.buyNum < 1) {
+				APP.showTips("合买至少认购1份");
+				return;
+			}
 			var buyMoney = PL3.G_BUY.partnerBuy.unitPrice * parameter.buyNum;
 			var aegisMoney = PL3.G_BUY.partnerBuy.unitPrice * parameter.aegisNum;
 			PL3.G_BUY.payMoney = buyMoney + aegisMoney;
-			comfirmHtml = makeConfirmHtml(3, PL3.G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, PL3.G_BUY.money, buyMoney, aegisMoney, 0, 0);
+			comfirmHtml = makeConfirmHtml(3, PL3.G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, PL3.G_BUY.money, parameter.buyNum, parameter.aegisNum, 0, 0, PL3.G_BUY.payMoney);
 			break;
 
 		case 4:
-
 			url = '/lottery/digital/buy-rank/' + PL3.G_BUY.lotyName + '/' + PL3.playName;
-
 			parameter.zhushu = PL3.G_BUY.proxyBuy.betNum;
 			parameter.beishu = PL3.G_BUY.proxyBuy.multiple;
 			parameter.qishu = PL3.G_BUY.proxyBuy.issueSize;
-
 			PL3.G_BUY.payMoney = PL3.G_BUY.money = parameter.zhushu * parameter.beishu * parameter.qishu * 2;
-
 			comfirmHtml = makeConfirmHtml(2, PL3.G_BUY.lotyCNName, 0, 0, 0, 0, 0, 0, parameter.qishu, PL3.G_BUY.money);
-
 			break;
 		}
-
 		APP.checkLogin(PL3.G_BUY.payMoney, {
 			enoughMoney: function () {
-
 				APP.showTips({
 					html: comfirmHtml,
 					title: '投注确认'
 				});
-
 				$('#buyConfirm').one('click', function (event) {
 					$.ajax({
 							url: url,
@@ -1869,27 +1873,39 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 							buyFailure(PL3.G_BUY.lotyName, PL3.G_BUY.lotyCNName);
 						});
 				});
-
 			}
 		});
 
 	};
 
-	function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyPrice, aegisPrice, trackSize, trackMoney) {
+	function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyNum, aegisNum, trackSize, trackMoney, buyPrice) {
 		var commHtml = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text">';
 		switch (buyType) {
 		case 1: // 自购
-			commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>共<span>' + betNum + '</span>注, 投注<span>' + mutiple + '</span>倍</p><p>本次需支付<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>';
+			commHtml +=
+				'<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+	            <p>共<span>' + betNum + '</span>注, 投注<span>' + mutiple + '</span>倍</p>\
+	            <p>本次需支付<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>';
 			break;
 		case 2: // 追号
-			commHtml += '<p>追号<span>' + trackSize + '</span>期</p><p>本次需支付<span class="fc-3">' + trackMoney + '</span>元</p>';
+			commHtml +=
+				'<p>追号<span>' + trackSize + '</span>期</p>\
+	            <p>本次需支付<span class="fc-3">' + trackMoney + '</span>元</p>';
 		case 4: // 机选
 			break;
 		case 3: // 合买
-			if (aegisPrice > 0) {
-				commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p><p>您认购<span>' + buyPrice.toFixed(2) + '</span>元, 保底<span>' + aegisPrice.toFixed(2) + '</span>元</p><p>共需支付<span class="fc-3">' + (buyPrice + aegisPrice).toFixed(2) + '</span>元</p>';
+			if (aegisNum > 0) {
+				commHtml +=
+					'<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+	              <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
+	              <p>您认购<span>' + buyNum + '</span>份, 保底<span>' + aegisNum + '</span>份</p>\
+	              <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
 			} else {
-				commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p><p>您认购<span>' + buyPrice.toFixed(2) + '</span>元</p><p>共需支付<span class="fc-3">' + (buyPrice + aegisPrice).toFixed(2) + '</span>元</p>';
+				commHtml +=
+					'<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+	              <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
+	              <p>您认购<span>' + buyNum + '</span>份</p>\
+	              <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
 			}
 			break;
 		}

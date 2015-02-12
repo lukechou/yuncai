@@ -84,20 +84,22 @@ textarea { resize: none; word-wrap: break-word; }
 /* Button */
 .btn { border-radius: 2px; font-size: 12px; }
 .btn-big { font-size: 20px; margin: 15px auto 10px; padding: 8px 30px; }
-.btn-add, .btn-add2 { font-weight: bold; position: relative; padding: 10px 25px 10px 35px; color: #fff; background: #bdbcbc; }
+.btn-add, .btn-add2 { font-weight: bold; position: relative; padding: 10px 25px 10px 35px; color: #adadad; font-size: 16px; font-family: '微软雅黑'; background: #f3f3f3; border: 1px #dad9d9 solid; }
 .btn-add > .icon, .btn-add2 > .icon { position: absolute; top: 14px; left: 15px; }
-.btn-add:hover, .btn-add.active, .btn-add2:hover, .btn-add2.active { background: #f13c38; }
+.btn-add.active, .btn-add2.active { background: #f88c35; color: #fff; }
 .btn-s { font-size: 12px; padding: 3px 8px; color: #fff; }
 .btn-c2 { background: #f5f5f5; }
 .btn-clean { line-height: 26px; width: 70px; height: 26px; padding: 0; }
-.btn-gray { color: #fff; background: #bdbcbc; }
 .btn-sear { color: #fff; background: #f88c35; }
 .btn-red, .btn-danger, .btn-c1 { color: #fff; background: #f13c38; }
 .btn-red:hover, .btn-danger:hover, .btn-c1:hover { background: #ff4a46; border-color: #ff4a46; }
 .btn-sear:hover { background: #fd8f37; }
 .btn:hover { text-decoration: none; }
-.btn-big { font-size: 20px; margin: 15px auto 10px; padding: 8px 30px; }
+.btn-del, .btn-gray { background: #f3f3f3; border: 1px #dad9d9 solid; }
+.btn-del:hover, .btn-gray:hover { background: url(../front_images/del-hover.png); }
+.btn-big { font-size: 20px; margin: 30px auto 10px; padding: 8px 30px; }
 .btn-bind { padding: 6px 20px; }
+.btn:focus { outline: none!important; }
 /* 弹出框 按钮组 */
 .m-btns { width: 210px; margin: auto; }
 .m-btns > .btn { width: 90px; margin: 0 5px; }
@@ -128,14 +130,14 @@ textarea { resize: none; word-wrap: break-word; }
 .tipbox .last > .btn { padding: 5px 35px; }
 /* 投注页面选球区样式 */
 .m-num { color: #848484; }
-.m-num-tips { font-size: 12px; }
+.m-num-tips { font-size: 12px; margin-bottom: 8px; }
 .m-num-tips > b { margin-right: 10px; }
 .m-num-title { position: relative; zoom: 1; margin: 20px auto 30px; text-align: center; border-bottom: 1px dashed #c4c4c4; }
 .m-num-title > p { position: absolute; top: -10px; right: 0; left: 0; display: inline-block; zoom: 1; width: 225px; margin: auto; padding: 0 10px; background: #fff; }
 .m-num-title2 > p { font-size: 12px; width: 400px; padding: 0; }
-.m-num-title > p > b { padding-right: 10px; }
+.m-num-title > p > b { padding-right: 5px; }
 .m-num-group { position: relative; margin: 0 0 40px -5px; }
-.m-num-group > a { font-size: 16px; font-weight: bold; line-height: 35px; display: block; float: left; width: 35px; height: 35px; margin: 5px 4px; text-align: center; color: #3d3d3d; border: 1px #dfdfdf solid; border-radius: 50%; background: #f5f5f5; }
+.m-num-group > a { font-size: 16px; font-weight: bold; line-height: 33px; display: block; float: left; width: 33px; height: 33px; margin: 5px 5px; text-align: center; color: #3d3d3d; border: 1px #d2d2d2 solid; border-radius: 50%; background: #ebebeb; }
 .m-num-group > a:hover { text-decoration: none; }
 .m-num-group-red > a.active { text-decoration: none; color: #fff; border: none; background: #f13c38; }
 .m-num-group-blue > a.active { text-decoration: none; color: #fff; border: none; background: #5198f1; }
@@ -173,20 +175,19 @@ textarea { resize: none; word-wrap: break-word; }
 .m-panel .panel-title { font-family: 'Microsoft Yahei'; color: #3d3d3d; }
 .m-panel .panel-heading { border-bottom: 1px #dfdfdf solid; background: #dddedf; }
 /* 高级投注-二级TABS导航 */
-.m-br-nav { padding: 6px 0 0 30px; background: #f5f5f5; }
-.m-br-nav > li > a { font-size: 12px; margin: 0; padding: 6px 15px; color: #3d3d3d; border: none; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f5f5f5; }
-.m-br-nav > li.active > a, .m-br-nav > li > a:hover, .m-br-nav > li.active > a:hover, .m-br-nav > li.active > a:focus { border-top: 2px #f13c38 solid; border-right: 1px #dfdfdf solid; border-bottom: none; border-left: 1px #dfdfdf solid; border-radius: 0; background: #fff; }
+.m-br-nav { padding: 6px 0 0 26px; background: #f5f5f5; }
+.m-br-nav > li > a { font-size: 12px; margin: 0; padding: 0; height: 26px; line-height: 26px; width: 88px; text-align: center; color: #3d3d3d; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f5f5f5; }
+.m-br-nav > li > a:hover { background: #f5f5f5; border-color: transparent; }
+.m-br-nav > li.active > a, .m-br-nav > li.active > a:hover, .m-br-nav > li.active > a:focus { border-top: 2px #f13c38 solid; border-right: 1px #dfdfdf solid; border-bottom: none; border-left: 1px #dfdfdf solid; border-radius: 0; background: #fff; }
 /* 投注页-通用顶部样式 */
 .m-brhd { position: relative; padding: 10px 0; border-bottom: 3px #f13c38 solid; }
 .m-brhd-logo { width: 78px; height: 78px; margin: 0 10px 0 20px; }
-.m-brhd-title { font-size: 16px; margin: 0; }
+.m-brhd-title { font-size: 16px; margin: 0; margin-top: 11px; }
 .m-brhd-title > b { font-size: 22px; }
 .m-brhd-group { position: absolute; bottom: 0; left: 109px; }
 .m-brhd-group > a { font-family: 'Microsoft Yahei'; font-size: 16px; float: left; height: 36px; padding: 8px 25px; color: #3d3d3d; background: #f5f5f5; }
-.m-brhd-group > a.active {color: #fff; background: #f13c38; }
-.m-brhd-group > a:hover{
-  text-decoration: none;
-}
+.m-brhd-group > a.active { color: #fff; background: #f13c38; }
+.m-brhd-group > a:hover { text-decoration: none; }
 .m-brhd-time, .m-brhd-qi { font-size: 12px; position: absolute; right: 10px; }
 .m-brhd-qi { font-family: 'simsun'; font-size: 14px; font-weight: bold; top: 35px; }
 .m-brhd-time { bottom: 15px; color: #848484; }
@@ -195,3 +196,22 @@ textarea { resize: none; word-wrap: break-word; }
 .side { position: fixed; z-index: 100; top: 214px; right: 0; width: 45px; cursor: pointer; background-position: 0 -37px; }
 .side:hover { background-position: 0 0; }
 .side .icon-text { position: absolute; top: 0; left: -100px; width: 69px; opacity: 0; background-position: -45px 0; filter: alpha(opacity=0); }
+/* Mask Alert */
+.m-mask { width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 101; display: none; }
+.m-mask-bg { width: 100%; height: 100%; background: #000; opacity: .4; filter: alpha(opacity=40); }
+.m-mask-main { width: 462px; height: 400px; position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; }
+.m-mask-close { position: absolute; right: 25px; top: 60px; cursor: pointer; }
+.m-stopsell-mask .m-mask-main { width: 600px; height: 320px; background: #fff; border: 8px solid rgba(33, 33, 33, .3); }
+.m-stopsell-mask .modal-header { padding: 10px 15px; color: #fff; background: #e1413b; height: 40px; line-height: 40px; }
+.m-stopsell-mask .modal-header h4 { font-size: 14px; font-family: 'simsun'; font-weight: bold; }
+.m-stopsell-mask .modal-header .close { margin-top: -2px; }
+.m-stopsell-mask .stopsell-img { margin: 30px 0 0 40px; float: left; }
+.m-stopsell-mask .stopsell-box { margin: 30px 0 0 40px; height: 320px; width: 220px; float: left; }
+.m-stopsell-mask .stopsell-box h4 { font-family: 'Microsoft Yahei'; color: #000; text-align: center; margin: 12px 0; }
+.m-stopsell-mask .stopsell-box a { color: #1962ae; }
+.m-stopsell-mask .stopsell-box p { font-size: 12px; text-align: center; }
+.m-stopsell-mask .stopsell-box ul { font-size: 12px; margin-top: 30px; }
+.m-stopsell-mask .stopsell-box ul li { width: 50%; float: left; margin-bottom: 15px; }
+.m-stopsell-mask .stopsell-box ul li a { margin-left: 5px; display: inline-block; width: 36px; text-align: left; }
+.m-stopsell-mask .logo { width: 44px; height: 44px }
+.font-weight { font-weight: bold }

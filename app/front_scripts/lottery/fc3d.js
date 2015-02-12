@@ -17,9 +17,11 @@ require.config({
 });
 
 require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], function($, _, store, APP, PL3) {
-
 	'use strict';
 
+	if($('#saleStatus').val() == 1){
+	    APP.showStopSellModal('福彩3D');
+	}
 	PL3.init({
 		G_BUY: {
 			lotyName: '',
@@ -253,7 +255,9 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 		var b = PL3.nav.big;
 		var s = PL3.nav.small;
-
+		if(b==='zx' && s === 'dt'){
+			s = 'cgtz';
+		}
 		PL3.ballAear = $('.box-' + b + '-' + s + ' .j_normal_choose_code');
 
 		if (b === 'zx' && s === 'cgtz') {
@@ -636,15 +640,15 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 		if (s === 'cgtz') {
 
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(',') + '</span>';
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join('') + '</span>';
 
 			if (b === 'zx') {
 				if (PL3.G_CHOOSE.codes[0][1].length > 0) {
-					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
+					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join('') + '</span>';
 				}
 
 				if (PL3.G_CHOOSE.codes[0][1].length > 0) {
-					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join(',') + '</span>';
+					html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][2].join('') + '</span>';
 				}
 			}
 		}
@@ -654,8 +658,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		}
 
 		if (s === 'dt') {
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][0].join(',') + '</span>';
-			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join(',') + '</span>';
+			html += '<span data-c="0">(' + PL3.G_CHOOSE.codes[0][0].join('') + ')</span>';
+			html += '<span data-c="0">' + PL3.G_CHOOSE.codes[0][1].join('') + '</span>';
 		}
 
 		html += '</div><div class="pull-right"><b><i class="money" data-m="1">' + PL3.G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
@@ -851,23 +855,17 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	 */
 	$('#buy_type').on('click', 'a', function(event) {
 		event.preventDefault();
-
 		// 切换 ICON
 		$(this).parents('#buy_type').find('.icon-y2').removeClass('icon-y2');
 		$(this).find('.icon').addClass('icon-y2');
-
 		PL3.G_BUY.trackData.issueMutipleMap = {}; // clean
-
 		$('#buy_mutiple_span').show();
-
 		PL3.G_BUY.partnerBuy.projectTitle = '排列3合买方案';
 		PL3.G_BUY.partnerBuy.projectDescription = '排列3';
-
 		// clean partner buy
 		PL3.G_BUY.buyType = parseInt($(this).attr('data-buytype'));
 		PL3.G_BUY.mutiple = 1;
 		$('#project_mutiple').val(PL3.G_BUY.mutiple);
-
 		// 1自购 2追号 3合买
 		switch (PL3.G_BUY.buyType) {
 			case 1:
@@ -885,6 +883,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			case 3:
 				calculateBuyCodes();
 				$('#track_desc').addClass('hide');
+				$("#share-num").val(PL3.G_BUY.money);
 				updateCreatePartProjectParame();
 				break;
 		}
@@ -1024,7 +1023,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		var val = parseInt($(this).val()) || 0;
 		var rengouPercent = Math.floor($('#part_buy_percent').html());
 		if (val > rengouPercent) {
-			$("#part_buy").val(Math.ceil($("#commission_percent").val() / 100 * PL3.G_BUY.money));
+			$("#part_buy").val(Math.ceil($("#commission_percent").val() / 100 * ($('#share-num').val() || 0)));
 			updateCreatePartProjectParame();
 		}
 		PL3.G_BUY.partnerBuy.commissionPercent = val;
@@ -1032,7 +1031,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	// 是否保底
 	$('#has_part_aegis').on('change', function(event) {
-
 		if ($(this)[0].checked) {
 			$('#part_aegis_num').removeAttr('disabled');
 			updateCreatePartProjectParame();
@@ -1041,7 +1039,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			$('#part_aegis_num').val(0);
 			$('#part_aegis_percent').html('0.00');
 		}
-
+		updateCreatePartProjectParame();
 	});
 
 	// 保底金额修改
@@ -1379,17 +1377,15 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			case 2:
 				break;
 			case 3:
-
+				// 分成多少份
+				var shareNum = parseInt($("#share-num").val()) || 1;
+				if (PL3.G_BUY.money % shareNum !== 0) {
+					shareNum = YC.Unit.getMaxDivisible(PL3.G_BUY.money, shareNum);
+				}
+				$("#share-num").val(shareNum);
+				PL3.G_BUY.partnerBuy.shareNum = shareNum;
+				$('.j-unit-price').html(PL3.G_BUY.money / PL3.G_BUY.partnerBuy.shareNum);
 				if (PL3.G_BUY.money > 0) {
-					// 分成多少份
-					var shareNum = parseInt($("#share-num").val());
-					if (PL3.G_BUY.money % shareNum !== 0) {
-						shareNum = YC.Unit.getMaxDivisible(PL3.G_BUY.money, shareNum);
-					}
-					$("#share-num").val(shareNum);
-					PL3.G_BUY.partnerBuy.shareNum = shareNum;
-
-					$('.j-unit-price').html(PL3.G_BUY.money / PL3.G_BUY.partnerBuy.shareNum);
 					if ($('#part_buy').val() > PL3.G_BUY.partnerBuy.shareNum) {
 						$('#part_buy').val(PL3.G_BUY.partnerBuy.shareNum);
 					}
@@ -1411,12 +1407,24 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 					var iMinBaodiNum = Math.ceil(PL3.G_BUY.partnerBuy.shareNum * 0.2);
 					// 剩余
 					var iLessBuyNum = PL3.G_BUY.partnerBuy.shareNum - PL3.G_BUY.partnerBuy.partBuyNum;
-					$('#part_aegis_num').val(function(index, value) {
-						if ($('#has_part_aegis')[0].checked && $(this).val() < iMinBaodiNum) {
-							return iMinBaodiNum;
-						}
-						return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
-					});
+//					$('#part_aegis_num').val(function(index, value) {
+//						if ($('#has_part_aegis')[0].checked && $(this).val() < iMinBaodiNum) {
+//							return iMinBaodiNum;
+//						}
+//						return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
+//					});
+					if($('#has_part_aegis')[0].checked){
+			            if(iLessBuyNum > iMinBaodiNum){
+			              $('#part_aegis_num').val(function(index, value) {
+			                if ($(this).val() < iMinBaodiNum) {
+			                  return iMinBaodiNum;
+			                }
+			                return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
+			              });
+			            }else{
+			              $('#part_aegis_num').val(iLessBuyNum);
+			            }
+			          }
 					var aegisNum = parseInt($('#part_aegis_num').val());
 					PL3.G_BUY.partnerBuy.partAegisNum = aegisNum;
 					$('#part_aegis_percent').html((aegisNum / PL3.G_BUY.partnerBuy.shareNum * 100).toFixed(2));
@@ -1827,7 +1835,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 				var buyMoney = PL3.G_BUY.partnerBuy.unitPrice * parameter.buyNum;
 				var aegisMoney = PL3.G_BUY.partnerBuy.unitPrice * parameter.aegisNum;
 				PL3.G_BUY.payMoney = buyMoney + aegisMoney;
-				comfirmHtml = makeConfirmHtml(3, PL3.G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, PL3.G_BUY.money, buyMoney, aegisMoney, 0, 0);
+				comfirmHtml = makeConfirmHtml(3, PL3.G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, PL3.G_BUY.money, parameter.buyNum, parameter.aegisNum, 0, 0, PL3.G_BUY.payMoney);
 				break;
 
 			case 4:
@@ -1869,27 +1877,40 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		});
 	};
 
-	function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyPrice, aegisPrice, trackSize, trackMoney) {
-		var commHtml = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text">';
-		switch (buyType) {
-			case 1: // 自购
-				commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>共<span>' + betNum + '</span>注, 投注<span>' + mutiple + '</span>倍</p><p>本次需支付<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>';
-				break;
-			case 2: // 追号
-				commHtml += '<p>追号<span>' + trackSize + '</span>期</p><p>本次需支付<span class="fc-3">' + trackMoney + '</span>元</p>';
-			case 4: // 机选
-				break;
-			case 3: // 合买
-				if (aegisPrice > 0) {
-					commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p><p>您认购<span>' + buyPrice.toFixed(2) + '</span>元, 保底<span>' + aegisPrice.toFixed(2) + '</span>元</p><p>共需支付<span class="fc-3">' + (buyPrice + aegisPrice).toFixed(2) + '</span>元</p>';
-				} else {
-					commHtml += '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p><p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p><p>您认购<span>' + buyPrice.toFixed(2) + '</span>元</p><p>共需支付<span class="fc-3">' + (buyPrice + aegisPrice).toFixed(2) + '</span>元</p>';
-				}
-				break;
-		}
-		commHtml += '<div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
-		return commHtml;
-	}
+	function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyNum, aegisNum, trackSize, trackMoney, buyPrice) {
+        var commHtml = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text">';
+        switch (buyType) {
+          case 1: // 自购
+            commHtml +=
+                '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+                <p>共<span>' + betNum + '</span>注, 投注<span>' + mutiple + '</span>倍</p>\
+                <p>本次需支付<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>';
+            break;
+          case 2: // 追号
+            commHtml +=
+                '<p>追号<span>' + trackSize + '</span>期</p>\
+                <p>本次需支付<span class="fc-3">' + trackMoney + '</span>元</p>';
+          case 4: // 机选
+            break;
+          case 3: // 合买
+            if (aegisNum > 0) {
+              commHtml +=
+                  '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+                  <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
+                  <p>您认购<span>' + buyNum + '</span>份, 保底<span>' + aegisNum + '</span>份</p>\
+                  <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
+            } else {
+              commHtml +=
+                  '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+                  <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
+                  <p>您认购<span>' + buyNum + '</span>份</p>\
+                  <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
+            }
+            break;
+        }
+        commHtml += '<div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
+        return commHtml;
+      }
 
 	function resetChooseBuyBtn() {
 

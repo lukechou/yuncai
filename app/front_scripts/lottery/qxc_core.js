@@ -68,7 +68,7 @@ var QXC={
                 m--;
             }
         }
-        
+
 		callback(produceCodes);//.sort()
 		return;
 	},
@@ -89,6 +89,7 @@ var QXC={
 		for (var m = 0; m < allDigitalCodes.length; m++) {
 			var digitalCodes = allDigitalCodes[m].split('');
 			var hash = {};
+			digitalCodes.sort();
 			returnCodes[m] = digitalCodes;
 			for (var n = 0; n < digitalCodes.length; n++) {
 				if(hash[digitalCodes[n]]) {

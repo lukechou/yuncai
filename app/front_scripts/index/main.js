@@ -5,6 +5,7 @@ require.config({
     store: '../lib/store.min',
     bootstrap: '../lib/bootstrap.min',
     owl: '../lib/owl.carousel.min',
+    slick: '../lib/slick.min',
     app: '../common/app',
     index: 'index'
   },
@@ -21,7 +22,7 @@ require.config({
 
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], function ($, _, store, APP, index) {
+require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick'], function ($, _, store, APP, index) {
 
   index.seeds.ballNum = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
   index.seeds.digitalBallNum = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -60,15 +61,34 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
     $(this).addClass('active')
   });
 
-  // 首页 头部轮播
-  $("#owl-example").owlCarousel({
-    navigation: false,
-    slideSpeed: 200,
-    paginationSpeed: 400,
-    lazyLoad: true,
-    singleItem: true,
-    autoPlay: 4000
+  $('#slick').slick({
+    lazyLoad: 'ondemand',
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    speed: 400,
+    infinite: true,
+    arrows: true,
+    dots: true
   });
+
+  $('#slick').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+    if (nextSlide === 1) {
+      var w = ($(window).width() - 985) / 2 + 265;
+      $('.bn3-left').width(w);
+    }
+  });
+
+  // 首页 头部轮播
+  // $("#owl-example").owlCarousel({
+  //   navigation: false,
+  //   slideSpeed: 200,
+  //   paginationSpeed: 400,
+  //   lazyLoad: true,
+  //   singleItem: true,
+  //   autoPlay: 4000
+  // });
 
   // 快捷投注类型切换
   $('#j-quick-buy-loty-type').on('click', 'a', function (event) {
@@ -103,24 +123,11 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
     index.parameter.codes = index.buyCodes[index.currLotyName];
     index.parameter.unikey = $.now();
 
-    $.ajax({
-        url: '/account/islogin',
-        type: 'get',
-        dataType: 'json',
-      })
-      .done(function (D) {
-        if (D.retCode === 100000) {
-          if (Number(D.retData.money.replace(/,/g, '')) >= 2) {
-            showBuyLotyConfirmMask();
-          } else {
-            APP.showTips({
-              html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>'
-            });
-          }
-        } else {
-          APP.handRetCode(D.retCode, D.retMsg, quickBuyLottery);
-        }
-      });
+    APP.checkLogin(2, {
+      enoughMoney: function () {
+        showBuyLotyConfirmMask();
+      }
+    });
 
   };
 
@@ -175,7 +182,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
           index.hasCreate[index.currLotyName] = false;
           APP.updateUserMoney();
         } else {
-          APP.showTips("购彩火爆，服务器正在努力处理.");
+          APP.showTips(data.retMsg);
         }
       })
       .fail(function () {
@@ -326,6 +333,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
     };
 
     if (t.attr('data-gm')) {
+
       var min = Number(t.attr('data-gm'));
       var maxBuy = 500000;
 
@@ -376,7 +384,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
                   APP.showTips("购买成功，预祝您中奖.");
                   APP.updateUserMoney();
                 } else {
-                  APP.showTips("购彩火爆，服务器正在努力处理.");
+                  APP.showTips(data.retMsg);
                 }
               })
               .fail(function () {
@@ -387,26 +395,13 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
 
       });
     } else {
-
+      //合买
       if (checkByNum(buyNum, maxNum)) {
-        $.ajax({
-            url: '/account/islogin',
-            type: 'get',
-            dataType: 'json',
-          })
-          .done(function (D) {
-            if (D.retCode === 100000) {
-              if (Number(D.retData.money.replace(/,/g, '')) >= buyNum) {
-                submitHemai();
-              } else {
-                APP.showTips({
-                  html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><p class="last"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></p></div>'
-                });
-              }
-            } else {
-              APP.handRetCode(D.retCode, D.retMsg, quickBuyLottery);
-            }
-          });
+        APP.checkLogin(buyNum, {
+          enoughMoney: function () {
+            submitHemai();
+          }
+        });
       }
 
     }
@@ -432,13 +427,15 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
         var dataItem = '';
         var dataArr = [];
         var percent = null;
+
         if (data.retCode === 100000) {
           dataItem = isHemai ? data.retData.data : data.retData;
+
           if (dataItem.length > 0) {
             for (var i = dataItem.length - 1; i >= 0; i--) {
               if (isHemai) {
                 percent = (1 - (dataItem[i].lessNum / Number(dataItem[i].price))).toFixed(2) * 100;
-                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + index.modelLoty[index.modelLotyName].cnName + '</div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen">每份' + dataItem[i].unitPrice + '元<input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-tou" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button><a href="' + dataItem[i].detailURI + '" class="link">详情</a></div></div></div>');
+                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + index.modelLoty[index.modelLotyName].cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-tou" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button></div></div></div>');
               } else {
 
                 dataArr.push('<div class="item m-he-box">\
@@ -446,8 +443,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
                               <img src="/front_images/index/index-hd.png" alt="head" class="head">\
                               <p>' + dataItem[i].username + '</p>\
                               <p class="zj">\
-                                  最近30天盈利金额：<br/>\
-                                  <span class="fs-24">' + dataItem[i].money + '</span>\
+                                  最近30天盈利金额：<span class="fs-24">' + dataItem[i].money + '</span>\
                                   元\
                               </p>\
                           </div>\
@@ -460,7 +456,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
                                   投注\
                                   <input type="text" class="j-input-place" data-place="最低投注' + dataItem[i].minMoney + '" value="最低投注' + dataItem[i].minMoney + '" />\
                                   元\
-                                  <button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy btn-tou">确定</button>\
+                                  <button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy btn-tou pull-right">确定</button>\
                               </div>\
                           </div>\
                       </div>');
@@ -546,39 +542,33 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
     var delay = 300;
     var html = '';
     var item = '';
-
-    if (d) {
-      index.startList = d;
-    }
+    var ul = '';
+    var width = $('#j-week-text').width();
 
     html += '<ul id="j-run-list">';
 
-    for (var i = index.startList.length - 1; i >= 0; i--) {
-      item = index.startList[i];
-      html += '<li>'+item.username.slice(0, 3) + '...中奖<span>' + item.bonus_money + '</span>元</li>';
+    for (var i = d.length - 1; i >= 0; i--) {
+      item = d[i];
+      html += '<li>' + item.username.slice(0, 3) + '...中奖<span>' + item.bonus_money + '元</span></li>';
     };
 
     html += '</ul>';
 
     $('#j-week-text').html(html);
+    ul = $('#j-run-list');
 
-    setInterval(function(){
-      var ul = $('#j-run-list');
-      var newLi
+    ul.width(d.length * width);
+    setInterval(function () {
       ul.animate({
-        marginTop:  '-60px'},
-        300, function() {
-          ul.first()
-          console.log(index.startIndex);
-        /* stuff to do after animation is complete */
-      });
-    }, 1000);
-
-    // if (index.startIndex < index.startList.length - 1) {
-    //   index.startIndex++;
-    // } else {
-    //   index.startIndex = 0;
-    // }
+          marginLeft: -width
+        },
+        300,
+        function () {
+          var h = ul.find('li').first().clone();
+          ul.find('li').first().remove();
+          ul.css('marginLeft', 0).append(h);
+        });
+    }, 4000);
 
   }
 
@@ -766,7 +756,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap'], funct
                   index.hasCreate[index.currLotyName] = false;
                   APP.updateUserMoney();
                 } else {
-                  APP.showTips("购彩火爆，服务器正在努力处理.");
+                  APP.showTips(data.retMsg);
                 }
               })
               .fail(function () {

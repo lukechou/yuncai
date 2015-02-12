@@ -20,7 +20,7 @@ $(function () {
       this.appendTable(htmlOutput);
       record.type = obj.type;
     };
-    PAGE.onFail = function(){
+    PAGE.onFail = function () {
       return;
     };
   };

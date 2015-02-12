@@ -101,6 +101,9 @@ $(document).ready(function() {
             if(data.retCode === 100000){
                 lessSeconds = Math.floor((data.retData[0].company_sell_etime - data.retData[0].sys_time));
                 stopSale = (0===parseInt(data.retData[0].sell_status, 0));
+                if(stopSale){
+                    APP.showStopSellModal(G_BUY.lotyCNName);
+                }
                 G_BUY.qihao = data.retData[0].issue_num;
                 G_BUY.qihaoId = data.retData[0].id;
             }
@@ -119,14 +122,13 @@ $(document).ready(function() {
         })
         .done(function(data) {
             if(data.retCode==100000){
-
                 var html = '';
                 for (var i = 0, len=data.retData.length; i < len; i++) {
                     var kjhmHtml = ('' == data.retData[i]['kjhm']) ? '等待开奖' : '<span class="fc-3">'+data.retData[i]['kjhm']+'</span>';
                     html += '<tr><td>'+data.retData[i]['no']+'期</td><td>'+kjhmHtml+'</td></tr>';
                 };
 //                <span class="bg-3">
-                var kjHTML = '等待开奖'; 
+                var kjHTML = '等待开奖';
                 if('' != data.retData[0]['kjhm'])
                 {
                     kjHTML = '';
@@ -137,7 +139,6 @@ $(document).ready(function() {
                 }
                 $('#j-new-num').html(kjHTML);
                 $('#j-last-issue-no').html(data.retData[0]['no']);
-
                 $('#j-last-issue-n').html(html);
             }
         })
@@ -179,10 +180,8 @@ $(document).ready(function() {
             if(data.retCode === 100000){
                 // 前一 // "1": "24|8|0|5|19|3|7|2|30|12|1",
                 var arrQ1 = data.retData['1'].split('|');
-                console.log(arrQ1);
                 var max = _.max(arrQ1, function(chr){return parseInt(chr);});
                 $('.j-row-q1').find('.j-yilou').each(function(index, el) {
-                    console.log(arrQ1[index]);
                     var html = (max == arrQ1[index]) ? ('<b style="color:red;">'+arrQ1[index]+'</b>') : arrQ1[index];
                     $(this).html(html);
                 });
@@ -233,14 +232,29 @@ $(document).ready(function() {
         if(stopSale){
             $('#j-less-info').html('停止销售');
         }else if(lessSeconds > 0){
-
+            var hours = Math.floor(lessSeconds / 3600);
             var minute = Math.floor(lessSeconds / 60 % 60);
             var seconds = lessSeconds % 60;
 
             minute = String((minute < 10) ? '0' + minute : minute);
             seconds = String((seconds < 10) ? '0' + seconds : seconds);
+            var minuteAndSecondHtml = '<span class="m-time-djs" >'+minute.slice(0,1)+'</span><span class="m-time-djs" >'+minute.slice(1,2)+'</span><span>分</span><span class="m-time-djs" >'+seconds.slice(0,1)+'</span><span class="m-time-djs" >'+seconds.slice(1,2)+'</span><span>秒</span>';
+            var outputHtml = '';
 
-            $('#j-less-info').html('<span class="m-time-djs" >'+minute.slice(0,1)+'</span><span class="m-time-djs" >'+minute.slice(1,2)+'</span><span>分</span><span class="m-time-djs" >'+seconds.slice(0,1)+'</span><span class="m-time-djs" >'+seconds.slice(1,2)+'</span><span>秒</span>');
+            if(hours > 10){
+                hours = String(hours);
+                outputHtml =  '<span class="m-time-djs" >'+hours.slice(0,1)+'</span><span class="m-time-djs" >'+hours.slice(1,2)+'</span><span>时</span>';
+                outputHtml += minuteAndSecondHtml;
+            }else{
+                if(hours>0){
+                outputHtml =  '<span class="m-time-djs" >0</span><span class="m-time-djs" >'+hours+'</span><span>时</span>';
+                outputHtml += minuteAndSecondHtml;
+                }else{
+                    outputHtml += minuteAndSecondHtml;
+                }
+            }
+
+            $('#j-less-info').html(outputHtml);
         }else{
             $('#j-less-info').html('销售时间截止');
             if(G_BUY.qihao){

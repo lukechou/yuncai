@@ -45,7 +45,7 @@ define(['jquery'], function ($) {
       var totalMoney = box.find('#j-total-money').html() * 1;
 
       // 获取份数
-      var copies = box.find('.j-share-num').val() * 1;
+      var copies = box.find('.j-share-num').val();
 
       // 单份金额
       var oneCopiesMoney = '';
@@ -54,7 +54,7 @@ define(['jquery'], function ($) {
       var rengouMoney = '';
 
       // 认购份数
-      var rengouCopies = box.find('.j-rengou').val() * 1 || 1;
+      var rengouCopies = box.find('.j-rengou').val();
 
       // 认购百分比
       var rengouPercent = '';
@@ -69,11 +69,14 @@ define(['jquery'], function ($) {
       var isBaodi = true;
       var isFullBao = box.find('#j-full-bao')[0].checked;
 
-      if(isFullBao){
-          box.find('.j-baodi-text').attr('readonly',true);
-        }else{
-          box.find('.j-baodi-text').removeAttr('readonly');
-        }
+      if (isFullBao) {
+        box.find('.j-baodi-text').attr('readonly', true);
+      } else {
+        box.find('.j-baodi-text').removeAttr('readonly');
+      }
+
+      copies = Number(copies.replace(/[^0-9]/g, ''));
+      rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
 
       // 无购买总金额
       if (totalMoney === 0) {
@@ -94,8 +97,8 @@ define(['jquery'], function ($) {
         rengouCopies = copies;
       }
 
-      if(rengouCopies/copies <.05){
-        rengouCopies = Math.ceil(copies*.05);
+      if (rengouCopies / copies < .05) {
+        rengouCopies = Math.ceil(copies * .05);
       }
 
       // 认购金额必须大于提成金额
@@ -124,7 +127,7 @@ define(['jquery'], function ($) {
 
         }
 
-        if(isFullBao){
+        if (isFullBao) {
           baodiCopies = copies - rengouCopies;
         }
 
