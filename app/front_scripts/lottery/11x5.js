@@ -125,7 +125,7 @@ $(document).ready(function() {
                 var html = '';
                 for (var i = 0, len=data.retData.length; i < len; i++) {
                     var kjhmHtml = ('' == data.retData[i]['kjhm']) ? '等待开奖' : '<span class="fc-3">'+data.retData[i]['kjhm']+'</span>';
-                    html += '<tr><td>'+data.retData[i]['no']+'期</td><td>'+kjhmHtml+'</td></tr>';
+                    html += '<tr><td class="right-qihao">'+data.retData[i]['no']+'期</td><td>'+kjhmHtml+'</td></tr>';
                 };
 //                <span class="bg-3">
                 var kjHTML = '等待开奖';
@@ -241,7 +241,7 @@ $(document).ready(function() {
             var minuteAndSecondHtml = '<span class="m-time-djs" >'+minute.slice(0,1)+'</span><span class="m-time-djs" >'+minute.slice(1,2)+'</span><span>分</span><span class="m-time-djs" >'+seconds.slice(0,1)+'</span><span class="m-time-djs" >'+seconds.slice(1,2)+'</span><span>秒</span>';
             var outputHtml = '';
 
-            if(hours > 10){
+            if(hours >= 10){
                 hours = String(hours);
                 outputHtml =  '<span class="m-time-djs" >'+hours.slice(0,1)+'</span><span class="m-time-djs" >'+hours.slice(1,2)+'</span><span>时</span>';
                 outputHtml += minuteAndSecondHtml;

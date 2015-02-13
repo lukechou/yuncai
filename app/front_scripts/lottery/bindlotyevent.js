@@ -435,8 +435,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // check select ball for toggle add button status
     var p = Config.box;
     var m = DLT.getZhuiJiaStatus();
-    var rLen = parseInt(p.find('.ball_red li.active').length),
-      bLen = parseInt(p.find('.ball_blue li.active').length),
+    var rLen = parseInt(p.find('.j-ball-red li.active').length),
+      bLen = parseInt(p.find('.j-ball-blue li.active').length),
       x = 0,
       y = 0,
       t = 0;
@@ -445,9 +445,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       x = QUEUE.getACTotalNum(rLen, SEEDS[Config.lotyName].redTotal, 'C');
       y = QUEUE.getACTotalNum(bLen, SEEDS[Config.lotyName].blueTotal, 'C');
       t = x * y;
-      p.find('.btn-add').addClass('active');
+
+      COMMON.updateAddBtn(true);
     } else {
-      p.find('.btn-add').removeClass('active');
+      COMMON.updateAddBtn(false);
     }
 
     COMMON.updateQuickZhu(rLen, bLen, t, t * m, p);
@@ -499,12 +500,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     COMMON.clearAllBallActive(el);
     for (var i = 0; i < r.length; i++) {
       rnum = parseInt(r[i]) - 1;
-      el.find('.ball_red li').eq(rnum).addClass('active');
+      el.find('.j-ball-red li').eq(rnum).addClass('active');
     };
 
     for (var i = 0; i < b.length; i++) {
       bnum = parseInt(b[i]) - 1;
-      el.find('.ball_blue li').eq(bnum).addClass('active');
+      el.find('.j-ball-blue li').eq(bnum).addClass('active');
     };
 
     COMMON.checkBallGroup($(this));
@@ -634,6 +635,28 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     };
   }
 
+  /*
+   * 更新 添加按钮状态
+   * @ active Boolean
+   * @ text String Span text
+   */
+  COMMON.updateAddBtn = function(active,text){
+
+    var btn = Config.box.find('.j-add-btn,.j-add-btn-2');
+
+    if(active){
+      btn.addClass('active');
+    }else{
+      btn.removeClass('active');
+    }
+
+    if(text){
+      btn.find('span').html(text);
+    }
+
+  };
+
+
   // 检测拖胆选球区
   DRAG.checkBallAear = function () {
 
@@ -641,9 +664,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var zhu = DRAG.getTuodanBallZhu();
 
     if (zhu.total) {
-      $('#tuo-sub').addClass('active');
+      COMMON.updateAddBtn(true);
     } else {
-      $('#tuo-sub').removeClass('active');
+      COMMON.updateAddBtn(false);
     }
 
     // 更新Tips View
@@ -816,9 +839,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     $('#sd-tip-zhu').html(l);
     $('#sd-tip-total').html(l * m);
     if (l) {
-      $('#sd_sub').addClass('active')
+      COMMON.updateAddBtn(true);
     } else {
-      $('#sd_sub').removeClass('active')
+      COMMON.updateAddBtn(false);
     }
 
   }
@@ -1001,7 +1024,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   ZHUI.updateHemai = function (copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies) {
 
     var box = Config.box;
-
+    var baodiTips = baodiCopies * oneCopiesMoney || 0;
+    var totalTips = (rengouCopies + baodiCopies) * oneCopiesMoney || 0;
     // 更新份数,每份金额,认购份数,提成百分比,认购百分比
     box.find('.j-share-num').val(copies);
     box.find('.j-unit-price').html(oneCopiesMoney);
@@ -1013,8 +1037,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     box.find('.j-baodi-text').val(baodiCopies);
     box.find('.j-baodi-percent').html(baodiPercent);
     box.find('.j-rengou-tip').html(rengouCopies * oneCopiesMoney);
-    box.find('.j-baidi-tip').html(baodiCopies * oneCopiesMoney);
-    box.find('.j-totalm-tip').html((rengouCopies + baodiCopies) * oneCopiesMoney);
+
+    box.find('.j-baidi-tip').html(baodiTips);
+    box.find('.j-totalm-tip').html(totalTips);
 
   };
 
@@ -1063,8 +1088,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     if (totalMoney % copies === 0) {
       oneCopiesMoney = totalMoney / copies;
     } else {
-      oneCopiesMoney = 2;
-      copies = totalMoney / 2;
+      oneCopiesMoney = 1;
+      copies = totalMoney;
     }
 
     // 认购份数小于0 或大于总份数时
@@ -1409,7 +1434,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     Config.isZhuiJia = $(this)[0]['checked'];
     DLT.updateZhuList(Config.box);
-
+    ZHUI.setHeMaiTotal();
   });
 
   /**
@@ -1417,10 +1442,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
    */
 
   // 添加到投注列表 or 修改投注号码
-  $('.btn-add').on('click', function (event) {
+  $('.j-add-btn').on('click', function (event) {
 
-    var p = Config.box.find('.j-touz-area'),
-      a = parseInt($(this).attr('data-add')),
+    var a = parseInt($(this).attr('data-add')),
       h = $(this).hasClass('active'),
       total = $(this).parents('.br-gou').siblings('.m-num-title').find('.j-quick-hd-total').html();
 
@@ -1429,9 +1453,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       bNums = [],
       tips = ['请先选择号码', '至少选择' + SEEDS[Config.lotyName].redTotal + '个红球和' + SEEDS[Config.lotyName].blueTotal + '个蓝球', '您好，单个投注的金额应小于2万元，请返回重新选择'];
 
-    var eRed = p.find('.ball_red .active'),
-      eBlue = p.find('.ball_blue .active'),
-      eGroup = p.find('.ball-group .active');
+    var eRed = Config.box.find('.j-ball-red .active'),
+      eBlue = Config.box.find('.j-ball-blue .active'),
+      eGroup = Config.box.find('.j-layout-select .active');
 
     if (parseInt(total) > 20000) {
       APP.showTips(tips[2]);
@@ -1547,10 +1571,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // toggle active
     p1.removeClass('active');
     p.addClass('active');
-    debugger
+
     // update add button
-    br.find('.btn-add span').html(html);
-    br.find('.btn-add').addClass('active').attr('data-add', 0);
+    COMMON.updateAddBtn(true, html);
+    Config.box.find('.j-add-btn').addClass('active').attr('data-add', 0);
     qiuckSet = p;
 
     // create ball and update zhu middle
@@ -1561,15 +1585,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   // 快捷投注随机选球
   $('.jxredball').on('click', function (event) {
-    var v = $(this).siblings('.jxRedBall_Num').val();
-    var sr = $(this).parents('.area_select').siblings('#ball_red');
+
+    var v = Config.box.find('.jxRedBall_Num').val();
+    var sr = Config.box.find('.j-ball-red');
     COMMON.randomNum(sr, 'redBall', v);
     COMMON.checkBallGroup($(this));
+
   });
 
   $('.jxblueball').on('click', function (event) {
-    var v = $(this).siblings('.jxBlueBall_Num').val();
-    var sb = $(this).parents('.area_select').siblings('#ball_blue');
+    var v = Config.box.find('.jxBlueBall_Num').val();
+    var sb = Config.box.find('.j-ball-blue');
     COMMON.randomNum(sb, 'blueBall', v);
     COMMON.checkBallGroup($(this));
   });
@@ -1577,7 +1603,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   // 快捷投注 选球
   $('.ball-group').on('click', 'li', function (event) {
 
-    var redGroup = $(this).parents('.ball_red');
+    var redGroup = Config.box.find('.j-ball-red');
     var redGroupAc = redGroup.find('.active');
 
     if (redGroup[0]) {
@@ -1614,12 +1640,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   // 快捷投注 清空投注列表
   $('.clearredball').on('click', function (event) {
-    $(this).parents('.area_select').siblings('.ball_red').find('.active').removeClass();
+    Config.box.find('.j-ball-red .active').removeClass();
     COMMON.checkBallGroup($(this));
   });
 
   $('.clearblueball').on('click', function (event) {
-    $(this).parents('.area_select').siblings('.ball_blue').find('.active').removeClass();
+    Config.box.find('.j-ball-blue .active').removeClass();
     COMMON.checkBallGroup($(this));
   });
 
@@ -1628,8 +1654,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var c = $(this).parents('.br-zhu');
     $(this).parents('.br-zhu-item').remove();
-    $('.btn-add').attr('data-add', 1);
-    $('.btn-add').find('span').html('添加到投注列表');
+    $('.j-add-btn').attr('data-add', 1);
+    $('.j-add-btn').find('span').html('添加到投注列表');
     COMMON.updateTotalZhu(c);
   });
 
@@ -1866,7 +1892,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   //  拖胆投注-选中当前注
   $('#j-tuo-zhu').on('click', '.br-zhu-item', function (event) {
 
-    var el = $(this).parents('.br-gou').siblings('.layout_select'),
+    var el = $(this).parents('.br-gou').siblings('.layout_select,.dt_layout_select'),
       list = DRAG.getOneListNums($(this)),
       next = $('#j-tuo-mintips'),
       n = '',
@@ -2014,12 +2040,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var c = $(this).parents('.br-zhu');
     $(this).parents('.br-zhu-item').remove();
     MANUAL.setSdTotal();
+    ZHUI.setHeMaiTotal();
   });
 
   // 清空列表
   $('#j-sd-clean').on('click', function (event) {
     $(this).parents('.br-zhu-r').siblings('.br-zhu-l').html('');
     MANUAL.setSdTotal();
+    ZHUI.setHeMaiTotal();
   });
 
   /**
@@ -2096,6 +2124,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       box.find('.j-bei-text').show();
       he.removeClass('hide');
       qi.addClass('hide');
+      ZHUI.setHeMaiTotal();
       break;
     }
 

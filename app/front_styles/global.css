@@ -34,7 +34,8 @@ textarea { resize: none; word-wrap: break-word; }
 .mt5 { margin-top: 5px; }
 .mt10 { margin-top: 10px !important; }
 .mt25 { margin-top: 25px !important; }
-.mr0 { margin-right: 0; }
+.mt30 { margin-top: 30px !important; }
+.mr0 { margin-right: 0!important; }
 .mr5 { margin-right: 5px !important; }
 .mr15 { margin-right: 15px; }
 .mb0 { margin-bottom: 0; }
@@ -132,16 +133,17 @@ textarea { resize: none; word-wrap: break-word; }
 .m-num { color: #848484; }
 .m-num-tips { font-size: 12px; margin-bottom: 8px; }
 .m-num-tips > b { margin-right: 10px; }
-.m-num-title { position: relative; zoom: 1; margin: 20px auto 30px; text-align: center; border-bottom: 1px dashed #c4c4c4; }
+.m-num-title { position: relative; zoom: 1; margin: 20px auto 30px; text-align: center; height: 1px;
+background: url(../front_images/bg-line.png); }
 .m-num-title > p { position: absolute; top: -10px; right: 0; left: 0; display: inline-block; zoom: 1; width: 225px; margin: auto; padding: 0 10px; background: #fff; }
 .m-num-title2 > p { font-size: 12px; width: 400px; padding: 0; }
-.m-num-title > p > b { padding-right: 5px; }
+.m-num-title > p > b { padding-right: 5px; font-weight: bold;}
 .m-num-group { position: relative; margin: 0 0 40px -5px; }
 .m-num-group > a { font-size: 16px; font-weight: bold; line-height: 33px; display: block; float: left; width: 33px; height: 33px; margin: 5px 5px; text-align: center; color: #3d3d3d; border: 1px #d2d2d2 solid; border-radius: 50%; background: #ebebeb; }
 .m-num-group > a:hover { text-decoration: none; }
 .m-num-group-red > a.active { text-decoration: none; color: #fff; border: none; background: #f13c38; }
 .m-num-group-blue > a.active { text-decoration: none; color: #fff; border: none; background: #5198f1; }
-.m-num-fun { font-size: 12px; position: absolute; right: 10px; bottom: 10px; }
+.m-num-fun { font-size: 12px; position: absolute; right: 17px; bottom: 5px; }
 .m-num-fun > select { width: 45px; padding: 3px; border: 1px #c4c4c4 solid; background: #fff; }
 .m-num-sui { margin: 0 5px; }
 .m-num-clean { color: #3d3d3d; }
@@ -176,7 +178,10 @@ textarea { resize: none; word-wrap: break-word; }
 .m-panel .panel-heading { border-bottom: 1px #dfdfdf solid; background: #dddedf; }
 /* 高级投注-二级TABS导航 */
 .m-br-nav { padding: 6px 0 0 26px; background: #f5f5f5; }
-.m-br-nav > li > a { font-size: 12px; margin: 0; padding: 0; height: 26px; line-height: 26px; width: 88px; text-align: center; color: #3d3d3d; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f5f5f5; }
+.m-br-nav > li{ margin-bottom: 0;}
+.m-br-nav > li.active{position: relative;
+top: 1px;}
+.m-br-nav > li > a { font-size: 12px; margin: 0; padding: 0; height: 28px; line-height: 28px; width: 88px; text-align: center; color: #3d3d3d; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f5f5f5; }
 .m-br-nav > li > a:hover { background: #f5f5f5; border-color: transparent; }
 .m-br-nav > li.active > a, .m-br-nav > li.active > a:hover, .m-br-nav > li.active > a:focus { border-top: 2px #f13c38 solid; border-right: 1px #dfdfdf solid; border-bottom: none; border-left: 1px #dfdfdf solid; border-radius: 0; background: #fff; }
 /* 投注页-通用顶部样式 */

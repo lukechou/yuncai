@@ -54,7 +54,7 @@ define(['jquery'], function ($) {
       var loginModal = null;
 
       if (!$('#user-login')[0]) {
-        var html = '<div id="j-login-modal" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="/html/user/find_psw.html" id="j-find-pwd">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+        var html = '<div id="j-login-modal" class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="/html/user/find_psw.html">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
         $('body').append(html);
       };
 
@@ -63,10 +63,6 @@ define(['jquery'], function ($) {
       loginModal.modal('show');
 
       $('#user-login').unbind();
-      $('#j-find-pwd').unbind();
-      $('#j-find-pwd').on('click', function (event) {
-        _this.showTips('请致电客服，由客服人员为您解决。<br>客服中心电话：4008-898-310');
-      });
       $('#user-login').on('click', function (event) {
 
         var user = _this.filterStr($('#login-username').val());
@@ -438,6 +434,13 @@ define(['jquery'], function ($) {
 
       var _this = this;
 
+
+      $('#j-header-login-btn').on('click', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        location.href='/account/login?ret_url=' + encodeURIComponent(location.href.replace(location.origin, ''));
+      });
+
       var menu = {
         el: $('#choseCai'),
         init: function (args) {
@@ -568,3 +571,5 @@ define(['jquery'], function ($) {
   a.init();
   return a;
 });
+
+

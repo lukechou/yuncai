@@ -52,7 +52,7 @@ var G_BUY = {
         shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
       },
       this.rowIndex = 0;
-    this.buyType = 1; // 1, 自购。 2， 追号， 3合买
+    // this.buyType = 1; // 1, 自购。 2， 追号， 3合买
     //    this.trackData = {
     //      issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
     //      trackStopMoney: 0 // 中奖急停金额
@@ -89,8 +89,8 @@ function init() {
   // myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
 $(document).ready(function() {
   init();
-  if($('#saleStatus').val() == 1){
-      APP.showStopSellModal('排列五');
+  if ($('#saleStatus').val() == 1) {
+    APP.showStopSellModal('排列五');
   }
   $(".j-num-group").on('click', 'a', function(event) {
     event.preventDefault();
@@ -250,7 +250,7 @@ $(document).ready(function() {
       G_CHOOSE.init();
       $('#choose_to_buy_tip').html('添加到投注列表');
       $('#choose_to_buy').attr('data-add', 1);
-      $('#choose_to_buy').removeClass('active');
+      updateAddBtn(false);
       $('#choose_to_buy').attr('disabled', 'disabled');
     }
 
@@ -298,7 +298,7 @@ $(document).ready(function() {
       return;
     }
     reflectChooseCode($(this).attr('databit'));
-    $('#choose_to_buy').addClass('active');
+    updateAddBtn(true);
   });
 
   /**
@@ -332,7 +332,7 @@ $(document).ready(function() {
     // event.preventDefault();
     var objectKey = $(this).parents('.br-zhu-item').attr('databit');
     reflectChooseCode(objectKey);
-    $('#choose_to_buy').addClass('active');
+    updateAddBtn(true);
     $('#choose_to_buy').attr('data-add', 0);
     $('#choose_to_buy_tip').html('修改投注号码');
     G_MODIFY_CODE_OBJ = {
@@ -457,14 +457,31 @@ $(document).ready(function() {
    */
   $('#buy_type').on('click', 'a', function(event) {
     event.preventDefault();
-    /* Act on the event */
+    G_BUY.buyType = parseInt($(this).attr('data-buytype'));
+    initBuyType();
+  });
+
+  function initBuyType() {
+    $('#buy_type').find('.icon-y2').removeClass('icon-y2');
+    $('#buy_type').find('.icon').each(function(index, el) {
+      if ($(this).parents('a[data-toggle="tab"]').attr('data-buytype') == G_BUY.buyType) {
+        $(this).addClass('icon-y2');
+      }
+    });
+    $('#buy_type').siblings('.tab-content').find('.tab-pane').each(function(index, el) {
+      if (index == G_BUY.buyType - 1) {
+        $(this).addClass('active');
+      } else {
+        $(this).removeClass('active');
+      }
+    });
     G_BUY.trackData.issueMutipleMap = {}; // clean
     $('#buy_mutiple_span').show();
     G_BUY.partnerBuy = {
       projectTitle: '排列5合买方案',
       projectDescription: '排列5'
     }; // clean partner buy
-    G_BUY.buyType = parseInt($(this).attr('data-buytype'));
+    // G_BUY.buyType = parseInt($(this).attr('data-buytype'));
     G_BUY.mutiple = 1;
     $('#project_mutiple').val(G_BUY.mutiple);
     switch (G_BUY.buyType) {
@@ -479,7 +496,6 @@ $(document).ready(function() {
         queryTrackIssueList(10);
         calculateBuyCodes();
         break;
-
       case 3: // 合买
         calculateBuyCodes();
         $('#track_desc').addClass('hide');
@@ -487,7 +503,7 @@ $(document).ready(function() {
         updateCreatePartProjectParame();
         break;
     }
-  });
+  }
 
   $('#issue_size').on('change', function(event) {
     event.preventDefault();
@@ -724,10 +740,10 @@ $(document).ready(function() {
   });
 
   // br-type icon toggle
-  $('#buy_type a[data-toggle="tab"]').on('click', function(e) {
-    $(this).parents('#buy_type').find('.icon-y2').removeClass('icon-y2');
-    $(this).find('.icon').addClass('icon-y2');
-  });
+  // $('#buy_type a[data-toggle="tab"]').on('click', function(e) {
+  //   $(this).parents('#buy_type').find('.icon-y2').removeClass('icon-y2');
+  //   $(this).find('.icon').addClass('icon-y2');
+  // });
 
   // 是否保底
   $('#is_end_zhongjiang').on('change', function(event) {
@@ -761,7 +777,7 @@ $(document).ready(function() {
     if (iptCodes == '') {
       $('#choose_zhushu').html(0);
       $('#choose_money').html(0);
-      $('#choose_to_buy').removeClass('active');
+      updateAddBtn(false);
       $('#choose_to_buy').attr('disabled', 'disabled');
       return;
     }
@@ -782,11 +798,11 @@ $(document).ready(function() {
       }
     }
     if (G_CHOOSE.zhushu > 0) {
-      $('#choose_to_buy').addClass('active');
+      updateAddBtn(true);
       $('#choose_to_buy').removeAttr('disabled');
       G_BUY.isManual = true;
     } else {
-      $('#choose_to_buy').removeClass('active');
+      updateAddBtn(false);
       $('#choose_to_buy').attr('disabled', 'disabled');
     }
     $('#choose_zhushu').html(G_CHOOSE.zhushu);
@@ -822,7 +838,6 @@ $(document).ready(function() {
     } else {
       toggleTabs(newTab, li, pagetype);
     }
-
   });
 
   function toggleTabs(newTab, li, pagetype) {
@@ -844,18 +859,20 @@ $(document).ready(function() {
     $('#buy-submit').attr("disabled", "disabled");
     switch (pagetype) {
       case 0:
+        G_BUY.buyType = 1;
         $("li.j-jx-zhus").show();
         $('#j-box-right').show();
         $('#j-box-bottom').show();
-        $('#choose_to_buy').removeClass('active');
+        updateAddBtn(false);
         $('#choose_to_buy').attr('disabled', 'disabled');
         $('#j-box-left').removeClass('multiphase-box');
         break;
       case 1:
+        G_BUY.buyType = 1;
         $("li.j-jx-zhus").hide();
         $('#j-box-right').show();
         $('#j-box-bottom').show();
-        $('#choose_to_buy').removeClass('active');
+        updateAddBtn(false);
         $('#choose_to_buy').attr('disabled', 'disabled');
         $('#j-box-left').removeClass('multiphase-box');
         break;
@@ -868,6 +885,7 @@ $(document).ready(function() {
         $('#j-box-left').addClass('multiphase-box');
         break;
     }
+    initBuyType();
   }
 
   /////////////////////////机选页面事件/////////////////////////////////////////
@@ -1014,71 +1032,62 @@ $(document).ready(function() {
   //////////////////////////function/////////////////////////////////////////
 
   function updateCreatePartProjectParame() {
-    switch (G_BUY.buyType) {
-      case 1: // 自购
-        break;
-      case 2: // 追号
-        break;
-      case 3: // 合买
-        // 分成多少份
-        var shareNum = parseInt($("#share-num").val()) || 1;
-        if (G_BUY.money % shareNum !== 0) {
-          shareNum = YC.Unit.getMaxDivisible(G_BUY.money, shareNum);
-        }
-        $("#share-num").val(shareNum);
-        G_BUY.partnerBuy.shareNum = shareNum;
-        $('.j-unit-price').html(G_BUY.money / G_BUY.partnerBuy.shareNum);
-        if (G_BUY.money > 0) {
-          if ($('#part_buy').val() > G_BUY.partnerBuy.shareNum) {
-            $('#part_buy').val(G_BUY.partnerBuy.shareNum);
-          }
-          // 购买的份数
-          G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
-          // 单价
-          var iUnitPrice = parseInt($('.j-unit-price').html());
-          G_BUY.partnerBuy.unitPrice = iUnitPrice;
-          // 认购的比例
-          var partBuyPercent = G_BUY.partnerBuy.partBuyNum / G_BUY.partnerBuy.shareNum * 100;
-          $('#part_buy_percent').html(partBuyPercent.toFixed(2));
-          // 提成比例
-          $('#commission_percent').val(function(index, value) {
-            return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
-          });
-          G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
-          // 保底数据
-          var iMinBaodiNum = Math.ceil(G_BUY.partnerBuy.shareNum * 0.2);
-          // 剩余
-          var iLessBuyNum = G_BUY.partnerBuy.shareNum - G_BUY.partnerBuy.partBuyNum;
-          if($('#has_part_aegis')[0].checked){
-            if(iLessBuyNum > iMinBaodiNum){
-              $('#part_aegis_num').val(function(index, value) {
-                if ($(this).val() < iMinBaodiNum) {
-                  return iMinBaodiNum;
-                }
-                return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
-              });
-            }else{
-              $('#part_aegis_num').val(iLessBuyNum);
-            }
-          }
-          var aegisNum = parseInt($('#part_aegis_num').val());
-          G_BUY.partnerBuy.partAegisNum = aegisNum;
-          $('#part_aegis_percent').html((aegisNum / G_BUY.partnerBuy.shareNum * 100).toFixed(2));
-          $('#buy_money_tips').html(G_BUY.partnerBuy.partBuyNum * iUnitPrice);
-          $('#aegis_money_tips').html(aegisNum * iUnitPrice);
-          $('#total_money_tips').html((aegisNum + G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
-        } else {
-          $('#part_buy_percent').html(0);
-          $('#buy_money_tips').html(0);
-          $('#aegis_money_tips').html(0);
-          $('#total_money_tips').html(0);
-          $('#part_aegis_num').val(0);
-          $('#part_aegis_percent').html(0);
-          $('#part_buy').val(1);
-        }
-        break;
+    // 分成多少份
+    var shareNum = parseInt($("#share-num").val()) || 1;
+    if (G_BUY.money % shareNum !== 0) {
+      shareNum = YC.Unit.getMaxDivisible(G_BUY.money, shareNum);
     }
-
+    $("#share-num").val(shareNum);
+    G_BUY.partnerBuy.shareNum = shareNum;
+    $('.j-unit-price').html(G_BUY.money / G_BUY.partnerBuy.shareNum);
+    if (G_BUY.money > 0) {
+      if ($('#part_buy').val() > G_BUY.partnerBuy.shareNum) {
+        $('#part_buy').val(G_BUY.partnerBuy.shareNum);
+      }
+      // 购买的份数
+      G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
+      // 单价
+      var iUnitPrice = parseInt($('.j-unit-price').html());
+      G_BUY.partnerBuy.unitPrice = iUnitPrice;
+      // 认购的比例
+      var partBuyPercent = G_BUY.partnerBuy.partBuyNum / G_BUY.partnerBuy.shareNum * 100;
+      $('#part_buy_percent').html(partBuyPercent.toFixed(2));
+      // 提成比例
+      $('#commission_percent').val(function(index, value) {
+        return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
+      });
+      G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
+      // 保底数据
+      var iMinBaodiNum = Math.ceil(G_BUY.partnerBuy.shareNum * 0.2);
+      // 剩余
+      var iLessBuyNum = G_BUY.partnerBuy.shareNum - G_BUY.partnerBuy.partBuyNum;
+      if ($('#has_part_aegis')[0].checked) {
+        if (iLessBuyNum > iMinBaodiNum) {
+          $('#part_aegis_num').val(function(index, value) {
+            if ($(this).val() < iMinBaodiNum) {
+              return iMinBaodiNum;
+            }
+            return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
+          });
+        } else {
+          $('#part_aegis_num').val(iLessBuyNum);
+        }
+      }
+      var aegisNum = parseInt($('#part_aegis_num').val());
+      G_BUY.partnerBuy.partAegisNum = aegisNum;
+      $('#part_aegis_percent').html((aegisNum / G_BUY.partnerBuy.shareNum * 100).toFixed(2));
+      $('#buy_money_tips').html(G_BUY.partnerBuy.partBuyNum * iUnitPrice);
+      $('#aegis_money_tips').html(aegisNum * iUnitPrice);
+      $('#total_money_tips').html((aegisNum + G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
+    } else {
+      $('#part_buy_percent').html(0);
+      $('#buy_money_tips').html(0);
+      $('#aegis_money_tips').html(0);
+      $('#total_money_tips').html(0);
+      $('#part_aegis_num').val(0);
+      $('#part_aegis_percent').html(0);
+      $('#part_buy').val(1);
+    }
   }
 
   /**
@@ -1102,10 +1111,10 @@ $(document).ready(function() {
       }
     }
     if (G_CHOOSE.zhushu > 0) {
-      $('#choose_to_buy').addClass('active');
+      updateAddBtn(true);
       $('#choose_to_buy').removeAttr('disabled');
     } else {
-      $('#choose_to_buy').removeClass('active');
+      updateAddBtn(false);
       $('#choose_to_buy').attr('disabled', 'disabled');
     }
     $("#choose_zhushu").html(G_CHOOSE.zhushu);
@@ -1344,8 +1353,8 @@ $(document).ready(function() {
         var buyMoney = G_BUY.partnerBuy.unitPrice * parameter.buyNum;
         var aegisMoney = G_BUY.partnerBuy.unitPrice * parameter.aegisNum;
         costRealMoney = buyMoney + aegisMoney;
-        comfirmHtml = makeConfirmHtml(3, G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu, 
-                G_BUY.money, parameter.buyNum, parameter.aegisNum, 0, 0, costRealMoney);
+        comfirmHtml = makeConfirmHtml(3, G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu,
+          G_BUY.money, parameter.buyNum, parameter.aegisNum, 0, 0, costRealMoney);
         break;
 
       case 4:
@@ -1403,27 +1412,27 @@ $(document).ready(function() {
     var commHtml = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text">';
     switch (buyType) {
       case 1: // 自购
-        commHtml += 
-            '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+        commHtml +=
+          '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
             <p>共<span>' + betNum + '</span>注, 投注<span>' + mutiple + '</span>倍</p>\
             <p>本次需支付<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>';
         break;
       case 2: // 追号
-        commHtml += 
-            '<p>追号<span>' + trackSize + '</span>期</p>\
+        commHtml +=
+          '<p>追号<span>' + trackSize + '</span>期</p>\
             <p>本次需支付<span class="fc-3">' + trackMoney + '</span>元</p>';
       case 4: // 机选
         break;
       case 3: // 合买
         if (aegisNum > 0) {
-          commHtml += 
-              '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+          commHtml +=
+            '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
               <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
               <p>您认购<span>' + buyNum + '</span>份, 保底<span>' + aegisNum + '</span>份</p>\
               <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
         } else {
-          commHtml += 
-              '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+          commHtml +=
+            '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
               <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
               <p>您认购<span>' + buyNum + '</span>份</p>\
               <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
@@ -1454,4 +1463,21 @@ $(document).ready(function() {
     store.set('lotyCNName', lotyCNName);
     window.location.href = '/html/lottery/trade/fail.html';
   }
+
+      /*
+     * 更新 添加按钮状态
+     * @ active Boolean
+     */
+    function updateAddBtn(active) {
+
+        var btn = $('#choose_to_buy');
+
+        if (active) {
+            btn.addClass('active');
+        } else {
+            btn.removeClass('active');
+        }
+
+    };
+
 });

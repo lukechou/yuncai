@@ -11,12 +11,14 @@ $(function () {
         dataType: 'json',
         data: {
           username: $('#username').val(),
-          password: $('#password').val()
+          password: $('#password').val(),
+          ret_url: $('#ret_url').val()
         },
       })
       .done(function (data) {
         if (data.retCode == 100000) {
-          window.location.href = data.retData.redirectURL;
+          window.location.href = decodeURIComponent(data.retData.redirectURL);
+
         } else {
           $("#j-tips").html(data.retMsg);
           $('.tips').css('visibility', 'visible');

@@ -30,7 +30,7 @@ $(function () {
 
     var record = {
       page: 1,
-      pageSize: 10,
+      pageSize: 15,
       type: null,
       init: function () {
 
@@ -51,7 +51,7 @@ $(function () {
           type: type,
           days: 30,
           page: 1,
-          pageSize: 10,
+          pageSize: 15,
         });
       }
     };
@@ -71,7 +71,7 @@ $(function () {
       type: i,
       days: days,
       page: 1,
-      pageSize: 10,
+      pageSize: 15,
     });
 
   });
@@ -87,7 +87,7 @@ $(function () {
       type: i,
       days: days,
       page: 1,
-      pageSize: 10,
+      pageSize: 15,
     });
 
   });

@@ -427,15 +427,30 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         var dataItem = '';
         var dataArr = [];
         var percent = null;
-
+        var cnName = index.modelLoty[index.modelLotyName].cnName;
+        var jczqIndex = [];
+        var jczqCnNameObj = {
+          'spf_gg': '胜平负',
+          'rqspf_gg': '让球胜平负',
+          'bf_gg': '比分',
+          'zjq_gg': '总进球',
+          'bqc_gg': '半全场',
+        };
         if (data.retCode === 100000) {
           dataItem = isHemai ? data.retData.data : data.retData;
 
           if (dataItem.length > 0) {
+
             for (var i = dataItem.length - 1; i >= 0; i--) {
               if (isHemai) {
+
+                if (index.modelLotyName === 'jczq') {
+                  jczqIndex = dataItem[i]['joinURI'].split('/');
+                  cnName = jczqCnNameObj[jczqIndex[jczqIndex.length - 1]];
+                }
+
                 percent = (1 - (dataItem[i].lessNum / Number(dataItem[i].price))).toFixed(2) * 100;
-                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + index.modelLoty[index.modelLotyName].cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-tou" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button></div></div></div>');
+                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-tou" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button></div></div></div>');
               } else {
 
                 dataArr.push('<div class="item m-he-box">\

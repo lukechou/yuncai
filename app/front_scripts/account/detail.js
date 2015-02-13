@@ -1,6 +1,6 @@
 $(function() {
   var tables = $('.tab-content .table');
-  var pageSize = 10;
+  var pageSize = 15;
 
   $('.j-search').on('click', function() {
 
@@ -12,7 +12,7 @@ $(function() {
       days: days,
       tradeType:$('#tradeType').val(),
       page: 1,
-      pageSize: pageSize,
+      pageSize: 8,
       innerHtmlObj: tables.eq(i).find('tbody')
     });
   });
@@ -31,14 +31,14 @@ $(function() {
       innerHtmlObj: tables.eq(i).find('tbody')
     });
   });
-  
+
   // 全部明细
   PAGE.loadDetailRecord({
       type: 0,
       days: 30,
       tradeType:$('#tradeType').val(),
       page: 1,
-      pageSize: pageSize,
+      pageSize: 8,
       innerHtmlObj: tables.eq(0).find('tbody')
     });
 });

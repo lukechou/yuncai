@@ -1,66 +1,18 @@
-.qxc .touz_area_box_2 .red_area {
-	width: 100%;
-}
-
-.qxc .m-num-title2 > p {
-    font-size: 12px;
-    padding: 0;
-    width: 550px;
-}
-
-.qxc .row-code {
-	margin: 0 auto;
-}
-
-.qxc .row_num_title {
-	float: left;
-	font-size: 18px;
-	width: 60px;
-	line-height: 40px;
-	margin: 5px 4px;
-}
-
-.qxc .row-code  .m-num-group {
-	float: left;
-	width: 480px;
-	margin: 0 0 10px -5px;
-}
-
-.qxc .row-code .m-num-group>a {
-	height: 40px;
-	width: 40px;
-	font-size: 16px;
-	line-height: 40px;
-}
-
-
-.qxc .row-code .quick-method {
-	float: left;
-	margin: 0 0 0 16px;
-	width: 86px;
-}
-
-.qxc .row-code .quick-method span {
-	background:
-		url("http://888pic.gtimg.com/images/trade/ssq/ssq_button_ver3.0.jpg")
-		no-repeat scroll -84px -212px rgba(0, 0, 0, 0);
-	cursor: pointer;
-	display: inline-block;
-	float: left;
-	height: 22px;
-	line-height: 22px;
-	margin: 0 0 3px 3px;
-	text-align: center;
-	width: 22px;
-}
-
-
-.qxc .br-zhu{ width: 610px; margin: 30px auto;}
-.qxc .br-zhu-r{ width: 80px;}
-.qxc .br-zhu-item b {
-float: left;
-width: 65px;
-color: #3d3d3d;
-font-weight: normal;
-margin-right: 3px;
-}
+.qxc .touz_area_box_2 .red_area{width:100%;}
+.qxc .m-num-title2 > p{font-size:12px;padding:0;width:550px;}
+.qxc .row-code{margin:0 auto;}
+.qxc .m-num-title-top{margin:10px auto 24px;}
+.qxc .m-num-title-top > p{font-size:12px;width:550px;padding:0;}
+.qxc .m-num-title-bottom{margin:40px auto 30px}
+.qxc .m-num-title-bottom > p{font-size:12px;width:550px;padding:0;}
+.qxc .row_num_title{line-height:40px;font-size:12px;font-family:'宋体';font-weight:bold;float:left;width:75px;margin:5px -18px 0px 30px;}
+.qxc .row-code  .m-num-group{float:left;margin:0 0 10px 6px;}
+.qxc .row-code .m-num-group>a{height:33px;width:33px;font-size:16px;line-height:33px;}
+.qxc .row-code .quick-method{float:left;width:86px;margin:0 0 0 40px;}
+lc
+.qxc .row-code .quick-method span{line-height:22px;display:inline-block;float:left;width:22px;height:22px;margin:0 0 3px 3px;cursor:pointer;text-align:center;border-radius:2px;background:#ebeaea;font-size:12px;}
+.qxc .row-code .quick-method span:hover{background:#ffd06b;color:#fff;}
+.qxc .br-zhu{width:610px;margin:30px 20px 30px 62px;}
+.qxc .br-zhu-r{width:80px;}
+.qxc .br-zhu-item b{float:left;width:65px;color:#3d3d3d;font-weight:normal;margin-right:3px;}
+.br-zhu-l{width:512px;}
