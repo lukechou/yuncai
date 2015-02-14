@@ -330,14 +330,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
    * @return {null}
    */
   COMMON.clearAllBallActive = function (el) {
-    el.find('.active').removeClass();
+    el.find('.active').removeClass('active');
   }
 
   // 随机选取N个球
   COMMON.randomNum = function (el, type, l) {
     var len = parseInt(l);
     var arr = _.sample(SEEDS[Config.lotyName][type], len);
-    el.find('.active').removeClass();
+    el.find('.active').removeClass('active');
     for (var i = 0; i < arr.length; i++) {
       el.find('li').eq(arr[i] - 1).addClass('active');
     };
@@ -1094,7 +1094,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     // 认购份数小于0 或大于总份数时
     if (copies < rengouCopies || rengouCopies <= 0) {
-      rengouCopies = copies;
+      rengouCopies = 1;
     }
 
     // 认购金额必须大于提成金额
@@ -1480,7 +1480,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         });
 
         if (rNums.length >= SEEDS[Config.lotyName].redTotal && bNums.length >= SEEDS[Config.lotyName].blueTotal) {
-          eGroup.removeClass();
+          eGroup.removeClass('active');
           html = COMMON.getOneZhu(rNums, bNums, total);
           Config.box.find('.br-zhu-l').append(html);
           COMMON.checkBallGroup($(this));
@@ -1509,7 +1509,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         });
 
         if (rNums.length >= SEEDS[Config.lotyName].redTotal && bNums.length >= SEEDS[Config.lotyName].blueTotal) {
-          eGroup.removeClass();
+          eGroup.removeClass('active');
           html = COMMON.getOneZhu(rNums, bNums, total, true);
           qiuckSet.html(html);
           COMMON.checkBallGroup($(this));
@@ -1640,12 +1640,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   // 快捷投注 清空投注列表
   $('.clearredball').on('click', function (event) {
-    Config.box.find('.j-ball-red .active').removeClass();
+    Config.box.find('.j-ball-red .active').removeClass('active');
     COMMON.checkBallGroup($(this));
   });
 
   $('.clearblueball').on('click', function (event) {
-    Config.box.find('.j-ball-blue .active').removeClass();
+    Config.box.find('.j-ball-blue .active').removeClass('active');
     COMMON.checkBallGroup($(this));
   });
 
@@ -2496,4 +2496,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     ZHUI.setHeMaiTotal();
   });
   ZHUI.bindHeMaiEvent();
+
+  // function initRightBox(){
+  //   var leftHeight = $('.box-left').height();
+  //   var rightTop = $('.box-right').css('marginTop').slice(0,2);
+  //   $('.box-right').height(leftHeight-rightTop);
+  // }
+
+  // initRightBox();
+
 });

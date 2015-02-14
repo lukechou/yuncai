@@ -42,16 +42,16 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           dataItem = detailData[i - 1];
           switch (obj.status) {
           case '2':
-            htmlStatu = '已满员';
+          htmlStatu = '<span class="miss-tips">已满员</span>';
             htmlUse =
-                '<a href="' + dataItem.detailURI + '">详情</a>\
+                '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
                 <input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" />\
                 <input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
             break;
           case '3':
-            htmlStatu = '已撤单';
+            htmlStatu = '<span class="miss-tips">已撤单</span>';
             htmlUse =
-                '<a href="' + dataItem.detailURI + '">详情</a>\
+                '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
                 <input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" />\
                 <input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
             break;
@@ -76,6 +76,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           $('#j-page-area').show();
       }
       this.appendTable(htmlOutput);
+      // for ie8 table odd hack
+      $("tbody tr:nth-child(odd) td").css("background","#f5f5f5");
     };
 
     PAGE.onFail = function () {

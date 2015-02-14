@@ -329,13 +329,17 @@ APP.showStopSellModal = function (lotyName) {
       <li><img class="logo" src="' + staticHostURI + '/front_images/lottery/pl3_home_logo.png" alt="排列3"/><a href="/lottery/buy/pl3">排列3</a></li>\
       <li class="text-right"><img class="logo" src="' + staticHostURI + '/front_images/lottery/pl5_home_logo.png" alt="排列5"/><a href="/lottery/buy/pl5">排列5</a></li>';
   var html = '<img src="' + staticHostURI + '/front_images/stopsell.png" class="stopsell-img" alt="mask-main" alt="暂停销售"/><div class="stopsell-box"><h4>' + lotyName + ' 暂停销售</h4><p>选择其它彩种投注 或 <a href="/">返回首页</a></p><ul>' + link + '</ul></div>';
-  var modalHtml = '<div class="m-mask m-stopsell-mask" id="j-stopsell-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close" id="j-stopsellmask-close"></i></button><h4 class="modal-title">暂停销售</h4></div><div class="stopsell-body">' + html + '</div></div></div>'
+  var modalHtml = '<div class="m-mask m-stopsell-mask" id="j-stopsell-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><div class="modal-header"><button type="button" class="close" id="j-stopsellmask-close"><i class="icon icon-close"></i></button><h4 class="modal-title">暂停销售</h4></div><div class="stopsell-body">' + html + '</div></div></div>'
   $('body').append(modalHtml);
   $('#j-stopsell-mask').show();
-  $('#j-stopsellmask-close').one('click', function (event) {
+
+  $('#j-stopsellmask-close').on('click', function (event) {
     $('#j-stopsell-mask').remove();
   });
 };
+
+
+
 
 APP.init = function () {
 
@@ -392,6 +396,8 @@ $(function () {
   $('#j-header-login-btn').on('click', function(event) {
     event.preventDefault();
     /* Act on the event */
-    location.href='/account/login?ret_url=' + encodeURIComponent(location.href.replace(location.origin, ''));
+    var url = location.href.replace(location.origin, '');
+    url = url.replace(/#/, '');
+    location.href='/account/login?ret_url=' + encodeURIComponent(url);
   });
 });

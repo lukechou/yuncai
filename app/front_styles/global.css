@@ -35,7 +35,7 @@ textarea { resize: none; word-wrap: break-word; }
 .mt10 { margin-top: 10px !important; }
 .mt25 { margin-top: 25px !important; }
 .mt30 { margin-top: 30px !important; }
-.mr0 { margin-right: 0!important; }
+.mr0 { margin-right: 0 !important; }
 .mr5 { margin-right: 5px !important; }
 .mr15 { margin-right: 15px; }
 .mb0 { margin-bottom: 0; }
@@ -85,9 +85,9 @@ textarea { resize: none; word-wrap: break-word; }
 /* Button */
 .btn { border-radius: 2px; font-size: 12px; }
 .btn-big { font-size: 20px; margin: 15px auto 10px; padding: 8px 30px; }
-.btn-add, .btn-add2 { font-weight: bold; position: relative; padding: 10px 25px 10px 35px; color: #adadad; font-size: 16px; font-family: '微软雅黑'; background: #f3f3f3; border: 1px #dad9d9 solid; }
+.btn-add, .btn-add2 { font-weight: bold; position: relative; padding: 10px 25px 10px 35px; color: #adadad; font-size: 16px; font-family: '微软雅黑'; background: #f3f3f3; border: 1px #dad9d9 solid; display: block; margin: auto; width: 174px;}
 .btn-add > .icon, .btn-add2 > .icon { position: absolute; top: 14px; left: 15px; }
-.btn-add.active, .btn-add2.active { background: #f88c35; color: #fff; }
+.btn-add.active, .btn-add2.active { background: #f88c35; color: #fff; border-color:transparent;}
 .btn-s { font-size: 12px; padding: 3px 8px; color: #fff; }
 .btn-c2 { background: #f5f5f5; }
 .btn-clean { line-height: 26px; width: 70px; height: 26px; padding: 0; }
@@ -100,7 +100,7 @@ textarea { resize: none; word-wrap: break-word; }
 .btn-del:hover, .btn-gray:hover { background: url(../front_images/del-hover.png); }
 .btn-big { font-size: 20px; margin: 30px auto 10px; padding: 8px 30px; }
 .btn-bind { padding: 6px 20px; }
-.btn:focus { outline: none!important; }
+.btn:focus { outline: none !important; }
 /* 弹出框 按钮组 */
 .m-btns { width: 210px; margin: auto; }
 .m-btns > .btn { width: 90px; margin: 0 5px; }
@@ -133,11 +133,11 @@ textarea { resize: none; word-wrap: break-word; }
 .m-num { color: #848484; }
 .m-num-tips { font-size: 12px; margin-bottom: 8px; }
 .m-num-tips > b { margin-right: 10px; }
-.m-num-title { position: relative; zoom: 1; margin: 20px auto 30px; text-align: center; height: 1px;
-background: url(../front_images/bg-line.png); }
-.m-num-title > p { position: absolute; top: -10px; right: 0; left: 0; display: inline-block; zoom: 1; width: 225px; margin: auto; padding: 0 10px; background: #fff; }
-.m-num-title2 > p { font-size: 12px; width: 400px; padding: 0; }
-.m-num-title > p > b { padding-right: 5px; font-weight: bold;}
+
+.m-num-title { height: 20px; clear: both; float: none; text-align: center; padding-top: 11px; font-size: 12px; margin: 20px 0 30px;}
+.m-num-title > p { background: #fff; padding: 0 10px; display: inline-block; position: relative; z-index: 10; }
+.m-num-title > i { display: block; margin: -19px 0 0 0; height: 1px; background: url(../front_images/bg-line.png) repeat-x; position: relative; z-index: 9; }
+.m-num-title > p > b { padding-right: 5px; font-weight: bold; }
 .m-num-group { position: relative; margin: 0 0 40px -5px; }
 .m-num-group > a { font-size: 16px; font-weight: bold; line-height: 33px; display: block; float: left; width: 33px; height: 33px; margin: 5px 5px; text-align: center; color: #3d3d3d; border: 1px #d2d2d2 solid; border-radius: 50%; background: #ebebeb; }
 .m-num-group > a:hover { text-decoration: none; }
@@ -177,10 +177,9 @@ background: url(../front_images/bg-line.png); }
 .m-panel .panel-title { font-family: 'Microsoft Yahei'; color: #3d3d3d; }
 .m-panel .panel-heading { border-bottom: 1px #dfdfdf solid; background: #dddedf; }
 /* 高级投注-二级TABS导航 */
-.m-br-nav { padding: 6px 0 0 26px; background: #f5f5f5; }
-.m-br-nav > li{ margin-bottom: 0;}
-.m-br-nav > li.active{position: relative;
-top: 1px;}
+.m-br-nav { padding: 6px 0 0 20px; background: #f5f5f5; }
+.m-br-nav > li { margin-bottom: 0; }
+.m-br-nav > li.active { position: relative; top: 1px; }
 .m-br-nav > li > a { font-size: 12px; margin: 0; padding: 0; height: 28px; line-height: 28px; width: 88px; text-align: center; color: #3d3d3d; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f5f5f5; }
 .m-br-nav > li > a:hover { background: #f5f5f5; border-color: transparent; }
 .m-br-nav > li.active > a, .m-br-nav > li.active > a:hover, .m-br-nav > li.active > a:focus { border-top: 2px #f13c38 solid; border-right: 1px #dfdfdf solid; border-bottom: none; border-left: 1px #dfdfdf solid; border-radius: 0; background: #fff; }
