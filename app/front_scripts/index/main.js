@@ -103,7 +103,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
   });
 
-  $('#j-quick-buy-loty-detail .btn-tou').on('click', function (event) {
+  $('#j-quick-buy-loty-detail .btn-red').on('click', function (event) {
     var lotyName = $(this).parents('.tab-pane').attr('id');
     quickBuyLottery();
   });
@@ -450,7 +450,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                 }
 
                 percent = (1 - (dataItem[i].lessNum / Number(dataItem[i].price))).toFixed(2) * 100;
-                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-tou" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button></div></div></div>');
+                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-red" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button></div></div></div>');
               } else {
 
                 dataArr.push('<div class="item m-he-box">\
@@ -471,7 +471,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                                   投注\
                                   <input type="text" class="j-input-place" data-place="最低投注' + dataItem[i].minMoney + '" value="最低投注' + dataItem[i].minMoney + '" />\
                                   元\
-                                  <button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy btn-tou pull-right">确定</button>\
+                                  <button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy btn-red pull-right">确定</button>\
                               </div>\
                           </div>\
                       </div>');
