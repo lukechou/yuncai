@@ -1,1 +1,38 @@
-.m-help{margin-top:15px}.m-help-left{width:190px;float:left;margin-right:15px}.m-help-left h2{background:#f13c38;color:#fff;font-weight:bold;font-size:16px;margin:0;padding:10px 20px}.m-help-left .help-nav{background:#f1f1f1;border:1px #dfdfdf solid;border-top:none;padding:0 8px;min-height:504px;font-size:12px}.m-help-left .help-nav>li{border-bottom:1px dashed #dfdfdf;padding:8px 0 10px 20px}.m-help-left .help-nav>li.more{background:url(../front_images/help-nav-icon.png) no-repeat right center}.m-help-left .help-nav>li a{color:#3d3d3d}.m-help-left .help-nav>li a.active,.m-help-left .help-nav>li a:hover{color:#f13c38;text-decoration:none}.more-0,.more-1,.more-2,.more-3,.more-4,.more-5{display:none}.more-nav{padding:3px 0 3px 30px!important}.more-0,.more-5{padding-left:40px!important}.more-nav a{color:#848484!important}.more-nav a:hover,.more-nav a.active{color:#f13c38!important;text-decoration:none}.m-help-right{width:780px;float:right}.m-help-right .panel{min-height:540px;border:1px #dfdfdf solid}.m-help-right .panel-heading{background:#f1f1f1;border-bottom:1px #dfdfdf solid;height:38px}.m-help-right .panel-body{font-size:12px;padding:0}.j-page{padding:40px 30px;display:none;line-height:1.8}.j-page.active{display:block}.j-page-0 p{text-indent:24px}.j-page-1{line-height:2}.j-page-6{padding:5px 30px 20px}.j-page-6 h4{margin:15px 0 5px;font-size:16px}.j-page-6 p{margin:0;padding-left:16px}.j-page .m-ul li{margin-bottom:10px}.j-page .title{font-size:14px;font-weight:bold}.j-page .text{text-indent:24px}.j-page-l{padding:0 0 30px 0}.j-page-l p,.j-page-l ul{padding:0 25px}.j-page-l .pagehd-tips{background:#f5f5f5;padding:25px 0 20px;margin-bottom:30px}.j-page-l .pagehd-tips .buzou{width:700px;border:none;display:block;margin:0 auto}.j-page-l .m-ul img{width:100%;margin-bottom:40px}.j-page-l .m-ul li{margin-bottom:0}.j-page-last{line-height:2}.j-page-last h1{margin-bottom:25px;font-size:14px;text-align:center;font-weight:bold}.j-page-last .title{margin:25px 0;font-size:12px;text-align:center}.j-page-last .td-1{width:42px;padding-top:0;vertical-align:baseline}.j-page-last .td-2{width:80px;padding-top:0;vertical-align:baseline}
+.m-help { margin-top: 15px }
+.m-help-left { width: 190px; float: left; margin-right: 15px }
+.m-help-left h2 { background: #f13c38; color: #fff; font-weight: bold; font-size: 16px; margin: 0; padding: 10px 20px }
+.m-help-left .help-nav { background: #f1f1f1; border: 1px #dfdfdf solid; border-top: none; padding: 0 8px 15px; min-height: 504px; margin-bottom: 20px; font-size: 12px }
+.m-help-left .help-nav>li { border-bottom: 1px dashed #dfdfdf; padding: 8px 0 10px 20px }
+.m-help-left .help-nav>li.more { background: url(../front_images/help-nav-icon.png) no-repeat right center }
+.m-help-left .help-nav>li a { color: #3d3d3d }
+.m-help-left .help-nav>li a.active, .m-help-left .help-nav>li a:hover { color: #f13c38; text-decoration: none }
+.more-0, .more-1, .more-2, .more-3, .more-4, .more-5 { display: none }
+.more-nav { padding: 3px 0 3px 30px !important }
+.more-0, .more-5 { padding-left: 40px !important }
+.more-nav a { color: #848484 !important }
+.more-nav a:hover, .more-nav a.active { color: #f13c38 !important; text-decoration: none }
+.m-help-right { width: 780px; float: right }
+.m-help-right .panel { min-height: 540px; border: 1px #dfdfdf solid }
+.m-help-right .panel-heading { background: #f1f1f1; border-bottom: 1px #dfdfdf solid; height: 38px }
+.m-help-right .panel-body { font-size: 12px; padding: 0 }
+.j-page { padding: 40px 30px; display: none; line-height: 1.8 }
+.j-page.active { display: block }
+.j-page-0 p { text-indent: 24px }
+.j-page-1 { line-height: 2 }
+.j-page-6 { padding: 5px 30px 20px }
+.j-page-6 h4 { margin: 15px 0 5px; font-size: 16px }
+.j-page-6 p { margin: 0; padding-left: 16px }
+.j-page .m-ul li { margin-bottom: 10px }
+.j-page .title { font-size: 14px; font-weight: bold }
+.j-page .text { text-indent: 24px }
+.j-page-l { padding: 0 0 30px 0 }
+.j-page-l p, .j-page-l ul { padding: 0 25px }
+.j-page-l .pagehd-tips { background: #f5f5f5; padding: 25px 0 20px; margin-bottom: 30px }
+.j-page-l .pagehd-tips .buzou { width: 700px; border: none; display: block; margin: 0 auto }
+.j-page-l .m-ul img { width: 100%; margin-bottom: 40px }
+.j-page-l .m-ul li { margin-bottom: 0 }
+.j-page-last { line-height: 2 }
+.j-page-last h1 { margin-bottom: 25px; font-size: 14px; text-align: center; font-weight: bold }
+.j-page-last .title { margin: 25px 0; font-size: 12px; text-align: center }
+.j-page-last .td-1 { width: 42px; padding-top: 0; vertical-align: baseline }
+.j-page-last .td-2 { width: 80px; padding-top: 0; vertical-align: baseline }

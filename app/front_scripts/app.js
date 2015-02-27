@@ -93,8 +93,8 @@ APP.updateHeadUserInfo = function () {
     })
     .done(function (data) {
       if (data.retCode === 100000) {
-        html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<img src="' + staticHostURI + '/front_images/bor.png" alt="bor"></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"><a href="/account/logout">退出</a><img src="' + staticHostURI + '/front_images/bor.png" alt="bor"><a href="/account/index" class="last">我的账户</a>';
-        $('#hd-top').html(html);
+        html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon icon-bor"></i></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><i class="icon icon-bor"></i><a href="/account/logout">退出</a><i class="icon icon-bor"></i><a href="/account/index" class="last">我的账户</a>';
+        $('#j-hd-top').html(html);
       }
     });
 

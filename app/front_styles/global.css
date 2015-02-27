@@ -6,8 +6,6 @@
 .bg-gray { background: #f5f5f5; }
 .bg-0 { background: #cf3430; }
 .bg-2 { background: #2a2a2b; }
-.bg-3 { background: #272728; }
-.bg-4 { background: #212121; }
 .bg-5 { background: #00943b; }
 /* List Class */
 ul, ol { margin: 0; padding: 0; list-style: none; }
@@ -219,19 +217,20 @@ textarea { resize: none; word-wrap: break-word; }
 .m-mask-main { width: 462px; height: 400px; position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; }
 .m-mask-close { position: absolute; right: 25px; top: 60px; cursor: pointer; }
 /* Stop sell mask Style */
-.m-stopsell-mask .m-mask-main { width: 600px; height: 320px; background: #fff; border: 8px solid rgba(33, 33, 33, .3); }
+.m-stopsell-mask .m-mask-main { width: 600px; height: 320px; border: 8px solid rgba(33, 33, 33, .3); }
 .m-stopsell-mask .modal-header { padding: 10px 15px; color: #fff; background: #e1413b; height: 40px; line-height: 40px; }
 .m-stopsell-mask .modal-header h4 { font-size: 14px; font-family: 'simsun'; font-weight: bold; }
 .m-stopsell-mask .modal-header .close { margin-top: -2px; }
-.m-stopsell-mask .stopsell-img { margin: 30px 0 0 40px; float: left; }
-.m-stopsell-mask .stopsell-box { margin: 30px 0 0 40px; height: 320px; width: 220px; float: left; }
-.m-stopsell-mask .stopsell-box h4 { font-family: 'Microsoft Yahei'; color: #000; text-align: center; margin: 12px 0; }
-.m-stopsell-mask .stopsell-box a { color: #1962ae; }
-.m-stopsell-mask .stopsell-box p { font-size: 12px; text-align: center; }
-.m-stopsell-mask .stopsell-box ul { font-size: 12px; margin-top: 30px; }
-.m-stopsell-mask .stopsell-box ul li { width: 50%; float: left; margin-bottom: 15px; }
-.m-stopsell-mask .stopsell-box ul li a { margin-left: 5px; display: inline-block; width: 36px; text-align: left; }
-.m-stopsell-mask .logo { width: 44px; height: 44px }
+.stopsell-body{background: #fff; overflow: hidden;}
+.stopsell-img { margin: 30px 0 0 40px; float: left; }
+.stopsell-box { margin: 30px 0 0 40px; height: 233px; width: 220px; float: left;}
+.stopsell-box h4 { font-family: 'Microsoft Yahei'; color: #000; text-align: center; margin: 12px 0; }
+.stopsell-box a { color: #1962ae; }
+.stopsell-box p { font-size: 12px; text-align: center; }
+.stopsell-box ul { font-size: 12px; margin-top: 30px; }
+.stopsell-box ul li { width: 50%; float: left; margin-bottom: 15px; }
+.stopsell-box ul li a { margin-left: 5px; display: inline-block; width: 36px; text-align: left; }
+.logo { width: 44px; height: 44px }
 /* All Page Class */
 body { color: #3d3d3d; background: #fff; }
 /* All Page Header */
@@ -241,6 +240,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-top > div > a.last { padding: 0 12px 0 10px; background: url(../front_images/index/top-down.png) no-repeat center right; }
 .hd-top > div > a.last:hover { background: url(../front_images/index/top-up.png) no-repeat center right; }
 .hd-top > div > a.active { color: #fff; }
+.hd-top .icon-bor{ vertical-align: middle; }
 .hd-mn { position: relative; }
 .hd-logo { margin-left: -1px; padding: 15px 0 8px; }
 .hd-nav, .hd-nav > li > a { height: 36px; }
@@ -256,7 +256,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-nav .seed-nav li>a.invalid { opacity: 0.5; color: #8a8a8a; }
 .hd-nav .seed-nav li>a.invalid:hover { cursor: default; background: #212121; }
 .hd-nav .seed-nav.on .hd-mask { display: block; }
-.hd-nav .seed-nav > a:hover { border-color: #2b2b2b; }
+
 .hd-mask { position: absolute; z-index: 101; left: 0; display: none; background: #212121; width: 265px; height: 360px; }
 .hd-mask > li { width: 265px; }
 .hd-mask > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; display: block; color: #fff; border-bottom: 1px #2f3032 dashed; }

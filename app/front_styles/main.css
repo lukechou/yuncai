@@ -262,7 +262,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .record-shai .btn { width: 70px; height: 30px; padding: 0; }
 .record-shai-ft { margin-top: 10px; padding: 20px 40px; border: 1px #dfdfdf solid; background: #f5f5f5; }
 .table .h-look { height: 145px; }
-.look-box { height: 96px; }
+.look-box { min-height: 96px; }
 .table .h-look > td { padding: 15px; vertical-align: middle; background: #e3e3e3; }
 .table .h-look > td td span { display: block; }
 

@@ -61,6 +61,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     $(this).addClass('active')
   });
 
+  // 首页 头部轮播
   $('#slick').slick({
     lazyLoad: 'ondemand',
     slidesToShow: 1,
@@ -80,19 +81,11 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     }
   });
 
-  // 首页 头部轮播
-  // $("#owl-example").owlCarousel({
-  //   navigation: false,
-  //   slideSpeed: 200,
-  //   paginationSpeed: 400,
-  //   lazyLoad: true,
-  //   singleItem: true,
-  //   autoPlay: 4000
-  // });
-
   // 快捷投注类型切换
   $('#j-quick-buy-loty-type').on('click', 'a', function (event) {
+
     index.currLotyName = $(this).attr('data-seed');
+
     index.timer4lottery();
     $('#j-go-buy-page').attr('href', '/lottery/buy/' + index.currLotyName);
 

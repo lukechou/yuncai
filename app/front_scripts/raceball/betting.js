@@ -27,7 +27,7 @@ define(['jquery', 'app'], function ($, APP) {
       dd: null,
       maxBonus: null,
       box: $('#bettingBox'),
-      tab: 'spf',
+      tab: 'spf'
     };
 
     bet.prototype.init = function () {

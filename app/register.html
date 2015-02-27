@@ -12,21 +12,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="Shortcut Icon" href="favicon.ico" type="image/ico" />
 <link rel="Bookmark" href="favicon.ico" type="image/ico" />
-<link rel="stylesheet" href="front_styles/bootstrap.min.css">
-<link rel="stylesheet" href="front_styles/global.css">
-<link rel="stylesheet" href="front_styles/icon.css">
-<link rel="stylesheet" href="front_styles/main.css">
-<link rel="stylesheet" href="front_styles/lib/lrkf/skin.css">   <link rel="stylesheet" href="front_styles//login.css">
+<link rel="stylesheet" href="front_styles/bootstrap.min.css?v=1.0.0">
+<link rel="stylesheet" href="front_styles/global.css?v=1.0.0">
+<link rel="stylesheet" href="front_styles/icon.css?v=1.0.0">
+<link rel="stylesheet" href="front_styles/main.css?v=1.0.0">   <link rel="stylesheet" href="front_styles//login.css">
   </head>
  <body>
    <div class="hd">
   <div class="hd-top">
-    <div class="w985" id="hd-top">
+    <div class="w985" id="j-hd-top">
               <span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;请</span>
-        <a href="/account/login" class="active">登录</a>
-        <img src="front_images/bor.png" alt="bor"/>
+        <a href="#" class="active" id="j-header-login-btn">登录</a>
+        <i class="icon icon-bor"></i>
         <a href="/account/register">免费注册</a>
-        <img src="front_images/bor.png" alt="bor"/>
+        <i class="icon icon-bor"></i>
         <a href="/account/index" class="last">我的账户<i class="icon-indextop"></i></a>
 
     </div>
@@ -148,36 +147,38 @@
          <h3 class="panel-title">欢迎注册彩胜网</h3>
        </div>
        <div class="panel-body">
-         <form class="form-horizontal" role="form" action="/account/reg/do-register" method="post" id="register-form">
-           <input name="_token" type="hidden" value="hrEb9aIl5IMssSXquCfqOLJD1dsb3cgUBUvunNyB">           <div class="form-group">
-             <label class="col-sm-2 col-sm-offset-3 control-label">用户名：</label>
-             <div class="col-sm-3">
+         <form role="form" action="#" method="post" id="register-form">
+           <input name="_token" type="hidden" value="snCRD2P4dcZYTkJWkBD35t1oYH0nHNpTHuJVqIaZ">           <div class="form-group">
+             <label class="control-lab">用户名：</label>
+             <div class="controls-inp">
                <input type="text" name="username" id="username" class="form-control" maxlength="16" placeholder="3 ~ 16个字符"></div>
            </div>
            <div class="form-group">
-             <label class="col-sm-2 col-sm-offset-3 col-sm-offset-3 control-label">密码：</label>
-             <div class="col-sm-3">
+             <label class="control-lab">密码：</label>
+             <div class="controls-inp">
                <input type="password" name="password" id='password' class="form-control" maxlength="16" placeholder="6 ~ 16 个字符"></div>
            </div>
            <div class="form-group">
-             <label class="col-sm-2 col-sm-offset-3 control-label">验证码：</label>
-             <div class="col-sm-3 check">
+             <label class="control-lab">确认密码：</label>
+             <div class="controls-inp">
+               <input type="password" name="repassword" id='repassword' class="form-control" maxlength="16" placeholder="6 ~ 16 个字符"></div>
+           </div>
+           <div class="form-group">
+             <label class="control-lab">验证码：</label>
+             <div class="controls-inp check">
                <input type="captcha" name="check_code" id="check_code" class="form-control check-input" placeholder="5 个字符">
                <img id="j-check-img" class="check-img" src="/tools/captcha" alt="验证码">
                <a href="javascript:;" id="j-replace-check" class="check-link">换一张</a>
              </div>
            </div>
-           <div class="form-group">
-             <label class="col-sm-2 col-sm-offset-3 control-label"></label>
-             <div class="col-sm-3 register-ft" >
+             <div class="register-ft" >
                <button class="btn btn-block btn-red fs-yh" type="submit" id="j-sub">同意协议并注册</button>
                <p>
-                 <input type="checkbox" checked id="j-agreen">
+                 <input class="ps-t2" type="checkbox" checked id="j-agreen">
                  我已年满18岁并同意
                  <a href="javascript:;" data-toggle="modal" data-target="#regModal">《注册协议》</a>
                </p>
              </div>
-           </div>
          </form>
          <div class="reg-success" id="reg-success">
            <img src="front_images/dui.png" alt="绑定成功" class="pull-left"/>
@@ -296,7 +297,8 @@
     <!-- /.ft-r--> </div>
   <!-- /.ft-mn-->
 </div>
-<!-- /.ft-->   <div class="friend-modal agreement-modal modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<!-- /.ft-->
+<script> var staticHostURI = 'http://static3.yuncai.com'; </script>   <div class="friend-modal agreement-modal modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
      <div class="modal-backdrop fade"></div>
      <div class="modal-dialog">
        <div class="modal-header">
@@ -423,9 +425,7 @@
        </div><!-- /.modal-body-->
      </div>
    </div>
-   <script src="front_scripts/lib/jquery.js"></script>
-   <script src="front_scripts/lib/bootstrap.min.js"></script>
-   <script src="front_scripts/app.js"></script>
-   <script src="front_scripts/user/register.js"></script>
+
+  <script data-main="front_scripts/user/register" src="front_scripts/lib/require.js"></script>
  </body>
  </html>

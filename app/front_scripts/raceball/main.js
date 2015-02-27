@@ -10,6 +10,8 @@ require.config({
     core: '../lib/core',
     betting: 'betting',
     hemai: 'hemai',
+    stickUp: 'stickUp',
+    scrollUp: 'scrollUp',
   },
   shim: {
     bootstrap: {
@@ -23,15 +25,113 @@ require.config({
     tipsy: {
       deps: ['jquery'],
       exports: 'jquery'
-    }
+    },
   }
 });
 
 require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core'], function ($, _, BET, APP, store, H) {
   'use strict';
-  if (serverTime == 1) {
-    APP.showStopSellModal("竞彩足球");
+
+  var scrollUp = (function () {
+
+    var scrollUp = {
+      el: $('#j-scroll-up'),
+      init: function () {
+        this.el.hover(function () {
+          $(this).addClass('active');
+        }, function () {
+          $(this).removeClass('active');
+        });
+        // this.el.on('click', function (event) {
+
+        //   if (!!window.ActiveXObject) {
+        //     $(window).scrollTop(0);
+        //   } else {
+        //     $('html,body').animate({
+        //       scrollTop: '0'
+        //     }, 300,'swing');
+        //   }
+
+        // });
+      }
+    };
+
+    return scrollUp;
+
+  }());
+
+  var scrollMenu = (function () {
+
+    var scrollMenu = {
+      el: $('.j-navbar-wrapper'),
+      top: 300,
+      init: function (argm) {
+
+        var _this = this;
+        if (argm) {
+          for (var prop in argm) {
+            if (argm.hasOwnProperty(prop)) {
+              _this[prop] = argm[prop];
+            }
+          }
+        };
+
+        $(window).scrollTop(0);
+
+        $(window).scroll(function (event) {
+
+          var winTop = $(this).scrollTop();
+
+          if (winTop > _this.top) {
+            _this.isMoreTop(winTop);
+          } else {
+            _this.isLessTop();
+          }
+
+        });
+
+      },
+      isLessTop: function () {
+        var _this = this;
+        _this.el.css({
+          'position': 'relative',
+        });
+        $('#j-scroll-up').fadeOut();
+      },
+      isMoreTop: function (winTop) {
+        var _this = this;
+        var setTop = 0;
+        var betBoxHeight = $('#bettingBox').height() + _this.top;
+
+        if (winTop < betBoxHeight) {
+          _this.el.css({
+            'position': 'fixed',
+            'top': setTop
+          });
+        } else {
+          _this.isLessTop();
+        }
+
+        $('#j-scroll-up').fadeIn();
+      }
+    };
+
+    return scrollMenu;
+
+  }());
+
+  function pageInit() {
+
+    // check Sell Status
+    if (serverTime == 1) {
+      APP.showStopSellModal("竞彩足球");
+    }
+
+    scrollUp.init();
+    scrollMenu.init();
   }
+
+  pageInit();
 
   function craeteDateBtn(type, sp) {
 

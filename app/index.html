@@ -1,3 +1,7 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,16 +12,16 @@
   <meta name="author" content="彩胜网">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="renderer" content="webkit">
-  <link rel="stylesheet" href="front_styles/lib/lrkf/skin.css">
   <link rel="stylesheet" href="front_styles/bootstrap.min.css">
   <link rel="stylesheet" href="front_styles/icon.css">
+  <link rel="stylesheet" href="front_styles/global.css">
   <link rel="stylesheet" href="front_styles/index.css?version=1.2.0"></head>
-<body>
+<body class="bg-24">
     <div class="hd">
     <div class="hd-top">
       <div class="w985" id="hd-top">
         <span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;请</span>
-        <a href="/account/login" class="active">登录</a>
+        <a href="#" class="active" id="j-header-login-btn">登录</a>
         <img src="front_images/bor.png" alt="bor"/>
         <a href="/account/register">免费注册</a>
         <img src="front_images/bor.png" alt="bor"/>
@@ -129,21 +133,25 @@
   </div>
   </div>
   <div class="page">
+
     <div class="section bg-5">
+
       <div class="page-hd">
-        <div id="owl-example" class="owl-carousel">
+
+        <div id="slick" class="slick">
           <div class="carousel bn2-bg">
-            <a href="/lottery/buy/jczq">
-              <img data-src="front_images/index/banner-2.jpg" class="small lazyOwl" alt="Banner"/>
+            <a href="/lottery/buy/dlt">
+              <img data-lazy="front_images/index/banner-4.jpg" class="small lazyOwl" />
             </a>
           </div>
           <div class="carousel bn3-bg">
             <a href="/lottery/trade/model-index">
-              <img data-src="front_images/index/banner-3.jpg" class="small lazyOwl" alt="Banner"/>
+              <img data-lazy="front_images/index/banner-3.jpg" class="small lazyOwl" />
             </a>
             <div class="bn3-left"></div>
           </div>
-        </div>
+        </div><!-- /.slick-->
+
         <div class="sticky">
           <div class="mask"></div>
           <div class="main">
@@ -156,10 +164,12 @@
             <p class="fs-14 fs-yh" id="j-week-start"></p>
             <p class="bottom" id="j-week-text"></p>
           </div>
-        </div>
-      </div>
-    </div>
-    <!-- /.page-hd-->
+        </div><!-- /.sticky-->
+
+      </div><!-- /.page-hd-->
+
+    </div><!--/.section-->
+
     <div class="section bg-3">
         <div class="page-new">
         <div class="m-title"> <i class="icon icon-dot"></i>
@@ -170,7 +180,8 @@
       </div>
       </div>
       </div>
-    <div class="section bg-1">
+
+    <div class="section bg-24">
       <div class="page-quick clearfix">
         <div class="box-left">
   <div class="m-title">
@@ -199,17 +210,17 @@
               <li class="blue">00</li>
       </ul>
       <button class="btn btn-change">换一注</button>
-      <button class="btn btn-tou">立即投注</button>
+      <button class="btn btn-red">立即投注</button>
       </div>
-      <p class="tips">15017期<span class="ml-30">双色球平均每期能诞生11个千万富豪哦~</span>
+      <p class="tips">15020期<span class="ml-30">双色球平均每期能诞生11个千万富豪哦~</span>
       <span class="pull-right">
       <span class="j-day">-</span>天<span class="j-hour">--</span>小时<span class="j-minute">--</span>分<span class="j-second">--</span>秒后截止
       </span>
       </p>
       </div>
-      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="64" />
-      <input type="hidden" class="j-qihao"  name="qihao" value="15017" /><input type="hidden" id="playName" name="playName" value="0" />
-      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1423395900" />
+      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="67" />
+      <input type="hidden" class="j-qihao"  name="qihao" value="15020" /><input type="hidden" id="playName" name="playName" value="0" />
+      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1424000700" />
     </div>
     <div role="tabpanel" class="tab-pane fade in " id="dlt">
           <div class="tou">
@@ -224,22 +235,22 @@
               <li class="blue">00</li>
       </ul>
       <button class="btn btn-change">换一注</button>
-      <button class="btn btn-tou">立即投注</button>
+      <button class="btn btn-red">立即投注</button>
       </div>
-      <p class="tips">15016期<span class="ml-30">0元滚存 </span>
+      <p class="tips">15019期<span class="ml-30">0元滚存 </span>
       <span class="pull-right">
       <span class="j-day">-</span>天<span class="j-hour">--</span>小时<span class="j-minute">--</span>分<span class="j-second">--</span>秒后截止
       </span>
       </p>
       </div>
-      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="48" />
-      <input type="hidden" class="j-qihao"  name="qihao" value="15016" /><input type="hidden" id="playName" name="playName" value="0" />
-      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1423309500" />
+      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="51" />
+      <input type="hidden" class="j-qihao"  name="qihao" value="15019" /><input type="hidden" id="playName" name="playName" value="0" />
+      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1423914300" />
     </div>
     <div role="tabpanel" class="tab-pane fade in " id="pl5">
           <div class="tou">
             <div class="tou-hd clearfix">
-              <img src="front_images/pl5-title.png" alt="排列5" class="ball">
+              <img src="front_images/lottery/pl5_logo.png" alt="排列5" class="ball">
               <ul class="tou-ls clearfix">  <li>00</li>
               <li>00</li>
               <li>00</li>
@@ -247,17 +258,17 @@
               <li>00</li>
       </ul>
       <button class="btn btn-change">换一注</button>
-      <button class="btn btn-tou">立即投注</button>
+      <button class="btn btn-red">立即投注</button>
       </div>
-      <p class="tips">15023期<span class="ml-30">0元滚存，天天开奖</span>
+      <p class="tips">15041期<span class="ml-30">0元滚存，天天开奖</span>
       <span class="pull-right">
       <span class="j-day">-</span>天<span class="j-hour">--</span>小时<span class="j-minute">--</span>分<span class="j-second">--</span>秒后截止
       </span>
       </p>
       </div>
-      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="18" />
-      <input type="hidden" class="j-qihao"  name="qihao" value="15023" /><input type="hidden" id="playName" name="playName" value="10" />
-      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1422025200" />
+      <input type="hidden" class="j-qihao-id"  name="qihao_id" value="36" />
+      <input type="hidden" class="j-qihao"  name="qihao" value="15041" /><input type="hidden" id="playName" name="playName" value="10" />
+      <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1423580400" />
     </div>
   </div>
 </div>
@@ -287,6 +298,33 @@
         <p>模型编号：[CD_60275]</p><p>最近30天,27投<span>12</span>中，回报率<span>295.23%</span><a class="btn" href="/lottery/trade/model-detail?model_id=CD_60275&status=1">点击查看详情</a></p>
       </div>
     </div>
+    <!--div role="tabpanel" class="tab-pane fade d-tou" id="profile">
+      <div class="head clearfix">
+        <div class="text">
+          <p>切塞切塞纳 VS 切塞纳切</p>
+          <p>比赛时间：09-28 21:00</p>
+        </div>
+        <img src="http://static3.yuncai.com
+        /front_images/team.jpg" alt="team" class="pull-left">
+        <img src="front_images/team.jpg" alt="team" class="pull-right">
+      </div>
+      <ul class="mid clearfix" id="j-d-tou">
+        <li class="first active">胜5.70</li>
+        <li>平5.70</li>
+        <li>负5.70</li>
+      </ul>
+      <div class="foot">
+        投注金额：
+        <select name="" id="">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+        元
+        <button class="btn btn-tou">立即投注</button>
+      </div>
+    </div-->
+
 
     <div role="tabpanel" class="tab-pane fade x-tou" id="messages">
       <div class="pull-left" id="j-xz-box">
@@ -299,7 +337,7 @@
           </li>
           <li>今日运程：<span id="j-xz-yc"></span></li>
           <li>
-            <button class="btn btn-tou" id="j-xz-buy">立即投注</button>
+            <button class="btn btn-red fs-yh" id="j-xz-buy">立即投注</button>
           </li>
         </ul>
       </div>
@@ -313,6 +351,8 @@
       </div>
       <!-- /.quick-->
     </div>
+
+
     <div class="section bg-2">
       <div class="page-he clearfix">
         <div class="box-left">
@@ -320,7 +360,7 @@
             <i class="icon icon-dot"></i>
             <span data-buy-type='0' >模型跟买</span>
             <b class="mb-line"></b>
-            <span data-buy-type='1' class="unactive ml-15">合买</span>
+            <span data-buy-type='1' class="unactive ml15">合买</span>
             <ul class="nav m-title-ls clearfix hide" id="j-model-nav">
               <li class="active" data-loty="jczq">
                 <a href="javascript:;">竞彩足球</a>
@@ -429,6 +469,36 @@
         <!-- /.box-right-->
       </div>
     </div>
+
+    <!--div class="section bg-4">
+    <div class="page-count">
+      <div class="m-title"> <i class="icon icon-dot"></i>
+        <span>热门统计</span>
+        <a href="#" class="more">更多</a>
+      </div>
+      <ul class="count-ls clearfix">
+        <li class="first">
+          <span class="tips">计划1</span>
+          <img src="http://static3.yuncai.com
+          /front_images/ying.png" alt="计划" class="ying">
+          <ul>
+            <li>
+              历史盈利：
+              <span class="money">11,685</span>
+              元
+            </li>
+            <li>当前回报：11倍</li>
+            <li>最近15天：15投1中</li>
+            <li>历史模型排行：第一名</li>
+          </ul>
+          <a href="#" class="btn look-link">查看计划详情</a>
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </div-->
 
   <div class="section bg-2">
     <div class="page-er">
@@ -606,14 +676,14 @@
             <span>9</span>
             <span>10</span>
           </div>
-          <button class="btn btn-danger" id="j-xz-getNum">获取号码</button>
+          <button class="btn btn-red" id="j-xz-getNum">获取号码</button>
         </div>
         <div class="main">
           <div class="main-num" id="j-num-list">
           </div>
         </div>
         <div class="bottom">
-          <button class="btn btn-danger" id="j-xz-ljtz">立即投注</button>
+          <button class="btn btn-red" id="j-xz-ljtz">立即投注</button>
           <button class="btn btn-gray" id="j-xz-reset">重选</button>
         </div>
       </div>
