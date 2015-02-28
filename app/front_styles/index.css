@@ -9,6 +9,11 @@
 .hd-nav .seed-nav > a:hover { border-color: #2b2b2b; }
 .hd-mask { z-index: 10; right: 0; display: block; }
 .ft { background: #242424; }
+.ft-left-img { background: url(../front_images/foot-black.png); }
+.ft-left-img1 { background-position: -95px -81px; width: 98px; height: 76px; }
+.ft-left-img2 { background-position: 0 0; width: 83px; height: 87px; }
+.ft-left-img3 { background-position: 0 -87px; width: 95px; height: 78px; }
+.ft-left-img4 { background-position: -83px 0; width: 76px; height: 81px; }
 .ft-list > li > h4 { color: #545454; }
 /* New Action Model Animate */
 .animated { -webkit-animation-duration: .5s; animation-duration: .5s; -webkit-animation-fill-mode: both; animation-fill-mode: both; }
@@ -35,6 +40,7 @@
 .section { width: 100%; }
 .page-er, .page-he, .page-new, .page-count, .page-quick { width: 985px; margin: auto; color: #999; }
 .btn { font-family: 'Microsoft Yahei'; }
+.btn-stop,.btn-stop:hover{ background: #4e4e4e; color: #999; border-color: #4e4e4e;}
 .m-title { font-size: 16px; color: #fff; }
 .m-title .icon-dot { margin-right: 8px; margin-bottom: 4px; }
 .m-title span { font-family: 'Microsoft Yahei'; font-size: 20px; font-weight: bold; cursor: pointer; }

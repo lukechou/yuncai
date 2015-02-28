@@ -2,11 +2,11 @@ var gulp = require('gulp');
 var del = require('del');
 var spritesmith = require('gulp.spritesmith');
 
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
   del(['dist/*.*'], cb);
 });
 
-gulp.task('sprite', ['clean'],function () {
+gulp.task('sprite', ['clean'], function () {
 
   var spriteData = gulp.src('./app/front_images/index/xz-btn/*.png').pipe(spritesmith({
     imgName: 'front_images/xz.png',
@@ -28,11 +28,24 @@ gulp.task('sprite', ['clean'],function () {
     cssName: 'front_styles/bf.css'
   }));
 
+  var spriteFootGray = gulp.src('./app/front_images/foot2/*.png').pipe(spritesmith({
+    imgName: 'front_images/foot-gray.png',
+    cssName: 'front_styles/foot-gray.css'
+  }));
+
+  var soriteFootBlack = gulp.src('./app/front_images/foot1/*.png').pipe(spritesmith({
+    imgName: 'front_images/foot-black.png',
+    cssName: 'front_styles/foot-black.css'
+  }));
+
 
   spriteData.pipe(gulp.dest('dist'));
   spriteDataIcon.pipe(gulp.dest('dist'));
   spriteDataLrkf.pipe(gulp.dest('dist'));
   spriteJczqBf.pipe(gulp.dest('dist'));
+  spriteFootGray.pipe(gulp.dest('dist'));
+  soriteFootBlack.pipe(gulp.dest('dist'));
+
 });
 
 gulp.task('default', ['sprite']);
