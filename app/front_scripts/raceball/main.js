@@ -10,7 +10,6 @@ require.config({
     core: '../lib/core',
     betting: 'betting',
     hemai: 'hemai',
-    stickUp: 'stickUp',
     scrollUp: 'scrollUp',
   },
   shim: {
@@ -26,33 +25,32 @@ require.config({
       deps: ['jquery'],
       exports: 'jquery'
     },
+    scrollUp: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
   }
 });
 
-require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core'], function ($, _, BET, APP, store, H) {
+require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core', 'scrollUp'], function ($, _, BET, APP, store, H) {
   'use strict';
 
   var scrollUp = (function () {
 
     var scrollUp = {
-      el: $('#j-scroll-up'),
+      el: $('#scrollUp'),
       init: function () {
+
+        $.scrollUp({
+          scrollText: '<div class="scroll-icon"><i class="icon icon-link-top"></i></div><div class="scroll-text">返回顶部</div>',
+        });
+
         this.el.hover(function () {
           $(this).addClass('active');
         }, function () {
           $(this).removeClass('active');
         });
-        // this.el.on('click', function (event) {
 
-        //   if (!!window.ActiveXObject) {
-        //     $(window).scrollTop(0);
-        //   } else {
-        //     $('html,body').animate({
-        //       scrollTop: '0'
-        //     }, 300,'swing');
-        //   }
-
-        // });
       }
     };
 
@@ -96,7 +94,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         _this.el.css({
           'position': 'relative',
         });
-        $('#j-scroll-up').fadeOut();
+        _this.el.eq(0).removeClass('active');
       },
       isMoreTop: function (winTop) {
         var _this = this;
@@ -104,15 +102,15 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         var betBoxHeight = $('#bettingBox').height() + _this.top;
 
         if (winTop < betBoxHeight) {
+          _this.el.eq(0).addClass('active');
           _this.el.css({
             'position': 'fixed',
             'top': setTop
           });
         } else {
+          _this.el.eq(0).removeClass('active');
           _this.isLessTop();
         }
-
-        $('#j-scroll-up').fadeIn();
       }
     };
 
@@ -125,6 +123,9 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     // check Sell Status
     if (serverTime == 1) {
       APP.showStopSellModal("竞彩足球");
+      $('#j-ljtzBtn,#j-fqhmBtn').addClass('btn-stop').html('暂停销售');
+      $('#j-ljtzBtn').attr('id','');
+      $('#j-fqhmBtn').remove();
     }
 
     scrollUp.init();
@@ -216,7 +217,20 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">0</em>' + line + '</div></span></dd>');
         break;
       case 'rqspf':
-        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + item['rqspf_rangqiu_num'] + '</em>' + line + '</div></span></dd>');
+        var rqspf_num = '';
+        switch (Number(item['rqspf_rangqiu_num'])){
+          case -1:
+            rqspf_num = '<b class="fc-3">'+item['rqspf_rangqiu_num']+'</b>';
+          break;
+          case 1:
+            rqspf_num = '<b class="fc-7">'+item['rqspf_rangqiu_num']+'</b>';
+          break;
+          default:
+            rqspf_num = item['rqspf_rangqiu_num'];
+          break;
+        }
+
+        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + rqspf_num + '</em>' + line + '</div></span></dd>');
         break;
       case 'bf':
         arr.push('<span class="row1 row1-1">' + bfLine + '</span></dd>');
@@ -263,8 +277,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         dataBodyHTML += createDataBody(jczqData[key], key);
       }
     }
-
-    $('#j-data-body').html(dataBodyHTML);
+    if(serverTime===0){
+      $('#j-data-body').html(dataBodyHTML);
+    }else{
+      $('#j-data-body .data-loadbox').html('竞彩足球 暂停销售');
+    }
   }
 
   initDataBody();
@@ -384,10 +401,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   // 赛事筛选
   $('#showOption').hover(function () {
-
+    $(this).addClass('hovered');
     $('#gameSeleList').show();
 
   }, function () {
+    $(this).removeClass('hovered');
     $('#gameSeleList').hide();
   });
 
@@ -471,8 +489,10 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   // 截止时间
   $('#j-changeTime').hover(function () {
+    $(this).addClass('hovered');
     $(this).find('.optionList').show();
   }, function () {
+    $(this).removeClass('hovered');
     $(this).find('.optionList').hide();
   });
 

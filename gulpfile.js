@@ -38,6 +38,11 @@ gulp.task('sprite', ['clean'], function () {
     cssName: 'front_styles/foot-black.css'
   }));
 
+  var spriteHomeLogo = gulp.src('./app/front_images/lottery/home_logo/*.png').pipe(spritesmith({
+    imgName: 'front_images/home-logo.png',
+    cssName: 'front_styles/home-logo.css'
+  }));
+
 
   spriteData.pipe(gulp.dest('dist'));
   spriteDataIcon.pipe(gulp.dest('dist'));
@@ -45,6 +50,7 @@ gulp.task('sprite', ['clean'], function () {
   spriteJczqBf.pipe(gulp.dest('dist'));
   spriteFootGray.pipe(gulp.dest('dist'));
   soriteFootBlack.pipe(gulp.dest('dist'));
+  spriteHomeLogo.pipe(gulp.dest('dist'));
 
 });
 

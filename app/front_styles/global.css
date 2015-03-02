@@ -33,6 +33,7 @@ textarea { resize: none; word-wrap: break-word; }
 .fc-4 { color: #5198f1; }
 .fc-5 { color: #0d67c4; }
 .fc-6 { color: #23a31d; }
+.fc-7{ color: #14B170;}
 .fc-84 { color: #848484; }
 .fc-3d { color: #3d3d3d; }
 .fs-yh { font-family: 'Microsoft Yahei' !important; }
@@ -121,8 +122,8 @@ textarea { resize: none; word-wrap: break-word; }
 .btn-big { font-size: 20px; margin: 30px auto 10px; padding: 8px 30px; }
 .btn-bind { padding: 6px 20px; }
 .btn:focus { outline: none !important; }
-.btn-stop { background: #c3c3c3; color: #fff; }
-.btn-stop:hover{ background: #c3c3c3; border-color: #c3c3c3;}
+.btn-stop, .btn-stop:hover, .btn-stop:focus { background: #c3c3c3; color: #fff; border-color: #c3c3c3; }
+
 /* Modal Button Group Class */
 .m-btns { width: 210px; margin: auto; }
 .m-btns > .btn { width: 90px; margin: 0 5px; }
@@ -290,7 +291,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-mask > li > a.active { background: #1d1d1d; }
 .hd-mask > li > a > span { font-size: 12px; padding-left: 11px; color: #8a8a8a; }
 .hd-mask-icon { display: inline-block; width: 50px; }
-.hd-mask-icon > img { width: 42px; height: 42px; margin: auto; }
+.hd-mask-icon > .icon { margin: auto; vertical-align: middle;}
 .hd-mask-list { overflow: hidden; width: 100%; padding: 10px 20px 6px 15px; }
 .hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 33%; text-align: left; }
 .hd-mask-list > li > a { font-size: 12px; display: block; color: #a5a5a5; line-height: 22px; }
@@ -340,3 +341,13 @@ body { color: #3d3d3d; background: #fff; }
 .login-modal .modal-body .login-form input { padding: 4px 10px; border: 1px #dfdfdf solid; }
 .login-modal .modal-body .btn { margin-left: 123px; padding: 5px 20px; }
 .login-modal .modal-body .login-form a { margin-left: 5px; color: #388bf1; }
+
+/* Home Logo */
+.icon-dlt-home-logo, .icon-jczq-home-logo, .icon-pl3-home-logo, .icon-pl5-home-logo, .icon-qlc-home-logo, .icon-qxc-home-logo, .icon-ssq-home-logo { background-image: url(../front_images/lottery/home-logo.png); }
+.icon-dlt-home-logo { background-position: 0px 0px; width: 44px; height: 44px; }
+.icon-jczq-home-logo { background-position: -44px 0px; width: 44px; height: 44px; }
+.icon-pl3-home-logo { background-position: 0px -44px; width: 44px; height: 44px; }
+.icon-pl5-home-logo { background-position: -44px -44px; width: 44px; height: 44px; }
+.icon-qlc-home-logo { background-position: -88px -44px; width: 43px; height: 43px; }
+.icon-qxc-home-logo { background-position: 0px -88px; width: 44px; height: 44px; }
+.icon-ssq-home-logo { background-position: -88px 0px; width: 44px; height: 44px; }

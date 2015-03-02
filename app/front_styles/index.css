@@ -40,7 +40,7 @@
 .section { width: 100%; }
 .page-er, .page-he, .page-new, .page-count, .page-quick { width: 985px; margin: auto; color: #999; }
 .btn { font-family: 'Microsoft Yahei'; }
-.btn-stop,.btn-stop:hover{ background: #4e4e4e; color: #999; border-color: #4e4e4e;}
+.btn-stop,.btn-stop:hover,.btn-stop:focus{ background: #4e4e4e; color: #999; border-color: #4e4e4e;}
 .m-title { font-size: 16px; color: #fff; }
 .m-title .icon-dot { margin-right: 8px; margin-bottom: 4px; }
 .m-title span { font-family: 'Microsoft Yahei'; font-size: 20px; font-weight: bold; cursor: pointer; }
