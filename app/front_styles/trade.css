@@ -59,8 +59,8 @@
 /* Brings-zhui Module */
 .br-zhui { padding: 0; text-align: center; }
 .br-zhui-top { position: relative; z-index: 5; color: #3d3d3d; border-bottom: 1px #dfdfdf solid; padding: 6px 10px 6px 15px; }
-.br-zhui-top h5 { font: 12px/1.5 tahoma, arial, '宋体'; float: left; vertical-align: 0; margin: 3px 0 0; }
-.br-zhui-top select { font: 12px/1.5 tahoma, arial, '宋体'; margin-left: 10px; height: 22px; }
+.br-zhui-top h5 { font: 12px/1.5 tahoma, arial, 'simsun'; float: left; vertical-align: 0; margin: 3px 0 0; }
+.br-zhui-top select { font: 12px/1.5 tahoma, arial, 'simsun'; margin-left: 10px; height: 22px; }
 .br-zhui-label { float: right; color: #848484; }
 .zhongj>input { margin: 0 5px; position: relative; top: 2px; }
 .br-zhui-label label { font-weight: normal !important; }
@@ -77,7 +77,7 @@
 .box-right { float: right; width: 231px; color: #3d3d3d;   }
 /* 标题样式 */
 .sub-title { background: #f5f5f5; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 16px; height: 34px; border-top: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid; }
-.more-detail { float: right; margin-right: 10px; font: 12px/34px '宋体'; }
+.more-detail { float: right; margin-right: 10px; font: 12px/34px 'simsun'; }
 .more-detail a { color: #848484; text-decoration: none; }
 .more-detail a:hover { color: #0d67c4; }
 /* 开奖公告 */
@@ -96,7 +96,7 @@
 .kjgg .sub-content>p>.bg-3, .kjgg .sub-content>p>.bg-4 { border-radius: 50%; width: 20px; height: 20px; display: inline-block; color: #fff; text-align: center; line-height: 20px; margin-right: 3px; }
 /* 号码统计 */
 .tab-cut { overflow: hidden; height: 29px; width: 100%; }
-.tab-cut li { font: normal 12px/28px '宋体'; color: #333; display: inline-block; width: 25%; float: left; text-align: center; cursor: pointer; background: #e4e5e6; border-bottom: 1px solid #dfdfdf; border-left: 1px #dfdfdf solid; }
+.tab-cut li { font: normal 12px/28px 'simsun'; color: #333; display: inline-block; width: 25%; float: left; text-align: center; cursor: pointer; background: #e4e5e6; border-bottom: 1px solid #dfdfdf; border-left: 1px #dfdfdf solid; }
 .tab-cut li.on { font-weight: bold; background: #f0efef; border-bottom: none; border-bottom-color: transparent; }
 .tab-cut li.br { border-right: 1px solid #ddd; }
 .hmtj .tab-con { padding: 10px 8px; }
@@ -104,7 +104,7 @@
 .lr-num-list li { float: left; width: 100%; display: inline-block; text-align: left; line-height: 28px; }
 #lr_content .tab-con { display: none; }
 .red-ball-bg, .blue-ball-bg { border-radius: 50%; height: 20px; width: 20px; display: inline-block; }
-.red-ball-bg, .blue-ball-bg { width: 18px; height: 18px; font: bold 12px/18px '宋体'; text-align: center; color: #fff; display: inline-block; }
+.red-ball-bg, .blue-ball-bg { width: 18px; height: 18px; font: bold 12px/18px 'simsun'; text-align: center; color: #fff; display: inline-block; }
 .red-ball-bg, .progressbarred { background: #f13c38; }
 .blue-ball-bg, .progressbarblue { background: #5198f1; }
 .progressbar, .progressbarblue, .progressbarred { display: inline-block; height: 7px; }
@@ -149,11 +149,11 @@
 .upload-count { line-height: 19px; height: 19px; margin: 16px 0 0 0; text-align: center; font-size: 14px; *width: 100%; }
 /* 标准格式样本 */
 .format-code ul { margin: 20px auto 10px; width: 98px; }
-.format-code li { height: 32px; line-height: 32px; color: #333; font-family: "宋体"; }
+.format-code li { height: 32px; line-height: 32px; color: #333; font-family: 'simsun'; }
 /* 常规投注-选号区 */
 .layout_select { padding-bottom: 10px; }
 .lrfx_red, .lrfx_blue { text-align: center; font-size: 12px; padding-bottom: 20px; color: #848484; }
-.lrfx_red b, .lrfx_blue b { font-size: 16px; margin-right: 8px; font-family: '微软雅黑'; font-weight: bold; }
+.lrfx_red b, .lrfx_blue b { font-size: 16px; margin-right: 8px; font-family: 'Microsoft Yahei'; }
 .layout_select { display: block; position: relative; }
 .dt_layout_select { display: block; position: relative; left: 0px; }
 .touz_area_box { margin: 9px 0 0; position: relative; }
@@ -179,4 +179,4 @@
 /* 多期投注 */
 .multiphase-box { position: relative; width: 100%; float: none; margin: 0 auto; display: block; border:none;}
 /* 彩种名称和描述css */
-.m-brhd-title >b { font-size: 22px; font-family: "微软雅黑"; font-weight: bold; }
+.m-brhd-title >b { font-size: 22px; font-family: 'Microsoft Yahei'; }

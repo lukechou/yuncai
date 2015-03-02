@@ -23,11 +23,11 @@
 .m-cs-rtbox .logo { width: 78px; height: 78px; margin-right: 0px; }
 .m-cs-rtbox .mn { position: relative; width: 655px; }
 .m-cs-rtbox .title { font-size: 16px; margin: 10px 0 15px; }
-.m-cs-rtbox .title > b { font-size: 22px; margin-right: 10px; font-family: "微软雅黑"; font-weight: bold; }
+.m-cs-rtbox .title > b { font-size: 22px; margin-right: 10px; font-family: 'Microsoft Yahei'; }
 .m-cs-rtbox .title > span { margin: 0 3px; }
 .m-cs-rtbox .links .btn { padding: 4px 12px; }
 .m-cs-rtbox .text { position: absolute; right: 0; bottom: 0; color: #848484; }
-.m-cs-rtbox .text .qi { display: block; margin-bottom: 15px; text-align: right; color: #3d3d3d; font-size: 14px; font-family: '宋体'; font-weight: bold; }
+.m-cs-rtbox .text .qi { display: block; margin-bottom: 15px; text-align: right; color: #3d3d3d; font-size: 14px; font-family: 'simsun'; font-weight: bold; }
 .m-cs-rtbox .text .qi > span { margin: 0 5px; }
 .badge2 { line-height: 14px; float: right; width: 56px; height: 14px; padding-left: 3px; text-align: center; color: #fff; background: url(../front_images/tip1.png) no-repeat; }
 /* 合买大厅-发单排行榜 And帮助中心 */
@@ -95,9 +95,9 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .he-table tbody tr .btn-c1 { margin-right: 5px; padding: 0; width: 57px; height: 25px; font-family: 'simsun'; }
 .he-table tbody tr .u-ci { font-size: 12px; width: 80px; padding: 3px 5px; border: 1px #dfdfdf solid; margin-right: 6px; }
 .m-hm-fi { padding: 5px 10px; background: #f5f5f5; }
-.m-hm-fi select, .m-hm-fi input { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: '宋体'; width: 70px; height: 25px; }
-.m-hm-fi select.middle { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: '宋体'; width: 90px; height: 25px; }
-.m-hm-fi select.small { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: '宋体'; width: 70px; height: 25px; }
+.m-hm-fi select, .m-hm-fi input { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: 'simsun'; width: 70px; height: 25px; }
+.m-hm-fi select.middle { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: 'simsun'; width: 90px; height: 25px; }
+.m-hm-fi select.small { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: 'simsun'; width: 70px; height: 25px; }
 .m-hm-fi input { width: 90px; }
 .m-hm-fi .btn { position: relative; padding: 0; width: 54px; height: 25px; }
 

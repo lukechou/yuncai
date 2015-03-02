@@ -21,7 +21,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* Font Class */
 h1, h2, h3, h4, h5, h6 { font-family: 'Microsoft Yahei'; }
-address, caption, cite, code, dfn, em, th, var, i, b { font-weight: 500; font-style: normal; }
+address, caption, cite, code, dfn, em, th, var, i { font-weight: 500; font-style: normal; }
 textarea { resize: none; word-wrap: break-word; }
 .fs-12 { font-size: 12px; }
 .fs-16 { font-size: 16px; }
@@ -102,7 +102,7 @@ textarea { resize: none; word-wrap: break-word; }
 /* Button Class */
 .btn { border-radius: 2px; font-size: 12px; }
 .btn-big { font-size: 20px; margin: 15px auto 10px; padding: 8px 30px; }
-.btn-add, .btn-add2 { font-weight: bold; position: relative; padding: 10px 25px 10px 35px; color: #adadad; font-size: 16px; font-family: '微软雅黑'; background: #f3f3f3; border: 1px #dad9d9 solid; display: block; margin: auto; width: 174px; }
+.btn-add, .btn-add2 { font-weight: bold; position: relative; padding: 10px 25px 10px 35px; color: #adadad; font-size: 16px; font-family: 'Microsoft Yahei'; background: #f3f3f3; border: 1px #dad9d9 solid; display: block; margin: auto; width: 174px; }
 .btn-add > .icon, .btn-add2 > .icon { position: absolute; top: 14px; left: 15px; }
 .btn-add.active, .btn-add2.active { background: #f88c35; color: #fff; border-color: transparent; }
 .btn-s { font-size: 12px; padding: 3px 8px; color: #fff; }
@@ -226,7 +226,7 @@ textarea { resize: none; word-wrap: break-word; }
 .m-brhd-group > a.active { color: #fff; background: #f13c38; }
 .m-brhd-group > a:hover { text-decoration: none; }
 .m-brhd-time, .m-brhd-qi { font-size: 12px; position: absolute; right: 10px; }
-.m-brhd-qi { font-family: 'simsun'; font-size: 14px; font-weight: bold; top: 35px; }
+.m-brhd-qi { font-family: 'simsun'; font-size: 14px; top: 35px; }
 .m-brhd-time { bottom: 15px; color: #848484; }
 
 /* 右侧客服咨询 */
@@ -285,7 +285,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-nav .seed-nav li>a.invalid:hover { cursor: default; background: #212121; }
 .hd-nav .seed-nav.on .hd-mask { display: block; }
 .hd-mask { position: absolute; z-index: 101; left: 0; display: none; background: #212121; width: 265px; height: 360px; }
-.hd-mask > li { width: 265px; }
+.hd-mask > li { width: 265px; height: 55px;}
 .hd-mask > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; display: block; color: #fff; border-bottom: 1px #2f3032 dashed; }
 .hd-mask > li > a:hover { cursor: pointer; text-decoration: none; background: #1d1d1d; }
 .hd-mask > li > a.active { background: #1d1d1d; }

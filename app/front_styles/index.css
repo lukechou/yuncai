@@ -54,6 +54,7 @@
 .page-hd .carousel .small { position: relative; left: 65px; width: 590px; }
 .page-hd .bn2-bg { background: #ed3c33; }
 .page-hd .bn3-bg { background: #ffee2f; }
+.page-hd .bn5-bg { background: #ee6463; }
 .page-hd .bn3-left { position: absolute; top: 0; left: 0; width: 30%; background: #04d1e9; height: 100%; }
 .page-hd { width: 100%; }
 .page-hd .sticky { font-size: 12px; position: absolute; top: 0; right: 0; bottom: 0; left: 853px; width: 132px; height: 360px; margin: auto; text-align: center; color: #fff; }

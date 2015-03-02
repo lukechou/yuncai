@@ -29,7 +29,7 @@
 .dataHead span { line-height: 29px; display: block; height: 29px; border-bottom: 1px solid #dfdfdf; }
 .dataHead .co6 .btnBox, .dataHead .co7 .btnBox { margin-left: -1px; white-space: nowrap; border: none; }
 .dataHead .co6 .btnBox em { width: 65px; }
-.imitateSelect:hover{ text-decoration: none;}
+.imitateSelect:hover { text-decoration: none; }
 .dataHead .gameSeleList, .dataHead .optionList { position: absolute; z-index: 100; top: 59px; left: -1px; display: none; border: 1px solid #1962ae; }
 .dataHead .co2.hovered, .dataHead .co3.hovered { border: 1px solid #1962ae; border-width: 1px 1px; background: #fff; margin-top: -1px; }
 .hide-border { display: none; }
@@ -39,17 +39,9 @@
 .dataHead .optionList a, .dataHead .optionList a:visited { line-height: 24px; display: block; height: 24px; color: #333; }
 .dataHead .optionList a:hover { text-decoration: none; color: #fff; background: #0d67c4; }
 .dataHead .co7 .optionList { top: 29px; width: 100%; }
-.co2, .co3 { cursor: pointer; }
-.co1 { overflow: hidden; width: 45px; }
-.co2 { width: 110px; }
-.co3 { width: 80px; }
-.co4 { width: 260px; }
-.co5, .dataBody .btnBox .rq { width: 49px; }
-.co6 { overflow: hidden; width: 168px; white-space: nowrap; }
-.co6-1 { width: 217px; }
-.co7 { width: 124px; }
-.co8 { position: absolute; right: 0; float: none; width: 60px; }
-.closeData dd, .isOver { display: none; }
+.dataHead .co2, .dataHead .co3 { cursor: pointer; }
+
+/* 赛事筛选, 截止时间 */
 .dataHead .gameSeleList ul { overflow: hidden; }
 .dataHead .gameSeleList li { line-height: 30px; position: relative; float: left; overflow: hidden; zoom: 1; width: 95px; height: 30px; cursor: pointer; text-align: left; text-indent: 30px; color: #3d3d3d; }
 .dataHead .gameSeleList li:hover { cursor: pointer; }
@@ -61,29 +53,37 @@
 .dataHead .gameSeleList .btn-red { color: #fff; }
 .dataHead .arrow { position: relative; left: 5px; display: inline-block; width: 10px; height: 6px; background: url(../front_images/help-nav-icon.png) no-repeat; }
 
+/* Row */
+.co1 { overflow: hidden; width: 45px; }
+.co2 { width: 110px; }
+.co3 { width: 80px; }
+.co4 { width: 260px; }
+.co5, .dataBody .btnBox .rq { width: 49px; }
+.co6 { overflow: hidden; width: 168px; white-space: nowrap; }
+.co6-1 { width: 217px; }
+.co7 { width: 124px; }
+.co8 { position: absolute; right: 0; float: none; width: 60px; }
+
 /* dataBody */
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
 .dataBody dl { position: relative; margin-bottom: 0; }
+
+/* dt */
 .dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 1px 0 1px; }
-.dataBody dt .cuspText { height: 38px; margin-right: 10px; cursor: pointer; }
-.dataBody dt .cusp { top: 15px; right: -12px; }
-.dataBody dt .matchSize { margin-left: 10px; }
+.dataBody .cuspText { height: 38px; margin-right: 10px; cursor: pointer; }
+.dataBody .cusp { top: 15px; right: -12px; }
+.dataBody .matchSize { margin-left: 10px; }
 
 /* All dd */
-.dataBody dd, .dataBody dd span, .towLine em, .dataBody .btnBox em, .dataBody .no-support, .dataBody dd span.btnBox .block, .analyMoreTable th, .row3-1 em, .row2-1 em { line-height: 38px; height: 38px; }
+.dataBody dd, .dataBody span, .towLine em, .dataBody .btnBox em, .dataBody .no-support, .dataBody span.btnBox .block, .analyMoreTable th, .row3-1 em, .row2-1 em { line-height: 38px; height: 38px; }
 .dataBody dd { position: relative; z-index: 2; zoom: 1; border-right: 1px #dfdfdf solid; }
-.dataBody dd span { font-family: 'simsun'; float: left; text-align: center; border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
 .dataBody dd:hover { background: #f6f7f9; }
+.dataBody dd span { font-family: 'simsun'; float: left; text-align: center; border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
 .towLine { overflow: hidden; border: 0; border-bottom: none; }
 .towLine em { display: inline-block; width: 38px; }
 .towLine em a { padding: 3px; color: #3d3d3d; }
 .towLine em a:hover, .towLine em a:focus { text-decoration: none; }
 .line1, .line2 { overflow: hidden; zoom: 1; white-space: nowrap; }
-.co7 em.hover a { background: #f13c38; }
-.co7 em.active a { background: #f13c38; }
-.dataBody dl dd .co7 .line1, .dataBody dl dd .co7 .line2 { border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
-
-/* touZhu area */
 .dataBody .co2 { overflow: hidden; color: #fff; border-width: 1px 0 0; background: #f13c38; }
 .dataBody dd .hostTeam, .dataBody dd .guestTeam { float: left; overflow: hidden; width: 48%; text-align: right; white-space: nowrap; }
 .dataBody dd .guestTeam { float: right; text-align: left; }
@@ -94,14 +94,16 @@
 
 /* btn background */
 .dataBody .sp-btn { background: url(../front_images/jczq/default.png); }
-.co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
 .dataBody .sp-btn.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
 .dataBody .sp-btn.active { color: #fff; background: url(../front_images/jczq/active.png) #f13c38; }
+
+.co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
+
 
 /* 投注表格主体 */
 .data-load { margin: auto; }
 .data-loadbox { width: 100%; height: 200px; padding-top: 100px; border: 1px #dfdfdf solid; border-width: 1px 1px 0; text-align: center; }
-.dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3 { display: none; }
+.dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3, .row4 { display: none; }
 .row2 .btnBox, .row3 .btnBox { border: none; }
 .onlyBf .co4, .onlyBqc .co4, .onlyZjq .co4 { width: 180px; }
 .onlyBf .co2, .onlyBqc .co2, .onlyZjq .co2 { width: 60px; }
@@ -118,8 +120,6 @@
 .analyMoreTable th { font-weight: 700; text-align: center; border: 1px solid #dfdfdf; }
 .analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; border: 1px solid #dfdfdf; }
 
-/* 半全场 */
-
 /* 总进球 */
 .onlyBf .no-support, .onlyZjq .no-support, .onlyBqc .no-support { width: 100%; border: none; }
 .onlyBf .row1, .onlyZjq .row3, .onlyBqc .row2 { display: block; }
@@ -130,15 +130,64 @@
 .onlyZjq .co2 { width: 93px; }
 .row1-1, .row2-1, .row3-1 { border: 1px #dfdfdf solid; }
 .dataBody .lastOne { border-right: none; }
-.row2 em, .row3 em { float: left; border-right: 1px #dfdfdf solid; }
-.row2 em, .row2-1 em { width: 35px; }
-.row3 em, .row3-1 em { width: 39px; }
 .row1-1.on { background: #e3e3e3; }
 .row1-1 .btn { font-size: 12px; width: 130px; height: 29px; padding: 0; color: #fff; border: none; background-image: url(../front_images/jczq/bf.png); background-position: 0 -29px; }
 .row1-1 .btn:hover { background-position: 0 -87px; }
 .row1-1 .btn.active { background-position: 0 0; }
 .row1-1 .btn.has { background-position: 0 -58px; }
-.row3-1 em, .row2-1 em { float: left; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
+.row2-1 em, .row3-1 em, .row4-1 em { float: left; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
+.row2 em, .row3 em { float: left; border-right: 1px #dfdfdf solid; }
+.row2 em, .row2-1 em { width: 35px; }
+.row3 em, .row3-1 em { width: 39px; }
+
+
+/* 混合投注 */
+.onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4{ height: 80px; line-height: 80px; }
+.onlyHhtz .dataBody dd { height: 80px }
+.onlyHhtz .row4 { display: block; width:193px; }
+.onlyHhtz .co4{ width: 252px;}
+.row4-1{ width: 193px;}
+.row4 em, .row4-1 em { width: 48px; }
+.row4 .rq{ width: 49px;}
+.onlyHhtz .co5{ display: block;}
+.onlyHhtz .co2 { width: 93px; }
+.onlyHhtz .dataBody .row4-1,.row4-1 em{ height: 40px; line-height: 40px;}
+
+
+.onlyHhtz .tg-data{
+  display: block;
+width: 49px;
+/* float: left; */
+border-left: 1px #dfdfdf solid;
+height: 80px;
+line-height: 80px;
+position: absolute;
+right: 0;
+text-align: center;
+border: 1px #dfdfdf solid;
+border-right: none;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Right */
 .icoDel, .qrtz-box a { color: #3d3d3d; }
