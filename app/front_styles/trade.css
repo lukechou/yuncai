@@ -51,7 +51,7 @@
 /* Brings-Together */
 .br-together, .br-zhui { background: #fff; border: 1px #dddedf solid; border-top: none; padding: 15px 13px; font-size: 12px; color: #848484; }
 .br-together .title { width: 60px; display: inline-block; text-align: right; margin-right: 5px; float: left; color: #3d3d3d; }
-.br-set { padding: 0 6px; height: 21px; line-height: 21px; text-align: center; display: block; border: 1px solid #dddddd; color: #333333; float: left; margin-right: 11px; }
+.br-set { padding: 0 6px; height: 21px; line-height: 17px; text-align: center; display: block; border: 2px solid #dfdfdf; color: #333333; float: left; margin-right: 11px; }
 .br-set:hover, .br-set.active { text-decoration: none; color: #f13c38; border-color: #f13c38; }
 .br-input, .br-textarea, .br-select { background: #fff; border: 1px solid #dfdfdf; padding: 2px; font-size: 12px; }
 .br-textarea { width: 340px; height: 100px; }

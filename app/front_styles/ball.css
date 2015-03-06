@@ -28,7 +28,7 @@
 .dataHead dd { position: relative; float: left; height: 60px; border-left: 1px solid #dfdfdf; }
 .dataHead span { line-height: 29px; display: block; height: 29px; border-bottom: 1px solid #dfdfdf; }
 .dataHead .co6 .btnBox, .dataHead .co7 .btnBox { margin-left: -1px; white-space: nowrap; border: none; }
-.dataHead .co6 .btnBox em { width: 65px; }
+.dataHead .co6 .btnBox em { width: 56px; float: left; border-right: 1px #dfdfdf solid; }
 .imitateSelect:hover { text-decoration: none; }
 .dataHead .gameSeleList, .dataHead .optionList { position: absolute; z-index: 100; top: 59px; left: -1px; display: none; border: 1px solid #1962ae; }
 .dataHead .co2.hovered, .dataHead .co3.hovered { border: 1px solid #1962ae; border-width: 1px 1px; background: #fff; margin-top: -1px; }
@@ -37,7 +37,7 @@
 .dataHead .gameSeleList { top: 58px; overflow: hidden; width: 295px; margin-left: 0; background: #fff; padding: 5px 0; }
 .dataHead .optionList { padding: 0; border-top: 0; background: #fff; }
 .dataHead .optionList a, .dataHead .optionList a:visited { line-height: 24px; display: block; height: 24px; color: #333; }
-.dataHead .optionList a:hover { text-decoration: none; color: #fff; background: #0d67c4; }
+.dataHead .optionList a.active, .dataHead .optionList a:hover { text-decoration: none; color: #fff; background: #0d67c4; }
 .dataHead .co7 .optionList { top: 29px; width: 100%; }
 .dataHead .co2, .dataHead .co3 { cursor: pointer; }
 
@@ -45,13 +45,13 @@
 .dataHead .gameSeleList ul { overflow: hidden; }
 .dataHead .gameSeleList li { line-height: 30px; position: relative; float: left; overflow: hidden; zoom: 1; width: 95px; height: 30px; cursor: pointer; text-align: left; text-indent: 30px; color: #3d3d3d; }
 .dataHead .gameSeleList li:hover { cursor: pointer; }
-.dataHead .gameSeleList li i { position: absolute; top: 9px; left: 10px; display: block; width: 16px; height: 14px; background-image: url(../front_images/jczq/jczqicon.png); background-position: 0 -82px; }
-.dataHead .gameSeleList li.active i { background-position: 0 -110px; }
+.dataHead .gameSeleList li i { position: absolute; top: 9px; left: 10px; display: block; width: 16px; height: 14px; background-image: url(../front_images/jczq/start.png); }
+.dataHead .gameSeleList li.active i { background-image: url(../front_images/jczq/jczqicon.png); background-position: 0 -110px; }
 .dataHead .gameSeleList .btnBox { line-height: 36px; float: right; width: 165px; height: 36px; margin-right: 15px; }
 .dataHead .gameSeleList .btnBox label { margin: 0; }
 .dataHead .gameSeleList .btnBox label .icon { position: relative; top: 4px; left: -5px; }
 .dataHead .gameSeleList .btn-red { color: #fff; }
-.dataHead .arrow { position: relative; left: 5px; display: inline-block; width: 10px; height: 6px; background: url(../front_images/help-nav-icon.png) no-repeat; }
+.arrow { position: relative; left: 5px; display: inline-block; width: 10px; height: 6px; background: url(../front_images/help-nav-icon.png) no-repeat; }
 
 /* Row */
 .co1 { overflow: hidden; width: 45px; }
@@ -91,21 +91,23 @@
 .dataBody .btnBox em { display: block; float: left; width: 56px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
 .dataBody .no-support { float: left; width: 168px; text-align: center; vertical-align: top; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
 .dataBody dd span.btnBox .block { width: 100%; margin-left: -1px; }
+.show-icon, .hide-icon { width: 7px; height: 6px; }
+.show-icon { background: url(../front_images/jczq/show-icon.png) no-repeat; }
+.hide-icon { background: url(../front_images/jczq/hide-icon.png) no-repeat; }
 
 /* btn background */
 .dataBody .sp-btn { background: url(../front_images/jczq/default.png); }
 .dataBody .sp-btn.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
 .dataBody .sp-btn.active { color: #fff; background: url(../front_images/jczq/active.png) #f13c38; }
-
 .co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
-
 
 /* 投注表格主体 */
 .data-load { margin: auto; }
 .data-loadbox { width: 100%; height: 200px; padding-top: 100px; border: 1px #dfdfdf solid; border-width: 1px 1px 0; text-align: center; }
 .dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3, .row4 { display: none; }
 .row2 .btnBox, .row3 .btnBox { border: none; }
-.onlyBf .co4, .onlyBqc .co4, .onlyZjq .co4 { width: 180px; }
+.onlyBf .co4 { width: 272px; }
+.onlyBqc .co4, .onlyZjq .co4 { width: 180px; }
 .onlyBf .co2, .onlyBqc .co2, .onlyZjq .co2 { width: 60px; }
 
 /* 胜平负 数据主体样式 */
@@ -114,16 +116,19 @@
 .onlyRqSpf .co5, .onlyRqSpf .co6, .onlySpf .co5, .onlySpf .co6 { display: block; }
 
 /* 比分 */
-.dataBody .bf-box { height: 150px; border: 1px #dfdfdf solid; border-width: 1px 0 0 1px; background: #e3e3e3; }
-.dataBody .bf-box:hover { background: #e3e3e3; }
-.analyMoreTable { width: 680px; margin: 15px auto 0; table-layout: fixed; text-align: center; border: 1px solid #dfdfdf; background: #fff; }
-.analyMoreTable th { font-weight: 700; text-align: center; border: 1px solid #dfdfdf; }
+.dataBody .bf-box, .bf-nobor, .dataBody .bf-box:hover { background: #e3e3e3; }
+.dataBody .bf-box { height: 150px; border: 1px #dfdfdf solid; border-width: 1px 0 0 1px; }
+.analyMoreTable { width: 680px; margin: 15px auto 0; table-layout: fixed; text-align: center; background: #fff; }
+.analyMoreTable th { font-weight: 700; text-align: center; border: 1px solid #dfdfdf; width: 45px; }
 .analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; border: 1px solid #dfdfdf; }
+.analyMoreTable2 th { width: 95px; }
+.analyMoreTable2 td { width: 45px; }
+.bf-nobor { position: absolute; right: 0; width: 316px; height: 5px; top: -3px; }
 
 /* 总进球 */
 .onlyBf .no-support, .onlyZjq .no-support, .onlyBqc .no-support { width: 100%; border: none; }
 .onlyBf .row1, .onlyZjq .row3, .onlyBqc .row2 { display: block; }
-.onlyBf .row1 { width: 316px; }
+.onlyBf .row1 { width: 224px; }
 .onlyBqc .row2 { width: 316px; }
 .onlyZjq .row3 { width: 314px; }
 .onlyBf .co2, .onlyBqc .co2 { width: 91px; }
@@ -140,58 +145,33 @@
 .row2 em, .row2-1 em { width: 35px; }
 .row3 em, .row3-1 em { width: 39px; }
 
-
 /* 混合投注 */
-.onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4{ height: 80px; line-height: 80px; }
-.onlyHhtz .dataBody dd { height: 80px }
-.onlyHhtz .row4 { display: block; width:193px; }
-.onlyHhtz .co4{ width: 252px;}
-.row4-1{ width: 193px;}
-.row4 em, .row4-1 em { width: 48px; }
-.row4 .rq{ width: 49px;}
-.onlyHhtz .co5{ display: block;}
+.onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4 { height: 80px; line-height: 80px; }
+.onlyHhtz .dataBody dd { min-height: 80px }
+.onlyHhtz .row4 { display: block; width: 193px; }
+.onlyHhtz .co4 { width: 252px; }
+.row4-1 { width: 197px; }
+.row4 em { width: 49px; float: left; border-right: 1px #dfdfdf solid; }
+.row4 em.last { width: 45px; }
+.row4-1 em { width: 49px; }
+.row4 .rq { width: 49px; }
+.onlyHhtz .co5 { display: block; }
 .onlyHhtz .co2 { width: 93px; }
-.onlyHhtz .dataBody .row4-1,.row4-1 em{ height: 40px; line-height: 40px;}
-
-
-.onlyHhtz .tg-data{
-  display: block;
-width: 49px;
-/* float: left; */
-border-left: 1px #dfdfdf solid;
-height: 80px;
-line-height: 80px;
-position: absolute;
-right: 0;
-text-align: center;
-border: 1px #dfdfdf solid;
-border-right: none;
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.rq b { font-weight: normal; }
+.onlyHhtz .dataBody .row4-1, .row4-1 em { height: 40px; line-height: 40px; }
+.onlyHhtz .tg-data { display: block; width: 45px; height: 80px; line-height: 80px; position: absolute; right: 0; text-align: center; border: 1px #dfdfdf solid; border-right: none; overflow: hidden; }
+.dataBody .hhtz-box { height: 226px; }
+.dataBody .tg-data { background: url(../front_images/jczq/h-default.png); }
+.dataBody .tg-data:hover { background: url(../front_images/jczq/h-hover.png); cursor: pointer; }
+.dataBody .tg-data .arrow-up, .dataBody .tg-data .arrow-down { position: relative; width: 9px; height: 4px; display: inline-block; left: 3px; }
+.dataBody .tg-data .arrow-up { background: url(../front_images/jczq/arrow-up.png) no-repeat; }
+.dataBody .tg-data .arrow-down { background: url(../front_images/jczq/arrow-down.png) no-repeat; }
+.dataBody .tg-data.active { background: #e3e3e3; border-left: none; }
+.hhtz-nobor { position: absolute; top: -3px; right: 0px; height: 5px; width: 45px; background: #e3e3e3; }
 
 /* Right */
 .icoDel, .qrtz-box a { color: #3d3d3d; }
-.icoDel { font-size: 18px; position: relative; top: 0; left: -5px; line-height: 1; }
+.icoDel { font-size: 18px; position: relative; top: 0; left: -1px; line-height: 1; }
 .icoDel:hover { color: #f13c38; text-decoration: none; }
 
 /* .unselect */
@@ -201,11 +181,13 @@ border-right: none;
 .m-lstitle { font-size: 12px; width: 258px; border-bottom: 1px #dfdfdf solid; background: #f5f5f5; }
 .m-lstitle li { float: left; padding: 5px 0; text-align: center; border-left: 1px #dfdfdf solid; }
 .t1 { width: 65px; }
-.t2 { width: 158px; }
+.t2 { width: 193px; }
 .t3 { width: 35px; }
-.scrollMoni { font-size: 12px; display: none; max-height: 140px; }
+.scrollMoni { font-size: 12px; display: none; max-height: 280px; }
 .scrollMoni .table { margin: 0; }
 .scrollMoni .table > tbody > tr > th, .scrollMoni .table > tbody > tr > td { text-align: center; border: none; }
+.scrollMoni .table > tbody > tr > th { height: 40px; overflow: hidden; padding: 14px 0 10px; float: left; }
+.scrollMoni .table > tbody > tr > .t1 { text-align: left; width: 65px; padding-left: 4px; }
 .mCSB_inside > .mCSB_container { margin-right: 0; }
 .mCSB_scrollTools { right: -5px; }
 .scrollMoni .icoDan { padding: 1px; color: #3d3d3d; border: 1px #dfdfdf solid; }
@@ -213,19 +195,19 @@ border-right: none;
 .scrollMoni .icoDan:hover { color: #f13c38; border-color: #f13c38; }
 .scrollMoni .icoDan:focus { color: #f13c38; border-color: #f13c38; }
 .scrollMoni .icoDan.disable { color: #dfdfdf; }
-.scrollMoni .table .gameOption .betList { padding: 0 0 5px 25px; }
-.block, .block2, .block0, .block1, .blockYel, .block2:visited, .block0:visited, .block1:visited, .blockYel:visited { line-height: 24px; float: left; width: 65px; height: 24px; margin: 0 5px 3px 0; text-align: center; color: #fff; }
+.scrollMoni .table .gameOption .betList { padding: 0 0 0 25px; }
+.block { line-height: 24px; float: left; width: 65px; height: 24px; margin: 0 5px 2px 0; text-align: center; color: #fff; }
 .block { background: #f13c38; }
-.block0 { background-color: #f13c38; }
-.block1 { background-color: #f88c35; }
-.block2 { background-color: #448b3b; }
+.block0, .block3 { background: #f13c38; }
+.block1, .block4 { background: #f88c35; }
+.block2, .block5 { background: #448b3b; }
 .block0:focus, .block1:focus, .block2:focus { text-decoration: none; }
-#poolStep1 .block:hover, #poolStep1 .block0:hover, #poolStep1 .block1:hover, #poolStep1 .block2:hover { text-decoration: none; text-indent: 9999px; }
-#poolStep1 .block0:hover { background: url(../front_images/jczq/close.png) #f13c38 no-repeat center center; }
-#poolStep1 .block1:hover { background: url(../front_images/jczq/close.png) #f88c35 no-repeat center center; }
-#poolStep1 .block2:hover { background: url(../front_images/jczq/close.png) #448b3b no-repeat center center; }
-#poolStep1 .block:hover { background: url(../front_images/jczq/close.png) #f13c38 no-repeat center center; }
-#poolStep2 .guoguanList { display: none; }
+.poolStep1 .block:hover, .poolStep1 .block0:hover, .poolStep1 .block1:hover, .poolStep1 .block2:hover { text-decoration: none; text-indent: 9999px; }
+.poolStep1 .block0:hover { background: url(../front_images/jczq/close.png) #f13c38 no-repeat center center; }
+.poolStep1 .block1:hover { background: url(../front_images/jczq/close.png) #f88c35 no-repeat center center; }
+.poolStep1 .block2:hover { background: url(../front_images/jczq/close.png) #448b3b no-repeat center center; }
+.poolStep1 .block:hover { background: url(../front_images/jczq/close.png) #f13c38 no-repeat center center; }
+.poolStep2 .guoguanList { display: none; }
 .guoguanList { padding: 8px 0 8px 25px; }
 .guoguanList .jtip { line-height: 20px; float: left; width: 65px; height: 24px; margin: 0 5px 5px 0; cursor: pointer; text-align: center; color: #3d3d3d; border: 2px #dfdfdf solid; }
 .guoguanList .jtip.active { line-height: 24px; border: none; background-image: url(../front_images/jczq/jczqicon.png); background-position: 0 -176px; }
@@ -258,7 +240,7 @@ border-right: none;
 .btns { text-align: center; }
 .br-together, .br-zhui { font-size: 12px; padding: 15px 20px 0 0; color: #3d3d3d; background: #fff; }
 .br-together .title { display: inline-block; float: left; width: 60px; margin-right: 5px; text-align: right; color: #3d3d3d; }
-.br-set { line-height: 21px; display: block; float: left; height: 21px; margin-right: 11px; padding: 0 6px; text-align: center; color: #333; border: 1px solid #ddd; }
+.br-set { line-height: 17px; display: block; float: left; height: 21px; margin-right: 11px; padding: 0 6px; text-align: center; color: #333; border: 2px solid #ddd; }
 .br-set:hover, .br-set.active { text-decoration: none; color: #f13c38; border-color: #f13c38; }
 .br-set:focus { text-decoration: none; }
 .br-input, .br-textarea, .br-select { font-size: 12px; padding: 2px; border: 1px solid #dfdfdf; background: #fff; }
@@ -268,9 +250,11 @@ border-right: none;
 .ball-table { width: 500px; margin: auto; color: #3d3d3d; }
 .ball-table thead tr th, .ball-table tbody tr td, .ball-table tbody tr th { border-color: #dfdfdf; }
 .ball-table thead tr th { border-bottom: none; background: #f5f5f5; }
-#j-ball-table { max-height: 150px; }
+.ball-tb { max-height: 150px; }
+
+/* 立即投注 */
 .ljtz-box { font-size: 12px; }
-#j-ljtz-box { max-height: 350px; }
+.ljtz-main { max-height: 350px; }
 .ljtz-box thead tr th, .ljtz-box tbody tr td, .ljtz-box tbody tr th { line-height: 24px; text-align: center; border-color: #dfdfdf; }
 .ljtz-box thead tr th { border-bottom: none; background: #f5f5f5; }
 .ljtz-box .block0, .ljtz-box .block1, .ljtz-box .block2 { width: 40px; }

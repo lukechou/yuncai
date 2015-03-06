@@ -67,11 +67,18 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 6000,
     speed: 400,
     infinite: true,
     arrows: true,
-    dots: true
+    dots: true,
+    pauseOnHover: true,
+    pauseOnDotsHover: true,
+  });
+
+  $('#slick .slick-dots li').on('mouseover', function (event) {
+    var dotIndex = $(this).index();
+    $('#slick')[0].slick.slickGoTo(dotIndex);
   });
 
   $('#slick').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
@@ -356,7 +363,14 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         money: buyNum
       };
 
-      var html = '<div class="m-detail-box"><p>您对模型编号<span class="mlr-8 fc-3">' + obj.model_id + '</span>投注<span class="mlr-8 fc-3">' + obj.money + '</span>元，请确认</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div>';
+      var btnHTML = '';
+      if (index.isSellStop) {
+        btnHTML = '<button class="btn btn-danger btn-stop">确定</button>';
+      } else {
+        btnHTML = '<button class="btn btn-danger" id="buyConfirm">确定</button>';
+      }
+
+      var html = '<div class="m-detail-box"><p>您对模型编号<span class="mlr-8 fc-3">' + obj.model_id + '</span>投注<span class="mlr-8 fc-3">' + obj.money + '</span>元，请确认</p><div class="btns">' + btnHTML + '<button class="btn btn-gray" data-dismiss="modal">取消</button></div></div>';
 
       APP.checkLogin(buyNum, {
         enoughMoney: function () {
@@ -429,6 +443,12 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
           'zjq_gg': '总进球',
           'bqc_gg': '半全场',
         };
+        var btnHTML = '';
+
+        if (index.isSellStop) {
+          btnHTML = '<button class="btn btn-danger btn-stop pull-right">确定</button>';
+        }
+
         if (data.retCode === 100000) {
           dataItem = isHemai ? data.retData.data : data.retData;
 
@@ -443,8 +463,17 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                 }
 
                 percent = (1 - (dataItem[i].lessNum / Number(dataItem[i].price))).toFixed(2) * 100;
-                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份"><button class="btn j-model-buy btn-red" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button></div></div></div>');
+
+                if (!index.isSellStop) {
+                  btnHTML = '<button class="btn j-model-buy btn-red" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button>';
+                }
+
+                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p>' + dataItem[i].username + '</p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份">' + btnHTML + '</div></div></div>');
               } else {
+
+                if (!index.isSellStop) {
+                  btnHTML = '<button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy btn-red pull-right">确定</button>';
+                }
 
                 dataArr.push('<div class="item m-he-box">\
                           <div class="top">\
@@ -463,13 +492,12 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                               <div class="gen gen-2">\
                                   投注\
                                   <input type="text" class="j-input-place" data-place="最低投注' + dataItem[i].minMoney + '" value="最低投注' + dataItem[i].minMoney + '" />\
-                                  元\
-                                  <button data-qihao="' + dataItem[i].qihao + '" data-modelid="' + dataItem[i]['model_id'] + '" data-gm="' + dataItem[i].minMoney + '" class="btn submit j-model-buy btn-red pull-right">确定</button>\
-                              </div>\
+                                  元' + btnHTML + '</div>\
                           </div>\
                       </div>');
               }
             };
+
             html += dataArr.join('');
             $('#j-model-tips').hide();
             $("#owl-demo").html(html);
@@ -742,7 +770,15 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         unikey: $.now()
       };
 
-      var html = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p>双色球 第<span>' + params.qihao + '</span>期</p><p>共<span>' + params.zhushu + '</span>注, 投注<span>1</span>倍</p><p>本次需支付<span class="fc-3">' + params.zhushu * 2 + '.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
+      var btnHTML = '';
+
+      if (index.isSellStop) {
+        btnHTML = '<button class="btn btn-danger btn-stop">确定</button>';
+      } else {
+        btnHTML = '<button class="btn btn-danger" id="buyConfirm">确定</button>';
+      }
+
+      var html = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p>双色球 第<span>' + params.qihao + '</span>期</p><p>共<span>' + params.zhushu + '</span>注, 投注<span>1</span>倍</p><p>本次需支付<span class="fc-3">' + params.zhushu * 2 + '.00</span>元</p><div class="btns">' + btnHTML + '<button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
 
       APP.checkLogin(params.zhushu * 2, {
         enoughMoney: function () {

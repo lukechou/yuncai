@@ -93,7 +93,11 @@ define(['jquery'], function ($) {
       }
 
       // 认购份数小于0 或大于总份数时
-      if (copies < rengouCopies || rengouCopies <= 0) {
+      if (rengouCopies <= 0) {
+        rengouCopies = 1;
+      }
+
+      if (copies < rengouCopies) {
         rengouCopies = copies;
       }
 

@@ -12,6 +12,7 @@ define(['jquery'], function ($) {
 
     index.prototype = {
       systemTime: 0,
+      isSellStop:true,
       currLotyName: 'dlt',
       hasCreate: {
         'ssq': false,

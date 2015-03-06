@@ -22,8 +22,9 @@ require.config({
 require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store, APP) {
 
   'use strict';
-  if($('#saleStatus').val() == 1){
-      APP.showStopSellModal(($('#lotyName').val()=='ssq') ? '双色球' : '大乐透');
+  if ($('#saleStatus').val() == 1) {
+    APP.showStopSellModal(($('#lotyName').val() == 'ssq') ? '双色球' : '大乐透');
+    $('#qiuck-sub,#buy-submit,#j-tuodan-sub,#j-upload-sub,#j-more-sub').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
   }
   /*
    *
@@ -56,6 +57,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       maxZhuShu: 100,
       maxHang: 100,
       maxQiShu: 154,
+      playType: 'cgtz',
       lotyName: lotyName,
       payMoney: 0,
       isZhuiJia: 0,
@@ -179,7 +181,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           box = TEMPLATE.bdbox;
           var totalMoney = o.zhushu * Money * o.beishu;
 
-          payMoney = (totalMoney/o.shareNum)*(o.buyNum+o.aegisNum);
+          payMoney = (totalMoney / o.shareNum) * (o.buyNum + o.aegisNum);
           obj = {
             lotyName: lotyName,
             qihao: o.qihao,
@@ -406,13 +408,16 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var m = [];
     var total = 0;
 
-    if (_.isUndefined(Config.box.find('#j-more-sub')[0])) {
+    if (Config.playType !== 'dqtz') {
+
       m.push(parseInt(p.find('.j-quick-zhu').html()));
       m.push(parseInt(p.find('.j-quick-bei').val()));
       m.push(parseInt(p.find('.j-quick-qi').val()));
       total = m[0] * m[1] * m[2] * money;
       p.find('.j-quick-total').html(total);
+
     } else {
+
       m.push(parseInt($('#j-more-zhu').val()));
       m.push(parseInt($('#j-more-bei').val()));
       m.push(parseInt($('#j-more-qi').val()));
@@ -421,6 +426,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       });
       total = m[0] * m[1] * m[2] * money;
       $('#j-more-total').html(total);
+
     }
 
     if (isSenior) {
@@ -640,22 +646,21 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
    * @ active Boolean
    * @ text String Span text
    */
-  COMMON.updateAddBtn = function(active,text){
+  COMMON.updateAddBtn = function (active, text) {
 
     var btn = Config.box.find('.j-add-btn,.j-add-btn-2');
 
-    if(active){
+    if (active) {
       btn.addClass('active');
-    }else{
+    } else {
       btn.removeClass('active');
     }
 
-    if(text){
+    if (text) {
       btn.find('span').html(text);
     }
 
   };
-
 
   // 检测拖胆选球区
   DRAG.checkBallAear = function () {
@@ -1030,7 +1035,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     box.find('.j-share-num').val(copies);
     box.find('.j-unit-price').html(oneCopiesMoney);
     box.find('.j-rengou').val(rengouCopies);
-    box.find('.br-select').val(ticheng);
     box.find('.j-rengou-percentage').html(rengouPercent);
 
     // 保底金额,保底百分比,认购
@@ -1048,11 +1052,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var box = Config.box;
 
+    if (Config.playType === 'dqtz') return;
     // 总金额
     var totalMoney = box.find('.j-quick-total').html() * 1;
 
     // 获取份数
-    var copies = box.find('.j-share-num').val();
+    var copies = box.find('.j-share-num').val() || 0;
 
     // 单份金额
     var oneCopiesMoney = '';
@@ -1080,7 +1085,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     // 无购买总金额
     if (totalMoney === 0) {
-      ZHUI.updateHemai(0, ticheng, 0, 0, 0);
+      ZHUI.updateHemai(0, ticheng, 0, 0, 0, 0, 0);
       return;
     }
 
@@ -1093,8 +1098,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     // 认购份数小于0 或大于总份数时
-    if (copies < rengouCopies || rengouCopies <= 0) {
+    if ( rengouCopies <= 0) {
       rengouCopies = 1;
+    }
+
+    if(copies < rengouCopies){
+      rengouCopies = copies;
     }
 
     // 认购金额必须大于提成金额
@@ -2057,27 +2066,41 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('#j-brhd-group a').on('click', function (event) {
 
     if ($(this).hasClass('active')) {
+
       return;
+
     } else {
+
       $('#j-brhd-group .active').removeClass('active');
+
       var t = parseInt($(this).attr('data-t'));
+
       if (t) {
+
         $('#quick').addClass('hidden');
         $('#senior').removeClass('hidden');
         Config.box = $('#senior .box-left').eq(0);
+
       } else {
+
         $('#senior').addClass('hidden');
         $('#quick').removeClass('hidden');
         Config.box = $('#quick .box-left');
+
       }
+
       $(this).addClass('active');
       return;
+
     }
+
   });
 
-  $('#senior .m-br-nav').on('click', 'a', function (event) {
+  // Senior Lottery Tabs Toggle
+  $('#j-nav-tabs').on('click', 'a', function (event) {
     var i = $(this).parents('li').index();
     Config.box = $('#senior .box-left').eq(i);
+    Config.playType = $(this).attr('data-playtype');
   });
 
   // 方案设置
@@ -2254,7 +2277,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
 
     vote.callback = function () {
-      if ( (params.buyNum+ params.aegisNum) > params.shareNum) {
+      if ((params.buyNum + params.aegisNum) > params.shareNum) {
         APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
       }
@@ -2335,7 +2358,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
     vote.callback = function () {
-      if ( (params.buyNum+ params.aegisNum) > params.shareNum) {
+      if ((params.buyNum + params.aegisNum) > params.shareNum) {
         APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
       }
@@ -2400,7 +2423,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
     vote.callback = function () {
-      if ( (params.buyNum+ params.aegisNum) > params.shareNum) {
+      if ((params.buyNum + params.aegisNum) > params.shareNum) {
         APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
       }

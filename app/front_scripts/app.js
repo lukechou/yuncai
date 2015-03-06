@@ -104,7 +104,7 @@ APP.showLoginBox = function (callback) {
   var loginModal = null;
 
   if (!$('#user-login')[0]) {
-    var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="/html/user/find_psw.html">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+    var html = '<div id="j-login-modal" class="modal fade bs-example-modal-sm login-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="/html/user/find_psw.html">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
     $('body').append(html);
   }
 
@@ -323,12 +323,19 @@ APP.initLrkf = function () {
 };
 
 APP.showStopSellModal = function (lotyName) {
-  var link =
-    '<li><img class="logo" src="' + staticHostURI + '/front_images/lottery/dlt_home_logo.png" alt="大乐透"/><a href="/lottery/buy/dlt">大乐透</a></li>\
+
+  var link = '';
+  link += '<p>选择其它彩种投注 或 <a href="/">返回首页</a></p><ul>';
+
+  link = '<li><img class="logo" src="' + staticHostURI + '/front_images/lottery/dlt_home_logo.png" alt="大乐透"/><a href="/lottery/buy/dlt">大乐透</a></li>\
       <li class="text-right"><img class="logo" src="' + staticHostURI + '/front_images/lottery/qxc_home_logo.png" alt="七星彩"/><a href="/lottery/buy/qxc">七星彩</a></li>\
       <li><img class="logo" src="' + staticHostURI + '/front_images/lottery/pl3_home_logo.png" alt="排列3"/><a href="/lottery/buy/pl3">排列3</a></li>\
       <li class="text-right"><img class="logo" src="' + staticHostURI + '/front_images/lottery/pl5_home_logo.png" alt="排列5"/><a href="/lottery/buy/pl5">排列5</a></li>';
-  var html = '<img src="' + staticHostURI + '/front_images/stopsell.png" class="stopsell-img" alt="mask-main" alt="暂停销售"/><div class="stopsell-box"><h4>' + lotyName + ' 暂停销售</h4><p>选择其它彩种投注 或 <a href="/">返回首页</a></p><ul>' + link + '</ul></div>';
+  link += '</ul></div>';
+
+  link = '';
+
+  var html = '<img src="' + staticHostURI + '/front_images/stopsell.png" class="stopsell-img" alt="mask-main" alt="暂停销售"/><div class="stopsell-box"><h4>' + lotyName + ' 暂停销售</h4>' + link;
   var modalHtml = '<div class="m-mask m-stopsell-mask" id="j-stopsell-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><div class="modal-header"><button type="button" class="close" id="j-stopsellmask-close"><i class="icon icon-close"></i></button><h4 class="modal-title">暂停销售</h4></div><div class="stopsell-body">' + html + '</div></div></div>'
   $('body').append(modalHtml);
   $('#j-stopsell-mask').show();
@@ -337,9 +344,6 @@ APP.showStopSellModal = function (lotyName) {
     $('#j-stopsell-mask').remove();
   });
 };
-
-
-
 
 APP.init = function () {
 
@@ -356,10 +360,9 @@ APP.init = function () {
     },
     bindEvent: function () {
       var _this = this;
-      _this.el.on('mouseout', function(event) {
+      _this.el.on('mouseout', function (event) {
         _this.el.removeClass('on');
       });
-
 
       _this.el.mouseover(function () {
         _this.el.addClass('on');
@@ -393,11 +396,11 @@ $(function () {
     $('.j-nav-center').addClass('active');
   }
 
-  $('#j-header-login-btn').on('click', function(event) {
+  $('#j-header-login-btn').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var url = location.href.replace(location.origin, '');
     url = url.replace(/#/, '');
-    location.href='/account/login?ret_url=' + encodeURIComponent(url);
+    location.href = '/account/login?ret_url=' + encodeURIComponent(url);
   });
 });

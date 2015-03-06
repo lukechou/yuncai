@@ -21,6 +21,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	if ($('#saleStatus').val() == 1) {
 		APP.showStopSellModal('福彩3D');
+		$('#buy-submit,#buy_button_proxy').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
 	}
 	PL3.init({
 		G_BUY: {
@@ -76,10 +77,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 						shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
 					},
 					this.rowIndex = 0;
-				//		this.trackData = {
-				//			issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
-				//			trackStopMoney: 0 // 中奖急停金额
-				//		};
 				this.proxyBuy = {
 					betNum: 2,
 					multiple: 1,
@@ -1466,12 +1463,14 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			$('#total_money_tips').html((aegisNum + PL3.G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
 		} else {
 
-			$('#part_aegis_num').val(0);
-			$('#part_aegis_percent').html('0.00');
-			$('#part_buy_percent').html(0);
-			$('#buy_money_tips').html(0);
-			$('#aegis_money_tips').html(0);
-			$('#total_money_tips').html(0);
+      $('#share-num').val(0);
+      $('#part_buy').val(0);
+      $('#part_aegis_num').val(0);
+      $('#part_aegis_percent').html('0.00');
+      $('#part_buy_percent').html(0);
+      $('#buy_money_tips').html(0);
+      $('#aegis_money_tips').html(0);
+      $('#total_money_tips').html(0);
 
 		}
 

@@ -31,7 +31,7 @@ var G_BUY = {
     issueSize: 10,
   },
 
-  init: function() {
+  init: function () {
     this.lotyName = $('#lotyName').val();
     this.playName = $('#playName').val();
     this.codes = [];
@@ -52,11 +52,6 @@ var G_BUY = {
         shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
       },
       this.rowIndex = 0;
-    // this.buyType = 1; // 1, 自购。 2， 追号， 3合买
-    //    this.trackData = {
-    //      issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
-    //      trackStopMoney: 0 // 中奖急停金额
-    //    };
     this.proxyBuy = {
       betNum: 2,
       multiple: 1,
@@ -70,7 +65,7 @@ var G_CHOOSE = {
   zhushu: 0,
   money: 0,
 
-  init: function() {
+  init: function () {
     this.codes = [];
     this.zhushu = 0;
     this.money = 0;
@@ -83,16 +78,19 @@ var G_MODIFY_CODE_OBJ = {
 };
 
 function init() {
-    G_BUY.init();
-    G_CHOOSE.init();
-  }
-  // myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
-$(document).ready(function() {
+  G_BUY.init();
+  G_CHOOSE.init();
+}
+
+$(document).ready(function () {
   init();
+
   if ($('#saleStatus').val() == 1) {
     APP.showStopSellModal('排列五');
+    $('#buy-submit,#buy_button_proxy').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
   }
-  $(".j-num-group").on('click', 'a', function(event) {
+
+  $(".j-num-group").on('click', 'a', function (event) {
     event.preventDefault();
     /* Act on the event */
     var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
@@ -107,7 +105,7 @@ $(document).ready(function() {
     arr = G_CHOOSE.codes[0][dataBit].concat();
     if ($(this).hasClass('active')) {
       // 删除元素,依赖：Lo-Dash.js库
-      _.remove(arr, function(n) {
+      _.remove(arr, function (n) {
         return n == num;
       });
     } else {
@@ -124,7 +122,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       $(this).toggleClass('active');    var dataBit [description]
    * @return {[type]}        [description]
    */
-  $('.j-quick-method').on('click', 'span', function(event) {
+  $('.j-quick-method').on('click', 'span', function (event) {
     event.preventDefault();
     /* Act on the event */
     $(this).toggleClass('active');
@@ -135,64 +133,64 @@ $(document).ready(function() {
     G_CHOOSE.codes[0][dataBit] = [];
     switch ($(this).attr('data-type')) {
       // 奇数
-      case 'odd':
-        $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
-          $(this).removeClass('active');
-          if (index % 2 != 0) {
-            $(this).toggleClass('active');
-            G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
-        });
-        break;
-
-        // 偶数
-      case 'even':
-        $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
-          $(this).removeClass('active');
-          if (index % 2 == 0) {
-            $(this).toggleClass('active');
-            G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
-        });
-        break;
-
-        // 大数
-      case 'big':
-        $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
-          $(this).removeClass('active');
-          if (index >= 5) {
-            $(this).toggleClass('active');
-            G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
-        });
-        break;
-
-        // 小数
-      case 'small':
-        $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
-          $(this).removeClass('active');
-          if (index <= 4) {
-            $(this).toggleClass('active');
-            G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
-        });
-        break;
-
-        // 全部
-      case 'all':
-        $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
-          $(this).addClass('active');
+    case 'odd':
+      $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
+        $(this).removeClass('active');
+        if (index % 2 != 0) {
+          $(this).toggleClass('active');
           G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-        });
-        break;
+        }
+      });
+      break;
 
-        // 清除
-      case 'clean':
-        G_CHOOSE.codes[0][dataBit].length = 0;
-        $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
-          $(this).removeClass('active');
-        });
-        break;
+      // 偶数
+    case 'even':
+      $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
+        $(this).removeClass('active');
+        if (index % 2 == 0) {
+          $(this).toggleClass('active');
+          G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+        }
+      });
+      break;
+
+      // 大数
+    case 'big':
+      $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
+        $(this).removeClass('active');
+        if (index >= 5) {
+          $(this).toggleClass('active');
+          G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+        }
+      });
+      break;
+
+      // 小数
+    case 'small':
+      $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
+        $(this).removeClass('active');
+        if (index <= 4) {
+          $(this).toggleClass('active');
+          G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+        }
+      });
+      break;
+
+      // 全部
+    case 'all':
+      $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
+        $(this).addClass('active');
+        G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+      });
+      break;
+
+      // 清除
+    case 'clean':
+      G_CHOOSE.codes[0][dataBit].length = 0;
+      $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
+        $(this).removeClass('active');
+      });
+      break;
     }
     calculateChooseCodes();
   });
@@ -202,42 +200,42 @@ $(document).ready(function() {
    * @param  {[type]} event) {    for       (var i [description]
    * @return {[type]}        [description]
    */
-  $('#choose_to_buy').on('click', function(event) {
+  $('#choose_to_buy').on('click', function (event) {
     var bool = false;
     switch (parseInt($('#choose_to_buy').attr('data-add'))) {
-      case 0:
-        var myriabCodes = G_CHOOSE.codes[0][0] || [];
-        var thousandCodes = G_CHOOSE.codes[0][1] || [];
-        var hundredCodes = G_CHOOSE.codes[0][2] || [];
-        var tenCodes = G_CHOOSE.codes[0][3] || [];
-        var digitalCodes = G_CHOOSE.codes[0][4] || [];
-        if (!(myriabCodes.length > 0 && thousandCodes.length > 0 && hundredCodes.length > 0 && tenCodes.length > 0 && digitalCodes.length > 0)) {
+    case 0:
+      var myriabCodes = G_CHOOSE.codes[0][0] || [];
+      var thousandCodes = G_CHOOSE.codes[0][1] || [];
+      var hundredCodes = G_CHOOSE.codes[0][2] || [];
+      var tenCodes = G_CHOOSE.codes[0][3] || [];
+      var digitalCodes = G_CHOOSE.codes[0][4] || [];
+      if (!(myriabCodes.length > 0 && thousandCodes.length > 0 && hundredCodes.length > 0 && tenCodes.length > 0 && digitalCodes.length > 0)) {
+        return;
+      }
+
+      if (G_CHOOSE.money > PL5.maxOneBetMoney) {
+        APP.showTips('您好，单个投注的金额应小于' + PL5.maxOneBetMoney + '元，请返回重新选择');
+        return false;
+      } else {
+        for (var key in G_BUY.codes) {
+          if (G_BUY.codes[key].key == G_MODIFY_CODE_OBJ.codeKey) {
+            G_BUY.codes[key].value = G_CHOOSE.codes[0];
+          }
+        }
+      }
+      var html = '<div class="br-zhu-item clearfix" databit="' + G_MODIFY_CODE_OBJ.codeKey + '"><b>[常规投注]</b><div class="list"><span data-c="0">' + G_CHOOSE.codes[0][0].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][1].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][2].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][3].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][4].join('') + '</span></div><div class="pull-right"><b><i class="money" data-m="1">' + G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
+      G_MODIFY_CODE_OBJ.codeObj.replaceWith(html);
+      bool = true;
+      break;
+
+    case 1:
+      for (var i = G_CHOOSE.codes.length - 1; i >= 0; i--) {
+        if (!(G_CHOOSE.codes[i][0].length > 0 && G_CHOOSE.codes[i][1].length > 0 && G_CHOOSE.codes[i][2].length > 0 && G_CHOOSE.codes[i][3].length > 0 && G_CHOOSE.codes[i][4].length > 0)) {
           return;
         }
-
-        if (G_CHOOSE.money > PL5.maxOneBetMoney) {
-          APP.showTips('您好，单个投注的金额应小于' + PL5.maxOneBetMoney + '元，请返回重新选择');
-          return false;
-        } else {
-          for (var key in G_BUY.codes) {
-            if (G_BUY.codes[key].key == G_MODIFY_CODE_OBJ.codeKey) {
-              G_BUY.codes[key].value = G_CHOOSE.codes[0];
-            }
-          }
-        }
-        var html = '<div class="br-zhu-item clearfix" databit="' + G_MODIFY_CODE_OBJ.codeKey + '"><b>[常规投注]</b><div class="list"><span data-c="0">' + G_CHOOSE.codes[0][0].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][1].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][2].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][3].join('') + '</span><span data-c="0">' + G_CHOOSE.codes[0][4].join('') + '</span></div><div class="pull-right"><b><i class="money" data-m="1">' + G_CHOOSE.money + '</i>元</b><a href="javascript:;" class="br-zhu-set">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>';
-        G_MODIFY_CODE_OBJ.codeObj.replaceWith(html);
-        bool = true;
-        break;
-
-      case 1:
-        for (var i = G_CHOOSE.codes.length - 1; i >= 0; i--) {
-          if (!(G_CHOOSE.codes[i][0].length > 0 && G_CHOOSE.codes[i][1].length > 0 && G_CHOOSE.codes[i][2].length > 0 && G_CHOOSE.codes[i][3].length > 0 && G_CHOOSE.codes[i][4].length > 0)) {
-            return;
-          }
-        }
-        bool = makeChooseCodeHtml(G_CHOOSE.codes);
-        break;
+      }
+      bool = makeChooseCodeHtml(G_CHOOSE.codes);
+      break;
     }
     if (bool) {
       calculateBuyCodes();
@@ -261,7 +259,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       var betNum [description]
    * @return {[type]}        [description]
    */
-  $('.j-zhu-adds').on('click', function(event) {
+  $('.j-zhu-adds').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var betNum = parseInt($(this).attr('data-zhu'));
@@ -271,7 +269,7 @@ $(document).ready(function() {
     }
     for (var i = betNum - 1; i >= 0; i--) {
 
-      PL5.produceCode(function(codes) {
+      PL5.produceCode(function (codes) {
         G_CHOOSE.zhushu = 1;
         G_CHOOSE.money = 2;
         makeChooseCodeHtml([codes]);
@@ -289,7 +287,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       alert(1); } [description]
    * @return {[type]}        [description]
    */
-  $('.br-zhu-l').on('click', '.br-zhu-item', function(event) {
+  $('.br-zhu-l').on('click', '.br-zhu-item', function (event) {
     event.preventDefault();
     if (G_BUY.isManual) {
       return;
@@ -306,7 +304,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {            var   dataBit [description]
    * @return {[type]}        [description]
    */
-  $('.br-zhu-l').on('click', '.br-zhu-del', function(event) {
+  $('.br-zhu-l').on('click', '.br-zhu-del', function (event) {
     // event.preventDefault();
     /* Act on the event */
     // alert($(this).parents('.br-zhu-item')[0] == G_MODIFY_CODE_OBJ.codeObj[0]);
@@ -315,7 +313,7 @@ $(document).ready(function() {
       $('#choose_to_buy_tip').html('添加到投注列表');
     }
     var dataBit = $(this).parents('.br-zhu-item').attr('dataBit');
-    _.remove(G_BUY.codes, function(n) {
+    _.remove(G_BUY.codes, function (n) {
       return n.key == dataBit;
     });
     $(this).parents('.br-zhu-item').remove();
@@ -328,7 +326,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {            var   dataBit [description]
    * @return {[type]}        [description]
    */
-  $('.br-zhu-l').on('click', '.br-zhu-set', function(event) {
+  $('.br-zhu-l').on('click', '.br-zhu-set', function (event) {
     // event.preventDefault();
     var objectKey = $(this).parents('.br-zhu-item').attr('databit');
     reflectChooseCode(objectKey);
@@ -346,7 +344,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {            $("#code_list").html('');   G_BUY.init();   calculateBuyCodes();    updateCreatePartProjectParame();  } [description]
    * @return {[type]}        [description]
    */
-  $('#clean_buy_code').on('click', function(event) {
+  $('#clean_buy_code').on('click', function (event) {
     // event.preventDefault();
     // clean html
     $("#code_list").html('');
@@ -362,7 +360,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       var mutipleObj [description]
    * @return {[type]}        [description]
    */
-  $('#decrease_mutiple').on('click', function(event) {
+  $('#decrease_mutiple').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var mutipleObj = $("#project_mutiple");
@@ -386,7 +384,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       var mutipleObj [description]
    * @return {[type]}        [description]
    */
-  $('#project_mutiple').on('change', function(event) {
+  $('#project_mutiple').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     var currentMultiple = parseInt($(this).val()) || 0;
@@ -407,7 +405,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       var mutipleObj [description]
    * @return {[type]}        [description]
    */
-  $('#increase_mutiple').on('click', function(event) {
+  $('#increase_mutiple').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var mutipleObj = $("#project_mutiple");
@@ -431,7 +429,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       fnBuy();  } [description]
    * @return {[type]}        [description]
    */
-  $('#buy-submit').on('click', function(event) {
+  $('#buy-submit').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false) {
@@ -441,7 +439,7 @@ $(document).ready(function() {
     fnBuy();
   });
 
-  $('#buy_button_proxy').on('click', function(event) {
+  $('#buy_button_proxy').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this).parents('.br-tou').find('.j-sub-agreed')[0].checked === false) {
@@ -455,7 +453,7 @@ $(document).ready(function() {
    * 切换购买方式
    * @return null
    */
-  $('#buy_type').on('click', 'a', function(event) {
+  $('#buy_type').on('click', 'a', function (event) {
     event.preventDefault();
     G_BUY.buyType = parseInt($(this).attr('data-buytype'));
     initBuyType();
@@ -463,12 +461,12 @@ $(document).ready(function() {
 
   function initBuyType() {
     $('#buy_type').find('.icon-y2').removeClass('icon-y2');
-    $('#buy_type').find('.icon').each(function(index, el) {
+    $('#buy_type').find('.icon').each(function (index, el) {
       if ($(this).parents('a[data-toggle="tab"]').attr('data-buytype') == G_BUY.buyType) {
         $(this).addClass('icon-y2');
       }
     });
-    $('#buy_type').siblings('.tab-content').find('.tab-pane').each(function(index, el) {
+    $('#buy_type').siblings('.tab-content').find('.tab-pane').each(function (index, el) {
       if (index == G_BUY.buyType - 1) {
         $(this).addClass('active');
       } else {
@@ -485,41 +483,41 @@ $(document).ready(function() {
     G_BUY.mutiple = 1;
     $('#project_mutiple').val(G_BUY.mutiple);
     switch (G_BUY.buyType) {
-      case 1: // 自购
-        $('#track_desc').addClass('hide');
-        calculateBuyCodes();
-        break;
+    case 1: // 自购
+      $('#track_desc').addClass('hide');
+      calculateBuyCodes();
+      break;
 
-      case 2: // 追号
-        $('#buy_mutiple_span').hide();
-        $('#track_desc').removeClass('hide');
-        queryTrackIssueList(10);
-        calculateBuyCodes();
-        break;
-      case 3: // 合买
-        calculateBuyCodes();
-        $('#track_desc').addClass('hide');
-        $("#share-num").val(G_BUY.money);
-        updateCreatePartProjectParame();
-        break;
+    case 2: // 追号
+      $('#buy_mutiple_span').hide();
+      $('#track_desc').removeClass('hide');
+      queryTrackIssueList(10);
+      calculateBuyCodes();
+      break;
+    case 3: // 合买
+      calculateBuyCodes();
+      $('#track_desc').addClass('hide');
+      $("#share-num").val(G_BUY.money);
+      updateCreatePartProjectParame();
+      break;
     }
   }
 
-  $('#issue_size').on('change', function(event) {
+  $('#issue_size').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     G_BUY.trackData.issueMutipleMap = {}; // clean
     queryTrackIssueList($(this).val());
   });
 
-  $('.br-details thead .br-zhui-c').on('change', function(event) {
+  $('.br-details thead .br-zhui-c').on('change', function (event) {
     var checked = $(this)[0].checked;
-    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function (index, el) {
       el.checked = checked;
     });
     // ZHUI.setZhuiHaoTotal(Config.box);
     G_BUY.trackData.issueMutipleMap = {}; // clean
-    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function (index, el) {
       if (el.checked) {
         G_BUY.trackData.issueMutipleMap[$(this).attr('data-qihaoid')] = {
           qihao: $(this).attr('data-qi'),
@@ -531,12 +529,12 @@ $(document).ready(function() {
   });
 
   // 追号总期的期数改变
-  $('.br-details').on('change', 'tbody .br-zhui-c', function(event) {
+  $('.br-details').on('change', 'tbody .br-zhui-c', function (event) {
     event.preventDefault();
     /* Act on the event */
     // ZHUI.setZhuiHaoTotal(Config.box);
     G_BUY.trackData.issueMutipleMap = {}; // clean
-    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+    $(this).parents('.br-details').find('tbody .br-zhui-c').each(function (index, el) {
       if (el.checked) {
         G_BUY.trackData.issueMutipleMap[$(this).attr('data-qihaoid')] = {
           qihao: $(this).attr('data-qi'),
@@ -548,7 +546,7 @@ $(document).ready(function() {
   });
 
   // 追号总期的倍数改变
-  $('.br-details thead .br-zhui-bei').on('change', function(event) {
+  $('.br-details thead .br-zhui-bei').on('change', function (event) {
     var val = parseInt($(this).val()) || 1;
     if (isNaN(val) || val < 1) {
       val = 1;
@@ -559,7 +557,7 @@ $(document).ready(function() {
     $(this).val(val);
     var baseObj = $(this).parents('.br-details');
     baseObj.find('tbody .br-zhui-bei').val(val);
-    baseObj.find('tbody .br-zhui-c').each(function(index, el) {
+    baseObj.find('tbody .br-zhui-c').each(function (index, el) {
       el.checked = 'checked';
       G_BUY.trackData.issueMutipleMap[$(this).attr('data-qihaoid')] = {
         qihao: $(this).attr('data-qi'),
@@ -570,7 +568,7 @@ $(document).ready(function() {
   });
 
   // 追号每期的倍数改变
-  $('.br-details tbody').on('change', '.br-zhui-bei', function(event) {
+  $('.br-details tbody').on('change', '.br-zhui-bei', function (event) {
     var val = parseInt($(this).val()) || 1;
     if (isNaN(val) || val < 1) {
       val = 1;
@@ -590,7 +588,7 @@ $(document).ready(function() {
   });
 
   // 我要分成多少份，最少一份，最多购买金额的数量
-  $("#share-num").on('change', function(event) {
+  $("#share-num").on('change', function (event) {
     event.preventDefault();
     var val = parseInt($(this).val()) || G_BUY.money;
     if (isNaN(val) || val < 1) {
@@ -604,7 +602,7 @@ $(document).ready(function() {
   });
 
   // 我要认购的份数
-  $("#part_buy").on('change', function(event) {
+  $("#part_buy").on('change', function (event) {
     event.preventDefault();
     var val = parseInt($(this).val()) || 1;
     if (isNaN(val) || val < 1) {
@@ -618,7 +616,7 @@ $(document).ready(function() {
   });
 
   // 我要提成比例
-  $('#commission_percent').on('change', function(event) {
+  $('#commission_percent').on('change', function (event) {
     event.preventDefault();
     var val = parseInt($(this).val()) || 0;
     var rengouPercent = Math.floor($('#part_buy_percent').html());
@@ -630,7 +628,7 @@ $(document).ready(function() {
   });
 
   // 是否保底
-  $('#has_part_aegis').on('change', function(event) {
+  $('#has_part_aegis').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this)[0].checked) {
@@ -644,7 +642,7 @@ $(document).ready(function() {
   });
 
   // 保底金额修改
-  $('#part_aegis_num').on('change', function(event) {
+  $('#part_aegis_num').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     var _aegisMoney = parseInt($(this).val()) || 0;
@@ -653,21 +651,21 @@ $(document).ready(function() {
   });
 
   // 方案保密设置
-  $('.br-set-group').on('click', 'a', function(event) {
+  $('.br-set-group').on('click', 'a', function (event) {
     event.preventDefault();
     /* Act on the event */
     $(this).parents('.br-set-group').find('a').removeClass('active');
     $(this).toggleClass('active');
     switch ($(this).html()) {
-      case '截止后公开':
-        G_BUY.partnerBuy.shareLevel = 1;
-        break;
-      case '立即公开':
-        G_BUY.partnerBuy.shareLevel = 0;
-        break;
-      case '截止前对跟单人公开':
-        G_BUY.partnerBuy.shareLevel = 2;
-        break;
+    case '截止后公开':
+      G_BUY.partnerBuy.shareLevel = 1;
+      break;
+    case '立即公开':
+      G_BUY.partnerBuy.shareLevel = 0;
+      break;
+    case '截止前对跟单人公开':
+      G_BUY.partnerBuy.shareLevel = 2;
+      break;
     }
   });
 
@@ -676,7 +674,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       G_BUY.partnerBuy.projectTitle [description]
    * @return {[type]}        [description]
    */
-  $('#title').on('change', function(event) {
+  $('#title').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     var projectTitle = $(this).val();
@@ -690,7 +688,7 @@ $(document).ready(function() {
     }
     $('#title_font_size').html(projectTitleLength);
   });
-  $('#title').on('keyup', function(event) {
+  $('#title').on('keyup', function (event) {
     event.preventDefault();
     /* Act on the event */
     var projectTitle = $(this).val();
@@ -710,7 +708,7 @@ $(document).ready(function() {
    * @param  {[type]} event) {    event.preventDefault();       G_BUY.partnerBuy.projectDescription [description]
    * @return {[type]}        [description]
    */
-  $('#desc').on('change', function(event) {
+  $('#desc').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     var projectDesc = $(this).val();
@@ -724,7 +722,7 @@ $(document).ready(function() {
     }
     $('#desc_font_size').html(projectDescLength);
   });
-  $('#desc').on('keyup', function(event) {
+  $('#desc').on('keyup', function (event) {
     event.preventDefault();
     /* Act on the event */
     var projectDesc = $(this).val();
@@ -746,7 +744,7 @@ $(document).ready(function() {
   // });
 
   // 是否保底
-  $('#is_end_zhongjiang').on('change', function(event) {
+  $('#is_end_zhongjiang').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     if ($(this)[0].checked) {
@@ -757,7 +755,7 @@ $(document).ready(function() {
       $('#part_aegis_num').val(0);
     }
   });
-  $('#track_stop_money').on('change', function() {
+  $('#track_stop_money').on('change', function () {
     event.preventDefault();
     /* Act on the event */
     var trackStopMoney = parseInt($(this).val()) || 3000;
@@ -765,14 +763,14 @@ $(document).ready(function() {
   });
 
   //手动输入Mask
-  $('#j-textarea-mask').on('click', function(event) {
+  $('#j-textarea-mask').on('click', function (event) {
     $(this).hide();
     // $('#sd_number')[0].focus();
     $('#sd_number').addClass('focus');
   });
 
   // 更新手动输入注数
-  $('#sd_number').on('blur', function(event) {
+  $('#sd_number').on('blur', function (event) {
     var iptCodes = _.compact($(this).val().replace(/，/ig, ',').split("\n"));
     if (iptCodes == '') {
       $('#choose_zhushu').html(0);
@@ -787,7 +785,7 @@ $(document).ready(function() {
     }
     G_CHOOSE.init();
     for (var i = 0; i < iptCodes.length; i++) {
-      var validate = PL5.isIllegalCode(iptCodes[i], function(code, zhushu) {
+      var validate = PL5.isIllegalCode(iptCodes[i], function (code, zhushu) {
         G_CHOOSE.codes.push(code);
         G_CHOOSE.zhushu += zhushu;
         G_CHOOSE.money += zhushu * 2;
@@ -812,22 +810,24 @@ $(document).ready(function() {
   /**
    * 玩法type切换
    */
-  $('#j-nav').on('click', 'a', function(event) {
+  $('#j-nav').on('click', 'a', function (event) {
     event.preventDefault();
+
     var _this = $(this);
     var pagetype = Number(_this.attr('data-pagetype'));
     var newTab = $(this).attr('href');
     var li = _this.parents('li');
 
     if (G_BUY.codes.length >= 1) {
+
       APP.showTips({
         title: '友情提示',
         text: '切换玩法将会清空您的号码',
         type: 2,
-        onConfirm: function() {
+        onConfirm: function () {
           $('#myModal').modal('hide');
           // 清空追号数据
-          $('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+          $('.br-details').find('tbody .br-zhui-c').each(function (index, el) {
             _this.parents('tr').find('.j-money').html(0);
           });
           toggleTabs(newTab, li, pagetype);
@@ -835,9 +835,13 @@ $(document).ready(function() {
           $('#choose_to_buy').attr('data-add', 1);
         }
       });
+
     } else {
+
       toggleTabs(newTab, li, pagetype);
+
     }
+
   });
 
   function toggleTabs(newTab, li, pagetype) {
@@ -851,46 +855,52 @@ $(document).ready(function() {
     $('#choose_to_buy').attr('data-add', '1');
     $('#j_normal_choose_code').find('.j-num-group a').removeClass('active');
     $('#sd_number').val('');
+
     G_BUY.init();
     G_CHOOSE.init();
     clean4CutBuyType();
     calculateChooseCodes();
     calculateBuyCodes();
+
+    G_BUY.proxyBuy.betNum = $('#bet_num_proxy').val();
+    G_BUY.proxyBuy.multiple = $('#mutiple_proxy').val();
+    G_BUY.proxyBuy.issueSize = $('#qihao_num_proxy').val();
+
     $('#buy-submit').attr("disabled", "disabled");
     switch (pagetype) {
-      case 0:
-        G_BUY.buyType = 1;
-        $("li.j-jx-zhus").show();
-        $('#j-box-right').show();
-        $('#j-box-bottom').show();
-        updateAddBtn(false);
-        $('#choose_to_buy').attr('disabled', 'disabled');
-        $('#j-box-left').removeClass('multiphase-box');
-        break;
-      case 1:
-        G_BUY.buyType = 1;
-        $("li.j-jx-zhus").hide();
-        $('#j-box-right').show();
-        $('#j-box-bottom').show();
-        updateAddBtn(false);
-        $('#choose_to_buy').attr('disabled', 'disabled');
-        $('#j-box-left').removeClass('multiphase-box');
-        break;
-      case 2:
-        G_BUY.buyType = 4;
-        calculateProxyBuy();
-        $("li.j-jx-zhus").show();
-        $('#j-box-right').hide();
-        $('#j-box-bottom').hide();
-        $('#j-box-left').addClass('multiphase-box');
-        break;
+    case 0:
+      G_BUY.buyType = 1;
+      $("li.j-jx-zhus").show();
+      $('#j-box-right').show();
+      $('#j-box-bottom').show();
+      updateAddBtn(false);
+      $('#choose_to_buy').attr('disabled', 'disabled');
+      $('#j-box-left').removeClass('multiphase-box');
+      break;
+    case 1:
+      G_BUY.buyType = 1;
+      $("li.j-jx-zhus").hide();
+      $('#j-box-right').show();
+      $('#j-box-bottom').show();
+      updateAddBtn(false);
+      $('#choose_to_buy').attr('disabled', 'disabled');
+      $('#j-box-left').removeClass('multiphase-box');
+      break;
+    case 2:
+      G_BUY.buyType = 4;
+      calculateProxyBuy();
+      $("li.j-jx-zhus").show();
+      $('#j-box-right').hide();
+      $('#j-box-bottom').hide();
+      $('#j-box-left').addClass('multiphase-box');
+      break;
     }
     initBuyType();
   }
 
   /////////////////////////机选页面事件/////////////////////////////////////////
   // 修改注数
-  $('#decrease_bet_num_proxy').on('click', function(event) {
+  $('#decrease_bet_num_proxy').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var betNumObj = $("#bet_num_proxy");
@@ -906,7 +916,7 @@ $(document).ready(function() {
     betNumObj.val(G_BUY.proxyBuy.betNum);
     calculateProxyBuy();
   });
-  $('#bet_num_proxy').on('change', function() {
+  $('#bet_num_proxy').on('change', function () {
     // bet_num_proxy
     var currentBetNum = parseInt($(this).val()) || 0;
     if (currentBetNum < PL5.minBetNum) {
@@ -919,7 +929,7 @@ $(document).ready(function() {
     $(this).val(G_BUY.proxyBuy.betNum);
     calculateProxyBuy();
   });
-  $('#increase_bet_num_proxy').on('click', function(event) {
+  $('#increase_bet_num_proxy').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var betNumObj = $("#bet_num_proxy");
@@ -937,7 +947,7 @@ $(document).ready(function() {
   });
 
   // 修改倍数
-  $('#decrease_mutiple_proxy').on('click', function(event) {
+  $('#decrease_mutiple_proxy').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var betMultipleObj = $("#mutiple_proxy");
@@ -953,7 +963,7 @@ $(document).ready(function() {
     betMultipleObj.val(G_BUY.proxyBuy.multiple);
     calculateProxyBuy();
   });
-  $('#mutiple_proxy').on('change', function() {
+  $('#mutiple_proxy').on('change', function () {
     // mutiple_proxy
     var currentMultipleNum = parseInt($(this).val()) || 0;
     if (currentMultipleNum < PL5.minMultiple) {
@@ -966,7 +976,7 @@ $(document).ready(function() {
     $(this).val(G_BUY.proxyBuy.multiple);
     calculateProxyBuy();
   });
-  $('#increase_mutiple_proxy').on('click', function(event) {
+  $('#increase_mutiple_proxy').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var betMultipleObj = $("#mutiple_proxy");
@@ -983,7 +993,7 @@ $(document).ready(function() {
     calculateProxyBuy();
   });
   // 修改注数
-  $('#decrease_qihao_num_proxy').on('click', function(event) {
+  $('#decrease_qihao_num_proxy').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var betIssueNumObj = $("#qihao_num_proxy");
@@ -999,7 +1009,7 @@ $(document).ready(function() {
     betIssueNumObj.val(G_BUY.proxyBuy.issueSize);
     calculateProxyBuy();
   });
-  $('#qihao_num_proxy').on('change', function() {
+  $('#qihao_num_proxy').on('change', function () {
     // qihao_num_proxy
     var currentIssueNum = parseInt($(this).val()) || 0;
     if (currentIssueNum < PL5.minIssueNum) {
@@ -1012,7 +1022,7 @@ $(document).ready(function() {
     $(this).val(G_BUY.proxyBuy.issueSize);
     calculateProxyBuy();
   });
-  $('#increase_qihao_num_proxy').on('click', function(event) {
+  $('#increase_qihao_num_proxy').on('click', function (event) {
     event.preventDefault();
     /* Act on the event */
     var betIssueNumObj = $("#qihao_num_proxy");
@@ -1053,7 +1063,7 @@ $(document).ready(function() {
       var partBuyPercent = G_BUY.partnerBuy.partBuyNum / G_BUY.partnerBuy.shareNum * 100;
       $('#part_buy_percent').html(partBuyPercent.toFixed(2));
       // 提成比例
-      $('#commission_percent').val(function(index, value) {
+      $('#commission_percent').val(function (index, value) {
         return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
       });
       G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
@@ -1063,7 +1073,7 @@ $(document).ready(function() {
       var iLessBuyNum = G_BUY.partnerBuy.shareNum - G_BUY.partnerBuy.partBuyNum;
       if ($('#has_part_aegis')[0].checked) {
         if (iLessBuyNum > iMinBaodiNum) {
-          $('#part_aegis_num').val(function(index, value) {
+          $('#part_aegis_num').val(function (index, value) {
             if ($(this).val() < iMinBaodiNum) {
               return iMinBaodiNum;
             }
@@ -1080,13 +1090,14 @@ $(document).ready(function() {
       $('#aegis_money_tips').html(aegisNum * iUnitPrice);
       $('#total_money_tips').html((aegisNum + G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
     } else {
+      $('#share-num').val(0);
+      $('#part_buy').val(0);
+      $('#part_aegis_num').val(0);
+      $('#part_aegis_percent').html('0.00');
       $('#part_buy_percent').html(0);
       $('#buy_money_tips').html(0);
       $('#aegis_money_tips').html(0);
       $('#total_money_tips').html(0);
-      $('#part_aegis_num').val(0);
-      $('#part_aegis_percent').html(0);
-      $('#part_buy').val(1);
     }
   }
 
@@ -1142,7 +1153,7 @@ $(document).ready(function() {
         trackIssueSize++;
         var currentIssueMoney = 2 * zhushu * G_BUY.trackData.issueMutipleMap[qihaoId].mutiple;
         G_BUY.money += currentIssueMoney;
-        $('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+        $('.br-details').find('tbody .br-zhui-c').each(function (index, el) {
           if ($(this).attr('data-qihaoid') == qihaoId) {
             $(this).parents('tr').find('.j-money').html(currentIssueMoney);
             return;
@@ -1204,11 +1215,11 @@ $(document).ready(function() {
     for (var i = 0; i < 5; i++) {
       var placeArr = codes[i];
       var len = placeArr.length;
-      baseobj.each(function(index, el) {
+      baseobj.each(function (index, el) {
         if (index == i) {
           // alert(index);
           for (var m = 0; m < len; m++) {
-            $(this).find('.j-num-group a').each(function(index) {
+            $(this).find('.j-num-group a').each(function (index) {
               if (parseInt($(this).html()) == placeArr[m]) {
                 $(this).addClass('active');
               }
@@ -1246,7 +1257,7 @@ $(document).ready(function() {
         dataType: 'json',
         // data: {param1: 'value1'},
       })
-      .done(function(data) {
+      .done(function (data) {
         if (data.retCode == 100000) {
           for (var i = 0; i < data.retData.length; i++) {
             var m = i + 1;
@@ -1264,7 +1275,7 @@ $(document).ready(function() {
         $('#track_issue_list').html(html);
         calculateBuyCodes();
       })
-      .fail(function() {
+      .fail(function () {
         html = '<tr><td colspan="5">系统繁忙， 请稍候再试</td></tr>';
         $('#track_issue_list').html(html);
       });
@@ -1288,7 +1299,7 @@ $(document).ready(function() {
     }
   }
 
-  var fnBuy = function() {
+  var fnBuy = function () {
     var url = '';
     var codeArr = [];
     for (var i = 0; i < G_BUY.codes.length; i++) {
@@ -1308,84 +1319,84 @@ $(document).ready(function() {
     var costRealMoney = 0;
 
     switch (G_BUY.buyType) {
-      case 1:
-        url = '/lottery/digital/buy-self/' + G_BUY.lotyName + '/' + G_BUY.playName;
-        parameter.qihaoId = G_BUY.qihaoId;
-        parameter.qihao = G_BUY.qihao;
-        comfirmHtml = makeConfirmHtml(1, G_BUY.lotyCNName, parameter.qihao, G_BUY.zhushu, G_BUY.mutiple, G_BUY.money, 0, 0, 0, 0);
-        costRealMoney = G_BUY.money;
-        break;
+    case 1:
+      url = '/lottery/digital/buy-self/' + G_BUY.lotyName + '/' + G_BUY.playName;
+      parameter.qihaoId = G_BUY.qihaoId;
+      parameter.qihao = G_BUY.qihao;
+      comfirmHtml = makeConfirmHtml(1, G_BUY.lotyCNName, parameter.qihao, G_BUY.zhushu, G_BUY.mutiple, G_BUY.money, 0, 0, 0, 0);
+      costRealMoney = G_BUY.money;
+      break;
 
-      case 2:
-        url = '/lottery/digital/buy-track/' + G_BUY.lotyName + '/' + G_BUY.playName;
-        var postIssueParameter = [];
-        for (var qihaoId in G_BUY.trackData.issueMutipleMap) {
-          postIssueParameter.push(qihaoId + '|' + G_BUY.trackData.issueMutipleMap[qihaoId].qihao + '|' + G_BUY.trackData.issueMutipleMap[qihaoId].mutiple);
-        }
-        if (postIssueParameter.length < 1) {
-          APP.showTips("追号最少购买一期");
-          return;
-        }
-        if ($('#is_end_zhongjiang')[0].checked) {
-          G_BUY.trackData.trackStopMoney = $('#track_stop_money').val();
-        }
-        parameter.endminmoney = G_BUY.trackData.trackStopMoney;
-        parameter.zhuihaoqihao = postIssueParameter;
-        comfirmHtml = makeConfirmHtml(2, G_BUY.lotyCNName, 0, 0, 0, 0, 0, 0, postIssueParameter.length, G_BUY.money);
-        costRealMoney = G_BUY.money;
-        break;
+    case 2:
+      url = '/lottery/digital/buy-track/' + G_BUY.lotyName + '/' + G_BUY.playName;
+      var postIssueParameter = [];
+      for (var qihaoId in G_BUY.trackData.issueMutipleMap) {
+        postIssueParameter.push(qihaoId + '|' + G_BUY.trackData.issueMutipleMap[qihaoId].qihao + '|' + G_BUY.trackData.issueMutipleMap[qihaoId].mutiple);
+      }
+      if (postIssueParameter.length < 1) {
+        APP.showTips("追号最少购买一期");
+        return;
+      }
+      if ($('#is_end_zhongjiang')[0].checked) {
+        G_BUY.trackData.trackStopMoney = $('#track_stop_money').val();
+      }
+      parameter.endminmoney = G_BUY.trackData.trackStopMoney;
+      parameter.zhuihaoqihao = postIssueParameter;
+      comfirmHtml = makeConfirmHtml(2, G_BUY.lotyCNName, 0, 0, 0, 0, 0, 0, postIssueParameter.length, G_BUY.money);
+      costRealMoney = G_BUY.money;
+      break;
 
-      case 3:
-        url = '/lottery/digital/buy-together/' + G_BUY.lotyName + '/' + G_BUY.playName;
-        parameter.qihaoId = G_BUY.qihaoId;
-        parameter.qihao = G_BUY.qihao;
-        parameter.title = G_BUY.partnerBuy.projectTitle;
-        parameter.textarea = G_BUY.partnerBuy.projectDescription;
-        parameter.shareNum = G_BUY.partnerBuy.shareNum;
-        parameter.buyNum = G_BUY.partnerBuy.partBuyNum;
-        parameter.aegisNum = G_BUY.partnerBuy.partAegisNum;
-        parameter.extraPercent = G_BUY.partnerBuy.commissionPercent;
-        parameter.set = (typeof G_BUY.partnerBuy.shareLevel === 'undefined') ? 1 : G_BUY.partnerBuy.shareLevel;
-        if (parameter.rengouMoney < 1) {
-          APP.showTips("合买至少认购一元");
-          return;
-        }
-        var buyMoney = G_BUY.partnerBuy.unitPrice * parameter.buyNum;
-        var aegisMoney = G_BUY.partnerBuy.unitPrice * parameter.aegisNum;
-        costRealMoney = buyMoney + aegisMoney;
-        comfirmHtml = makeConfirmHtml(3, G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu,
-          G_BUY.money, parameter.buyNum, parameter.aegisNum, 0, 0, costRealMoney);
-        break;
+    case 3:
+      url = '/lottery/digital/buy-together/' + G_BUY.lotyName + '/' + G_BUY.playName;
+      parameter.qihaoId = G_BUY.qihaoId;
+      parameter.qihao = G_BUY.qihao;
+      parameter.title = G_BUY.partnerBuy.projectTitle;
+      parameter.textarea = G_BUY.partnerBuy.projectDescription;
+      parameter.shareNum = G_BUY.partnerBuy.shareNum;
+      parameter.buyNum = G_BUY.partnerBuy.partBuyNum;
+      parameter.aegisNum = G_BUY.partnerBuy.partAegisNum;
+      parameter.extraPercent = G_BUY.partnerBuy.commissionPercent;
+      parameter.set = (typeof G_BUY.partnerBuy.shareLevel === 'undefined') ? 1 : G_BUY.partnerBuy.shareLevel;
+      if (parameter.rengouMoney < 1) {
+        APP.showTips("合买至少认购一元");
+        return;
+      }
+      var buyMoney = G_BUY.partnerBuy.unitPrice * parameter.buyNum;
+      var aegisMoney = G_BUY.partnerBuy.unitPrice * parameter.aegisNum;
+      costRealMoney = buyMoney + aegisMoney;
+      comfirmHtml = makeConfirmHtml(3, G_BUY.lotyCNName, parameter.qihao, parameter.zhushu, parameter.beishu,
+        G_BUY.money, parameter.buyNum, parameter.aegisNum, 0, 0, costRealMoney);
+      break;
 
-      case 4:
-        url = '/lottery/digital/buy-rank/' + G_BUY.lotyName + '/' + G_BUY.playName;
-        parameter.zhushu = G_BUY.proxyBuy.betNum;
-        parameter.beishu = G_BUY.proxyBuy.multiple;
-        parameter.qishu = G_BUY.proxyBuy.issueSize;
-        comfirmHtml = makeConfirmHtml(2, G_BUY.lotyCNName, 0, 0, 0, 0, 0, 0, parameter.qishu, G_BUY.money);
-        costRealMoney = G_BUY.money;
-        break;
+    case 4:
+      url = '/lottery/digital/buy-rank/' + G_BUY.lotyName + '/' + G_BUY.playName;
+      parameter.zhushu = G_BUY.proxyBuy.betNum;
+      parameter.beishu = G_BUY.proxyBuy.multiple;
+      parameter.qishu = G_BUY.proxyBuy.issueSize;
+      comfirmHtml = makeConfirmHtml(2, G_BUY.lotyCNName, 0, 0, 0, 0, 0, 0, parameter.qishu, G_BUY.money);
+      costRealMoney = G_BUY.money;
+      break;
     }
     $.ajax({
         url: '/account/islogin',
         type: 'get',
         dataType: 'json',
       })
-      .done(function(D) {
+      .done(function (D) {
         if (D.retCode === 100000) {
           if (Number(D.retData.money.replace(/,/g, '')) >= costRealMoney) {
             APP.showTips({
               html: comfirmHtml,
               title: '投注确认'
             });
-            $('#buyConfirm').one('click', function(event) {
+            $('#buyConfirm').one('click', function (event) {
               $.ajax({
                   url: url,
                   type: 'POST',
                   dataType: 'json',
                   data: parameter,
                 })
-                .done(function(data) {
+                .done(function (data) {
                   if (data.retCode === 100000) {
                     buySuccess(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId, costRealMoney, G_BUY.lotyName, G_BUY.lotyCNName);
                   } else {
@@ -1393,7 +1404,7 @@ $(document).ready(function() {
                     return;
                   }
                 })
-                .fail(function() {
+                .fail(function () {
                   buyFailure(G_BUY.lotyName, G_BUY.lotyCNName);
                 })
             });
@@ -1411,33 +1422,33 @@ $(document).ready(function() {
   function makeConfirmHtml(buyType, LotyCNName, issueNum, betNum, mutiple, projectPrice, buyNum, aegisNum, trackSize, trackMoney, buyPrice) {
     var commHtml = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text">';
     switch (buyType) {
-      case 1: // 自购
-        commHtml +=
-          '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+    case 1: // 自购
+      commHtml +=
+        '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
             <p>共<span>' + betNum + '</span>注, 投注<span>' + mutiple + '</span>倍</p>\
             <p>本次需支付<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>';
-        break;
-      case 2: // 追号
-        commHtml +=
-          '<p>追号<span>' + trackSize + '</span>期</p>\
+      break;
+    case 2: // 追号
+      commHtml +=
+        '<p>追号<span>' + trackSize + '</span>期</p>\
             <p>本次需支付<span class="fc-3">' + trackMoney + '</span>元</p>';
-      case 4: // 机选
-        break;
-      case 3: // 合买
-        if (aegisNum > 0) {
-          commHtml +=
-            '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+    case 4: // 机选
+      break;
+    case 3: // 合买
+      if (aegisNum > 0) {
+        commHtml +=
+          '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
               <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
               <p>您认购<span>' + buyNum + '</span>份, 保底<span>' + aegisNum + '</span>份</p>\
               <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
-        } else {
-          commHtml +=
-            '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
+      } else {
+        commHtml +=
+          '<p>' + LotyCNName + ' 第<span>' + issueNum + '</span>期</p>\
               <p>方案总金额<span class="fc-3">' + projectPrice.toFixed(2) + '</span>元</p>\
               <p>您认购<span>' + buyNum + '</span>份</p>\
               <p>共需支付<span class="fc-3">' + buyPrice.toFixed(2) + '</span>元</p>';
-        }
-        break;
+      }
+      break;
     }
     commHtml += '<div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
     return commHtml;
@@ -1464,20 +1475,20 @@ $(document).ready(function() {
     window.location.href = '/html/lottery/trade/fail.html';
   }
 
-      /*
-     * 更新 添加按钮状态
-     * @ active Boolean
-     */
-    function updateAddBtn(active) {
+  /*
+   * 更新 添加按钮状态
+   * @ active Boolean
+   */
+  function updateAddBtn(active) {
 
-        var btn = $('#choose_to_buy');
+    var btn = $('#choose_to_buy');
 
-        if (active) {
-            btn.addClass('active');
-        } else {
-            btn.removeClass('active');
-        }
+    if (active) {
+      btn.addClass('active');
+    } else {
+      btn.removeClass('active');
+    }
 
-    };
+  };
 
 });

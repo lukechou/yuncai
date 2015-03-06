@@ -18,7 +18,8 @@ gulp.task('sprite', ['clean'], function () {
     cssName: 'front_styles/lrkf.css'
   }));
 
-  var spriteDataIcon = gulp.src('./app/front_images/icon/*.png').pipe(spritesmith({
+  var spriteDataIcon = gulp.src('./app/f
+    ront_images/icon/*.png').pipe(spritesmith({
     imgName: 'front_images/icon.png',
     cssName: 'front_styles/icon.css'
   }));
