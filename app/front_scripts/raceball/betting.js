@@ -71,11 +71,11 @@ define(['jquery', 'app'], function ($, APP) {
       }
     };
 
-    bet.prototype.toggleBunch = function (h, method) {
+    bet.prototype.toggleBunch = function (isActive, method) {
 
       var _this = this;
 
-      if (h) {
+      if (isActive) {
         _this.bunch.push(method);
         _this.bunch = _.uniq(_this.bunch).sort(function (a, b) {
           return a.slice(0, 1) - b.slice(0, 1);
@@ -249,25 +249,59 @@ define(['jquery', 'app'], function ($, APP) {
       var jtip = list.find('.jtip');
       var jtipLen = jtip.length;
       var hasHhtzBf = null;
+      var hasHhtzBqc = null;
+      var hasHhtzZjq = null;
       var maxLen = _this.maxBunch[_this.tab];
+      var moreBunchIndex = 0;
+      var startIndex = 2;
+      var bunchHtml = '';
+
+      if (len < 2) {
+
+        _this.bunch = [];
+        list.hide().html('');
+        tips.show();
+        return;
+
+      }
 
       if (_this.tab === 'hhtz') {
 
         hasHhtzBf = _.find(_this.match, function (chr) {
           return chr.type === 'bf';
-        })
+        });
 
-        if (hasHhtzBf) {
+        hasHhtzBqc = _.find(_this.match, function (chr) {
+          return chr.type === 'bqc';
+        });
+
+        hasHhtzZjq = _.find(_this.match, function (chr) {
+          return chr.type === 'zjq';
+        });
+
+        if (hasHhtzZjq) {
+
+          maxLen = 6;
+          $('#j-me-7,#j-me-8').remove();
+          _this.toggleBunch(false, '7_1');
+          _this.toggleBunch(false, '8_1');
+
+        }
+
+        if (hasHhtzBf || hasHhtzBqc) {
+
           maxLen = 4;
-
           $('#j-me-5,#j-me-6,#j-me-7,#j-me-8').remove();
+          _this.toggleBunch(false, '5_1');
+          _this.toggleBunch(false, '6_1');
+          _this.toggleBunch(false, '7_1');
+          _this.toggleBunch(false, '8_1');
+
         }
 
       }
 
-      if (len > maxLen) return;
-
-      if (len >= 2) {
+      if (len >= startIndex) {
 
         if ($('#j-me-' + len)[0]) {
 
@@ -283,44 +317,55 @@ define(['jquery', 'app'], function ($, APP) {
 
         } else {
 
-          if (len == 2) {
-            obj.isCheck = true;
-            obj.active = 'active';
+          if (len == startIndex) {
             _this.toggleBunch(true, '2_1');
           }
 
-          if (len == 3) {
-            jtip.removeClass('active').attr('data-check', 'false');
-            _this.toggleBunch(false, '2_1')
+          if (len == startIndex + 1) {
+            _this.toggleBunch(false, '2_1');
           }
 
-          html = _.template('<li class="jtip <%= active%>" id="j-me-<%= len%>" data-method="<%= len%>_1" data-check="<%= isCheck%>"><%= len%>串1</li>');
+          if (len >= startIndex) {
 
-          tips.hide();
-          list.show();
-          if (_this.tab === 'hhtz' && len > (jtip.length + 2)) {
-            var moreJtips = len - (jtip.length + 2);
+            for (var i = 2; i <= len; i++) {
 
-            for (var i = 0, len = moreJtips; i <= len; i++) {
-              obj = {
-                len: i + 5,
-                isCheck: false,
-                active: ''
+              var isActiveBunch = _.find(_this.bunch, function (bunch) {
+                return Number(bunch.slice(0, 1)) === i;
+              });
+
+              if (isActiveBunch) {
+
+                obj = {
+                  len: i,
+                  isCheck: true,
+                  active: 'active'
+                };
+
+              } else {
+
+                obj = {
+                  len: i,
+                  isCheck: false,
+                  active: ''
+                };
+
               }
-              list.append(html(obj));
+
+              if (i <= maxLen) {
+                html = _.template('<li class="jtip <%= active%>" id="j-me-<%= len%>" data-method="<%= len%>_1" data-check="<%= isCheck%>"><%= len%>串1</li>');
+                bunchHtml += html(obj);
+              } else {
+                i = len + 1;
+              }
 
             };
-
-          } else {
-            list.append(html(obj));
           }
+
+          tips.hide();
+          list.html(bunchHtml).show();
 
         }
 
-      } else {
-        _this.bunch = [];
-        list.hide().html('');
-        tips.show();
       }
 
     };
@@ -623,7 +668,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       };
 
-      html += '<table class="analyMoreTable"><tbody>';
+      html += '<div class="bf-nobor"></div><table class="analyMoreTable"><tbody>';
 
       html += '<tr><th>主胜</th>' + shtml.join('') + '<td class="j-bf-all sp-btn">全包</td></tr>';
       html += '<tr><th>平</th>' + phtml.join('') + '<td colspan="8" class="noBg"></td><td class="j-bf-all sp-btn">全包</td></tr>';
@@ -775,7 +820,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       };
 
-      html += '<table class="analyMoreTable analyMoreTable2"><tbody>';
+      html += '<div class="hhtz-nobor"></div><table class="analyMoreTable analyMoreTable2"><tbody>';
 
       html += '<tr><th>半全场</th>' + bqcHtml + '</tr>';
 
@@ -820,7 +865,7 @@ define(['jquery', 'app'], function ($, APP) {
         var hasNewDd = _this.box.find('[data-newdd=' + matchcode + ']').length;
 
         if (!t.hasClass('active')) {
-
+          t.html('隐藏<i class="arrow-up"></i>');
           if (hasNewDd) {
             _this.box.find('[data-newdd=' + matchcode + ']').show();
           } else {
@@ -831,7 +876,7 @@ define(['jquery', 'app'], function ($, APP) {
           t.removeClass('has').addClass('active');
 
         } else {
-
+          t.html('展开<i class="arrow-down"></i>');
           if (hasNewDd) {
             _this.box.find('[data-newdd=' + matchcode + ']').hide();
           }
@@ -1034,7 +1079,8 @@ define(['jquery', 'app'], function ($, APP) {
           t.attr('data-show', 1);
         }
 
-        t.html(title[s]);
+        t.find('.icon').toggleClass('show-icon').toggleClass('hide-icon');
+        t.find('.j-nav-text').html(title[s]);
 
       });
 
@@ -1125,8 +1171,24 @@ define(['jquery', 'app'], function ($, APP) {
       });
 
       $('#j-touzhu-tips').on('click', function (event) {
+
         $('#j-touzhu-tipstext').toggle();
         $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
+
+        if ($(this).find('.icon').hasClass('icon-bdown')) {
+
+          var asideBox = $('.j-navbar-wrapper').eq(1);
+          var asideBoxHeight = asideBox.height();
+          var bodyHeight = $('body').height();
+          var windowHeight = $(window).height();
+          var footerHeight = $('.ft').height();
+
+          asideBox.css({
+            'top': '-200'
+          });
+
+        }
+
       });
 
       $('#j-btn-clear').on('click', function (event) {

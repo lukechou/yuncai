@@ -104,16 +104,36 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         var _this = this;
         var setTop = 0;
         var betBoxHeight = $('#bettingBox').height() + _this.top;
+        var leftBox = _this.el.eq(0);
+        var rightBox = _this.el.eq(1);
+        var offBottom = 50;
+
+        var asideBoxHeight = rightBox.height();
+        var bodyHeight = $('body').height();
+        var windowHeight = $(window).height();
+        var footerHeight = $('.ft').height();
 
         if (winTop < betBoxHeight) {
-          _this.el.eq(0).addClass('active');
+          leftBox.addClass('active');
+
           _this.el.css({
             'position': 'fixed',
             'top': setTop
           });
+
+          if (windowHeight < asideBoxHeight) {
+            rightBox.css('position', 'relative');
+          } else {
+            if ((winTop + asideBoxHeight + footerHeight + offBottom) > bodyHeight) {
+              rightBox.css('position', 'relative');
+            }
+          }
+
         } else {
-          _this.el.eq(0).removeClass('active');
+
+          leftBox.removeClass('active');
           _this.isLessTop();
+
         }
       }
 
@@ -163,7 +183,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
       if (tab === 'bf') {
         arr.push('<span class="row1 row1-1">' + bfLine + '</span></dd>');
-      }else{
+      } else {
         line = BET.craeteDateBtn(item[tab], item[tab + '_gg_sp']);
       }
 
@@ -250,7 +270,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     html += BET.getSpBtn(1, rqspfTitle, rqspfArr, 'rqspf', 3);
     html += '</span>';
 
-    html += '<em class="tg-data j-show-hhtz">展开</em></dd>'
+    html += '<em class="tg-data j-show-hhtz">展开<i class="arrow-down"></i></em></dd>';
 
     return html;
   }
@@ -306,7 +326,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var h = '';
 
     // head
-    h += '<dl><dt>' + time + '(12:00 -- 次日12:00)<span class="matchSize">' + dataCount + '</span>场比赛可投注<span class="cuspText fc-84 j-dataBody-toggle pull-right" data-show="1">隐藏</span></dt>';
+    h += '<dl><dt>' + time + '(12:00 -- 次日12:00)<span class="matchSize">' + dataCount + '</span>场比赛可投注<span class="cuspText fc-84 j-dataBody-toggle pull-right" data-show="1"><span class="j-nav-text">隐藏</span><i class="icon show-icon"></i></span></dt>';
 
     if (BET.tab === 'hhtz') {
       h += createHhtzHtml(data);
@@ -535,6 +555,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   $('#j-changeTime .optionList').on('click', 'a', function (event) {
 
     var type = $(this).attr('data-timeType');
+    $('#j-changeTime .optionList a').removeClass('active');
+    $(this).addClass('active');
     $('#j-changeTimeText').html($(this).html());
 
     $('.dataBody dd').each(function (index, el) {

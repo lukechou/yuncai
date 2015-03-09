@@ -1031,6 +1031,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var box = Config.box;
     var baodiTips = baodiCopies * oneCopiesMoney || 0;
     var totalTips = (rengouCopies + baodiCopies) * oneCopiesMoney || 0;
+    if (copies === 0) {
+      oneCopiesMoney = 0;
+    }
     // 更新份数,每份金额,认购份数,提成百分比,认购百分比
     box.find('.j-share-num').val(copies);
     box.find('.j-unit-price').html(oneCopiesMoney);
@@ -1098,11 +1101,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     // 认购份数小于0 或大于总份数时
-    if ( rengouCopies <= 0) {
+    if (rengouCopies <= 0) {
       rengouCopies = 1;
     }
 
-    if(copies < rengouCopies){
+    if (copies < rengouCopies) {
       rengouCopies = copies;
     }
 

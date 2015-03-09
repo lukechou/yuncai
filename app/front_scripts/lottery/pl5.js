@@ -341,18 +341,19 @@ $(document).ready(function () {
 
   /**
    * 清空列表
-   * @param  {[type]} event) {            $("#code_list").html('');   G_BUY.init();   calculateBuyCodes();    updateCreatePartProjectParame();  } [description]
-   * @return {[type]}        [description]
    */
   $('#clean_buy_code').on('click', function (event) {
-    // event.preventDefault();
-    // clean html
-    $("#code_list").html('');
+
     var buyType = G_BUY.buyType;
+
+    $("#code_list").html('');
+
     G_BUY.init();
     calculateBuyCodes();
+
     G_BUY.buyType = buyType;
     updateCreatePartProjectParame();
+
   });
 
   /**
@@ -1040,56 +1041,81 @@ $(document).ready(function () {
   });
 
   //////////////////////////function/////////////////////////////////////////
+  function updatePartView() {
+
+  }
 
   function updateCreatePartProjectParame() {
+
     // 分成多少份
-    var shareNum = parseInt($("#share-num").val()) || 1;
+    var shareNum = parseInt($("#share-num").val()) || G_BUY.money;
+    // 单价
+    var iUnitPrice = null;
+    // 保底数据
+    var iMinBaodiNum = null;
+    // 剩余
+    var iLessBuyNum = null;
+    //
+    var aegisNum = null;
+
+    // debugger
     if (G_BUY.money % shareNum !== 0) {
-      shareNum = YC.Unit.getMaxDivisible(G_BUY.money, shareNum);
+
+      shareNum = G_BUY.money;
+
     }
+    // debugger
+
     $("#share-num").val(shareNum);
+
     G_BUY.partnerBuy.shareNum = shareNum;
+
     $('.j-unit-price').html(G_BUY.money / G_BUY.partnerBuy.shareNum);
-    if (G_BUY.money > 0) {
-      if ($('#part_buy').val() > G_BUY.partnerBuy.shareNum) {
-        $('#part_buy').val(G_BUY.partnerBuy.shareNum);
+
+    if ($('#part_buy').val() > G_BUY.partnerBuy.shareNum) {
+      $('#part_buy').val(G_BUY.partnerBuy.shareNum);
+    }
+    // 购买的份数
+    G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
+
+    iUnitPrice = parseInt($('.j-unit-price').html());
+    G_BUY.partnerBuy.unitPrice = iUnitPrice;
+
+    // 认购的比例
+    var partBuyPercent = G_BUY.partnerBuy.partBuyNum / G_BUY.partnerBuy.shareNum * 100;
+    $('#part_buy_percent').html(partBuyPercent.toFixed(2));
+    // 提成比例
+    $('#commission_percent').val(function (index, value) {
+      return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
+    });
+
+    G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
+    iMinBaodiNum = Math.ceil(G_BUY.partnerBuy.shareNum * 0.2);
+    iLessBuyNum = G_BUY.partnerBuy.shareNum - G_BUY.partnerBuy.partBuyNum;
+
+    if ($('#has_part_aegis')[0].checked) {
+      if (iLessBuyNum > iMinBaodiNum) {
+        $('#part_aegis_num').val(function (index, value) {
+          if ($(this).val() < iMinBaodiNum) {
+            return iMinBaodiNum;
+          }
+          return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
+        });
+      } else {
+        $('#part_aegis_num').val(iLessBuyNum);
       }
-      // 购买的份数
-      G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
-      // 单价
-      var iUnitPrice = parseInt($('.j-unit-price').html());
-      G_BUY.partnerBuy.unitPrice = iUnitPrice;
-      // 认购的比例
-      var partBuyPercent = G_BUY.partnerBuy.partBuyNum / G_BUY.partnerBuy.shareNum * 100;
-      $('#part_buy_percent').html(partBuyPercent.toFixed(2));
-      // 提成比例
-      $('#commission_percent').val(function (index, value) {
-        return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
-      });
-      G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
-      // 保底数据
-      var iMinBaodiNum = Math.ceil(G_BUY.partnerBuy.shareNum * 0.2);
-      // 剩余
-      var iLessBuyNum = G_BUY.partnerBuy.shareNum - G_BUY.partnerBuy.partBuyNum;
-      if ($('#has_part_aegis')[0].checked) {
-        if (iLessBuyNum > iMinBaodiNum) {
-          $('#part_aegis_num').val(function (index, value) {
-            if ($(this).val() < iMinBaodiNum) {
-              return iMinBaodiNum;
-            }
-            return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
-          });
-        } else {
-          $('#part_aegis_num').val(iLessBuyNum);
-        }
-      }
-      var aegisNum = parseInt($('#part_aegis_num').val());
-      G_BUY.partnerBuy.partAegisNum = aegisNum;
-      $('#part_aegis_percent').html((aegisNum / G_BUY.partnerBuy.shareNum * 100).toFixed(2));
-      $('#buy_money_tips').html(G_BUY.partnerBuy.partBuyNum * iUnitPrice);
-      $('#aegis_money_tips').html(aegisNum * iUnitPrice);
-      $('#total_money_tips').html((aegisNum + G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
-    } else {
+    }
+
+    aegisNum = parseInt($('#part_aegis_num').val());
+    G_BUY.partnerBuy.partAegisNum = aegisNum;
+
+    $('#part_aegis_percent').html((aegisNum / G_BUY.partnerBuy.shareNum * 100).toFixed(2));
+    $('#buy_money_tips').html(G_BUY.partnerBuy.partBuyNum * iUnitPrice);
+    $('#aegis_money_tips').html(aegisNum * iUnitPrice);
+    $('#total_money_tips').html((aegisNum + G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
+
+    if (G_BUY.money <= 0) {
+
       $('#share-num').val(0);
       $('#part_buy').val(0);
       $('#part_aegis_num').val(0);
@@ -1098,7 +1124,9 @@ $(document).ready(function () {
       $('#buy_money_tips').html(0);
       $('#aegis_money_tips').html(0);
       $('#total_money_tips').html(0);
+
     }
+
   }
 
   /**
