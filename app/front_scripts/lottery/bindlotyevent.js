@@ -1040,7 +1040,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     box.find('.j-rengou').val(rengouCopies);
     box.find('.j-rengou-percentage').html(rengouPercent);
 
-    // 保底金额,保底百分比,认购
+    // 保底份数,保底百分比,认购
     box.find('.j-baodi-text').val(baodiCopies);
     box.find('.j-baodi-percent').html(baodiPercent);
     box.find('.j-rengou-tip').html(rengouCopies * oneCopiesMoney);
@@ -1049,6 +1049,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     box.find('.j-totalm-tip').html(totalTips);
 
   };
+
+  // 合买总金额
+  Config.hemaiTotalMoney = 0;
 
   // 更新合买 总金额
   ZHUI.setHeMaiTotal = function () {
@@ -1085,6 +1088,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     copies = Number(copies.replace(/[^0-9]/g, ''));
     rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
+
+    if (Config.hemaiTotalMoney !== totalMoney) {
+      Config.hemaiTotalMoney = totalMoney;
+      copies = totalMoney;
+    }
 
     // 无购买总金额
     if (totalMoney === 0) {

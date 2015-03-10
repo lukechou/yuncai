@@ -1,3 +1,24 @@
+/**
+ * [G_BUY description]
+ * zhushu  注数
+ * money  金额
+ * qihaoId  期号Id
+ * qihao  期号
+ * codes  投注号码集合
+ * trackData  追号投注对象
+ * proxyBuy  多期投注
+ * partnerBuy-projectTitle  方案标题
+ * partnerBuy-projectDescription  方案描述
+ * partnerBuy-shareNum  分成多少份
+ * partnerBuy-partBuyNum  合买认购份数
+ * partnerBuy-partAegisNum  合买保底份数
+ * partnerBuy-commissionPercent 合买提成
+ * partnerBuy-unitPrice 单价
+ * partnerBuy-shareLevel  // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
+ * buyType  1:自购, 2:追号, 3:合买, 4:多期机选
+ * issueMutipleMap  qihaoID:期号id : object(qihao:期号, multiple:倍数)
+ * trackStopMoney  中奖急停金额
+ */
 var G_BUY = {
   lotyName: '',
   lotyCNName: '七乐彩',
@@ -10,20 +31,20 @@ var G_BUY = {
   isManual: false,
   qihao: 0,
   partnerBuy: {
-    projectTitle: '七乐彩合买方案', // 方案标题
-    projectDescription: '七乐彩', // 方案标题
-    shareNum: 0, // 分成多少份
-    partBuyNum: 0, // 合买认购份数
-    partAegisNum: 0, // 合买保底份数
-    commissionPercent: 0, // 合买提成
-    unitPrice: 0, // 单价
-    shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
-  }, // 合买
+    projectTitle: '七乐彩合买方案',
+    projectDescription: '七乐彩',
+    shareNum: 0,
+    partBuyNum: 0,
+    partAegisNum: 0,
+    commissionPercent: 0,
+    unitPrice: 0,
+    shareLevel: 1,
+  },
   rowIndex: 0,
-  buyType: 1, // 1:自购, 2:追号, 3:合买, 4:多期机选
+  buyType: 1,
   trackData: {
-    issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
-    trackStopMoney: 0, // 中奖急停金额
+    issueMutipleMap: {},
+    trackStopMoney: 0,
   },
   proxyBuy: {
     betNum: 2,
@@ -41,14 +62,14 @@ var G_BUY = {
     this.qihaoId = $('#qihaoId').val();
     this.qihao = $('#qihao').val();
     this.partnerBuy = {
-      projectTitle: '七乐彩合买方案', // 方案标题
-      projectDescription: '七乐彩', // 方案标题
-      shareNum: 0, // 分成多少份
-      partBuyNum: 0, // 合买认购份数
-      partAegisNum: 0, // 合买保底份数
-      commissionPercent: 0, // 合买提成
-      unitPrice: 0, // 单价
-      shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
+      projectTitle: '七乐彩合买方案',
+      projectDescription: '七乐彩',
+      shareNum: 0,
+      partBuyNum: 0,
+      partAegisNum: 0,
+      commissionPercent: 0,
+      unitPrice: 0,
+      shareLevel: 1,
     }, this.rowIndex = 0;
     this.proxyBuy = {
       betNum: 2,
@@ -294,12 +315,14 @@ $(document).ready(function () {
    * @return {[type]} [description]
    */
   $('#clean_buy_code').on('click', function (event) {
-    // event.preventDefault();
-    // clean html
-    $("#code_list").html('');
     var buyType = G_BUY.buyType;
+
+    $("#code_list").html('');
+
     G_BUY.init();
     calculateBuyCodes();
+    G_BUY.mutiple = Number(_.escape($('#project_mutiple').val())) || 1;
+
     G_BUY.buyType = buyType;
     updateCreatePartProjectParame();
   });
@@ -551,29 +574,12 @@ $(document).ready(function () {
   // 我要分成多少份，最少一份，最多购买金额的数量
   $("#share-num").on('change', function (event) {
     event.preventDefault();
-    var val = parseInt($(this).val()) || G_BUY.money;
-    if (isNaN(val) || val < 1) {
-      val = 1;
-    } else {
-      val = Math.ceil(val);
-      (val > G_BUY.money) && (val = G_BUY.money);
-    }
-    $(this).val(val);
     updateCreatePartProjectParame();
   });
 
   // 我要认购的份数
   $("#part_buy").on('change', function (event) {
     event.preventDefault();
-    var val = parseInt($(this).val()) || 1;
-    if (isNaN(val) || val < 1) {
-      val = 1;
-    } else {
-      val = Math.ceil(val);
-      // (val > G_BUY.money) && (val = G_BUY.money);
-      (val > G_BUY.partnerBuy.shareNum) && (val = G_BUY.partnerBuy.shareNum);
-    }
-    $(this).val(val);
     updateCreatePartProjectParame();
   });
 
@@ -592,23 +598,12 @@ $(document).ready(function () {
   // 是否保底
   $('#has_part_aegis').on('change', function (event) {
     event.preventDefault();
-    /* Act on the event */
-    if ($(this)[0].checked) {
-      $('#part_aegis_num').removeAttr('disabled');
-    } else {
-      $('#part_aegis_num').attr('disabled', 'disabled');
-      $('#part_aegis_num').val(0);
-      $('#part_aegis_percent').html('0.00');
-    }
     updateCreatePartProjectParame();
   });
 
   // 保底金额修改
   $('#part_aegis_num').on('change', function (event) {
     event.preventDefault();
-    /* Act on the event */
-    var _aegisMoney = parseInt($(this).val()) || 0;
-    $(this).val(_aegisMoney);
     updateCreatePartProjectParame();
   });
 
@@ -1006,65 +1001,172 @@ $(document).ready(function () {
 
   // ////////////////////////function/////////////////////////////////////////
 
-  function updateCreatePartProjectParame() {
-    // 分成多少份
-    var shareNum = parseInt($("#share-num").val()) || 1;
-    if (G_BUY.money % shareNum !== 0) {
-      shareNum = YC.Unit.getMaxDivisible(G_BUY.money, shareNum);
-    }
-    $("#share-num").val(shareNum);
-    G_BUY.partnerBuy.shareNum = shareNum;
-    $('.j-unit-price').html(G_BUY.money / G_BUY.partnerBuy.shareNum);
-    if (G_BUY.money > 0) {
-      if ($('#part_buy').val() > G_BUY.partnerBuy.shareNum) {
-        $('#part_buy').val(G_BUY.partnerBuy.shareNum);
-      }
-      // 购买的份数
-      G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
-      // 单价
-      var iUnitPrice = parseInt($('.j-unit-price').html());
-      G_BUY.partnerBuy.unitPrice = iUnitPrice;
-      // 认购的比例
-      var partBuyPercent = G_BUY.partnerBuy.partBuyNum / G_BUY.partnerBuy.shareNum * 100;
+  function updatePartView(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies) {
 
-      $('#part_buy_percent').html(partBuyPercent.toFixed(2));
-      // 提成比例
-      $('#commission_percent').val(function (index, value) {
-        return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
-      });
-      G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
-      // 保底数据
-      var iMinBaodiNum = Math.ceil(G_BUY.partnerBuy.shareNum * 0.2);
-      // 剩余
-      var iLessBuyNum = G_BUY.partnerBuy.shareNum - G_BUY.partnerBuy.partBuyNum;
-      if ($('#has_part_aegis')[0].checked) {
-        if (iLessBuyNum > iMinBaodiNum) {
-          $('#part_aegis_num').val(function (index, value) {
-            if ($(this).val() < iMinBaodiNum) {
-              return iMinBaodiNum;
-            }
-            return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
-          });
-        } else {
-          $('#part_aegis_num').val(iLessBuyNum);
-        }
-      }
-      var aegisNum = parseInt($('#part_aegis_num').val());
-      G_BUY.partnerBuy.partAegisNum = aegisNum;
-      $('#part_aegis_percent').html((aegisNum / G_BUY.partnerBuy.shareNum * 100).toFixed(2));
-      $('#buy_money_tips').html(G_BUY.partnerBuy.partBuyNum * iUnitPrice);
-      $('#aegis_money_tips').html(aegisNum * iUnitPrice);
-      $('#total_money_tips').html((aegisNum + G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
-    } else {
-      $('#share-num').val(0);
-      $('#part_buy').val(0);
-      $('#part_aegis_num').val(0);
-      $('#part_aegis_percent').html('0.00');
-      $('#part_buy_percent').html(0);
-      $('#buy_money_tips').html(0);
-      $('#aegis_money_tips').html(0);
-      $('#total_money_tips').html(0);
+    var baodiTips = baodiCopies * oneCopiesMoney || 0;
+    var totalTips = (rengouCopies + baodiCopies) * oneCopiesMoney || 0;
+    if (copies === 0) {
+      oneCopiesMoney = 0;
     }
+
+    // update partnerBuy
+    // 分成多少份,购买的份数,单份金额,提成比例,保底份数
+    G_BUY.partnerBuy.shareNum = copies;
+    G_BUY.partnerBuy.partBuyNum = rengouCopies;
+    G_BUY.partnerBuy.unitPrice = oneCopiesMoney;
+    G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
+    G_BUY.partnerBuy.partAegisNum = baodiCopies;
+
+    // 分成多少份,每份金额,认购份数,提成百分比,认购百分比
+    $('#share-num').val(copies);
+    $('.j-unit-price').html(oneCopiesMoney);
+    $('#part_buy').val(rengouCopies);
+    $('#part_buy_percent').html(rengouPercent);
+
+    // 保底份数,保底百分比,认购,保底金额tips,共需支付金额tips
+    $('#part_aegis_num').val(baodiCopies);
+    $('#part_aegis_percent').html(baodiPercent);
+    $('#buy_money_tips').html(rengouCopies * oneCopiesMoney);
+    $('#aegis_money_tips').html(baodiTips);
+    $('#total_money_tips').html(totalTips);
+
+  }
+
+  G_BUY.hemaiTotalMoney = 0;
+
+  function updateCreatePartProjectParame() {
+
+    // 总金额
+    var totalMoney = G_BUY.money;
+
+    // 获取份数 shareNum
+    var copies = $("#share-num").val() || totalMoney;
+
+    // 单份金额 iUnitPrice
+    var oneCopiesMoney = '';
+
+    // 认购金额
+    var rengouMoney = '';
+
+    // 认购份数
+    var rengouCopies = $('#part_buy').val();
+
+    // 认购百分比
+    var rengouPercent = '';
+
+    // 提成
+    var ticheng = $('#commission_percent').val() * 1 || 0;
+
+    // 保底金额 b-用户输入保底份数
+    // 保底份数 aegisNum
+    var baodiCopies = '';
+    var baodiPercent = '';
+    var b = parseInt($('#part_aegis_num').val()) || 0;
+
+    // 是否保底 hasPartAegis
+    var isBaodi = $('#has_part_aegis')[0].checked || false;
+
+    copies = Number(copies.replace(/[^0-9]/g, ''));
+    rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
+
+    if (G_BUY.hemaiTotalMoney !== totalMoney) {
+      G_BUY.hemaiTotalMoney = totalMoney;
+      copies = totalMoney;
+    }
+
+    // 无购买总金额
+    if (totalMoney <= 0) {
+      updatePartView(0, ticheng, 0, 0, 0, 0, 0);
+      return;
+    }
+
+    // 生成对应份数
+    if (totalMoney % copies === 0) {
+      oneCopiesMoney = totalMoney / copies;
+    } else {
+      oneCopiesMoney = 1;
+      copies = totalMoney;
+    }
+
+    // 认购份数小于0 或大于总份数时
+    if (rengouCopies <= 0) {
+      rengouCopies = 1;
+    }
+
+    if (copies < rengouCopies) {
+      rengouCopies = copies;
+    }
+
+    // 认购金额必须大于提成金额
+    if (ticheng > (rengouCopies / copies * 100)) {
+      rengouCopies = Math.ceil(copies * ticheng * 0.01);
+    }
+    rengouMoney = rengouCopies * oneCopiesMoney;
+
+    // 是否保底
+    if ($('#has_part_aegis')[0]) {
+      isBaodi = $('#has_part_aegis')[0].checked;
+    }
+
+    // 设置保底份数
+    if (isBaodi) {
+
+      $('#part_aegis_num')[0].disabled = false;
+
+      if (b === 0) {
+
+        if ((rengouCopies / copies) < 0.8) {
+          baodiCopies = Math.ceil(copies * 0.2);
+        } else {
+          baodiCopies = copies - rengouCopies;
+        }
+
+      } else {
+
+        if ((b + rengouCopies) < copies) {
+
+          if ((b / copies) < 0.2) {
+
+            if ((Math.ceil(copies * 0.2) + rengouCopies) > copies) {
+
+              baodiCopies = copies - rengouCopies;
+
+            } else {
+
+              baodiCopies = Math.ceil(copies * 0.2);
+            }
+
+          } else {
+
+            baodiCopies = b;
+
+          }
+
+        } else {
+
+          baodiCopies = copies - rengouCopies;
+
+        }
+
+      }
+
+      baodiPercent = (baodiCopies / copies * 100).toFixed(2);
+
+    } else {
+      $('#part_aegis_num')[0].disabled = true;
+      baodiCopies = 0;
+      baodiPercent = '0.00';
+    }
+
+    if (totalMoney === 0) {
+      rengouPercent = 0;
+    } else {
+      rengouPercent = (rengouCopies / copies * 100).toFixed(2);
+    }
+
+    updatePartView(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies);
+    return;
+
   }
 
   /**

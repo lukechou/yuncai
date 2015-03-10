@@ -71,6 +71,7 @@
 /* dt */
 .dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 1px 0 1px; }
 .dataBody .cuspText { height: 38px; margin-right: 10px; cursor: pointer; }
+.dataBody .cuspText .icon { margin-left: 5px; }
 .dataBody .cusp { top: 15px; right: -12px; }
 .dataBody .matchSize { margin-left: 10px; }
 
@@ -99,6 +100,7 @@
 .dataBody .sp-btn { background: url(../front_images/jczq/default.png); }
 .dataBody .sp-btn.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
 .dataBody .sp-btn.active { color: #fff; background: url(../front_images/jczq/active.png) #f13c38; }
+.dataBody .sp-btn.active>div { color: #fff; }
 .co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
 
 /* 投注表格主体 */
@@ -119,11 +121,14 @@
 .dataBody .bf-box, .bf-nobor, .dataBody .bf-box:hover { background: #e3e3e3; }
 .dataBody .bf-box { height: 150px; border: 1px #dfdfdf solid; border-width: 1px 0 0 1px; }
 .analyMoreTable { width: 680px; margin: 15px auto 0; table-layout: fixed; text-align: center; background: #fff; }
+.analyMoreTable .sp-btn>div { color: #000; }
 .analyMoreTable th { font-weight: 700; text-align: center; border: 1px solid #dfdfdf; width: 45px; }
-.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; border: 1px solid #dfdfdf; }
+.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; border: 1px solid #dfdfdf; color: #888; }
 .analyMoreTable2 th { width: 95px; }
 .analyMoreTable2 td { width: 45px; }
-.bf-nobor { position: absolute; right: 0; width: 316px; height: 5px; top: -3px; }
+.analyMoreTable2 td.no-all{ width: 585px;}
+.bf-nobor { position: absolute; right: 0; width: 224px; height: 5px; top: -3px; }
+.bf-nosupport{ line-height: 150px; text-align: center;}
 
 /* 总进球 */
 .onlyBf .no-support, .onlyZjq .no-support, .onlyBqc .no-support { width: 100%; border: none; }
@@ -159,15 +164,21 @@
 .onlyHhtz .co2 { width: 93px; }
 .rq b { font-weight: normal; }
 .onlyHhtz .dataBody .row4-1, .row4-1 em { height: 40px; line-height: 40px; }
-.onlyHhtz .tg-data { display: block; width: 45px; height: 80px; line-height: 80px; position: absolute; right: 0; text-align: center; border: 1px #dfdfdf solid; border-right: none; overflow: hidden; }
+.onlyHhtz .tg-data { display: block; width: 45px; height: 80px; line-height: 80px; position: absolute; right: 0; text-align: center; border: 1px #dfdfdf solid; border-right: none; overflow: hidden; text-indent: -5px;}
 .dataBody .hhtz-box { height: 226px; }
+.onlyHhtz .tg-data.has, .onlyHhtz .tg-data.has:hover { background: url(../front_images/jczq/h-active.png); color: #fff; }
 .dataBody .tg-data { background: url(../front_images/jczq/h-default.png); }
-.dataBody .tg-data:hover { background: url(../front_images/jczq/h-hover.png); cursor: pointer; }
-.dataBody .tg-data .arrow-up, .dataBody .tg-data .arrow-down { position: relative; width: 9px; height: 4px; display: inline-block; left: 3px; }
-.dataBody .tg-data .arrow-up { background: url(../front_images/jczq/arrow-up.png) no-repeat; }
-.dataBody .tg-data .arrow-down { background: url(../front_images/jczq/arrow-down.png) no-repeat; }
+.dataBody .tg-data:hover { background: url(../front_images/jczq/h-hover.png); cursor: pointer; color: #3d3d3d; }
+.dataBody .tg-data .arrow-up, .dataBody .tg-data .arrow-down, .dataBody .tg-data .arrow-down2 { position: absolute; width: 9px; height: 4px; right: 2px; top: 39px; display: none; }
+.dataBody .tg-data .arrow-up { background: url(../front_images/jczq/arrow-up.png) no-repeat;  }
+.dataBody .tg-data .arrow-down { background: url(../front_images/jczq/arrow-down.png) no-repeat; display: block;}
+.dataBody .tg-data .arrow-down2 { background: url(../front_images/jczq/arrow-down2.png) no-repeat; }
+.onlyHhtz .tg-data.has .arrow-down2 { display: block; }
+.onlyHhtz .tg-data.active .arrow-up { display: block; }
+.onlyHhtz .tg-data.active .arrow-down, .onlyHhtz .tg-data.has .arrow-down { display: none; }
 .dataBody .tg-data.active { background: #e3e3e3; border-left: none; }
-.hhtz-nobor { position: absolute; top: -3px; right: 0px; height: 5px; width: 45px; background: #e3e3e3; }
+.dataBody .tg-data.active .arrow-up { display: block; }
+.hhtz-nobor { position: absolute; top: -3px; right: 0; height: 5px; width: 45px; background: #e3e3e3; }
 
 /* Right */
 .icoDel, .qrtz-box a { color: #3d3d3d; }

@@ -11,7 +11,7 @@
 .btn-add2 .icon-arrow-b, .btn-add2.active .icon-arrow-a, .btn-add .icon-arrow-b, .btn-add.active .icon-arrow-a { display: inline-block; }
 .btn-add2 .icon-arrow-a, .btn-add2.active .icon-arrow-b, .btn-add .icon-arrow-a, .btn-add.active .icon-arrow-b { display: none; }
 /* Brings-count */
-.br-count { text-align: center; }
+.br-count { text-align: center; height: 26px;}
 .br-count .btn-group { margin: 0 5px; }
 .br-count .btn { background: #f5f5f5; padding: 2px 8px; border: 1px #dfdfdf solid; height: 26px; }
 .br-count .btn-results { padding: 2px 5px; width: 50px; background: #fff; }

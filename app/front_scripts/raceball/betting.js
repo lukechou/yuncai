@@ -11,6 +11,18 @@ define(['jquery', 'app'], function ($, APP) {
       // constructor body
     }
 
+    /**
+     * Bet
+     * beishu  倍数
+     * zhushu  注数
+     * isAgreen  是否同意协议
+     * match  对阵信息
+     * bunch  几串几集合
+     * maxBunch  最多几串几
+     * maxBonus  最大预计奖金
+     *
+     * @type {Object}
+     */
     bet.prototype = {
       beishu: 1,
       zhushu: null,
@@ -676,6 +688,10 @@ define(['jquery', 'app'], function ($, APP) {
 
       html += '</tbody></table>';
 
+      if (data.bf != 1) {
+        html = '<div class="bf-nobor"></div><div class="bf-nosupport">本场对阵不支持该玩法</div>'
+      }
+
       return html;
     };
 
@@ -757,6 +773,7 @@ define(['jquery', 'app'], function ($, APP) {
       var shtml = [];
       var phtml = [];
       var fhtml = [];
+      var bfHtml = [];
       var noSp = '';
 
       for (var key in jczqData) {
@@ -820,13 +837,26 @@ define(['jquery', 'app'], function ($, APP) {
 
       };
 
+      bfHtml = '<tr><th rowspan="3">比分</th>' + shtml.join('') + '</tr><tr>' + phtml.join('') + '<td colspan="8" class="noBg"></td></tr><tr>' + fhtml.join('') + '</tr>';
+
+      // 是否支持玩法
+      if (data.bqc != 1) {
+        bqcHtml = '<td colspan="13" class="no-all">本场对阵不支持该玩法</td>';
+      }
+
+      if (data.bf != 1) {
+        bfHtml = '<tr><th>半全场</th><td colspan="13" class="no-all">本场对阵不支持该玩法</td></tr>'
+      }
+
+      if (data.zjq != 1) {
+        zjqHtml = '<td colspan="13" class="no-all">本场对阵不支持该玩法</td>';
+      }
+
       html += '<div class="hhtz-nobor"></div><table class="analyMoreTable analyMoreTable2"><tbody>';
 
       html += '<tr><th>半全场</th>' + bqcHtml + '</tr>';
 
-      html += '<tr><th rowspan="3">比分</th>' + shtml.join('') + '</tr>';
-      html += '<tr>' + phtml.join('') + '<td colspan="8" class="noBg"></td></tr>';
-      html += '<tr>' + fhtml.join('') + '</tr>';
+      html += bfHtml;
 
       html += '<tr><th>总进球</th>' + zjqHtml + '</tr>';
 
@@ -861,11 +891,12 @@ define(['jquery', 'app'], function ($, APP) {
         var dd = t.parents('dd');
         var newDd = null;
         var html = _this.getOneHhtzHtml(matchcode);
+        var iconHtml = '<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i>';
 
         var hasNewDd = _this.box.find('[data-newdd=' + matchcode + ']').length;
 
         if (!t.hasClass('active')) {
-          t.html('隐藏<i class="arrow-up"></i>');
+          t.html('隐藏' + iconHtml);
           if (hasNewDd) {
             _this.box.find('[data-newdd=' + matchcode + ']').show();
           } else {
@@ -876,16 +907,18 @@ define(['jquery', 'app'], function ($, APP) {
           t.removeClass('has').addClass('active');
 
         } else {
-          t.html('展开<i class="arrow-down"></i>');
+
           if (hasNewDd) {
             _this.box.find('[data-newdd=' + matchcode + ']').hide();
           }
 
           if (_.find(_this.match, function (chr) {
-              return chr.matchcode === matchcode;
+              return chr.matchcode === matchcode && chr.type !== 'spf' && chr.type !== 'rqspf';
             })) {
+            t.html('展开' + iconHtml);
             t.addClass('has').removeClass('active');
           } else {
+            t.html('展开' + iconHtml);
             t.removeClass('active has');
           }
 
@@ -1192,6 +1225,7 @@ define(['jquery', 'app'], function ($, APP) {
       });
 
       $('#j-btn-clear').on('click', function (event) {
+        _this.box.find('.j-show-hhtz').removeClass('has');
         _this.clearBetData();
       });
 
@@ -1218,7 +1252,10 @@ define(['jquery', 'app'], function ($, APP) {
           return (o.index == i && o.matchcode == code);
         });
 
-        if (_this.match == 0) $('#poolStep1 .unSeleTips').show();
+        if (_this.match == 0) {
+          $('#poolStep1 .unSeleTips').show();
+        }
+
         _this.setSecondBox();
         _this.setAllTotal();
 
@@ -1228,6 +1265,14 @@ define(['jquery', 'app'], function ($, APP) {
               return chr.matchcode === code;
             }).length === 0) {
             $('#bettingBox dd[matchcode=' + code + '] .j-show-bf').removeClass('has');
+          }
+        }
+
+        if (_this.tab === 'hhtz') {
+          if (_.filter(_this.match, function (chr) {
+              return chr.matchcode === code;
+            }).length === 0) {
+            $('#bettingBox dd[matchcode=' + code + '] .j-show-hhtz').removeClass('has');
           }
         }
 
@@ -1242,7 +1287,13 @@ define(['jquery', 'app'], function ($, APP) {
         removeItem.remove();
         actItem.removeClass('active hover');
 
-        $('#bettingBox dd[matchcode=' + code + ']').find('.j-show-bf').removeClass('has');
+        if (_this.tab === 'hhtz') {
+          $('#bettingBox dd[matchcode=' + code + '] .j-show-hhtz').removeClass('has');
+        }
+
+        if (_this.tab === 'bf') {
+          $('#bettingBox dd[matchcode=' + code + ']').find('.j-show-bf').removeClass('has');
+        }
         _.remove(_this.match, function (o) {
           return o.matchcode == code;
         });

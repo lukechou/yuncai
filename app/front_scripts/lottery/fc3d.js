@@ -19,10 +19,27 @@ require.config({
 require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], function ($, _, store, APP, PL3) {
 	'use strict';
 
-	if ($('#saleStatus').val() == 1) {
-		APP.showStopSellModal('福彩3D');
-		$('#buy-submit,#buy_button_proxy').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
-	}
+	/**
+	 * [G_BUY description]
+	 * zhushu  注数
+	 * money  金额
+	 * qihaoId  期号Id
+	 * qihao  期号
+	 * codes  投注号码集合
+	 * trackData  追号投注对象
+	 * proxyBuy  多期投注
+	 * partnerBuy-projectTitle  方案标题
+	 * partnerBuy-projectDescription  方案描述
+	 * partnerBuy-shareNum  分成多少份
+	 * partnerBuy-partBuyNum  合买认购份数
+	 * partnerBuy-partAegisNum  合买保底份数
+	 * partnerBuy-commissionPercent 合买提成
+	 * partnerBuy-unitPrice 单价
+	 * partnerBuy-shareLevel  // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
+	 * buyType  1:自购, 2:追号, 3:合买, 4:多期机选
+	 * issueMutipleMap  qihaoID:期号id : object(qihao:期号, multiple:倍数)
+	 * trackStopMoney  中奖急停金额
+	 */
 	PL3.init({
 		G_BUY: {
 			lotyName: '',
@@ -36,20 +53,20 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			isManual: false,
 			qihao: 0,
 			partnerBuy: {
-				projectTitle: '福彩3D合买方案', // 方案标题
-				projectDescription: '福彩3D', // 方案标题
-				shareNum: 0, // 分成多少份
-				partBuyNum: 0, // 合买认购份数
-				partAegisNum: 0, // 合买保底份数
-				commissionPercent: 0, // 合买提成
-				unitPrice: 0, // 单价
-				shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
-			}, // 合买
+				projectTitle: '福彩3D合买方案',
+				projectDescription: '福彩3D',
+				shareNum: 0,
+				partBuyNum: 0,
+				partAegisNum: 0,
+				commissionPercent: 0,
+				unitPrice: 0,
+				shareLevel: 1,
+			},
 			rowIndex: 0,
-			buyType: 1, // 1:自购, 2:追号, 3:合买, 4:多期机选
+			buyType: 1,
 			trackData: {
-				issueMutipleMap: {}, // qihaoID:期号id : object(qihao:期号, multiple:倍数)
-				trackStopMoney: 0, // 中奖急停金额
+				issueMutipleMap: {},
+				trackStopMoney: 0,
 			},
 			proxyBuy: {
 				betNum: 2,
@@ -67,14 +84,14 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 				this.qihaoId = $('#qihaoId').val();
 				this.qihao = $('#qihao').val();
 				this.partnerBuy = {
-						projectTitle: '福彩3D合买方案', // 方案标题
-						projectDescription: '福彩3D', // 方案标题
-						shareNum: 0, // 分成多少份
-						partBuyNum: 0, // 合买认购份数
-						partAegisNum: 0, // 合买保底份数
-						commissionPercent: 0, // 合买提成
-						unitPrice: 0, // 单价
-						shareLevel: 1, // 0，立即公开。 1，期号截止公开。 2，跟担人公开。 3，不公开
+						projectTitle: '福彩3D合买方案',
+						projectDescription: '福彩3D',
+						shareNum: 0,
+						partBuyNum: 0,
+						partAegisNum: 0,
+						commissionPercent: 0,
+						unitPrice: 0,
+						shareLevel: 1,
 					},
 					this.rowIndex = 0;
 				this.proxyBuy = {
@@ -163,7 +180,22 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	}());
 
+	/**
+	 * 	Page Init
+	 * 	1.停售检测
+	 * 	2.绑定Input占位事件
+	 * 	3.G_BUY 初始化
+	 * 	4.G_CHOOSE 初始化
+	 * 	5.玩法切换
+	 * @return null
+	 */
 	function pageInit() {
+
+		if ($('#saleStatus').val() == 1) {
+			APP.showStopSellModal(PL3.G_BUY.lotyCNName);
+			$('#buy-submit,#buy_button_proxy').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
+		}
+
 		APP.bindInputPlace();
 		PL3.G_BUY.init();
 		PL3.G_CHOOSE.init();
@@ -174,6 +206,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			content: $('#j-content'),
 			main: $('#j-box-main')
 		});
+
 	}
 
 	pageInit();
@@ -793,6 +826,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		$('#project_price').html(0);
 		PL3.G_BUY.init();
 		calculateBuyCodes();
+		PL3.G_BUY.mutiple = Number(_.escape($('#project_mutiple').val())) || 1;
+
 		updateCreatePartProjectParame();
 
 	});
@@ -894,10 +929,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		});
 		PL3.G_BUY.trackData.issueMutipleMap = {}; // clean
 		$('#buy_mutiple_span').show();
-		PL3.G_BUY.partnerBuy.projectTitle = '福彩3d合买方案';
-		PL3.G_BUY.partnerBuy.projectDescription = '福彩3d';
-		// clean partner buy
-		// PL3.G_BUY.buyType = parseInt($(this).attr('data-buytype'));
+		PL3.G_BUY.partnerBuy.projectTitle = PL3.G_BUY.lotyCNName + '合买方案';
+		PL3.G_BUY.partnerBuy.projectDescription = PL3.G_BUY.lotyCNName;
 		PL3.G_BUY.mutiple = 1;
 		$('#project_mutiple').val(PL3.G_BUY.mutiple);
 		switch (PL3.G_BUY.buyType) {
@@ -1021,32 +1054,11 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	// 我要分成多少份，最少一份，最多购买金额的数量
 	$("#share-num").on('change', function (event) {
-		event.preventDefault();
-		var val = parseInt($(this).val()) || PL3.G_BUY.money;
-		if (isNaN(val) || val < 1) {
-			val = 1;
-		} else {
-			val = Math.ceil(val);
-			(val > PL3.G_BUY.money) && (val = PL3.G_BUY.money);
-		}
-		$(this).val(val);
 		updateCreatePartProjectParame();
 	});
 
 	// 我要认购的份数
 	$("#part_buy").on('change', function (event) {
-
-		var val = parseInt($(this).val()) || 1;
-
-		if (isNaN(val) || val < 1) {
-			val = 1;
-		} else {
-			val = Math.ceil(val);
-			// (val > PL3.G_BUY.money) && (val = PL3.G_BUY.money);
-			(val > PL3.G_BUY.partnerBuy.shareNum) && (val = PL3.G_BUY.partnerBuy.shareNum);
-		}
-		$(this).val(val);
-
 		updateCreatePartProjectParame();
 	});
 
@@ -1076,11 +1088,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	// 保底金额修改
 	$('#part_aegis_num').on('change', function (event) {
-
-		var _aegisMoney = parseInt($(this).val()) || 0;
-		$(this).val(_aegisMoney);
 		updateCreatePartProjectParame();
-
 	});
 
 	// 方案保密设置
@@ -1398,81 +1406,172 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 	//////////////////////////function/////////////////////////////////////////
 
-	/**
-	 * 更新购买类型 自购1 追号2 合买3
-	 * @return null
-	 */
+	function updatePartView(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies) {
+
+		var gBuy = PL3.G_BUY;
+		var baodiTips = baodiCopies * oneCopiesMoney || 0;
+		var totalTips = (rengouCopies + baodiCopies) * oneCopiesMoney || 0;
+		if (copies === 0) {
+			oneCopiesMoney = 0;
+		}
+
+		// update partnerBuy
+		// 分成多少份,购买的份数,单份金额,提成比例,保底份数
+		gBuy.partnerBuy.shareNum = copies;
+		gBuy.partnerBuy.partBuyNum = rengouCopies;
+		gBuy.partnerBuy.unitPrice = oneCopiesMoney;
+		gBuy.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
+		gBuy.partnerBuy.partAegisNum = baodiCopies;
+
+		// 分成多少份,每份金额,认购份数,提成百分比,认购百分比
+		$('#share-num').val(copies);
+		$('.j-unit-price').html(oneCopiesMoney);
+		$('#part_buy').val(rengouCopies);
+		$('#part_buy_percent').html(rengouPercent);
+
+		// 保底份数,保底百分比,认购,保底金额tips,共需支付金额tips
+		$('#part_aegis_num').val(baodiCopies);
+		$('#part_aegis_percent').html(baodiPercent);
+		$('#buy_money_tips').html(rengouCopies * oneCopiesMoney);
+		$('#aegis_money_tips').html(baodiTips);
+		$('#total_money_tips').html(totalTips);
+
+	}
+
+	PL3.G_BUY.hemaiTotalMoney = 0;
+
 	function updateCreatePartProjectParame() {
 
-		// 分成多少份
-		var shareNum = parseInt($("#share-num").val()) || 1;
-		// if(PL3.G_BUY.money===0){
-		// 	shareNum = 0;
-		// }
-		if (PL3.G_BUY.money % shareNum !== 0) {
-			shareNum = YC.Unit.getMaxDivisible(PL3.G_BUY.money, shareNum);
-		}
-		$("#share-num").val(shareNum);
-		PL3.G_BUY.partnerBuy.shareNum = shareNum;
-		$('.j-unit-price').html(PL3.G_BUY.money / PL3.G_BUY.partnerBuy.shareNum);
-		if (PL3.G_BUY.money > 0) {
-			if ($('#part_buy').val() > PL3.G_BUY.partnerBuy.shareNum) {
-				$('#part_buy').val(PL3.G_BUY.partnerBuy.shareNum);
-			}
-			// 购买的份数
-			PL3.G_BUY.partnerBuy.partBuyNum = parseInt($('#part_buy').val());
-			// 单价
-			var iUnitPrice = parseInt($('.j-unit-price').html());
-			PL3.G_BUY.partnerBuy.unitPrice = iUnitPrice;
-			// 认购的比例
-			var partBuyPercent = PL3.G_BUY.partnerBuy.partBuyNum / PL3.G_BUY.partnerBuy.shareNum * 100;
+		// 总金额
+		var totalMoney = PL3.G_BUY.money;
 
-			$('#part_buy_percent').html(partBuyPercent.toFixed(2));
-			// 提成比例
-			$('#commission_percent').val(function (index, value) {
-				return ($(this).val() > 0 && $(this).val() > partBuyPercent) ? Math.floor(partBuyPercent) : $(this).val();
-			});
-			PL3.G_BUY.partnerBuy.commissionPercent = parseInt($('#commission_percent').val());
-			// 保底数据
-			var iMinBaodiNum = Math.ceil(PL3.G_BUY.partnerBuy.shareNum * 0.2);
-			// 剩余
-			var iLessBuyNum = PL3.G_BUY.partnerBuy.shareNum - PL3.G_BUY.partnerBuy.partBuyNum;
-			//        $('#part_aegis_num').val(function (index, value) {
-			//          if ($('#has_part_aegis')[0].checked && $(this).val() < iMinBaodiNum) {
-			//            return iMinBaodiNum;
-			//          }
-			//          return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
-			//        });
-			if ($('#has_part_aegis')[0].checked) {
-				if (iLessBuyNum > iMinBaodiNum) {
-					$('#part_aegis_num').val(function (index, value) {
-						if ($(this).val() < iMinBaodiNum) {
-							return iMinBaodiNum;
-						}
-						return $(this).val() > iLessBuyNum ? iLessBuyNum : $(this).val();
-					});
-				} else {
-					$('#part_aegis_num').val(iLessBuyNum);
-				}
-			}
-			var aegisNum = parseInt($('#part_aegis_num').val());
-			PL3.G_BUY.partnerBuy.partAegisNum = aegisNum;
-			$('#part_aegis_percent').html((aegisNum / PL3.G_BUY.partnerBuy.shareNum * 100).toFixed(2));
-			$('#buy_money_tips').html(PL3.G_BUY.partnerBuy.partBuyNum * iUnitPrice);
-			$('#aegis_money_tips').html(aegisNum * iUnitPrice);
-			$('#total_money_tips').html((aegisNum + PL3.G_BUY.partnerBuy.partBuyNum) * iUnitPrice);
+		// 获取份数 shareNum
+		var copies = $("#share-num").val() || totalMoney;
+
+		// 单份金额 iUnitPrice
+		var oneCopiesMoney = '';
+
+		// 认购金额
+		var rengouMoney = '';
+
+		// 认购份数
+		var rengouCopies = $('#part_buy').val();
+
+		// 认购百分比
+		var rengouPercent = '';
+
+		// 提成
+		var ticheng = $('#commission_percent').val() * 1 || 0;
+
+		// 保底金额 b-用户输入保底份数
+		// 保底份数 aegisNum
+		var baodiCopies = '';
+		var baodiPercent = '';
+		var b = parseInt($('#part_aegis_num').val()) || 0;
+
+		// 是否保底 hasPartAegis
+		var isBaodi = $('#has_part_aegis')[0].checked || false;
+
+		copies = Number(copies.replace(/[^0-9]/g, ''));
+		rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
+
+		if (PL3.G_BUY.hemaiTotalMoney !== totalMoney) {
+			PL3.G_BUY.hemaiTotalMoney = totalMoney;
+			copies = totalMoney;
+		}
+
+		// 无购买总金额
+		if (totalMoney <= 0) {
+			updatePartView(0, ticheng, 0, 0, 0, 0, 0);
+			return;
+		}
+
+		// 生成对应份数
+		if (totalMoney % copies === 0) {
+			oneCopiesMoney = totalMoney / copies;
 		} else {
-
-      $('#share-num').val(0);
-      $('#part_buy').val(0);
-      $('#part_aegis_num').val(0);
-      $('#part_aegis_percent').html('0.00');
-      $('#part_buy_percent').html(0);
-      $('#buy_money_tips').html(0);
-      $('#aegis_money_tips').html(0);
-      $('#total_money_tips').html(0);
-
+			oneCopiesMoney = 1;
+			copies = totalMoney;
 		}
+
+		// 认购份数小于0 或大于总份数时
+		if (rengouCopies <= 0) {
+			rengouCopies = 1;
+		}
+
+		if (copies < rengouCopies) {
+			rengouCopies = copies;
+		}
+
+		// 认购金额必须大于提成金额
+		if (ticheng > (rengouCopies / copies * 100)) {
+			rengouCopies = Math.ceil(copies * ticheng * 0.01);
+		}
+		rengouMoney = rengouCopies * oneCopiesMoney;
+
+		// 是否保底
+		if ($('#has_part_aegis')[0]) {
+			isBaodi = $('#has_part_aegis')[0].checked;
+		}
+
+		// 设置保底份数
+		if (isBaodi) {
+
+			$('#part_aegis_num')[0].disabled = false;
+
+			if (b === 0) {
+
+				if ((rengouCopies / copies) < 0.8) {
+					baodiCopies = Math.ceil(copies * 0.2);
+				} else {
+					baodiCopies = copies - rengouCopies;
+				}
+
+			} else {
+
+				if ((b + rengouCopies) < copies) {
+
+					if ((b / copies) < 0.2) {
+
+						if ((Math.ceil(copies * 0.2) + rengouCopies) > copies) {
+
+							baodiCopies = copies - rengouCopies;
+
+						} else {
+
+							baodiCopies = Math.ceil(copies * 0.2);
+						}
+
+					} else {
+
+						baodiCopies = b;
+
+					}
+
+				} else {
+
+					baodiCopies = copies - rengouCopies;
+
+				}
+
+			}
+
+			baodiPercent = (baodiCopies / copies * 100).toFixed(2);
+
+		} else {
+			$('#part_aegis_num')[0].disabled = true;
+			baodiCopies = 0;
+			baodiPercent = '0.00';
+		}
+
+		if (totalMoney === 0) {
+			rengouPercent = 0;
+		} else {
+			rengouPercent = (rengouCopies / copies * 100).toFixed(2);
+		}
+
+		updatePartView(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies);
+		return;
 
 	}
 
