@@ -3,6 +3,9 @@
 .raceball .m-brhd { border: 1px #dfdfdf solid; border-bottom: 3px #f13c38 solid; }
 .raceball .vote-nav { margin-bottom: 12px; border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; }
 
+/* bjdc */
+.bjdc-mid { font-size: 12px; line-height: 36px; height: 36px; padding-left: 15px; border: 1px #dfdfdf solid; border-width: 0 1px; }
+
 /* left tips */
 .m-down-tips { margin: 12px auto; border: 1px #dfdfdf solid; border-bottom: none; }
 .m-down-tips > h3 { font-size: 14px; font-weight: bold; margin: 0; padding: 8px 20px; cursor: pointer; border-bottom: 1px #dfdfdf solid; background: #f5f5f5; }
@@ -28,13 +31,13 @@
 .dataHead dd { position: relative; float: left; height: 60px; border-left: 1px solid #dfdfdf; }
 .dataHead span { line-height: 29px; display: block; height: 29px; border-bottom: 1px solid #dfdfdf; }
 .dataHead .co6 .btnBox, .dataHead .co7 .btnBox { margin-left: -1px; white-space: nowrap; border: none; }
-.dataHead .co6 .btnBox em { width: 56px; float: left; border-right: 1px #dfdfdf solid; }
+.dataHead .co6 .btnBox em { float: left; width: 56px; border-right: 1px #dfdfdf solid; }
 .imitateSelect:hover { text-decoration: none; }
 .dataHead .gameSeleList, .dataHead .optionList { position: absolute; z-index: 100; top: 59px; left: -1px; display: none; border: 1px solid #1962ae; }
-.dataHead .co2.hovered, .dataHead .co3.hovered { border: 1px solid #1962ae; border-width: 1px 1px; background: #fff; margin-top: -1px; }
+.dataHead .co2.hovered, .dataHead .co3.hovered { margin-top: -1px; border: 1px solid #1962ae; border-width: 1px 1px; background: #fff; }
 .hide-border { display: none; }
-.co2.hovered .hide-border, .co3.hovered .hide-border { display: block; position: absolute; height: 5px; bottom: -3px; background: #fff; z-index: 101; width: 100%; }
-.dataHead .gameSeleList { top: 58px; overflow: hidden; width: 295px; margin-left: 0; background: #fff; padding: 5px 0; }
+.co2.hovered .hide-border, .co3.hovered .hide-border { position: absolute; z-index: 101; bottom: -3px; display: block; width: 100%; height: 5px; background: #fff; }
+.dataHead .gameSeleList { top: 58px; overflow: hidden; width: 295px; margin-left: 0; padding: 5px 0; background: #fff; }
 .dataHead .optionList { padding: 0; border-top: 0; background: #fff; }
 .dataHead .optionList a, .dataHead .optionList a:visited { line-height: 24px; display: block; height: 24px; color: #333; }
 .dataHead .optionList a.active, .dataHead .optionList a:hover { text-decoration: none; color: #fff; background: #0d67c4; }
@@ -100,13 +103,13 @@
 .dataBody .sp-btn { background: url(../front_images/jczq/default.png); }
 .dataBody .sp-btn.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
 .dataBody .sp-btn.active { color: #fff; background: url(../front_images/jczq/active.png) #f13c38; }
-.dataBody .sp-btn.active>div { color: #fff; }
+.dataBody .sp-btn.active > div { color: #fff; }
 .co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
 
 /* 投注表格主体 */
 .data-load { margin: auto; }
-.data-loadbox { width: 100%; height: 200px; padding-top: 100px; border: 1px #dfdfdf solid; border-width: 1px 1px 0; text-align: center; }
-.dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3, .row4 { display: none; }
+.data-loadbox { width: 100%; height: 200px; padding-top: 100px; text-align: center; border: 1px #dfdfdf solid; border-width: 1px 1px 0; }
+.dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3, .row4, .row5 { display: none; }
 .row2 .btnBox, .row3 .btnBox { border: none; }
 .onlyBf .co4 { width: 272px; }
 .onlyBqc .co4, .onlyZjq .co4 { width: 180px; }
@@ -117,18 +120,25 @@
 .onlyRqSpf .dataBody .towLine .line1 { display: block; }
 .onlyRqSpf .co5, .onlyRqSpf .co6, .onlySpf .co5, .onlySpf .co6 { display: block; }
 
+/* 上下单双 */
+.onlySxds .row5 { display: block; width: 217px; }
+.row5 em { width: 54px; }
+.onlySxds .dataHead span { line-height: 20px; height: 20px; }
+.onlySxds .dataHead .row5 em { line-height: 20px; height: 20px; }
+.row5-clo2 em { width: 50%; }
+
 /* 比分 */
 .dataBody .bf-box, .bf-nobor, .dataBody .bf-box:hover { background: #e3e3e3; }
 .dataBody .bf-box { height: 150px; border: 1px #dfdfdf solid; border-width: 1px 0 0 1px; }
-.analyMoreTable { width: 680px; margin: 15px auto 0; table-layout: fixed; text-align: center; background: #fff; }
-.analyMoreTable .sp-btn>div { color: #000; }
-.analyMoreTable th { font-weight: 700; text-align: center; border: 1px solid #dfdfdf; width: 45px; }
-.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; border: 1px solid #dfdfdf; color: #888; }
+.analyMoreTable { width: 680px; margin: 15px auto; table-layout: fixed; text-align: center; background: #fff; }
+.analyMoreTable .sp-btn > div { color: #000; }
+.analyMoreTable th { font-weight: 700; width: 45px; text-align: center; border: 1px solid #dfdfdf; }
+.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; color: #888; border: 1px solid #dfdfdf; }
 .analyMoreTable2 th { width: 95px; }
 .analyMoreTable2 td { width: 45px; }
-.analyMoreTable2 td.no-all{ width: 585px;}
-.bf-nobor { position: absolute; right: 0; width: 224px; height: 5px; top: -3px; }
-.bf-nosupport{ line-height: 150px; text-align: center;}
+.analyMoreTable2 td.no-all { width: 585px; }
+.bf-nobor { position: absolute; top: -3px; right: 0; width: 224px; height: 5px; }
+.bf-nosupport { line-height: 150px; text-align: center; }
 
 /* 总进球 */
 .onlyBf .no-support, .onlyZjq .no-support, .onlyBqc .no-support { width: 100%; border: none; }
@@ -145,45 +155,45 @@
 .row1-1 .btn:hover { background-position: 0 -87px; }
 .row1-1 .btn.active { background-position: 0 0; }
 .row1-1 .btn.has { background-position: 0 -58px; }
-.row2-1 em, .row3-1 em, .row4-1 em { float: left; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
+.row2-1 em, .row3-1 em, .row4-1 em, .row5 em { float: left; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
 .row2 em, .row3 em { float: left; border-right: 1px #dfdfdf solid; }
 .row2 em, .row2-1 em { width: 35px; }
 .row3 em, .row3-1 em { width: 39px; }
 
 /* 混合投注 */
-.onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4 { height: 80px; line-height: 80px; }
-.onlyHhtz .dataBody dd { min-height: 80px }
+.onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4 { line-height: 80px; height: 80px; }
+.onlyHhtz .dataBody dd { min-height: 80px; }
 .onlyHhtz .row4 { display: block; width: 193px; }
 .onlyHhtz .co4 { width: 252px; }
 .row4-1 { width: 197px; }
-.row4 em { width: 49px; float: left; border-right: 1px #dfdfdf solid; }
+.row4 em { float: left; width: 49px; border-right: 1px #dfdfdf solid; }
 .row4 em.last { width: 45px; }
 .row4-1 em { width: 49px; }
 .row4 .rq { width: 49px; }
 .onlyHhtz .co5 { display: block; }
 .onlyHhtz .co2 { width: 93px; }
 .rq b { font-weight: normal; }
-.onlyHhtz .dataBody .row4-1, .row4-1 em { height: 40px; line-height: 40px; }
-.onlyHhtz .tg-data { display: block; width: 45px; height: 80px; line-height: 80px; position: absolute; right: 0; text-align: center; border: 1px #dfdfdf solid; border-right: none; overflow: hidden; text-indent: -5px;}
+.onlyHhtz .dataBody .row4-1, .row4-1 em { line-height: 40px; height: 40px; }
+.onlyHhtz .tg-data { line-height: 80px; position: absolute; right: 0; display: block; overflow: hidden; width: 45px; height: 80px; text-align: center; text-indent: -5px; border: 1px #dfdfdf solid; border-right: none; }
 .dataBody .hhtz-box { height: 226px; }
-.onlyHhtz .tg-data.has, .onlyHhtz .tg-data.has:hover { background: url(../front_images/jczq/h-active.png); color: #fff; }
+.onlyHhtz .tg-data.has, .onlyHhtz .tg-data.has:hover { color: #fff; background: url(../front_images/jczq/h-active.png); }
 .dataBody .tg-data { background: url(../front_images/jczq/h-default.png); }
-.dataBody .tg-data:hover { background: url(../front_images/jczq/h-hover.png); cursor: pointer; color: #3d3d3d; }
-.dataBody .tg-data .arrow-up, .dataBody .tg-data .arrow-down, .dataBody .tg-data .arrow-down2 { position: absolute; width: 9px; height: 4px; right: 2px; top: 39px; display: none; }
-.dataBody .tg-data .arrow-up { background: url(../front_images/jczq/arrow-up.png) no-repeat;  }
-.dataBody .tg-data .arrow-down { background: url(../front_images/jczq/arrow-down.png) no-repeat; display: block;}
+.dataBody .tg-data:hover { cursor: pointer; color: #3d3d3d; background: url(../front_images/jczq/h-hover.png); }
+.dataBody .tg-data .arrow-up, .dataBody .tg-data .arrow-down, .dataBody .tg-data .arrow-down2 { position: absolute; top: 39px; right: 2px; display: none; width: 9px; height: 4px; }
+.dataBody .tg-data .arrow-up { background: url(../front_images/jczq/arrow-up.png) no-repeat; }
+.dataBody .tg-data .arrow-down { display: block; background: url(../front_images/jczq/arrow-down.png) no-repeat; }
 .dataBody .tg-data .arrow-down2 { background: url(../front_images/jczq/arrow-down2.png) no-repeat; }
 .onlyHhtz .tg-data.has .arrow-down2 { display: block; }
 .onlyHhtz .tg-data.active .arrow-up { display: block; }
 .onlyHhtz .tg-data.active .arrow-down, .onlyHhtz .tg-data.has .arrow-down { display: none; }
-.dataBody .tg-data.active { background: #e3e3e3; border-left: none; }
+.dataBody .tg-data.active { border-left: none; background: #e3e3e3; }
 .dataBody .tg-data.active .arrow-up { display: block; }
-.hhtz-nobor { position: absolute; top: -3px; right: 0; height: 5px; width: 45px; background: #e3e3e3; }
+.hhtz-nobor { position: absolute; top: -3px; right: 0; width: 45px; height: 5px; background: #e3e3e3; }
 
 /* Right */
 .icoDel, .qrtz-box a { color: #3d3d3d; }
-.icoDel { font-size: 18px; position: relative; top: 0; left: -1px; line-height: 1; }
-.icoDel:hover { color: #f13c38; text-decoration: none; }
+.icoDel { font-size: 18px; line-height: 1; position: relative; top: 0; left: -1px; }
+.icoDel:hover { text-decoration: none; color: #f13c38; }
 
 /* .unselect */
 .unselect h2 { font: 500 16px/36px 'Microsoft Yahei'; line-height: 36px; height: 36px; margin: 0; padding-left: 15px; color: #3d3d3d; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; background: #f5f5f5; }
@@ -197,8 +207,8 @@
 .scrollMoni { font-size: 12px; display: none; max-height: 280px; }
 .scrollMoni .table { margin: 0; }
 .scrollMoni .table > tbody > tr > th, .scrollMoni .table > tbody > tr > td { text-align: center; border: none; }
-.scrollMoni .table > tbody > tr > th { height: 40px; overflow: hidden; padding: 14px 0 10px; float: left; }
-.scrollMoni .table > tbody > tr > .t1 { text-align: left; width: 65px; padding-left: 4px; }
+.scrollMoni .table > tbody > tr > th { float: left; overflow: hidden; height: 40px; padding: 14px 0 10px; }
+.scrollMoni .table > tbody > tr > .t1 { width: 65px; padding-left: 4px; text-align: left; }
 .mCSB_inside > .mCSB_container { margin-right: 0; }
 .mCSB_scrollTools { right: -5px; }
 .scrollMoni .icoDan { padding: 1px; color: #3d3d3d; border: 1px #dfdfdf solid; }
@@ -434,18 +444,18 @@
 #scrollUp:hover { cursor: pointer; text-decoration: none; }
 
 /* tipsy Style */
-.tipsy { font-size: 10px; position: absolute; padding: 5px; z-index: 100000 }
-.tipsy-inner { background: #fefaf5; color: #333; max-width: 465px; padding: 5px 8px 4px 8px; text-align: center; border: 1px #f69100 solid }
-.tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #fefaf5 }
-.tipsy-arrow-n { border-bottom-color: #fefaf5 }
-.tipsy-arrow-s { border-top-color: #fefaf5 }
-.tipsy-arrow-e { border-left-color: #fefaf5 }
-.tipsy-arrow-w { border-right-color: #fefaf5 }
-.tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent }
-.tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent }
-.tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent }
-.tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent }
-.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent }
-.tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent }
-.tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent }
-.tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent }
+.tipsy { font-size: 10px; position: absolute; z-index: 100000; padding: 5px; }
+.tipsy-inner { max-width: 465px; padding: 5px 8px 4px 8px; text-align: center; color: #333; border: 1px #f69100 solid; background: #fefaf5; }
+.tipsy-arrow { line-height: 0; position: absolute; width: 0; height: 0; border: 5px dashed #fefaf5; }
+.tipsy-arrow-n { border-bottom-color: #fefaf5; }
+.tipsy-arrow-s { border-top-color: #fefaf5; }
+.tipsy-arrow-e { border-left-color: #fefaf5; }
+.tipsy-arrow-w { border-right-color: #fefaf5; }
+.tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -5px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
+.tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
+.tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
+.tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-right-color: transparent; border-bottom: none; border-left-color: transparent; }
+.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-right-color: transparent; border-bottom: none; border-left-color: transparent; }
+.tipsy-se .tipsy-arrow { right: 10px; bottom: 0; border-top-style: solid; border-right-color: transparent; border-bottom: none; border-left-color: transparent; }
+.tipsy-e .tipsy-arrow { top: 50%; right: 0; margin-top: -5px; border-top-color: transparent; border-right: none; border-bottom-color: transparent; border-left-style: solid; }
+.tipsy-w .tipsy-arrow { top: 50%; left: 0; margin-top: -5px; border-top-color: transparent; border-right-style: solid; border-bottom-color: transparent; border-left: none; }

@@ -165,10 +165,13 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       $('#j-ljtzBtn,#j-fqhmBtn').addClass('btn-stop').html('暂停销售');
       $('#j-ljtzBtn').attr('id', '');
       $('#j-fqhmBtn').remove();
-    }
+    } else {
+      initDataBody();
+      gameSeleListInit();
 
-    scrollUp.init();
-    scrollMenu.init();
+      scrollUp.init();
+      scrollMenu.init();
+    }
 
   }
 
@@ -197,25 +200,26 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       arr = arr.concat(dataLeftCommon);
 
       if (tab === 'bf') {
+
         arr.push('<span class="row1 row1-1">' + bfLine + '</span></dd>');
+
       } else {
+
         line = BET.craeteDateBtn(item[tab], item[tab + '_gg_sp']);
+
       }
 
       if (tab === 'rqspf') {
 
         var rqspfNum = '';
+        rqspfNum = Number(item['rqspf_rangqiu_num'])
 
-        switch (Number(item['rqspf_rangqiu_num'])) {
-        case -1:
-          rqspfNum = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
-          break;
-        case 1:
+        if (rqspfNum > 0) {
           rqspfNum = '<b class="fc-7">' + item['rqspf_rangqiu_num'] + '</b>';
-          break;
-        default:
-          rqspfNum = item['rqspf_rangqiu_num'];
-          break;
+        }
+
+        if (rqspfNum < 0) {
+          rqspfNum = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
         }
 
         arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + rqspfNum + '</em>' + line + '</div></span></dd>');
@@ -231,6 +235,10 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
       if (tab === 'zjq') {
         arr.push('<span class="row3 row3-1">' + line + '</span></dd>');
+      }
+
+      if (tab === 'sxds') {
+        arr.push('<span class="row5">' + line + '</span></dd>');
       }
 
     };
@@ -264,6 +272,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var spfTitle = ['胜', '平', '负'];
     var rqspfArr = item['rqspf_gg_sp'].split('|');
     var rqspfTitle = ['让球胜', '让球平', '让球负'];
+    var noSupportTips = '本场对阵不支持该玩法';
 
     switch (Number(item['rqspf_rangqiu_num'])) {
     case -1:
@@ -278,11 +287,20 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     }
 
     html += '<span class="row4-1"><em class="rq">0</em>';
-    html += BET.getSpBtn(1, spfTitle, spfArr, 'spf');
+    if (item.spf == 1) {
+      html += BET.getSpBtn(item.spf, spfTitle, spfArr, 'spf');
+    } else {
+      html += noSupportTips;
+    }
+
     html += '</span>';
 
     html += '<span class="row4-1"><em class="rq">' + rqspfNum + '</em>';
-    html += BET.getSpBtn(1, rqspfTitle, rqspfArr, 'rqspf', 3);
+    if (item.rqspf == 1) {
+      html += BET.getSpBtn(item.rqspf, rqspfTitle, rqspfArr, 'rqspf', 3);
+    } else {
+      html += noSupportTips;
+    }
     html += '</span>';
 
     html += '<em class="tg-data j-show-hhtz">展开<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i></em></dd>';
@@ -354,9 +372,6 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     return h;
   }
 
-  initDataBody();
-  gameSeleListInit();
-
   // Toggle Buy Type
   $('#j-vote-nav').on('click', 'a', function (event) {
 
@@ -381,7 +396,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   var buyTicket = function (obj, type, lotyName) {
-
+    obj.unikey = $.now();
     $.ajax({
         url: '/lottery/jingcai/' + type + '/' + lotyName + '/' + BET.tab + '_gg',
         type: 'POST',

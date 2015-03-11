@@ -40,7 +40,9 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     chart.init({
       chartEl: $('#chart')
     });
-    chart.getChartData('CK_30758');
+
+    var modelId = _.escape($.trim($('#j-module-id').val()));
+    chart.getChartData(modelId);
   }
 
   init();

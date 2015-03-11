@@ -21,9 +21,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
 
   // 合买大厅分页
   PAGE.loadPrjctLst = function (obj) {
-    var path = window.location.pathname.replace(/\/*$/,'');
+    var path = window.location.pathname.replace(/\/*$/, '');
     PAGE.ajaxUrl = path + '/ajax';
-    PAGE.pageElement = $('.j-page-box');
+    PAGE.pageElement = $('#j-page-area');
     PAGE.initAjax(obj);
 
     PAGE.onSuccess = function (data) {
@@ -42,42 +42,49 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           dataItem = detailData[i - 1];
           switch (obj.status) {
           case '2':
-          htmlStatu = '<span class="miss-tips">已满员</span>';
+            htmlStatu = '<span class="miss-tips">已满员</span>';
             htmlUse =
-                '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
+              '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
                 <input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" />\
                 <input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
             break;
           case '3':
             htmlStatu = '<span class="miss-tips">已撤单</span>';
             htmlUse =
-                '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
+              '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
                 <input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" />\
                 <input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
             break;
           default:
             htmlStatu = '<input type="text" class="text-left u-ci w50 j-gou-count" placeholder="剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
-            htmlUse = '<button data-type="1" data-one="'+dataItem.unitPrice+'" class="text-left btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
+            htmlUse = '<button data-type="1" data-one="' + dataItem.unitPrice + '" class="text-left btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
             break;
           }
           htmlOutput +=
-              '<tr>\
+            '<tr>\
                   <td>' + i + '</td>\
                   <td>' + dataItem.username + '</td>\
                   <td>' + dataItem.schedule + ' %</td>\
                   <td class="tb-4 fc-3 j-mtotal">' + dataItem.price + '元</td>\
-                  <td class="text-left">' + dataItem.unitPrice + '元</td><td>' + htmlStatu+htmlUse + '</td></tr>';
+                  <td class="text-left">' + dataItem.unitPrice + '元</td><td>' + htmlStatu + htmlUse + '</td></tr>';
         }
       } else {
         htmlOutput = '<td colspan="6" style="height:50px">暂无相关记录</td>';
       }
-      if(data.retData.totalRecord > obj.pageSize){
-          $('#j-page-line').show();
-          $('#j-page-area').show();
+
+      PAGE.config.pageNum = Math.ceil(data.retData.totalRecord / obj.pageSize);
+      PAGE.makePageHtml();
+      PAGE.bindPageEvent(PAGE.loadPrjctLst);
+
+      if (data.retData.totalRecord > obj.pageSize) {
+        $('#j-page-line').show();
+        $('#j-page-area').show();
       }
+
       this.appendTable(htmlOutput);
+
       // for ie8 table odd hack
-      $("tbody tr:nth-child(odd) td").css("background","#f5f5f5");
+      $("tbody tr:nth-child(odd) td").css("background", "#f5f5f5");
     };
 
     PAGE.onFail = function () {
@@ -154,7 +161,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       'spf_gg': '胜平负',
       'rqspf_gg': '让球胜平负',
       'zjq_gg': '总进球',
-      'bf_gg': '比分'
+      'bf_gg': '比分',
+      'hhtz_gg':'混合投注'
     };
     var tabHtml = tab[tabIndex[tabIndex.length - 1]] || '';
 
@@ -180,14 +188,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
         lotyName: mname,
         total: mtotal,
         pay: b,
-        payMoney:b*onePrice
+        payMoney: b * onePrice
       });
 
       html = {
         html: h,
       };
 
-      APP.checkLogin(b*onePrice, {
+      APP.checkLogin(b * onePrice, {
         enoughMoney: function () {
           APP.showTips(html);
           $('#buyConfirm').one('click', function (event) {
@@ -332,21 +340,19 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
   });
 
   function initIcon() {
-      var objSchedule = $('.j-sort-schedule');
-      var objProjectPrice = $('.j-sort-project-price');
-      var objUnitPrice = $('.j-sort-unit-price');
-      objSchedule.removeClass();
-      objSchedule.addClass('icon icon-down j-sort-schedule');
-      // objSchedule.addClass('icon-down');
-      objProjectPrice.removeClass();
-      objProjectPrice.addClass('icon icon-down j-sort-project-price');
-      // objProjectPrice.addClass('icon-down');
-      objUnitPrice.removeClass();
-      objUnitPrice.addClass('icon icon-down j-sort-unit-price');
-      // objUnitPrice.addClass('icon-down');
-    }
-    //innerHtmlObj: $('.m-pager'),
+    var objSchedule = $('.j-sort-schedule');
+    var objProjectPrice = $('.j-sort-project-price');
+    var objUnitPrice = $('.j-sort-unit-price');
+    objSchedule.removeClass();
+    objSchedule.addClass('icon icon-down j-sort-schedule');
+    objProjectPrice.removeClass();
+    objProjectPrice.addClass('icon icon-down j-sort-project-price');
+    objUnitPrice.removeClass();
+    objUnitPrice.addClass('icon icon-down j-sort-unit-price');
+  }
+
   function pageOnLoad() {
+
     // Init Table
     PAGE.pageTable = $('#projectList');
     PAGE.loadPrjctLst({
@@ -358,6 +364,28 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       pageSize: 10,
       page: 1
     });
+
+    footFixed();
+    $(window).on('resize', function(event) {
+      footFixed();
+    });
+
+  }
+
+  function footFixed() {
+
+    var f = $('.ft');
+    var a = $(window).height();
+    var b = f.height();
+    var c = f[0].offsetTop;
+    var d = a - b - c;
+
+    if (d > 0) {
+      f.css('marginTop',d);
+    } else {
+      f.css('marginTop',0);
+    }
+
   }
 
   pageOnLoad();

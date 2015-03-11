@@ -58,7 +58,7 @@ var PAGE = (function () {
     bindPageEvent: function (callback) {
 
       $('.next-page').on('click', function (event) {
-        PAGE.config.page = parseInt(PAGE.config.page)
+        PAGE.config.page = parseInt(PAGE.config.page);
         if (PAGE.config.page < PAGE.config.pageNum) {
           PAGE.config.page += 1;
           callback(PAGE.config);
@@ -66,7 +66,7 @@ var PAGE = (function () {
       });
 
       $('.back-page').on('click', function (event) {
-        PAGE.config.page = parseInt(PAGE.config.page)
+        PAGE.config.page = parseInt(PAGE.config.page);
         PAGE.config.page -= 1;
         if (PAGE.config.page <= 0) {
           PAGE.config.page = 1;

@@ -35,7 +35,8 @@ define(['jquery', 'app'], function ($, APP) {
         'bf': 4,
         'zjq': 6,
         'bqc': 4,
-        'hhtz': 8
+        'hhtz': 8,
+        'sxds': 6
       },
       dd: null,
       maxBonus: null,
@@ -45,6 +46,7 @@ define(['jquery', 'app'], function ($, APP) {
       bqcSpValueArr: ['胜胜', '胜平', '胜负', '平胜', '平平', '平负', '负胜', '负平', '负负'],
       rqspfSpValueArr: ['让球胜', '让球平', '让球负'],
       spfSpValueArr: ['胜', '平', '负'],
+      sxdsSpValueArr: ['上单', '上双', '下单', '下双']
     };
 
     bet.prototype.init = function () {
@@ -275,6 +277,22 @@ define(['jquery', 'app'], function ($, APP) {
         tips.show();
         return;
 
+      }
+
+      if (Config.lotyName === 'bjdc') {
+        switch (_this.tab) {
+        case 'bqc':
+          maxLen = 6;
+          break;
+        case 'bf':
+          maxLen = 3;
+          break;
+        case 'spf':
+          maxLen = 15;
+          break;
+        default:
+          break;
+        }
       }
 
       if (_this.tab === 'hhtz') {
@@ -535,6 +553,7 @@ define(['jquery', 'app'], function ($, APP) {
         spf: [3, 1, 0],
         rqspf: [3, 1, 0],
         zjq: [0, 1, 2, 3, 4, 5, 6, 7],
+        sxds: [0, 1, 2, 3],
         bqc: ['33', '31', '30', '13', '11', '10', '03', '01', '00'],
         bf: ['10', '20', '21', '30', '31', '32', '40', '41', '42', '50', '51', '52', '90', '00', '11', '22', '33', '99', '01', '02', '12', '03', '13', '23', '04', '14', '24', '05', '15', '25', '09'],
       };
@@ -638,11 +657,25 @@ define(['jquery', 'app'], function ($, APP) {
       var pArr = ['0:0', '1:1', '2:2', '3:3', '平其他'];
       var fArr = ['0:1', '0:2', '1:2', '0:3', '1:3', '2:3', '0:4', '1:4', '2:4', '0:5', '1:5', '2:5', '负其他'];
       var common = '';
-      var hArr = sArr.concat(pArr, fArr);
+      var hArr = null;
       var shtml = [];
       var phtml = [];
       var fhtml = [];
       var noSp = '';
+      var indexArr = [12, 17, 30];
+      var tableCol = 8;
+
+      // 北京单场
+      if (Config.lotyName === 'bjdc') {
+
+        sArr.splice(9, 3);
+        fArr.splice(9, 3);
+        indexArr = [9, 14, 24];
+        tableCol = 5;
+
+      }
+
+      hArr = sArr.concat(pArr, fArr);
 
       for (var key in jczqData) {
         if (jczqData.hasOwnProperty(key)) {
@@ -666,15 +699,15 @@ define(['jquery', 'app'], function ($, APP) {
         }
         common = 'class="sp-btn ' + noSp + '" gametype="bf"';
 
-        if (0 <= i && i <= 12) {
+        if (0 <= i && i <= indexArr[0]) {
           shtml.push('<td data-item="' + hArr[i] + '" sp="' + spArr[i] + '" index="' + i + '"' + common + '>' + hArr[i] + '<div>' + spArr[i] + '</div></td>');
         }
 
-        if (13 <= i && i <= 17) {
+        if (indexArr[0] + 1 <= i && i <= indexArr[1]) {
           phtml.push('<td data-item="' + hArr[i] + '" sp="' + spArr[i] + '" index="' + i + '"' + common + '>' + hArr[i] + '<div>' + spArr[i] + '</div></td>');
         }
 
-        if (18 <= i && i <= 30) {
+        if (indexArr[1] + 1 <= i && i <= indexArr[2]) {
           fhtml.push('<td data-item="' + hArr[i] + '" sp="' + spArr[i] + '" index="' + i + '"' + common + '>' + hArr[i] + '<div>' + spArr[i] + '</div></td>');
         }
 
@@ -683,7 +716,7 @@ define(['jquery', 'app'], function ($, APP) {
       html += '<div class="bf-nobor"></div><table class="analyMoreTable"><tbody>';
 
       html += '<tr><th>主胜</th>' + shtml.join('') + '<td class="j-bf-all sp-btn">全包</td></tr>';
-      html += '<tr><th>平</th>' + phtml.join('') + '<td colspan="8" class="noBg"></td><td class="j-bf-all sp-btn">全包</td></tr>';
+      html += '<tr><th>平</th>' + phtml.join('') + '<td colspan="' + tableCol + '" class="noBg"></td><td class="j-bf-all sp-btn">全包</td></tr>';
       html += '<tr><th>主负</th>' + fhtml.join('') + '<td class="j-bf-all sp-btn">全包</td></tr>';
 
       html += '</tbody></table>';
@@ -822,16 +855,39 @@ define(['jquery', 'app'], function ($, APP) {
       var bqcSpArr = data.bqc_gg_sp.split('|') || [];
       var zjqSpArr = data.zjq_gg_sp.split('|') || [];
 
-      common = 'class="sp-btn ' + noSp + '" gametype="bqc"';
-
       for (var i = 0, len = _this.bqcSpValueArr.length; i < len; i++) {
+
+        if (bqcSpArr[i]) {
+
+          noSp = 'j-sp-btn';
+
+        } else {
+
+          bqcSpArr[i] = '--';
+          noSp = '';
+
+        }
+
+        common = 'class="sp-btn ' + noSp + '" gametype="bqc"';
 
         bqcHtml += '<td data-item="' + _this.bqcSpValueArr[i] + '" sp="' + bqcSpArr[i] + '" index="' + (i + 6) + '"' + common + '>' + _this.bqcSpValueArr[i] + '<div>' + bqcSpArr[i] + '</div></td>';
 
       };
 
-      common = 'class="sp-btn ' + noSp + '" gametype="zjq"';
       for (var i = 0, len = _this.zjqSpValueArr.length; i < len; i++) {
+
+        if (zjqSpArr[i]) {
+
+          noSp = 'j-sp-btn';
+
+        } else {
+
+          zjqSpArr[i] = '--';
+          noSp = '';
+
+        }
+
+        common = 'class="sp-btn ' + noSp + '" gametype="zjq"';
 
         zjqHtml += '<td data-item="' + _this.zjqSpValueArr[i] + '" sp="' + zjqSpArr[i] + '" index="' + (i + 46) + '"' + common + '>' + _this.zjqSpValueArr[i] + '<div>' + zjqSpArr[i] + '</div></td>';
 
@@ -845,14 +901,14 @@ define(['jquery', 'app'], function ($, APP) {
       }
 
       if (data.bf != 1) {
-        bfHtml = '<tr><th>半全场</th><td colspan="13" class="no-all">本场对阵不支持该玩法</td></tr>'
+        bfHtml = '<tr><th>比分</th><td colspan="13" class="no-all">本场对阵不支持该玩法</td></tr>'
       }
 
       if (data.zjq != 1) {
         zjqHtml = '<td colspan="13" class="no-all">本场对阵不支持该玩法</td>';
       }
 
-      html += '<div class="hhtz-nobor"></div><table class="analyMoreTable analyMoreTable2"><tbody>';
+      html += '<div class="hhtz-nobor"></div><table class="analyMoreTable analyMoreTable2 j-analymore-table"><tbody>';
 
       html += '<tr><th>半全场</th>' + bqcHtml + '</tr>';
 
@@ -894,6 +950,7 @@ define(['jquery', 'app'], function ($, APP) {
         var iconHtml = '<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i>';
 
         var hasNewDd = _this.box.find('[data-newdd=' + matchcode + ']').length;
+        var minHieght = null;
 
         if (!t.hasClass('active')) {
           t.html('隐藏' + iconHtml);
@@ -902,6 +959,9 @@ define(['jquery', 'app'], function ($, APP) {
           } else {
             newDd = dd.clone().removeClass().addClass('bf-box hhtz-box j-bf-box').attr('data-newdd', matchcode).html(html);
             dd.after(newDd);
+            minHieght = _this.box.find('[data-newdd=' + matchcode + '] .j-analymore-table')[0].offsetHeight + 30;
+            _this.box.find('[data-newdd=' + matchcode + ']').height(minHieght);
+
           }
 
           t.removeClass('has').addClass('active');
