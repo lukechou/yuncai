@@ -52,7 +52,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .table2 > tbody > tr > td.oper > a, .table2 > tbody > tr > td.oper > a:hover { color: #0d67c4; }
 .table2 > tbody > tr:nth-child(odd) { background: #f5f5f5; }
 .table2 > thead > tr > th, .table2 > tbody > tr > td { border: none; }
-.table > tbody > tr > td { padding: 5px; }
+
 /* 合买大厅-名人 */
 .m-hm-name { font-size: 12px; }
 .m-hm-name h2 { font-size: 16px; font-weight: bold; margin: 15px 0 10px; color: #f13c38; }

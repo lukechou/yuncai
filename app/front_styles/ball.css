@@ -5,6 +5,12 @@
 
 /* bjdc */
 .bjdc-mid { font-size: 12px; line-height: 36px; height: 36px; padding-left: 15px; border: 1px #dfdfdf solid; border-width: 0 1px; }
+.bjdc .bjdc-expired { display: none !important; }
+.bjdc-mid .icon { position: relative; top: 3px; margin-right: 5px; cursor: pointer; }
+.guoguan-tab li{ float: left; width: 50%; text-align: center; font-size: 12px; height: 32px; line-height: 32px; background: #f1f1f1; border: 1px #dfdfdf solid; cursor: pointer;}
+.guoguan-tab li.zygg-tab{ border-width: 0 1px 1px 0;}
+.guoguan-tab li.dcgg-tab{ border-width: 0 0 1px 1px;}
+.guoguan-tab li.active{ border:none; background: #fff;}
 
 /* left tips */
 .m-down-tips { margin: 12px auto; border: 1px #dfdfdf solid; border-bottom: none; }

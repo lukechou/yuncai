@@ -40,13 +40,15 @@ define(['jquery', 'app'], function ($, APP) {
       },
       dd: null,
       maxBonus: null,
+      bjdcPassWay: true,
       box: $('#bettingBox'),
       tab: 'spf',
       zjqSpValueArr: ['0', '1', '2', '3', '4', '5', '6', '7+'],
       bqcSpValueArr: ['胜胜', '胜平', '胜负', '平胜', '平平', '平负', '负胜', '负平', '负负'],
       rqspfSpValueArr: ['让球胜', '让球平', '让球负'],
       spfSpValueArr: ['胜', '平', '负'],
-      sxdsSpValueArr: ['上单', '上双', '下单', '下双']
+      sxdsSpValueArr: ['上单', '上双', '下单', '下双'],
+      hhtzIconHtml: '<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i>'
     };
 
     bet.prototype.init = function () {
@@ -245,18 +247,189 @@ define(['jquery', 'app'], function ($, APP) {
     };
 
     /**
-     *  设置右侧第二个Box
+     *  Update Pass Way
      */
+    bet.prototype.getBjdcZhggBunchHtml = function (len, maxLen) {
+
+      var _this = this;
+      var bunchHtml = '';
+      var isActiveBunch = '';
+      var isDg = '';
+      var cStr = '';
+      var obj = '';
+      var html = '';
+      var bunchMap = {
+        bunch2: [3],
+        bunch3: [4, 7],
+        bunch4: [5, 11, 15],
+        bunch5: [6, 16, 26, 31],
+        bunch6: [7, 22, 42, 57, 63]
+      };
+      var item = null;
+      var bunchCount = len;
+
+      if (bunchCount > maxLen) {
+        bunchCount = maxLen;
+      }
+
+      if (bunchCount > 6) {
+        bunchCount = 6;
+      }
+
+      for (var i = 2; i <= bunchCount; i++) {
+
+        item = bunchMap['bunch' + i];
+
+        for (var j = 0; j < item.length; j++) {
+
+          cStr = i + '_' + item[j];
+          isDg = i + '串' + item[j];
+
+          isActiveBunch = _.find(_this.bunch, function (bunch) {
+            return bunch === cStr;
+          });
+
+          if (isActiveBunch) {
+
+            obj = {
+              method: cStr,
+              isCheck: true,
+              active: 'active',
+              bunch: isDg
+            };
+
+          } else {
+
+            obj = {
+              method: cStr,
+              isCheck: false,
+              active: '',
+              bunch: isDg
+            };
+
+          }
+
+          html = _.template('<li class="jtip <%= active%>" data-method="<%= method%>" data-check="<%= isCheck%>"><%= bunch%></li>');
+          bunchHtml += html(obj);
+
+        };
+
+      };
+
+      return bunchHtml;
+    };
+
+    bet.prototype.getBjdcZyggBunchHtml = function (len, maxLen) {
+
+      var _this = this;
+      var bunchHtml = '';
+      var isActiveBunch = '';
+      var isDg = '';
+      var obj = '';
+      var html = '';
+
+      for (var i = 1; i <= len; i++) {
+
+        isActiveBunch = _.find(_this.bunch, function (bunch) {
+          return Number(bunch.slice(0, 1)) === i;
+        });
+
+        if (i === 1) {
+          isDg = '单关';
+        } else {
+          isDg = i + '串1';
+        }
+
+        if (isActiveBunch) {
+
+          obj = {
+            len: i,
+            isCheck: true,
+            active: 'active',
+            bunch: isDg
+          };
+
+        } else {
+
+          obj = {
+            len: i,
+            isCheck: false,
+            active: '',
+            bunch: isDg
+          };
+
+        }
+
+        if (i <= maxLen) {
+          html = _.template('<li class="jtip <%= active%>" id="j-me-<%= len%>" data-method="<%= len%>_1" data-check="<%= isCheck%>"><%= bunch%></li>');
+          bunchHtml += html(obj);
+        } else {
+          i = len + 1;
+        }
+
+      };
+
+      return bunchHtml;
+
+    };
+
+    /**
+     * 北京单场-组合过关
+     * len  对阵场数
+     * tip  对阵选择提示
+     * list 几串几dom
+     * bunchHtml  几串几html
+     * obj  生成html对象
+     * html  html生成
+     * bunchMap  组合过关映射数组
+     */
+    bet.prototype.setBjdcBox = function () {
+
+      var _this = this;
+      var len = _.uniq(_this.match, 'matchcode').length;
+      var tips = $('#poolErrorTips');
+      var list = $('#j-method-ls');
+      var bunchHtml = '';
+      var obj = null;
+      var html = '';
+      var maxLen = _this.maxBunch[_this.tab];
+
+      switch (_this.tab) {
+      case 'bqc':
+        maxLen = 6;
+        break;
+      case 'bf':
+        maxLen = 3;
+        break;
+      case 'spf':
+        maxLen = 15;
+        break;
+      default:
+        break;
+      }
+
+      if (len < 2) {
+
+        _this.bunch = [];
+        list.hide().html('');
+        tips.show();
+        return;
+
+      } else {
+        bunchHtml = _this.getBjdcZhggBunchHtml(len, maxLen);
+        tips.hide();
+        list.html(bunchHtml).show();
+        return;
+
+      }
+
+    };
+
     bet.prototype.setSecondBox = function () {
 
       var _this = this;
       var len = _.uniq(_this.match, 'matchcode').length;
-
-      var obj = {
-        len: len,
-        isCheck: false,
-        active: ''
-      };
+      var obj = null;
       var tips = $('#poolErrorTips');
       var list = $('#j-method-ls');
       var html = '';
@@ -269,17 +442,16 @@ define(['jquery', 'app'], function ($, APP) {
       var moreBunchIndex = 0;
       var startIndex = 2;
       var bunchHtml = '';
+      var isActiveBunch = '';
 
-      if (len < 2) {
-
-        _this.bunch = [];
-        list.hide().html('');
-        tips.show();
-        return;
-
-      }
-
+      // 几串几北京单场
       if (Config.lotyName === 'bjdc') {
+
+        if (!_this.bjdcPassWay) {
+          _this.setBjdcBox();
+          return;
+        }
+
         switch (_this.tab) {
         case 'bqc':
           maxLen = 6;
@@ -293,6 +465,35 @@ define(['jquery', 'app'], function ($, APP) {
         default:
           break;
         }
+
+        if (len < 1) {
+
+          _this.bunch = [];
+          list.hide().html('');
+          tips.show();
+          return;
+
+        } else {
+
+          var isDg = '';
+
+          // create html
+          bunchHtml = _this.getBjdcZyggBunchHtml(len, maxLen);
+          tips.hide();
+          list.html(bunchHtml).show();
+          return;
+
+        }
+
+      }
+
+      if (len < 2) {
+
+        _this.bunch = [];
+        list.hide().html('');
+        tips.show();
+        return;
+
       }
 
       if (_this.tab === 'hhtz') {
@@ -359,7 +560,7 @@ define(['jquery', 'app'], function ($, APP) {
 
             for (var i = 2; i <= len; i++) {
 
-              var isActiveBunch = _.find(_this.bunch, function (bunch) {
+              isActiveBunch = _.find(_this.bunch, function (bunch) {
                 return Number(bunch.slice(0, 1)) === i;
               });
 
@@ -439,7 +640,7 @@ define(['jquery', 'app'], function ($, APP) {
       });
       var ms = _.uniq(_this.match, 'matchcode');
       var matchTotal = ms.length;
-      var chuanArr = [];
+      var chuanArr = _this.bunch;
       var maxList = [];
       var mb = 0;
       var result = {
@@ -447,47 +648,91 @@ define(['jquery', 'app'], function ($, APP) {
         maxBonus: 0,
       };
 
-      $('#j-method-ls .jtip[data-check="true"]').each(function (index, el) {
-        chuanArr.push(el.attributes['data-method'].value);
-      });
+      var mapBjdcChuanguanDetail = {
+        '1_1': ['1_1'],
+        '2_1': ['2_1'],
+        '2_3': ['1_1', '2_1'],
+        '3_1': ['3_1'],
+        '3_4': ['2_1', '3_1'],
+        '3_7': ['1_1', '2_1', '3_1'],
+        '4_1': ['4_1'],
+        '4_5': ['3_1', '4_1'],
+        '4_11': ['2_1', '3_1', '4_1'],
+        '4_15': ['1_1', '2_1', '3_1', '4_1'],
+        '5_1': ['5_1'],
+        '5_6': ['4_1', '5_1'],
+        '5_16': ['3_1', '4_1', '5_1'],
+        '5_26': ['2_1', '3_1', '4_1', '5_1'],
+        '5_31': ['1_1', '2_1', '3_1', '4_1', '5_1'],
+        '6_1': ['6_1'],
+        '6_7': ['5_1', '6_1'],
+        '6_22': ['4_1', '5_1', '6_1'],
+        '6_42': ['3_1', '4_1', '5_1', '6_1'],
+        '6_57': ['2_1', '3_1', '4_1', '5_1', '6_1'],
+        '6_63': ['1_1', '2_1', '3_1', '4_1', '5_1', '6_1'],
+        '7_1': ['7_1'],
+        '8_1': ['8_1'],
+        '9_1': ['9_1'],
+        '10_1': ['10_1'],
+        '11_1': ['11_1'],
+        '12_1': ['12_1'],
+        '13_1': ['13_1'],
+        '14_1': ['14_1'],
+        '15_1': ['15_1'],
+      }
+      var matchkeySp = {};
+      var matchkeySpArr = [];
 
       for (var prop in group) {
         if (group.hasOwnProperty(prop)) {
           maxList.push(_.max(group[prop], 'sp'));
         }
       }
-      var matchkeySp = {};
-      var matchkeySpArr = [];
+
       if (chuanArr.length != 0) {
 
         for (var i = 0; i < ms.length; i++) {
+
           matchkeySpArr = [];
           matchkeys.push(ms[i].matchcode);
+
           var tem = group[ms[i].matchcode];
+
           for (var k = tem.length - 1; k >= 0; k--) {
             matchkeySpArr.push(tem[k].sp);
           };
+
           matchkeySp[ms[i].matchcode] = matchkeySpArr;
+
         };
 
         for (var i = 0; i < chuanArr.length; i++) {
-          var combinedData = YC.Unit.explodeCombined(matchkeys, Number(chuanArr[i].slice(0, 1)));
-          for (var m = combinedData.length - 1; m >= 0; m--) {
 
-            var _tmpZhushu = 1;
-            var _tmpMaxBonus = 1;
-            for (var j = combinedData[m].length - 1; j >= 0; j--) {
+          for (var k = 0; k < mapBjdcChuanguanDetail[chuanArr[i]].length; k++) {
+            var bunchIndex = Number(mapBjdcChuanguanDetail[chuanArr[i]][k].split('_')[0]);
+            var combinedData = YC.Unit.explodeCombined(matchkeys, bunchIndex);
 
-              _tmpZhushu *= matchkeySp[combinedData[m][j]].length;
-              _tmpMaxBonus *= _.max(matchkeySp[combinedData[m][j]], function (chr) {
-                return parseInt(chr);
-              });
+            for (var m = combinedData.length - 1; m >= 0; m--) {
+
+              var _tmpZhushu = 1;
+              var _tmpMaxBonus = 1;
+
+              for (var j = combinedData[m].length - 1; j >= 0; j--) {
+
+                _tmpZhushu *= matchkeySp[combinedData[m][j]].length;
+                _tmpMaxBonus *= _.max(matchkeySp[combinedData[m][j]], function (chr) {
+                  return parseInt(chr);
+                });
+
+              };
+
+              result.zhus += _tmpZhushu;
+              result.maxBonus += _tmpMaxBonus;
+
             };
 
-            result.zhus += _tmpZhushu;
-            result.maxBonus += _tmpMaxBonus;
+          }
 
-          };
         }
       }
 
@@ -553,7 +798,7 @@ define(['jquery', 'app'], function ($, APP) {
         spf: [3, 1, 0],
         rqspf: [3, 1, 0],
         zjq: [0, 1, 2, 3, 4, 5, 6, 7],
-        sxds: [0, 1, 2, 3],
+        sxds: ['00', '01', '10', '11'],
         bqc: ['33', '31', '30', '13', '11', '10', '03', '01', '00'],
         bf: ['10', '20', '21', '30', '31', '32', '40', '41', '42', '50', '51', '52', '90', '00', '11', '22', '33', '99', '01', '02', '12', '03', '13', '23', '04', '14', '24', '05', '15', '25', '09'],
       };
@@ -947,13 +1192,12 @@ define(['jquery', 'app'], function ($, APP) {
         var dd = t.parents('dd');
         var newDd = null;
         var html = _this.getOneHhtzHtml(matchcode);
-        var iconHtml = '<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i>';
 
         var hasNewDd = _this.box.find('[data-newdd=' + matchcode + ']').length;
         var minHieght = null;
 
         if (!t.hasClass('active')) {
-          t.html('隐藏' + iconHtml);
+          t.html('隐藏' + _this.hhtzIconHtml);
           if (hasNewDd) {
             _this.box.find('[data-newdd=' + matchcode + ']').show();
           } else {
@@ -975,10 +1219,10 @@ define(['jquery', 'app'], function ($, APP) {
           if (_.find(_this.match, function (chr) {
               return chr.matchcode === matchcode && chr.type !== 'spf' && chr.type !== 'rqspf';
             })) {
-            t.html('展开' + iconHtml);
+            t.html('展开' + _this.hhtzIconHtml);
             t.addClass('has').removeClass('active');
           } else {
-            t.html('展开' + iconHtml);
+            t.html('展开' + _this.hhtzIconHtml);
             t.removeClass('active has');
           }
 
@@ -1142,34 +1386,64 @@ define(['jquery', 'app'], function ($, APP) {
       _this.box.on('click', '.j-dataBody-toggle', function (event) {
 
         var t = $(this);
-        var s = t.attr('data-show');
+        var s = Number(t.attr('data-show'));
         var dl = t.parents('dl');
         var allDd = dl.find('dd');
         var listDd = dl.find('.j-data-dd');
         var bfDd = dl.find('.j-bf-box');
         var title = ['隐藏', '展开'];
+        var unS = (s === 1) ? 0 : 1;
 
-        if (s == 1) {
+        if (s === 1) {
+
           allDd.hide();
-          if (_this.tab === 'bf') {
+
+          if (_this.tab === 'hhtz') {
+
             bfDd.each(function (index, el) {
+
+              if ($(this).find('.j-sp-btn.active').length > 0) {
+                var matchcode = $(this).attr('matchcode');
+                var bfNearBox = dl.find('.j-data-dd[matchcode=' + matchcode + ']');
+                bfNearBox.find('.j-show-hhtz').addClass('has');
+              }
+
+            });
+
+          }
+
+          if (_this.tab === 'bf') {
+
+            bfDd.each(function (index, el) {
+
               if ($(this).find('.j-sp-btn.active').length > 0) {
                 var matchcode = $(this).attr('matchcode');
                 var bfNearBox = dl.find('.j-data-dd[matchcode=' + matchcode + ']');
                 bfNearBox.find('.j-show-bf').addClass('has');
               }
+
             });
 
           }
-          t.attr('data-show', 0);
+
+          t.attr('data-show', unS);
+
         } else {
+
           listDd.show();
 
+          if (_this.tab === 'hhtz') {
+            listDd.find('.j-show-hhtz').removeClass('active').html(
+              '展开' + _this.hhtzIconHtml);
+          }
+
           if (_this.tab === 'bf') {
-            listDd.find('.j-show-bf').removeClass('active');
+            listDd.find('.j-show-bf,.j-show-hhtz').removeClass('active');
             listDd.find('.row1-1').removeClass('on');
           }
-          t.attr('data-show', 1);
+
+          t.attr('data-show', unS);
+
         }
 
         t.find('.icon').toggleClass('show-icon').toggleClass('hide-icon');
@@ -1241,12 +1515,17 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      $('#poolStep2').on('click', '.jtip', function (event) {
+      $('#j-method-ls').on('click', '.jtip', function (event) {
 
         var t = $(this);
         var a = 'active';
         var h = null;
         var method = t.attr('data-method') || null;
+
+        if (Config.lotyName === 'bjdc' && !_this.bjdcPassWay) {
+          _this.bunch = [];
+          $('#j-method-ls .jtip').removeClass(a);
+        }
 
         t.toggleClass(a);
         h = t.hasClass(a);

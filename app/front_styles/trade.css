@@ -8,8 +8,8 @@
 /* Brings-hd */
 .br-tuo { padding: 25px 58px 30px; }
 .br-gou { width: 695px; margin: auto; }
-.btn-add2 .icon-arrow-b, .btn-add2.active .icon-arrow-a, .btn-add .icon-arrow-b, .btn-add.active .icon-arrow-a { display: inline-block; }
-.btn-add2 .icon-arrow-a, .btn-add2.active .icon-arrow-b, .btn-add .icon-arrow-a, .btn-add.active .icon-arrow-b { display: none; }
+.btn-add2 .icon-arrow-a, .btn-add2.active .icon-arrow-b, .btn-add .icon-arrow-a, .btn-add.active .icon-arrow-b { display: inline-block; }
+.btn-add2 .icon-arrow-b, .btn-add2.active .icon-arrow-a, .btn-add .icon-arrow-b, .btn-add.active .icon-arrow-a { display: none; }
 /* Brings-count */
 .br-count { text-align: center; height: 26px;}
 .br-count .btn-group { margin: 0 5px; }

@@ -35,6 +35,12 @@ require.config({
 require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core', 'scrollUp'], function ($, _, BET, APP, store, H) {
   'use strict';
 
+  var bjdc = {
+    'spfShow': true,
+    'rqspfShow': true,
+    'stopShow': false
+  };
+
   var scrollUp = (function () {
 
     var scrollUp = {
@@ -157,6 +163,16 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   }());
   /*******************************fixed menu********************************/
 
+  /**
+   * 页面初始化
+   * 停售检测
+   * 正常销售-初始化表单-检测对阵列表-返回顶部控件-固定菜单控件
+   * Icon 事件初始化
+   * UI 下拉框
+   * UI 下拉框
+   * 赛事筛选
+   * @return {[type]} [description]
+   */
   function pageInit() {
 
     // check Sell Status
@@ -165,6 +181,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       $('#j-ljtzBtn,#j-fqhmBtn').addClass('btn-stop').html('暂停销售');
       $('#j-ljtzBtn').attr('id', '');
       $('#j-fqhmBtn').remove();
+      $('#j-data-body .data-loadbox').html(Config.lotyCNName + ' 暂停销售');
     } else {
       initDataBody();
       gameSeleListInit();
@@ -173,10 +190,241 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       scrollMenu.init();
     }
 
+    $('.icon').tipsy({
+      gravity: 'nw',
+      html: true,
+      opacity: 1
+    });
+
+    $('#poolStep1 .scrollMoni').mCustomScrollbar({
+      theme: "light-3",
+      mouseWheelPixels: 200
+    });
+
+    $('#j-ball-table').mCustomScrollbar({
+      theme: "light-3",
+      mouseWheelPixels: 200
+    });
+
+    $('#j-show-option').hover(function () {
+      $(this).addClass('hovered');
+      $('#gameSeleList').show();
+
+    }, function () {
+      $(this).removeClass('hovered');
+      $('#gameSeleList').hide();
+    });
+
+    $('#gameSeleList').on('click', 'li', function (event) {
+
+      var start = [];
+      var isAllHide = false;
+
+      $(this).toggleClass('active');
+
+      $('#gameSeleList li.active').each(function (index, el) {
+        start.push($.trim($(this).text()));
+      });
+
+      $('.gameSelect dd').each(function (index, el) {
+
+        var t = $(this);
+        var isBfBox = t.hasClass('j-bf-box');
+
+        if (_.indexOf(start, t.attr('leaguename')) < 0) {
+          $(this).hide();
+
+          if (BET.tab === 'hhtz' || BET.tab === 'bf') {
+
+            if (t.find('.j-sp-btn.active').length > 0) {
+              var matchcode = t.attr('matchcode');
+              var bfNearBox = $('#j-data-body .j-data-dd[matchcode=' + matchcode + ']');
+              bfNearBox.find('.j-show-hhtz,.j-show-bf').addClass('has');
+              bfNearBox.find('.row1-1').removeClass('on');
+            }
+
+          }
+
+        } else {
+
+          if (BET.tab === 'hhtz') {
+            $(this).find('.j-show-hhtz').removeClass('active').html('展开' + BET.hhtzIconHtml);
+          }
+
+          if (BET.tab === 'bf') {
+            $(this).find('.j-show-bf').removeClass('active');
+            $(this).find('.row1-1').removeClass('on');
+          }
+
+          if (!isBfBox) {
+            $(this).show();
+          }
+        }
+
+      });
+
+    });
+
+    $('#gameSeleList').on('click', '.makeSure', function (event) {
+
+      var start = [];
+
+      if ($('#gameSeleList .icon').hasClass('icon-cgou')) {
+        $('#gameSeleList li.active').each(function (index, el) {
+          start.push($.trim($(this).text()));
+        });
+        $('#gameSeleList').hide();
+
+        setToggleBtn(start);
+
+        store.set('startArr', start);
+      } else {
+        store.clear('startArr');
+      }
+
+    });
+
+    $('#gameSeleList').on('click', '.icon', function (event) {
+      var t = $(this);
+      t.toggleClass('icon-cbox').toggleClass('icon-cgou');
+    });
+
+    // 截止时间
+    $('#j-changeTime').hover(function () {
+      $(this).addClass('hovered');
+      $(this).find('.optionList').show();
+    }, function () {
+      $(this).removeClass('hovered');
+      $(this).find('.optionList').hide();
+    });
+
+    $('#j-changeTime .optionList').on('click', 'a', function (event) {
+
+      var type = $(this).attr('data-timeType');
+      $('#j-changeTime .optionList a').removeClass('active');
+      $(this).addClass('active');
+      $('#j-changeTimeText').html($(this).html());
+
+      $('.dataBody dd').each(function (index, el) {
+        var time = $(this).attr(type);
+        $(this).find('.co3 .jtip').html(time);
+      });
+
+    });
+
+    $('.j-bd-mid').on('click', function (event) {
+      event.preventDefault();
+
+      var t = $(this);
+      var ac = Number(t.attr('data-ac'));
+      var m = _.escape(t.attr('data-method'));
+
+      if (ac) {
+        t.removeClass('icon-bd2').addClass('icon-bd');
+        t.attr('data-ac', 0);
+        bjdc[m + 'Show'] = false;
+        filterBjdc();
+      } else {
+        t.removeClass('icon-bd').addClass('icon-bd2');
+        t.attr('data-ac', 1);
+        bjdc[m + 'Show'] = true;
+        filterBjdc();
+      }
+
+    });
+
+    if (Config.lotyName === 'bjdc') {
+
+      var data = jczqData;
+      var allMatch = 0;
+      var expiredMatch = 0;
+      var rqMatch = 0;
+      var norqMatch = 0;
+
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          allMatch += data[key].length;
+          for (var i = data[key].length - 1; i >= 0; i--) {
+            if (data[key][i]['is_expired'] == 1) {
+              expiredMatch++
+            }
+            if (Number(data[key][i]['rqspf_rangqiu_num']) === 0) {
+              norqMatch++
+            } else {
+              rqMatch++
+            }
+          };
+        }
+      }
+
+      $('#j-bjdc-all').html(allMatch);
+      $('#j-bjdc-stop').html(expiredMatch);
+      $('#j-bjdc-rq').html(rqMatch);
+      $('#j-bjdc-norq').html(norqMatch);
+
+      $('#j-gg-tab').on('click', 'li', function (event) {
+
+        var t = $(this);
+
+        if (!t.hasClass('active')) {
+          BET.bunch = [];
+          BET.setAllTotal();
+        };
+
+        $('#j-gg-tab li').removeClass('active');
+        t.addClass('active');
+
+        if (t.attr('data-bunch') === '0') {
+          BET.bjdcPassWay = true;
+          BET.setSecondBox();
+        } else {
+          BET.bjdcPassWay = false;
+          BET.setBjdcBox();
+        }
+
+      });
+
+    }
+
   }
 
   pageInit();
 
+  function getZhGg() {
+
+  }
+
+  // 北京单场对阵筛选
+  function filterBjdc() {
+
+    if (BET.tab === 'spf') {
+
+      if (bjdc.spfShow) {
+        BET.box.find('.isSpfShow').show();
+      } else {
+        BET.box.find('.isSpfShow').hide();
+      }
+
+      if (bjdc.rqspfShow) {
+        BET.box.find('.isRqspfShow').show();
+      } else {
+        BET.box.find('.isRqspfShow').hide();
+      }
+
+    }
+    if (bjdc.stopShow) {
+      BET.box.removeClass('bjdc');
+    } else {
+      BET.box.addClass('bjdc');
+    }
+
+  }
+
+  /**
+   * 创建数据主体
+   * @param  {Object} data 对阵数据对象
+   * @return {String}      生成数据主体HTML
+   */
   function createDateMain(data) {
 
     var arr = [];
@@ -226,7 +474,19 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       }
 
       if (tab === 'spf') {
-        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">0</em>' + line + '</div></span></dd>');
+        var bjdcSpfRq = 0;
+        if (Config.lotyName === 'bjdc') {
+          bjdcSpfRq = Number(item['rqspf_rangqiu_num'])
+
+          if (bjdcSpfRq > 0) {
+            bjdcSpfRq = '<b class="fc-7">' + item['rqspf_rangqiu_num'] + '</b>';
+          }
+
+          if (bjdcSpfRq < 0) {
+            bjdcSpfRq = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
+          }
+        }
+        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + bjdcSpfRq + '</em>' + line + '</div></span></dd>');
       }
 
       if (tab === 'bqc') {
@@ -247,10 +507,27 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   }
 
+  /**
+   * 返回一列通用左侧html
+   * @param  {Object} item 对阵数据对象
+   * @return {String}      html
+   */
   function getDataLeftCommon(item) {
 
+    var isExpired = '';
+
+    if (Config.lotyName === 'bjdc' && item.is_expired == 1) {
+      isExpired = 'bjdc-expired';
+    }
+
     var arr = [];
-    arr.push('<dd isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="j-data-dd">');
+    var bjdcSpfStyle = 'isSpfShow';
+
+    if (Number(item.rqspf_rangqiu_num) !== 0) {
+      bjdcSpfStyle = 'isRqspfShow';
+    }
+
+    arr.push('<dd isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="j-data-dd ' + isExpired + ' ' + bjdcSpfStyle + '">');
 
     arr.push('<span class="co1"><i class="jtip" inf="' + item.week + item.game_order + '">' + item.game_order + '</i></span>');
 
@@ -264,6 +541,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   }
 
+  /**
+   * 创建混合投注html
+   * @param  {Object} item 对阵数据对象
+   * @return {String}      html
+   */
   function createHhtzBtnHtml(item) {
 
     var rqspfNum = '';
@@ -274,16 +556,14 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var rqspfTitle = ['让球胜', '让球平', '让球负'];
     var noSupportTips = '本场对阵不支持该玩法';
 
-    switch (Number(item['rqspf_rangqiu_num'])) {
-    case -1:
-      rqspfNum = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
-      break;
-    case 1:
+    rqspfNum = Number(item['rqspf_rangqiu_num'])
+
+    if (rqspfNum > 0) {
       rqspfNum = '<b class="fc-7">' + item['rqspf_rangqiu_num'] + '</b>';
-      break;
-    default:
-      rqspfNum = item['rqspf_rangqiu_num'];
-      break;
+    }
+
+    if (rqspfNum < 0) {
+      rqspfNum = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
     }
 
     html += '<span class="row4-1"><em class="rq">0</em>';
@@ -303,11 +583,16 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     }
     html += '</span>';
 
-    html += '<em class="tg-data j-show-hhtz">展开<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i></em></dd>';
+    html += '<em class="tg-data j-show-hhtz">展开' + BET.hhtzIconHtml + '</em></dd>';
 
     return html;
   }
 
+  /**
+   * 创建混合投注html
+   * @param  {Object} item 对阵数据对象
+   * @return {String}      html
+   */
   function createHhtzHtml(data) {
 
     if (!data) {
@@ -342,7 +627,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       }
     }
 
-    if (serverTime === 0) {
+    if (serverTime == 0) {
       $('#j-data-body').html(dataBodyHTML);
     } else {
       $('#j-data-body .data-loadbox').html(Config.lotyCNName + ' 暂停销售');
@@ -377,28 +662,51 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     var type = $(this).attr('data-type');
     var tab = $(this).attr('data-game');
+    var newClass = 'bettingBox clearfix ' + type;
+
+    if (Config.lotyName === 'bjdc') {
+      newClass = 'bettingBox bjdc clearfix ' + type;
+    }
 
     $('#j-vote-nav .active').removeClass('active');
     $(this).parents('li').addClass('active');
 
     BET.tab = $(this).attr('data-game');
-    BET.box.removeClass().addClass('bettingBox clearfix ' + type);
+    BET.box.removeClass().addClass(newClass);
     BET.clearBetData();
+
+    if (Config.lotyName === 'bjdc' && BET.tab === 'spf') {
+      $('.j-bd-spf').show();
+    } else {
+      $('.j-bd-spf').hide();
+    }
 
     initDataBody();
 
   });
 
-  $('.icon').tipsy({
-    gravity: 'nw',
-    html: true,
-    opacity: 1
-  });
-
+  /**
+   * 购票函数
+   * @param  {Object} obj      购彩参数
+   * @param  {String} type     购票类型 自购,合买
+   * @param  {String} lotyName 彩种类型
+   * @return {null}
+   */
   var buyTicket = function (obj, type, lotyName) {
+
+    var u = 'jingcai';
+    var l = '';
+
+    if (lotyName === 'bjdc') {
+      u = 'bjdc';
+    } else {
+      l = '_gg';
+    }
+
     obj.unikey = $.now();
+
     $.ajax({
-        url: '/lottery/jingcai/' + type + '/' + lotyName + '/' + BET.tab + '_gg',
+        url: '/lottery/' + u + '/' + type + '/' + lotyName + '/' + BET.tab + l,
         type: 'POST',
         dataType: 'json',
         data: obj
@@ -420,6 +728,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       });
   };
 
+  /**
+   * 底部提示切换
+   * @return {null}
+   *
+   */
   var showTipMask = function () {
     var b = $('#j-game-method');
     var top = b[0].offsetTop;
@@ -443,6 +756,10 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var f = setInterval(times, 100);
   };
 
+  /**
+   * 弹出前对阵合法性检测
+   * @return {Boolean} 是否合法
+   */
   var checkParams = function () {
 
     var matchLen = _.uniq(BET.match, 'matchcode').length;
@@ -455,7 +772,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
       return false;
     }
-    if (matchLen < 2) {
+    if (matchLen < 2 && Config.lotyName==='jczq') {
       APP.showTips('请在左侧至少选择2场比赛');
       return false;
     }
@@ -473,76 +790,12 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     return true;
   };
 
-  // 部分ui 下拉框
-  $('#poolStep1 .scrollMoni').mCustomScrollbar({
-    theme: "light-3",
-    mouseWheelPixels: 200
-  });
-
-  $('#j-ball-table').mCustomScrollbar({
-    theme: "light-3",
-    mouseWheelPixels: 200
-  });
-
-  // 赛事筛选
-  $('#showOption').hover(function () {
-    $(this).addClass('hovered');
-    $('#gameSeleList').show();
-
-  }, function () {
-    $(this).removeClass('hovered');
-    $('#gameSeleList').hide();
-  });
-
-  $('#gameSeleList').on('click', 'li', function (event) {
-
-    var start = [];
-    var isAllHide = false;
-
-    $(this).toggleClass('active');
-
-    $('#gameSeleList li.active').each(function (index, el) {
-      start.push($.trim($(this).text()));
-    });
-
-    $('.gameSelect dd').each(function (index, el) {
-      if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
-        $(this).hide();
-      } else {
-        $(this).show();
-      }
-    });
-
-  });
-
-  $('#gameSeleList').on('click', '.makeSure', function (event) {
-
-    var start = [];
-
-    if ($('#gameSeleList .icon').hasClass('icon-cgou')) {
-      $('#gameSeleList li.active').each(function (index, el) {
-        start.push($.trim($(this).text()));
-      });
-      $('#gameSeleList').hide();
-
-      setToggleBtn(start);
-
-      store.set('startArr', start);
-    } else {
-      store.clear('startArr');
-    }
-
-  });
-
-  $('#gameSeleList').on('click', '.icon', function (event) {
-    var t = $(this);
-    t.toggleClass('icon-cbox').toggleClass('icon-cgou');
-  });
-
   function gameSeleListInit() {
+
     var start = store.get('startArr');
 
     if (start) {
+
       $('#gameSeleList li').each(function (index, el) {
         if (_.indexOf(start, $.trim($(this).text())) >= 0) {
           $(this).addClass('active');
@@ -558,42 +811,24 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
           $(this).show();
         }
       });
+
       setToggleBtn(start);
+
     }
 
   }
 
   function setToggleBtn(start) {
+
     var t = $('.j-dataBody-toggle');
+
     if (start.length == 0) {
       t.html('展开').attr('data-show', 0);
     } else {
       t.html('隐藏').attr('data-show', 1);
     }
+
   }
-
-  // 截止时间
-  $('#j-changeTime').hover(function () {
-    $(this).addClass('hovered');
-    $(this).find('.optionList').show();
-  }, function () {
-    $(this).removeClass('hovered');
-    $(this).find('.optionList').hide();
-  });
-
-  $('#j-changeTime .optionList').on('click', 'a', function (event) {
-
-    var type = $(this).attr('data-timeType');
-    $('#j-changeTime .optionList a').removeClass('active');
-    $(this).addClass('active');
-    $('#j-changeTimeText').html($(this).html());
-
-    $('.dataBody dd').each(function (index, el) {
-      var time = $(this).attr(type);
-      $(this).find('.co3 .jtip').html(time);
-    });
-
-  });
 
   // 合买
   $('#j-fqhmBtn').on('click', function (event) {
