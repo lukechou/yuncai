@@ -610,10 +610,24 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
   function showMask() {
 
-    $('#j-first-mask').show().addClass('animated');
-    $('#j-mask-close').one('click', function (event) {
-      $('#j-first-mask').remove();
+    var imgArr = [];
+
+    $('#j-first-mask img').each(function (index, el) {
+
+      var newImg = new Image();
+      var src = $(this).attr('data-src')
+      newImg.src = src;
+      imgArr.push(newImg);
+
+      $(this).attr('src', src);
     });
+
+    imgArr[1].onload = function () {
+      $('#j-first-mask').show().addClass('animated');
+      $('#j-mask-close').one('click', function (event) {
+        $('#j-first-mask').remove();
+      });
+    };
 
   }
 

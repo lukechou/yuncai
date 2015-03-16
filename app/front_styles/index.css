@@ -52,24 +52,14 @@
 
 /* New Action Model Animate */
 .animated { -webkit-animation-duration: .5s; animation-duration: .5s; -webkit-animation-fill-mode: both; animation-fill-mode: both; }
-.pullDown { animation-name: pullDown; -webkit-animation-name: pullDown; animation-duration: 1.1s; -webkit-animation-duration: 1.1s; animation-timing-function: ease-out; -webkit-animation-timing-function: ease-out; transform-origin: 50% 0%; -ms-transform-origin: 50% 0%; -webkit-transform-origin: 50% 0%; }
-@keyframes pullDown {
-  0% { -webkit-transform: scaleY(0.1); transform: scaleY(0.1); }
-  40% { -webkit-transform: scaleY(1.02); transform: scaleY(1.02); }
-  60% { -webkit-transform: scaleY(0.98); transform: scaleY(0.98); }
-  80% { -webkit-transform: scaleY(1.01); transform: scaleY(1.01); }
-  100% { -webkit-transform: scaleY(0.98); transform: scaleY(0.98); }
-  80% { -webkit-transform: scaleY(1.01); transform: scaleY(1.01); }
-  100% { -webkit-transform: scaleY(1); transform: scaleY(1); }
+.slideDown { animation-name: slideDown; -webkit-animation-name: slideDown; animation-duration: .5s; -webkit-animation-duration: .5s; animation-timing-function: ease; -webkit-animation-timing-function: ease; visibility: visible !important; }
+@keyframes slideDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0%); }
 }
-@-webkit-keyframes pullDown {
-  0% { -webkit-transform: scaleY(0.1); }
-  40% { -webkit-transform: scaleY(1.02); }
-  60% { -webkit-transform: scaleY(0.98); }
-  80% { -webkit-transform: scaleY(1.01); }
-  100% { -webkit-transform: scaleY(0.98); }
-  80% { -webkit-transform: scaleY(1.01); }
-  100% { -webkit-transform: scaleY(1); }
+@-webkit-keyframes slideDown {
+  0% { -webkit-transform: translateY(-100%); }
+  100% { -webkit-transform: translateY(0%); }
 }
 
 /* Page */
@@ -98,7 +88,7 @@
 .page-hd .sticky .mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: .2; background: #000; filter: alpha(opacity = 20); -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity = 20); }
 .page-hd .sticky .main { position: absolute; z-index: 10; top: 0; left: 0; width: 132px; height: 360px; padding-top: 10px; }
 .page-hd .sticky .main p.fs-18 { height: 25px; }
-.page-hd .sticky .bei, .page-hd .sticky .head { margin-bottom: 6px; }
+.page-hd .sticky .bei, .page-hd .sticky .head { margin-bottom: 6px; width: 96px; height: 96px; }
 .page-hd .head { width: 96px; height: 96px; margin-top: 15px; border-radius: 50%; }
 .page-hd p { margin-bottom: 3px; }
 .page-hd .bottom { line-height: 30px; position: absolute; bottom: 0; width: 100%; height: 30px; margin-bottom: 0; background: rgba(0, 0, 0, .1); overflow: hidden; }
@@ -144,7 +134,7 @@
 
 /* 模型推荐 */
 .map { font-size: 12px; }
-.map img { margin: 1px 0 15px; }
+.map img { margin: 1px 0 15px; width: 288px; height: 87px; }
 .map p { margin-bottom: 11px; }
 .map p > span { color: #f13c38; }
 .map .btn { font-size: 12px; float: right; margin-top: -8px; padding: 3px 5px; color: #fff; background: transparent; border: 1px #7f7f7f solid; font-family: "simsun"; }
@@ -153,7 +143,7 @@
 /* 幸运投注 */
 .x-tou { font-size: 12px; }
 .x-tou .pull-left { padding-left: 15px; text-align: center; }
-.x-tou .pull-left img { padding-bottom: 10px; }
+.x-tou .pull-left img { padding-bottom: 10px; width: 82px; height: 92px; }
 .x-tou .pull-left p { margin-bottom: 5px; }
 .x-tou .pull-right { width: 168px; }
 .x-tou .pull-right li { padding-bottom: 5px; }

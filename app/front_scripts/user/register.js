@@ -16,6 +16,8 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
 
   'use strict';
 
+  APP.updateHeadUserInfo();
+
   // Register
   $('#register-form').on('submit', function(event) {
     event.preventDefault();
