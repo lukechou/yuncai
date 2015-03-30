@@ -102,6 +102,14 @@ function init() {
 
 $(document).ready(function () {
   init();
+
+  $('#j-touzhu-tips').on('click', function (event) {
+
+    $(this).toggleClass('active');
+    $('#j-touzhu-tipstext').toggle();
+
+  });
+
   if ($('#saleStatus').val() == 1) {
     APP.showStopSellModal('七乐彩');
     $('#buy-submit,#buy_button_proxy').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');

@@ -26,6 +26,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     APP.showStopSellModal(($('#lotyName').val() == 'ssq') ? '双色球' : '大乐透');
     $('#qiuck-sub,#buy-submit,#j-tuodan-sub,#j-upload-sub,#j-more-sub').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
   }
+    $('#j-touzhu-tips').on('click', function (event) {
+
+    $(this).toggleClass('active');
+    $('#j-touzhu-tipstext').toggle();
+
+  });
+
   /*
    *
    *  QUEUE  组合计算 取得排列的数目 Module

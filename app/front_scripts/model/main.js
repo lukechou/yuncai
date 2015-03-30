@@ -22,7 +22,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function ($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function($, _, store, chart, APP, model) {
   'use strict';
 
   /**
@@ -34,12 +34,12 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
   /**
    * 筛选条件输入限制
    */
-  $('.j-less').on('keyup paste', function (event) {
+  $('.j-less').on('keyup paste', function(event) {
     event.preventDefault();
     $(this).val($(this).val().replace(/[^0-9.]/g, ''));
   });
 
-  $('.j-bao').on('keyup paste', function (event) {
+  $('.j-bao').on('keyup paste', function(event) {
     event.preventDefault();
     var t = $(this);
     t.val(t.val().replace(/[^0-9.]/g, ''));
@@ -55,7 +55,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
   /**
    * 提交检测
    */
-  $('#detail-form').submit(function () {
+  $('#detail-form').submit(function() {
     var el = $('#j-input-id');
     var val = el.val();
     var tips = el.attr('data-place');
@@ -73,7 +73,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
    * Login Link Event
    * @return null
    */
-  $('#j-loginbox-show').on('click', function (event) {
+  $('#j-loginbox-show').on('click', function(event) {
     APP.showLoginBox();
   });
 
@@ -81,7 +81,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
    * Save 筛选条件
    * @return null
    */
-  $('.j-save-btn').on('click', function (event) {
+  $('.j-save-btn').on('click', function(event) {
 
     if (!APP.checkUserLoginStatus()) {
       APP.showLoginBox();
@@ -91,7 +91,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
   });
 
-  $('body').on('click', function (event) {
+  $('body').on('click', function(event) {
     if ($('.j-sort-btn').hasClass('on')) {
       $('.j-sort-btn').removeClass('on');
       $('.j-sort-box').addClass('hide');
@@ -101,7 +101,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
    * Delete 填充表单
    * @return null
    */
-  $('#j-save-wrap').on('click', '.j-save-name', function (event) {
+  $('#j-save-wrap').on('click', '.j-save-name', function(event) {
 
     var _this = $(this);
     $('#j-save-wrap li').removeClass('cur');
@@ -161,7 +161,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
    * Delete 筛选条件
    * @return null
    */
-  $('#j-save-wrap').on('click', '.j-save-del', function (event) {
+  $('#j-save-wrap').on('click', '.j-save-del', function(event) {
 
     var _this = $(this);
     var id = $(this).attr('data-id');
@@ -171,7 +171,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
       title: '删除确认',
       text: t,
       type: 2,
-      onConfirm: function () {
+      onConfirm: function() {
         $.ajax({
             url: '/lottery/model/cancel-search',
             type: 'post',
@@ -180,7 +180,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
               search_id: id
             },
           })
-          .done(function (D) {
+          .done(function(D) {
             if (D.retCode === 100000) {
               _this.parents('li').remove();
               for (var prop in saveData) {
@@ -195,7 +195,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
               APP.handRetCode(D.retCode, D.retMsg);
             }
           })
-          .fail(function () {
+          .fail(function() {
             APP.onServiceFail();
           });
       }
@@ -207,10 +207,10 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
    * 切换我的筛选框
    * @return null
    */
-  $('.j-sort-box').on('click', function (event) {
+  $('.j-sort-box').on('click', function(event) {
     event.stopPropagation();
   });
-  $('.j-sort-btn').on('click', function (event) {
+  $('.j-sort-btn').on('click', function(event) {
     event.stopPropagation();
     $('.j-sort-box').toggleClass('hide');
     $(this).toggleClass('on');
@@ -225,7 +225,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
             't': $.now()
           }
         })
-        .done(function (D) {
+        .done(function(D) {
           if (D.retCode === 100000) {
             hadQuerySort = true; //标记为已请求
             if (D.retData[0]) {
@@ -236,7 +236,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
             APP.handRetCode(D.retCode, D.retMsg);
           }
         })
-        .fail(function () {
+        .fail(function() {
           APP.onServiceFail();
         });
     } else {
@@ -305,7 +305,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
         dataType: 'json',
         data: params,
       })
-      .done(function (D) {
+      .done(function(D) {
         if (D.retCode === 100000) {
 
           saveData[params.search_name] = {
@@ -329,19 +329,19 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
         }
 
       })
-      .fail(function () {
+      .fail(function() {
         APP.onServiceFail();
       });
   }
 
   // 显示曲线图
-  $('#track_detail_list').on('click', '.j-show-chart', function (event) {
+  $('#track_detail_list').on('click', '.j-show-chart', function(event) {
 
     if (event.target.tagName !== 'A') {
       var a = 'active';
       var id = $(this).attr('data-modelId');
       var colspan = $(this).find('td').length;
-      var chartHTML = '<div class="chart-box"><a href="/lottery/model/history-data?day=30&type=0&model_id='+id+'" class="his-link" title="查看历史数据">查看历史数据</a><div class="chart-loading" id="j-chart-loder"><img src="' + Config.staticHostURI + '/front_images/loader.gif" alt="Logding.."/></div><div class="chart" id="chart"></div></div>';
+      var chartHTML = '<div class="chart-box"><a href="/lottery/model/history-data?day=30&type=0&model_id=' + id + '" class="his-link" title="查看历史数据">查看历史数据</a><div class="chart-loading" id="j-chart-loder"><img src="' + Config.staticHostURI + '/front_images/loader.gif" alt="Logding.."/></div><div class="chart" id="chart"></div></div>';
       var tr = '<tr id="chart-tr"><td colspan="' + colspan + '" style="padding:0;">' + chartHTML + '</td></tr>';
 
       if (!id) return;
@@ -373,7 +373,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     var newUrl = null;
 
     if (order) {
-      $('.result-table thead th a').each(function (index, el) {
+      $('.result-table thead th a').each(function(index, el) {
 
         var href = $(this).attr('href');
         if (href.indexOf(order) >= 0) {

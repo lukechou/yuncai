@@ -151,11 +151,11 @@ $(function () {
           break;
         case 0:
           // 全部记录
-          htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+          htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
           break;
         default:
           // 默认
-          htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '元</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+          htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
           break;
         }
 

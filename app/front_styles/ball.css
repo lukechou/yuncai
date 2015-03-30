@@ -74,6 +74,17 @@
 .co8 { position: absolute; right: 0; float: none; width: 60px; }
 
 /* dataBody */
+.collect-body{
+  display: none;
+  border:1px #4bacea solid;
+}
+.collect-body .co1{ width: 43px;}
+.collect-body .row2-1 em{ height: 37px;}
+.collect-body .row3-1 em{ height: 37px;}
+.collect-body .row4-1 em{ height: 39px;}
+
+.collect-title{ background: #4bacea; height: 45px; line-height: 45px; color: #fff; font-weight: bold; padding-left: 15px;}
+
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
 .dataBody dl { position: relative; margin-bottom: 0; }
 

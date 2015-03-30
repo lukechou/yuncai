@@ -2,72 +2,88 @@
 Icon classes can be used entirely standalone. They are named after their original file names.
 
 ```html
-<i class="icon-home"></i>
+<!-- `display: block` sprite -->
+<div class="icon-home"></div>
+
+<!-- `display: inline-block` sprite -->
+<img class="icon-home" />
 ```
 */
 .icon-arrow-a {
   background-image: url(../front_images/icon.png);
-  background-position: -108px 0px;
+  background-position: -138px 0px;
   width: 13px;
   height: 15px;
 }
 .icon-arrow-b {
   background-image: url(../front_images/icon.png);
-  background-position: -87px -91px;
+  background-position: -138px -15px;
   width: 13px;
   height: 14px;
 }
 .icon-bao {
   background-image: url(../front_images/icon.png);
-  background-position: -91px -58px;
+  background-position: -75px -64px;
   width: 16px;
   height: 16px;
 }
 .icon-bd {
   background-image: url(../front_images/icon.png);
-  background-position: -69px -108px;
+  background-position: -123px -44px;
   width: 14px;
   height: 14px;
 }
 .icon-bd2 {
   background-image: url(../front_images/icon.png);
-  background-position: -121px 0px;
+  background-position: 0px -116px;
   width: 14px;
   height: 14px;
 }
+.icon-bdown {
+  background-image: url(../front_images/icon.png);
+  background-position: -26px -54px;
+  width: 18px;
+  height: 10px;
+}
 .icon-bor {
   background-image: url(../front_images/icon.png);
-  background-position: -19px -86px;
+  background-position: -148px -41px;
   width: 2px;
   height: 13px;
 }
+.icon-bup {
+  background-image: url(../front_images/icon.png);
+  background-position: -78px -53px;
+  width: 18px;
+  height: 10px;
+}
 .icon-card {
   background-image: url(../front_images/icon.png);
-  background-position: -42px -72px;
+  background-position: 0px -80px;
   width: 25px;
   height: 19px;
 }
 .icon-cbox {
   background-image: url(../front_images/icon.png);
-  background-position: -40px -108px;
+  background-position: -123px 0px;
   width: 15px;
   height: 15px;
 }
 .icon-cgou {
   background-image: url(../front_images/icon.png);
-  background-position: -83px -76px;
+  background-position: -123px -15px;
   width: 15px;
   height: 15px;
 }
 .icon-close {
   background-image: url(../front_images/icon.png);
-  background-position: -55px -122px;
+  background-position: -138px -29px;
   width: 12px;
   height: 12px;
 }
 .icon-d0 {
   background-image: url(../front_images/icon.png);
-  background-position: -26px -32px;
+  background-position: 0px -32px;
   width: 26px;
   height: 32px;
 }
@@ -79,7 +95,7 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .icon-d2 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -32px;
+  background-position: -52px 0px;
   width: 26px;
   height: 32px;
 }
@@ -91,223 +107,223 @@ Icon classes can be used entirely standalone. They are named after their origina
 }
 .icon-ding {
   background-image: url(../front_images/icon.png);
-  background-position: -102px -34px;
+  background-position: -59px -64px;
   width: 16px;
   height: 16px;
 }
 .icon-dot {
   background-image: url(../front_images/icon.png);
-  background-position: -70px -20px;
+  background-position: -138px -113px;
   width: 6px;
   height: 6px;
 }
 .icon-down-active {
   background-image: url(../front_images/icon.png);
-  background-position: -24px -132px;
+  background-position: -138px -67px;
   width: 10px;
   height: 12px;
 }
 .icon-down {
   background-image: url(../front_images/icon.png);
-  background-position: -123px -48px;
+  background-position: -138px -79px;
   width: 10px;
   height: 12px;
 }
 .icon-hdown {
   background-image: url(../front_images/icon.png);
-  background-position: -135px -10px;
+  background-position: -44px -54px;
   width: 16px;
   height: 8px;
 }
 .icon-i {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -64px;
+  background-position: -56px -32px;
   width: 22px;
   height: 22px;
 }
 .icon-link-top {
   background-image: url(../front_images/icon.png);
-  background-position: -19px -102px;
+  background-position: -38px -64px;
   width: 21px;
   height: 16px;
 }
 .icon-lock {
   background-image: url(../front_images/icon.png);
-  background-position: -29px -118px;
+  background-position: -138px -41px;
   width: 10px;
   height: 14px;
 }
 .icon-message {
   background-image: url(../front_images/icon.png);
-  background-position: -77px -39px;
+  background-position: -25px -80px;
   width: 25px;
   height: 19px;
 }
 .icon-mobile {
   background-image: url(../front_images/icon.png);
-  background-position: -52px 0px;
+  background-position: -78px -25px;
   width: 18px;
-  height: 27px;
+  height: 28px;
 }
 .icon-moon {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -105px;
+  background-position: -16px -99px;
   width: 15px;
   height: 16px;
 }
 .icon-nl-1-1 {
   background-image: url(../front_images/icon.png);
-  background-position: -72px -58px;
+  background-position: -50px -80px;
   width: 19px;
   height: 18px;
 }
 .icon-nl-1-2 {
   background-image: url(../front_images/icon.png);
-  background-position: -22px -84px;
+  background-position: -103px -79px;
   width: 19px;
   height: 18px;
 }
 .icon-nl-2-1 {
   background-image: url(../front_images/icon.png);
-  background-position: -112px -64px;
+  background-position: -64px -99px;
   width: 16px;
   height: 14px;
 }
 .icon-nl-2-2 {
   background-image: url(../front_images/icon.png);
-  background-position: -107px -50px;
+  background-position: -80px -99px;
   width: 16px;
   height: 14px;
 }
 .icon-nl-3-1 {
   background-image: url(../front_images/icon.png);
-  background-position: -41px -91px;
+  background-position: 0px -99px;
   width: 16px;
   height: 17px;
 }
 .icon-nl-3-2 {
   background-image: url(../front_images/icon.png);
-  background-position: -67px -76px;
+  background-position: -87px -80px;
   width: 16px;
   height: 17px;
 }
 .icon-nl-r-1 {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -135px;
+  background-position: -144px -103px;
   width: 6px;
   height: 10px;
 }
 .icon-nl-r-2 {
   background-image: url(../front_images/icon.png);
-  background-position: -135px 0px;
+  background-position: -138px -103px;
   width: 6px;
   height: 10px;
 }
 .icon-pass {
   background-image: url(../front_images/icon.png);
-  background-position: -77px -20px;
-  width: 25px;
-  height: 19px;
+  background-position: -26px -32px;
+  width: 30px;
+  height: 22px;
 }
 .icon-r1 {
   background-image: url(../front_images/icon.png);
-  background-position: -118px -34px;
+  background-position: -47px -99px;
   width: 17px;
   height: 14px;
 }
 .icon-start {
   background-image: url(../front_images/icon.png);
-  background-position: -57px -93px;
+  background-position: -31px -99px;
   width: 16px;
   height: 15px;
 }
 .icon-stop {
   background-image: url(../front_images/icon.png);
-  background-position: -22px -64px;
+  background-position: -103px -40px;
   width: 20px;
   height: 20px;
 }
 .icon-suc {
   background-image: url(../front_images/icon.png);
-  background-position: -39px -123px;
+  background-position: -123px -100px;
   width: 14px;
   height: 14px;
 }
 .icon-suc1 {
   background-image: url(../front_images/icon.png);
-  background-position: -52px -52px;
+  background-position: -103px -20px;
   width: 20px;
   height: 20px;
 }
 .icon-sun {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -86px;
+  background-position: -103px -60px;
   width: 19px;
   height: 19px;
 }
 .icon-tan {
   background-image: url(../front_images/icon.png);
-  background-position: -98px -74px;
+  background-position: -123px -86px;
   width: 14px;
   height: 14px;
 }
 .icon-tips-stop {
   background-image: url(../front_images/icon.png);
-  background-position: -90px 0px;
+  background-position: -69px -80px;
   width: 18px;
   height: 18px;
 }
 .icon-unlock {
   background-image: url(../front_images/icon.png);
-  background-position: -55px -108px;
+  background-position: -123px -72px;
   width: 14px;
   height: 14px;
 }
 .icon-up-active {
   background-image: url(../front_images/icon.png);
-  background-position: -14px -132px;
+  background-position: -138px -55px;
   width: 10px;
   height: 12px;
 }
 .icon-up {
   background-image: url(../front_images/icon.png);
-  background-position: -100px -88px;
+  background-position: -138px -91px;
   width: 10px;
   height: 12px;
 }
 .icon-warm {
   background-image: url(../front_images/icon.png);
-  background-position: 0px -121px;
+  background-position: -123px -58px;
   width: 14px;
   height: 14px;
 }
 .icon-write {
   background-image: url(../front_images/icon.png);
-  background-position: -52px -27px;
+  background-position: -78px 0px;
   width: 25px;
   height: 25px;
 }
 .icon-y {
   background-image: url(../front_images/icon.png);
-  background-position: -15px -118px;
+  background-position: -123px -30px;
   width: 14px;
   height: 14px;
 }
 .icon-y2 {
   background-image: url(../front_images/icon.png);
-  background-position: -73px -93px;
+  background-position: -96px -99px;
   width: 14px;
   height: 14px;
 }
 .icon-yes {
   background-image: url(../front_images/icon.png);
-  background-position: -70px 0px;
+  background-position: -103px 0px;
   width: 20px;
   height: 20px;
 }
 .icon-yilou_bgd {
   background-image: url(../front_images/icon.png);
-  background-position: -102px -18px;
+  background-position: 0px -64px;
   width: 38px;
   height: 16px;
 }

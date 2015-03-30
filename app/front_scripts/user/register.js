@@ -19,7 +19,7 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
   APP.updateHeadUserInfo();
 
   // Register
-  $('#register-form').on('submit', function(event) {
+  $('#register-form').on('submit', function (event) {
     event.preventDefault();
 
     var user = $.trim($("#username").val());
@@ -59,7 +59,7 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
             code: code
           },
         })
-        .done(function(data) {
+        .done(function (data) {
           if (data.retCode == 100000) {
             $('#register-form').hide();
             $('#reg-success').fadeIn();
@@ -69,7 +69,7 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
             APP.showTips(data.retMsg);
           }
         })
-        .fail(function() {
+        .fail(function () {
           APP.showTips('服务器错误!')
         });
     } else {
@@ -78,13 +78,13 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
 
   });
 
-  $('#password').on('change', function(event) {
+  $('#password').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     $(this).val($(this).val().replace(/ /g, ''));
   });
 
-  $('#repassword').on('change', function(event) {
+  $('#repassword').on('change', function (event) {
     event.preventDefault();
     /* Act on the event */
     $(this).val($(this).val().replace(/ /g, ''));
@@ -103,15 +103,20 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
   };
 
   // Replace Check Image
-  $('#j-replace-check').on('click', function(event) {
+  $('#j-replace-check').on('click', function (event) {
 
-    var img = new Image('');
-    var d = new Date().getTime()
-    img.src = '/tools/captcha?' + d
-
-    var checkImg = document.getElementById('j-check-img')
-    checkImg.src = img.src
+    getNewCheckImg();
 
   });
+
+  function getNewCheckImg() {
+    var d = +new Date();
+
+    var checkImg = document.getElementById('j-check-img');
+
+    checkImg.src = '/tools/captcha?' + d;
+  }
+
+  getNewCheckImg();
 
 });

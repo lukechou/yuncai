@@ -43,6 +43,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
     var modelId = _.escape($.trim($('#j-module-id').val()));
     chart.getChartData(modelId);
+
   }
 
   init();

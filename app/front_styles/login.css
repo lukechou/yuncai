@@ -3,11 +3,11 @@
 .login-left { width: 630px; height: 400px; background: #b52222; }
 .login-limg { display: block; margin: 100px auto 0; }
 .login-right { width: 355px; height: 400px; border: 1px #dfdfdf solid; border-left: none; background: #fff; }
-.login-right form { width: 300px; margin: 50px auto 0; }
-.login-right h1 { font-size: 24px; }
+.login-right form { width: 300px; margin: 46px auto 0; }
+.login-right h1 { font-size: 24px; margin-bottom: 5px; }
 .login-right .tips { font-size: 12px; line-height: 35px; visibility: hidden; height: 35px; margin-bottom: 5px; padding: 10px; padding: 0 0 0 10px; border: 1px #f13c38 solid; }
 .login-right .tips i { position: relative; top: 3px; }
-.login-right input { display: block; width: 100%; margin-bottom: 20px; padding: 14px 15px; border: 1px #dfdfdf solid; border-radius: 2px; }
+.login-right input { display: block; width: 100%; margin-bottom: 21px; padding: 14px 15px; border: 1px #afafaf solid; border-radius: 2px; }
 .login-right .btn { font-size: 18px; }
 .login-right form p { font-size: 12px; margin-top: 30px; text-align: right; }
 .login-right form p > a { padding: 0 10px; color: #3d3d3d; }
@@ -21,24 +21,28 @@
 .register form .form-group, .register form .check-img { height: 34px; }
 .register-ft, .register form .controls-inp, .register form .form-control { width: 216px; }
 .register form { width: 296px; margin: auto; padding: 80px 0 0; }
-.register form .form-group { margin-bottom: 15px; }
-.register form .control-lab { font-size: 12px; font-weight: normal; float: left; width: 80px; margin-bottom: 0; padding: 7px 15px 0 0; text-align: right; }
+.register form .form-group { margin-bottom: 12px; }
+.register form .control-lab { font-size: 12px; font-weight: normal; float: left; width: 80px; margin-bottom: 0; padding: 7px 2px 0 0; text-align: right; }
 .register form .controls-inp { float: left; }
 .register form .form-control { border: 1px #dfdfdf solid; border-radius: 0; background: #fff; }
 .register form .check { position: relative; }
 .register form .check-input { float: left; width: 100px; margin-right: 16px; }
 .register form .check-img { width: 100px; }
 .register form .check-link { font-size: 12px; position: absolute; top: 8px; right: -55px; }
+.pos-relative{ position: relative; }
+.icon-gray-cha{  background-image: url(../front_images/icon/gray-cha.png);background-position: 0 0;width: 26px;height: 26px;position: absolute;right: 0;top: 0; z-index: 1; right: 10px; top: 12px; cursor: pointer; }
 /* Register footer section */
-.register-ft { font-size: 12px; float: right; margin-bottom: 80px; }
+.register-ft { font-size: 12px; float: right; margin: 10px 0 80px 0; }
 .register-ft p { margin: 10px 0; }
 .register-ft .btn-red { font-size: 14px; }
 /* Register success */
 .reg-success { display: none; margin-left: 296px; padding: 80px 0 290px 0; height: 370px; }
-.reg-success .tips-box { margin-top: -5px; margin-left: 15px; }
+.reg-success .tips-box { margin-top: -10px; margin-left: 15px; }
 .reg-success .tips-box h3 { font-size: 18px; font-weight: bold; }
-.reg-success .tips-box ul { font-size: 12px; padding: 30px 0 15px 0; }
-.reg-success .tips-box .tips { font-size: 12px; margin-top: 30px; }
+.reg-success .tips-box ul { font-size: 12px; padding: 25px 0 0 0; }
+.reg-success .tips-box ul li{ margin-bottom: 11px; }
+.reg-success .tips-box .tips { font-size: 12px; margin-top: 24px; }
+.reg-success .tips-box .btn-big{ margin-top: 2px; }
 /* 404 Page */
 .btn-missback { font-size: 20px; display: block; width: 190px; margin: 15px auto 120px; padding: 8px 30px; color: #3d3d3d; border: 1px #4899f3 solid; background: #fff; }
 .btn-missback:hover { color: #fff; background: #4899f3; }

@@ -70,13 +70,13 @@
 .br-zhui-c { margin: 0 5px !important; position: relative; top: 2px; }
 .br-zhui-bei { width: 35px; margin-right: 5px; }
 /* 右侧辅助功能区 */
-.box-left { position: relative; width: 710px; float: left; margin-left: 42px;border-right: 1px #dfdfdf solid; padding-right: 17px;}
+.box-left { position: relative; width: 710px; float: left; margin-left: 42px;padding-right: 17px;}
 .box-left-dlt{min-height: 784px;}
 .box-left2 { position: relative; display: block; margin: 0; float: none; width: 100%; }
 .box-left,.box-right{ display: inline; margin-top: 12px; }
-.box-right { float: right; width: 231px; color: #3d3d3d;   }
+.box-right { float: right; width: 231px; color: #3d3d3d; border-left: 1px #dfdfdf solid; }
 /* 标题样式 */
-.sub-title { background: #f5f5f5; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 16px; height: 34px; border-top: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid; }
+.sub-title { background: #f5f5f5; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 16px; height: 33px; border-top: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid; }
 .more-detail { float: right; margin-right: 10px; font: 12px/34px 'simsun'; }
 .more-detail a { color: #848484; text-decoration: none; }
 .more-detail a:hover { color: #0d67c4; }
@@ -156,7 +156,8 @@
 .lrfx_red b, .lrfx_blue b { font-size: 16px; margin-right: 8px; font-family: 'Microsoft Yahei'; }
 .layout_select { display: block; position: relative; }
 .dt_layout_select { display: block; position: relative; left: 0px; }
-.touz_area_box { margin: 9px 0 0; position: relative; }
+.touz_area_box { margin: 7px 0 0; position: relative; }
+.martop-6{ margin-top: -6px; }
 .touz_area_box li { float: left; margin: 0 6px 10px 0; text-align: center; padding: 0; cursor: pointer; font-weight: bold; transition: .3s; }
 .touz_area_box li span { cursor: pointer; display: block; overflow: hidden; text-align: center; width: 33px; height: 33px; line-height: 33px; font-size: 17px; border-radius: 50%; }
 .touz_area_box li em { color: #afafaf; font-size: 12px; font-style: normal; font-weight: normal; }

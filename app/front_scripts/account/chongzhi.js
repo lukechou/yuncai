@@ -80,8 +80,9 @@ $(function() {
 
   // 金额更改
   $('#js-sum').on('change', function() {
+
     if (isIllageMoney()) {
-      $('#js-sum-e').html('请输入整数的金额')
+      $('#j-sum-tips').html('请输入整数的金额');
       $('#js-sum-e').removeClass('hide');
       $('#js-sum-suc').addClass('hide');
     } else {
@@ -89,12 +90,12 @@ $(function() {
       $('#js-sum').val(cz.money)
 
       if (cz.money < 0.01) {
-        $('#js-sum-e').html('充值金额不能小于0.01元')
+        $('#j-sum-tips').html('充值金额不能小于0.01元');
         $('#js-sum-e').removeClass('hide');
         $('#js-sum-suc').addClass('hide');
       } else {
         if (cz.money > 1000000) {
-          $('#js-sum-e').html('输入的金额不能大于一百万')
+          $('#j-sum-tips').html('输入的金额不能大于一百万');
           $('#js-sum-e').removeClass('hide');
           $('#js-sum-suc').addClass('hide');
         } else {

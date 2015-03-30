@@ -153,6 +153,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       fc3d: '福彩3D',
       qlc: '七乐彩',
       qxc: '七星彩',
+      bjdc:'足球单场'
     };
     var mname = lotyNameObj[lotyName];
     var tabIndex = tr.find('.joinUrl').val().split('/');
@@ -162,8 +163,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       'rqspf_gg': '让球胜平负',
       'zjq_gg': '总进球',
       'bf_gg': '比分',
-      'hhtz_gg':'混合投注'
+      'hhtz_gg':'混合投注',
+      'zjq':'总进球',
+      'bf':'比分',
+      'sxds':'上下单双',
+      'spf':'胜平负',
+      'bqc':'半全场'
     };
+
     var tabHtml = tab[tabIndex[tabIndex.length - 1]] || '';
 
     if (checkByNum(b, max)) {

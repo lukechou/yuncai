@@ -211,6 +211,13 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
   pageInit();
 
+  $('#j-touzhu-tips').on('click', function (event) {
+
+    $(this).toggleClass('active');
+    $('#j-touzhu-tipstext').toggle();
+
+  });
+
   /**
    * 玩法切换 - 大类
    *

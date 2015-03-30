@@ -49,6 +49,7 @@ textarea { resize: none; word-wrap: break-word; }
 .mt30 { margin-top: 30px !important; }
 .mr0 { margin-right: 0 !important; }
 .mr5 { margin-right: 5px !important; }
+.mr10 { margin-right: 10px; }
 .mr15 { margin-right: 15px; }
 .mb0 { margin-bottom: 0; }
 .mb15 { margin-bottom: 15px; }
@@ -98,6 +99,7 @@ textarea { resize: none; word-wrap: break-word; }
 .m-pager a { margin: 0 5px; color: #404040; }
 .m-pager a.dis { color: #848484; }
 .m-pager-i { width: 50px; margin-right: 5px; border: 1px #dfdfdf solid; background: #fff; }
+input[type="radio"]{ width: 12px!important;height: 12px!important; }
 
 /* Button Class */
 .btn { border-radius: 2px; font-size: 12px; }
@@ -183,7 +185,7 @@ textarea { resize: none; word-wrap: break-word; }
 .m-mn-table > thead > tr > th { font-weight: normal; text-align: center; border-bottom: 1px solid #dfdfdf; background: #f5f5f5; }
 .m-mn-table > tbody > tr:nth-child(odd) { background: #fff; }
 .m-mn-table > tbody > tr { background: #f5f5f5; }
-.m-mn-table-bor { border: 1px #dfdfdf solid; }
+.m-mn-table-bor { border: 1px #dfdfdf solid;   border-collapse: initial;}
 .m-table-border > tbody > tr > td, .m-table-border > thead > tr > th { border: 1px #dfdfdf solid; }
 .m-table-middle > tbody > tr > td { vertical-align: middle; }
 
@@ -204,7 +206,7 @@ textarea { resize: none; word-wrap: break-word; }
 
 /* 我的账户-筛选导航模块 */
 .m-de-hd { font-size: 12px; padding: 5px 20px 5px 0; }
-.m-de-hd > select { width: 120px; height: 26px; margin-right: 20px; padding: 0 5px; border: 1px #dfdfdf solid; }
+.m-de-hd > select { width: 120px; height: 26px; margin-right: 6px; padding: 0 5px; border: 1px #dfdfdf solid; }
 .m-de-hd > label { font-weight: normal; }
 .m-de-hd > .btn { width: 70px; height: 26px; padding: 0; }
 .m-panel { min-height: 540px; border: 1px #dfdfdf solid; }
@@ -259,6 +261,14 @@ textarea { resize: none; word-wrap: break-word; }
 .stopsell-box ul li { width: 50%; float: left; margin-bottom: 15px; }
 .stopsell-box ul li a { margin-left: 5px; display: inline-block; width: 36px; text-align: left; }
 .logo { width: 44px; height: 44px }
+
+
+/* feed bottom tips */
+.brings-tips h3 { cursor: pointer; }
+.brings-tips h3.active { border-bottom: none; }
+.brings-tips h3 .icon { margin: 0 0 -1px 5px; -webkit-transition: .3s; transition: .3s; }
+.brings-tips h3.active .icon {    -webkit-transform: rotate(180deg); transform: rotate(180deg);}
+
 
 /* All Page Class */
 body { color: #3d3d3d; background: #fff; }
@@ -355,3 +365,6 @@ body { color: #3d3d3d; background: #fff; }
 .icon-qlc-home-logo { background-position: -88px -44px; width: 43px; height: 43px; }
 .icon-qxc-home-logo { background-position: 0px -88px; width: 44px; height: 44px; }
 .icon-ssq-home-logo { background-position: -88px 0px; width: 44px; height: 44px; }
+
+/* text */
+.redtext{ color: red; }

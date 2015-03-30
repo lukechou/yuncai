@@ -9,11 +9,11 @@ require.config({
 
 });
 
-require(['jquery', 'app'], function ($, APP) {
+require(['jquery', 'app'], function($, APP) {
 
   var page = null;
 
-  $('#j-nav').on('click', 'li', function () {
+  $('#j-nav').on('click', 'li', function() {
 
     // 是否多级导航
     if ($(this).hasClass('more')) {
@@ -38,8 +38,8 @@ require(['jquery', 'app'], function ($, APP) {
 
     $('#j-nav .active').removeClass('active');
 
-    if(smallNav){
-      $('.more-'+smallNav).show();
+    if (smallNav) {
+      $('.more-' + smallNav).show();
     }
 
     leftNav.addClass('active');
@@ -56,11 +56,12 @@ require(['jquery', 'app'], function ($, APP) {
 
   }
 
+
   function init() {
 
     var pageIndex = APP.filterStr(APP.parseQueryString().page);
 
-    if (pageIndex==='') {
+    if (pageIndex === '') {
       pageIndex = 6;
     }
 
@@ -75,13 +76,13 @@ require(['jquery', 'app'], function ($, APP) {
         type: 'get',
         dataType: 'html',
       })
-      .done(function (d) {
+      .done(function(d) {
 
         $('#j-page-main').append(d);
         $('.j-page-' + pageIndex).fadeIn('300');
 
       })
-      .fail(function () {
+      .fail(function() {
         console.log("error");
       });
 

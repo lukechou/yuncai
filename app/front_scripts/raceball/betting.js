@@ -29,6 +29,7 @@ define(['jquery', 'app'], function ($, APP) {
       isAgreen: true,
       match: [],
       bunch: [],
+      collect: [],
       maxBunch: {
         'spf': 8,
         'rqspf': 8,
@@ -276,6 +277,19 @@ define(['jquery', 'app'], function ($, APP) {
         bunchCount = 6;
       }
 
+      for (var i = 2; i <= maxLen; i++) {
+        isActiveBunch = _.find(_this.bunch, function (bunch) {
+          return Number(bunch.slice(0, 1)) === i;
+        });
+
+        if (i > len && isActiveBunch) {
+          _.remove(_this.bunch, function (chr) {
+            return Number(chr.slice(0, 1)) === i;
+          });
+        }
+
+      };
+
       for (var i = 2; i <= bunchCount; i++) {
 
         item = bunchMap['bunch' + i];
@@ -327,6 +341,19 @@ define(['jquery', 'app'], function ($, APP) {
       var isDg = '';
       var obj = '';
       var html = '';
+
+      for (var i = 2; i <= maxLen; i++) {
+        isActiveBunch = _.find(_this.bunch, function (bunch) {
+          return Number(bunch.slice(0, 1)) === i;
+        });
+
+        if (i > len && isActiveBunch) {
+          _.remove(_this.bunch, function (chr) {
+            return Number(chr.slice(0, 1)) === i;
+          });
+        }
+
+      };
 
       for (var i = 1; i <= len; i++) {
 
@@ -802,6 +829,13 @@ define(['jquery', 'app'], function ($, APP) {
         bqc: ['33', '31', '30', '13', '11', '10', '03', '01', '00'],
         bf: ['10', '20', '21', '30', '31', '32', '40', '41', '42', '50', '51', '52', '90', '00', '11', '22', '33', '99', '01', '02', '12', '03', '13', '23', '04', '14', '24', '05', '15', '25', '09'],
       };
+
+      if (Config.lotyName === 'bjdc') {
+
+        params.bf = ['10', '20', '21', '30', '31', '32', '40', '41', '42', '90', '00', '11', '22', '33', '99', '01', '02', '12', '03', '13', '23', '04', '14', '24', '09'];
+
+      }
+
       params.hhtz = params.spf.concat(params.rqspf, params.bqc, params.bf, params.zjq);
 
       var item = null;
@@ -1235,19 +1269,19 @@ define(['jquery', 'app'], function ($, APP) {
 
         var t = $(this);
         var row = t.parents('.row1-1');
-        var matchcode = t.parents('dd').attr('matchcode');
         var dd = t.parents('dd');
+        var matchcode = dd.attr('matchcode');
         var newDd = null;
         var html = _this.getOneBfHtml(matchcode);
-
-        var hasNewDd = _this.box.find('[data-newdd=' + matchcode + ']').length;
+        var dl = dd.parents('dl');
+        var hasNewDd = dl.find('[data-newdd=' + matchcode + ']').length;
 
         row.toggleClass('on');
 
         if (row.hasClass('on')) {
 
           if (hasNewDd) {
-            _this.box.find('[data-newdd=' + matchcode + ']').show();
+            dl.find('[data-newdd=' + matchcode + ']').show();
           } else {
             newDd = dd.clone().removeClass().addClass('bf-box j-bf-box').attr('data-newdd', matchcode).html(html);
             dd.after(newDd);
@@ -1258,7 +1292,7 @@ define(['jquery', 'app'], function ($, APP) {
         } else {
 
           if (hasNewDd) {
-            _this.box.find('[data-newdd=' + matchcode + ']').hide();
+            dl.find('[data-newdd=' + matchcode + ']').hide();
           }
 
           if (_.find(_this.match, function (chr) {
@@ -1430,7 +1464,16 @@ define(['jquery', 'app'], function ($, APP) {
 
         } else {
 
-          listDd.show();
+          if ($(this).parents('#j-collect-body').length) {
+            listDd.show();
+          } else {
+            listDd.each(function (index, el) {
+              var m = $(this).attr('matchcode');
+              if ($('#j-collect-body .j-data-dd[matchcode=' + m + ']').length == 0) {
+                $(this).show();
+              }
+            });
+          }
 
           if (_this.tab === 'hhtz') {
             listDd.find('.j-show-hhtz').removeClass('active').html(

@@ -279,6 +279,13 @@ $(document).ready(function () {
 
   });
 
+  $('#j-touzhu-tips').on('click', function (event) {
+
+    $(this).toggleClass('active');
+    $('#j-touzhu-tipstext').toggle();
+
+  });
+
   /**
    * 机选按钮
    *

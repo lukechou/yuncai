@@ -33,4 +33,14 @@ $(function () {
         console.log("error");
       });
   });
+  $('#username,#password').focus(function(event) {
+      $(this).siblings('i.icon-gray-cha').removeClass('hide');
+  });
+  /*$('#username,#password').blur(function(event) {
+      $(this).siblings('i.icon-gray-cha').addClass('hide');
+  });*/
+  $('i.icon-gray-cha').click(function(event) {
+      $(this).siblings('input').val('');
+      $(this).addClass('hide')
+  });
 });

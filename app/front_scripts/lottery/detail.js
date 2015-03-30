@@ -15,7 +15,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function ($, _, store, APP) {
   'use strict';
   var rHd = $('.right-hd');
   if (rHd.length) {
@@ -63,16 +63,16 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
     return results;
   }
 
-  $('body').on('click', '#hemaiRefresh', function(event) {
+  $('body').on('click', '#hemaiRefresh', function (event) {
     window.location.reload();
   });
 
-  $('#j-buy').on('keyup', function(event) {
+  $('#j-buy').on('keyup', function (event) {
     $(this).val($(this).val().replace(/\D|^0/g, ''));
     updateBuyMoneyTotal();
   });
 
-  $('#j-buy').on('change', function() {
+  $('#j-buy').on('change', function () {
     var v = parseInt(buy.buyTotal.val());
     if (isNaN(v)) {
       buy.buyTotal.val(HeMai.max);
@@ -86,7 +86,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
     updateBuyMoneyTotal();
   });
 
-  $('#buy-submit').on('click', function() {
+  $('#buy-submit').on('click', function () {
 
     var isAgreen = $('#j-isAgreen')[0].checked;
     var template = '';
@@ -114,7 +114,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
           byNum: b,
           joinURI: $('#j-joinURI').val(),
           prjctId: $('#j-projectId').val(),
-          onSuccess: function() {
+          onSuccess: function () {
 
             v = parseInt(buy.buyTotal.val());
             max = parseInt(HeMai.max);
@@ -148,17 +148,17 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
           lotyName: mname,
           total: mtotal,
           pay: b,
-          payMoney:b*onePrice
+          payMoney: b * onePrice
         });
 
         html = {
           html: h,
         };
 
-        APP.checkLogin(b*onePrice, {
-          enoughMoney: function() {
+        APP.checkLogin(b * onePrice, {
+          enoughMoney: function () {
             APP.showTips(html);
-            $('#buyConfirm').one('click', function(event) {
+            $('#buyConfirm').one('click', function (event) {
               submitHemai(data);
             });
           }
@@ -169,7 +169,8 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
 
   });
 
-  var submitHemai = function(obj) {
+  var submitHemai = function (obj) {
+
     $.ajax({
         url: obj.joinURI,
         type: 'get',
@@ -180,7 +181,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
           unikey: (new Date()).valueOf(),
         },
       })
-      .done(function(data) {
+      .done(function (data) {
         if (data.retCode == 100000) {
           if (obj.onSuccess) {
             obj.onSuccess();
@@ -189,39 +190,39 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
           APP.showTips({
             text: '合买成功!',
             type: 1,
-            onConfirm: function() {
+            onConfirm: function () {
               window.location.reload();
             }
           });
-          $('body').on('click', '.close', function(event) {
+          $('body').on('click', '.close', function (event) {
             window.history.go(0);
           });
         } else {
           APP.handRetCode(data.retCode, data.retMsg);
         }
       })
-      .fail(function() {
+      .fail(function () {
         APP.onServiceFail();
       });
   };
 
   PAGE.loadTicketRecord = function (obj) {
-    PAGE.ajaxUrl = '/lottery/cp-detail/'+$('#j-strLotyName').val()+'/ajax';
+    PAGE.ajaxUrl = '/lottery/cp-detail/' + $('#j-strLotyName').val() + '/ajax';
     PAGE.pageElement = $('.j-page-box');
     PAGE.initAjax(obj);
     PAGE.onSuccess = function (data) {
       var htmlOutput = '';
-      var nextPage = ((PAGE.config.page-1)*10 >0)? (PAGE.config.page-1)*10 :'';
+      var nextPage = ((PAGE.config.page - 1) * 10 > 0) ? (PAGE.config.page - 1) * 10 : '';
       if (data.retCode == 100000) {
-        for (var i =0, len=data.retData.length; i < len; i++) {
-          htmlOutput+='<tr>\
-            <td class="w180">'+(i+1 + nextPage)+'</td>\
-            <td>'+data.retData[i].code+'</td>\
-            <td>'+data.retData[i].gg+'</td>\
-            <td>'+(data.retData[i].money/data.retData[i].multiple/2)+'</td>\
-            <td>'+data.retData[i].multiple+'</td>\
-            <td>'+data.retData[i].money+'</td>\
-            <td>'+data.retData[i].status+'</td>\
+        for (var i = 0, len = data.retData.length; i < len; i++) {
+          htmlOutput += '<tr>\
+            <td class="w180">' + (i + 1 + nextPage) + '</td>\
+            <td>' + data.retData[i].code + '</td>\
+            <td>' + data.retData[i].gg + '</td>\
+            <td>' + (data.retData[i].money / data.retData[i].multiple / 2) + '</td>\
+            <td>' + data.retData[i].multiple + '</td>\
+            <td>' + data.retData[i].money + '</td>\
+            <td>' + data.retData[i].status + '</td>\
           </tr>';
         };
         PAGE.config.pageNum = Math.ceil(data.total / obj.pageSize);
@@ -232,37 +233,37 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap'], function($, 
       }
       this.appendTable(htmlOutput);
     };
-    PAGE.onFail = function(){
+    PAGE.onFail = function () {
       return;
     };
   };
 
-  $('#j-tab').on('click', 'a', function(event) {
+  $('#j-tab').on('click', 'a', function (event) {
     event.preventDefault();
     /* Act on the event */
     var tables = $('.tab-content .table');
     var index = parseInt($(this).attr('data-x'));
     switch (index) {
-      case 1:
-          switch($('#j-project-status').val()){
-              case '已撤单':
-                  tables.eq(index).find('tbody').html('<tr><td colspan="7">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
-                  break;
+    case 1:
+      switch ($('#j-project-status').val()) {
+      case '已撤单':
+        tables.eq(index).find('tbody').html('<tr><td colspan="7">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
+        break;
 
-              case '待出票':
-                  tables.eq(index).find('tbody').html('<tr><td colspan="7">等待出票中...</td></tr>');
-                  break;
+      case '待出票':
+        tables.eq(index).find('tbody').html('<tr><td colspan="7">等待出票中...</td></tr>');
+        break;
 
-              default:
-                  // getNewPage
-                  PAGE.pageTable = tables.eq(index).find('tbody');
-                  PAGE.loadTicketRecord({
-                    project_no: $('#j-projectNo').val(),
-                    page: 1,
-                    pageSize: 10,
-                  });
-                  break;
-          }
+      default:
+        // getNewPage
+        PAGE.pageTable = tables.eq(index).find('tbody');
+        PAGE.loadTicketRecord({
+          project_no: $('#j-projectNo').val(),
+          page: 1,
+          pageSize: 10,
+        });
+        break;
+      }
     }
   });
 
