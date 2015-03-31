@@ -6,12 +6,12 @@
 .login-right form { width: 300px; margin: 46px auto 0; }
 .login-right h1 { font-size: 24px; margin-bottom: 5px; }
 .login-right .tips { font-size: 12px; line-height: 35px; visibility: hidden; height: 35px; margin-bottom: 5px; padding: 10px; padding: 0 0 0 10px; border: 1px #f13c38 solid; }
-.login-right .tips i { position: relative; top: 3px; }
-.login-right input { display: block; width: 100%; margin-bottom: 21px; padding: 14px 15px; border: 1px #afafaf solid; border-radius: 2px; }
+.login-right .tips i { position: relative; top: 5px; }
+.login-right input { display: block; width: 100%; margin-bottom: 21px; padding: 14px 37px; border: 1px #afafaf solid; border-radius: 2px; font-family: "微软雅黑"; }
 .login-right .btn { font-size: 18px; }
 .login-right form p { font-size: 12px; margin-top: 30px; text-align: right; }
 .login-right form p > a { padding: 0 10px; color: #3d3d3d; }
-.login-right form p > a.first { border-right: 1px #3d3d3d solid; }
+.login-right form p > a.first { border-right: 1px #afafaf solid; }
 /* Register Page */
 .register { padding: 15px 0 75px 0; }
 .register .panel-heading { padding-left: 20px; border-radius: 0; background: #f1f1f1; }
@@ -30,7 +30,8 @@
 .register form .check-img { width: 100px; }
 .register form .check-link { font-size: 12px; position: absolute; top: 8px; right: -55px; }
 .pos-relative{ position: relative; }
-.icon-gray-cha{  background-image: url(../front_images/icon/gray-cha.png);background-position: 0 0;width: 26px;height: 26px;position: absolute;right: 0;top: 0; z-index: 1; right: 10px; top: 12px; cursor: pointer; }
+.icon-gray-cha{ position: absolute;right: 0;top: 0; z-index: 1; right: 10px; top: 12px; cursor: pointer; }
+.icon-login-user,.icon-login-pass{ position: absolute; top: 12px; left: 11px; }
 /* Register footer section */
 .register-ft { font-size: 12px; float: right; margin: 10px 0 80px 0; }
 .register-ft p { margin: 10px 0; }

@@ -5,7 +5,7 @@
 
 /* top nav */
 .m-num-title{ margin-top: 0;}
-.m-br-nav > li > a { font-size: 12px; line-height: 1.4; height: auto; margin: 0; padding: 6px 15px; border: none; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f5f5f5; }
+.m-br-nav > li > a { font-size: 12px; line-height: 1.4; height: auto; margin: 0; padding: 6px 15px; border: none; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f1f1f1; }
 .m-brhd-title > b { font-family: '微软雅黑'; font-size: 22px; font-weight: 900; }
 .m-br-nav > li > a > b { font-family: '宋体'; font-size: 14px; font-weight: bold; }
 .m-br-nav > li > a span { color: #8e8e8e; }
@@ -20,6 +20,7 @@
 .m-br-nav > li > a.second-weight { width: 56px; }
 .m-br-nav > li > a.last { width: 79px; }
 .box-left { margin-top: 0; padding-top: 6px; }
+.box-left-rightnobor { border-right: none; }
 .box-right { margin-top: -64px; }
 .kjgg .sub-content { height: 60px; background: #fff; }
 
@@ -34,7 +35,7 @@
 .I1x5 .row-code  .m-num-group { float: left; margin: 0; }
 .I1x5 .row-code .m-num-group > a { font-family: Arial; font-size: 16px; line-height: 33px; width: 33px; height: 33px; margin: 0 5px; }
 .I1x5 .row-code .quick-method { float: left; width: 86px; margin: 0 0 0 40px; }
-.I1x5 .row-code .quick-method span { font-size: 12px; line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #ebeaea; }
+.I1x5 .row-code .quick-method span { font-size: 12px; line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; }
 .I1x5 .row-code .quick-method span:hover { color: #fff; background: #ffd06b; }
 .I1x5 .mlr5 { font-weight: bold; }
 .I1x5 .br-zhu { width: 610px; margin: 30px auto; }

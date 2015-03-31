@@ -115,7 +115,7 @@ $(function () {
         continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
 
         if (dataItem.lotyCNName == '模型') {
-          dataItem.lotyCNName = '竞彩足球<i class="icon-font icon-f7" title="模型：' + dataItem.projectNo + '">模</i>';
+          dataItem.lotyCNName = '<i class="icon-font icon-f8" title="模型：' + dataItem.projectNo + '">模</i>竞彩足球';
 
           if (type == 3) {
             projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看</a>';

@@ -537,6 +537,10 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
    */
   PL3.chooseBuyBtn.on('click', function (event) {
 
+    if(!$(this).hasClass('active')){
+      return;
+    }
+
     var bool = false;
     var type = parseInt(PL3.chooseBuyBtn.attr('data-add'));
     var buyBoxCodesLen = $("#code_list .br-zhu-item").length;
@@ -616,7 +620,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
         PL3.chooseBuyBtn.attr('disabled', 'disabled');
       }
       if (uploadArr.length === 0) {
-        APP.showTips('<h5>您好，请按照正确格式填写，例：</h5><p>格式：5,8,9</p>');
+        APP.showTips('<h5>请按照正确的格式填写：</h5><p>单式：1,2,3</p><p>复式：01,234,35</p>');
         return;
       } else {
         calculateBuyCodes();
@@ -1212,7 +1216,21 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
     $(this).hide();
     $('#sd_number').addClass('focus');
     $('#sd_number')[0].focus();
+
   });
+
+  $('#sd_number').on('blur', function (event) {
+    event.preventDefault();
+    /* Act on the event */
+
+    var val = $.trim($(this).val());
+    if (val === '') {
+      $('#j-textarea-mask').show();
+      $('#choose_to_buy').removeClass('active');
+    }
+
+  });
+
 
   // 更新手动输入注数
   $('#sd_number').on('keyup', function (event) {

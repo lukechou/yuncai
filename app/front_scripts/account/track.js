@@ -18,23 +18,25 @@ $(function() {
       // Create Records HTML
       if (data.retCode == 100000) {
         if (data.retData.data.length > 0) {
+
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
             if (dataItem.show == 1) {
               show = '<a href="' + dataItem.detailURI + '">查看详细</a><a href="' + dataItem.buyURI + '" class="ml8">继续投注</a>';
-            }else{
+            } else {
               show = '';
             }
             htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.price + '</td><td>' + dataItem.lessIssueNum + '</td><td>' + dataItem.finishIssueNum + '</td><td>' + dataItem.status + '</td><td>' + show + '</td></tr>';
           }
-
-          PAGE.config.pageNum = data.retData.pageSize;
-          PAGE.makePageHtml();
-          PAGE.bindPageEvent(PAGE.loadTrackList);
         } else {
           htmlOutput = '<tr><td colspan="7">无相关追号纪录</td></tr>';
         }
+
+        PAGE.config.pageNum = data.retData.pageSize;
+        PAGE.makePageHtml();
+        PAGE.bindPageEvent(PAGE.loadTrackList);
+
       } else {
         htmlOutput = '<tr><td colspan="7">' + data.retMsg + '</td></tr>';
       }

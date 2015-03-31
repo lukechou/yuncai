@@ -33,12 +33,39 @@ $(function () {
         console.log("error");
       });
   });
-  $('#username,#password').focus(function(event) {
+  $('#username').focus(function() {
+    var user_val = $('#username').val();
+    if(user_val!=""){
       $(this).siblings('i.icon-gray-cha').removeClass('hide');
-  });
-  /*$('#username,#password').blur(function(event) {
+    }else{
       $(this).siblings('i.icon-gray-cha').addClass('hide');
-  });*/
+    }
+  });
+  $('#username').change(function() {
+    var user_val = $(this).val();
+    if(user_val!=""){
+        $(this).siblings('i.icon-gray-cha').removeClass('hide');
+    }else{
+      $(this).siblings('i.icon-gray-cha').addClass('hide');
+    }
+  });
+  $('#username').keydown(function() {
+    var user_val = $(this).val();
+    if(user_val!=""){
+        $(this).siblings('i.icon-gray-cha').removeClass('hide');
+    }else{
+      $(this).siblings('i.icon-gray-cha').addClass('hide');
+    }
+  });
+  $('#username').keyup(function() {
+    var user_val = $(this).val();
+    if(user_val!=""){
+        $(this).siblings('i.icon-gray-cha').removeClass('hide');
+    }else{
+      $(this).siblings('i.icon-gray-cha').addClass('hide');
+    }
+  });
+
   $('i.icon-gray-cha').click(function(event) {
       $(this).siblings('input').val('');
       $(this).addClass('hide')

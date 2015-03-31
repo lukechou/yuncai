@@ -84,7 +84,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       this.appendTable(htmlOutput);
 
       // for ie8 table odd hack
-      $("tbody tr:nth-child(odd) td").css("background", "#f5f5f5");
+      $("tbody tr:nth-child(odd) td").css("background", "#f1f1f1");
     };
 
     PAGE.onFail = function () {

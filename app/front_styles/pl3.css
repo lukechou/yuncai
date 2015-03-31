@@ -10,7 +10,7 @@
 .pl3 .m-num-group > a{font-size:16px;line-height:33px;width:33px;height:33px;}
 .pl3 .row-code .quick-method{float:left;width:86px;margin:0 0 0 40px;}
 .pl3 .row-code .quick-method span,
-.quick-method-dt span{line-height:22px;display:inline-block;float:left;width:22px;height:22px;margin:0 0 3px 3px;cursor:pointer;text-align:center;border-radius:2px;background:#ebeaea;font-size:12px;}
+.quick-method-dt span{line-height:22px;display:inline-block;float:left;width:22px;height:22px;margin:0 0 3px 3px;cursor:pointer;text-align:center;border-radius:2px;background:#f1f1f1;font-size:12px;}
 .pl3 .row-code .quick-method span:hover{background:#ffd06b;color:#fff;}
 .quick-method-dt{float:left;width:86px;margin:0 0 0 58px;}
 .quick-method-dt span:hover{background:#ffd06b;color:#fff;}

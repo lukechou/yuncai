@@ -5,7 +5,7 @@ require.config({
     bootstrap: '../lib/bootstrap.min',
     store: '../lib/store.min',
     app: '../common/app',
-    lottery: 'lottery'
+    lottery: 'lottery',
   },
   shim: {
     bootstrap: {
@@ -16,17 +16,19 @@ require.config({
       deps: ['jquery', 'app', 'store'],
       exports: 'lottery'
     },
+
   }
 });
 
 require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store, APP) {
 
   'use strict';
+
   if ($('#saleStatus').val() == 1) {
     APP.showStopSellModal(($('#lotyName').val() == 'ssq') ? '双色球' : '大乐透');
     $('#qiuck-sub,#buy-submit,#j-tuodan-sub,#j-upload-sub,#j-more-sub').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
   }
-    $('#j-touzhu-tips').on('click', function (event) {
+  $('#j-touzhu-tips').on('click', function (event) {
 
     $(this).toggleClass('active');
     $('#j-touzhu-tipstext').toggle();
@@ -169,8 +171,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var isMost = (o.zhuihaoqihao) ? true : false;
 
     isZhui = (o.qishu == 1) ? false : true;
-
-    // isZhui = (Config.box.find('.j-br-type .active').attr('data-buytype') == 2) ? true : false;
 
     if (isZhui) {
 
@@ -331,7 +331,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return num.sort(function (a, b) {
       return a - b;
     });
-  }
+  };
 
   /**
    * [clearAllBallActive 清除所有球的选中状态]
@@ -339,18 +339,24 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
    * @return {null}
    */
   COMMON.clearAllBallActive = function (el) {
+
     el.find('.active').removeClass('active');
-  }
+
+  };
 
   // 随机选取N个球
   COMMON.randomNum = function (el, type, l) {
+
     var len = parseInt(l);
     var arr = _.sample(SEEDS[Config.lotyName][type], len);
+
     el.find('.active').removeClass('active');
+
     for (var i = 0; i < arr.length; i++) {
-      el.find('li').eq(arr[i] - 1).addClass('active');
+      el.find('li span').eq(arr[i] - 1).addClass('active');
     };
-  }
+
+  };
 
   // 页尾统计 加减输入框 change
   COMMON.updateCount = function (m, c) {
@@ -448,8 +454,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // check select ball for toggle add button status
     var p = Config.box;
     var m = DLT.getZhuiJiaStatus();
-    var rLen = parseInt(p.find('.j-ball-red li.active').length),
-      bLen = parseInt(p.find('.j-ball-blue li.active').length),
+    var rLen = parseInt(p.find('.j-ball-red .active').length),
+      bLen = parseInt(p.find('.j-ball-blue .active').length),
       x = 0,
       y = 0,
       t = 0;
@@ -513,12 +519,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     COMMON.clearAllBallActive(el);
     for (var i = 0; i < r.length; i++) {
       rnum = parseInt(r[i]) - 1;
-      el.find('.j-ball-red li').eq(rnum).addClass('active');
+      el.find('.j-ball-red li').eq(rnum).find('span').addClass('active');
     };
 
     for (var i = 0; i < b.length; i++) {
       bnum = parseInt(b[i]) - 1;
-      el.find('.j-ball-blue li').eq(bnum).addClass('active');
+      el.find('.j-ball-blue li').eq(bnum).find('span').addClass('active');
     };
 
     COMMON.checkBallGroup($(this));
@@ -1497,13 +1503,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     if (a == 1) {
       if (h) {
         eRed.each(function (index, el) {
-          var e = el.getElementsByTagName('span')[0].innerHTML;
+
+          var e = $(this).html();
           rNums.push(e);
+
         });
 
         eBlue.each(function (index, el) {
-          var e = el.getElementsByTagName('span')[0].innerHTML;
+
+          var e = $(this).html();
           bNums.push(e);
+
         });
 
         if (rNums.length >= SEEDS[Config.lotyName].redTotal && bNums.length >= SEEDS[Config.lotyName].blueTotal) {
@@ -1621,14 +1631,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   $('.jxblueball').on('click', function (event) {
+
     var v = Config.box.find('.jxBlueBall_Num').val();
     var sb = Config.box.find('.j-ball-blue');
+
     COMMON.randomNum(sb, 'blueBall', v);
     COMMON.checkBallGroup($(this));
+
   });
 
   // 快捷投注 选球
-  $('.ball-group').on('click', 'li', function (event) {
+  $('.ball-group').on('click', 'span', function (event) {
 
     var redGroup = Config.box.find('.j-ball-red');
     var redGroupAc = redGroup.find('.active');
@@ -1980,22 +1993,41 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   var sdNumberTips = '';
   var sdStatus = true;
 
+
+  $('#sd_number').on('blur', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+
+    var val = $.trim($(this).val());
+    if(val ===''){
+      $('#j-textarea-mask').show();
+    }
+
+  });
+
+
   // 粘贴上传-添加到投注列表
   $('#sd_sub').on('click', function (event) {
 
+    var t = $(this);
     var str = $.trim($('#sd_number').val());
     var formatZhus = '';
     var l = '';
     var html = '';
     var money = DLT.getZhuiJiaStatus();
-    var tips = ['<h5>您好，请按照正确格式填写，例：</h5><p>格式1：01,02,03,04,05,06+10</p>', '请输入投注号码'];
-
-    if (lotyName == 'dlt') {
-      tips[0] = '<h5>您好，请按照正确格式填写，例：</h5><p>格式1：01,02,03,04,05+10,11</p>';
-    }
-
+    var tips = ['<h5>请按照正确的格式填写：</h5><p>单式：01,02,03,04,05,06+01</p><p>复式：01,02,03,04,05,06,07,08+01,02</p>', '请输入投注号码'];
     var boxZhuLen = Config.box.find('.br-zhu-item').length;
     var addZhuLen = 0;
+
+    if(!t.hasClass('active')){
+      return;
+    }
+
+    if (lotyName == 'dlt') {
+      tips[0] = '<h5>请按照正确的格式填写：</h5><p>单式：01,02,03,04,05+01,02</p><p>复式：01,02,03,04,05,06,07+01,02,03</p>';
+    }
+
+
 
     if (Config.box.find('.br-zhu-item').length >= Config.maxHang) {
       APP.showTips('您的投注号码多于100行，请返回重新选择');
@@ -2044,7 +2076,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   //手动输入Mask
   $('#j-textarea-mask').on('click', function (event) {
     $(this).hide()
-    $('#sd_number')[0].focus()
+    $('#sd_number')[0].focus();
   });
 
   // 手动输入获取输入框焦点

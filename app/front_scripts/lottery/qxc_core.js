@@ -1,31 +1,39 @@
 /**
  * 排列5的库文件
  */
-var QXC={
+var QXC = {
 	digitalCodeConnector: ',',
-	errorMsg : '',
-	digitalDescMap : {0:'第一位',1:'第二位',2:'第三位',3:'第四位',4:'第五位',5:'第六位',6:'第七位'},
-	maxOneBetMoney : 20000,
-	maxBuyCodeLength : 100,
-	maxMultiple :  9999,
-	minMultiple : 1,
-	maxBetNum : 100,
-	minBetNum : 1,
-	maxIssueNum : 30,
-	minIssueNum : 1,
+	errorMsg: '',
+	digitalDescMap: {
+		0: '第一位',
+		1: '第二位',
+		2: '第三位',
+		3: '第四位',
+		4: '第五位',
+		5: '第六位',
+		6: '第七位'
+	},
+	maxOneBetMoney: 20000,
+	maxBuyCodeLength: 100,
+	maxMultiple: 9999,
+	minMultiple: 1,
+	maxBetNum: 100,
+	minBetNum: 1,
+	maxIssueNum: 30,
+	minIssueNum: 1,
 	// 直选对象
-	ZhiXuanNormal:{
-		minCode :0,
-		maxCode :9,
-		oneBetCodeNum:7,
-		codeRegex : /^([0-9]{1,10}[,]){6}([0-9]{1,10})$/,
+	ZhiXuanNormal: {
+		minCode: 0,
+		maxCode: 9,
+		oneBetCodeNum: 7,
+		codeRegex: /^([0-9]{1,10}[,]){6}([0-9]{1,10})$/,
 	},
 
 	/**
 	 * 获取最后一条错误提示信息
 	 * @return {[type]} [description]
 	 */
-	getLastErrorMsg : function(){
+	getLastErrorMsg: function () {
 		return this.errorMsg;
 	},
 
@@ -40,7 +48,7 @@ var QXC={
 	 * @param  {[type]} sevenCodes  [description]
 	 * @return {[type]}             [description]
 	 */
-	getZhiXuanZhushu : function(firstCodes, secondCodes, thirdCodes, fourthCodes, fifthCodes, sixCodes, sevenCodes) {
+	getZhiXuanZhushu: function (firstCodes, secondCodes, thirdCodes, fourthCodes, fifthCodes, sixCodes, sevenCodes) {
 		var first = Math.getCombineNum(firstCodes.length, 1, 'C');
 		var second = Math.getCombineNum(secondCodes.length, 1, 'C');
 		var third = Math.getCombineNum(thirdCodes.length, 1, 'C');
@@ -57,19 +65,19 @@ var QXC={
 	 * @param  {Function} callback [description]
 	 * @return {[type]}            [description]
 	 */
-	produceCode: function(callback) {
-        var produceCodes = [];
-        for (var m = this.ZhiXuanNormal.oneBetCodeNum-1; m >= 0;) {
-            produceCodes[m]=[];
-            var currentCode = Math.getRandomInt(this.ZhiXuanNormal.minCode,this.ZhiXuanNormal.maxCode);
-//            currentCode = currentCode.toString();
-            if($.inArray(currentCode, produceCodes[m]) < 0){
-                produceCodes[m].push(currentCode);
-                m--;
-            }
-        }
+	produceCode: function (callback) {
+		var produceCodes = [];
+		for (var m = this.ZhiXuanNormal.oneBetCodeNum - 1; m >= 0;) {
+			produceCodes[m] = [];
+			var currentCode = Math.getRandomInt(this.ZhiXuanNormal.minCode, this.ZhiXuanNormal.maxCode);
+			//            currentCode = currentCode.toString();
+			if ($.inArray(currentCode, produceCodes[m]) < 0) {
+				produceCodes[m].push(currentCode);
+				m--;
+			}
+		}
 
-		callback(produceCodes);//.sort()
+		callback(produceCodes); //.sort()
 		return;
 	},
 
@@ -78,9 +86,12 @@ var QXC={
 	 * @param  {[type]}  code [description]
 	 * @return {Boolean}      [description]
 	 */
-	isIllegalCode: function(code, callback){
-		if(!this.ZhiXuanNormal.codeRegex.test(code)){
-			this.errorMsg = "投注号码格式错误, 参考格式:12,34,56,78,90,78,90或者12，34，56，78，90,78,90";
+	isIllegalCode: function (code, callback) {
+		if (!this.ZhiXuanNormal.codeRegex.test(code)) {
+			this.errorMsg = '';
+			this.errorMsg += '<h5>请按照正确的格式填写：</h5>';
+			this.errorMsg += '<p>单式：1,2,3,4,5,6,7</p>';
+			this.errorMsg += '<p>复式：01,12,34,45,5,6,7</p>';
 			return false;
 		}
 		var returnZhushu = 0;
@@ -92,14 +103,14 @@ var QXC={
 			digitalCodes.sort();
 			returnCodes[m] = digitalCodes;
 			for (var n = 0; n < digitalCodes.length; n++) {
-				if(hash[digitalCodes[n]]) {
-			  	 	this.errorMsg = this.digitalDescMap[m] + "重复投注了:" + digitalCodes[n];
-			  	 	return false;
-			  	}
-			  	hash[digitalCodes[n]] = true;
+				if (hash[digitalCodes[n]]) {
+					this.errorMsg = this.digitalDescMap[m] + "重复投注了:" + digitalCodes[n];
+					return false;
+				}
+				hash[digitalCodes[n]] = true;
 			}
 		}
-		returnZhushu += this.getZhiXuanZhushu(allDigitalCodes[0].split(''),allDigitalCodes[1].split(''),allDigitalCodes[2].split(''),allDigitalCodes[3].split(''),allDigitalCodes[4].split(''),allDigitalCodes[5].split(''),allDigitalCodes[6].split(''));
+		returnZhushu += this.getZhiXuanZhushu(allDigitalCodes[0].split(''), allDigitalCodes[1].split(''), allDigitalCodes[2].split(''), allDigitalCodes[3].split(''), allDigitalCodes[4].split(''), allDigitalCodes[5].split(''), allDigitalCodes[6].split(''));
 		callback(returnCodes, returnZhushu);
 		return true;
 	}

@@ -97,11 +97,10 @@ function setStart(len) {
   return str;
 }
 
-
-$(function() {
+$(function () {
 
   // Sure Bind Info
-  $('#j-bind-sub').on('click', function(event) {
+  $('#j-bind-sub').on('click', function (event) {
     event.preventDefault();
 
     // Get From Bind Info
@@ -109,7 +108,6 @@ $(function() {
     var identityCardNo = $('#number').val();
     var confirmIdentityCardNo = $('#confirm-number').val();
     var password = $('#password').val();
-
 
     // Filter Bind Info
     var reg = new RegExp('/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/');
@@ -122,25 +120,28 @@ $(function() {
     }
 
     if (cardInfo.isTrue) {
+
       var d1 = new Date().getTime();
       var d2 = new Date(cardInfo.year + '-' + cardInfo.month + '-' + cardInfo.day).getTime();
       var age = (d1 - d2) / 1000 / 31558150;
       if (age < 18) {
-        APP.showTips('未满18岁不能注册！');
+        APP.showTips('绑定失败，身份证号码不符合规定');
         return;
       }
 
     } else {
-      APP.showTips('输入的身份证不合法,请检查后再输入！');
+
+      APP.showTips('请输入正确的身份证号码');
       return;
+
     }
 
-    if (username == '' || identityCardNo == '' || confirmIdentityCardNo == '' || password == '') {
-      APP.showTips('请先填写完整信息');
+    if ( password === '') {
+      APP.showTips('请输入登录密码');
       return;
     }
     if (identityCardNo != confirmIdentityCardNo) {
-      APP.showTips('两次输入身份证号码不一致！');
+      APP.showTips('两次身份证号码输入不一致');
       return;
     }
 
@@ -155,7 +156,7 @@ $(function() {
           password: password
         },
       })
-      .done(function(data) {
+      .done(function (data) {
         if (data.retCode == 100000) {
           $('#bind-form').hide().remove();
           $('#bindcard-suc').fadeIn();
@@ -166,7 +167,7 @@ $(function() {
         }
 
       })
-      .fail(function() {
+      .fail(function () {
         APP.onServiceFail();
       });
   });

@@ -3,7 +3,7 @@
 .brings-mn, .brings-tips { border: 1px #dfdfdf solid; }
 .brings-mn { margin-top: 15px; }
 .brings-tips { border: 1px #dfdfdf solid; margin: 12px auto; }
-.brings-tips>h3 { background: #f5f5f5; font-weight: bold; font-size: 12px; padding: 8px 20px; margin: 0; border-bottom: 1px #dfdfdf solid; font-family: 'simsun'; }
+.brings-tips>h3 { background: #f1f1f1; font-weight: bold; font-size: 12px; padding: 8px 20px; margin: 0; border-bottom: 1px #dfdfdf solid; font-family: 'simsun'; }
 .brings-tips>ul { padding: 10px 20px; font-size: 12px; line-height: 2.2; }
 /* Brings-hd */
 .br-tuo { padding: 25px 58px 30px; }
@@ -13,7 +13,7 @@
 /* Brings-count */
 .br-count { text-align: center; height: 26px;}
 .br-count .btn-group { margin: 0 5px; }
-.br-count .btn { background: #f5f5f5; padding: 2px 8px; border: 1px #dfdfdf solid; height: 26px; }
+.br-count .btn { background: #f1f1f1; padding: 2px 8px; border: 1px #dfdfdf solid; height: 26px; }
 .br-count .btn-results { padding: 2px 5px; width: 50px; background: #fff; }
 .br-count2 { margin: 40px auto 80px; text-align: center; }
 .br-count-item { display: inline-block; }
@@ -44,7 +44,7 @@
 .input-br-zhu-l { border: 1px #dfdfdf solid; width: 526px; height: 155px; font-size: 12px; overflow: auto; }
 /* Brings-details */
 .br-details { margin: 30px 0; }
-.box-left .br-type { background: #f5f5f5; padding: 6px 15px; border: 1px solid #dfdfdf; }
+.box-left .br-type { background: #f1f1f1; padding: 6px 15px; border: 1px solid #dfdfdf; }
 .box-left .br-type>li.active>a, .br-type>li>a:hover, .br-type>li>a:hover, .br-type>li.active>a:hover, .br-type>li.active>a:focus { border-radius: 0; background: #f5f5f5; border: none !important; }
 .box-left .br-type>li>a { position: relative; padding: 0; border: 0; margin-left: 40px; color: #3d3d3d; }
 .box-left .br-type>li>a>.icon { position: absolute; top: 2px; left: -20px; }
@@ -74,9 +74,11 @@
 .box-left-dlt{min-height: 784px;}
 .box-left2 { position: relative; display: block; margin: 0; float: none; width: 100%; }
 .box-left,.box-right{ display: inline; margin-top: 12px; }
-.box-right { float: right; width: 231px; color: #3d3d3d; border-left: 1px #dfdfdf solid; }
+.box-right { float: right; width: 231px; color: #3d3d3d; }
+.box-left{ border-right: 1px #dfdfdf solid; }
+
 /* 标题样式 */
-.sub-title { background: #f5f5f5; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 16px; height: 33px; border-top: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid; }
+.sub-title { background: #f1f1f1; font: bold 14px/33px 'Microsoft Yahei'; text-indent: 16px; height: 33px; border-top: 1px #dfdfdf solid; border-bottom: 1px #dfdfdf solid; }
 .more-detail { float: right; margin-right: 10px; font: 12px/34px 'simsun'; }
 .more-detail a { color: #848484; text-decoration: none; }
 .more-detail a:hover { color: #0d67c4; }
@@ -84,7 +86,7 @@
 /* 表格格式 */
 .sub-content { font-size: 12px; }
 .sub-content .table { margin-bottom: 0; }
-.sub-content .table>thead>tr>th { background: #f5f5f5; border: none; border: none; font-weight: normal; border: 1px #dfdfdf solid !important; border-width: 1px 0 !important; }
+.sub-content .table>thead>tr>th { background: #f1f1f1; border: none; border: none; font-weight: normal; border: 1px #dfdfdf solid !important; border-width: 1px 0 !important; }
 .sub-content .table>thead>tr>th, .sub-content .table>tbody>tr>td { text-align: center; }
 .sub-content .table>tbody>tr:nth-child(1) td { background: #fff; }
 .sub-content .table>tbody>tr>td { background: url(../front_images/bg-line.png) left top repeat-x; border: none; padding: 8px 0; }
@@ -158,13 +160,14 @@
 .dt_layout_select { display: block; position: relative; left: 0px; }
 .touz_area_box { margin: 7px 0 0; position: relative; }
 .martop-6{ margin-top: -6px; }
-.touz_area_box li { float: left; margin: 0 6px 10px 0; text-align: center; padding: 0; cursor: pointer; font-weight: bold; transition: .3s; }
-.touz_area_box li span { cursor: pointer; display: block; overflow: hidden; text-align: center; width: 33px; height: 33px; line-height: 33px; font-size: 17px; border-radius: 50%; }
+.touz_area_box li { float: left; margin: 0 6px 10px 0; text-align: center; padding: 0; cursor: pointer; font-weight: bold; }
+.touz_area_box li span { cursor: pointer; display: block; overflow: hidden; text-align: center; width: 33px; height: 33px; line-height: 33px; font-size: 17px;  -webkit-border-radius: 50%; border-radius: 50%;}
 .touz_area_box li em { color: #afafaf; font-size: 12px; font-style: normal; font-weight: normal; }
 .touz_area_box li em.colorRed { color: #f13c38; }
-.touz_area_box li span.gray_ball, .touz_area_box li span { background: #ebebeb; color: #3d3d3d; border: 1px #d2d2d2 solid; }
-.touz_area_box .red_area li.active span { background: #f13c38; color: #fff; text-decoration: none; border: none; }
-.touz_area_box .blue_area li.active span { background: #5198f1; color: #fff; text-decoration: none; border: none; }
+.touz_area_box li span.gray_ball, .touz_area_box li span { background: #f1f1f1; color: #3d3d3d; border: 1px #dfdfdf solid; behavior: url(/front_styles/pie/pie.htc);}
+.touz_area_box .red_area span.active { background: #f13c38; color: #fff; text-decoration: none; border: none; }
+.touz_area_box .blue_area span.active { background: #5198f1; color: #fff; text-decoration: none; border: none; }
+
 /* 大乐透.快捷投注.选球区 */
 .touz_area_box .red_area { width: 462px; }
 .touz_area_box .blue_area { width: 189px; _height: 182px; margin-right: 5px;}

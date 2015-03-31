@@ -231,6 +231,11 @@ $(document).ready(function () {
    * @return {[type]}        [description]
    */
   $('#choose_to_buy').on('click', function (event) {
+
+    if (!$(this).hasClass('active')) {
+      return;
+    }
+
     var bool = false;
     switch (parseInt($('#choose_to_buy').attr('data-add'))) {
     case 0:
@@ -259,6 +264,32 @@ $(document).ready(function () {
       break;
 
     case 1:
+
+      // 注数检测
+      var iptCodes = _.compact($('#sd_number').val().replace(/，/ig, ',').split("\n"));
+      if (iptCodes.length > PL5.maxBuyCodeLength) {
+        APP.showTips('您的投注号码多于' + PL5.maxBuyCodeLength + '行，请返回重新选择');
+        return;
+      }
+
+      // 初始化 选择对象
+      G_CHOOSE.init();
+
+      // 投注合法化检测
+      for (var i = 0; i < iptCodes.length; i++) {
+        var validate = PL5.isIllegalCode(iptCodes[i], function (code, zhushu) {
+          G_CHOOSE.codes.push(code);
+          G_CHOOSE.zhushu += zhushu;
+          G_CHOOSE.money += zhushu * 2;
+        });
+
+        if (!validate) {
+          APP.showTips(PL5.getLastErrorMsg());
+          return;
+        }
+
+      }
+
       for (var i = G_CHOOSE.codes.length - 1; i >= 0; i--) {
         if (!(G_CHOOSE.codes[i][0].length > 0 && G_CHOOSE.codes[i][1].length > 0 && G_CHOOSE.codes[i][2].length > 0 && G_CHOOSE.codes[i][3].length > 0 && G_CHOOSE.codes[i][4].length > 0)) {
           return;
@@ -267,6 +298,7 @@ $(document).ready(function () {
       bool = makeChooseCodeHtml(G_CHOOSE.codes);
       break;
     }
+
     if (bool) {
       calculateBuyCodes();
       updateCreatePartProjectParame();
@@ -765,38 +797,35 @@ $(document).ready(function () {
 
   //手动输入Mask
   $('#j-textarea-mask').on('click', function (event) {
+
     $(this).hide();
-    // $('#sd_number')[0].focus();
+    $('#sd_number')[0].focus();
     $('#sd_number').addClass('focus');
+
+  });
+
+  $('#sd_number').on('blur', function (event) {
+    event.preventDefault();
+    /* Act on the event */
+
+    var val = $.trim($(this).val());
+    if (val === '') {
+      $('#j-textarea-mask').show();
+    }
+
   });
 
   // 更新手动输入注数
-  $('#sd_number').on('blur', function (event) {
+  $('#sd_number').on('keyup blur', function (event) {
+
+    // update totalNums
+
     var iptCodes = _.compact($(this).val().replace(/，/ig, ',').split("\n"));
-    if (iptCodes == '') {
-      $('#choose_zhushu').html(0);
-      $('#choose_money').html(0);
-      updateAddBtn(false);
-      $('#choose_to_buy').attr('disabled', 'disabled');
-      return;
-    }
-    if (iptCodes.length > PL5.maxBuyCodeLength) {
-      APP.showTips('您的投注号码多于' + PL5.maxBuyCodeLength + '行，请返回重新选择');
-      return;
-    }
-    G_CHOOSE.init();
-    for (var i = 0; i < iptCodes.length; i++) {
-      var validate = PL5.isIllegalCode(iptCodes[i], function (code, zhushu) {
-        G_CHOOSE.codes.push(code);
-        G_CHOOSE.zhushu += zhushu;
-        G_CHOOSE.money += zhushu * 2;
-      });
-      if (!validate) {
-        APP.showTips("第" + (i + 1) + "行：" + PL5.getLastErrorMsg());
-        return;
-      }
-    }
-    if (G_CHOOSE.zhushu > 0) {
+
+    $('#choose_zhushu').html(iptCodes.length);
+    $('#choose_money').html(iptCodes.length * 2);
+
+    if (iptCodes.length) {
       updateAddBtn(true);
       $('#choose_to_buy').removeAttr('disabled');
       G_BUY.isManual = true;
@@ -804,8 +833,7 @@ $(document).ready(function () {
       updateAddBtn(false);
       $('#choose_to_buy').attr('disabled', 'disabled');
     }
-    $('#choose_zhushu').html(G_CHOOSE.zhushu);
-    $('#choose_money').html(G_CHOOSE.money);
+
   });
 
   /**

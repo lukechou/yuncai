@@ -5,7 +5,7 @@
 .pl5 .row-code  .m-num-group { float: left; margin: 0 0 10px 6px; }
 .pl5 .row-code .m-num-group>a { height: 33px; width: 33px; font-size: 16px; line-height: 33px; }
 .pl5 .row-code .quick-method { float: left; margin: 0 0 0 40px; width: 86px; }
-.pl5 .row-code .quick-method span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #ebeaea; font-size: 12px; }
+.pl5 .row-code .quick-method span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
 .pl5 .row-code .quick-method span:hover { background: #ffd06b; color: #fff; }
 .pl5 .br-zhu { width: 610px; margin: 30px 20px 30px 30px; }
 .pl5 .br-zhu-r { width: 80px; }
