@@ -1,7 +1,6 @@
 
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,18 +12,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="renderer" content="webkit">
   <link rel="stylesheet" href="front_styles/bootstrap.min.css">
-  <link rel="stylesheet" href="front_styles/icon.css">
-  <link rel="stylesheet" href="front_styles/global.css">
-  <link rel="stylesheet" href="front_styles/index.css?version=1.2.0"></head>
+  <link rel="stylesheet" href="front_styles/icon.css?version=1.0.1">
+  <link rel="stylesheet" href="front_styles/global.css?version=1.0.1">
+  <link rel="stylesheet" href="front_styles/index.css?version=1.0.1"></head>
 <body class="bg-24">
-    <div class="hd">
+
+  <div class="hd">
     <div class="hd-top">
-      <div class="w985" id="hd-top">
+      <div class="w985" id="j-hd-top">
         <span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;请</span>
         <a href="#" class="active" id="j-header-login-btn">登录</a>
-        <img src="front_images/bor.png" alt="bor"/>
+        <i class="icon icon-bor"></i>
         <a href="/account/register">免费注册</a>
-        <img src="front_images/bor.png" alt="bor"/>
+        <i class="icon icon-bor"></i>
         <a href="/account/index" class="last">我的账户</a>
       </div>
     </div>
@@ -39,13 +39,13 @@
         <li id="choseCai" class="seed-nav">
           <a href="javascript:;">
             选择彩种
-            <img src="front_images/h-down.png" alt="down" />
+            <i class="icon icon-hdown"></i>
           </a>
           <ul class="hd-mask" id="hdMask">
             <li>
               <a href="/lottery/buy/jczq">
                 <div class="hd-mask-icon">
-                  <img src="front_images/lottery/jczq_home_logo.png" alt="竞彩足球"/>
+                  <i class="icon icon-jczq-home-logo"></i>
                 </div>
                 竞彩足球
                 <span>返奖率73%</span>
@@ -54,7 +54,7 @@
             <li>
               <a href="/lottery/buy/ssq">
                 <div class="hd-mask-icon">
-                  <img src="front_images/lottery/ssq_home_logo.png" alt="双色球"/>
+                  <i class="icon icon-ssq-home-logo"></i>
                 </div>
                 双色球
                 <span>2元赢取1000万</span>
@@ -63,7 +63,7 @@
             <li>
               <a href="/lottery/buy/dlt">
                 <div class="hd-mask-icon">
-                  <img src="front_images/lottery/dlt_home_logo.png" alt="大乐透"/>
+                  <i class="icon icon-dlt-home-logo"></i>
                 </div>
                 大乐透
                 <span>3元赢取1600万</span>
@@ -72,7 +72,7 @@
             <li>
               <a href="/lottery/buy/pl5">
                 <div class="hd-mask-icon">
-                  <img src="front_images/lottery/pl5_home_logo.png" alt="排列5"/>
+                  <i class="icon icon-pl5-home-logo"></i>
                 </div>
                 排列5
                 <span>每日一注赢10万</span>
@@ -81,7 +81,7 @@
             <li>
               <a href="/lottery/buy/qlc">
                 <div class="hd-mask-icon">
-                  <img src="front_images/lottery/qlc_home_logo.png" alt="七乐彩"/>
+                  <i class="icon icon-qlc-home-logo"></i>
                 </div>
                 七乐彩
                 <span>30选7猜中赢百万</span>
@@ -132,6 +132,7 @@
       </ul>
   </div>
   </div>
+
   <div class="page">
 
     <div class="section bg-5">
@@ -139,11 +140,9 @@
       <div class="page-hd">
 
         <div id="slick" class="slick">
-          <div class="carousel bn2-bg">
-            <a href="/lottery/buy/dlt">
-              <img data-lazy="front_images/index/banner-4.jpg" class="small lazyOwl" />
-            </a>
-          </div>
+          <!--div class="carousel bn5-bg">
+              <img data-lazy="front_images/index/banner-5.jpg" class="small lazyOwl" />
+          </div-->
           <div class="carousel bn3-bg">
             <a href="/lottery/trade/model-index">
               <img data-lazy="front_images/index/banner-3.jpg" class="small lazyOwl" />
@@ -188,8 +187,8 @@
     <i class="icon icon-dot"></i>
     <span>快速投注</span>
     <ul class="nav m-title-ls clearfix" id="j-quick-buy-loty-type" role="tablist">
-      <li role="presentation" class="active"><a href="#ssq" role="tab" data-toggle="tab" data-seed="ssq">双色球</a></li>
-      <li role="presentation"><a href="#dlt" role="tab" data-toggle="tab" data-seed="dlt">大乐透</a></li>
+      <!--li role="presentation"><a href="#ssq" role="tab" data-toggle="tab" data-seed="ssq">双色球</a></li-->
+      <li role="presentation" class="active"><a href="#dlt" role="tab" data-toggle="tab" data-seed="dlt">大乐透</a></li>
       <li role="presentation"><a href="#pl5" role="tab" data-toggle="tab" data-seed="pl5">排列5</a></li>
     </ul>
     <a href="/lottery/buy/ssq" target="_black" class="more" id="j-go-buy-page">自选号码</a>
@@ -197,7 +196,7 @@
   <!-- /.m-title-->
   <!-- Tab panes -->
   <div class="tab-content" id="j-quick-buy-loty-detail">
-    <div role="tabpanel" class="tab-pane fade in active" id="ssq">
+    <div role="tabpanel" class="tab-pane fade in " id="ssq">
           <div class="tou">
             <div class="tou-hd clearfix">
               <img src="front_images/lottery/ssq_logo.png" alt="双色球" class="ball">
@@ -222,7 +221,7 @@
       <input type="hidden" class="j-qihao"  name="qihao" value="15020" /><input type="hidden" id="playName" name="playName" value="0" />
       <input type="hidden" class="j-qihao-sell-endtime"  name="qihao_sell_endtime" value="1424000700" />
     </div>
-    <div role="tabpanel" class="tab-pane fade in " id="dlt">
+    <div role="tabpanel" class="tab-pane fade in active" id="dlt">
           <div class="tou">
             <div class="tou-hd clearfix">
               <img src="front_images/lottery/dlt_logo.png" alt="大乐透" class="ball">
@@ -235,7 +234,7 @@
               <li class="blue">00</li>
       </ul>
       <button class="btn btn-change">换一注</button>
-      <button class="btn btn-red">立即投注</button>
+      <button class="btn btn-stop">暂停销售</button>
       </div>
       <p class="tips">15019期<span class="ml-30">0元滚存 </span>
       <span class="pull-right">
@@ -258,7 +257,7 @@
               <li>00</li>
       </ul>
       <button class="btn btn-change">换一注</button>
-      <button class="btn btn-red">立即投注</button>
+      <button class="btn btn-stop">暂停销售</button>
       </div>
       <p class="tips">15041期<span class="ml-30">0元滚存，天天开奖</span>
       <span class="pull-right">
@@ -337,7 +336,7 @@
           </li>
           <li>今日运程：<span id="j-xz-yc"></span></li>
           <li>
-            <button class="btn btn-red fs-yh" id="j-xz-buy">立即投注</button>
+            <button class="btn btn-red btn-stop fs-yh" id="j-xz-buy-stop">暂停销售</button>
           </li>
         </ul>
       </div>
@@ -532,26 +531,24 @@
 <!-- /.page-->
 
 
-
-
 <div class="ft">
     <div class="ft-mn w985">
       <div class="ft-l clearfix">
         <ul>
           <li class="mr-30 mb-25">
-            <img src="front_images//index-ft-1.png" alt="购彩方便">
+            <i class="ft-left-img ft-left-img1"></i>
             <a href="#">购彩方便</a>
           </li>
           <li class="mb-25">
-            <img src="front_images//index-ft-2.png" alt="账户安全">
+            <i class="ft-left-img ft-left-img2"></i>
             <a href="#">账户安全</a>
           </li>
           <li class="mr-30">
-            <img src="front_images//index-ft-3.png" alt="领奖无忧">
+            <i class="ft-left-img ft-left-img3"></i>
             <a href="#">领奖无忧</a>
           </li>
           <li>
-            <img src="front_images//index-ft-4.png" alt="无手续费">
+            <i class="ft-left-img ft-left-img4"></i>
             <a href="#">无手续费</a>
           </li>
         </ul>
@@ -610,6 +607,7 @@
             </ul>
           </li>
         </ul>
+
         <div class="ft-text text-center">
           <p class="ft-service">服务热线:400-8898-310</p>
           <p>Copyright &copy; 2012-2014 深圳市云彩科技有限公司 版权所有 粤ICP备13068146号-2</p>
@@ -620,14 +618,20 @@
         </div>
       </div>
   </div>
-</div>
+  </div>
 </body>
 
-<div class="m-mask pullDown" id="j-first-mask">
+<script>
+    var staticHostURI = 'http://static3.yuncai.com';
+</script>
+
+
+
+<div class="m-mask slideDown" id="j-first-mask">
   <div class="m-mask-bg"></div>
   <div class="m-mask-main">
-    <img src="front_images/index/mask-close.png" alt="close" class="m-mask-close" id="j-mask-close">
-    <img src="front_images/index/mask-main.png" alt="mask-main"></div>
+    <img src="front_images/hm.gif" data-src="front_images/index/mask-close.png" alt="close" class="m-mask-close" id="j-mask-close">
+    <img src="front_images/hm.gif" data-src="front_images/index/mask-main.png" alt="mask-main"></div>
 </div>
 
 <div class="friend-modal modal xz-modal" id="j-xz-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
