@@ -1,123 +1,3 @@
-/*****************************Project Center Start*****************************/
-
-/* 合买大厅-index */
-.customize { overflow: hidden; padding: 12px 0; }
-.customize-l { float: left; width: 185px; }
-.customize-r { float: right; width: 800px; padding-left: 12px; }
-
-/* 合买大厅-Right-Header */
-.customize-s { margin-bottom: 10px; padding: 15px 10px 15px 15px; border: 1px #dfdfdf solid; background: #e4e5e6; }
-.customize-s > h1 { font-size: 22px; font-weight: bold; margin: 0; }
-.customize-s > h1 > .icon { margin-right: 5px; }
-.c-name { font-size: 12px; width: 130px; padding: 2px 5px; }
-
-/* 合买大厅-Left Nav */
-.m-he-nav { font-size: 12px; width: 186px; background: #f1f1f1; }
-.m-he-nav h2 { font-size: 16px; font-weight: bold; margin: 0; padding: 10px 20px; color: #fff; background: #f13c38; }
-.m-he-nav ul { border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; }
-.m-he-nav ul > li.title { font-weight: bold; padding: 5px 20px; }
-.m-he-nav ul > li > a { display: block; padding: 5px 20px; color: #3d3d3d; }
-.m-he-nav ul > li > a.active { background: #e1e1e1; color: #0d67c4; }
-.m-he-nav ul > li > a:hover { text-decoration: none; color: #0d67c4; }
-.m-he-nav ul.last { border-bottom: 1px #dfdfdf solid; }
-.m-he-nav .line { width: 93%; margin: auto; border-bottom: 1px #d8d8d8 dotted; }
-
-/* 合买大厅-右侧头部 */
-.m-cs-rtbox { font-size: 12px; padding: 10px 21px 10px 20px; border: 1px #dfdfdf solid; background: #f1f1f1; margin-bottom: 12px; }
-.m-cs-rtbox .logo { width: 78px; height: 78px; margin-right: 0px; }
-.m-cs-rtbox .mn { position: relative; width: 655px; }
-.m-cs-rtbox .title { font-size: 16px; margin: 10px 0 15px; }
-.m-cs-rtbox .title > b { font-size: 22px; margin-right: 10px; font-family: 'Microsoft Yahei'; }
-.m-cs-rtbox .title > span { margin: 0 3px; }
-.m-cs-rtbox .links .btn { padding: 4px 12px; }
-.m-cs-rtbox .text { position: absolute; right: 0; bottom: 0; color: #848484; }
-.m-cs-rtbox .text .qi { display: block; margin-bottom: 15px; text-align: right; color: #3d3d3d; font-size: 14px; font-family: 'simsun'; font-weight: bold; }
-.m-cs-rtbox .text .qi > span { margin: 0 5px; }
-.badge2 { line-height: 14px; float: right; width: 56px; height: 14px; padding-left: 3px; text-align: center; color: #fff; background: url(../front_images/tip1.png) no-repeat; }
-
-/* 合买大厅-发单排行榜 And帮助中心 */
-.m-dan-nav { margin-top: 15px; border: 1px #dfdfdf solid; }
-.m-dan-nav .head { font-weight: bold; padding: 5px 20px; background: #dddedf; }
-.list-group { margin: 0; }
-.list-group-item:last-child { border-radius: 0; }
-.list-group-item-2 { font-size: 12px; position: relative; display: block; padding: 6px 10px 6px 20px; color: #404040; border: none; background: #f0efef; }
-.list-line { width: 90%; margin: 5px auto; border-top: 1px #dfdfdf dashed; }
-.list-line2 { width: 99%; }
-.list-group-item-2.title { font-weight: bold; margin: 0; color: #000; }
-a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; color: #0c67c4; background: #dddedf; }
-.list-group2 { font-size: 12px; padding: 8px 5px 15px 8px; }
-.list-group2 .table { margin: 0; }
-.list-group2 .table a { color: #0c67c4; }
-.list-group2 .table > thead > tr > th, .list-group2 .table > tbody > tr > th, .list-group2 .table > tfoot > tr > th, .list-group2 .table > thead > tr > td, .list-group2 .table > tbody > tr > td, .list-group2 .table > tfoot > tr > td { padding: 0; border: none; }
-.list-group2 .table > thead { color: #848484; }
-.table-mn { border: 1px #dfdfdf solid; }
-.table2 { background: #fff; }
-.table2 { font-size: 12px; text-align: center; }
-.table2 > thead > tr > th { font-weight: normal; text-align: center; color: #848484; }
-.table2 > tbody > tr > td.oper > a, .table2 > tbody > tr > td.oper > a:hover { color: #0d67c4; }
-.table2 > tbody > tr:nth-child(odd) { background: #f1f1f1; }
-.table2 > thead > tr > th, .table2 > tbody > tr > td { border: none; }
-
-/* 合买大厅-名人 */
-.m-hm-name { font-size: 12px; }
-.m-hm-name h2 { font-size: 16px; font-weight: bold; margin: 15px 0 10px; color: #f13c38; }
-.m-hm-name .mn { padding: 0 25px; border: 1px #dfdfdf solid; }
-#owl-he { width: 732px; margin: auto; margin-left: 5px; }
-.m-hm-name .owl-pagination { display: none; }
-.m-hm-name .owl-theme .owl-controls .owl-buttons .owl-prev, .m-hm-name .owl-theme .owl-controls .owl-buttons .owl-next { top: 65px; }
-.m-hm-name .owl-theme .owl-controls .owl-buttons .owl-prev { left: -35px; width: 15px; padding: 0; background: url(../front_images/h-prev.png)no-repeat center center; }
-.m-hm-name .owl-theme .owl-controls .owl-buttons .owl-next { right: -26px; width: 15px; padding: 0; background: url(../front_images/h-next.png)#dfe0e1 no-repeat center center; }
-
-/* 合买大厅-轮播组件 */
-#owl-he .item { height: 145px; margin: 15px 0; padding: 0 8px; color: #404040; border-left: 1px #dfdfdf dashed; }
-#owl-he .item.first { border: none; }
-#owl-he .item ul > li { padding-bottom: 5px; }
-#owl-he .item ul > li.zj .title { float: left; height: 19px; }
-#owl-he .item ul > li .icon { display: block; float: left; margin-right: 2px; }
-#owl-he .item ul > li.last { padding-bottom: 0; }
-#owl-he .item .head { width: 46px; height: 46px; margin-right: 15px; }
-#owl-he .item .ding { float: right; margin-top: 13px; color: #0c67c4; }
-#owl-he .item .title { display: inline-block; width: 60px; }
-#owl-he .item .input { width: 65px; margin-right: 3px; padding: 3px 4px; border: 1px #dfdfdf solid; background: #fff; }
-#owl-he .item .btn { font-size: 12px; float: right; padding: 4px 25px; color: #fff; background: #f13c38; }
-#owl-he .item  .money { font-size: 18px; margin-right: 5px; }
-
-/* 合买大厅-表格组件 */
-.he-table { margin-bottom: 0; }
-.he-table .tb-1 { width: 74px; }
-.he-table .tb-2 { width: 114px; }
-.he-table .tb-3 { width: 114px; }
-.he-table .tb-4 { text-align: right; width: 145px; padding-right: 24px; }
-.he-table .tb-5 { text-align: left; width: 80px; }
-.he-table .tb-6 .fen { position: relative; left: -35px; }
-.he-table .tb-6 .more { position: relative; left: 20px; }
-.he-table .tb-load { height: 187px; }
-.he-table .miss-tips { position: relative; left: -36px; }
-.he-table .miss-dan { position: relative; left: 26px; }
-.he-table>thead>tr>th, .he-table tbody tr td { padding: 5px 0; }
-.he-table thead tr .icon { position: relative; top: 3px; margin-left: 5px; }
-.he-table tbody tr .icon-moon, .he-table tbody tr .icon-start { position: relative; bottom: 2px; }
-.he-table tbody tr .ding { display: inline-block; width: 16px; margin-right: 5px; }
-.he-table tbody tr td { height: 25px; vertical-align: middle; }
-.he-table tbody tr .btn-c1 { margin-right: 5px; padding: 0; width: 57px; height: 25px; font-family: 'simsun'; }
-.he-table tbody tr .u-ci { font-size: 12px; width: 80px; padding: 3px 5px; border: 1px #dfdfdf solid; margin-right: 6px; }
-.m-hm-fi { padding: 5px 10px; background: #f1f1f1; }
-.m-hm-fi select, .m-hm-fi input { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: 'simsun'; width: 70px; height: 25px; }
-.m-hm-fi select.middle { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: 'simsun'; width: 90px; height: 25px; }
-.m-hm-fi select.small { padding: 3px; color: #3d3d3d; border: 1px #dfdfdf solid; background: #fff; font-size: 12px; font-family: 'simsun'; width: 70px; height: 25px; }
-.m-hm-fi input { width: 90px; }
-.m-hm-fi .btn { position: relative; padding: 0; width: 54px; height: 25px; }
-
-/*****************************Project Center End*****************************/
-
-/****************************Project Detial Start****************************/
-
-
-
-/****************************Project Detial End****************************/
-
-/****************************Personal Detial Start****************************/
-
 /* 个人中心 */
 .personal { width: 985px; margin: auto; padding: 12px 0 30px; }
 .personal .m-tab-nav { padding: 6px 0 0 15px; }
@@ -242,7 +122,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .info-list .title { display: inline-block; width: 50px; text-align: right; }
 .info-list .value > input[type=radio] { position: relative; top: 2px; width: 10px; margin: 0 3px; }
 .info-list .value > input { width: 200px; background: #fff; }
-.info-list .value .btn-red { font-size: 14px; padding: 5px 0; \width: 100px; margin-top: 0; }
+.info-list .value .btn-red { font-size: 14px; padding: 5px 0; width: 100px; margin-top: 0; }
 .info-list .value > input, .info-list .value > select { padding: 5px 10px; border: 1px #dfdfdf solid; }
 .pwd-tips { display: none; }
 .pwd-tips i { position: relative; top: 6px; margin: 0 6px; }
@@ -275,6 +155,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .safemobile .panel-body .info-text { padding: 51px 15px 15px 230px; }
 .safeemail { padding: 10px 30px; }
 .safemobile .panel-body .safeemail .info-text { padding: 51px 15px 15px 210px; }
+.safemobile  .btn-common.active { background: #dfdfdf; }
 #j-safeemail-2, #j-safeemail-3 { display: none; }
 .safemobile .panel-body #j-safeemail-2 .info-text { padding: 51px 15px 15px 140px; }
 .safecard .panel { min-height: 320px; }
@@ -371,13 +252,11 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .bind-form .control-label { font-weight: normal; padding-right: 2px; float: left; width: 120px; }
 .bind-form .form-control { height: 28px; border: 1px #dfdfdf solid; border-radius: 0; width: 196px; display: inline-block; }
 .bind-form .control-right { width: 400px; float: left; }
-.bind-form .form-group > div { padding: 0; }
-.bind-form .form-tips { text-indent: -50px; }
+.bind-form .form-group > div { padding: 0; position: relative; }
+.card-tips { height: 42px; line-height: 42px; font-size: 24px; font-weight: bold; min-width: 120px; position: absolute; top: -42px; left: 0; background: #333; padding: 0 10px; color: #08b959; border: 1px #eac07d solid; background: #fbf6e9; display: none; }
 
 /* 个人中心-绑定成功 */
-.bindcard-suc {   display: none;
-  margin: 40px 0 0 210px;
-  overflow: hidden; }
+.bindcard-suc { display: none; margin: 40px 0 0 210px; overflow: hidden; }
 .bindcard-suc > div.pull-left { margin-left: 15px; }
 .bindcard-suc h5 { font-size: 18px; font-weight: bold; margin-bottom: 20px; }
 
@@ -412,19 +291,3 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .next-text ul .title { font-family: 'Microsoft Yahei'; font-size: 18px; font-weight: bold; }
 .next-text .more { margin-left: 70px; }
 .graytext { color: #a5a5a5; }
-
-/****************************Personal Detial End****************************/
-
-/* 购买成功页 */
-.buyok .top-title { font-size: 12px; margin: 10px 0; color: #3d3d3d; }
-.buyok .top-title a { padding: 0 5px; color: #3d3d3d; }
-.buyok .main { width: 100%; height: 400px; margin-bottom: 130px; border: 1px #dfdfdf solid; }
-.main .m-box { width: 560px; margin: 100px auto 0; }
-.main .m-box .icon { float: left; }
-.main .m-box .text { font-size: 12px; margin-left: 75px; }
-.main .m-box h4 { font-size: 14px; font-weight: bold; }
-.main .m-box p { color: #848484; }
-.main .m-box .linkLine a { padding: 0 10px; border-left: 1px #dfdfdf solid; }
-.main .m-box .linkLine a.first { padding-left: 0; border: none; }
-.main .m-box .linkLine a:hover { text-decoration: none; color: #f13c38; }
-

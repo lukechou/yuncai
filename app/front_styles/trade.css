@@ -95,7 +95,9 @@
 /* 开奖公告 */
 .kjgg .sub-content { padding: 5px 0 5px 16px; }
 .kjgg .sub-content>p { text-align: left; margin: 5px 0; }
-.kjgg .sub-content>p>.bg-3, .kjgg .sub-content>p>.bg-4 { border-radius: 50%; width: 20px; height: 20px; display: inline-block; color: #fff; text-align: center; line-height: 20px; margin-right: 3px; }
+.kjgg .sub-content>p>.bg-3, .kjgg .sub-content>p>.bg-4 { width: 20px; height: 20px; display: inline-block; color: #fff; text-align: center; line-height: 20px; margin-right: 3px; }
+.kjgg .sub-content>p>.bg-3{background: url(../front_images/ballicon/bssr.png) no-repeat;}
+.kjgg .sub-content>p>.bg-4{background: url(../front_images/ballicon/bssb.png) no-repeat;}
 /* 号码统计 */
 .tab-cut { overflow: hidden; height: 29px; width: 100%; }
 .tab-cut li { font: normal 12px/28px 'simsun'; color: #333; display: inline-block; width: 25%; float: left; text-align: center; cursor: pointer; background: #e4e5e6; border-bottom: 1px solid #dfdfdf; border-left: 1px #dfdfdf solid; }
@@ -161,12 +163,12 @@
 .touz_area_box { margin: 7px 0 0; position: relative; }
 .martop-6{ margin-top: -6px; }
 .touz_area_box li { float: left; margin: 0 6px 10px 0; text-align: center; padding: 0; cursor: pointer; font-weight: bold; }
-.touz_area_box li span { cursor: pointer; display: block; overflow: hidden; text-align: center; width: 33px; height: 33px; line-height: 33px; font-size: 17px;  -webkit-border-radius: 50%; border-radius: 50%;}
+.touz_area_box li span { cursor: pointer; display: block; overflow: hidden; text-align: center; width: 33px; height: 33px; line-height: 33px; font-size: 17px; }
 .touz_area_box li em { color: #afafaf; font-size: 12px; font-style: normal; font-weight: normal; }
 .touz_area_box li em.colorRed { color: #f13c38; }
-.touz_area_box li span.gray_ball, .touz_area_box li span { background: #f1f1f1; color: #3d3d3d; border: 1px #dfdfdf solid; behavior: url(/front_styles/pie/pie.htc);}
-.touz_area_box .red_area span.active { background: #f13c38; color: #fff; text-decoration: none; border: none; }
-.touz_area_box .blue_area span.active { background: #5198f1; color: #fff; text-decoration: none; border: none; }
+.touz_area_box li span.gray_ball, .touz_area_box li span { color: #3d3d3d;  background: url(../front_images/ballicon/bsg.png) no-repeat;}
+.touz_area_box .red_area .active span { background: url(../front_images/ballicon/bsr.png) no-repeat; color: #fff; text-decoration: none; border: none; }
+.touz_area_box .blue_area .active span { background: url(../front_images/ballicon/bsb.png) no-repeat; color: #fff; text-decoration: none; border: none; }
 
 /* 大乐透.快捷投注.选球区 */
 .touz_area_box .red_area { width: 462px; }

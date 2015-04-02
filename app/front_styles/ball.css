@@ -128,8 +128,9 @@
 .data-loadbox { width: 100%; height: 200px; padding-top: 100px; text-align: center; border: 1px #dfdfdf solid; border-width: 1px 1px 0; }
 .dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3, .row4, .row5 { display: none; }
 .row2 .btnBox, .row3 .btnBox { border: none; }
-.onlyBf .co4 { width: 272px; }
-.onlyBqc .co4, .onlyZjq .co4 { width: 180px; }
+.onlyBf .co4 { width: 260px; }
+.onlyZjq .co4 { width: 180px; }
+.onlyBqc .co4 { width: 178px; }
 .onlyBf .co2, .onlyBqc .co2, .onlyZjq .co2 { width: 60px; }
 
 /* 胜平负 数据主体样式 */
@@ -160,10 +161,12 @@
 /* 总进球 */
 .onlyBf .no-support, .onlyZjq .no-support, .onlyBqc .no-support { width: 100%; border: none; }
 .onlyBf .row1, .onlyZjq .row3, .onlyBqc .row2 { display: block; }
-.onlyBf .row1 { width: 224px; }
+.onlyBf .row1 { width: 217px; }
 .onlyBqc .row2 { width: 316px; }
 .onlyZjq .row3 { width: 314px; }
-.onlyBf .co2, .onlyBqc .co2 { width: 91px; }
+.onlyBf .co2 { width: 91px; }
+.onlyBqc .co2 { width: 93px; }
+.onlyBf .co2 { width: 110px; }
 .onlyZjq .co2 { width: 93px; }
 .row1-1, .row2-1, .row3-1 { border: 1px #dfdfdf solid; }
 .dataBody .lastOne { border-right: none; }
@@ -180,15 +183,16 @@
 /* 混合投注 */
 .onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4 { line-height: 80px; height: 80px; }
 .onlyHhtz .dataBody dd { min-height: 80px; }
-.onlyHhtz .row4 { display: block; width: 193px; }
-.onlyHhtz .co4 { width: 252px; }
+.onlyHhtz .row4 { display: block;}
+.onlyHhtz .co4 { width: 260px; }
 .row4-1 { width: 197px; }
-.row4 em { float: left; width: 49px; border-right: 1px #dfdfdf solid; }
+.row4 em { float: left; width: 42px; border-right: 1px #dfdfdf solid; }
 .row4 em.last { width: 45px; }
-.row4-1 em { width: 49px; }
+.row4-1 em.rq { width: 45px; }
+.row4-1 em { width: 42px; }
 .row4 .rq { width: 49px; }
-.onlyHhtz .co5 { display: block; }
-.onlyHhtz .co2 { width: 93px; }
+.onlyHhtz .co5 { display: block; width:45px; }
+.onlyHhtz .co2 { width: 110px; }
 .rq b { font-weight: normal; }
 .onlyHhtz .dataBody .row4-1, .row4-1 em { line-height: 40px; height: 40px; }
 .onlyHhtz .tg-data { line-height: 80px; position: absolute; right: 0; display: block; overflow: hidden; width: 45px; height: 80px; text-align: center; text-indent: -5px; border: 1px #dfdfdf solid; border-right: none; }
@@ -208,9 +212,9 @@
 .hhtz-nobor { position: absolute; top: -3px; right: 0; width: 45px; height: 5px; background: #e3e3e3; }
 
 /* Right */
-.icoDel, .qrtz-box a { color: #3d3d3d; }
-.icoDel { font-size: 18px; line-height: 1; position: relative; top: 0; left: -1px; }
-.icoDel:hover { text-decoration: none; color: #f13c38; }
+.qrtz-box a { color: #3d3d3d; }
+.icoDel { font-size: 18px; line-height: 1; position: relative; top: 0; left: -1px; color: #848484; }
+.icoDel:hover { text-decoration: none; color: #3d3d3d; }
 
 /* .unselect */
 .unselect h2 { font: 500 16px/36px 'Microsoft Yahei'; line-height: 36px; height: 36px; margin: 0; padding-left: 15px; color: #3d3d3d; border-top: 1px solid #dfdfdf; border-bottom: 1px solid #dfdfdf; background: #f1f1f1; }

@@ -113,8 +113,8 @@
 /* 快速投注区 */
 .tou .ball { width: 108px; height: 78px; float: left; padding: 0 15px; }
 .tou .tou-ls { float: left; padding: 20px 15px 0 0; }
-.tou .tou-ls li { font-family: 'Microsoft Yahei'; font-size: 18px; line-height: 42px; float: left; width: 42px; height: 42px; margin-right: 11px; text-align: center; color: #fff; border-radius: 50%; background: #f13c38; }
-.tou .tou-ls li.blue { background: #388bf1; }
+.tou .tou-ls li { font-family: 'Microsoft Yahei'; font-size: 18px; line-height: 42px; float: left; width: 42px; height: 42px; margin-right: 11px; text-align: center; color: #fff; background: url(../front_images/ballicon/bbr.png) no-repeat; }
+.tou .tou-ls li.blue { background: url(../front_images/ballicon/bbb.png) no-repeat; }
 .tou .btn { font-family: 'Microsoft Yahei'; height: 40px; padding: 0; margin: 20px 0 0; float: left; font-size: 16px; width: 90px; }
 .tou .btn-change { width: 70px; margin-right: 7px; }
 .tou .tips { font-size: 12px; padding: 34px 0 0 30px; }

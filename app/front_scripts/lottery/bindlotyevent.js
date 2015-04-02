@@ -353,7 +353,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     el.find('.active').removeClass('active');
 
     for (var i = 0; i < arr.length; i++) {
-      el.find('li span').eq(arr[i] - 1).addClass('active');
+      el.find('li').eq(arr[i] - 1).addClass('active');
     };
 
   };
@@ -519,12 +519,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     COMMON.clearAllBallActive(el);
     for (var i = 0; i < r.length; i++) {
       rnum = parseInt(r[i]) - 1;
-      el.find('.j-ball-red li').eq(rnum).find('span').addClass('active');
+      el.find('.j-ball-red li').eq(rnum).addClass('active');
     };
 
     for (var i = 0; i < b.length; i++) {
       bnum = parseInt(b[i]) - 1;
-      el.find('.j-ball-blue li').eq(bnum).find('span').addClass('active');
+      el.find('.j-ball-blue li').eq(bnum).addClass('active');
     };
 
     COMMON.checkBallGroup($(this));
@@ -1641,7 +1641,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // 快捷投注 选球
-  $('.ball-group').on('click', 'span', function (event) {
+  $('.ball-group').on('click', 'li', function (event) {
 
     var redGroup = Config.box.find('.j-ball-red');
     var redGroupAc = redGroup.find('.active');
@@ -1993,18 +1993,16 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   var sdNumberTips = '';
   var sdStatus = true;
 
-
-  $('#sd_number').on('blur', function(event) {
+  $('#sd_number').on('blur', function (event) {
     event.preventDefault();
     /* Act on the event */
 
     var val = $.trim($(this).val());
-    if(val ===''){
+    if (val === '') {
       $('#j-textarea-mask').show();
     }
 
   });
-
 
   // 粘贴上传-添加到投注列表
   $('#sd_sub').on('click', function (event) {
@@ -2019,15 +2017,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var boxZhuLen = Config.box.find('.br-zhu-item').length;
     var addZhuLen = 0;
 
-    if(!t.hasClass('active')){
+    if (!t.hasClass('active')) {
       return;
     }
 
     if (lotyName == 'dlt') {
       tips[0] = '<h5>请按照正确的格式填写：</h5><p>单式：01,02,03,04,05+01,02</p><p>复式：01,02,03,04,05,06,07+01,02,03</p>';
     }
-
-
 
     if (Config.box.find('.br-zhu-item').length >= Config.maxHang) {
       APP.showTips('您的投注号码多于100行，请返回重新选择');

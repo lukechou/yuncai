@@ -620,7 +620,11 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
         PL3.chooseBuyBtn.attr('disabled', 'disabled');
       }
       if (uploadArr.length === 0) {
-        APP.showTips('<h5>请按照正确的格式填写：</h5><p>单式：1,2,3</p><p>复式：01,234,35</p>');
+        var uploadErrorTips = '<h5>请按照正确的格式填写：</h5><p>单式：1,2,3</p><p>复式：01,234,35</p>';
+        if(PL3.nav.big!=='zx'){
+          uploadErrorTips = '<h5>请按照正确的格式填写：</h5><p>单式：1,2,3</p><p>复式：0,1,2,3,4,5</p>';
+        }
+        APP.showTips(uploadErrorTips);
         return;
       } else {
         calculateBuyCodes();

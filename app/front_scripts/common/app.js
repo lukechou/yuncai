@@ -244,13 +244,13 @@ define(['jquery'], function ($) {
 
         switch (type) {
         case 1:
-          html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">确定</button></div>';
+          html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">'+obj.ensuretext+'</button></div>';
           break;
         case 2:
-          html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">确定</button><button class="btn btn-gray ml15" data-dismiss="modal">取消</button></div>';
+          html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">'+obj.ensuretext+'</button><button class="btn btn-gray ml15" data-dismiss="modal">'+obj.canceltext+'</button></div>';
           break;
         default:
-          html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">确定</button></div>';
+          html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">'+obj.ensuretext+'</button></div>';
           break;
         }
       } else {
@@ -265,6 +265,7 @@ define(['jquery'], function ($) {
 
         $('.j-apptips-title').html(obj.title);
         $('#apptips-content').html(html);
+
       }
 
       // 绑定确认按钮事件
@@ -298,6 +299,8 @@ define(['jquery'], function ($) {
         html: '',
         type: 0,
         text: '',
+          ensuretext:'确定',
+          canceltext:'取消',
         onConfirm: null,
         callback: null
       };
