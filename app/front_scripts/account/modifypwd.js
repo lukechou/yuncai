@@ -42,11 +42,17 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
           _this.Parent = _this.elParent($(this));
 
           if (method == 2) {
+
             if (newPwd !== checkPwd) {
               _this.errorShow();
             } else {
-              _this.successShow();
+              if(checkPwd!==''){
+                _this.successShow();
+              }else{
+                _this.hideAllTips();
+              }
             }
+
           } else {
 
             if (/^[^\s]{6,15}$/.test(v)) {
@@ -113,6 +119,25 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
 
   Inp.init();
 
+
+  $('#newpwd').on('change', function(event) {
+    event.preventDefault();
+
+    var ckp = $('#checkpwd');
+    var val = $(this).val();
+    var ckpVal = ckp.val();
+
+    if(val === ckpVal){
+      ckp.parents('.info-list').find('.j-tips-s,.j-tips-e,.j-tips-w').addClass('hide');
+      ckp.parents('.info-list').find('.j-tips-s').removeClass('hide');
+    }else{
+      ckp.parents('.info-list').find('.j-tips-s,.j-tips-e,.j-tips-w').addClass('hide');
+      ckp.parents('.info-list').find('.j-tips-e').removeClass('hide');
+    }
+
+  });
+
+
   //修改密码
   $('#j-pwdsave').on('click', function () {
 
@@ -136,6 +161,7 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
 
           if (data.retCode == 100000) {
             Inp.hideAllTips();
+
             $('.pwd-tips').fadeIn('fast', function () {
 
               setTimeout(function () {
@@ -143,6 +169,8 @@ require(['jquery', 'app', 'bootstrap'], function ($, APP) {
               }, 1000);
 
             });
+
+            location.href = '/account/logout';
 
           } else {
 

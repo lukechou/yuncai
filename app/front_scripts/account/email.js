@@ -51,7 +51,7 @@
    });
 
    $('#j-send-again').on('click', function () {
-     if (!$(this).hasClass('active')) {
+     if ($(this).hasClass('active')) {
        return;
      } else {
        sendCaptchaEmail(true);
@@ -88,7 +88,7 @@
            $('#j-safeemail-2').fadeIn();
 
            // 计算可再次发送时间
-           nextTime = (+new Date()) + 60000;
+           nextTime = (+new Date()) + 120000;
 
            sengAgain = setInterval(function () {
              var now = $.now();
@@ -97,10 +97,10 @@
                $('#j-send-again').html(t + '秒后可再次发送');
              } else {
                clearInterval(sengAgain);
-               $('#j-send-again').html('再次发送').removeClass('active');
+               $('#j-send-again').html('重新发送').removeClass('active');
              }
            }, 1000);
-           $('#email_temp').html(data.retData.email);
+           $('#email_temp').html(e);
            $('#email_login').attr('href', data.retData.mailHost);
          } else {
            APP.handRetCode(data.retCode, data.retMsg);
@@ -110,13 +110,15 @@
    }
 
    $('#j-send-2').on('click', function () {
+    var e = $("#email").val();
+    var c = $('#checknum').val();
      $.ajax({
          url: '/account/bind_mail/ajax',
          type: 'get',
          dataType: 'json',
          data: {
-           email: $("#email").val(),
-           captcha: $('#checknum').val()
+           email: e,
+           captcha: c
          },
        })
        .done(function (data) {
@@ -124,7 +126,7 @@
          if (data.retCode == 100000) {
            $('#j-safeemail-2').hide();
            $('#j-safeemail-3').fadeIn();
-           $('#bindMail').html(data.retData.email);
+           $('#bindMail').html(e);
          } else {
            APP.handRetCode(data.retCode, data.retMsg);
          }

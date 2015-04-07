@@ -312,60 +312,71 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                 display: 'none'
             });
         });
-        $('#j-tab li:nth-child(2)').click(function(event) {
-            $('#j-total-zhu').css({
-                display: 'none'
-            });
-            $('#j-just-showmein').css({
-                display: 'block'
-            });
-        });
+
+        $('#j-tab li').on('click', function(event) {
+                var selctVal = $(this).find('a').html();
+                $('#j-just-showmein').hide();
+                $('#j-total-zhu').hide();
+                if (selctVal == '参与用户') {
+                    $('#j-just-showmein').show();
+                } else if (selctVal == "选号详情") {
+                    $('#j-total-zhu').show();
+                }
+            })
+            //$('#j-tab li:nth-child(2)').click(function(event) {
+            //    $('#j-total-zhu').css({
+            //        display: 'none'
+            //    });
+            //    $('#j-just-showmein').css({
+            //        display: 'block'
+            //    });
+            //});
         if ($('#myname').text() != $('.j-user-details td:nth-child(2)').text()) {
             $('.j-co-opertd a').remove();
         }
         $('.j-cancalorder-oper').on('click', function(event) {
+            var orderId = $(this).parents('tr').attr('data-id');
             APP.showTips({
                 title: '撤单确认',
                 text: '<div class="hm-cdqr1"><i class="icon icon-fail"></i>您是否确认撤销该合买订单？ <dvi>',
                 type: 2,
                 onConfirm: function() {
-                    APP.showTips({
-                        title: '撤单确认',
-                        text: '<div class="hm-cdqr2"><i class="icon icon-dui"></i><div class="cdqr2-div1">已撤销该合买订单</div><div class="cdqr2-div2">投注金额将自动返还到您的账户上</div></div>',
-                        type: 2,
-                        onConfirm: function() {
-                            $('#myModal').modal('hide');
-                        }
-                    });
+                    $.ajax({
+                            url: cancelOrderURI + orderId,
+                            type: 'get',
+                            dataType: 'json'
+                        })
+                        .done(function(data) {
+                            if (data.retCode == 100000) {
+                                APP.showTips({
+                                    title: '撤单确认',
+                                    text: '<div class="hm-cdqr2"><i class="icon icon-dui"></i><div class="cdqr2-div1">已撤销该合买订单</div><div class="cdqr2-div2">投注金额将自动返还到您的账户上</div></div>',
+                                    type: 1,
+                                    onConfirm: function() {
+                                        $('#myModal').modal('hide');
+                                        window.location.reload();
+                                    }
+                                });
+                            } else {
+                                APP.handRetCode(data.retCode, data.retMsg);
+                            }
+                        })
+                        .fail(function() {
+                            APP.onServiceFail();
+                        });
                 }
             });
         });
         $('#j-ck').on('click', function(event) {
-
-            if ($('#j-ck').is(':checked')) {
-                if ($('#myname').text() != $('.j-user-details td:nth-child(2)').text()) {
-                    $('.j-user-details').css({
-                        visibility: 'hidden'
-                    });
+            var selected = ($('#j-ck').is(':checked'));
+            $('.j-user-details').each(function(index) {
+                if (selected && ($(this).attr('data-uid') != $('#j-login-uid').val())) {
+                    $(this).hide();
                 } else {
-                    $('.j-user-details').css({
-                        visibility: 'visible'
-                    });
+                    $(this).show();
                 }
-            } else {
-                if ($('#myname').text() != $('.j-user-details td:nth-child(2)').text()) {
-                    $('.j-user-details').css({
-                        visibility: 'visible'
-                    });
-                } else {
-                    $('.j-user-details').css({
-                        visibility: 'hidden'
-                    });
-                }
-            }
-
+            });
         });
-
     }
     checkCancelOrder();
 
@@ -378,7 +389,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
         var len = $('.j-tou-ls-box2').children('div').length;
         var sum = 0;
 
-         if (len > 4) {
+        if (len > 4) {
             $('.j-tzhm-more').css({
                 display: 'block'
             });
@@ -393,7 +404,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
         $('.j-tzhm-more').on('click', function(event) {
             APP.showTips({
                 title: '投注号码',
-                text: '<div class="tzhm-popdiv">'+$('#j-code-html').val()+'</div>'
+                text: '<div class="tzhm-popdiv">' + $('#j-code-html').val() + '</div>'
             });
         });
 
@@ -433,7 +444,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     $('.j-cancel-project').on('click', function(event) {
         var requestURI = $(this).attr('data-c');
         APP.showTips({
-            text: "是否撤销所选期次追号（撤销后不可恢复）？",
+            text: "您是否确认撤销本次合买方案？",
             type: 2,
             onConfirm: function() {
                 $.ajax({
@@ -443,9 +454,16 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                     })
                     .done(function(data) {
                         if (data.retCode == 100000) {
+                            var html = '<div class="tipbox">' +
+                                '<p>已撤销本次合买方案</p>' +
+                                '<p>投注金额将自动返还到您的账户上</p>' +
+                                '</div>' +
+                                '<div class="m-btns">' +
+                                '<button class="btn btn-danger" id="j-modal-confirm">确认</button>' +
+                                '<button class="btn btn-gray ml15" data-dismiss="modal">取消</button>' +
+                                '</div>';
                             APP.showTips({
-                                text: '撤销成功!',
-                                type: 1,
+                                html: html,
                                 onConfirm: function() {
                                     window.location.reload();
                                 }
@@ -474,7 +492,10 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
             projectIds.push($(this).val())
         });
         if (projectIds.length < 1) {
-            APP.showTips({text:"请选择要取消的追号方案", type:0});
+            APP.showTips({
+                text: "请选择要取消的追号方案",
+                type: 0
+            });
             return;
         }
         var requestURI = $(this).attr('data-c');
@@ -485,26 +506,26 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
             canceltext: '继续追号',
             onConfirm: function() {
                 $.ajax({
-                    url: cancelURI + projectIds.join(','),
-                    type: 'get',
-                    dataType: 'json'
-                })
-                .done(function(data) {
-                    if (data.retCode == 100000) {
-                        APP.showTips({
-                            text: '取消追号成功',
-                            type: 1,
-                            onConfirm: function() {
-                                window.location.reload();
-                            }
-                        });
-                    } else {
-                        APP.handRetCode(data.retCode, data.retMsg);
-                    }
-                })
-                .fail(function() {
-                    APP.onServiceFail();
-                });
+                        url: cancelURI + projectIds.join(','),
+                        type: 'get',
+                        dataType: 'json'
+                    })
+                    .done(function(data) {
+                        if (data.retCode == 100000) {
+                            APP.showTips({
+                                text: '取消追号成功',
+                                type: 1,
+                                onConfirm: function() {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            APP.handRetCode(data.retCode, data.retMsg);
+                        }
+                    })
+                    .fail(function() {
+                        APP.onServiceFail();
+                    });
             }
         });
     });

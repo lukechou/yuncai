@@ -66,7 +66,7 @@ require(['jquery', 'app'], function($, APP) {
     }
 
     togglePage(pageIndex);
-
+    APP.updateHeadUserInfo();
   }
 
   function getHelpHtml(pageIndex) {

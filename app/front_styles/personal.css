@@ -2,7 +2,7 @@
 .personal { width: 985px; margin: auto; padding: 12px 0 30px; }
 .personal .m-tab-nav { padding: 6px 0 0 15px; }
 .ps-nav { float: left; width: 185px; height: 540px; margin-right: 12px; border: 1px #dfdfdf solid; background: #f1f1f1; }
-.m-nav-t > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; color: #3d3d3d; }
+.m-nav-t > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; color: #3d3d3d; padding: 10px 10px; }
 .m-nav-t > li > a i.icon-nl-1-2, .m-nav-t > li > a i.icon-nl-2-2, .m-nav-t > li > a i.icon-nl-3-2, .m-nav-t > li > a i.icon-nl-r-2 { display: none; }
 .m-nav-t > li > a.active i.icon-nl-1-1, .m-nav-t > li > a.active i.icon-nl-2-1, .m-nav-t > li > a.active i.icon-nl-3-1, .m-nav-t > li > a.active i.icon-nl-r-1 { display: none; }
 .m-nav-t > li > a.active i.icon-nl-1-2, .m-nav-t > li > a.active i.icon-nl-2-2, .m-nav-t > li > a.active i.icon-nl-3-2, .m-nav-t > li > a.active i.icon-nl-r-2 { display: inline-block; }
@@ -13,7 +13,7 @@
 .m-nav-t > li > a i.icon-nl-2-1, .m-nav-t > li > a i.icon-nl-2-2 { margin: 4px 6px 0 2px; }
 .m-nav-t > li > a i.icon-nl-3-1, .m-nav-t > li > a i.icon-nl-3-2 { margin: 3px 6px 0 2px; }
 .m-nav-t > li > a i.icon-nl-r-1, .m-nav-t > li > a i.icon-nl-r-2 { float: right; margin-top: 6px; }
-.m-nav-t > li > a:hover, .m-nav-t > li > a.active { color: #fff; background: #f13c38; width: 185px; margin: -1px 0 0 -1px; }
+.m-nav-t > li > a:hover, .m-nav-t > li > a.active { color: #fff; background: #f13c38; width: 185px; margin: -1px 0 0 -1px; font-weight: bold; }
 .m-nav-l { overflow: hidden; margin: 0 8px; padding: 10px 0; border-top: 1px #dfdfdf dotted; }
 .m-nav-l > li { font-size: 12px; position: relative; display: block; float: left; margin: 0 20px 0 0; padding: 8px 0; }
 .m-nav-l > li:nth-child(odd):after { position: absolute; top: 0; right: -10px; display: block; width: 1px; height: 14px; margin: 9px 0; content: ''; background: #dfdfdf; }
@@ -155,12 +155,15 @@
 .safemobile .panel-body .info-text { padding: 51px 15px 15px 230px; }
 .safeemail { padding: 10px 30px; }
 .safemobile .panel-body .safeemail .info-text { padding: 51px 15px 15px 210px; }
+.safeemail .value>span .active { color: #a7a5a5; }
 .safemobile  .btn-common.active { background: #dfdfdf; }
 #j-safeemail-2, #j-safeemail-3 { display: none; }
 .safemobile .panel-body #j-safeemail-2 .info-text { padding: 51px 15px 15px 140px; }
+.info-list .value .btn-green { font-size: 14px; padding: 5px 0; width: 100px; margin-top: 0; }
 .safecard .panel { min-height: 320px; }
 .safecard .panel-body { padding: 10px 0 50px; }
 .safecard .confirm-text { width: 220px; margin: auto; padding-left: 25px; }
+.no-event{ color: #a7a5a5;}
 
 /* 个人中心-充值 */
 .recharge { padding: 25px 20px; background: #fff; }
@@ -265,7 +268,9 @@
 .bindcard-tips .icon { position: relative; top: 2px; margin-right: 3px; }
 .bindcard-form { margin: 35px 0 0 154px; }
 .bindcard-form .form-group { position: relative; }
-.bindcard-form .form-group .text { margin-top: 7px; }
+.bindcard-form .form-group .text { position: relative; top: 9px; }
+.bindcard-form .form-group .text-2 { top: 0; }
+.bindcard-form .form-group .text-2 .g-inp-tips { margin-left: 13px; }
 .bindcard-form .form-group .text select { padding: 5px 3px; border: 1px #dfdfdf solid; }
 .bindcard-form .form-group .yinhang { width: 120px; }
 .bindcard-form .form-group .sheng, .bindcard-form .form-group .shi { width: 93px; }

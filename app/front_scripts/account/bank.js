@@ -23,6 +23,16 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
     parentClass: '.form-group'
   });
 
+  $('#j-yinhang').on('change', function () {
+
+    var v = $(this).val();
+
+    if (v != 0) {
+      $(this).parents('.form-group').find('.j-tips-e').addClass('hide');
+    }
+
+  });
+
   // 确认绑定button
   $('#j-bind-sub').on('click', function (event) {
     event.preventDefault();
@@ -63,7 +73,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
       status.pwd = false;
     }
 
-    if (!bank == 0) {
+    if (bank == 0) {
       status.bank = false;
     }
 
@@ -84,16 +94,30 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
     if (v === '') {
       tips.html(v).hide();
     } else {
-      tips.html(v).fadeIn();
+      tips.html(v).show();
     }
 
   });
 
   $('#j-card,#j-confirm-card').on('blur', function (event) {
+
     var t = $(this);
     var tips = t.siblings('.j-card-tips');
     tips.hide();
+
   });
+
+  $('#j-confirm-card').on('blur', function(event) {
+    event.preventDefault();
+
+    var ct = $('#j-confirm-card').val();
+
+    if(ct == ''){
+      $('#j-confirm-card').parents('.form-group').find('.j-tips-s,.j-tips-e,.j-tips-w').addClass('hide');
+    }
+    debugger
+  });
+
 
   // 提交绑定信息
   function bindBankInfo(info) {
@@ -117,7 +141,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
         if (data.retCode == 100000) {
 
           $('#j-bindBank').html(info.bank);
-          $('#j-bindCard').html(data.retData.bankAccount);
+          $('#j-bindCard').html(info.card);
           $('#bind-form').hide();
           $('#bindbak-suc').fadeIn();
           $('.bindcard-tips').toggle();

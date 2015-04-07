@@ -60,16 +60,16 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
                 type: 'get',
                 dataType: 'json',
                 data: {
-                  mobile: $('#usermobile').val(),
+                  mobile: m1,
                   captcha: $('#checknum').val(),
-                  password: $('#userpwd').val()
+                  password: m2
                 },
               })
               .done(function (data) {
 
                 if (data.retCode == 100000) {
 
-                  $('#bindMobile').html(data.retData.mobile)
+                  $('#bindMobile').html(m1)
                   $('#j-info-text').hide();
                   $('#bindcard-suc').fadeIn();
 
@@ -84,6 +84,15 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
         // SMS 信息发送按钮
         $("#send_captcha_sms").on('click', function (event) {
           event.preventDefault();
+          var mb = $("#usermobile").val();
+
+          if (!inp.regGroup.mobile.test(mb)) {
+            $('#usermobile').parents('.info-list').find('.j-tips-e').removeClass('hide');
+            _this.smsControl = false;
+            return;
+          }else{
+            _this.smsControl = true;
+          }
 
           if (_this.smsControl) {
             $.ajax({
@@ -127,9 +136,9 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
       initSmsEvent: function () {
 
         var _this = this;
-        var nextTime = 60;
+        var nextTime = 120;
 
-        _this.reStartTime = (+new Date()) + 60 * 1000;
+        _this.reStartTime = (+new Date()) + 120 * 1000;
 
         _this.updateSmsBtn(nextTime + '秒后可重新发送');
         _this.updateSmSEvent(true);

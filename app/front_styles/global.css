@@ -71,12 +71,18 @@ textarea { resize: none; word-wrap: break-word; }
 
 /* Width Class */
 .w40 { width: 40px; }
+.w45 { width: 45px; }
 .w50 { width: 50px; }
+.w55 { width: 55px; }
 .w70 { width: 70px; }
+.w80 { width: 80px; }
+.w90 { width: 90px; }
 .w100 { width: 100px !important; }
 .w120 { width: 120px; }
-.w150 {width: 150px!important;}
+.w150 { width: 150px !important; }
 .w180 { width: 180px; }
+.w200{ width: 200px;}
+.w230{ width: 230px;}
 
 /* Paging Class */
 .pages { font-size: 12px; margin-top: 10px; }
@@ -172,10 +178,11 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .m-num-title > i { display: block; margin: -19px 0 0 0; height: 1px; background: url(../front_images/bg-line.png) repeat-x; position: relative; z-index: 9; }
 .m-num-title > p > b { padding-right: 5px; font-weight: bold; }
 .m-num-group { position: relative; margin: 0 0 40px -5px; }
-.m-num-group > a { font-size: 16px; font-weight: bold; line-height: 33px; display: block; float: left; width: 33px; height: 33px; margin: 5px 5px; text-align: center; color: #3d3d3d; background: url(../front_images/ballicon/bsg.png) no-repeat; }
+.m-num-group > a { font-size: 16px; font-weight: bold; line-height: 33px;  float: left; width: 33px; height: 33px; margin: 5px 5px; text-align: center; color: #3d3d3d; background: url(../front_images/ballicon/bsg.png) no-repeat; }
 .m-num-group > a:hover { text-decoration: none; }
-.m-num-group-red > a.active { text-decoration: none; color: #fff; border: none; background: url(../front_images/ballicon/bsr.png) no-repeat; }
-.m-num-group-blue > a.active { text-decoration: none; color: #fff; border: none; background: url(../front_images/ballicon/bsb.png) no-repeat; }
+.m-num-group-red > a.active, .m-num-group-blue > a.active { text-decoration: none; color: #fff; border: none; }
+.m-num-group-red > a.active { background: url(../front_images/ballicon/bsr.png) no-repeat; }
+.m-num-group-blue > a.active { background: url(../front_images/ballicon/bsb.png) no-repeat; }
 .m-num-fun { font-size: 12px; position: absolute; right: 17px; bottom: 5px; }
 .m-num-fun > select { width: 45px; padding: 3px; border: 1px #c4c4c4 solid; background: #fff; }
 .m-num-sui { margin: 0 5px; }
@@ -237,7 +244,6 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .m-brhd-qi { font-family: 'simsun'; font-size: 14px; top: 35px; }
 .m-brhd-time { bottom: 15px; color: #848484; }
 
-
 /* 右侧客服咨询 */
 .side, .icon-text { height: 37px; background-image: url(../front_images/lrkf/lrkf.png); }
 .side { position: fixed; z-index: 100; top: 132px; right: 0; width: 45px; cursor: pointer; background-position: 0 -37px; }
@@ -266,12 +272,11 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .stopsell-box ul li a { margin-left: 5px; display: inline-block; width: 36px; text-align: left; }
 .logo { width: 44px; height: 44px }
 
-
 /* feed bottom tips */
 .brings-tips h3 { cursor: pointer; }
 .brings-tips h3.active { border-bottom: none; }
 .brings-tips h3 .icon { margin: 0 0 -1px 5px; -webkit-transition: .3s; transition: .3s; }
-.brings-tips h3.active .icon {    -webkit-transform: rotate(180deg); transform: rotate(180deg);}
+.brings-tips h3.active .icon { -webkit-transform: rotate(180deg); transform: rotate(180deg); }
 
 /* All Page Class */
 body { color: #3d3d3d; background: #fff; }
@@ -288,7 +293,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-logo { margin-left: -1px; padding: 15px 0 8px; }
 .hd-logo img { width: 97px; height: 51px; }
 .hd-nav, .hd-nav > li > a { height: 36px; }
-.hd-nav > li { position: relative; display: block; float: left; }
+.hd-nav > li { position: relative; float: left; }
 .hd-nav > li > a { font-family: 'Microsoft Yahei'; font-size: 18px; position: relative; display: block; padding: 8px 30px 4px; text-decoration: none; color: #fff; }
 .hd-nav > li > a.active { border-bottom: 3px #f13c38 solid; }
 .hd-nav > li > a:hover { border-bottom: 3px #f13c38 solid; }
@@ -372,6 +377,7 @@ body { color: #3d3d3d; background: #fff; }
 /* text */
 .redtext { color: red; }
 .tipbox > p { font-size: 14px; margin-bottom: 8px; }
+
 /* reset bootstrap */
 .nav-tabs { border-bottom: 1px solid #dfdfdf !important; }
 
@@ -382,7 +388,6 @@ body { color: #3d3d3d; background: #fff; }
 .g-inp-tips-suc { text-indent: 0; }
 .g-inp-tips-suc .icon { position: relative; top: 3px; }
 .g-inp-tips-err .icon, .g-inp-tips-wam .icon { position: absolute; top: 3px; margin-right: 5px; left: 5px; }
-
 
 /* 购买成功页 */
 .buyok .top-title { font-size: 12px; margin: 10px 0; color: #3d3d3d; }
@@ -396,10 +401,3 @@ body { color: #3d3d3d; background: #fff; }
 .main .m-box .linkLine a { padding: 0 10px; border-left: 1px #dfdfdf solid; }
 .main .m-box .linkLine a.first { padding-left: 0; border: none; }
 .main .m-box .linkLine a:hover { text-decoration: none; color: #f13c38; }
-
-
-
-
-
-
-

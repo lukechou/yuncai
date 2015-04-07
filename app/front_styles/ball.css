@@ -7,10 +7,10 @@
 .bjdc-mid { font-size: 12px; line-height: 36px; height: 36px; padding-left: 15px; border: 1px #dfdfdf solid; border-width: 0 1px; }
 .bjdc .bjdc-expired { display: none !important; }
 .bjdc-mid .icon { position: relative; top: 3px; margin-right: 5px; cursor: pointer; }
-.guoguan-tab li{ float: left; width: 50%; text-align: center; font-size: 12px; height: 32px; line-height: 32px; background: #f1f1f1; border: 1px #dfdfdf solid; cursor: pointer;}
-.guoguan-tab li.zygg-tab{ border-width: 0 1px 1px 0;}
-.guoguan-tab li.dcgg-tab{ border-width: 0 0 1px 1px;}
-.guoguan-tab li.active{ border:none; background: #fff;}
+.guoguan-tab li { float: left; width: 50%; text-align: center; font-size: 12px; height: 32px; line-height: 32px; background: #f1f1f1; border: 1px #dfdfdf solid; cursor: pointer; }
+.guoguan-tab li.zygg-tab { border-width: 0 1px 1px 0; }
+.guoguan-tab li.dcgg-tab { border-width: 0 0 1px 1px; }
+.guoguan-tab li.active { border: none; background: #fff; }
 
 /* left tips */
 .m-down-tips { margin: 12px auto; border: 1px #dfdfdf solid; border-bottom: none; }
@@ -60,7 +60,7 @@
 .dataHead .gameSeleList .btnBox label { margin: 0; }
 .dataHead .gameSeleList .btnBox label .icon { position: relative; top: 4px; left: -5px; }
 .dataHead .gameSeleList .btn-red { color: #fff; }
-.arrow { position: relative; left: 5px; display: inline-block; width: 10px; height: 6px; background: url(../front_images/help-nav-icon.png) no-repeat; }
+.arrow { position: relative; left: 5px; display: inline-block; width: 8px; height: 4px; background: url(../front_images/help-nav-icon-new.png) no-repeat; }
 
 /* Row */
 .co1 { overflow: hidden; width: 45px; }
@@ -74,17 +74,12 @@
 .co8 { position: absolute; right: 0; float: none; width: 60px; }
 
 /* dataBody */
-.collect-body{
-  display: none;
-  border:1px #4bacea solid;
-}
-.collect-body .co1{ width: 43px;}
-.collect-body .row2-1 em{ height: 37px;}
-.collect-body .row3-1 em{ height: 37px;}
-.collect-body .row4-1 em{ height: 39px;}
-
-.collect-title{ background: #4bacea; height: 45px; line-height: 45px; color: #fff; font-weight: bold; padding-left: 15px;}
-
+.collect-body { display: none; border: 1px #4bacea solid; }
+.collect-body .co1 { width: 43px; }
+.collect-body .row2-1 em { height: 37px; }
+.collect-body .row3-1 em { height: 37px; }
+.collect-body .row4-1 em { height: 39px; }
+.collect-title { background: #4bacea; height: 45px; line-height: 45px; color: #fff; font-weight: bold; padding-left: 15px; }
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
 .dataBody dl { position: relative; margin-bottom: 0; }
 
@@ -147,15 +142,15 @@
 
 /* 比分 */
 .dataBody .bf-box, .bf-nobor, .dataBody .bf-box:hover { background: #e3e3e3; }
-.dataBody .bf-box { height: 150px; border: 1px #dfdfdf solid; border-width: 1px 0 0 1px; }
-.analyMoreTable { width: 680px; margin: 15px auto; table-layout: fixed; text-align: center; background: #fff; }
+.dataBody .bf-box { height: 139px; border: 1px #dfdfdf solid; border-width: 1px 0 0 1px; }
+.analyMoreTable { width: 680px; margin: 10px 0 0 10px; table-layout: fixed; text-align: center; background: #fff; }
 .analyMoreTable .sp-btn > div { color: #000; }
-.analyMoreTable th { font-weight: 700; width: 45px; text-align: center; border: 1px solid #dfdfdf; }
-.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; color: #888; border: 1px solid #dfdfdf; }
+.analyMoreTable th { font-weight: 700; width: 60px; text-align: center; border: 1px solid #dfdfdf; }
+.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; color: #888; border: 1px solid #dfdfdf; width: 45px; }
 .analyMoreTable2 th { width: 95px; }
 .analyMoreTable2 td { width: 45px; }
 .analyMoreTable2 td.no-all { width: 585px; }
-.bf-nobor { position: absolute; top: -3px; right: 0; width: 224px; height: 5px; }
+.bf-nobor { position: absolute; top: -3px; right: 0; width: 218px; height: 5px; }
 .bf-nosupport { line-height: 150px; text-align: center; }
 
 /* 总进球 */
@@ -183,7 +178,7 @@
 /* 混合投注 */
 .onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4 { line-height: 80px; height: 80px; }
 .onlyHhtz .dataBody dd { min-height: 80px; }
-.onlyHhtz .row4 { display: block;}
+.onlyHhtz .row4 { display: block; }
 .onlyHhtz .co4 { width: 260px; }
 .row4-1 { width: 197px; }
 .row4 em { float: left; width: 42px; border-right: 1px #dfdfdf solid; }
@@ -191,7 +186,7 @@
 .row4-1 em.rq { width: 45px; }
 .row4-1 em { width: 42px; }
 .row4 .rq { width: 49px; }
-.onlyHhtz .co5 { display: block; width:45px; }
+.onlyHhtz .co5 { display: block; width: 45px; }
 .onlyHhtz .co2 { width: 110px; }
 .rq b { font-weight: normal; }
 .onlyHhtz .dataBody .row4-1, .row4-1 em { line-height: 40px; height: 40px; }
@@ -238,7 +233,8 @@
 .scrollMoni .icoDan:focus { color: #f13c38; border-color: #f13c38; }
 .scrollMoni .icoDan.disable { color: #dfdfdf; }
 .scrollMoni .table .gameOption .betList { padding: 0 0 0 25px; }
-.block { line-height: 24px; float: left; width: 65px; height: 24px; margin: 0 5px 2px 0; text-align: center; color: #fff; }
+.scrollMoni .table .gameOption .betList p { margin-bottom: 0; }
+.block { line-height: 24px; float: left; width: 65px; height: 24px; margin: 0 10px 6px 0; text-align: center; color: #fff; }
 .block { background: #f13c38; }
 .block0, .block3 { background: #f13c38; }
 .block1, .block4 { background: #f88c35; }

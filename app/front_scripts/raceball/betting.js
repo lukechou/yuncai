@@ -1,7 +1,7 @@
-define(['jquery', 'app'], function ($, APP) {
+define(['jquery', 'app'], function($, APP) {
   'use strict';
 
-  var bet = (function () {
+  var bet = (function() {
 
     function bet(args) {
       // enforces new
@@ -52,7 +52,7 @@ define(['jquery', 'app'], function ($, APP) {
       hhtzIconHtml: '<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i>'
     };
 
-    bet.prototype.init = function () {
+    bet.prototype.init = function() {
 
       this.beishu = $('#j-qiucksub-bei').val();
       this.zhushu = null;
@@ -67,7 +67,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    bet.prototype.updateCount = function (m, c) {
+    bet.prototype.updateCount = function(m, c) {
       var v = parseInt(m.val(), 10);
       if (c == 1) {
         v++;
@@ -80,7 +80,7 @@ define(['jquery', 'app'], function ($, APP) {
       m.val(v);
     };
 
-    bet.prototype.getOtherEm = function (el, i) {
+    bet.prototype.getOtherEm = function(el, i) {
       if (el.parents().hasClass('bidCounts')) {
         return this.box.find('.even em[index="' + i + '"]');
       } else {
@@ -88,17 +88,17 @@ define(['jquery', 'app'], function ($, APP) {
       }
     };
 
-    bet.prototype.toggleBunch = function (isActive, method) {
+    bet.prototype.toggleBunch = function(isActive, method) {
 
       var _this = this;
 
       if (isActive) {
         _this.bunch.push(method);
-        _this.bunch = _.uniq(_this.bunch).sort(function (a, b) {
+        _this.bunch = _.uniq(_this.bunch).sort(function(a, b) {
           return a.slice(0, 1) - b.slice(0, 1);
         });
       } else {
-        _.remove(_this.bunch, function (b) {
+        _.remove(_this.bunch, function(b) {
           return b == method;
         });
       }
@@ -112,12 +112,12 @@ define(['jquery', 'app'], function ($, APP) {
      * @param {String} sp    sp value
      * @param {String} title title
      */
-    bet.prototype.addOneItem = function (i, dd, sp, title, dzTab) {
+    bet.prototype.addOneItem = function(i, dd, sp, title, dzTab) {
 
       var _this = this;
       var code = dd.attr('matchcode');
 
-      if (_.find(_this.match, function (chr) {
+      if (_.find(_this.match, function(chr) {
           return (chr.index == i && chr.matchcode == code);
         })) {
         return;
@@ -143,6 +143,9 @@ define(['jquery', 'app'], function ($, APP) {
       };
 
       var linkHTML = '';
+      var linkHTML1 = '';
+      var linkHTML2 = '';
+      var linkHTML3 = '';
 
       var hasMatch = _.find(_this.match, {
         'matchcode': code
@@ -156,21 +159,20 @@ define(['jquery', 'app'], function ($, APP) {
         title: title,
       });
 
-      var selectMatch = _.uniq(_this.match, function (n) {
+      var selectMatch = _.uniq(_this.match, function(n) {
         return n.matchcode;
       });
 
-      _this.match = _this.match.sort(function (a, b) {
+      _this.match = _this.match.sort(function(a, b) {
         return Number(a.index) - Number(b.index);
       });
 
-      selectMatch = _this.match.concat().sort(function (a, b) {
+      selectMatch = _this.match.concat().sort(function(a, b) {
         return Number(a.matchcode) - Number(b.matchcode);
       });
-
       if (hasMatch) {
 
-        _.each(_this.match, function (matchs) {
+        _.each(_this.match, function(matchs) {
 
           if (matchs.matchcode == code) {
 
@@ -180,9 +182,25 @@ define(['jquery', 'app'], function ($, APP) {
               color = 'block block' + matchs.index;
             }
 
-            linkHTML += '<a index="' + matchs.index + '" gametype="' + matchs.type + '" matchcode="' + matchs.matchcode + '" href="javascript:;" class="' + color + '">' + matchs.title + '</a>';
+            if (matchs.index >= 0 && matchs.index <= 12) {
+              linkHTML1 += '<a index="' + matchs.index + '" gametype="' + matchs.type + '" matchcode="' + matchs.matchcode + '" href="javascript:;" class="' + color + '">' + matchs.title + '</a>';
+            } else if (matchs.index >= 13 && matchs.index <= 17) {
+              linkHTML2 += '<a index="' + matchs.index + '" gametype="' + matchs.type + '" matchcode="' + matchs.matchcode + '" href="javascript:;" class="' + color + '">' + matchs.title + '</a>';
+            } else if (matchs.index >= 18 && matchs.index <= 30) {
+              linkHTML3 += '<a index="' + matchs.index + '" gametype="' + matchs.type + '" matchcode="' + matchs.matchcode + '" href="javascript:;" class="' + color + '">' + matchs.title + '</a>';
+            }
           }
         });
+        if(!!linkHTML1){
+          linkHTML1 = '<p class="clearfix">' + linkHTML1 + '</p>';
+        }
+        if(!!linkHTML2){
+          linkHTML2 = '<p class="clearfix">' + linkHTML2 + '</p>';
+        }
+        if(!!linkHTML3){
+          linkHTML3 = '<p class="clearfix">' + linkHTML3 + '</p>';
+        }
+        linkHTML = linkHTML1 + linkHTML2 + linkHTML3;
 
         $('#selectGamePool .gameOption[matchcode=' + code + '] .betList').html(linkHTML);
 
@@ -221,14 +239,14 @@ define(['jquery', 'app'], function ($, APP) {
      * @param  {element} dd 选中的行
      * @return {null}
      */
-    bet.prototype.removeOneItem = function (i, dd) {
+    bet.prototype.removeOneItem = function(i, dd) {
 
       var _this = this;
       var code = dd.attr('matchcode');
       var hasMatch = null;
       var matchTotal = 0;
 
-      _.remove(_this.match, function (o) {
+      _.remove(_this.match, function(o) {
         return (o.index == i && o.matchcode == code);
       });
 
@@ -250,7 +268,7 @@ define(['jquery', 'app'], function ($, APP) {
     /**
      *  Update Pass Way
      */
-    bet.prototype.getBjdcZhggBunchHtml = function (len, maxLen) {
+    bet.prototype.getBjdcZhggBunchHtml = function(len, maxLen) {
 
       var _this = this;
       var bunchHtml = '';
@@ -278,12 +296,12 @@ define(['jquery', 'app'], function ($, APP) {
       }
 
       for (var i = 2; i <= maxLen; i++) {
-        isActiveBunch = _.find(_this.bunch, function (bunch) {
+        isActiveBunch = _.find(_this.bunch, function(bunch) {
           return Number(bunch.slice(0, 1)) === i;
         });
 
         if (i > len && isActiveBunch) {
-          _.remove(_this.bunch, function (chr) {
+          _.remove(_this.bunch, function(chr) {
             return Number(chr.slice(0, 1)) === i;
           });
         }
@@ -299,7 +317,7 @@ define(['jquery', 'app'], function ($, APP) {
           cStr = i + '_' + item[j];
           isDg = i + '串' + item[j];
 
-          isActiveBunch = _.find(_this.bunch, function (bunch) {
+          isActiveBunch = _.find(_this.bunch, function(bunch) {
             return bunch === cStr;
           });
 
@@ -333,7 +351,7 @@ define(['jquery', 'app'], function ($, APP) {
       return bunchHtml;
     };
 
-    bet.prototype.getBjdcZyggBunchHtml = function (len, maxLen) {
+    bet.prototype.getBjdcZyggBunchHtml = function(len, maxLen) {
 
       var _this = this;
       var bunchHtml = '';
@@ -343,12 +361,12 @@ define(['jquery', 'app'], function ($, APP) {
       var html = '';
 
       for (var i = 2; i <= maxLen; i++) {
-        isActiveBunch = _.find(_this.bunch, function (bunch) {
+        isActiveBunch = _.find(_this.bunch, function(bunch) {
           return Number(bunch.slice(0, 1)) === i;
         });
 
         if (i > len && isActiveBunch) {
-          _.remove(_this.bunch, function (chr) {
+          _.remove(_this.bunch, function(chr) {
             return Number(chr.slice(0, 1)) === i;
           });
         }
@@ -357,7 +375,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       for (var i = 1; i <= len; i++) {
 
-        isActiveBunch = _.find(_this.bunch, function (bunch) {
+        isActiveBunch = _.find(_this.bunch, function(bunch) {
           return Number(bunch.slice(0, 1)) === i;
         });
 
@@ -410,7 +428,7 @@ define(['jquery', 'app'], function ($, APP) {
      * html  html生成
      * bunchMap  组合过关映射数组
      */
-    bet.prototype.setBjdcBox = function () {
+    bet.prototype.setBjdcBox = function() {
 
       var _this = this;
       var len = _.uniq(_this.match, 'matchcode').length;
@@ -422,17 +440,17 @@ define(['jquery', 'app'], function ($, APP) {
       var maxLen = _this.maxBunch[_this.tab];
 
       switch (_this.tab) {
-      case 'bqc':
-        maxLen = 6;
-        break;
-      case 'bf':
-        maxLen = 3;
-        break;
-      case 'spf':
-        maxLen = 15;
-        break;
-      default:
-        break;
+        case 'bqc':
+          maxLen = 6;
+          break;
+        case 'bf':
+          maxLen = 3;
+          break;
+        case 'spf':
+          maxLen = 15;
+          break;
+        default:
+          break;
       }
 
       if (len < 2) {
@@ -452,7 +470,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    bet.prototype.setSecondBox = function () {
+    bet.prototype.setSecondBox = function() {
 
       var _this = this;
       var len = _.uniq(_this.match, 'matchcode').length;
@@ -480,17 +498,17 @@ define(['jquery', 'app'], function ($, APP) {
         }
 
         switch (_this.tab) {
-        case 'bqc':
-          maxLen = 6;
-          break;
-        case 'bf':
-          maxLen = 3;
-          break;
-        case 'spf':
-          maxLen = 15;
-          break;
-        default:
-          break;
+          case 'bqc':
+            maxLen = 6;
+            break;
+          case 'bf':
+            maxLen = 3;
+            break;
+          case 'spf':
+            maxLen = 15;
+            break;
+          default:
+            break;
         }
 
         if (len < 1) {
@@ -525,15 +543,15 @@ define(['jquery', 'app'], function ($, APP) {
 
       if (_this.tab === 'hhtz') {
 
-        hasHhtzBf = _.find(_this.match, function (chr) {
+        hasHhtzBf = _.find(_this.match, function(chr) {
           return chr.type === 'bf';
         });
 
-        hasHhtzBqc = _.find(_this.match, function (chr) {
+        hasHhtzBqc = _.find(_this.match, function(chr) {
           return chr.type === 'bqc';
         });
 
-        hasHhtzZjq = _.find(_this.match, function (chr) {
+        hasHhtzZjq = _.find(_this.match, function(chr) {
           return chr.type === 'zjq';
         });
 
@@ -565,7 +583,7 @@ define(['jquery', 'app'], function ($, APP) {
 
           if ((jtipLen + 1) > len) {
 
-            _.remove(_this.bunch, function (b) {
+            _.remove(_this.bunch, function(b) {
               return b.slice(0, 1) == (jtipLen + 1);
             });
 
@@ -587,7 +605,7 @@ define(['jquery', 'app'], function ($, APP) {
 
             for (var i = 2; i <= len; i++) {
 
-              isActiveBunch = _.find(_this.bunch, function (bunch) {
+              isActiveBunch = _.find(_this.bunch, function(bunch) {
                 return Number(bunch.slice(0, 1)) === i;
               });
 
@@ -635,10 +653,10 @@ define(['jquery', 'app'], function ($, APP) {
      * @param  {Function} callback 回调函数
      * @return {null}
      */
-    bet.prototype.combinations = function (numArr, choose, callback) {
+    bet.prototype.combinations = function(numArr, choose, callback) {
       var n = numArr.length;
       var c = [];
-      var inner = function (start, choose_) {
+      var inner = function(start, choose_) {
         if (choose_ == 0) {
           callback(c);
         } else {
@@ -656,13 +674,13 @@ define(['jquery', 'app'], function ($, APP) {
      *  获取投注总注数和最高奖金
      * @return {null}
      */
-    bet.prototype.getTotalZhus = function () {
+    bet.prototype.getTotalZhus = function() {
 
       var _this = this;
       var matchkeys = [];
       var acTotalNum = 1;
       var method = null;
-      var group = _.groupBy(_this.match, function (match) {
+      var group = _.groupBy(_this.match, function(match) {
         return match.matchcode;
       });
       var ms = _.uniq(_this.match, 'matchcode');
@@ -747,7 +765,7 @@ define(['jquery', 'app'], function ($, APP) {
               for (var j = combinedData[m].length - 1; j >= 0; j--) {
 
                 _tmpZhushu *= matchkeySp[combinedData[m][j]].length;
-                _tmpMaxBonus *= _.max(matchkeySp[combinedData[m][j]], function (chr) {
+                _tmpMaxBonus *= _.max(matchkeySp[combinedData[m][j]], function(chr) {
                   return parseInt(chr);
                 });
 
@@ -774,7 +792,7 @@ define(['jquery', 'app'], function ($, APP) {
      *  Clear Betting Object Data
      * @return {null}
      */
-    bet.prototype.clearBetData = function () {
+    bet.prototype.clearBetData = function() {
       var _this = this;
       $('#selectGamePool tbody').html('');
       $('#poolStep1 .scrollMoni').hide();
@@ -794,7 +812,7 @@ define(['jquery', 'app'], function ($, APP) {
     /**
      *  设置右侧第三个Box
      */
-    bet.prototype.setAllTotal = function () {
+    bet.prototype.setAllTotal = function() {
 
       var _this = this;
       var ms = _.uniq(_this.match, 'matchcode').length;
@@ -813,7 +831,7 @@ define(['jquery', 'app'], function ($, APP) {
       $('#maxbonus').html(maxBonus);
     };
 
-    bet.prototype.getSubContent = function (matchs) {
+    bet.prototype.getSubContent = function(matchs) {
 
       var _this = this;
       var c = [];
@@ -893,7 +911,7 @@ define(['jquery', 'app'], function ($, APP) {
      *  提交表单,获取要提交的参数
      * @return {object}
      */
-    bet.prototype.getSubmitParams = function () {
+    bet.prototype.getSubmitParams = function() {
 
       var _this = this;
       var obj = null;
@@ -902,7 +920,7 @@ define(['jquery', 'app'], function ($, APP) {
       var uniqMatch = null;
 
       // get Params
-      uniqMatch = _.uniq(_this.match, 'matchcode').sort(function (a, b) {
+      uniqMatch = _.uniq(_this.match, 'matchcode').sort(function(a, b) {
         return a.matchcode - b.matchcode;
       });
 
@@ -927,7 +945,7 @@ define(['jquery', 'app'], function ($, APP) {
     /*
       获取一注比分的HTML
      */
-    bet.prototype.getOneBfHtml = function (matchcode) {
+    bet.prototype.getOneBfHtml = function(matchcode) {
 
       var data = '';
       var html = '';
@@ -1015,7 +1033,7 @@ define(['jquery', 'app'], function ($, APP) {
      * @param  {String}  tab        玩法类型
      * @param  {Number}  moreIndex        add index
      */
-    bet.prototype.getSpBtn = function (isSupport, item, spArr, tab, moreIndex) {
+    bet.prototype.getSpBtn = function(isSupport, item, spArr, tab, moreIndex) {
 
       var hasSp = '';
       var l = '';
@@ -1056,7 +1074,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    bet.prototype.craeteDateBtn = function (type, sp) {
+    bet.prototype.craeteDateBtn = function(type, sp) {
 
       var _this = this;
       var h = '';
@@ -1071,7 +1089,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    bet.prototype.getOneHhtzHtml = function (matchcode) {
+    bet.prototype.getOneHhtzHtml = function(matchcode) {
 
       var _this = this;
       var data = '';
@@ -1204,22 +1222,22 @@ define(['jquery', 'app'], function ($, APP) {
      *  购票主体事件绑定
      * @return {null}
      */
-    bet.prototype.bindMain = function () {
+    bet.prototype.bindMain = function() {
 
       var _this = this;
       var a = 'active';
       var h = 'hover';
 
-      _this.box.on('mousemove', 'dd', function (event) {
+      _this.box.on('mousemove', 'dd', function(event) {
         $(this).addClass('even');
       });
 
-      _this.box.on('mouseout', 'dd', function (event) {
+      _this.box.on('mouseout', 'dd', function(event) {
         $(this).removeClass('even');
       });
 
       //混合投注
-      _this.box.on('click', '.j-show-hhtz', function (event) {
+      _this.box.on('click', '.j-show-hhtz', function(event) {
 
         var t = $(this);
         var matchcode = t.parents('dd').attr('matchcode');
@@ -1250,7 +1268,7 @@ define(['jquery', 'app'], function ($, APP) {
             _this.box.find('[data-newdd=' + matchcode + ']').hide();
           }
 
-          if (_.find(_this.match, function (chr) {
+          if (_.find(_this.match, function(chr) {
               return chr.matchcode === matchcode && chr.type !== 'spf' && chr.type !== 'rqspf';
             })) {
             t.html('展开' + _this.hhtzIconHtml);
@@ -1265,7 +1283,7 @@ define(['jquery', 'app'], function ($, APP) {
       });
 
       // 比分展开
-      _this.box.on('click', '.j-show-bf', function (event) {
+      _this.box.on('click', '.j-show-bf', function(event) {
 
         var t = $(this);
         var row = t.parents('.row1-1');
@@ -1295,7 +1313,7 @@ define(['jquery', 'app'], function ($, APP) {
             dl.find('[data-newdd=' + matchcode + ']').hide();
           }
 
-          if (_.find(_this.match, function (chr) {
+          if (_.find(_this.match, function(chr) {
               return chr.matchcode === matchcode;
             })) {
             t.addClass('has').removeClass('active');
@@ -1308,7 +1326,7 @@ define(['jquery', 'app'], function ($, APP) {
       });
 
       //全包
-      _this.box.on('click', '.j-bf-all', function (event) {
+      _this.box.on('click', '.j-bf-all', function(event) {
 
         var t = $(this);
         var dd = t.parents('dd');
@@ -1318,7 +1336,7 @@ define(['jquery', 'app'], function ($, APP) {
 
         t.toggleClass(a);
 
-        t.siblings('.j-sp-btn').each(function (index, el) {
+        t.siblings('.j-sp-btn').each(function(index, el) {
 
           i = $(this).attr('index');
           sp = $(this).attr('sp');
@@ -1336,7 +1354,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      _this.box.on('mousemove', '.j-sp-btn,.j-bf-all', function (event) {
+      _this.box.on('mousemove', '.j-sp-btn,.j-bf-all', function(event) {
 
         var t = $(this);
         var i = t.attr('index');
@@ -1347,7 +1365,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      _this.box.on('mouseout', '.j-sp-btn,.j-bf-all', function (event) {
+      _this.box.on('mouseout', '.j-sp-btn,.j-bf-all', function(event) {
 
         var t = $(this);
         var i = t.attr('index');
@@ -1365,7 +1383,7 @@ define(['jquery', 'app'], function ($, APP) {
        * String  sp  sp对应title
        * Dom  dd  事件触发父dd
        */
-      _this.box.on('click', '.j-sp-btn', function (event) {
+      _this.box.on('click', '.j-sp-btn', function(event) {
 
         var t = $(this);
         var index = t.attr('index');
@@ -1376,7 +1394,7 @@ define(['jquery', 'app'], function ($, APP) {
         var allSp = true;
         var lock = true;
         var matchLen = _.uniq(_this.match, 'matchcode').length;
-        var hasMatch = _.find(_this.match, function (chr) {
+        var hasMatch = _.find(_this.match, function(chr) {
           return chr.matchcode === matchcode;
         });
         var dzTab = t.attr('gametype');
@@ -1401,7 +1419,7 @@ define(['jquery', 'app'], function ($, APP) {
           t.removeClass(h).addClass(a);
           _this.addOneItem(index, dd, sp, title, dzTab);
 
-          t.siblings('.j-sp-btn').each(function (index, el) {
+          t.siblings('.j-sp-btn').each(function(index, el) {
             if (!$(this).hasClass(a) && lock) {
               allSp = false;
               lock = false;
@@ -1417,7 +1435,7 @@ define(['jquery', 'app'], function ($, APP) {
       });
 
       //  Buy Main Toggle
-      _this.box.on('click', '.j-dataBody-toggle', function (event) {
+      _this.box.on('click', '.j-dataBody-toggle', function(event) {
 
         var t = $(this);
         var s = Number(t.attr('data-show'));
@@ -1434,7 +1452,7 @@ define(['jquery', 'app'], function ($, APP) {
 
           if (_this.tab === 'hhtz') {
 
-            bfDd.each(function (index, el) {
+            bfDd.each(function(index, el) {
 
               if ($(this).find('.j-sp-btn.active').length > 0) {
                 var matchcode = $(this).attr('matchcode');
@@ -1448,7 +1466,7 @@ define(['jquery', 'app'], function ($, APP) {
 
           if (_this.tab === 'bf') {
 
-            bfDd.each(function (index, el) {
+            bfDd.each(function(index, el) {
 
               if ($(this).find('.j-sp-btn.active').length > 0) {
                 var matchcode = $(this).attr('matchcode');
@@ -1467,7 +1485,7 @@ define(['jquery', 'app'], function ($, APP) {
           if ($(this).parents('#j-collect-body').length) {
             listDd.show();
           } else {
-            listDd.each(function (index, el) {
+            listDd.each(function(index, el) {
               var m = $(this).attr('matchcode');
               if ($('#j-collect-body .j-data-dd[matchcode=' + m + ']').length == 0) {
                 $(this).show();
@@ -1496,7 +1514,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    bet.prototype.filterNum = function (v) {
+    bet.prototype.filterNum = function(v) {
 
       if (v === '') {
         return v;
@@ -1518,11 +1536,11 @@ define(['jquery', 'app'], function ($, APP) {
      * 购票右侧时间绑定
      * @return {null}
      */
-    bet.prototype.bindRight = function () {
+    bet.prototype.bindRight = function() {
 
       var _this = this;
 
-      $('.j-coutn-total').on('click', '.j-count', function (event) {
+      $('.j-coutn-total').on('click', '.j-count', function(event) {
 
         var m = $(this).siblings('.btn-results'),
           c = $(this).attr('data-c'),
@@ -1533,7 +1551,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      $('#j-qiucksub-bei').on('keyup', function (event) {
+      $('#j-qiucksub-bei').on('keyup', function(event) {
 
         var t = $(this);
         var r = t.attr('data-r');
@@ -1545,7 +1563,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      $('#j-qiucksub-bei').on('change', function (event) {
+      $('#j-qiucksub-bei').on('change', function(event) {
 
         var t = $(this);
         var r = t.attr('data-r');
@@ -1558,7 +1576,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      $('#j-method-ls').on('click', '.jtip', function (event) {
+      $('#j-method-ls').on('click', '.jtip', function(event) {
 
         var t = $(this);
         var a = 'active';
@@ -1579,13 +1597,13 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      $('#orderRule').on('click', '.icon', function (event) {
+      $('#orderRule').on('click', '.icon', function(event) {
         var t = $(this);
         t.toggleClass('icon-cbox').toggleClass('icon-cgou');
         _this.isAgreen = t.hasClass('icon-cgou');
       });
 
-      $('#j-touzhu-tips').on('click', function (event) {
+      $('#j-touzhu-tips').on('click', function(event) {
 
         $('#j-touzhu-tipstext').toggle();
         $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
@@ -1606,13 +1624,13 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      $('#j-btn-clear').on('click', function (event) {
+      $('#j-btn-clear').on('click', function(event) {
         _this.box.find('.j-show-hhtz').removeClass('has');
         _this.clearBetData();
       });
 
       // BetList Button remvoe match
-      $('#selectGamePool').on('click', '.betList a', function (event) {
+      $('#selectGamePool').on('click', '.betList a', function(event) {
 
         var code = $(this).attr('matchcode');
         var i = $(this).attr('index');
@@ -1630,7 +1648,7 @@ define(['jquery', 'app'], function ($, APP) {
         removeItem.remove();
         actItem.removeClass('active');
 
-        _.remove(_this.match, function (o) {
+        _.remove(_this.match, function(o) {
           return (o.index == i && o.matchcode == code);
         });
 
@@ -1643,7 +1661,7 @@ define(['jquery', 'app'], function ($, APP) {
 
         if (_this.tab === 'bf') {
           actItem.siblings('.j-bf-all').removeClass('active hover');
-          if (_.filter(_this.match, function (chr) {
+          if (_.filter(_this.match, function(chr) {
               return chr.matchcode === code;
             }).length === 0) {
             $('#bettingBox dd[matchcode=' + code + '] .j-show-bf').removeClass('has');
@@ -1651,7 +1669,7 @@ define(['jquery', 'app'], function ($, APP) {
         }
 
         if (_this.tab === 'hhtz') {
-          if (_.filter(_this.match, function (chr) {
+          if (_.filter(_this.match, function(chr) {
               return chr.matchcode === code;
             }).length === 0) {
             $('#bettingBox dd[matchcode=' + code + '] .j-show-hhtz').removeClass('has');
@@ -1660,7 +1678,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       });
 
-      $('#selectGamePool').on('click', '.j-del-all', function (event) {
+      $('#selectGamePool').on('click', '.j-del-all', function(event) {
 
         var code = $(this).parents('tr').attr('matchcode');
         var removeItem = $('#selectGamePool tr[matchcode=' + code + ']');
@@ -1676,7 +1694,7 @@ define(['jquery', 'app'], function ($, APP) {
         if (_this.tab === 'bf') {
           $('#bettingBox dd[matchcode=' + code + ']').find('.j-show-bf').removeClass('has');
         }
-        _.remove(_this.match, function (o) {
+        _.remove(_this.match, function(o) {
           return o.matchcode == code;
         });
 

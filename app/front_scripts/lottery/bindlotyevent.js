@@ -96,7 +96,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     redBall: SEEDS.ballNum.slice(0, 33),
     blueBall: SEEDS.ballNum.slice(0, 16),
     redMax: 16,
-    blueMax: 12,
+    blueMax: 16,
     redDanMax: 5,
     redTuoMax: 20,
     redTotal: 6,
@@ -108,7 +108,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     redBall: SEEDS.ballNum.slice(0, 35),
     blueBall: SEEDS.ballNum.slice(0, 12),
     redMax: 18,
-    blueMax: 12,
+    blueMax: 16,
     redDanMax: 4,
     redTuoMax: 17,
     redTotal: 5,
@@ -888,6 +888,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     };
 
     li += '</div>';
+
     if (m) {
       li += '<div class="pull-right"><b><i class="money" data-m="' + m + '">' + (m * money) + '</i>元</b>';
     } else {
@@ -905,11 +906,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   // MANUAL 设置下方 注数 金额 统计
   MANUAL.setSdTotal = function () {
+
     var t = 0;
     var money = DLT.getZhuiJiaStatus();
     $('#sd-list').find('.money').each(function (index, el) {
       t += parseInt(el.innerHTML);
     });
+
     $('#sd-tip-zhu2').html(t / money);
     $('#sd-tip-total2').html(t);
   }
@@ -930,35 +933,74 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return arr;
   }
 
-  // 检测手动输入注
-  MANUAL.checkSdZhu = function (str, typeNums, len) {
+  /**
+   * 检测手动输入单式
+   * @param  {String} str      单式字符串
+   * @param  {Number} type 选球类型
+   * @return {Boolean}          是否正常单式或复式
+   */
+  MANUAL.checkSdZhu = function (str, type) {
 
-    var nums = str.split(',')
+    // 球形数组,复式最大长度,单式最小长度
+    var typeNums = '';
+    var maxLen = '';
+    var minLen = '';
 
-    if (nums.length == len && _.uniq(nums).length == len) {
+    if (type) {
+      typeNums = SEEDS[Config.lotyName].blueBall;
+      maxLen = SEEDS[Config.lotyName].blueMax;
+      minLen = SEEDS[Config.lotyName].blueTotal;
+    } else {
+      typeNums = SEEDS[Config.lotyName].redBall;
+      maxLen = SEEDS[Config.lotyName].redMax;
+      minLen = SEEDS[Config.lotyName].redTotal;
+    }
+
+    var nums = str.split(',');
+    var numsLen = nums.length;
+
+    // 是否符合 选球数范围, 是否重复
+    if (minLen <= numsLen && maxLen >= numsLen && _.uniq(nums).length == numsLen) {
+
       for (var i = 0; i < nums.length; i++) {
+
+        // 是否在选球数组
         if (!_.find(typeNums, function (num) {
             return num == nums[i];
           })) {
+
           return false;
+
         }
+
       };
       return true;
+
     } else {
+
       return false;
+
     }
-  }
+
+  };
 
   // 格式化 手动上传号码
   MANUAL.sdFormat = function (str) {
 
     var zhus = {};
     var l = '';
+    var rLen = 0;
+    var bLen = 0;
+    var money = 0;
+    var x = 0;
+    var y = 0;
+    var m = DLT.getZhuiJiaStatus();
 
     zhus.code = 0;
     zhus.good = [];
     zhus.bad = [];
-
+    zhus.moneyArr = [];
+    zhus.overMaxMoney = false;
     zhus.all = str.split(/\n/g);
 
     // 数组分组
@@ -972,14 +1014,33 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         if (zhus.all[i].indexOf('+') >= 0) {
           l = zhus.all[i].split(/\+/g);
         } else {
-          l = zhus.all[i].split(/\|/g)
+          l = zhus.all[i].split(/\|/g);
         }
 
         if (l.length == 2) {
 
-          if (MANUAL.checkSdZhu(l[0], SEEDS[Config.lotyName].redBall, SEEDS[Config.lotyName].redTotal) && MANUAL.checkSdZhu(l[1], SEEDS[Config.lotyName].blueBall, SEEDS[Config.lotyName].blueTotal)) {
+          if (MANUAL.checkSdZhu(l[0], 0) && MANUAL.checkSdZhu(l[1], 1)) {
 
-            zhus.good.push(zhus.all[i]);
+            rLen = l[0].split(',').length;
+            bLen = l[1].split(',').length;
+
+            // 计算复式金额
+            x = QUEUE.getACTotalNum(rLen, SEEDS[Config.lotyName].redTotal, 'C');
+            y = QUEUE.getACTotalNum(bLen, SEEDS[Config.lotyName].blueTotal, 'C');
+
+            money = x * y * m;
+
+            if (money > 20000) {
+
+              zhus.bad.push(zhus.all[i]);
+              zhus.overMaxMoney = true;
+
+            }else{
+
+              zhus.good.push(zhus.all[i]);
+              zhus.moneyArr.push(money);
+
+            }
 
           } else {
 
@@ -1348,12 +1409,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     COMMON.checkBallGroup(Config.box);
     COMMON.setZhuTotal();
 
-    if (Config.box.find('#j-upload-sub')[0]) {
+    if (Config.playType ==="ztsc") {
       MANUAL.setSdTotal();
       MANUAL.totalSdNums();
     }
 
-    if (Config.box.find('#j-tuodan-sub')[0]) {
+    if (Config.playType ==="tdtz") {
       DRAG.checkBallAear();
     }
 
@@ -1504,14 +1565,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       if (h) {
         eRed.each(function (index, el) {
 
-          var e = $(this).html();
+          var e = $.trim($(this).text());
           rNums.push(e);
 
         });
 
         eBlue.each(function (index, el) {
 
-          var e = $(this).html();
+          var e = $.trim($(this).text());
           bNums.push(e);
 
         });
@@ -2012,10 +2073,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var formatZhus = '';
     var l = '';
     var html = '';
-    var money = DLT.getZhuiJiaStatus();
-    var tips = ['<h5>请按照正确的格式填写：</h5><p>单式：01,02,03,04,05,06+01</p><p>复式：01,02,03,04,05,06,07,08+01,02</p>', '请输入投注号码'];
+    var tips = ['<h5>请按照正确的格式填写：</h5><p>单式：01,02,03,04,05,06+01</p><p>复式：01,02,03,04,05,06,07,08+01,02</p>', '请输入投注号码', '您的投注号码多于' + Config.maxHang + '行，请返回重新选择','您好，单个投注的金额应小于2万元，请返回重新选择'];
     var boxZhuLen = Config.box.find('.br-zhu-item').length;
     var addZhuLen = 0;
+    var money = DLT.getZhuiJiaStatus();
 
     if (!t.hasClass('active')) {
       return;
@@ -2026,47 +2087,69 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     if (Config.box.find('.br-zhu-item').length >= Config.maxHang) {
-      APP.showTips('您的投注号码多于100行，请返回重新选择');
+      APP.showTips(tips[2]);
       return;
     }
 
-    if (!_.isEmpty(str)) {
-      formatZhus = MANUAL.sdFormat(str);
-      addZhuLen = formatZhus.good.length;
-      if ((boxZhuLen + addZhuLen) > Config.maxHang) {
-        APP.showTips('您的投注号码多于100行，请返回重新选择');
-        return;
-      }
-    } else {
+    // 输入为空判断
+    if (_.isEmpty(str)) {
+
       APP.showTips(tips[1]);
       return;
+
+    } else {
+
+      formatZhus = MANUAL.sdFormat(str);
+      addZhuLen = formatZhus.good.length;
+
+      if(formatZhus.overMaxMoney){
+        APP.showTips(tips[3]);
+        return;
+      }
+
+      if ((boxZhuLen + addZhuLen) > Config.maxHang) {
+        APP.showTips(tips[2]);
+        return;
+      }
+
     }
 
+    // 格式化正常注数
     if (formatZhus && formatZhus.code == 0) {
       APP.showTips(tips[0]);
     }
 
+    // 构造html
     for (var i = 0; i < formatZhus.good.length; i++) {
       l = MANUAL.relovStr(formatZhus.good[i]);
-      html += MANUAL.getListHTML(l[0], l[1], money);
+      html += MANUAL.getListHTML(l[0], l[1], formatZhus.moneyArr[i]);
     };
 
     $('#sd-list').append(html);
+
+    // 更新总额
     MANUAL.setSdTotal();
 
+    // 非法单式处理
     if (formatZhus.bad.length > 0) {
+
       $('#sd_number').val('');
       for (var i = 0; i < formatZhus.bad.length; i++) {
         if (formatZhus.bad[i]) {
           $('#sd_number').val($('#sd_number').val() + formatZhus.bad[i] + '\n');
         }
       };
+
     } else {
+
       $('#sd_number').val('');
+
     }
 
+    // 更新选项
     MANUAL.totalSdNums();
     ZHUI.setHeMaiTotal();
+
   });
 
   //手动输入Mask

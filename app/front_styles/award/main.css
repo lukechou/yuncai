@@ -1,0 +1,45 @@
+/*start 开奖公告*/
+.table-aligncenter > thead > tr > th, .table-aligncenter > tbody > tr > td { text-align: center; }
+.kjgg .top { font-size: 12px; margin: 10px 0; color: #242424; }
+.kjgg .top-title { color: #848484; }
+.kjgg .top a { color: #3d3d3d; }
+.kjgg-content { border: 1px solid #dfdfdf; font-size: 12px; margin-bottom: 50px; border-bottom: none; }
+.kjgg-content .title { height: 40px; background: #f1f1f1; line-height: 40px; border-bottom: 1px solid #dfdfdf; }
+.kjgg-content .title h2 { font-weight: bold; font-family: "宋体"; font-size: 14px; line-height: 40px; margin: 0 0 0 12px; color: #3D3D3D; float: left; }
+.kjgg-content .title-r { float: right; margin-right: 10px; color: #dfdfdf; }
+.lottery-new-notice, .digital-lottery, .compe-sport, .high-freq { border-bottom: 1px solid #dfdfdf; }
+.lottery-new-notice .content { height: 40px; line-height: 40px; padding-left: 12px; }
+.lottery-new-notice .content .date { float: left; }
+.lottery-new-notice .content dl, .lottery-new-notice .content dl dt, .lottery-new-notice .content dl dd { float: left; }
+.lottery-new-notice .content dl { margin: 0 0 0 10px; }
+.lottery-new-notice .content dl dt { color: #F13C38; }
+.lottery-new-notice .content dl dd { margin-right: 10px; color: #0d67c4; }
+.kjggindex-common-table th { height: 35px; color: #848484; background: #f8f8f8;}
+.kjggindex-common-table td { height: 40px; }
+.kjggindex-common-table .td1 { text-align: left; padding-left: 18px; }
+.kjggindex-common-table tr { border-bottom: 1px dotted #dfdfdf; }
+.kjggindex-common-table tr:last-child { border-bottom: none; }
+.kjggindex-common-table .th1 { width: 110px; text-align: left; padding-left: 18px; }
+.kjggindex-common-table .th2 { width: 99px; }
+.kjggindex-common-table .th2, .kjggindex-common-table .td2 ,.kjggindex-common-table .th3,.kjggindex-common-table .td3,.kjggindex-common-table .th5,.kjggindex-common-table .td5,.kjggindex-common-table .th6,.kjggindex-common-table .td6,.kjggindex-common-table .th7,.kjggindex-common-table .td7{ text-align: left; }
+.kjggindex-common-table .th3 { width: 104px; }
+.kjggindex-common-table .th4 { width: 283px; text-align: left; }
+.kjggindex-common-table .th5 { width: 95px; }
+.kjggindex-common-table .th6 { width: 71px; }
+.kjggindex-common-table .th7 { width: 126px; }
+.kjggindex-common-table .th8 { width: 95px; }
+.kjggindex-common-table td.td8 button { width: 57px; height: 25px; }
+.kjggindex-common-table td.td8 button a { color: #fff; }
+.kjggindex-common-table .td4 { text-align: left; }
+.kjnum-hasbg-list, .kjnum-nobg-list { display: inline-block; }
+.kjnum-hasbg-list li { display: inline-block; width: 26px; height: 26px; border-radius: 26px; line-height: 27px; text-align: center; font-weight: bold; font-size: 16px; margin-right: 7px; }
+.kjnum-hasbg-list li.red, .kjnum-hasbg-list li.blue { color: #fff; }
+.kjnum-hasbg-list li.red { background: #F13C38; }
+.kjnum-hasbg-list li.blue { background: #388BF1; }
+.kjnum-nobg-list li { color: #3D3D3D; font-weight: bold; display: inline-block; font-family: "微软雅黑"; margin: 0 1px; font-size: 13px; margin: 0 2px; }
+.kjnum-nobg-list li a { font-family: "宋体"; font-weight: normal; }
+.kjggindex-common-table .td4 .pink-squ, .kjggindex-common-table .td4 .green-squ { width: 16px; height: 16px; border-radius: 2px; color: #fff; font-weight: bold; display: inline-block; text-align: center; margin-left: 7px; line-height: 16px; }
+.pink-squ { background: #F61A77; }
+.green-squ { background: #59B664; }
+
+/*end 开奖公告*/
