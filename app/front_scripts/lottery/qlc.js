@@ -168,10 +168,12 @@ $(document).ready(function () {
    * @return {[type]} [description]
    */
   $('#choose_to_buy').on('click', function (event) {
+
     if (!$(this).hasClass('active')) {
       return;
     }
     var bool = false;
+
     switch (parseInt($('#choose_to_buy').attr('data-add'))) {
     case 0:
       var firstBitCodes = G_CHOOSE.codes[0][0] || [];
@@ -204,27 +206,29 @@ $(document).ready(function () {
 
     case 1:
 
-      // 注数检测
-      var iptCodes = _.compact($('#sd_number').val().replace(/，/ig, ',').split("\n"));
-      if (iptCodes.length > QLC.maxBuyCodeLength) {
-        APP.showTips('您的投注号码多于' + QLC.maxBuyCodeLength + '行，请返回重新选择');
-        return;
-      }
-
-      // 初始化 选择对象
-      G_CHOOSE.init();
-
-      // 投注合法化检测
-      for (var i = 0; i < iptCodes.length; i++) {
-        var validate = QLC.isIllegalCode(iptCodes[i], function (code, zhushu) {
-          code.sort();
-          G_CHOOSE.codes.push(code);
-          G_CHOOSE.zhushu += zhushu;
-          G_CHOOSE.money += zhushu * 2;
-        });
-        if (!validate) {
-          APP.showTips(QLC.getLastErrorMsg());
+      if (QLC.navPageType === 1) {
+        // 注数检测
+        var iptCodes = _.compact($('#sd_number').val().replace(/，/ig, ',').split("\n"));
+        if (iptCodes.length > QLC.maxBuyCodeLength) {
+          APP.showTips('您的投注号码多于' + QLC.maxBuyCodeLength + '行，请返回重新选择');
           return;
+        }
+
+        // 初始化 选择对象
+        G_CHOOSE.init();
+
+        // 投注合法化检测
+        for (var i = 0; i < iptCodes.length; i++) {
+          var validate = QLC.isIllegalCode(iptCodes[i], function (code, zhushu) {
+            code.sort();
+            G_CHOOSE.codes.push(code);
+            G_CHOOSE.zhushu += zhushu;
+            G_CHOOSE.money += zhushu * 2;
+          });
+          if (!validate) {
+            APP.showTips(QLC.getLastErrorMsg());
+            return;
+          }
         }
       }
 
@@ -233,9 +237,11 @@ $(document).ready(function () {
           return;
         }
       }
+
       bool = makeChooseCodeHtml(G_CHOOSE.codes);
       break;
     }
+
     if (bool) {
       calculateBuyCodes();
       updateCreatePartProjectParame();
@@ -810,6 +816,7 @@ $(document).ready(function () {
    */
   $('#j-nav').on('click', 'a', function (event) {
     event.preventDefault();
+
     var _this = $(this);
     var pagetype = Number(_this.attr('data-pagetype'));
     var newTab = $(this).attr('href');
@@ -839,6 +846,8 @@ $(document).ready(function () {
   function toggleTabs(newTab, li, pagetype) {
 
     var oldTab = $('#j-nav li.active a').attr('href');
+
+    QLC.navPageType = pagetype;
 
     $(oldTab).removeClass('active');
     $(newTab).addClass('active');
@@ -889,6 +898,7 @@ $(document).ready(function () {
       $('#j-box-left').addClass('multiphase-box');
       break;
     }
+
     initBuyType();
   }
 

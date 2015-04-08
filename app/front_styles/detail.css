@@ -3,7 +3,7 @@
 .xiang .tab-content .ttil { font-size: 12px; padding: 8px 20px; }
 .xiang .tab-content .ttil span { margin-right: 20px; }
 .xiang .tab-content .ttil input { position: relative; top: 3px; }
-.xiang .m-mn-table tr td { vertical-align: middle; word-break: break-all; border-top: none; line-height: 1; }
+.xiang .m-mn-table tr td { vertical-align: middle; word-break: break-all; border-top: none; line-height: 1.7; }
 .xiang .m-mn-table tr td p { margin-bottom: 6px; }
 .xiang .m-mn-table .text-left p { padding-left: 30px; }
 .xiang .tab-content .tips { font-size: 12px; margin-bottom: 0; padding: 10px 20px 10px 0; text-align: right; }

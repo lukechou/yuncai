@@ -102,6 +102,19 @@ require(['jquery', 'app', 'zclip', 'bootstrap', 'datetimepicker'], function ($, 
       $('.datetimepicker').css('top', '244px');
     });
 
+    // 彩种类型跳转
+    $('#j-lottery').on('change', function(event) {
+      event.preventDefault();
+      var u = $(this).val();
+
+      window.location.href = u;
+    });
+
+    $('#j-more-list').on('click', function(event) {
+      event.preventDefault();
+      $('#j-list-body tr').show();
+    });
+
   }
 
   pageInit();

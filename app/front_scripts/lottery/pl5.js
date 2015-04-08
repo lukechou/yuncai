@@ -265,29 +265,31 @@ $(document).ready(function () {
 
     case 1:
 
-      // 注数检测
-      var iptCodes = _.compact($('#sd_number').val().replace(/，/ig, ',').split("\n"));
-      if (iptCodes.length > PL5.maxBuyCodeLength) {
-        APP.showTips('您的投注号码多于' + PL5.maxBuyCodeLength + '行，请返回重新选择');
-        return;
-      }
-
-      // 初始化 选择对象
-      G_CHOOSE.init();
-
-      // 投注合法化检测
-      for (var i = 0; i < iptCodes.length; i++) {
-        var validate = PL5.isIllegalCode(iptCodes[i], function (code, zhushu) {
-          G_CHOOSE.codes.push(code);
-          G_CHOOSE.zhushu += zhushu;
-          G_CHOOSE.money += zhushu * 2;
-        });
-
-        if (!validate) {
-          APP.showTips(PL5.getLastErrorMsg());
+      if (PL5.navPageType === 1) {
+        // 注数检测
+        var iptCodes = _.compact($('#sd_number').val().replace(/，/ig, ',').split("\n"));
+        if (iptCodes.length > PL5.maxBuyCodeLength) {
+          APP.showTips('您的投注号码多于' + PL5.maxBuyCodeLength + '行，请返回重新选择');
           return;
         }
 
+        // 初始化 选择对象
+        G_CHOOSE.init();
+
+        // 投注合法化检测
+        for (var i = 0; i < iptCodes.length; i++) {
+          var validate = PL5.isIllegalCode(iptCodes[i], function (code, zhushu) {
+            G_CHOOSE.codes.push(code);
+            G_CHOOSE.zhushu += zhushu;
+            G_CHOOSE.money += zhushu * 2;
+          });
+
+          if (!validate) {
+            APP.showTips(PL5.getLastErrorMsg());
+            return;
+          }
+
+        }
       }
 
       for (var i = G_CHOOSE.codes.length - 1; i >= 0; i--) {
@@ -876,6 +878,8 @@ $(document).ready(function () {
   function toggleTabs(newTab, li, pagetype) {
 
     var oldTab = $('#j-nav li.active a').attr('href');
+
+    PL5.navPageType = pagetype;
 
     $(oldTab).removeClass('active');
     $(newTab).addClass('active');

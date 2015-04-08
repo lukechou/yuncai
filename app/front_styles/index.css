@@ -105,6 +105,7 @@
 .page-quick { height: 259px; }
 .page-quick, .page-he { padding: 8px 0; }
 .page-quick .m-title { padding: 30px 0 20px; }
+.page-quick .box-right .m-title{ padding-top: 34px;}
 .page-quick .box-right .m-title .more { display: none; margin-top: 0; }
 .page-quick .box-right .new-ls { margin-left: 0; }
 .page-quick .box-right .new-ls li a { padding: 3px 5px; }

@@ -7,22 +7,33 @@ require.config({
     app: '../common/app',
     model: 'model',
     chart: 'chart',
-    highcharts: 'highcharts'
+    highcharts: 'highcharts',
+    tipsy: '../lib/jquery.tipsy',
   },
   shim: {
     bootstrap: {
       deps: ['jquery'],
       exports: 'jquery'
-    }
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function ($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap','tipsy'], function ($, _, store, chart, APP, model) {
   'use strict';
 
   function init() {
     APP.bindInputPlace();
     APP.bindInputOnlyInt('.j-only-int');
+
+    $('.j-icon-tips').tipsy({
+      gravity: 'nw',
+      html: true,
+      opacity: 1
+    });
 
     // 初始化 收藏模块
     model.init({
