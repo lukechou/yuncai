@@ -161,6 +161,7 @@
 .page-he .m-title { padding: 30px 0 20px; }
 .page-he .box-left .item { background: #242424; }
 .page-he .m-he-box { font-size: 12px; position: relative; color: #c1c1c1; background: #242424; }
+.m-he-box .username{ color: #c1c1c1;}
 .m-he-box .head { margin: 0 auto 10px; }
 .m-he-box .top { padding: 24px; }
 .m-he-box .bottom { position: absolute; bottom: 0; width: 100%; height: 88px; text-align: left; background: #202020; }

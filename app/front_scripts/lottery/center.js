@@ -63,7 +63,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           htmlOutput +=
             '<tr>\
                   <td>' + i + '</td>\
-                  <td>' + dataItem.username + '</td>\
+                  <td><a class="username" href="' + dataItem.user_profile_url + '">' + dataItem.username + '</a></td>\
                   <td>' + dataItem.schedule + ' %</td>\
                   <td class="tb-4 fc-3 j-mtotal">' + dataItem.price + '元</td>\
                   <td class="text-left">' + dataItem.unitPrice + '元</td><td>' + htmlStatu + htmlUse + '</td></tr>';

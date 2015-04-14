@@ -13,7 +13,7 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .auto-bd { padding: 12px 15px 30px; background: #f1f1f1; border-top: 1px #dfdfdf solid; }
 .text-fen span { font-weight: bold; margin-right: 5px; }
 .auto-bd .m-table-one> thead > tr > th { background: #f9f9f9; }
-.auto-list { overflow-y: auto; border: 1px #dfdfdf solid; border-width: 0 1px 1px; background: #fff; max-height: 200px; }
+.auto-list { overflow-y: auto; border: 1px #dfdfdf solid; border-width: 0 1px 1px; background: #fff; max-height: 325px; }
 .auto-list-table { border: none; }
 .empty-tip { line-height: 180px !important; }
 .auto-stop-nav { margin-top: 15px; }
@@ -25,45 +25,51 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .u-tipsbox2 { background: #fff; }
 .u-tipsbox h5 { font-weight: normal; }
 
-
 /* 模型自动投注列表 */
-.auto-list-main{
-  font-size: 12px; margin-bottom: 20px;
-}
+.auto-list-main { font-size: 12px; margin-bottom: 20px; }
+.auto-list-main .auto-hd-title { border: 1px #dfdfdf solid; border-bottom: none; }
+.auto-mid { border: 1px #dfdfdf solid; border-width: 1px  1px 0; height: 40px; line-height: 40px; padding: 0 20px; }
+.auto-mid>b { font-size: 14px; }
+.auto-mid-right { float: right; }
+.auto-mid-right select { width: 110px; padding: 3px 5px; margin: 0 15px 0 5px; border-color: #dfdfdf; }
+.auto-mid-right .icon { position: relative; top: 3px; left: -3px; }
+.m-table-one > tbody > tr > td { height: 40px; padding: 0; }
+.w1 { width: 227px; }
+.w2 { width: 236px; }
 
-.auto-list-main .auto-hd-title{
-  border:1px #dfdfdf solid;
-  border-bottom: none;
-}
+/* table col*/
+.edit-wrap { border: 1px solid #ccc; display: inline-block; vertical-align: middle; width: 150px; height: 27px; margin: 0 auto; position: relative; }
+.i-reduce, .i-add { display: block; width: 25px; height: 25px; background: #f2f2f2; position: absolute; top: 0; font-size: 14px; font-weight: bold; line-height: 25px; color: #5b5b5b; }
+.i-reduce:hover, .i-add:hover, .i-reduce:focus, .i-add:focus { text-decoration: none; background: url(../front_images/model/btn-bg.png); }
+.i-add { right: 0; }
+.i-reduce { left: 0; }
+.edit-num { position: absolute; left: 25px; top: 0; height: 25px; line-height: 25px; width: 98px; border: 1px #dfdfdf solid; border-width: 0 1px; text-align: center; }
 
-.auto-mid{
-  border: 1px #dfdfdf solid;
-  border-width: 1px  1px 0;
-  height: 40px; line-height: 40px;
-  padding:0 20px;
-}
-.auto-mid>b{
-font-size: 14px;
-}
-.auto-mid-right{
-  float: right;
-}
+/* 投注确认框 */
+.auto-modal .modal-dialog { font-size: 12px; width: 870px; }
+.auto-modal .modal-body { padding: 25px 20px 30px; }
+.btn-gp { width: 360px; margin: auto; }
+.btn-gp .btn { height: 43px; line-height: 43px; padding: 0; font-size: 16px; }
+.btn-gp .btn-red { float: left; width: 170px; }
+.btn-gp .btn-gray { float: right; width: 170px; }
+.btn-gp .btn-gray:hover { border: none; background: url(../front_images/model/del-hover.png); }
+.text-bm { margin: 12px 0 0; }
+.auto-modal h6 { font-weight: bold; color: #3d3d3d; }
+.text-stop { margin: 10px 0 4px; }
+.text-tips { margin-bottom: 35px; }
+.text-top { margin-bottom: 25px; }
+.auto-modal .auto-list { max-height: 202px; }
 
-.auto-mid-right select{
-width: 110px;
-padding:3px 5px;
-margin:0 15px 0 5px;
-border-color:#dfdfdf;
-}
+/* Color */
+.fc-8 { color: #f000a9; }
+.fc-9 { color: #00a7b6; }
 
-.auto-mid-right .icon{
-  position: relative;
-  top: 3px;
-  left: -3px;
-}
-
-
-
+/* auto model list */
+.list-table> tbody > tr:hover { background: #fcead3 }
+.list-table> tbody >.tr-modify { background: #fbe6db; border: #f6c9b2 solid 1px; }
+.list-table> tbody >.tr-modify:hover { background: #fbe6db; }
+.list-table > tbody > tr > .list-box { padding: 12px; }
+.box-table> thead > tr > th { background: #f9f9f9; }
 
 
 

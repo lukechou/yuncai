@@ -3,6 +3,7 @@
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar,.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar{ background-color: rgba(198,198,198,1);}
 .mCS-light-3.mCSB_scrollTools .mCSB_draggerRail{width: 8px;background: rgba(237,237,237,1);}
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{background-color: rgba(198,198,198,1);}
+.mCSB_scrollTools .mCSB_dragger{ height: 40px!important; }
 
 
 

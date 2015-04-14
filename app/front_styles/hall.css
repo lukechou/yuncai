@@ -32,7 +32,8 @@
 
 /* List-4 */
 .hall-list-4 > li { width: 158px; height: 205px; margin-left: 79px; }
-.hall-list-4 > li img { width: 134px; height: 134px; }
+.hall-list-4 > li .hall-list-img-wrapper { width: 140px; height: 140px; }
 .hall-list-4 > li p { font-size: 12px; }
 .hall-list-4 > li img.mt13 { margin-top: 13px; }
+.hall-list-4 > li img.kl10f { width: 155px; height: 125px; }
 .hall-list-4 > li h4.mt23 { margin-top: 23px; }

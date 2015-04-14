@@ -1,0 +1,73 @@
+/* Cover default*/
+.brings-mn { margin-top: 0; border-top: none; }
+.box-left { margin-top: 0; padding-top: 6px; }
+.box-left-rightnobor { border-right: none; }
+.box-right { margin-top: -63px; }
+.kjgg .sub-content { height: 60px; background: #fff; }
+.m-down-tips > ul >li>ul>li { }
+
+/* top nav */
+.m-br-nav { padding: 0; background: #f5f5f5; width: 752px; }
+.m-br-nav > li { width: 12.5%; }
+.m-br-nav > li > a { font-size: 12px; line-height: 1.4; height: auto; margin: 0; padding: 6px 15px; border: none; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f1f1f1; text-align: center; border-right: 1px #dfdfdf solid; position: relative; display: block; width: 100%; padding: 5px 0; }
+.m-br-nav > li.active > a, .m-br-nav > li > a:hover, .m-br-nav > li.active > a:hover, .m-br-nav > li.active > a:focus { line-height: 1.4; color: #fff; background: #3d3d3d; height: 62px; border: none; }
+.m-br-nav > li > a > span { color: #8e8e8e; font-family: 'simsun'; font-size: 12px; }
+.m-br-nav > li.active > a span, .m-br-nav > li > a:hover span { color: #fff; }
+.m-br-nav > li > a > b { font-family: 'simsun'; font-size: 14px; font-weight: bold; }
+.m-br-nav > li.active { top: 0; }
+
+/* k3-title*/
+.k3-title { border-bottom: 3px #f13c38 solid; }
+.k3-title-btn { height: 38px; line-height: 38px; padding: 0; width: 120px; border-radius: 0; font-family: 'simsun'; font-weight: bold; font-size: 18px; }
+.k3-sell-time { font-size: 12px; float: right; margin-top: 15px; }
+
+/* k3-hd */
+.k3-hd { margin: 15px auto; height: 180px; padding: 8px 10px; background: #f2f2f2; }
+.k3-hd-first, .k3-hd-second, .k3-hd-third { background: #fff; float: left; height: 166px; }
+.k3-hd-first { width: 200px; text-align: center; }
+.k3-hd-first h2 { margin: 15px auto 5px; font-size: 24px; }
+.k3-hd-first img { height: 90px; }
+.k3-hd-first p { margin: 0; font-size: 12px; }
+
+/* second */
+.k3-hd-second { text-align: center; padding: 10px 0 15px; width: 360px; margin-left: 10px; }
+.second-hd { font-size: 14px; font-weight: bold; margin-bottom: 12px; }
+.second-box { width: 220px; height: 90px; margin: 0 auto 10px; background: #222; color: #fff; font-size: 36px; line-height: 90px; }
+.second-ft { font-size: 12px; }
+
+/* third */
+.k3-hd-third { text-align: center; padding: 10px 0; width: 385px; margin-left: 10px; }
+.third-hd .icon { height: 20px; width: 20px; line-height: 20px; color: #fff; font-size: 12px; border-radius: 2px; font-weight: bold; }
+.third-box { width: 250px; height: 90px; background: #f2f2f2; border: 1px #dfdfdf solid; margin: 10px auto; }
+.third-more { color: #696969; font-size: 12px; float: right; margin-right: 10px; }
+.third-hisnum { width: 195px; }
+.third-hisnum li { float: left; height: 70px; width: 60px; background: #222; color: #fff; line-height: 70px; margin: 10px 0 0 5px; font-size: 36px; }
+.third-histext { font-size: 12px; width: 50px; }
+.third-histext h5 { font-size: 36px; }
+
+/* box-choose */
+.box-choose { display: none; }
+.box-choose.active { display: block; overflow: hidden; }
+.choose-bd { }
+.choose-ws { float: left; margin: 17px 0 0 0; margin-top: 17px; width: 75px; }
+.choose-ws .choose-title { font-weight: bold; font-size: 14px; }
+.sel-num-title { margin: 11px 0 0 -24px; text-align: center; color: #717171; font-size: 12px; line-height: 20px; height: 20px; background: url(../front_images/icon/yilou_bgd.png) center center no-repeat; }
+.list-ball { width: 580px; overflow: hidden; }
+.list-ball li { width: 74px; height: 80px; float: left; margin: 0 8px 4px 0; }
+.list-ball li a { width: 78px; height: 50px; outline: none; background: #f2f2f2; border: 1px #dfdfdf solid; display: block; text-align: center; color: #222; border-radius: 5px; }
+.list-ball li b { font-size: 23px; display: block; line-height: 31px; }
+.list-ball li span { font-size: 12px; font-weight: normal; line-height: 12px; position: relative; top: -4px; }
+.list-ball li a.active { text-decoration: none; background: #f13c38; color: #fff; }
+.list-ball li a:hover,.list-ball li a:focus{ text-decoration: none;}
+.list-ball li em { text-align: center; color: #B1B1B1; font-size: 12px; width: 100%; display: inline-block; }
+.list-ball li { width: 74px; height: 80px; }
+.choose-as-box { margin: 10px 0; }
+.choose-as-box strong { width: 75px; float: left; margin-top: 11px; color: #848484; }
+.choose-as-btn { width: 128px; height: 40px; float: left; background: #f2f2f2; border: 1px #dfdfdf solid; margin-right: 20px; border-radius: 5px; text-align: center; font-size: 12px; line-height: 40px; }
+.choose-as-btn b { font-size: 14px; }
+.choose-as-btn.last { margin-right: 0; }
+.choose-as-btn.active { border-color: #f13c38; cursor: pointer; }
+
+/* 今日开奖 */
+.todaynum-table { display: none; }
+.bottomBox h3 { clear: both; float: none; height: 15px; line-height: 15px; padding: 11px 15px 11px; font-size: 12px; }

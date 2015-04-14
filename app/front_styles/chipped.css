@@ -82,6 +82,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 
 /* 合买大厅-表格组件 */
 .he-table { margin-bottom: 0; }
+.he-table .username{ color: #3d3d3d;}
 .he-table .tb-1 { width: 74px; }
 .he-table .tb-2 { width: 114px; }
 .he-table .tb-3 { width: 114px; }

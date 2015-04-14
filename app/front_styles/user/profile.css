@@ -1,0 +1,76 @@
+/*start 个人中心 首页*/
+.per-center { margin: 15px auto 80px; }
+.per-info { height: 176px; width: 100%; border: 1px solid #dfdfdf; padding: 27px 0 0 20px; }
+.per-info-img { margin-top: 8px; }
+.per-info-box { margin: 0 0 0 28px; }
+.per-name { font-size: 23px; font-weight: bold; color: #3D3D3D; }
+.per-level { display: inline-block; width: 43px; height: 14px; background: #F13C38; border-radius: 10px; font-size: 12px; color: #fff; font-weight: bold; text-align: center; font-style: italic; line-height: 14px; margin: 10px 0 0 12px; }
+.awarded-num { font-size: 16px; color: #F13C38; margin: 2px 37px 0 5px; }
+.per-info-box p, .per-info-box p span { font-family: "微软雅黑"; font-weight: bold; vertical-align: middle; }
+.per-info-box p { margin-bottom: 28px; }
+.awarded-cishu, .awarded-num, .per-info-box p > span > i, .per-level, .per-name { float: left; }
+.awarded-cishu { font-size: 15px; margin: 4px 0 0 5px; }
+.per-nav { margin-top: 12px; border: 1px solid #dfdfdf; border-bottom: none; }
+.per-bor { border: 1px solid #dfdfdf; }
+.per-com-table { font-size: 12px; width: 100%; text-align: center; border-bottom: 1px solid #dfdfdf; }
+.per-com-table tr { height: 35px; }
+.per-com-table th { background: #f1f1f1; text-align: center; border-bottom: 1px solid #dfdfdf; }
+.per-now .title { height: 35px; line-height: 35px; font-size: 12px; font-weight: bold; padding-left: 20px; }
+.per-table .th1 { width: 136px; }
+.per-table .th2 { width: 136px; }
+.per-table .th3 { width: 150px; }
+.per-table .th4 { width: 128px; }
+.per-table .th5 { width: 155px; }
+.per-table .th6 { width: 147px; }
+.per-table .th7 { width: 133px; }
+.per-table tbody tr td .u-ci, .j-more-recent-news table tbody tr td .u-ci { font-size: 12px; width: 80px; padding: 3px 5px; border: 1px #dfdfdf solid; margin-right: 6px; height: 25px; }
+.per-table tbody tr td .btn-c1 { margin-right: 5px; padding: 0; width: 57px; height: 25px; font-family: 'simsun'; line-height: 25px; }
+.per-com-table > tbody > tr:nth-child(2n) > td { background: #f1f1f1; }
+.per-model-table tbody tr .td1 { padding-top: 6px; }
+.per-model-table tbody tr .td1 span { float: left; margin: 0 -2px 0 20px; }
+.per-model-table .th1 { width: 140px; }
+.per-model-table .th2 { width: 160px; }
+.per-model-table .th3 { width: 147px; }
+.per-model-table .th4 { width: 149px; }
+.per-model-table .th5 { width: 146px; }
+.per-model-table .th6 { width: 142px; }
+.per-model-table .th7 { width: 104px; }
+.recent-news { margin-top: 12px; border: 1px solid #dfdfdf; }
+.recent-news div, .recent-news li, .recent-news span { font-size: 12px; }
+.recent-news .title { height: 35px; line-height: 35px; padding-left: 20px; font-size: 12px; font-weight: bold; background: #f1f1f1; }
+.recent-news-ul > li { border-bottom: 1px dotted #dfdfdf; list-style: disc inside; }
+.j-more-recent-news { background: #FBE6DB; border: 1px solid #F6C9B2; width: 100%; display: none; }
+.recent-news-ul > li > p { margin: 10px 0 8px 21px; }
+.j-more-recent-news table { margin: 12px auto 12px; width: 960px; }
+.j-more-recent-news table tr th, .j-more-recent-news table tr td { height: 35px; text-align: center; }
+.j-more-recent-news table tr th { background: #f1f1f1; }
+.j-more-recent-news table tr td { background: #fff; }
+.icon-tridown, .j-per-modelmore { cursor: pointer; }
+.j-per-modelmore { float: right; font-weight: normal; }
+.icon-tridown, .icon-triup { margin-left: 3px; cursor: pointer; }
+.j-launch-hemai-page-box, .j-join-hemai-page-box, .j-nowbuy-model-page-box, .j-recent-news-page-box { padding-bottom: 10px; margin-right: 12px; }
+
+/*end 个人中心 首页*/
+
+/*start 个人中心 历史记录*/
+.j-per-his, .j-per-dzgd, .j-per-model { display: none; }
+.more-his-choose span select { height: 23px; border: 1px solid #dfdfdf; width: 110px }
+.per-his-table { border: 1px solid #dfdfdf; margin-top: 12px;}
+.per-his-table > thead > tr > .th1 { width: 222px; }
+.per-his-table > thead > tr > .th2 { width: 188px; }
+.per-his-table > thead > tr > .th3 { width: 200px; }
+.per-his-table > thead > tr > .th4 { width: 243px; }
+.per-his-table > thead > tr > .th5 { width: 127px; }
+.per-his-table > thead > tr > .th6 { width: 319px; }
+.per-his-table > thead > tr > .th6, .per-his-table > tbody > tr > .td6 { border-right: 1px solid #dfdfdf; }
+/* .per-his-table > tbody > tr.his-tr > td { background: #f1f1f1; } */
+.j-more-his { background: #FBE6DB; border: 1px solid #F6C9B2; width: 100%; padding: 0 12px 12px 12px; }
+.more-his-choose { height: 40px; text-align: left; line-height: 40px; }
+.j-more-his table { margin: 0 auto width:960px; }
+.j-more-his table tr th, .j-more-recent-news table tr td { height: 35px; text-align: center; }
+.j-more-his table tr th { background: #f1f1f1; }
+.j-more-his table tr td { background: #fff; }
+.j-his-more-details { cursor: pointer; }
+.j-his-more-tr { display: none; }
+
+/*end 个人中心 历史记录*/

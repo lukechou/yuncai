@@ -38,6 +38,7 @@ textarea { resize: none; word-wrap: break-word; }
 .fc-7 { color: #14b170; }
 .fc-84 { color: #848484; }
 .fc-3d { color: #3d3d3d; }
+.fc-fff{ color: #fff;}
 .fs-yh { font-family: 'Microsoft Yahei' !important; }
 .fs-st { font-family: 'simsun' !important; }
 .font-weight { font-weight: bold; }
@@ -289,6 +290,11 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .brings-tips h3.active { border-bottom: none; }
 .brings-tips h3 .icon { margin: 0 0 -1px 5px; -webkit-transition: .3s; transition: .3s; }
 .brings-tips h3.active .icon { -webkit-transform: rotate(180deg); transform: rotate(180deg); }
+
+/* left tips */
+.m-down-tips { margin: 12px auto; border: 1px #dfdfdf solid; border-bottom: none; }
+.m-down-tips > h3 { font-size: 14px; font-weight: bold; margin: 0; padding: 8px 20px; cursor: pointer; border-bottom: 1px #dfdfdf solid; background: #f1f1f1; }
+.m-down-tips > ul { font-size: 12px; line-height: 2.2; padding: 10px 20px; border-bottom: 1px #dfdfdf solid; }
 
 /* All Page Class */
 body { color: #3d3d3d; background: #fff; }
