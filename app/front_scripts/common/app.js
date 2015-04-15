@@ -149,6 +149,7 @@ define(['jquery'], function ($) {
      * @return {null}
      */
     app.prototype.handRetCode = function (retCode, retMsg, callback) {
+
       var _this = this;
 
       switch (retCode) {
@@ -581,8 +582,11 @@ define(['jquery'], function ($) {
   }());
 
   var a = new app();
+
   a.init();
+
   return a;
+
 });
 
 
