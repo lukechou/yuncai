@@ -182,7 +182,7 @@ var CoreJxssc = {
                 if ((code.length != 1)) {
                     return 0;
                 }
-                alert(YC.Unit.getCombineNum(code[0].length, 3));
+                //alert(YC.Unit.getCombineNum(code[0].length, 3));
                 return YC.Unit.getCombineNum(code[0].length, 3);
 
             case this.playType['2XZX']:
@@ -196,16 +196,16 @@ var CoreJxssc = {
                     return 0;
                 }
                 var mapCodeBetNum = {
-                    '00': 1,
-                    '01': 2,
-                    '02': 3,
-                    '03': 4,
-                    '04': 5,
-                    '05': 6,
-                    '06': 7,
-                    '07': 8,
-                    '08': 9,
-                    '09': 10,
+                    '0': 1,
+                    '1': 2,
+                    '2': 3,
+                    '3': 4,
+                    '4': 5,
+                    '5': 6,
+                    '6': 7,
+                    '7': 8,
+                    '8': 9,
+                    '9': 10,
                     '10': 9,
                     '11': 8,
                     '12': 7,
@@ -233,16 +233,16 @@ var CoreJxssc = {
                     return 0;
                 }
                 var mapCodeBetNum = {
-                    '00': 1,
-                    '01': 1,
-                    '02': 2,
-                    '03': 2,
-                    '04': 3,
-                    '05': 3,
-                    '06': 4,
-                    '07': 4,
-                    '08': 5,
-                    '09': 5,
+                    '0': 1,
+                    '1': 1,
+                    '2': 2,
+                    '3': 2,
+                    '4': 3,
+                    '5': 3,
+                    '6': 4,
+                    '7': 4,
+                    '8': 5,
+                    '9': 5,
                     '10': 5,
                     '11': 4,
                     '12': 4,
@@ -318,6 +318,7 @@ var CoreJxssc = {
      */
     produceCode: function(playType) {
         var produceCodes = [];
+        var produceCodes2 = [[]];//定义二位数组，用于存储三星组三等只有一行号码可选，但是又要选择多个号码的情况
         switch (playType) {
             case this.playType['5XZX']:
                 produceCodes[0] = _.sample(this.baseCode, 1);
@@ -349,13 +350,17 @@ var CoreJxssc = {
                 return produceCodes;
 
             case this.playType['3XZ3']:
-                return false;
+                //return false;
+                produceCodes2[0][0] = _.sample(this.baseCode, 1);
+                produceCodes2[0][1] = _.sample(this.baseCode, 1);
+                produceCodes2[0][2] = _.sample(this.baseCode, 1);
+                return produceCodes2;
 
             case this.playType['3XZ6']:
-                produceCodes[0] = _.sample(this.baseCode, 1);
-                produceCodes[1] = _.sample(this.baseCode, 1);
-                produceCodes[2] = _.sample(this.baseCode, 1);
-                return produceCodes;
+                produceCodes2[0][0] = _.sample(this.baseCode, 1);
+                produceCodes2[0][1] = _.sample(this.baseCode, 1);
+                produceCodes2[0][2] = _.sample(this.baseCode, 1);
+                return produceCodes2;
 
             case this.playType['2XZX']:
                 produceCodes[0] = _.sample(this.baseCode, 1);
@@ -363,14 +368,19 @@ var CoreJxssc = {
                 return produceCodes;
 
             case this.playType['2XZXHZ']:
-                return false;
-
-            case this.playType['2XZ2']:
+                //return false;
                 produceCodes[0] = _.sample(this.baseCode, 1);
                 return produceCodes;
 
+            case this.playType['2XZ2']:
+                produceCodes2[0][0] = _.sample(this.baseCode, 1);
+                produceCodes2[0][1] = _.sample(this.baseCode, 1);
+                return produceCodes2;
+
             case this.playType['2XTXHZ']:
-                return false;
+                //return false;
+                produceCodes[0] = _.sample(this.baseCode, 1);
+                return produceCodes;
 
             case this.playType['1XZX']:
                 produceCodes[0] = _.sample(this.baseCode, 1);
@@ -379,6 +389,22 @@ var CoreJxssc = {
             case this.playType['DXSD']:
                 produceCodes[0] = _.sample(this.baseDXSDCode, 1);
                 produceCodes[1] = _.sample(this.baseDXSDCode, 1);
+                for (var i = 0; i < 2; i++) {
+                    switch(produceCodes[i]["0"]){//大用 2 表示,小用 1 表示,单用 5 表示,双用 4 表示
+                        case '2' :
+                            produceCodes[i]["0"] = '大';
+                        break;
+                        case '1' :
+                            produceCodes[i]["0"] = '小';
+                        break;
+                        case '5' :
+                            produceCodes[i]["0"] = '单';
+                        break;
+                        case '4' :
+                            produceCodes[i]["0"] = '双';
+                        break;
+                    }
+                };
                 return produceCodes;
 
             case this.playType['R1']:

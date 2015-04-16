@@ -122,12 +122,15 @@ $(document).ready(function () {
       })
       .done(function (data) {
         if (data.retCode === 100000) {
+
           lessSeconds = Math.floor((data.retData[0].company_sell_etime - data.retData[0].sys_time));
           stopSale = (0 === parseInt(data.retData[0].sell_status, 0));
+
           if (stopSale) {
             APP.showStopSellModal(G_BUY.lotyCNName);
             $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
           }
+
           G_BUY.qihao = data.retData[0].issue_num;
           G_BUY.qihaoId = data.retData[0].id;
         }

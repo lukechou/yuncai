@@ -50,12 +50,33 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       }
     }
   };
-
   var K3 = (function () {
 
+    /**
+     * lotyCnName  彩种中文名
+     * qihaoId  期号ID
+     * qihao  期号
+     * lotyName  彩种类型
+     * lotyId  彩种Id-追号#依赖
+     * playType  玩法类型: b0,b1,b2,b3,b4,b5,b6,b7
+     * chooseMoney  选择号码金额
+     * chooseZhushu  选择号码组合注数
+     * buyArr  购买数组
+     * playName  玩法中文名字
+     * buyCodesType  组成购买参数时彩种对应参数头
+     * beishu  购买倍数
+     * trackData  选中的追号数据
+     * buyType  购买类型 1-自购 2-合买
+     * runTimer 当前期倒计时循环函数
+     * kjStatus  开奖状态 1-已开奖 2-开奖中 3-开奖倒计时
+     *
+     */
     var K3 = {
-      lotyCnName: '快3',
+      lotyCnName: _.escape($('#j-lotyCnName').val()),
+      qihaoId: _.escape($('#qihaoId').val()),
+      qihao: _.escape($('#qihao').val()),
       lotyName: $('#j-lotyName').val(),
+      lotyId: $('#j-track-lotyid').val(),
       playType: 'b0',
       chooseMoney: 0,
       chooseZhushu: 0,
@@ -83,6 +104,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       beishu: 1,
       trackData: [],
       buyType: 1,
+      runTimer: null,
+      kjStatus: 1,
+      runWaitTimer: null,
+      waitEndTime: 0,
+      waitStartTime:0
     };
 
     return K3;
@@ -614,8 +640,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // 购买类型判断 1-自购，2-追号
     if (_this.buyType == 1) {
 
-      obj.qihaoId = _.escape($('#qihaoId').val());
-      obj.qihao = _.escape($('#qihao').val());
+      obj.qihaoId = _this.qihaoId;
+      obj.qihao = _this.qihao;
       payMoney = m * obj.beishu;
 
       text += '<p>' + _this.lotyCnName + ' 第<span>' + obj.qihao + '</span>期</p>';
@@ -1015,6 +1041,361 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
+  pageInit();
+
+  function pageInit() {
+
+    loadNewestAward();
+    loadLastIssueList();
+    loadCurrentIssue();
+
+    setInterval(function () {
+
+      loadNewestAward();
+      loadLastIssueList();
+
+    }, 10000);
+
+  }
+
+  //  最新开奖
+  function loadNewestAward() {
+
+    $.ajax({
+        url: '/lottery/issue/get-last-award-info',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          lotteryId: K3.lotyId
+        }
+      })
+      .done(function (data) {
+
+        if (data.retCode === 100000) {
+          var html = '';
+          for (var int = 0; int < data.retData.length; int++) {
+            if (int > 5) break;
+            html += "<tr>";
+            html += "<td>" + data.retData[int].username + "</td>";
+            html += "<td>" + data.retData[int].bonus_before_tax + "</td>";
+            html += "</tr>";
+          }
+          $('#j-new-bonus-list').html((html == '') ? '<tr><td colspan="2">暂无相关中奖纪录</td></tr>' : html);
+        } else {
+          $('#j-new-bonus-list').html('<tr><td colspan="2">系统繁忙</td></tr>');
+        }
+
+      });
+  }
+
+  // 获取最新期数列表
+  function loadLastIssueList() {
+
+    $.ajax({
+        url: '/lottery/issue/kuaipin/last-issue-n',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          loty_name: K3.lotyName,
+          issue_num: 10
+        }
+      })
+      .done(function (data) {
+
+        var item = data.retData;
+        var html = '';
+        var html2 = '';
+        var kjhmHtml = '';
+        var kjHTML = '等待开奖';
+        var arrKJHM = '';
+        var lastData = item[0];
+        var type = null;
+        var lessTime = 0;
+
+        if (data.retCode == 100000) {
+
+          for (var i = 0, len = item.length; i < len; i++) {
+
+            kjhmHtml = ('' == item[i]['kjhm']) ? '等待开奖' : '<span class="fc-3">' + item[i]['kjhm'] + '</span>';
+
+            html += '<tr><td>' + item[i]['no'] + '期</td><td>' + kjhmHtml + '</td></tr>';
+
+          };
+
+          $('#j-last-issue-n').html(html);
+
+          if (lastData['kjhm'] != '') {
+
+            kjHTML = '';
+            arrKJHM = lastData['kjhm'].split(' ');
+
+            for (var i = 0, len = arrKJHM.length; i < len; i++) {
+              kjHTML += '<span class="bg-3">' + arrKJHM[i] + '</span>';
+            }
+
+            html2 = '<p>' + K3.lotyCnName + ' 第<span class="fc-3 mlr5">' + lastData['no'] + '</span>期<span>开奖</span></p><p class="sub-content-num">' + kjHTML + '</p>';
+
+          }
+
+          $('#j-sub-content').html(html2);
+
+          // 开奖状态判断
+          if (lastData.kj_time <= lastData.server_time) {
+
+            if (arrKJHM) {
+              // 已开奖
+              type = 1;
+            } else {
+              // 开奖中
+              type = 2;
+            }
+
+          } else {
+            // 倒计时
+            type = 3;
+            lessTime = lastData.kj_time - lastData.server_time;
+          }
+
+          if (K3.kjStatus !== type) {
+
+            toggleKjbox({
+              nums: arrKJHM,
+              no: lastData['no'],
+              type: type,
+              lessTime: lessTime,
+            });
+
+            K3.kjStatus = type;
+
+          }
+
+        }
+      });
+  }
+
+  function toggleKjbox(obj) {
+
+    if (!obj) {
+      return;
+    }
+
+    var hz = 0;
+    var o = null;
+    var xt = '';
+    var html = '';
+
+    if (obj.nums && obj.nums.length > 0) {
+
+      for (var i = 0; i < obj.nums.length; i++) {
+        hz += ~~(obj.nums[i]);
+      };
+
+      if (hz % 2 === 0) {
+        xt += '<i class="icon icon-tips k3-bg4 mlr2">双</i>';
+      } else {
+        xt += '<i class="icon icon-tips k3-bg3 mlr2">单</i>';
+      }
+
+      if (hz > 10) {
+        xt += '<i class="icon icon-tips k3-bg1 mlr2">大</i>';
+      } else {
+        xt += '<i class="icon icon-tips k3-bg2 mlr2">小</i>';
+      }
+
+    }
+
+    o = {
+      qihao: obj.no,
+      nums: obj.nums,
+      xt: xt,
+      hz: hz
+    };
+
+    // 类型判断
+    if (!obj.type) {
+      obj.type = 1;
+    }
+
+    if (obj.type === 1) {
+
+      // 已开奖
+      html = _.template('<p class="third-hd"><b>第<span class="mlr5"><%= qihao%></span>开奖号码：<% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></b>形态：<%= xt%></p><div class="third-box clearfix"><ul class="pull-left third-hisnum"><% _.forEach(nums, function(num) { %><li ><%- num %></li><% }); %></ul><div class="pull-right third-histext"><h5><%= hz%></h5><span>和值</span></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+
+      $('#j-kj-box').html(html(o));
+      return;
+
+    }
+
+    if (obj.type === 2) {
+
+      // 开奖Ing
+      html = _.template('<p class="third-hd"><b>第<span class="mlr5"><%= qihao%></span>开奖号码：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li>1</li><li>2</li><li>3</li></ul><div class="pull-right third-histext"><span class="third-kjing">开奖中</span></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+
+      $('#j-kj-box').html(html(o));
+
+      K3.gunNum = 1;
+
+      // 号码滚动动画
+      setInterval(function(){
+
+        K3.gunNum++;
+
+        if(K3.gunNum===7){
+          K3.gunNum = 1;
+        }
+
+        $('#j-kjing-num li').html(K3.gunNum);
+
+      }, 200);
+
+
+      return;
+    }
+
+    if (obj.type === 3) {
+
+      if (!obj.nums) {
+        o.xt = '';
+      }
+
+      o.time = secondFormat(obj.lessTime).join(':');
+
+      // 等待开奖
+      html = _.template('<p class="third-hd fs-12">第<span class="mlr5"><%= qihao%></span>开奖号码：<% _.forEach(nums, function(num) { %><i class="mlr2 icon icon-k3num<%= num %>"></i><% }); %>和值:</span> <b class="fc-3"><%= hz%></b>形态: <%= xt%></p><div class="third-timer"><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p><div class="progress"><div class="progress-bar progress-bar-danger" id="progress-bar"></div></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+
+      K3.waitEndTime = obj.lessTime;
+      K3.waitStartTime = obj.lessTime;
+
+      K3.runWaitTimer = setInterval(function () {
+
+        K3.waitEndTime--;
+
+        if (K3.waitEndTime > 0) {
+
+          $('#j-wait-time').html(secondFormat(K3.waitEndTime).join(':'));
+          $('.progress-bar').width((K3.waitEndTime/K3.waitStartTime)*100 + '%');
+        }else{
+
+          clearInterval(K3.runWaitTimer);
+          loadLastIssueList();
+
+        }
+
+      }, 1000);
+
+      $('#j-kj-box').html(html(o));
+
+      return;
+    }
+
+  }
+
+  function secondFormat(s) {
+
+    var f = ~~(s / 60);
+    var m = s % 60;
+
+    if (f < 10) {
+      f = '0' + f;
+    }
+
+    if (m < 10) {
+      m = '0' + m;
+    }
+
+    var h = [f, m];
+
+    return h;
+  }
+
+  function updateTimer(s) {
+
+    var h = secondFormat(s);
+    var html = '';
+    html = '<i class="icon icon-k302">'+h[0]+'</i><i class="icon icon-k302">'+h[1]+'</i>'
+    $('#j-less-seconds').html(html);
+
+  }
+
+  function timer(s) {
+
+    updateTimer(s);
+
+    var now = ~~((new Date().getTime()) / 1000);
+    K3.nextTimer = now + s;
+
+    K3.runTimer = setInterval(function () {
+
+      var n = ~~((new Date().getTime()) / 1000);
+      var j = K3.nextTimer - n;
+
+      if (j > 0) {
+        updateTimer(j);
+      } else {
+
+        updateTimer(0);
+
+        toggleKjbox({
+          type: 3
+        });
+
+        K3.kjStatus = 3;
+
+        if (K3.runTimer) {
+          clearInterval(K3.runTimer);
+        }
+
+        loadCurrentIssue();
+      }
+
+    }, 1000);
+
+  }
+
+  // 获取当前期参数
+  function loadCurrentIssue() {
+
+    $.ajax({
+        url: '/lottery/issue/get-cur-issue',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          lottery_id: K3.lotyId
+        }
+      })
+      .done(function (data) {
+
+        var item = data.retData[0];
+        var lessSeconds = '';
+        var stopSale = '';
+
+        if (data.retCode === 100000) {
+
+          lessSeconds = Math.floor((item.company_sell_etime - item.sys_time));
+          stopSale = (0 === parseInt(item.sell_status, 0));
+
+          timer(lessSeconds);
+
+          // 判断是否停售
+          if (stopSale) {
+
+            APP.showStopSellModal(K3.lotyCnName);
+
+            $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
+
+          }
+
+          // 更新 投注期号
+          K3.qihao = item.issue_num;
+          K3.qihaoId = item.id;
+          $('#j-dq-qihao').html(item.id);
+
+        }
+
+      });
+
+  }
+
   function filterNum(v) {
 
     if (v === '') {
@@ -1066,14 +1447,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   function queryTrackIssueList(num) {
 
     var html = '';
-    var lotyId = $('#j-track-lotyid').val();
 
     html = '<tr><td colspan="5">系统繁忙， 请稍候再试</td></tr>';
 
     $('.br-details thead .br-zhui-bei').val(1);
 
     $.ajax({
-      url: '/lottery/issue/get-issue-list?lottery_id=' + lotyId + '&issue_size=' + num,
+      url: '/lottery/issue/get-issue-list?lottery_id=' + K3.lotyId + '&issue_size=' + num,
       type: 'GET',
       dataType: 'json',
     }).done(function (data) {

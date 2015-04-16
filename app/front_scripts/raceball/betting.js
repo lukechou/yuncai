@@ -1608,7 +1608,7 @@ define(['jquery', 'app'], function ($, APP) {
 
         var t = $(this);
         var r = t.attr('data-r');
-        var v = _this.<filterNum></filterNum>(t.val());
+        var v = _this.filterNum(t.val());
         v = v || 1;
 
         t.val(v);

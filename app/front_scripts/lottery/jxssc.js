@@ -87,7 +87,7 @@ $(document).ready(function() {
     init();
     var lessSeconds = 0;
     var stopSale = false;
-    timer4Sale();
+    //timer4Sale();
     loadCurrentIssue();
 
     function loadCurrentIssue() {
@@ -101,6 +101,7 @@ $(document).ready(function() {
                     lessSeconds = Math.floor((data.retData[0].company_sell_etime - data.retData[0].sys_time));
                     stopSale = (0 === parseInt(data.retData[0].sell_status, 0));
                     G_BUY.qihao = data.retData[0].issue_num;
+                    $('#j-current-issue').html(G_BUY.qihao);
                     G_BUY.qihaoId = data.retData[0].id;
                     loadYiLou();
                 }
@@ -246,6 +247,40 @@ $(document).ready(function() {
     });
 
     /**
+     * 大小单双 单号码选中
+     */
+    $('.j-dxds-num-group').on('click', 'a', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
+        var arr = null;
+        var num = $(this).html();
+        if (!G_CHOOSE.codes[dataBit]) {
+            G_CHOOSE.codes[dataBit] = [];
+        }
+        arr = G_CHOOSE.codes[dataBit].concat();
+        if ($(this).hasClass('active')) {
+            _.remove(arr, function(n) {
+                return n == num;
+            });
+        } else {
+            arr = [];
+            arr.push(num);
+        }
+        G_CHOOSE.codes[dataBit] = arr;
+        G_CHOOSE.codes[dataBit].sort();
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+        } else {
+            $(this).addClass('active');
+            $(this).siblings('a').removeClass('active');
+        }
+        calculateChooseCodes();
+        displayChooseInfo();
+    });
+
+
+    /**
      * 自助选号action
      */
     $('.j-quick-method').on('click', 'span', function(event) {
@@ -302,6 +337,7 @@ $(document).ready(function() {
                 break;
                 // 全部
             case 'all':
+                $(this).parents('.j-row-code').find('.j-num-group a').removeClass('active');
                 $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
                     // cleanAnotherBitData($(this).html(), dataBit);
                     $(this).toggleClass('active');
@@ -324,6 +360,27 @@ $(document).ready(function() {
     $('.j-radio-group').on('click', '.j-radio-unit', function(event) {
         event.preventDefault();
         /* Act on the event */
+        $('#code_list').html('');
+        $('#choose_to_buy').attr('data-add', '1').removeClass('active');
+        $('#choose_to_buy_tip').text('添加到投注列表');
+        $('.j-row-code .j-num-group a').removeClass('active');
+        G_CHOOSE.init();
+        G_BUY.init();
+        $('#buy_zhushu').text('0');
+        $('#project_price').text('0');
+        $('#choose_zhushu').text('0');
+        $('#choose_money').text('0');
+        $('#buy_mutiple_span').show();
+        //初始化
+        $('#buy_type li:nth-child(2) i').addClass('icon-y2');
+        $('#buy_type li:nth-child(3) i').removeClass('icon-y2');
+        $('#buy_type li:nth-child(2)').addClass('active');
+        $('#buy_type li:nth-child(3)').removeClass('active');
+        $('#cg1').addClass('active');
+        $('#cg2').removeClass('active');
+        calculateBuyCodes();
+        displayBuyInfo();
+
         switch ($(this).attr('data-sub-play')) {
             case '0':
                 var objBase = $(this).parents('#j_normal_choose_code');
@@ -482,6 +539,7 @@ $(document).ready(function() {
             $("#choose_money").html(0);
             $("#sd_number").val('');
             $('.j-num-group a.active').removeClass();
+            $('.j-dxds-num-group a.active').removeClass();
             G_CHOOSE.init();
             $('#choose_to_buy_tip').html('添加到投注列表');
             $('#choose_to_buy').attr('data-add', 1);
@@ -549,6 +607,19 @@ $(document).ready(function() {
         $(this).parents('.br-zhu-item').remove();
         calculateBuyCodes();
         displayBuyInfo();
+
+        //重置
+        $('.j-num-group a').removeClass('active');
+        $('#choose_zhushu').text('0');
+        $('#choose_money').text('0');
+        $('.choose_to_buy_tip').text('添加到投注列表');
+        $('#choose_to_buy').removeClass('active');
+        G_CHOOSE.init();
+
+        if ('[大小双单]' == $(this).parents('.pull-right').siblings('b').text()) {
+            $('.j-dxds-num-group a').removeClass('active');
+        }
+
     });
 
     /**
@@ -663,6 +734,7 @@ $(document).ready(function() {
     $('#buy_type').on('click', 'a', function(event) {
         event.preventDefault();
         /* Act on the event */
+        var _this = this;
         G_BUY.trackData.issueMutipleMap = {}; // clean
         $('#buy_mutiple_span').show();
         G_BUY.partnerBuy = {
@@ -682,6 +754,9 @@ $(document).ready(function() {
             case 2: // 追号
                 $('#buy_mutiple_span').hide();
                 $('#track_desc').removeClass('hide');
+                var tabContent = $(_this).parents('#buy_type').next('.tab-content');
+                tabContent.find('#cg1').removeClass('active');
+                tabContent.find('#cg2').addClass('active');
                 queryTrackIssueList(10);
                 //                calculateBuyCodes();
                 //                displayBuyInfo();
@@ -809,18 +884,21 @@ $(document).ready(function() {
         objCurrentSelectCodeArea.siblings().hide();
         $('#choose_to_buy').attr('data-add', '1');
         $('.j-num-group a.active').removeClass();
+        $('.j-dxds-num-group a.active').removeClass();
         $('#sd_number').val('');
         G_BUY.init();
         G_CHOOSE.init();
+        loadCurrentIssue();
+        timer4Sale();
         clean4CutBuyType();
         calculateChooseCodes();
         displayChooseInfo();
         calculateBuyCodes();
         displayBuyInfo();
         $('#buy-submit').attr("disabled", "disabled");
-        if(G_CHOOSE.playType != CoreJxssc.playType['3XZ3'] || G_CHOOSE.playType != CoreJxssc.playType['2XZXHZ'] || G_CHOOSE.playType != CoreJxssc.playType['2XTXHZ']){
+        if (G_CHOOSE.playType != CoreJxssc.playType['3XZ3'] || G_CHOOSE.playType != CoreJxssc.playType['2XZXHZ'] || G_CHOOSE.playType != CoreJxssc.playType['2XTXHZ']) {
             $("li.j-jx-zhus").show();
-        }else{
+        } else {
             $("li.j-jx-zhus").hide();
         }
         // $("li[name='auto_produce']").show();
@@ -829,6 +907,7 @@ $(document).ready(function() {
         $('#choose_to_buy').removeClass('active');
         $('#choose_to_buy').attr('disabled', 'disabled');
         $('#j-box-left').removeClass('multiphase-box');
+
     });
 
     // ////////////////////////function/////////////////////////////////////////
@@ -1050,6 +1129,7 @@ $(document).ready(function() {
     function reflectChooseCode(buyIndex) {
         //        $('#j_normal_choose_code').find('.j-num-group a').removeClass('active');
         $('.j-num-group a.active').removeClass();
+        $('.j-dxds-num-group a.active').removeClass();
         var codes = {};
         for (var index in G_BUY.codes) {
             if (G_BUY.codes[index].key == buyIndex) {
@@ -1058,16 +1138,52 @@ $(document).ready(function() {
             }
         }
         G_CHOOSE.init();
+        var palyType = codes.playType;
         for (var i = 0; i < codes.value.length; i++) {
             G_CHOOSE.codes[i] = [];
-            $('.j-choose-code-' + codes.playType).find('.j-row-code[data-bit=' + i + '] a').each(function(index) {
-                for (var m = 0; m < codes.value[i].length; m++) {
-                    if ($(this).html() == codes.value[i][m]) {
-                        $(this).addClass('active');
-                        G_CHOOSE.codes[i].push(codes.value[i][m]);
-                    }
-                }
-            });
+            switch (palyType) {
+                case '2XZX':
+                case '2XZ2':
+                    $('.j-choose-code-' + palyType + ' .j-normal-play').find('.j-row-code[data-bit=' + i + '] a').each(function(index) {
+                        for (var m = 0; m < codes.value[i].length; m++) {
+                            if ($(this).html() == codes.value[i][m]) {
+                                $(this).addClass('active');
+                                G_CHOOSE.codes[i].push(codes.value[i][m]);
+                            }
+                        }
+                    });
+                    break;
+                case '2XZXHZ':
+                    $('.j-choose-code-2XZX .j-hezhi-play').find('.j-row-code[data-bit=' + i + '] a').each(function(index) {
+                        for (var m = 0; m < codes.value[i].length; m++) {
+                            if ($(this).html() == codes.value[i][m]) {
+                                $(this).addClass('active');
+                                G_CHOOSE.codes[i].push(codes.value[i][m]);
+                            }
+                        }
+                    });
+                    break;
+                case '2XTXHZ':
+                    $('.j-choose-code-2XZ2 .j-hezhi-play').find('.j-row-code[data-bit=' + i + '] a').each(function(index) {
+                        for (var m = 0; m < codes.value[i].length; m++) {
+                            if ($(this).html() == codes.value[i][m]) {
+                                $(this).addClass('active');
+                                G_CHOOSE.codes[i].push(codes.value[i][m]);
+                            }
+                        }
+                    });
+                    break;
+                default:
+                    $('.j-choose-code-' + codes.playType).find('.j-row-code[data-bit=' + i + '] a').each(function(index) {
+                        for (var m = 0; m < codes.value[i].length; m++) {
+                            if ($(this).html() == codes.value[i][m]) {
+                                $(this).addClass('active');
+                                G_CHOOSE.codes[i].push(codes.value[i][m]);
+                            }
+                        }
+                    });
+                    break;
+            }
         }
         calculateChooseCodes();
         displayChooseInfo();
@@ -1117,21 +1233,21 @@ $(document).ready(function() {
         });
     }
 
-// 补充方案投注内容格式
-// 5XZX(五星直选) 5XZX|13,32,56,67,34    32注     5XZX|1,2,3,4,5     1注
-// 5XTX(五星通选) 5XTX|1,2,3,4,5     1注    5XTX|234,2356,234,12345,1    180注
-// 4XZX(四星直选) 4XZX|234,2356,234,12345   180注
-// 3XZX(三星直选) 3XZX|234,2356,234   36注
-// 3XZ3(三星组三) 3XZ3|1,2,3,4,5    20注       3XZ3|5@2,3,4    6注(胆拖)
-// 3XZ6(三星组六) 3XZ6|1,2,3,4,5    10注       3XZ6|2,3@1,6,7,8,9   5注(胆拖)     3XZ6|2@1,6,7,8,9    10注(胆拖)
-// 2XZX(二星直选) 2XZX|234,2356   12注
-// 2XZXHZ(二星直选和值) 2XZXHZ|1,2,11,12    20注
-// 2XZ2(二星组选) 2XZ2|1,2,3,4,5   10注        2XZ2|2@1,6,7,8,9   5注(胆拖)
-// 2XTXHZ(二星组选和值)     2XTXHZ|1,2,3,4,5   11注
-// 1XZX(一星)              1XZX|12345   5注
-// DXSD(大小双单)     DXSD|1245,1245   16注
-// R1(任选一)              R1|7,-,-,-,-      1注
-// R2(任选二)              R2|7,-,-,-,1     1注
+    // 补充方案投注内容格式
+    // 5XZX(五星直选) 5XZX|13,32,56,67,34    32注     5XZX|1,2,3,4,5     1注
+    // 5XTX(五星通选) 5XTX|1,2,3,4,5     1注    5XTX|234,2356,234,12345,1    180注
+    // 4XZX(四星直选) 4XZX|234,2356,234,12345   180注
+    // 3XZX(三星直选) 3XZX|234,2356,234   36注
+    // 3XZ3(三星组三) 3XZ3|1,2,3,4,5    20注       3XZ3|5@2,3,4    6注(胆拖)
+    // 3XZ6(三星组六) 3XZ6|1,2,3,4,5    10注       3XZ6|2,3@1,6,7,8,9   5注(胆拖)     3XZ6|2@1,6,7,8,9    10注(胆拖)
+    // 2XZX(二星直选) 2XZX|234,2356   12注
+    // 2XZXHZ(二星直选和值) 2XZXHZ|1,2,11,12    20注
+    // 2XZ2(二星组选) 2XZ2|1,2,3,4,5   10注        2XZ2|2@1,6,7,8,9   5注(胆拖)
+    // 2XTXHZ(二星组选和值)     2XTXHZ|1,2,3,4,5   11注
+    // 1XZX(一星)              1XZX|12345   5注
+    // DXSD(大小双单)     DXSD|1245,1245   16注
+    // R1(任选一)              R1|7,-,-,-,-      1注
+    // R2(任选二)              R2|7,-,-,-,1     1注
     var fnBuy = function() {
         var url = '';
         var codeArr = [];
@@ -1160,6 +1276,22 @@ $(document).ready(function() {
                     break;
                 case CoreJxssc.playType['2XZX']:
                 case CoreJxssc.playType['DXSD']:
+                    for (var j = 0; j < 2; j++) {
+                        switch (G_BUY.codes[i].value[j][0]) {
+                            case '大':
+                                G_BUY.codes[i].value[j][0] = '2';
+                                break;
+                            case '小':
+                                G_BUY.codes[i].value[j][0] = '1';
+                                break;
+                            case '单':
+                                G_BUY.codes[i].value[j][0] = '5';
+                                break;
+                            case '双':
+                                G_BUY.codes[i].value[j][0] = '4';
+                                break;
+                        }
+                    }
                     codeArr.push(G_BUY.codes[i].playType + '|' + G_BUY.codes[i].value[0].join('') + ',' + G_BUY.codes[i].value[1].join(''));
                     break;
                 case CoreJxssc.playType['1XZX']:
@@ -1172,7 +1304,7 @@ $(document).ready(function() {
                     var BaiWeiCodes = (G_BUY.codes[i].value[2]) ? G_BUY.codes[i].value[2].join('') : '-';
                     var ShiWeiCodes = (G_BUY.codes[i].value[3]) ? G_BUY.codes[i].value[3].join('') : '-';
                     var GeWeiCodes = (G_BUY.codes[i].value[4]) ? G_BUY.codes[i].value[4].join('') : '-';
-                    codeArr.push(G_BUY.codes[i].playType + '|' + WanWeiCodes +',' + QianWeiCodes +','+ BaiWeiCodes +','+ ShiWeiCodes +','+ GeWeiCodes);
+                    codeArr.push(G_BUY.codes[i].playType + '|' + WanWeiCodes + ',' + QianWeiCodes + ',' + BaiWeiCodes + ',' + ShiWeiCodes + ',' + GeWeiCodes);
                     break;
                 default:
                     return;
