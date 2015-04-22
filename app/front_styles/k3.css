@@ -32,7 +32,10 @@
 /* second */
 .k3-hd-second { width: 345px; margin-left: 10px; padding: 10px 0 15px; text-align: center; }
 .second-hd { font-size: 14px; font-weight: bold; margin-bottom: 12px; }
+.second-hd.out { visibility: hidden; opacity: 0; transition: .5s; }
 .second-box { font-size: 48px; line-height: 87px; width: 221px; height: 87px; margin: 0 auto 10px; color: #fff; background: url(../front_images/k3/01.png); }
+.second-box.active{ width: 288px; background: url(../front_images/k3/24.png);}
+.second-box h6 { font-size: 24px; margin: 0 auto; line-height: 87px; }
 .second-ft { font-size: 12px; }
 .icon-k302 { width: 84px; height: 69px; overflow: hidden; line-height: 69px; margin: 9px 5px 0; background: url(../front_images/k3/02.png); }
 
@@ -41,14 +44,32 @@
 .third-box { width: 240px; height: 87px; margin: 10px auto; background: url(../front_images/k3/15.png); }
 .third-more { font-size: 12px; position: absolute; right: 10px; bottom: 10px; float: right; color: #696969; }
 .third-hisnum { width: 195px; }
-.third-hisnum li { font-size: 36px; line-height: 70px; float: left; width: 60px; height: 70px; margin: 10px 0 0 5px; color: #fff; background: #222; }
+.third-hisnum li { font-size: 36px; line-height: 69px; float: left; width: 56px; height: 69px; margin: 10px 0 0 5px; background: url(../front_images/k3/16.png); overflow: hidden; position: relative; }
+.third-hisnum li span { width: 56px; height: 69px; display: block; }
+.third-hisnum li .num-group { position: absolute; height: 414px; }
+.third-hisnum li .num-1 { background: url(../front_images/k3/17.png) no-repeat center center; }
+.third-hisnum li .num-2 { background: url(../front_images/k3/18.png) no-repeat center center; }
+.third-hisnum li .num-3 { background: url(../front_images/k3/20.png) no-repeat center center; }
+.third-hisnum li .num-4 { background: url(../front_images/k3/19.png) no-repeat center center; }
+.third-hisnum li .num-5 { background: url(../front_images/k3/21.png) no-repeat center center; }
+.third-hisnum li .num-6 { background: url(../front_images/k3/22.png) no-repeat center center; }
 .third-histext { font-size: 12px; width: 45px; }
 .third-histext h5 { font-size: 36px; }
 .third-kjing { line-height: 87px; }
 .third-timer { width: 220px; height: 90px; margin: auto; }
-.thired-timer-sp { margin: 15px auto 5px; }
+.thired-timer-sp { margin: 10px auto 5px; line-height: 1.1; }
+.third-timer h5 { font-size: 14px; margin: 0; }
 .thired-timer-sp span { font-size: 36px; }
-.progress-bar { width: 100%; -webkit-transition: .2s; transition: .2s; }
+.progress { width: 221px; height: 14px; background: url(../front_images/k3/23.png); }
+.progress-bar { background: url(../front_images/k3/10.png) repeat-x center left; border-radius: 8px; width: 100%; -webkit-transition: .2s; transition: .2s; position: relative; }
+.progress-box { width: 215px; float: left; height: 14px; margin-left: 3px; }
+.progress-bar .mid { background: url(../front_images/k3/14.png) no-repeat; height: 8px; width: 2px; position: absolute; top: 3px; }
+.progress-bar .mid-1 { left: 53px; }
+.progress-bar .mid-2 { left: 107px; }
+.progress-bar .mid-3 { left: 161px; }
+.progress-bar .before, .progress-bar .after { height: 6px; width: 6px; display: block; position: absolute; top: 0; bottom: 0; margin: auto; }
+.progress-bar .before { background: url(../front_images/k3/11.png) repeat-x center left; left: 0; }
+.progress-bar .after { background: url(../front_images/k3/12.png) repeat-x center left; right: 0; }
 .icon-k303 { width: 28px; height: 29px; background: url(../front_images/k3/03.png); margin-right: 8px; position: relative; top: 2px; }
 .k3-bg1 { background: #bf2b97 }
 .k3-bg2 { background: #589451 }
@@ -62,6 +83,10 @@
 .icon-k3num5 { background: url(../front_images/k3/08.png); }
 .icon-k3num6 { background: url(../front_images/k3/09.png); }
 .icon-tips { font-size: 12px; font-weight: bold; line-height: 20px; width: 20px; height: 20px; color: #fff; border-radius: 2px; }
+
+/* 等待开售 */
+.wait-p1 { font-weight: bold; margin: 10px 0; }
+.wait-p2 { font-weight: bold; font-size: 24px; }
 
 /* box-choose */
 .box-choose { display: none; }
@@ -93,5 +118,9 @@
 .choose-as-btn.active { cursor: pointer; border-color: #f13c38; }
 
 /* 今日开奖 */
-.todaynum-table { display: none; }
 .bottomBox h3 { font-size: 12px; line-height: 15px; float: none; clear: both; height: 15px; padding: 11px 15px 11px; }
+.todaynum-table { border: none; }
+.todaynum-table > thead > tr > th { background: #f6f6f6; }
+.todaynum-table .awardTd { color: #f13c38; }
+.todaynum-table .period { color: #000; }
+.todaynum-table td { color: #848484; }

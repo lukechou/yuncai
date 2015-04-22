@@ -107,17 +107,28 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
 
   });
 
-  $('#j-confirm-card').on('blur', function(event) {
+  $('#j-confirm-card').on('blur keyup', function (event) {
     event.preventDefault();
 
-    var ct = $('#j-confirm-card').val();
 
-    if(ct == ''){
+    var t = $(this);
+    var v = $.trim(t.val());
+    var tips = t.siblings('.j-card-tips');
+    var f = t.parents('.form-group');
+
+    f.find('.j-tips-s,.j-tips-e,.j-tips-w').addClass('hide');
+
+    if ($('#j-card').val() === v) {
+      f.find('.j-tips-s').removeClass('hide');
+    } else {
+      f.find('.j-tips-e').removeClass('hide');
+    }
+
+    if (v == '') {
       $('#j-confirm-card').parents('.form-group').find('.j-tips-s,.j-tips-e,.j-tips-w').addClass('hide');
     }
-    debugger
-  });
 
+  });
 
   // 提交绑定信息
   function bindBankInfo(info) {

@@ -33,7 +33,7 @@ define(['jquery', 'app'], function ($, APP) {
       regGroup: {
         email: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
         pwd: /^[^\s]{6,15}$/,
-        bank: /^\d{19}$/,
+        bank: /^\d{13,19}$/,
         mobile:/^1[0-9]{10}$/,
       }
     };

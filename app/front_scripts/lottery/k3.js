@@ -68,7 +68,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
      * trackData  选中的追号数据
      * buyType  购买类型 1-自购 2-合买
      * runTimer 当前期倒计时循环函数
-     * kjStatus  开奖状态 1-已开奖 2-开奖中 3-开奖倒计时
+     * kjStatus  开奖状态 0-页面初始化 1-已开奖 2-开奖中 3-开奖倒计时 4-等待开售
      *
      */
     var K3 = {
@@ -105,10 +105,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       trackData: [],
       buyType: 1,
       runTimer: null,
-      kjStatus: 1,
+      kjStatus: 0,
+      currentKjStatus: null,
       runWaitTimer: null,
       waitEndTime: 0,
-      waitStartTime:0
+      waitStartTime: 0,
+      alertQihao: null,
+      waitSell: false,
     };
 
     return K3;
@@ -226,6 +229,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     if (_.isNumber(count) && count > 0) {
 
+      if ((_this.buyArr.length + count) > 100) {
+        APP.showTips('您的投注号码多于100行，请返回重新选择');
+        return;
+      }
+
       for (var i = 0; i < count; i++) {
 
         _this.createOneItem();
@@ -260,14 +268,18 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     switch (_this.playType) {
 
     case 'b3':
-      s = _.sample(a[_this.playType], 3);
+      s = _.sample(a[_this.playType], 3).sort(function (a, b) {
+        return a - b;
+      });
       break;
     case 'b6':
       s = _.sample(a[_this.playType], 2);
       s = s[0] + s[0] + '#' + s[1];
       break;
     case 'b7':
-      s = _.sample(a[_this.playType], 2);
+      s = _.sample(a[_this.playType], 2).sort(function (a, b) {
+        return a - b;
+      });
       break;
     default:
       s = _.sample(a[_this.playType], 1);
@@ -711,13 +723,15 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var bs = null;
     var qi = null;
     var m = 0;
+    var o = _this.getBuyArrTotalMoney();
 
     // 更新 trackData
-    $('.br-zhui').find('tbody .br-zhui-c').each(function (index, el) {
+    $('#track_issue_list').find('.br-zhui-c').each(function (index, el) {
 
-      tid = $(this).attr('data-qihaoid');
-      bs = ~~$(this).parents('tr').find('.br-zhui-bei').val();
-      qi = $(this).attr('data-qi');
+      var t = $(this);
+      tid = t.attr('data-qihaoid');
+      bs = ~~t.parents('tr').find('.br-zhui-bei').val();
+      qi = t.attr('data-qi');
 
       if (el.checked) {
 
@@ -729,12 +743,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
       }
 
+      t.parents('tr').find('.j-money').html(o * bs);
+
     });
 
-    var o = _this.getBuyArrTotalMoney();
     m = _this.getTrackTotalMoney(o);
-
-    $('.br-zhui tbody .j-money').html(o);
 
     // update ui
     $('#track_issue_num').html(_this.trackData.length);
@@ -779,8 +792,24 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
+  // 追号总期的期数改变
+  $('.br-details').on('change', 'thead .br-zhui-c', function (event) {
+    event.preventDefault();
+
+    if ($(this)[0].checked) {
+      $('#track_issue_list .br-zhui-c').each(function (index, el) {
+        $(this)[0].checked = true;
+      });
+    } else {
+      $('#track_issue_list .br-zhui-c').removeAttr('checked');
+    }
+
+    K3.updateTrackList();
+
+  });
+
   // 追号总期的倍数改变
-  $('.br-details thead .br-zhui-bei').on('change', function (event) {
+  $('.br-details').on('change', 'thead .br-zhui-bei', function (event) {
 
     var val = parseInt($(this).val()) || 1;
 
@@ -811,7 +840,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('#buy-submit').on('click', function (event) {
     event.preventDefault();
 
-    K3.buyLoty();
+    if (!$('.j-sub-agreed')[0].checked) {
+      APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
+      return;
+    } else if (K3.buyType === 2 && K3.trackData.length === 0) {
+      APP.showTips('追号最少购买一期');
+    } else {
+      K3.buyLoty();
+    }
 
   });
 
@@ -889,6 +925,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     K3.playType = type;
     K3.togglePlayTab();
 
+    $('.j-as-btn').removeClass('active');
   });
 
   // choose Num
@@ -928,6 +965,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   // Choose to BuyBox
   $('#choose_to_buy').on('click', function (event) {
     event.preventDefault();
+
+    if (K3.buyArr.length >= 100) {
+      APP.showTips('您的投注号码多于100行，请返回重新选择');
+      return;
+    }
 
     if ($(this).hasClass('active')) {
       K3.getChooseToBuy();
@@ -1008,21 +1050,27 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('#buy_type').on('click', 'li', function (event) {
     event.preventDefault();
 
+    var me = $(this);
     $('#buy_type li .icon').removeClass('icon-y2');
-    $(this).find('.icon').addClass('icon-y2');
+    me.find('.icon').addClass('icon-y2');
 
-    var t = ~~$(this).find('a').attr('data-buytype');
+    var a = me.find('a');
+    var t = ~~a.attr('data-buytype');
+    var l = a.attr('href');
+
+    $('#buy_type').siblings('.tab-content').find('.tab-pane').removeClass('active');
+    $(l).addClass('active');
 
     K3.onToggleBuyType(t);
 
     switch (t) {
-    case 1: // 自购
+    case 1:
 
       $('#track_desc').addClass('hide');
-
+      $('#buy_mutiple_span').show();
       break;
 
-    case 2: // 追号
+    case 2:
 
       $('#buy_mutiple_span').hide();
       $('#track_desc').removeClass('hide');
@@ -1041,24 +1089,186 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
+  $('#j-kj-box').on('click', '.third-more', function (event) {
+    event.preventDefault();
+    showTodayNum();
+
+    var top = $('#j-todaynum-table').offset().top;
+
+    $("html, body").animate({
+      scrollTop: top + 'px'
+    }, 300);
+
+  });
+
+  $('#j-award-more').on('click', function (event) {
+    event.preventDefault();
+    if ($('#j-todaynum-table').hasClass('hide')) {
+      showTodayNum();
+    } else {
+      hideTodayNum();
+    }
+
+  });
+
+  function showTodayNum() {
+    $('#j-award-more b').html('收起');
+    $('#j-todaynum-table').removeClass('hide');
+  }
+
+  function hideTodayNum() {
+    $('#j-award-more b').html('展开');
+    $('#j-todaynum-table').addClass('hide');
+  }
+
   pageInit();
 
   function pageInit() {
 
-    loadNewestAward();
-    loadLastIssueList();
-    loadCurrentIssue();
+    var t = 10;
+
+    getAllAwardRecord(); // 最新所有开奖公告
+    loadNewestAward(); //最新中奖信息
+    loadLastIssueList(); //最新中奖列表
+    loadCurrentIssue(); //获取当前期
+    K3.statu = 1;
 
     setInterval(function () {
 
+      getAllAwardRecord();
       loadNewestAward();
       loadLastIssueList();
 
-    }, 10000);
+    }, t * 1000);
 
   }
 
-  //  最新开奖
+  // 最新所有开奖公告
+  function getAllAwardRecord() {
+
+    var url = '/lottery/award/kuaipin/' + K3.lotyName;
+    var tbody = $('#j-todaynum-table tbody');
+
+    var tbodyQihao = tbody.attr('data-qihao');
+
+    if (tbodyQihao && tbodyQihao === K3.qihao) {
+      return;
+    } else {
+
+      $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'json',
+          data: {
+            t: 'ajx'
+          },
+        })
+        .done(function (data) {
+
+          var q = K3.qihao.slice(0, K3.qihao.length - 2);
+          var max = ~~$('#j-maxqishu').val();
+
+          var maxLen = 84;
+          var groupIndex = 21;
+          var a = [];
+          var j = '';
+          var dt = null;
+          var html = '';
+          var f = '';
+
+          for (var i = 0; i < groupIndex; i++) {
+            a.push([]);
+          };
+
+          for (var i = 1; i <= maxLen; i++) {
+
+            dt = null;
+
+            j = (i < 10) ? ('0' + i) : i;
+
+            if (data[q + j]) {
+
+              dt = data[q + j];
+              dt.index = j;
+
+            } else {
+
+              dt = {
+                index: j
+              };
+
+            }
+
+            if (a[i % groupIndex]) {
+
+              a[i % groupIndex].push(dt);
+
+            } else {
+
+              a[i % groupIndex] = [];
+              a[i % groupIndex].push(dt);
+
+            }
+
+          }
+
+          a[a.length] = a[0];
+
+          for (var i = 1, len = a.length; i < len; i++) {
+
+            html += '<tr>';
+
+            for (var j = 0; j < a[i].length; j++) {
+
+              f = a[i][j];
+
+              html += '<td class="period">' + f.index + '</td>';
+
+              if (f.code_str) {
+
+                html += '<td class="awardTd">' + f.code_str + '</td>';
+
+              } else {
+
+                html += '<td>- -</td>';
+
+              }
+
+              if (f.hz_val) {
+
+                html += '<td>' + f.hz_val + '</td>';
+
+              } else {
+
+                html += '<td></td>';
+
+              }
+
+              if (f.shape) {
+
+                html += '<td>' + f.shape + '</td>';
+
+              } else {
+
+                html += '<td></td>';
+
+              }
+
+            };
+
+            html += '</tr>';
+
+          };
+
+          tbody.html(html);
+          tbody.attr('data-qihao', K3.qihao);
+
+        });
+    }
+
+  }
+
+  //  最新中奖信息
   function loadNewestAward() {
 
     $.ajax({
@@ -1088,7 +1298,90 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       });
   }
 
-  // 获取最新期数列表
+  // 获取当前期参数
+  function loadCurrentIssue() {
+
+    var v = $('#issue_size').val();
+    queryTrackIssueList(v);
+
+    $.ajax({
+        url: '/lottery/issue/get-cur-issue',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          lottery_id: K3.lotyId
+        }
+      })
+      .done(function (data) {
+
+        var item = data.retData[0];
+        var lessSeconds = '';
+        var stopSale = '';
+        var max = ~~$('#j-maxqishu').val() || 100;
+        var q = '';
+
+        if (data.retCode === 100000) {
+
+          stopSale = (0 === parseInt(item.sell_status, 10));
+
+          // 判断是否停售
+          if (stopSale) {
+
+            APP.showStopSellModal(K3.lotyCnName);
+
+            $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
+
+            $('#j-less-seconds').html('<i class="icon icon-k302">--</i><i class="icon icon-k302">--</i>');
+
+            return;
+
+          }
+
+          lessSeconds = Math.floor((item.company_sell_etime - item.sys_time));
+
+
+          // update k3 qihao
+          K3.qihao = item.issue_num;
+          K3.qihaoId = item.id;
+          q = (~~K3.qihao.slice(K3.qihao.length - 2)) - 1;
+
+          $('#j-sell-qi').html(q);
+          $('#j-less-qi').html(max - q);
+
+          // 小于0 等待开售中
+          if (lessSeconds < 0) {
+
+            $('#j-second-hd').addClass('out')
+            $('#j-less-seconds').html('<h6>等待开售中..</h6>');
+
+            K3.waitSell = true;
+
+            loadLastIssueList();
+
+            // 10秒后 再次请求最新当前期
+            callCurrentIssueNext(10);
+
+          } else {
+
+            timer(lessSeconds);
+
+            K3.waitSell = false;
+
+            // update mid area
+            $('#j-second-hd').removeClass('out')
+            $('#j-dq-qihao').html(K3.qihao);
+
+          }
+
+        }
+
+      }).fail(function () {
+        callCurrentIssueNext(10);
+      });
+
+  }
+
+  // 获取最新期数列表，更新右侧开奖信息，开奖公告
   function loadLastIssueList() {
 
     $.ajax({
@@ -1135,6 +1428,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
             html2 = '<p>' + K3.lotyCnName + ' 第<span class="fc-3 mlr5">' + lastData['no'] + '</span>期<span>开奖</span></p><p class="sub-content-num">' + kjHTML + '</p>';
 
+          } else {
+            html2 = '<p>' + K3.lotyCnName + ' 第<span class="fc-3 mlr5">' + lastData['no'] + '</span>期<span>开奖</span></p><p class="sub-content-num">' + kjHTML + '</p>';
           }
 
           $('#j-sub-content').html(html2);
@@ -1144,28 +1439,33 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
             if (arrKJHM) {
               // 已开奖
-              type = 1;
+              K3.currentKjStatus = 1;
             } else {
               // 开奖中
-              type = 2;
+              K3.currentKjStatus = 2;
+            }
+
+            if (K3.waitSell) {
+              // 等待开售
+              K3.currentKjStatus = 4;
             }
 
           } else {
             // 倒计时
-            type = 3;
+            K3.currentKjStatus = 3;
             lessTime = lastData.kj_time - lastData.server_time;
           }
 
-          if (K3.kjStatus !== type) {
+          if (K3.kjStatus !== K3.currentKjStatus || K3.currentKjStatus === 4) {
 
             toggleKjbox({
               nums: arrKJHM,
               no: lastData['no'],
-              type: type,
               lessTime: lessTime,
+              item: item
             });
 
-            K3.kjStatus = type;
+            K3.kjStatus = K3.currentKjStatus;
 
           }
 
@@ -1173,36 +1473,43 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       });
   }
 
+  function getNumsHz(nums) {
+
+    var h = 0;
+
+    if (nums && nums.length > 0) {
+
+      for (var i = 0; i < nums.length; i++) {
+        h += ~~(nums[i]);
+      };
+
+    } else {
+      h = null;
+    }
+
+    return h;
+
+  }
+
   function toggleKjbox(obj) {
+
+    var hz = 0;
+    var o = {};
+    var xt = '';
+    var html = '';
+    var f = '';
+    var beforeQi = null;
 
     if (!obj) {
       return;
     }
 
-    var hz = 0;
-    var o = null;
-    var xt = '';
-    var html = '';
-
-    if (obj.nums && obj.nums.length > 0) {
-
-      for (var i = 0; i < obj.nums.length; i++) {
-        hz += ~~(obj.nums[i]);
-      };
-
-      if (hz % 2 === 0) {
-        xt += '<i class="icon icon-tips k3-bg4 mlr2">双</i>';
-      } else {
-        xt += '<i class="icon icon-tips k3-bg3 mlr2">单</i>';
-      }
-
-      if (hz > 10) {
-        xt += '<i class="icon icon-tips k3-bg1 mlr2">大</i>';
-      } else {
-        xt += '<i class="icon icon-tips k3-bg2 mlr2">小</i>';
-      }
-
+    if (!K3.currentKjStatus) {
+      K3.currentKjStatus = 1;
     }
+
+    hz = getNumsHz(obj.nums);
+    xt = getNumsXt(obj.nums);
 
     o = {
       qihao: obj.no,
@@ -1211,14 +1518,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       hz: hz
     };
 
-    // 类型判断
-    if (!obj.type) {
-      obj.type = 1;
-    }
+    // 已开奖
+    if (K3.currentKjStatus === 1) {
 
-    if (obj.type === 1) {
-
-      // 已开奖
       html = _.template('<p class="third-hd"><b>第<span class="mlr5"><%= qihao%></span>开奖号码：<% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></b>形态：<%= xt%></p><div class="third-box clearfix"><ul class="pull-left third-hisnum"><% _.forEach(nums, function(num) { %><li ><%- num %></li><% }); %></ul><div class="pull-right third-histext"><h5><%= hz%></h5><span>和值</span></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
 
       $('#j-kj-box').html(html(o));
@@ -1226,102 +1528,170 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     }
 
-    if (obj.type === 2) {
+    // 开奖中
+    if (K3.currentKjStatus === 2) {
 
-      // 开奖Ing
-      html = _.template('<p class="third-hd"><b>第<span class="mlr5"><%= qihao%></span>开奖号码：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li>1</li><li>2</li><li>3</li></ul><div class="pull-right third-histext"><span class="third-kjing">开奖中</span></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+      var rf = '<div class="num-group"><span class="num-1"></span><span class="num-2"></span><span class="num-3"></span><span class="num-4"></span><span class="num-5"></span><span class="num-6"></span></div>';
+
+      html = _.template('<p class="third-hd"><b>第<span class="mlr5"><%= qihao%></span>开奖号码：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li>' + rf + '</li><li>' + rf + '</li><li>' + rf + '</li></ul><div class="pull-right third-histext"><span class="third-kjing">开奖中</span></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
 
       $('#j-kj-box').html(html(o));
-
-      K3.gunNum = 1;
-
-      // 号码滚动动画
-      setInterval(function(){
-
-        K3.gunNum++;
-
-        if(K3.gunNum===7){
-          K3.gunNum = 1;
-        }
-
-        $('#j-kjing-num li').html(K3.gunNum);
-
-      }, 200);
-
-
+      runNumsAnimate();
       return;
     }
 
-    if (obj.type === 3) {
+    // 倒计时
+    if (K3.currentKjStatus === 3) {
 
-      if (!obj.nums) {
-        o.xt = '';
+      beforeQi = obj.item[1];
+      obj.nums = beforeQi.kjhm;
+      hz = getNumsHz(obj.nums);
+      xt = getNumsXt(obj.nums);
+
+      o.hz = hz;
+      o.xt = xt;
+      o.nums = obj.nums;
+
+      if (obj.nums) {
+        f = '和值:</span> <b class="fc-3">' + o.hz + '</b>形态: ' + o.xt;
+      } else {
+        f = '<b class="fc-3">等待开奖</b>';
       }
 
       o.time = secondFormat(obj.lessTime).join(':');
 
-      // 等待开奖
-      html = _.template('<p class="third-hd fs-12">第<span class="mlr5"><%= qihao%></span>开奖号码：<% _.forEach(nums, function(num) { %><i class="mlr2 icon icon-k3num<%= num %>"></i><% }); %>和值:</span> <b class="fc-3"><%= hz%></b>形态: <%= xt%></p><div class="third-timer"><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p><div class="progress"><div class="progress-bar progress-bar-danger" id="progress-bar"></div></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+      html = _.template('<p class="third-hd fs-12">第<span class="mlr5">' + beforeQi.no + '</span>期开奖号码：<% _.forEach(nums, function(num) { %><i class="mlr2 icon icon-k3num<%= num %>"></i><% }); %>' + f + '</p><div class="third-timer"><h5>第<b class="fc-3 mlr5"><%= qihao%></b>期等待开奖：</h5><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p><div class="progress"><div class="progress-box"><div class="progress-bar progress-bar-danger" id="progress-bar"><i class="before"></i><i class="after"></i><i class="mid mid-1"></i><i class="mid mid-2"></i><i class="mid mid-3"></i></div></div></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
 
       K3.waitEndTime = obj.lessTime;
       K3.waitStartTime = obj.lessTime;
 
-      K3.runWaitTimer = setInterval(function () {
+      runWaitTimeAnimate();
+      $('#j-kj-box').html(html(o));
+      return;
+    }
 
-        K3.waitEndTime--;
+    if (K3.currentKjStatus === 4) {
 
-        if (K3.waitEndTime > 0) {
+      beforeQi = obj.item[1];
+      obj.nums = beforeQi.kjhm;
+      hz = getNumsHz(obj.nums);
+      xt = getNumsXt(obj.nums);
 
-          $('#j-wait-time').html(secondFormat(K3.waitEndTime).join(':'));
-          $('.progress-bar').width((K3.waitEndTime/K3.waitStartTime)*100 + '%');
-        }else{
+      o.hz = hz;
+      o.xt = xt;
+      o.nums = obj.nums;
 
-          clearInterval(K3.runWaitTimer);
-          loadLastIssueList();
+      if (obj.nums) {
+        f = '和值:</span> <b class="fc-3">' + o.hz + '</b>形态: ' + o.xt;
+      } else {
+        f = '<b class="fc-3">等待开奖</b>';
+      }
 
-        }
+      var d = '';
+      var kjhmArr = obj.item[0].kjhm.split(' ');
 
-      }, 1000);
+      if (obj.item[0].kjhm) {
+
+        for (var i = 0; i < kjhmArr.length; i++) {
+          d += '<i class="mlr2 icon icon-k3num' + kjhmArr[i] + '"></i>';
+        };
+
+      } else {
+        d = '等待开奖中..';
+      }
+
+      // 已开奖
+      html = _.template('<p class="third-hd fs-12">第<span class="mlr5">' + beforeQi.no + '</span>期开奖号码：<% _.forEach(nums, function(num) { %><i class="mlr2 icon icon-k3num<%= num %>"></i><% }); %>' + f + '</p><div class="third-box clearfix"><p class="wait-p1">第<span class="fc-3 mlr5"><%= qihao%></span>期</p><p class="wait-p2 fs-yh">' + d + '</p></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
 
       $('#j-kj-box').html(html(o));
-
       return;
     }
 
   }
 
+  function runWaitTimeAnimate() {
+
+    K3.runWaitTimer = setInterval(function () {
+
+      K3.waitEndTime--;
+
+      if (K3.waitEndTime > 0) {
+
+        //时间数字
+        $('#j-wait-time').html(secondFormat(K3.waitEndTime).join(':'));
+        // 进度条
+        $('.progress-bar').width((K3.waitEndTime / K3.waitStartTime) * 100 + '%');
+
+      } else {
+
+        // 清除倒计时, 获取最新期数列表
+        clearInterval(K3.runWaitTimer);
+        loadLastIssueList();
+
+      }
+
+    }, 1000);
+
+  }
+
   function secondFormat(s) {
 
-    var f = ~~(s / 60);
+    var result = [];
+
+    var h = ~~(s / 60 / 60)
+    var f = ~~(s / 60 % 60);
     var m = s % 60;
+
+    if (h < 10) {
+
+      if (h <= 0) {
+        h = null;
+      } else {
+        h = '0' + h;
+      }
+    }
 
     if (f < 10) {
       f = '0' + f;
     }
 
     if (m < 10) {
+
       m = '0' + m;
     }
 
-    var h = [f, m];
+    if (h) {
+      result.push(h);
+    }
 
-    return h;
+    result.push(f, m);
+
+    return result;
   }
 
   function updateTimer(s) {
 
     var h = secondFormat(s);
+
     var html = '';
-    html = '<i class="icon icon-k302">'+h[0]+'</i><i class="icon icon-k302">'+h[1]+'</i>'
-    $('#j-less-seconds').html(html);
+
+    if (h.length === 3) {
+      html = '<i class="icon icon-k302">' + h[0] + '</i><i class="icon icon-k302">' + h[1] + '</i></i><i class="icon icon-k302">' + h[2] + '</i>';
+      $('#j-less-seconds').addClass('active').html(html);
+    } else {
+      html = '<i class="icon icon-k302">' + h[0] + '</i><i class="icon icon-k302">' + h[1] + '</i>';
+      $('#j-less-seconds').removeClass('active').html(html);
+    }
 
   }
 
   function timer(s) {
 
+    s = s < 0 ? 0 : s;
     updateTimer(s);
 
     var now = ~~((new Date().getTime()) / 1000);
+    var q = $('#j-dq-qihao').html();
     K3.nextTimer = now + s;
 
     K3.runTimer = setInterval(function () {
@@ -1335,64 +1705,38 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
         updateTimer(0);
 
-        toggleKjbox({
-          type: 3
-        });
+        if (K3.alertQihao !== q) {
+          APP.showTips("您好，第 " + q + '期已截止，投注时请确认您选择的期号。');
+          K3.alertQihao = q;
+        }
 
-        K3.kjStatus = 3;
+        loadLastIssueList();
 
         if (K3.runTimer) {
           clearInterval(K3.runTimer);
         }
 
         loadCurrentIssue();
+
       }
 
     }, 1000);
 
   }
 
-  // 获取当前期参数
-  function loadCurrentIssue() {
+  function callCurrentIssueNext(t) {
 
-    $.ajax({
-        url: '/lottery/issue/get-cur-issue',
-        type: 'GET',
-        dataType: 'json',
-        data: {
-          lottery_id: K3.lotyId
-        }
-      })
-      .done(function (data) {
+    var time = null;
 
-        var item = data.retData[0];
-        var lessSeconds = '';
-        var stopSale = '';
+    if (t && _.isNumber(t) && t > 0) {
+      time = 1000 * t;
+    } else {
+      time = 10000;
+    }
 
-        if (data.retCode === 100000) {
-
-          lessSeconds = Math.floor((item.company_sell_etime - item.sys_time));
-          stopSale = (0 === parseInt(item.sell_status, 0));
-
-          timer(lessSeconds);
-
-          // 判断是否停售
-          if (stopSale) {
-
-            APP.showStopSellModal(K3.lotyCnName);
-
-            $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
-
-          }
-
-          // 更新 投注期号
-          K3.qihao = item.issue_num;
-          K3.qihaoId = item.id;
-          $('#j-dq-qihao').html(item.id);
-
-        }
-
-      });
+    var f = setTimeout(function () {
+      loadCurrentIssue();
+    }, time);
 
   }
 
@@ -1488,5 +1832,61 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     });
 
   };
+
+  function getNumsXt(nums) {
+
+    var x = '';
+    var h = 0;
+
+    if (nums && nums.length > 0) {
+
+      for (var i = 0; i < nums.length; i++) {
+        h += ~~(nums[i]);
+      };
+
+      if (h % 2 === 0) {
+        x += '<i class="icon icon-tips k3-bg4 mlr2">双</i>';
+      } else {
+        x += '<i class="icon icon-tips k3-bg3 mlr2">单</i>';
+      }
+
+      if (h > 10) {
+        x += '<i class="icon icon-tips k3-bg1 mlr2">大</i>';
+      } else {
+        x += '<i class="icon icon-tips k3-bg2 mlr2">小</i>';
+      }
+
+    } else {
+
+      x = null;
+
+    }
+
+    return x;
+  }
+
+  function runNumsAnimate() {
+
+    //号码滚动动画
+    var s = setInterval(function () {
+
+      $('#j-kjing-num .num-group').each(function (index, el) {
+        var g = $(this);
+
+        g.animate({
+            top: -69
+          },
+          100,
+          function () {
+            var h = g.find('span').first().clone();
+            g.find('span').first().remove();
+            g.css('top', 0).append(h);
+          });
+
+      });
+
+    }, 100);
+
+  }
 
 });

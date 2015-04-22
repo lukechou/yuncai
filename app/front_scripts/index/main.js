@@ -457,10 +457,10 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
             for (var i = dataItem.length - 1; i >= 0; i--) {
               if (isHemai) {
 
-                if (index.modelLotyName === 'jczq') {
-                  jczqIndex = dataItem[i]['joinURI'].split('/');
-                  cnName = jczqCnNameObj[jczqIndex[jczqIndex.length - 1]];
-                }
+                //if (index.modelLotyName === 'jczq') {
+                //  jczqIndex = dataItem[i]['joinURI'].split('/');
+                  //cnName = jczqCnNameObj[jczqIndex[jczqIndex.length - 1]];
+                //}
 
                 percent = (1 - (dataItem[i].lessNum / Number(dataItem[i].price))).toFixed(2) * 100;
 
@@ -468,7 +468,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                   btnHTML = '<button class="btn j-model-buy btn-red" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button>';
                 }
 
-                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p><a class="username" href="' + dataItem[i].user_profile_url + '">' + dataItem[i].username + '</a></p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + cnName + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份">' + btnHTML + '</div></div></div>');
+                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p><a class="username" href="' + dataItem[i].user_profile_url + '">' + dataItem[i].username + '</a></p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + dataItem[i]['playCnName'] + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份">' + btnHTML + '</div></div></div>');
               } else {
 
                 if (!index.isSellStop) {

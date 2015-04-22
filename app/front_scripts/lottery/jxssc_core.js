@@ -51,7 +51,8 @@ var CoreJxssc = {
     minBetNum: 1,
     maxIssueNum: 30,
     minIssueNum: 1,
-    baseCode: ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    baseCode: ['0','1', '2', '3', '4', '5', '6', '7', '8', '9'],
+    hzbaseCode: ['0','1', '2', '3', '4', '5', '6', '7', '8', '9','10','11','12','13','14','15','16','17','18'],
     baseDXSDCode: ['1', '2', '4', '5'],
     baseDigitalValue: [0, 1, 2, 3, 4],
 
@@ -319,6 +320,7 @@ var CoreJxssc = {
     produceCode: function(playType) {
         var produceCodes = [];
         var produceCodes2 = [[]];//定义二位数组，用于存储三星组三等只有一行号码可选，但是又要选择多个号码的情况
+        var tmp = [];
         switch (playType) {
             case this.playType['5XZX']:
                 produceCodes[0] = _.sample(this.baseCode, 1);
@@ -351,15 +353,18 @@ var CoreJxssc = {
 
             case this.playType['3XZ3']:
                 //return false;
-                produceCodes2[0][0] = _.sample(this.baseCode, 1);
-                produceCodes2[0][1] = _.sample(this.baseCode, 1);
-                produceCodes2[0][2] = _.sample(this.baseCode, 1);
+                tmp = _.sample(this.baseCode, 2);
+                produceCodes2[0][0] = tmp[0];
+                produceCodes2[0][1] = tmp[1];
+                produceCodes2[0].sort();
                 return produceCodes2;
 
             case this.playType['3XZ6']:
-                produceCodes2[0][0] = _.sample(this.baseCode, 1);
-                produceCodes2[0][1] = _.sample(this.baseCode, 1);
-                produceCodes2[0][2] = _.sample(this.baseCode, 1);
+                tmp = _.sample(this.baseCode, 3);
+                produceCodes2[0][0] = tmp[0];
+                produceCodes2[0][1] = tmp[1];
+                produceCodes2[0][2] = tmp[2];
+                produceCodes2[0].sort();
                 return produceCodes2;
 
             case this.playType['2XZX']:
@@ -369,17 +374,19 @@ var CoreJxssc = {
 
             case this.playType['2XZXHZ']:
                 //return false;
-                produceCodes[0] = _.sample(this.baseCode, 1);
+                produceCodes[0] = _.sample(this.hzbaseCode, 1);
                 return produceCodes;
 
             case this.playType['2XZ2']:
-                produceCodes2[0][0] = _.sample(this.baseCode, 1);
-                produceCodes2[0][1] = _.sample(this.baseCode, 1);
+                tmp = _.sample(this.baseCode, 2);
+                produceCodes2[0][0] = tmp[0];
+                produceCodes2[0][1] = tmp[1];
+                produceCodes2[0].sort();
                 return produceCodes2;
 
             case this.playType['2XTXHZ']:
                 //return false;
-                produceCodes[0] = _.sample(this.baseCode, 1);
+                produceCodes[0] = _.sample(this.hzbaseCode, 1);
                 return produceCodes;
 
             case this.playType['1XZX']:

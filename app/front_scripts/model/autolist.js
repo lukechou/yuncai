@@ -51,5 +51,27 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
 
 
+  $('#j-auto-table').on('click', '.j-modify', function (event) {
+    event.preventDefault();
+
+    if ($('.j-edit').hasClass('hide')) {
+
+      $('.j-edit').removeClass('hide');
+      $('.j-view').addClass('hide');
+
+    }
+
+  });
+
+  function pageInit() {
+
+    // 初始化 提示悬浮
+    $('.j-icon-tips').tipsy({
+      gravity: 's',
+      opacity: 1
+    });
+  }
+
+  pageInit();
 
 });

@@ -212,7 +212,7 @@ define(['jquery'], function ($) {
 
             }
 
-            if (o.always) o.always();
+            if (o.always) o.always(userMoney);
 
           } else {
             _this.handRetCode(D.retCode, D.retMsg, o.enoughMoney);

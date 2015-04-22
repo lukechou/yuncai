@@ -70,6 +70,7 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .list-table> tbody >.tr-modify:hover { background: #fbe6db; }
 .list-table > tbody > tr > .list-box { padding: 12px; }
 .box-table> thead > tr > th { background: #f9f9f9; }
+.box-table .td-active{ background: #ffe3e2;}
 
 
 

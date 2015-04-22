@@ -31,7 +31,8 @@ $(document).ready(function () {
     money: 0,
     qihaoId: 0,
     isManual: false,
-    qihao: 0,
+    qihao: $('#qihao').val(),
+    alertStopModal: 0,
     partnerBuy: {
       projectTitle: '11选5合买方案',
       projectDescription: '11选5',
@@ -131,6 +132,19 @@ $(document).ready(function () {
             $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
           }
 
+
+          if ( G_BUY.alertStopModal !== G_BUY.qihao && G_BUY.alertStopModal !==0) {
+
+            APP.showTips("您好，第 " + G_BUY.alertStopModal + " 期已截止，投注时请确认您选择的期号。");
+
+          }
+
+          if(lessSeconds < 0 && G_BUY.alertStopModal !== G_BUY.qihao){
+            APP.showTips("您好，第 " + G_BUY.qihao + " 期已截止，投注时请确认您选择的期号。");
+          }
+
+          G_BUY.alertStopModal = G_BUY.qihao;
+
           G_BUY.qihao = data.retData[0].issue_num;
           G_BUY.qihaoId = data.retData[0].id;
         }
@@ -142,7 +156,6 @@ $(document).ready(function () {
   }
 
   function loadLastIssueList() {
-
     $.ajax({
         url: '/lottery/issue/kuaipin/last-issue-n?loty_name=' + G_BUY.lotyName + '&issue_num=10',
         type: 'GET',
@@ -313,10 +326,9 @@ $(document).ready(function () {
 
       $('#j-less-info').html(outputHtml);
     } else {
+
       $('#j-less-info').html('销售时间截止');
-      // if (G_BUY.qihao) {
-      //   APP.showTips("您好，第 " + G_BUY.qihao + " 期已截止，投注时请确认您选择的期号。");
-      // }
+
       loadCurrentIssue();
       if (G_BUY.buyType == 2) {
         queryTrackIssueList($('#issue_size').val());
@@ -324,7 +336,7 @@ $(document).ready(function () {
     }
   }
 
-  $('#j-touzhu-tips').on('click', function(event) {
+  $('#j-touzhu-tips').on('click', function (event) {
 
     $(this).toggleClass('active');
     $('#j-touzhu-tipstext').toggle();

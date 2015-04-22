@@ -18,12 +18,14 @@ require.config({
     tipsy: {
       deps: ['jquery'],
       exports: 'jquery'
-    },
+    }
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap','tipsy'], function ($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function ($, _, store, chart, APP, model) {
   'use strict';
+
+  var modelId = _.escape($.trim($('#j-module-id').val()));
 
   function init() {
     APP.bindInputPlace();
@@ -52,8 +54,60 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap','tips
       chartEl: $('#chart')
     });
 
-    var modelId = _.escape($.trim($('#j-module-id').val()));
     chart.getChartData(modelId);
+
+    updateMainAuto();
+  }
+
+  function updateMainAuto() {
+
+    $.ajax({
+        url: '/lottery/trade/auto-buy-list',
+        type: 'get',
+        dataType: 'json',
+        data: {
+          model_id: modelId,
+        },
+      })
+      .done(function (data) {
+
+        var h = '';
+        var item = data.retData;
+        var len = item.length;
+        var ingLen = _.filter(item, function (n) {
+          return n.auto_status === '0';
+        }).length;
+
+        if (data.retCode === 100000) {
+
+          $('#j-auto-count').html(len);
+          $('#j-auto-go').html(ingLen);
+
+          if (len > 0) {
+
+            h = _.map(item,function(n,i){
+
+              var s = ['<td class="fc-7">进行中</td>','<td>已完成</td>','<td class="fc-3">已终止</td>','<td class="fc-3">所有期执行完毕</td>','<td class="fc-3">完成期数系统终止</td>','<td class="fc-3">符合条件系统终止</td>'];
+
+              var str = '<tr><td>'+(i+1)+'</td><td>'+n.start_time+'</td><td>'+n.complete_issue+'/'+n.total_issue+'</td><td>'+n.total_money+'</td><td>'+n.total_bounty+'</td>'+s[n.auto_status]+'<td><a href="/lottery/trade/auto-buy-detail?model_id='+modelId+'&rid='+i+'" target="_blank">查看</a></td><td class="j-icon-tips" original-title="该自动投注由<span class=\'fc-3 mlr5\'>Raymond</span>计划生成">计划生成</td></tr>';
+
+              return str;
+
+            }).join('');
+
+          } else {
+
+            h += '<tr><td colspan="8">该模型您没有自动投注</td></tr>';
+
+          }
+
+          $('#j-auto-list').html(h);
+          $('#j-main-auto').show();
+
+        } else {
+          APP.showTips(data.retMsg);
+        }
+      });
 
   }
 

@@ -34,7 +34,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   // 后台输出 直接拿老彩胜测试数据
   var ar = '3.25';
-  var modelId = 'CG_25626';  // 模型ID
+  var modelId = $('#j-module-id').val(); // 模型ID
   var moneyArr = [
     [1, 30],
     [2, 74],
@@ -60,7 +60,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     [22, 220078],
     [23, 317922],
     [24, 459254]
-  ];  // 固定投注返回数组
+  ]; // 固定投注返回数组
 
   var percentTotal = 0; //比例总额
   var moneyTotal = 0; //总额比例
@@ -78,7 +78,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   var rNum = /\D/; //是否有非数字
   var totalMoneyMin = 0; //总额投注最小金额
   var percentTip = '(<span class="fc-3">范围：1-50期</span>)'; //比例期数提示
-  var autoType = 0;  //投注类型 0-间隔投注  1-固定投注
+  var autoType = 0; //投注类型 0-间隔投注  1-固定投注
   var rInt = /^-?[0-9]{1,}$/; //整数正则
 
   // AUTO 对象
@@ -897,7 +897,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       })
       .done(function () {
 
-        console.log("success");
         APP.showTips(json.remsg);
       });
 
@@ -948,9 +947,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var stopHtml = '';
 
     if (clearVal($('[name="autostop"]:checked').val())) {
-      stopHtml = '盈利以后自动终止';
-    } else {
       stopHtml = '完成所有期数后终止';
+    } else {
+      stopHtml = '盈利以后自动终止';
     }
 
     if (autoType) {
@@ -970,15 +969,81 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   // 投注
   $('#j-auto-buy').on('click', function (event) {
     event.preventDefault();
-    //余额足够支付首期时提示-自动投注设置成功
-    //投注模型：xx_xxxx，系统会在盈利以后自动终止自动投注。
 
-    //余额不足支付首期时提示-设置自动投注失败！
-    //投注模型：xx_xxxx，系统会在盈利以后自动终止自动投注。
-    //当前账户余额不足支付自动投注的首期金额
-    //首期投注金额：30 元
-    //当前账户余额：0.00 元
-    //【立即充值】
+    /*
+     * total_issue  自动投注期数
+     * model_id  模型id
+     * total_money  总金额
+     * stop_type 终止自动投注条件 1-完成所有期数后终止 2-盈利以后自动终止
+     * first_money  首期投注金额
+     * space_issue  间隔期数
+     * space_rate  间隔增加比例
+     * auto_type 投注类型
+     * issue_num  []
+     * current_rate  []
+     * current_money  []
+     *
+     */
+var stopHtml = '';
+
+    if (clearVal($('[name="autostop"]:checked').val())) {
+      stopHtml = '完成所有期数后终止';
+    } else {
+      stopHtml = '盈利以后自动终止';
+    }
+
+    var data = {
+      total_issue: AUTO.issueVal,
+      model_id: modelId,
+      total_money: AUTO.totalVal,
+      stop_type: clearVal($('[name="autostop"]:checked').val()),
+      first_money: AUTO.firstVal,
+      space_issue: AUTO.spaceVal,
+      space_rate: AUTO.rateVal,
+      auto_type: autoType,
+    };
+
+    $('#j-data-body').find('input[name]').each(function () {
+      var name = $(this).attr('name') + '';
+      if (name.length !== 0) {
+        if (!data[name]) {
+          data[name] = [];
+        }
+        data[name].push($(this).val());
+      }
+    });
+
+    $('#autoModal').modal('hide');
+
+    APP.checkLogin(AUTO.firstVal, {
+      always: function (m) {
+
+        if (m >= AUTO.firstVal) {
+
+          $.ajax({
+              url: '/lottery/trade/add-auto-buy',
+              type: 'get',
+              dataType: 'json',
+              data: data,
+            })
+            .done(function (data) {
+
+              if (data.retCode === 100000) {
+                APP.showTips('<p>自动投注设置成功</p><p>投注模型：'+modelId+'，系统会在'+stopHtml+'。</p>');
+              } else {
+                APP.showTips(data.retMsg);
+              }
+
+            });
+        } else {
+
+          APP.showTips({
+            html:'<div class="tipbox"><p>您的余额不足,购买失败！</p><p>当前账户余额不足支付自动投注的首期金额</p><p>首期投注金额：<span class="fc-3">'+AUTO.firstVal+'</span>元</p><p>当前账户余额：<span class="fc-3">'+m+' </span>元</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+          });
+        }
+
+      }
+    });
 
   });
 

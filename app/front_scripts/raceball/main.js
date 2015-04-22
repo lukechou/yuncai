@@ -1175,7 +1175,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   // 立即购买
   $('#j-ljtzBtn').on('click', function (event) {
-
+    debugger;
     var obj = BET.getSubmitParams();
     var vote = {};
     var c = null;

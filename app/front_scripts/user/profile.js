@@ -41,13 +41,22 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       var htmlOutput = '';
       var detailData = '';
       var dataItem = '';
-
       if (data.retCode == 100000) {
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
-            htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci" placeholder="' + '剩余' + dataItem.lessNum + '份"/>' + '</td><td><a class="btn btn-s btn-c1" href="' + dataItem.joinURI + '">购买</a><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
+            switch (dataItem.state) {
+              case 0: //正常
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '"/>' + '</td><td><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + dataItem.joinURI + '" lotyplay="' + dataItem.lotyPlay + '" pid="' + dataItem.id + '">购买</button><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                break;
+              case 1: //撤单
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已撤单</span></td><td><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                break;
+              case 2: //满员
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已满员</span></td><td><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                break;
+            }
           }
         } else {
           htmlOutput = '<tr><td colspan="7">当前没有发起合买</td></tr>';
@@ -88,7 +97,17 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
-            htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td>' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci" placeholder="' + '剩余' + dataItem.lessNum + '份"/>' + '</td><td><a class="btn btn-s btn-c1" href="' + dataItem.joinURI + '">购买</a><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
+            switch (dataItem.state) {
+              case 0: //正常
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '"/>' + '</td><td><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + dataItem.joinURI + '" lotyplay="' + dataItem.lotyPlay + '" pid="' + dataItem.id + '">购买</button><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                break;
+              case 1: //撤单
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已撤单</span></td><td><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                break;
+              case 2: //满员
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已满员</span></td><td><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                break;
+            }
           }
         } else {
           htmlOutput = '<tr><td colspan="7">当前没有参与投注</td></tr>';
@@ -172,9 +191,9 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
             if (dataItem.show_detail) {
-              htmlOutput += ('<li><p lotyname="' + dataItem.loty_name + '" projectno="' + dataItem.project_no + '">' + dataItem.feed + ' -- ' + dataItem.date_str + iDom + '</p>' + jMoreRecentNewsDom + '</li>');
+              htmlOutput += ('<li><p lotyname="' + dataItem.loty_name + '" projectno="' + dataItem.project_no + '">' + dataItem.feed + iDom + '<span class="date-str">' + dataItem.date_str + '</span></p>' + jMoreRecentNewsDom + '</li>');
             } else {
-              htmlOutput += ('<li><p>' + dataItem.feed + ' -- ' + dataItem.date_str + '</p></li>');
+              htmlOutput += ('<li><p>' + dataItem.feed + '<span class="date-str">' + dataItem.date_str + '</span></p></li>');
             }
           }
         } else {
@@ -478,6 +497,43 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     //还要进行数据加载
   });
 
+  function filterNum(v, max) {
+
+    if (v === '') {
+      return v;
+    }
+
+    var n = parseInt(v, 10);
+
+    if (isNaN(n)) {
+      n = 1;
+    } else {
+      n = (n >= 1) ? n : 1;
+      n = n;
+    }
+    n = n > max ? max : n;
+    return n;
+  }
+
+  $('#j-launch-hemai-table,#j-join-hemai-table,#j-nowbuy-model-table').on('change', '.j-gou-count', function(event) {
+    var max = $(this).attr('data-max');
+    var v = $(this).val();
+
+    var result = filterNum(v, max);
+
+    $(this).val(result);
+
+  });
+  $('#j-launch-hemai-table,#j-join-hemai-table,#j-nowbuy-model-table').on('keyup', '.j-gou-count', function(event) {
+    var max = $(this).attr('data-max');
+    var v = $(this).val();
+
+    var result = filterNum(v, max);
+
+    $(this).val(result);
+
+  });
+
   var ajaxLoadData = {
     loadMoreRecentNews: function(tbody) {
       var pObj = tbody.parents('.j-more-recent-news').siblings('p');
@@ -489,15 +545,184 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           dataType: 'json'
         })
         .done(function(data) {
-          var trHtml = '<tr><td>' + data.lotyPlay + '</td><td>' + data.qihao + '</td><td>' + data.price + '</td><td>' + data.unitPrice +
-            '</td><td>' + data.schedule + '%</td><td><input type="text" class="u-ci" placeholder="' + '剩余' + data.lessNum + '份"/>' +
-            '</td><td><a class="btn btn-s btn-c1" href="' + data.joinURI +
-            '">购买</a>    <a target="_blank" href="' + data.detailURI + '">详情</a></td></tr>';
+          console.log(data);
+          var trHtml = '<tr><td>' + data.lotyPlay + '</td><td class="j-mqi" jmqi="' + data.qihao + '">' + data.qihao + '</td><td class="j-mtotal">' + data.price + '</td><td>' + data.unitPrice +
+            '</td><td>' + data.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + data.lessNum + '份" data-max="' + data.lessNum + '" maxlength="' + data.lessNum.toString().split('').length + '"/>' +
+            '</td><td><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + data.joinURI +
+            '" lotyplay="' + data.lotyPlay + '" pid="' + data.id + '">购买</button><a target="_blank" href="' + data.detailURI + '">详情</a></td></tr>';
           tbody.html(trHtml);
+          $('.j-more-recent-news-table').on('change', '.j-gou-count', function(event) {
+            var max = $(this).attr('data-max');
+            //var v = Number($(this).val());
+            var v = $(this).val();
+
+            var result = filterNum(v, max);
+
+            $(this).val(result);
+
+          });
+          $('.j-more-recent-news-table').on('keyup', '.j-gou-count', function(event) {
+            var max = $(this).attr('data-max');
+            //var v = Number($(this).val());
+            var v = $(this).val();
+
+            var result = filterNum(v, max);
+
+            $(this).val(result);
+
+          });
+
         })
         .fail(function() {
           APP.showTips('服务器繁忙,请稍后再试!');
         });
     }
   };
+
+
+  $(document).on('click', '.j-gou-btn', function() {
+    var _this = this;
+    var tr = $(this).parents('tr');
+    var count = tr.find('.j-gou-count');
+    var onePrice = $(this).attr('data-one'); // 每份金额
+    var b = Number(count.val()); // 购买份数
+    var max = Number(count.attr('data-max')); //最大购买份数
+    var data = {};
+    var html = {};
+    var template = '';
+    var h = '';
+    var mtotal = tr.find('.j-mtotal').html(); //方案总金额
+    var mid = tr.find('.j-mqi').attr('jmqi'); // 第几期
+    var midHtml = '';
+    var lotyNameObj = {
+      ssq: '双色球',
+      dlt: '大乐透',
+      jczq: '竞彩足球',
+      pl3: '排列3',
+      pl5: '排列5',
+      fc3d: '福彩3D',
+      qlc: '七乐彩',
+      qxc: '七星彩',
+      bjdc: '足球单场'
+    };
+    var dataUri = $(this).attr('data-uri');
+    var tabIndex = dataUri.split('/');
+    var mname = lotyNameObj[tabIndex[tabIndex.length - 2]]; // 购买彩种类型
+    var tab = {
+      'bqc_gg': '半全场',
+      'spf_gg': '胜平负',
+      'rqspf_gg': '让球胜平负',
+      'zjq_gg': '总进球',
+      'bf_gg': '比分',
+      'hhtz_gg': '混合投注',
+      'zjq': '总进球',
+      'bf': '比分',
+      'sxds': '上下单双',
+      'spf': '胜平负',
+      'bqc': '半全场'
+    };
+    var tabHtml = tab[tabIndex[tabIndex.length - 1]] || '';
+
+    if (checkByNum(b, max)) {
+
+      data = {
+        byNum: b, // 参与合买分数
+        joinURI: dataUri, //参与合买uri
+        prjctId: $(_this).attr('pid'), // 合买prjctId
+        onSuccess: function(d) {
+          max = max - b;
+          count.attr({
+            'placeholder': '最多' + max,
+            'data-max': max
+          });
+        }
+      };
+
+
+
+      if (mid) midHtml = '第<span>' + mid + '</span>期';
+
+      template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + tabHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %></span>份</p><p>共需支付<span class="fc-3"><%= payMoney %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
+
+      h = template({
+        lotyName: mname,
+        total: mtotal,
+        pay: b,
+        payMoney: b * onePrice
+      });
+
+      html = {
+        html: h,
+      };
+
+      APP.checkLogin(b * onePrice, {
+        enoughMoney: function() {
+          APP.showTips(html);
+          $('#buyConfirm').one('click', function(event) {
+            submitHemai(data);
+          });
+        }
+      });
+    }
+  });
+
+  function checkByNum(num, max) {
+    var c = 1;
+    if (_.isNaN(num)) {
+      APP.showTips('请输入整数购买份数');
+      c = 0;
+    }
+    if (num <= 0 || APP.isDecimal(num)) {
+      APP.showTips('请输入整数购买份数');
+      c = 0;
+    }
+    if (num > max) {
+      APP.showTips('超过最大可购买份额');
+      c = 0;
+    }
+    return c;
+  }
+
+  var submitHemai = function(obj) {
+
+    $.ajax({
+        url: obj.joinURI,
+        type: 'get',
+        dataType: 'json',
+        data: {
+          pid: obj.prjctId,
+          buyNum: obj.byNum,
+          unikey: (new Date()).valueOf()
+        },
+      })
+      .done(function(data) {
+
+        if (data.retCode == 100000) {
+          if (obj.onSuccess) {
+            obj.onSuccess();
+          }
+          APP.updateUserMoney();
+          APP.showTips({
+            text: '合买成功!',
+            type: 1,
+            onConfirm: function() {
+              window.location.reload();
+            }
+          });
+          $('body').on('click', '.close', function(event) {
+            window.history.go(0);
+          });
+        } else {
+          APP.handRetCode(data.retCode, data.retMsg);
+        }
+
+      })
+      .fail(function() {
+        APP.onServiceFail();
+      });
+
+  };
+
+
+
 });

@@ -24,7 +24,7 @@
 .per-table .th6 { width: 147px; }
 .per-table .th7 { width: 133px; }
 .per-table tbody tr td .u-ci, .j-more-recent-news table tbody tr td .u-ci { font-size: 12px; width: 80px; padding: 3px 5px; border: 1px #dfdfdf solid; margin-right: 6px; height: 25px; }
-.per-table tbody tr td .btn-c1 { margin-right: 5px; padding: 0; width: 57px; height: 25px; font-family: 'simsun'; line-height: 25px; }
+.per-table tbody tr td .btn-c1, .j-more-recent-news-table .btn-c1 { margin-right: 5px; padding: 0; width: 57px; height: 25px; font-family: 'simsun'; line-height: 25px; }
 .per-com-table > tbody > tr:nth-child(2n) > td { background: #f1f1f1; }
 .per-model-table tbody tr .td1 { padding-top: 6px; }
 .per-model-table tbody tr .td1 span { float: left; margin: 0 -2px 0 20px; }
@@ -41,6 +41,7 @@
 .recent-news-ul > li { border-bottom: 1px dotted #dfdfdf; list-style: disc inside; }
 .j-more-recent-news { background: #FBE6DB; border: 1px solid #F6C9B2; width: 100%; display: none; }
 .recent-news-ul > li > p { margin: 10px 0 8px 21px; }
+.recent-news-ul .date-str { float: right; margin-right: 20px; }
 .j-more-recent-news table { margin: 12px auto 12px; width: 960px; }
 .j-more-recent-news table tr th, .j-more-recent-news table tr td { height: 35px; text-align: center; }
 .j-more-recent-news table tr th { background: #f1f1f1; }
@@ -55,7 +56,7 @@
 /*start 个人中心 历史记录*/
 .j-per-his, .j-per-dzgd, .j-per-model { display: none; }
 .more-his-choose span select { height: 23px; border: 1px solid #dfdfdf; width: 110px }
-.per-his-table { border: 1px solid #dfdfdf; margin-top: 12px;}
+.per-his-table { border: 1px solid #dfdfdf; margin-top: 12px; }
 .per-his-table > thead > tr > .th1 { width: 222px; }
 .per-his-table > thead > tr > .th2 { width: 188px; }
 .per-his-table > thead > tr > .th3 { width: 200px; }
@@ -63,7 +64,7 @@
 .per-his-table > thead > tr > .th5 { width: 127px; }
 .per-his-table > thead > tr > .th6 { width: 319px; }
 .per-his-table > thead > tr > .th6, .per-his-table > tbody > tr > .td6 { border-right: 1px solid #dfdfdf; }
-/* .per-his-table > tbody > tr.his-tr > td { background: #f1f1f1; } */
+.per-his-table > tbody > tr.his-tr > td { border-bottom: 1px dotted #dfdfdf; }
 .j-more-his { background: #FBE6DB; border: 1px solid #F6C9B2; width: 100%; padding: 0 12px 12px 12px; }
 .more-his-choose { height: 40px; text-align: left; line-height: 40px; }
 .j-more-his table { margin: 0 auto width:960px; }

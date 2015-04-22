@@ -1035,7 +1035,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
               zhus.bad.push(zhus.all[i]);
               zhus.overMaxMoney = true;
 
-            }else{
+            } else {
 
               zhus.good.push(zhus.all[i]);
               zhus.moneyArr.push(money);
@@ -1409,12 +1409,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     COMMON.checkBallGroup(Config.box);
     COMMON.setZhuTotal();
 
-    if (Config.playType ==="ztsc") {
+    if (Config.playType === "ztsc") {
       MANUAL.setSdTotal();
       MANUAL.totalSdNums();
     }
 
-    if (Config.playType ==="tdtz") {
+    if (Config.playType === "tdtz") {
       DRAG.checkBallAear();
     }
 
@@ -1707,26 +1707,35 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var redGroup = Config.box.find('.j-ball-red');
     var redGroupAc = redGroup.find('.active');
 
-    if (redGroup[0]) {
+    if ( $(this).parents('.j-ball-red').length) {
 
       if (redGroupAc.length <= SEEDS[Config.lotyName].redMax) {
 
         if (redGroupAc.length == SEEDS[Config.lotyName].redMax) {
+
           if ($(this).hasClass('active')) {
+
             $(this).removeClass('active');
             COMMON.checkBallGroup($(this));
+
           } else {
+
             APP.showTips('最多只能选择' + SEEDS[Config.lotyName].redMax + '个红球');
             COMMON.checkBallGroup($(this));
+
           }
         } else {
+
           $(this).toggleClass('active');
           COMMON.checkBallGroup($(this));
+
           if (redGroup.find('.active').length == SEEDS[Config.lotyName].redMax) {
             APP.showTips('已经达到最大投注个数');
           }
         }
+
       } else {
+
         APP.showTips('最多只能选择' + SEEDS[Config.lotyName].redMax + '个红球');
       }
 
@@ -2073,7 +2082,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var formatZhus = '';
     var l = '';
     var html = '';
-    var tips = ['<h5>请按照正确的格式填写：</h5><p>单式：01,02,03,04,05,06+01</p><p>复式：01,02,03,04,05,06,07,08+01,02</p>', '请输入投注号码', '您的投注号码多于' + Config.maxHang + '行，请返回重新选择','您好，单个投注的金额应小于2万元，请返回重新选择'];
+    var tips = ['<h5>请按照正确的格式填写：</h5><p>单式：01,02,03,04,05,06+01</p><p>复式：01,02,03,04,05,06,07,08+01,02</p>', '请输入投注号码', '您的投注号码多于' + Config.maxHang + '行，请返回重新选择', '您好，单个投注的金额应小于2万元，请返回重新选择'];
     var boxZhuLen = Config.box.find('.br-zhu-item').length;
     var addZhuLen = 0;
     var money = DLT.getZhuiJiaStatus();
@@ -2102,7 +2111,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       formatZhus = MANUAL.sdFormat(str);
       addZhuLen = formatZhus.good.length;
 
-      if(formatZhus.overMaxMoney){
+      if (formatZhus.overMaxMoney) {
         APP.showTips(tips[3]);
         return;
       }
@@ -2406,9 +2415,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     vote.isCheck = box.find('.j-sub-agreed')[0].checked;
 
     vote.callback = function () {
+
       if ((params.buyNum + params.aegisNum) > params.shareNum) {
+
         APP.showTips('ERROR：认购金额和保底金额超过购买金额！');
         return;
+
       }
       $.ajax({
           url: requestURL,
@@ -2417,8 +2429,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           data: params,
         })
         .done(function (data) {
-
-          COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          if (data.retCode === 100000) {
+            COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          } else {
+            APP.handRetCode(data.retCode, data.retMsg);
+            return;
+          }
         })
         .fail(function () {
           COMMON.onSubmitFail()
@@ -2498,7 +2514,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           data: params,
         })
         .done(function (data) {
-          COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          if (data.retCode === 100000) {
+            COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          } else {
+            APP.handRetCode(data.retCode, data.retMsg);
+            return;
+          }
         })
         .fail(function () {
           COMMON.onSubmitFail()
@@ -2564,7 +2585,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           data: params,
         })
         .done(function (data) {
-          COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          if (data.retCode === 100000) {
+            COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          } else {
+            APP.handRetCode(data.retCode, data.retMsg);
+            return;
+          }
         })
         .fail(function () {
           COMMON.onSubmitFail()
@@ -2609,7 +2635,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           data: params,
         })
         .done(function (data) {
-          COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId)
+          if (data.retCode === 100000) {
+            COMMON.onSubmitDone(data.retCode, data.retMsg, data.retData.projectNo, data.retData.trackId);
+          } else {
+            APP.handRetCode(data.retCode, data.retMsg);
+            return;
+          }
         })
         .fail(function () {
           COMMON.onSubmitFail()
