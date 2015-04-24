@@ -106,7 +106,6 @@ $(document).ready(function () {
         if (data.retCode === 100000) {
           lessSeconds = Math.floor((data.retData[0].company_sell_etime - data.retData[0].sys_time));
           stopSale = (0 === parseInt(data.retData[0].sell_status, 0));
-          debugger;
           stopSaleBool(stopSale);
 
           if ( G_BUY.alertStopModal !== G_BUY.qihao && G_BUY.alertStopModal !==0) {
@@ -125,7 +124,7 @@ $(document).ready(function () {
           G_BUY.qihao = data.retData[0].issue_num;
           $('#j-current-issue').html(G_BUY.qihao);
           G_BUY.qihaoId = data.retData[0].id;
-          loadYiLou();
+          //loadYiLou();
         }
       })
       .fail(function () {

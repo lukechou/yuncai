@@ -32,35 +32,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   var PERCENT_MIN = -100; //最小比例
   var PERCENT_MAX = 1000; //最大比例
 
-  // 后台输出 直接拿老彩胜测试数据
-  var ar = '3.25';
-  var modelId = $('#j-module-id').val(); // 模型ID
-  var moneyArr = [
-    [1, 30],
-    [2, 74],
-    [3, 136],
-    [4, 226],
-    [5, 356],
-    [6, 544],
-    [7, 816],
-    [8, 1210],
-    [9, 1778],
-    [10, 2600],
-    [11, 3786],
-    [12, 5500],
-    [13, 7974],
-    [14, 11548],
-    [15, 16712],
-    [16, 24170],
-    [17, 34942],
-    [18, 50502],
-    [19, 72978],
-    [20, 105444],
-    [21, 152340],
-    [22, 220078],
-    [23, 317922],
-    [24, 459254]
-  ]; // 固定投注返回数组
+  var modelId = $('#j-module-id').val();
 
   var percentTotal = 0; //比例总额
   var moneyTotal = 0; //总额比例
@@ -562,14 +534,20 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     for (var k in data) {
       if (data.hasOwnProperty(k)) {
+
         html += '<tr>';
+
         html += '<td class="w200">' + k + '<input type="hidden" name="issue_num[]" value="' + k + '"></td>';
+
+
         html += '<td><span class="j-view">' + data[k].bet_money + '</span>';
         html += '<span class="j-edit edit-wrap clearfix hide">';
         html += '<a href="javascript:;" class="i-reduce j-reduce">-</a>';
         html += '<input class="j-num edit-num" data-val="' + data[k].bet_money + '" type="text" name="current_money[]" value="' + data[k].bet_money + '">';
         html += '<a href="javascript:;" class="i-add j-add">+</a>';
         html += '</span></td>';
+
+
         html += '<td class="w200"><span class="j-add-money">' + data[k].add_money + '</span></td>';
         html += '<td class="w200"><span class="j-bounty-money">' + data[k].bounty_money + '</span></td>';
         html += '</tr>';
@@ -643,7 +621,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
         //第一个比例不能修改
         html += '<td class="w1"><span class="j-view j-rate-view">' + curRate + '%</span><span class="j-edit hide">' + curRate + '%</span>';
-        html += '<input maxLength="6" class="j-num edit-num align-c" type="hidden" name="current_rate[]" value="' + curRate + '">';
+        html += '<input maxLength="6" class="j-num edit-num" type="hidden" name="current_rate[]" value="' + curRate + '">';
         html += '</td>';
 
       } else {
@@ -737,155 +715,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     AUTO.addVal = AUTO.totalVal;
 
-    var json = {
-      "recode": 1,
-      "remsg": "",
-      "data": {
-        "1": {
-          "bet_money": "30",
-          "add_money": 30,
-          "bounty_money": "97.50"
-        },
-        "2": {
-          "bet_money": "44",
-          "add_money": 74,
-          "bounty_money": "143.00"
-        },
-        "3": {
-          "bet_money": "62",
-          "add_money": 136,
-          "bounty_money": "201.50"
-        },
-        "4": {
-          "bet_money": "90",
-          "add_money": 226,
-          "bounty_money": "292.50"
-        },
-        "5": {
-          "bet_money": "130",
-          "add_money": 356,
-          "bounty_money": "422.50"
-        },
-        "6": {
-          "bet_money": "188",
-          "add_money": 544,
-          "bounty_money": "611.00"
-        },
-        "7": {
-          "bet_money": "272",
-          "add_money": 816,
-          "bounty_money": "884.00"
-        },
-        "8": {
-          "bet_money": "394",
-          "add_money": 1210,
-          "bounty_money": "1280.50"
-        },
-        "9": {
-          "bet_money": "568",
-          "add_money": 1778,
-          "bounty_money": "1846.00"
-        },
-        "10": {
-          "bet_money": "822",
-          "add_money": 2600,
-          "bounty_money": "2671.50"
-        },
-        "11": {
-          "bet_money": "1186",
-          "add_money": 3786,
-          "bounty_money": "3854.50"
-        },
-        "12": {
-          "bet_money": "1714",
-          "add_money": 5500,
-          "bounty_money": "5570.50"
-        },
-        "13": {
-          "bet_money": "2474",
-          "add_money": 7974,
-          "bounty_money": "8040.50"
-        },
-        "14": {
-          "bet_money": "3574",
-          "add_money": 11548,
-          "bounty_money": "11615.50"
-        },
-        "15": {
-          "bet_money": "5164",
-          "add_money": 16712,
-          "bounty_money": "16783.00"
-        },
-        "16": {
-          "bet_money": "7458",
-          "add_money": 24170,
-          "bounty_money": "24238.50"
-        },
-        "17": {
-          "bet_money": "10772",
-          "add_money": 34942,
-          "bounty_money": "35009.00"
-        },
-        "18": {
-          "bet_money": "15560",
-          "add_money": 50502,
-          "bounty_money": "50570.00"
-        },
-        "19": {
-          "bet_money": "22476",
-          "add_money": 72978,
-          "bounty_money": "73047.00"
-        },
-        "20": {
-          "bet_money": "32466",
-          "add_money": 105444,
-          "bounty_money": "105514.50"
-        },
-        "21": {
-          "bet_money": "46896",
-          "add_money": 152340,
-          "bounty_money": "152412.00"
-        },
-        "22": {
-          "bet_money": "67738",
-          "add_money": 220078,
-          "bounty_money": "220148.50"
-        }
-      }
-    };
-
-    if (json.recode == 1) {
-
-      var html = '';
-
-      html = createMoneyTableHtml(json.data);
-
-      if (!html) {
-        return;
-      }
-
-      // 切换表格头
-      toggleTheadEl();
-
-      // 更新表格
-      updateTable(html);
-
-      moneyTotal = AUTO.totalVal;
-
-      // 模型自动投注 box 底部提示
-      updateBottomTips();
-
-      return;
-
-    } else {
-
-      APP.showTips(json.remsg);
-      return;
-
-    }
-
     $.ajax({
-        url: '/trade/autobuy/ajaxfenpei/',
+        url: '/lottery/model/autobuy/analyse-fixed-profit/ajx',
         type: 'get',
         dataType: 'json',
         data: {
@@ -895,9 +726,37 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
           'total_money': AUTO.totalVal
         },
       })
-      .done(function () {
+      .done(function (json) {
 
-        APP.showTips(json.remsg);
+        if (json.retCode === 100000) {
+
+          var html = '';
+
+          html = createMoneyTableHtml(json.retData);
+
+          if (!html) {
+            return;
+          }
+
+          // 切换表格头
+          toggleTheadEl();
+
+          // 更新表格
+          updateTable(html);
+
+          moneyTotal = AUTO.totalVal;
+
+          // 模型自动投注 box 底部提示
+          updateBottomTips();
+
+          return;
+
+        } else {
+
+          APP.showTips(json.retMsg);
+          return;
+
+        }
       });
 
   }
@@ -984,7 +843,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
      * current_money  []
      *
      */
-var stopHtml = '';
+    var stopHtml = '';
 
     if (clearVal($('[name="autostop"]:checked').val())) {
       stopHtml = '完成所有期数后终止';
@@ -1021,15 +880,15 @@ var stopHtml = '';
         if (m >= AUTO.firstVal) {
 
           $.ajax({
-              url: '/lottery/trade/add-auto-buy',
-              type: 'get',
+              url: '/lottery/model/autobuy/buy',
+              type: 'post',
               dataType: 'json',
               data: data,
             })
             .done(function (data) {
 
               if (data.retCode === 100000) {
-                APP.showTips('<p>自动投注设置成功</p><p>投注模型：'+modelId+'，系统会在'+stopHtml+'。</p>');
+                APP.showTips('<p>自动投注设置成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
               } else {
                 APP.showTips(data.retMsg);
               }
@@ -1038,7 +897,7 @@ var stopHtml = '';
         } else {
 
           APP.showTips({
-            html:'<div class="tipbox"><p>您的余额不足,购买失败！</p><p>当前账户余额不足支付自动投注的首期金额</p><p>首期投注金额：<span class="fc-3">'+AUTO.firstVal+'</span>元</p><p>当前账户余额：<span class="fc-3">'+m+' </span>元</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+            html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><p>当前账户余额不足支付自动投注的首期金额</p><p>首期投注金额：<span class="fc-3">' + AUTO.firstVal + '</span>元</p><p>当前账户余额：<span class="fc-3">' + m + ' </span>元</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
           });
         }
 
@@ -1148,6 +1007,7 @@ var stopHtml = '';
 
         // 切换修改提示
         toggleEditEl();
+
         // 切换表格头
         toggleTheadEl();
 

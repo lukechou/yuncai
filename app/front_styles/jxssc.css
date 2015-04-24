@@ -56,6 +56,7 @@
 .box-left .m-num-title .i-4XZX { margin-top: -28px; }
 .j-normal-play .m-num-title, .j-hezhi-play  .m-num-title { padding-top: 11px; }
 .m-br-nav > li.m-br-nav-last { border-right: 1px solid #dfdfdf; }
+.j-choose-code-DXSD .m-row-miss-code span{width: 125px;}
 
 /*start 右上角时间显示*/
 .m-brhd-qi { top: 21px; }

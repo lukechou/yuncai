@@ -111,7 +111,6 @@ var pager = (function() {
 
       var _this = this;
       _this.config = obj;
-
       $.ajax({
           url:_this.ajaxUrl,
           type: 'get',

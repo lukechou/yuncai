@@ -71,9 +71,11 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .list-table > tbody > tr > .list-box { padding: 12px; }
 .box-table> thead > tr > th { background: #f9f9f9; }
 .box-table .td-active{ background: #ffe3e2;}
-
-
-
+.list-box .btn-sear{ float: right; position: relative; top: -30px; margin-right: 50px;}
+.m-table-one > tbody > tr.modify-bottom > td{ padding: 10px 0;}
+.m-table-one > tbody > tr.modify-bottom > td:hover{ background: #fff;}
+.modify-bottom .btn{ width: 160px; height: 40px; margin:0 10px;}
+.modify-bottom .btn-gray:hover{ background: url(../front_images/model/del-hover.png);}
 
 
 
