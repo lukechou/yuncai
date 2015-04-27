@@ -14,6 +14,8 @@
 .m-help-right { width: 780px; float: right }
 .m-help-right .panel { min-height: 540px; border: 1px #dfdfdf solid }
 .m-help-right .panel-heading { background: #f1f1f1; border-bottom: 1px #dfdfdf solid; height: 38px }
+
+
 .m-help-right .panel-body { font-size: 12px; padding: 0 }
 .j-page { padding: 40px 30px; display: none; line-height: 1.8 }
 .j-page.active { display: block }
@@ -36,3 +38,26 @@
 .j-page-last .title { margin: 25px 0; font-size: 12px; text-align: center }
 .j-page-last .td-1 { width: 42px; padding-top: 0; vertical-align: baseline }
 .j-page-last .td-2 { width: 80px; padding-top: 0; vertical-align: baseline }
+
+
+
+.m-help-right .panel-title{ font-size: 14px; font-weight: bold;}
+.help-text{ font-size: 12px;}
+.help-text p{ margin-bottom: 5px;}
+.help-text .title{ margin:10px auto;}
+.help-text .title.fs-14{ font-size: 14px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

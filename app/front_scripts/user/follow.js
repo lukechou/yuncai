@@ -45,8 +45,18 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
+            switch (dataItem.follow_type) {
+              case '1':
+              htmlOutput += '<tr class="dzgd-tr"><td class="j-loty-name" loty-name="' + dataItem.loty_name + '" ldr-id="' + dataItem.ldr_id + '" leader-uid="' + dataItem.leader_uid + '" fid="' + dataItem.id + '">' + dataItem.loty_cnname + '</td><td class="leader-username"><a href="http://kp2.yuncai.com/user/profile/index/' + dataItem.leader_uid + '" target="_blank">' + dataItem.leader_username + '</a></td><td>' + dataItem.dateline + '</td><td><span class="fc-3">' + dataItem.follow_value + '</span>元</td><td>' + dataItem.follow_times + '</td><td><button class="btn btn-sear btn-oper j-mod-dzgd">修改</button><a href="javascript:;" class="j-undo">撤销</a></td></tr>' + dzgdTr;
+                break;
+              case '2':
+                htmlOutput += '<tr class="dzgd-tr"><td class="j-loty-name" loty-name="' + dataItem.loty_name + '" ldr-id="' + dataItem.ldr_id + '" leader-uid="' + dataItem.leader_uid + '" fid="' + dataItem.id + '">' + dataItem.loty_cnname + '</td><td class="leader-username"><a href="http://kp2.yuncai.com/user/profile/index/' + dataItem.leader_uid + '" target="_blank">'+dataItem.leader_username + '</a></td><td>' + dataItem.dateline + '</td><td><span class="fc-3">' + dataItem.follow_value + '</span>%</td><td>' + dataItem.follow_times + '</td><td><button class="btn btn-sear btn-oper j-mod-dzgd">修改</button><a href="javascript:;" class="j-undo">撤销</a></td></tr>' + dzgdTr;
+                break;
 
-            htmlOutput += '<tr class="dzgd-tr"><td class="j-loty-name" loty-name="' + dataItem.loty_name + '" ldr-id="' + dataItem.ldr_id + '" leader-uid="' + dataItem.leader_uid + '">' + dataItem.loty_cnname + '</td><td class="leader-username">' + dataItem.leader_username + '</td><td>' + dataItem.dateline + '</td><td><span class="fc-3">' + dataItem.follow_value + '</span>元</td><td>' + dataItem.follow_times + '</td><td><button class="btn btn-sear btn-oper j-mod-dzgd">修改</button><a href="javascript:;" class="j-undo">撤销</a></td></tr>' + dzgdTr;
+
+            }
+
+
           }
         } else {
           htmlOutput = '<tr><td colspan="6">当前没有跟单用户</td></tr>';
@@ -72,32 +82,36 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
 
   $(document).delegate('.j-undo', 'click', function(event) {
     var _this = $(this);
-    var followID = _this.parents('.dzgd-tr').find('.j-loty-name').attr('ldr-id');
+    var followID = _this.parents('.dzgd-tr').find('.j-loty-name').attr('fid');
     var leaderUserName = _this.parents('.dzgd-tr').find('.leader-username').text();
     var DATA = {
       follow_id: followID
     };
 
     APP.showTips({
-      text : '<div class="frbox"><div class="text"><p>确认撤销对' + leaderUserName + '的跟单吗？</p></div></div>',
-      type : 2,
+      text: '<div class="frbox"><div class="text"><p>确认撤销对' + leaderUserName + '的跟单吗？</p></div></div>',
+      type: 2,
       className: 'undoModel',
-      onConfirm : function(){
+      onConfirm: function() {
         undoFollow(DATA);
       }
     });
 
   });
 
-  function undoFollow(DATA){
-     $.ajax({
+  function undoFollow(DATA) {
+    $.ajax({
         url: '/user/follow/un-follow',
         type: 'get',
         dataType: 'json',
         data: DATA
       })
-      .done(function() {
-        APP.showTips('撤销成功！');
+      .done(function(data) {
+        if(data.retCode==100000){
+          APP.showTips('撤销成功！');
+        }else{
+          APP.showTips(data.retMsg);
+        }
         PAGE7.loadDZFollowDetails({
           page: 1, //第几页
           pageSize: 10, // 多少条1页
@@ -256,7 +270,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var unitPrice,
       maxBuyTimes,
       unitPercentage,
-      unitPercentageZ,
       maxPrice,
       DATA = {};
     var followID = _this.parents('.j-dzgd-tr').prev('.dzgd-tr').find('.j-loty-name').attr('ldr-id');
@@ -289,16 +302,15 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           loty_name: lotyName,
           unit_price: unitPrice,
           max_buy_times: maxBuyTimes,
-          follow_id: followID
+          follow_id: followID,
+          data_type: dataType
         };
-        outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购金额：<span class="fc-3">' + unitPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes  + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
+        outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购金额：<span class="fc-3">' + unitPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
 
         break;
 
       case '1':
         unitPercentage = _this.parents('.input-div').find('.j-unit-percentage').val();
-        unitPercentageZ = unitPercentage;
-        unitPercentage = unitPercentage / 100;
         maxBuyTimes = _this.parents('.input-div').find('.j-max-buy-times').val();
         if (!unitPercentage && !maxBuyTimes) {
           APP.showTips('每次认购比例和定制次数不能为空');
@@ -316,16 +328,15 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           loty_name: lotyName,
           unit_percentage: unitPercentage,
           max_buy_times: maxBuyTimes,
-          follow_id: followID
+          follow_id: followID,
+          data_type: dataType
         };
-        outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购比例：<span class="fc-3">' + unitPercentageZ + '</span>%</p><p>定制次数：<span class="fc-3">' + maxBuyTimes  + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
+        outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购比例：<span class="fc-3">' + unitPercentage + '</span>%</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
 
         break;
 
       case '2':
         unitPercentage = _this.parents('.input-div').find('.j-unit-percentage').val();
-        unitPercentageZ = unitPercentage;
-        unitPercentage = unitPercentage / 100;
         maxPrice = _this.parents('.input-div').find('.j-max-price').val();
         maxBuyTimes = _this.parents('.input-div').find('.j-max-buy-times').val();
         if (!unitPercentage && !maxPrice && !maxBuyTimes) {
@@ -357,23 +368,29 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           unit_percentage: unitPercentage,
           max_price: maxPrice,
           max_buy_times: maxBuyTimes,
-          follow_id: followID
+          follow_id: followID,
+          data_type: dataType
         };
-        outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p class="dzgd-tL">每次认购比例：<span class="fc-3">' + unitPercentageZ + '</span>%</p><p class="dzgd-tL">认购金额上限：<span class="fc-3">' + maxPrice  + '</span>元</p><p class="dzgd-tL">定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p class="dzgd-tL-bot">确认按以上信息进行跟单吗？</p></div></div>';
+        outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p class="dzgd-tL">每次认购比例：<span class="fc-3">' + unitPercentage + '</span>%</p><p class="dzgd-tL">认购金额上限：<span class="fc-3">' + maxPrice + '</span>元</p><p class="dzgd-tL">定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p class="dzgd-tL-bot">确认按以上信息进行跟单吗？</p></div></div>';
         break;
     }
 
-    APP.showTips({
-      text : outhtml,
-      type : 2,
-      onConfirm : function(){
-        confirmFollow(DATA,_this);
+    APP.onlyCheckLogin({
+      checkLogin: function() {
+        APP.showTips({
+          text: outhtml,
+          type: 2,
+          onConfirm: function() {
+            confirmFollow(DATA, _this);
+          }
+        });
       }
     });
 
   });
 
-  function confirmFollow(DATA,_this){
+
+  function confirmFollow(DATA, _this) {
     $.ajax({
         url: '/user/follow/follow',
         type: 'get',
@@ -381,7 +398,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         data: DATA
       })
       .done(function(data) {
-        console.log(data);
         if (data.retCode == 100000) {
           APP.showTips('跟单成功！');
           _this.parents('.j-dzgd-div').find('input[type="text"]').val('');

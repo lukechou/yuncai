@@ -204,6 +204,31 @@ define(['jquery'], function($) {
 
     };
 
+    /**
+     * Check User Status
+     * @return {null}
+     */
+    app.prototype.onlyCheckLogin = function(o) {
+
+      var _this = this;
+
+      $.ajax({
+          url: '/account/islogin',
+          type: 'get',
+          dataType: 'json',
+        })
+        .done(function(D) {
+          if (D.retCode === 100000) {
+            if (o.checkLogin) {
+              o.checkLogin();
+            }
+          }else{
+            _this.handRetCode(D.retCode, D.retMsg, o.checkLogin);
+          }
+        });
+
+    };
+
     app.prototype.checkUserLoginStatus = function() {
 
       var _this = this;
@@ -250,7 +275,7 @@ define(['jquery'], function($) {
 
       } else {
 
-        if(!obj.className){
+        if (!obj.className) {
           $('#myModal').removeClass().addClass('friend-modal modal');
         }
 
