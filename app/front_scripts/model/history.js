@@ -94,7 +94,7 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function ($, APP, _) {
       tzNr = dataItem.tzNr.join('');
 
       html += '<td>' + dataItem.tzTime + '</td>';
-      html += '<td>' + craeteTdHTML(dataItem.ssbh) + '</td>';
+      html += '<td class="">' + craeteTdHTML(dataItem.ssbh) + '</td>';
       html += '<td>' + craeteTdHTML(dataItem.dz) + '</td>';
       html += '<td class="fc-3">' + sg + '</td>';
       html += '<td>' + tzNr + '</td>';
@@ -102,7 +102,7 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function ($, APP, _) {
       html += '<td>' + craeteTdHTML(dataItem.tzJe) + '</td>';
       html += '<td ' + isZhong + '>' + dataItem.status + '</td>';
       html += '</tr></tbody></table></div></td></tr>';
-      debugger
+
     };
 
     return html;

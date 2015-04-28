@@ -1251,7 +1251,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         var stopSale = '';
         var max = ~~$('#j-maxqishu').val() || 100;
         var q = '';
-
+        return;
         if (data.retCode === 100000) {
 
           stopSale = (0 === parseInt(item.sell_status, 10));

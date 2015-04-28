@@ -204,7 +204,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   }
 
-// 间隔比例-表格重绘 $num:比例节点，val：当前要计算的值
+  // 间隔比例-表格重绘 $num:比例节点，val：当前要计算的值
   function countMoneyFn($num, val) {
 
     var index = AUTO.numObj.index($num);
@@ -324,7 +324,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       //--------------------------------------
     }
   }
-
 
   // 固定收益-表格重绘 $num:比例节点，val：当前要计算的值
   function countPercentFn($num, val) {
@@ -658,13 +657,15 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     });
     var stopTips = ['盈利以后自动终止', '完成所有期数后终止'];
     var arr = [];
+    var info = item.autobuyInfo;
+
     ar = item.modelInfo.ar;
 
-    h += '<tr class="tr-modify j-tr-modify"><td colspan="9" class="list-box"><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<span class="fc-3 mlr5">' + r.finished_issue + '</span>期，累计投注<span class="fc-3 mlr5">' + r.total_money + '</span>元，累积奖金<span class="fc-3 mlr5">' + r.total_bounty + '</span>元</p>';
+    h += '<tr class="tr-modify j-tr-modify"><td colspan="9" class="list-box"><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<span class="fc-3 mlr5">' + info.complete_issue + '</span>期，累计投注<span class="fc-3 mlr5">' + r.project_money + '</span>元，累积奖金<span class="fc-3 mlr5">' + r.total_bounty + '</span>元</p>';
 
     h += '<p class="text-left text-fen"><span>投注资金分配详情:</span>';
 
-    if (item.autobuyInfo.auto_status == 0 && item.autobuyInfo.total_issue > 1) {
+    if (info.auto_status == 0 && info.total_issue > 1) {
       h += '<span id="j-percent-edit-wrap"><a href="javascript:;" class="j-modify">修改投注分配</a> <i class="icon icon-warm ps-t2 j-icon-tips" original-title="可自行修改投注增加比例或者档期投注金额,系统将按照您修改后的投注分配进行投注"></i></span><button class="btn btn-sear j-stop-issue">手动终止自动投注</button>';
     }
 
@@ -672,7 +673,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     h += '<table class="table m-table-one box-table"><thead><tr><th>期数</th>';
 
-    if (item.autobuyInfo.auto_type == 0) {
+    if (info.auto_type == 0) {
       h += '<th>投注增加比例</th><th>当前投注金额（元）</th>';
     } else {
       h += '<th>当前投注金额（元）</th>';
@@ -695,9 +696,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
         nh += '<td class="j-issue-num" data-issuenum="' + n.issue_num + '">' + n.issue_num + '</td>';
       }
 
-      AUTO.autoType = ~~item.autobuyInfo.auto_type;
+      AUTO.autoType = ~~info.auto_type;
 
-      if (item.autobuyInfo.auto_type == 0) {
+      if (info.auto_type == 0) {
 
         /*间隔比例*/
 
@@ -780,13 +781,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
       nh += '<td>' + n.project_issue + '</td>';
 
-      if (n.mz === 2) {
-        nh += '<td title="' + Number(n.yu_bounty_money).toFixed(2) + '" class="td-active">是</td>';
-      } else if (n.mz === 1) {
-        nh += '<td>否</td>';
-      } else {
-        nh += '<td>--</td>';
-      }
+      nh += '<td>'+n.mz+'</td>';
 
       nh += '</tr>';
       return nh;
@@ -795,9 +790,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     h += arr.join('');
 
-    h += '</tbody></table><p class="text-left text-stop" id="j-text-stop">终止自动投注的条件：<span class="fc-3">' + stopTips[item.autobuyInfo.stop_type] + '</span></p><p class="auto-stop-nav text-left hide">'
+    h += '</tbody></table><p class="text-left text-stop" id="j-text-stop">终止自动投注的条件：<span class="fc-3">' + stopTips[info.stop_type] + '</span></p><p class="auto-stop-nav text-left hide">'
 
-    if (item.autobuyInfo.stop_type == 1) {
+    if (info.stop_type == 1) {
       h += '请选择终止自动投注的条件：<input type="radio" name="autostop" checked="checked" value="1">完成所有期数后终止<input type="radio" name="autostop" value="0">盈利以后自动终止';
     } else {
       h += '请选择终止自动投注的条件：<input type="radio" name="autostop"  value="1">完成所有期数后终止<input type="radio" name="autostop" checked="checked" value="0">盈利以后自动终止';
@@ -805,7 +800,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     h += '</p></td></tr>';
 
-    if (item.autobuyInfo.auto_status == 0 && item.autobuyInfo.total_issue > 1) {
+    if (info.auto_status == 0 && info.total_issue > 1) {
       h += '<tr class="j-modify-bottom modify-bottom hide"><td colspan="9"><button class="btn btn-red" id="j-modify-confirm">确认修改</button><button class="btn btn-gray" id="j-modify-cancel">取消修改</button></td></tr>';
     }
 
@@ -842,7 +837,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
                 text: '已取消自动投注',
                 type: 1,
                 onConfirm: function () {
-                  window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id='+modelId;
+                  window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId;
                 }
               });
 
@@ -874,7 +869,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   });
 
-  function getBodyHtml(){
+  function getBodyHtml() {
 
     var data = {};
     var b = $('#j-data-body');
@@ -900,26 +895,26 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     });
 
-    if(data['current_rate']){
+    if (data['current_rate']) {
 
-      $.each(issueNumObj, function(index, val) {
+      $.each(issueNumObj, function (index, val) {
         html += '<tr>';
-        html += '<td class="w150">'+$(this).html()+'</td>';
-        html += '<td class="w150">'+data['current_rate'][index]+'</td>';
-        html += '<td class="w150">'+data['current_money'][index]+'</td>';
-        html += '<td class="w150">'+moneyObj.eq(index).html()+'</td>';
-        html += '<td>'+bountyObj.eq(index).html()+'</td>';
+        html += '<td class="w150">' + $(this).html() + '</td>';
+        html += '<td class="w150">' + data['current_rate'][index] + '</td>';
+        html += '<td class="w150">' + data['current_money'][index] + '</td>';
+        html += '<td class="w150">' + moneyObj.eq(index).html() + '</td>';
+        html += '<td>' + bountyObj.eq(index).html() + '</td>';
         html += '</tr>';
       });
 
-    }else{
+    } else {
 
-      $.each(issueNumObj, function(index, val) {
+      $.each(issueNumObj, function (index, val) {
         html += '<tr>';
-        html += '<td class="w200">'+$(this).html()+'</td>';
-        html += '<td>'+data['current_money'][index]+'</td>';
-        html += '<td class="w200">'+moneyObj.eq(index).html()+'</td>';
-        html += '<td class="w200">'+bountyObj.eq(index).html()+'</td>';
+        html += '<td class="w200">' + $(this).html() + '</td>';
+        html += '<td>' + data['current_money'][index] + '</td>';
+        html += '<td class="w200">' + moneyObj.eq(index).html() + '</td>';
+        html += '<td class="w200">' + bountyObj.eq(index).html() + '</td>';
         html += '</tr>';
       });
 
@@ -939,7 +934,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var total = $('.j-add-money').last().html();
     var bodyHtml = getBodyHtml();
     var headHtml = '';
-    var stopType =clearVal($('[name="autostop"]:checked').val());
+    var stopType = clearVal($('[name="autostop"]:checked').val());
     var titleHtml = '您对模型<span class="mlr5">' + modelId + '</span> 设置了' + len + '期的自动投注 总投注金额为<span class="mlr5 fc-3">' + total + '</span>元（<span class="fc-84">系统会按期自动投注</span>）';
 
     var stopHtml = '';
@@ -960,7 +955,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     }
 
-
     $('#j-modal-title').html(titleHtml);
     $('#j-modal-thead').html(headHtml);
     $('#j-modal-tbody').html(bodyHtml);
@@ -970,11 +964,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   }
 
-  $('#j-auto-buy').on('click', function(event) {
+  $('#j-auto-buy').on('click', function (event) {
     event.preventDefault();
     updateIssue();
   });
-
 
   function updateIssue() {
 
@@ -994,7 +987,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     }
 
     var issueNum = [];
-    var stopType =clearVal($('[name="autostop"]:checked').val());
+    var stopType = clearVal($('[name="autostop"]:checked').val());
 
     $('[data-issuenum]').each(function (index, el) {
       issueNum.push($(this).attr('data-issuenum'));
@@ -1164,7 +1157,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
       var s = ['<td class="fc-7">进行中</td>', '<td>已完成</td>', '<td class="fc-3">已终止</td>', '<td class="fc-3">所有期执行完毕</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
 
-      var str = '<tr data-rid="' + n.id + '" data-statu="' + n.auto_status + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + Number(n.total_money).toFixed(2) + '</td><td>' + Number(n.total_bounty).toFixed(2) + '</td><td>' + Number(n.total_bounty).toFixed(2) + '</td>' + s[n.auto_status] + '<td><a href="javascript:;" class="j-toggle-issue">查看</a></td><td></td></tr>';
+      var str = '<tr data-rid="' + n.id + '" data-statu="' + n.auto_status + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + Number(n.project_money).toFixed(2) + '</td><td>' + Number(n.total_bounty).toFixed(2) + '</td><td>' + Number(n.total_bounty).toFixed(2) + '</td>' + s[n.auto_status] + '<td><a href="javascript:;" class="j-toggle-issue">查看</a></td><td></td></tr>';
       // '<td class="j-icon-tips" original-title="该自动投注由<span class=\'fc-3 mlr5\'>Raymond</span>计划生成">计划生成</td>'
       return str;
 

@@ -381,7 +381,7 @@
 .main-hd .time-group > span { display: inline-block; width: 26px; height: 23px; margin: 0 3px; padding: 3px 6px; text-align: center; color: #f13c38; background: #333; }
 .main-ft { height: 250px; padding: 10px 15px; background: #f1f1f1; }
 .ft-hd { font-size: 12px; padding: 12px 10px; border: 1px #dfdfdf solid; background: #fff; }
-.ft-tou { padding: 8px 15px; border: #dfdfdf; background: #fff; }
+.ft-tou { padding: 8px 15px; font-size: 12px; border: #dfdfdf; background: #fff; }
 .ft-main { width: 710px; margin: auto; }
 .ft-main .zhus { margin: 55px 0 20px; }
 .ft-main .zhus h4 { line-height: 38px; float: left; height: 38px; margin: 0; }
@@ -407,8 +407,8 @@
 
 /* 收藏弹出层 */
 .collect-modal .modal-dialog { width: 540px; }
-.collect-modal .modal-body { padding: 0; }
-.collect-modal .alert-warning { font-size: 12px; margin: 15px; padding: 10px 15px; }
+.collect-modal .modal-body { padding: 15px 0 0; }
+.collect-modal .alert-warning { font-size: 12px; margin: 0 15px 15px; padding: 10px 15px; }
 .btn-collect-submit { width: 100px; }
 .table-collect td { font-size: 12px; padding-bottom: 15px; }
 .table-collect td.last-td { padding: 0 30px 10px 10px; }
@@ -438,7 +438,9 @@
 .history-main .table .bg-f4 { background: #f4f4f4 !important; }
 .no-datatips { line-height: 200px; height: 200px; }
 .history-main .table .h-look > td { padding: 15px; background: #e3e3e3; }
-
+.history-main .table .h-look > td td span {
+  display: block;
+}
 /* 投注确认 */
 .m-detail-box .btns { width: 210px; margin: auto; }
 .m-detail-box .btns .btn { width: 90px; margin: 0 5px; }

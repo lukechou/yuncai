@@ -92,6 +92,72 @@ define(['jquery'], function($) {
 
     };
 
+    /**
+     * 全局通用登录弹出框
+     * @return {null}
+     */
+    app.prototype.onlyShowLoginBox = function(callback) {
+
+      var _this = this;
+      var loginModal = null;
+
+      if (!$('#user-login')[0]) {
+        var html = '<div id="j-login-modal" class="modal bs-example-modal-sm login-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="/html/user/find_psw.html">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
+        $('body').append(html);
+      };
+
+      loginModal = $('#j-login-modal');
+      loginModal.on('show.bs.modal', _this.centerModal);
+      loginModal.modal('show');
+
+      $('#user-login').unbind();
+      $('#user-login').on('click', function(event) {
+
+        var user = _this.filterStr($('#login-username').val());
+        var pwd = _this.filterStr($('#login-password').val());
+
+        if (user && pwd) {
+          $.ajax({
+              url: '/account/userinfo/user/dologin',
+              type: 'post',
+              dataType: 'json',
+              data: {
+                username: user,
+                password: pwd
+              },
+            })
+            .done(function(data) {
+              if (data.retCode == 100000) {
+                loginModal.hide();
+                _this.updateHeadUserInfo();
+                _this.onlyCheckLogin({
+                  checkLogin: function() {
+                    if (callback) {
+                      callback();
+                      //window.location.reload();
+                    }
+                  }
+                });
+
+                return;
+              } else {
+                _this.showTips(data.retMsg);
+              }
+            })
+            .fail(function() {
+              _this.onServiceFail();
+            });
+        } else {
+          _this.showTips({
+            text: '帐号密码不能为空'
+          });
+          return;
+        }
+
+      });
+
+    };
+
     app.prototype.updateHeadUserInfo = function() {
       var html = '';
       $.ajax({
@@ -133,7 +199,6 @@ define(['jquery'], function($) {
     app.prototype.handRetCode = function(retCode, retMsg, callback) {
 
       var _this = this;
-
       switch (retCode) {
         case 120002:
           _this.showLoginBox(callback);
@@ -142,6 +207,30 @@ define(['jquery'], function($) {
           _this.showTips({
             html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
           });
+          break;
+        default:
+          _this.showTips({
+            text: retMsg
+          });
+          break;
+      }
+    };
+
+    /**
+     * HandRetCode for Ajax
+     * @param  {retCode} retCode Ajax Respone Status
+     * @param  {retMsg} retMsg  Ajaxa Respone Msg
+     * @return {null}
+     */
+    app.prototype.onlyHandRetCode = function(retCode, retMsg, callback) {
+
+      var _this = this;
+      switch (retCode) {
+        case 120002:
+          _this.onlyShowLoginBox(callback);
+          break;
+        case 120001:
+
           break;
         default:
           _this.showTips({
@@ -222,8 +311,9 @@ define(['jquery'], function($) {
             if (o.checkLogin) {
               o.checkLogin();
             }
-          }else{
-            _this.handRetCode(D.retCode, D.retMsg, o.checkLogin);
+          } else {
+            _this.onlyHandRetCode(D.retCode, D.retMsg, o.checkLogin);
+            return;
           }
         });
 

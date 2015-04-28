@@ -70,7 +70,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
       oVal++;
       if (oVal < PERCENT_MIN || oVal > PERCENT_MAX) {
-        APP.showTips('投注增加比例范围为' + PERCENT_MIN + '%-' + PERCENT_MIN + '%');
+        APP.showTips('投注增加比例范围为' + PERCENT_MIN + '%-' + PERCENT_MAX + '%');
         return;
       }
 
@@ -103,7 +103,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
       oVal--;
       if (oVal < PERCENT_MIN || oVal > PERCENT_MAX) {
-        APP.showTips('投注增加比例范围为' + PERCENT_MIN + '%-' + PERCENT_MIN + '%');
+        APP.showTips('投注增加比例范围为' + PERCENT_MIN + '%-' + PERCENT_MAX + '%');
         return;
       }
 
@@ -130,8 +130,21 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     event.preventDefault();
 
     var $num = $(this);
-    var oVal = parseInt($num.val());
-    if (oVal == '-') return;
+    var oVal = parseInt($num.val(),10);
+
+    if ($num.val() == '-') return;
+
+    if(oVal == -0) {
+
+      $num.val(0);
+      oVal = 0;
+
+    }
+
+    if(isNaN(oVal)){
+      $(this).val($(this).val().replace(/[^0-9.-]/g, ''));
+      oVal = $num.val();
+    }
 
     if (AUTO.timer) {
       clearTimeout(AUTO.timer);
@@ -145,7 +158,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
         countMoneyFn($num, oVal);
       }
 
-    }, 100);
+    }, 200);
 
   });
 
@@ -159,7 +172,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       var oVal = $num.val();
 
       if (oVal < PERCENT_MIN || oVal > PERCENT_MAX || !rInt.test(oVal)) {
-        APP.showTips('投注增加比例范围为' + PERCENT_MIN + '%-' + PERCENT_MIN + '%');
+        APP.showTips('投注增加比例范围为' + PERCENT_MIN + '%-' + PERCENT_MAX + '%');
         $num.val($num.data('val'));
         return;
       }
@@ -229,6 +242,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var $this = $(this);
     var oVal = $this.val();
 
+    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+
     if (oVal < BET_MIN) return;
 
     if (!rInt.test(oVal)) {
@@ -267,6 +282,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   $body.on('blur', '.j-cur-input', function (event) {
     event.preventDefault();
+
+    $(this).val($(this).val().replace(/[^0-9]/g, ''));
 
     var $this = $(this);
     checkCurMoney($this);
@@ -412,7 +429,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       opacity: 1
     });
 
-    $('#j-first,#j-space').tipsy({
+    $('#j-first,#j-space,#j-rate').tipsy({
       trigger: 'focus',
       gravity: 's',
       opacity: 1
@@ -539,14 +556,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
         html += '<td class="w200">' + k + '<input type="hidden" name="issue_num[]" value="' + k + '"></td>';
 
-
         html += '<td><span class="j-view">' + data[k].bet_money + '</span>';
         html += '<span class="j-edit edit-wrap clearfix hide">';
         html += '<a href="javascript:;" class="i-reduce j-reduce">-</a>';
         html += '<input class="j-num edit-num" data-val="' + data[k].bet_money + '" type="text" name="current_money[]" value="' + data[k].bet_money + '">';
         html += '<a href="javascript:;" class="i-add j-add">+</a>';
         html += '</span></td>';
-
 
         html += '<td class="w200"><span class="j-add-money">' + data[k].add_money + '</span></td>';
         html += '<td class="w200"><span class="j-bounty-money">' + data[k].bounty_money + '</span></td>';
@@ -888,7 +903,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
             .done(function (data) {
 
               if (data.retCode === 100000) {
-                APP.showTips('<p>自动投注设置成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
+                // APP.showTips('<p>自动投注设置成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
+                window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id='+modelId;
               } else {
                 APP.showTips(data.retMsg);
               }
@@ -906,73 +922,83 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   });
 
+  $('.j-inp-num').on('keyup paste', function (event) {
+    event.preventDefault();
+    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+  });
+
   // 确认自动投注
 
   $('#j-count-confirm').on('click', function (event) {
     event.preventDefault();
-
-    var ajaxDataObj = {};
 
     if (!AUTO.changedfrom) {
       APP.showTips('请先点击计算自动投注分配！');
       return false;
     }
 
-    updateAutoParams();
+    APP.onlyCheckLogin({
+      checkLogin: function () {
 
-    if (autoType === 0) {
+        var ajaxDataObj = {};
 
-      AUTO.status = checkParamsStatus();
+        updateAutoParams();
 
-      if (AUTO.status) {
-        //判断金额范围
-        var curMoneyObj = $('.j-view');
+        if (autoType === 0) {
 
-        for (var i = 0; i < curMoneyObj.length; i++) {
-          var val = curMoneyObj.eq(i).text();
-          if (val < BET_MIN || val > BET_MAX) {
-            APP.showTips('当期投注不能小于30或大于500000');
-            return false;
+          AUTO.status = checkParamsStatus();
+
+          if (AUTO.status) {
+            //判断金额范围
+            var curMoneyObj = $('.j-view');
+
+            for (var i = 0; i < curMoneyObj.length; i++) {
+              var val = curMoneyObj.eq(i).text();
+              if (val < BET_MIN || val > BET_MAX) {
+                APP.showTips('当期投注不能小于30或大于500000');
+                return false;
+              }
+            }
+
+            $('.j-edit').addClass('hide');
+            $('.j-view').removeClass('hide');
+            createBuyModal();
+
+          } else {
+            return;
           }
+
         }
 
-        $('.j-edit').addClass('hide');
-        $('.j-view').removeClass('hide');
-        createBuyModal();
+        if (autoType === 1) {
 
-      } else {
-        return;
-      }
+          AUTO.status = checkMoneyParamsStatus();
 
-    }
+          if (AUTO.status) {
 
-    if (autoType === 1) {
+            //判断金额范围
+            var curMoneyObj = $('.j-cur-money');
 
-      AUTO.status = checkMoneyParamsStatus();
+            for (var i = 0; i < curMoneyObj.length; i++) {
+              var val = curMoneyObj.eq(i).text();
+              if (val < BET_MIN || val > BET_MAX) {
+                APP.showTips('当期投注不能小于30或大于500000');
+                return false;
+              }
+            }
 
-      if (AUTO.status) {
+            $('.j-edit').addClass('hide');
+            $('.j-view').removeClass('hide');
 
-        //判断金额范围
-        var curMoneyObj = $('.j-cur-money');
+            createBuyModal();
 
-        for (var i = 0; i < curMoneyObj.length; i++) {
-          var val = curMoneyObj.eq(i).text();
-          if (val < BET_MIN || val > BET_MAX) {
-            APP.showTips('当期投注不能小于30或大于500000');
-            return false;
+          } else {
+            return;
           }
+
         }
-
-        $('.j-edit').addClass('hide');
-        $('.j-view').removeClass('hide');
-
-        createBuyModal();
-
-      } else {
-        return;
       }
-
-    }
+    });
 
   });
 
@@ -1062,6 +1088,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var index = AUTO.numObj.index($num);
     var curRate = val / 100 + 1;
     var newCurRate = null;
+
     if (!rInt.test(val)) {
       APP.showTips('投注增加比例必须为整数');
       val = 0;
@@ -1092,7 +1119,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
         curNum = 0;
         $numObj.eq(i).val(0)
       }
-      AUTO.viewObj.eq(i).text(curNum + '%');
+
       var curRate = curNum / 100 + 1; //当前应增加的比例
       if (i == 0) { //第一期用初始投注额
         var curMoney = Math.round(curRate * AUTO.curMoneyObj.eq(i).text());
@@ -1153,12 +1180,18 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       //--------------------------------------
       //数据重新填充
       //--------------------------------------
+
       //投注增加比例
+      AUTO.viewObj.eq(i).text(curNum + '%');
       AUTO.numObj.eq(i).text(curNum);
       AUTO.numObj.eq(i).val(curNum);
+
       //当期投注金额（元）
-      AUTO.curMoneyObj.eq(i).text(curMoney); //修改当前期金额
-      AUTO.curInput.eq(i).val(curMoney).data('val', curMoney); //修改当前期input金额
+      //修改当前期金额
+      AUTO.curMoneyObj.eq(i).text(curMoney);
+      //修改当前期input金额
+      AUTO.curInput.eq(i).val(curMoney).data('val', curMoney);
+
       //累计投注金额
       if (0 < i) { //非第一期时累加上一期的金额
         var preMoney = parseInt(AUTO.addMoneyObj.eq(i - 1).text(), 10);

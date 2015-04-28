@@ -43,6 +43,10 @@ gulp.task('sprite', ['clean'], function () {
     cssName: 'front_styles/home-logo.css'
   }));
 
+  var spriteKlpk = gulp.src('./app/front_images/klpk/group/*.png').pipe(spritesmith({
+    imgName: 'front_images/klpk/klpk-group.png',
+    cssName: 'front_styles/klpk-icon.css'
+  }));
 
   spriteData.pipe(gulp.dest('dist'));
   spriteDataIcon.pipe(gulp.dest('dist'));
@@ -51,6 +55,7 @@ gulp.task('sprite', ['clean'], function () {
   spriteFootGray.pipe(gulp.dest('dist'));
   soriteFootBlack.pipe(gulp.dest('dist'));
   spriteHomeLogo.pipe(gulp.dest('dist'));
+  spriteKlpk.pipe(gulp.dest('dist'));
 
 });
 

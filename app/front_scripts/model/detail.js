@@ -84,7 +84,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
               var s = ['<td class="fc-7">进行中</td>', '<td>已完成</td>', '<td class="fc-3">已终止</td>', '<td class="fc-3">所有期执行完毕</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
 
-              var str = '<tr><td>' + n.id + '</td><td>' + APP.dateFormat(new Date(n.start_time*1000),'%Y-%M-%d %h:%m:%s',true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.total_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
+              var str = '<tr><td>' + n.id + '</td><td>' + APP.dateFormat(new Date(n.start_time*1000),'%Y-%M-%d %h:%m:%s',true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
 
               // var str = '<td class="j-icon-tips" original-title="该自动投注由<span class=\'fc-3 mlr5\'>Raymond</span>计划生成">计划生成</td>';
 

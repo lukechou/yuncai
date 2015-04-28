@@ -1,0 +1,59 @@
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+```html
+<!-- `display: block` sprite -->
+<div class="icon-home"></div>
+
+<!-- `display: inline-block` sprite -->
+<img class="icon-home" />
+```
+*/
+.icon-01 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: 0px -130px;
+  width: 33px;
+  height: 47px;
+}
+.icon-02 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: -33px -130px;
+  width: 33px;
+  height: 47px;
+}
+.icon-03 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: -155px -48px;
+  width: 68px;
+  height: 29px;
+}
+.icon-04 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: -100px -87px;
+  width: 68px;
+  height: 29px;
+}
+.icon-05 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: 0px 0px;
+  width: 100px;
+  height: 130px;
+}
+.icon-06 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: -100px -48px;
+  width: 55px;
+  height: 39px;
+}
+.icon-07 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: -100px 0px;
+  width: 170px;
+  height: 48px;
+}
+.icon-08 {
+  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: -223px -48px;
+  width: 30px;
+  height: 25px;
+}

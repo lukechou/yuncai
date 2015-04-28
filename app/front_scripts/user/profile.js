@@ -377,14 +377,14 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       var detailData = '';
       var dataItem = '';
       var j = 10 * (obj.page - 1) + 1;
-
+      console.log(data);
       if (data.retCode == 100000) {
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++, j++) {
             dataItem = detailData[i - 1];
 
-            htmlOutput += '<tr><td>' + j + '</td><td>' + dataItem.subscriber + '</td><td>' + dataItem.lotyName + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.timing + '</td></tr>';
+            htmlOutput += '<tr><td>' + j + '</td><td>' + dataItem.subscriber + '</td><td>' + obj.cnloty_name + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.timing + '</td></tr>';
           }
         } else {
           htmlOutput = '<tr><td colspan="5">当前没有跟单用户</td></tr>';
@@ -407,7 +407,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     event.preventDefault();
     var h = '<table class="dingz-list-table"><thead><th class="th1">顺序</th><th class="th2">认购人</th><th class="th3">彩种</th><th class="th4">每次认购</th><th class="th5">定制时间</th></thead><tbody id="j-user-follow-list-table"></tbody></table><div class="j-user-follow-list-page-box clearfix"></div>';
     var _this = $(this);
-    var totalSize = $(this).text();
+    var totalSize = _this.text();
+    var cnLotyName = _this.parents('tr.dzgd-tr').find('.j-loty-name').text();
     APP.showTips({
       title: $('.per-name').text() + ' 跟单用户列表',
       text: '合买成功!',
@@ -421,7 +422,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       pageSize: 10, // 多少条1页
       pageElement: '.j-user-follow-list-page-box',
       loty_name: _this.parents('td').siblings('.j-loty-name').attr('loty-name'),
-      leader_uid: uid
+      leader_uid: uid,
+      cnloty_name: cnLotyName
     });
   });
 
@@ -571,50 +573,18 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       gdjeContent.hide();
     }
   });
-  $(document).delegate('.j-mod-dzgd', 'click', function() {
-    var targetTr = $(this).parent('td').parent('tr').next('tr.j-dzgd-tr');
-    var _this = $(this);
-    var newRadio = _this.parents('.dzgd-tr').next('.j-dzgd-tr').find('.j-dzgd-choose');
-    var gdjeContent = targetTr.find('.j-dzgd-gdje-content');
-    var bfbContent = targetTr.find('.j-dzgd-bfb-content');
 
-    if ('修改' == _this.text()) {
-      _this.text('收起');
-      newRadio.html('<span><input type="radio" name="dzgd" id="gdje" checked="checked"><label for="gdje">按固定金额定制跟单</label></span><span><input type="radio" name="dzgd" id="bfb"><label for="bfb">按百分比定制跟单</label></span>');
-      targetTr.css({
-        display: 'table-row'
-      });
-      gdjeContent.show();
-      bfbContent.hide();
 
-    } else if ('收起' == _this.text()) {
-      _this.text('修改');
-      newRadio.html();
-      targetTr.css({
-        display: 'none'
-      });
-      bfbContent.show();
-      gdjeContent.hide();
-    }
-  });
-  $(document).delegate('.j-dzgd-choose span input[type="radio"]', 'click', function(event) {
-      var _this = $(this);
-      debugger
-      _this.prop('checked', true);
-      _this.parents('span').siblings('span').find('input[type="radio"]').removeAttr('checked');
-  });
 
   $(document).delegate('.j-dzgd-choose span', 'click', function(event) {
-    event.preventDefault();
+
     var _this = $(this);
 
     var radioId = _this.find('input[type="radio"]').attr('id');
-    //_this.find('input[type="radio"]').prop('checked', true);
-    //_this.siblings('span').find('input[type="radio"]').removeAttr('checked');
 
     var gdjeContent = _this.parents('.j-dzgd-choose').siblings('.j-dzgd-gdje-content');
     var bfbContent = _this.parents('.j-dzgd-choose').siblings('.j-dzgd-bfb-content');
-    var newRadio = '<span><input type="radio" name="jiner" checked="checked" id="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" name="jiner" id="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上线)</span></span>';
+    var newRadio = '<span><input type="radio" name="jiner" checked="checked" id="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" name="jiner" id="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>';
     var pJinerChoose = bfbContent.find('.j-jiner-choose');
     var pRenGouChoose = bfbContent.find('.j-rengou-jiner');
     var submitBtn = bfbContent.find('.j-imme-follow');
@@ -640,7 +610,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
   });
 
   $(document).delegate('.j-jiner-choose span', 'click', function(event) {
-    event.preventDefault();
+
     var _this = $(this);
     var radioId = _this.find('input[type="radio"]').attr('id');
     _this.siblings('span').find('input[type="radio"]').removeAttr('checked');
@@ -759,7 +729,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           unit_price: unitPrice,
           max_buy_times: maxBuyTimes,
           follow_id: followID,
-          data_type : dataType
+          data_type: dataType
         };
         outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购金额：<span class="fc-3">' + unitPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
 
@@ -785,7 +755,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           unit_percentage: unitPercentage,
           max_buy_times: maxBuyTimes,
           follow_id: followID,
-          data_type : dataType
+          data_type: dataType
         };
         outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购比例：<span class="fc-3">' + unitPercentage + '</span>%</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
 
@@ -825,7 +795,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           max_price: maxPrice,
           max_buy_times: maxBuyTimes,
           follow_id: followID,
-          data_type : dataType
+          data_type: dataType
         };
         outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购比例：<span class="fc-3">' + unitPercentage + '</span>%</p><p>认购金额上限：<span class="fc-3">' + maxPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span></p><p>确认按以上信息进行跟单吗？</p></div></div>';
         break;
@@ -843,10 +813,12 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       }
     });
 
-
   });
 
   function confirmFollow(DATA, _this) {
+    $('#myModal').on('hidden.bs.modal', function(e) {
+      window.location.reload();
+    });
     $.ajax({
         url: '/user/follow/follow',
         type: 'get',
@@ -854,14 +826,18 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         data: DATA
       })
       .done(function(data) {
-        console.log(data);
         if (data.retCode == 100000) {
-          APP.showTips('跟单成功！');
+          APP.showTips({
+            text: '跟单成功！',
+            type: 1,
+            onConfirm: function() {
+              window.location.reload();
+            }
+          });
           _this.parents('.j-dzgd-div').find('input[type="text"]').val('');
         } else {
           APP.handRetCode(data.retCode, data.retMsg);
         }
-        window.location.reload();
       })
       .fail(function() {
         APP.onServiceFail();
@@ -911,7 +887,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var v = $(this).val();
 
     var result = filterNum(v, max);
-    result = result > 100 ? 100 : result;
+    result = result > 99 ? 99 : result;
     $(this).val(result);
 
   });
@@ -920,7 +896,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var v = $(this).val();
 
     var result = filterNum(v, max);
-    result = result > 100 ? 100 : result;
+    result = result > 99 ? 99 : result;
 
     $(this).val(result);
 
@@ -929,15 +905,15 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var max = $(this).attr('data-max');
     var v = $(this).val();
     var result = filterNum(v, max);
+    result = result > 100000 ? 100000 : result;
     $(this).val(result);
-
   });
   $(document).delegate('.j-dzgd-bfb-content .j-max-price', 'keyup', function(event) {
     var max = $(this).attr('data-max');
     var v = $(this).val();
     var result = filterNum(v, max);
+    result = result > 100000 ? 100000 : result;
     $(this).val(result);
-
   });
 
   //模型的“更多”则自动跳转至“历史记录-模型投注-查看全部记录”
@@ -1174,9 +1150,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       .fail(function() {
         APP.onServiceFail();
       });
-
   };
-
-
 
 });

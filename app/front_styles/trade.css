@@ -23,7 +23,7 @@
 .br-tou>p { margin: 12px 0 25px; }
 .br-tou>.btn-red{ display: block; width: 142px;}
 .br-tou .checkbox label a { color: #848484; }
-.br-zhu { margin: 30px 0; margin-left: 42px; }
+.br-zhu { margin: 30px 0 30px 42px; }
 .br-zhu-l { border: 1px #dfdfdf solid; width: 500px; height: 155px; font-size: 12px; overflow: auto; }
 .br-zhu-item { padding: 5px 10px; color: #f13c38; border-bottom: 1px #dfdfdf dashed; cursor: pointer; }
 .br-zhu-item:hover, .br-zhu-item.active { background: #fcead3; }
@@ -68,7 +68,7 @@
 .br-zhui-list>thead>tr>th { color: #3d3d3d; font-weight: bold; }
 .br-zhui-list>thead>tr>th, .br-zhui-list>tbody>tr>td { border: none; text-align: center; }
 .br-zhui-c { margin: 0 5px !important; position: relative; top: 2px; }
-.br-zhui-bei { width: 35px; margin-right: 5px; }
+.br-zhui-bei { width: 35px; margin-right: 5px; text-align: center;}
 /* 右侧辅助功能区 */
 .box-left { position: relative; width: 710px; float: left; margin-left: 42px;padding-right: 17px;}
 .box-left-dlt{min-height: 784px;}
