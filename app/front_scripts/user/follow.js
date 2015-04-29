@@ -46,10 +46,10 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
             switch (dataItem.follow_type) {
-              case '1':
+              case 1:
                 htmlOutput += '<tr class="dzgd-tr"><td class="j-loty-name" loty-name="' + dataItem.loty_name + '" ldr-id="' + dataItem.ldr_id + '" leader-uid="' + dataItem.leader_uid + '" fid="' + dataItem.id + '" follow-type="' + dataItem.follow_type + '" follow-max-money="' + dataItem.follow_max_money + '">' + dataItem.loty_cnname + '</td><td class="leader-username"><a href="/user/profile/index/' + dataItem.leader_uid + '" target="_blank">' + dataItem.leader_username + '</a></td><td>' + dataItem.dateline + '</td><td><span class="fc-3">' + dataItem.follow_value + '</span>元</td><td class="j-cishu">' + dataItem.follow_times + '</td><td><button class="btn btn-sear btn-oper j-mod-dzgd">修改</button><a href="javascript:;" class="j-undo">撤销</a></td></tr>' + dzgdTr;
                 break;
-              case '2':
+              case 2:
                 htmlOutput += '<tr class="dzgd-tr"><td class="j-loty-name" loty-name="' + dataItem.loty_name + '" ldr-id="' + dataItem.ldr_id + '" leader-uid="' + dataItem.leader_uid + '" fid="' + dataItem.id + '" follow-type="' + dataItem.follow_type + '" follow-max-money="' + dataItem.follow_max_money + '">' + dataItem.loty_cnname + '</td><td class="leader-username"><a href="/user/profile/index/' + dataItem.leader_uid + '" target="_blank">' + dataItem.leader_username + '</a></td><td>' + dataItem.dateline + '</td><td><span class="fc-3">' + dataItem.follow_value + '</span>%</td><td class="j-cishu">' + dataItem.follow_times + '</td><td><button class="btn btn-sear btn-oper j-mod-dzgd">修改</button><a href="javascript:;" class="j-undo">撤销</a></td></tr>' + dzgdTr;
                 break;
             }
@@ -194,8 +194,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var submitBtn = bfbContent.find('.j-imme-follow');
 
     //重置input[type="text"]
-    gdjeContent.find('input[type="text"]').val("");
-    bfbContent.find('input[type="text"]').val("");
+    //gdjeContent.find('input[type="text"]').val("");
+    //bfbContent.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'gdje':
@@ -222,8 +222,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var submitBtn = _this.parents('.j-jiner-choose').siblings('.ljgd-btn-div').find('.j-imme-follow');
 
     var dzcs = _this.parents('.j-jiner-choose').siblings('.j-dzcs');
-    rengouJiner.find('input[type="text"]').val("");
-    dzcs.find('input[type="text"]').val("");
+    //rengouJiner.find('input[type="text"]').val("");
+    //dzcs.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'wux-jiner':
@@ -401,7 +401,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       })
       .done(function(data) {
         if (data.retCode == 100000) {
-          APP.showTips('跟单成功！');
+          APP.showTips('修改跟单设置成功！');
           _this.parents('.j-dzgd-div').find('input[type="text"]').val('');
         } else {
           APP.handRetCode(data.retCode, data.retMsg);
@@ -423,7 +423,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var v = $(this).val();
 
     var result = filterNum(v, max);
-
+    result = result > 100000 ? 100000 : result;
     $(this).val(result);
 
   });
@@ -432,7 +432,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var v = $(this).val();
 
     var result = filterNum(v, max);
-
+    result = result > 100000 ? 100000 : result;
     $(this).val(result);
 
   });

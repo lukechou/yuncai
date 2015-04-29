@@ -1,12 +1,13 @@
 /* Cover default*/
 .brings-mn { margin-top: 0; border-top: none; }
-.box-left { margin-top: 0; padding-top: 6px; }
 .box-left-rightnobor { border-right: none; }
 .box-right { width: 233px; margin-top: -66px; }
 .kjgg .sub-content { height: 60px; background: #fff; }
 .br-zhu-item b { width: 70px; }
 body { background: url(../front_images/klpk/bg.jpg)#2a2a2b no-repeat center 0; }
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn { opacity: 1; }
 .fc-3 { color: #ffe65e; }
+.fc-red { color: #f13c38; }
 .ft { background: #242424; }
 .ft-left-img { background: url(../front_images/foot-black.png); }
 .ft-left-img1 { width: 98px; height: 76px; background-position: -95px -81px; }
@@ -18,8 +19,8 @@ body { background: url(../front_images/klpk/bg.jpg)#2a2a2b no-repeat center 0; }
 .brings-mn { border-radius: 10px; }
 .box-right { border-radius: 0 0 10px 0; }
 .brings-mn, .k3-hd { width: 985px; margin: auto; }
-.brings-mn, .m-num-title > p { background: #0e6e4c; }
-.box-right, .box-left .br-type, .kjgg .sub-content { background: #0d5e41; }
+.box-left, .m-num-title > p { background: #0e6e4c; }
+.brings-mn, .box-left .br-type, .kjgg .sub-content { background: #0d5e41; }
 .box-right, .m-list li > a, .m-list li > a:hover, .more-detail a, .more-detail a:hover, .m-num-title > p, .br-count-item { color: #4bb88f; }
 .sub-content .table > tbody > tr:nth-child(1) td { background: transparent; }
 .sub-title { border-color: #107854; background: #074a31; }
@@ -27,25 +28,25 @@ body { background: url(../front_images/klpk/bg.jpg)#2a2a2b no-repeat center 0; }
 .m-num-title > i { background: transparent; }
 .sub-content .table > thead > tr > th { border-color: #107854 !important; background: #074a31; }
 .checkbox label, .br-tou .checkbox label a { color: #4bb88f; }
-.box-right {   height: 900px;
-  margin-top: -82px; }
+.box-left { min-height: 750px; width: 752px; margin: 0; padding: 6px 17px 0 42px; }
+.box-right { margin-top: -82px; }
 .box-left .br-type { color: #fff; border: none !important; }
 .box-left .br-type > li > a { color: #fff; }
 .box-left .br-type > li.active > a, .br-type > li > a:hover, .br-type > li > a:hover, .br-type > li.active > a:hover, .br-type > li.active > a:focus { color: #fff; background: #0d5e41; }
 .btn-add, .btn-add2 { background: #fff; }
 .br-count .btn-group { color: #fff; }
-.br-count .btn-results { border-color: #0c583d; background: #0d6c4b; }
 .br-count .btn { border-color: #0c583d; background: #0d5d41; }
+.br-count .btn-results { border-color: #0c583d; background: #0d6c4b; }
 .br-zhu-r .btn { width: 68px; height: 29px; color: #fff; border: none; background: transparent; background-image: url(../front_images/klpk/klpk-group.png); background-position: -155px -48px; }
 .br-zhu-r ul > li { margin-bottom: 13px; }
 .br-zhu-r ul > li:first-child { margin-bottom: 14px; }
 .br-zhu-item:hover, .br-zhu-item.active { background: #116849; }
 .br-zhu-l { border-top: 1px #054227 solid; border-right: none; border-bottom: 1px #1b9068 solid; border-left: 1px #054227 solid; background: #0d5d41; }
-.br-zhu-item { border-color: #19855d; }
+.br-zhu-item { border-color: #19855d; color: #ffe65e; }
+.br-zhu-item .br-zhu-up { color: #ffe65e; }
 .br-zhu-item b { color: #4bb88f; }
-.br-zhu-item { color: #ffe65e; }
 .br-zhu-item a { color: #4bb88f; }
-.br-zhu-item a:hover { color: #ffe65e; }
+.br-zhu-item a:hover { color: #fff; }
 .br-details { position: relative; left: -42px; width: 752px; }
 .br-details .tab-content { margin-top: 5px; }
 .box-left .br-type { padding-left: 82px; }
@@ -144,25 +145,41 @@ body { background: url(../front_images/klpk/bg.jpg)#2a2a2b no-repeat center 0; }
 /* box-choose */
 .box-choose { display: none; }
 .box-choose.active { display: block; overflow: hidden; }
-.choose-ws { float: left; width: 75px; margin: 17px 0 0 0; margin-top: 17px; }
-.choose-ws .choose-title { font-size: 14px; font-weight: bold; }
-.sel-num-title { font-size: 12px; line-height: 20px; height: 20px; margin: 11px 0 0 -24px; text-align: center; color: #4bb88f; }
-.list-ball { overflow: hidden; width: 580px; }
-.list-ball li { float: left; width: 74px; height: 80px; margin: 0 8px 4px 0; }
-.list-ball li a { display: block; width: 78px; height: 50px; text-align: center; color: #222; border: 1px #dfdfdf solid; border-radius: 5px; outline: none; background: #f2f2f2; }
+.choose-ws { float: left; width: 75px; margin: 17px 0 0 0; }
+.choose-ws .choose-title, .sel-num-title { font-size: 12px; color: #4bb88f; }
+.list-ball, .list-yl { overflow: hidden; width: 580px; }
+.list-ball li { border-radius: 5px; float: left; height: 130px; }
+.list-ball li, .list-yl li { width: 100px; margin: 0 15px 4px 0; }
+.list-ball li a { display: block; width: 100%; height: 100%; text-align: center; color: #222; outline: none; background-image: -moz-linear-gradient(top, #ffffff, #e8e8e8); background-image: -ms-linear-gradient(top, #ffffff, #e8e8e8); background-image: -webkit-linear-gradient(top, #ffffff, #e8e8e8); background-image: linear-gradient(top, #ffffff, #e8e8e8); border: 2px solid transparent; border-radius: 5px; box-shadow: 0 2px 8px #444; }
+.list-ball li b { font-size: 16px; line-height: 31px; display: block; }
+.if-thbox .iconfont { line-height: 130px; }
+.if-box .iconfont { font-size: 36px; }
+.if-box .if-text { font-size: 16px; }
+.if-thsbox { margin-top: 25px; }
+.list-ball li a.active { text-decoration: none; border-color: #f13c38; }
+.list-ball li a:hover { box-shadow: 0 0 8px #A4FFC6; }
+.list-ball li a:hover, .list-ball li a:focus { text-decoration: none; }
 
-/* big button style*/
-.list-ball li.big { width: 165px; }
-.list-ball li.big a { font-size: 20px; line-height: 50px; width: 165px; }
+/* list-big */
+
+/*.list-big li a {  background-image: url(../front_images/klpk/klpk-group.png);
+  background-position: 0px 0px; }*/
+
+/*遗漏*/
+.sel-num-title { line-height: 20px; height: 20px; margin: 0; text-align: center; float: left; width: 75px; }
+.list-yl { color: #4bb88f; }
+.list-yl li { float: left; text-align: center; }
+
+/* list-small */
+.list-small li { height: 44px; }
+.list-small li, .list-yl-sm li { width: 34px; margin: 0 10px 4px 0; }
+.list-small li b { font-size: 16px; line-height: 44px; }
+
+/* list-mid */
+.list-mid li { height: 75px; }
+.list-mid li, .list-yl-mid li { width: 75px; margin: 0 40px 4px 0; }
 
 /* mid button style*/
-.list-ball li.mid a { font-size: 20px; line-height: 50px; }
-.list-ball li b { font-size: 23px; line-height: 31px; display: block; }
-.list-ball li span { font-size: 12px; font-weight: normal; line-height: 12px; position: relative; top: -4px; }
-.list-ball li a.active { text-decoration: none; color: #fff; background: #f13c38; }
-.list-ball li a:hover, .list-ball li a:focus { text-decoration: none; }
-.list-ball li em { font-size: 12px; display: inline-block; width: 100%; text-align: center; color: #b1b1b1; }
-.list-ball li { width: 74px; height: 80px; }
 .choose-as-btn { font-size: 12px; line-height: 40px; float: left; width: 128px; height: 40px; margin-right: 20px; text-align: center; border: 1px #dfdfdf solid; border-radius: 5px; background: #f2f2f2; }
 .choose-as-btn b { font-size: 14px; }
 .choose-as-btn.last { margin-right: 0; }
@@ -175,3 +192,23 @@ body { background: url(../front_images/klpk/bg.jpg)#2a2a2b no-repeat center 0; }
 .todaynum-table .awardTd { color: #f13c38; }
 .todaynum-table .period { color: #000; }
 .todaynum-table td { color: #848484; }
+
+/* Iconfont */
+.iconfont { font-family: "iconfont" !important; font-size: 16px; font-style: normal; -webkit-font-smoothing: antialiased; -webkit-text-stroke-width: 0.2px; -moz-osx-font-smoothing: grayscale; display: inline-block; }
+.icon-h1:before { content: "\e60e"; }
+.icon-h2:before { content: "\e60d"; }
+.icon-h3:before { content: "\e610"; }
+.icon-h4:before { content: "\e60f"; }
+.icon-n01:before { content: "\e60c"; }
+.icon-n02:before { content: "\e600"; }
+.icon-n03:before { content: "\e601"; }
+.icon-n04:before { content: "\e602"; }
+.icon-n05:before { content: "\e603"; }
+.icon-n06:before { content: "\e604"; }
+.icon-n07:before { content: "\e605"; }
+.icon-n08:before { content: "\e606"; }
+.icon-n09:before { content: "\e607"; }
+.icon-n10:before { content: "\e608"; }
+.icon-n11:before { content: "\e609"; }
+.icon-n12:before { content: "\e60b"; }
+.icon-n13:before { content: "\e60a"; }

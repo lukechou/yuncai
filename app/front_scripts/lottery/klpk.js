@@ -82,24 +82,32 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       chooseZhushu: 0,
       buyArr: [],
       playName: {
-        b0: '和值',
-        b1: '三同号通选',
-        b2: '三同号单选',
-        b3: '三不同号',
-        b4: '三连号通选',
-        b5: '二同号复选',
-        b6: '二同号单选',
-        b7: '二不同号',
+        b0: '包选',
+        b1: '同花',
+        b2: '顺子',
+        b3: '同花顺',
+        b4: '豹子',
+        b5: '对子',
+        b6: '任选一',
+        b7: '任选二',
+        b8: '任选三',
+        b9: '任选四',
+        b10: '任选五',
+        b11: '任选六',
       },
       buyCodesType: {
-        b0: 'HZ',
-        b1: '3A',
-        b2: '3B',
-        b3: '3C',
-        b4: '3D',
-        b5: '2A',
-        b6: '2B',
-        b7: '2C',
+        b0: 'BX',
+        b1: 'TH',
+        b2: 'SZ',
+        b3: 'THS',
+        b4: 'BZ',
+        b5: 'DZ',
+        b6: 'R1',
+        b7: 'R2',
+        b8: 'R3',
+        b9: 'R4',
+        b10: 'R5',
+        b11: 'R6',
       },
       beishu: 1,
       trackData: [],
@@ -150,6 +158,28 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
+  K3.setNameStr = function (nums, numNameArr) {
+
+    var result = '';
+
+    if (numNameArr) {
+      for (var i = 0; i < nums.length; i++) {
+
+        result += '<span>' + numNameArr[nums[i]] + '</span>';
+
+      };
+    } else {
+
+      for (var i = 0; i < nums.length; i++) {
+
+        result += '<span>' + nums[i] + '</span>';
+      }
+    }
+
+    return result;
+  };
+
+
   K3.createOneNote = function (o) {
 
     var _this = this;
@@ -157,6 +187,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // 投注号码存储
     _this.saveNumsObj(o);
 
+    var numNameArr = null;
     var obj = {
       title: _this.playName[o.playType],
       nums: o.nums,
@@ -167,48 +198,112 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     switch (_this.playType) {
     case 'b0':
+      numNameArr = {
+        '01': '同花包选',
+        '02': '顺子包选',
+        '03': '同花顺包选',
+        '04': '豹子包选',
+        '05': '同花包选',
+      };
+      break;
+    case 'b1':
 
-      for (var i = 0; i < obj.nums.length; i++) {
-
-        obj.num += '<span>' + obj.nums[i] + '</span>';
-
+      numNameArr = {
+        '01': '黑桃',
+        '02': '红心',
+        '03': '梅花',
+        '04': '方块',
+        'BX': '同花包选',
       };
 
       break;
-    case 'b1':
-      obj.num = '<span>三同号通选</span>';
-      break;
     case 'b2':
-      for (var i = 0; i < obj.nums.length; i++) {
-
-        obj.num += '<span>' + obj.nums[i] + '</span>';
-
+      numNameArr = {
+        '01': 'A23',
+        '02': '234',
+        '03': '345',
+        '04': '456',
+        '05': '567',
+        '06': '678',
+        '07': '789',
+        '08': '8910',
+        '09': '910J',
+        '10': '10JQ',
+        '11': 'JQK',
+        '12': 'QKA',
+        'BX': '顺子包选'
       };
       break;
     case 'b3':
-      obj.num = '<span>' + o.nums + '</span>';
+
+      numNameArr = {
+        '01': '黑桃顺子',
+        '02': '红心顺子',
+        '03': '梅花顺子',
+        '04': '方块顺子',
+        'BX': '同花顺包选',
+      };
+
       break;
     case 'b4':
-      obj.num = '<span>三连号通选</span>';
+      numNameArr = {
+        '01': 'AAA',
+        '02': '222',
+        '03': '333',
+        '04': '444',
+        '05': '555',
+        '06': '666',
+        '07': '777',
+        '08': '888',
+        '09': '999',
+        '10': '101010',
+        '11': 'JJJ',
+        '12': 'QQQ',
+        '13': 'KKK',
+        'BX': '豹子包选'
+      };
       break;
     case 'b5':
-      obj.num = '<span>' + o.nums + '</span>';
-      break;
-    case 'b6':
-      obj.num = '<span>' + o.nums + '</span>';
-      break;
-    case 'b7':
-      for (var i = 0; i < obj.nums.length; i++) {
-
-        obj.num += '<span>' + obj.nums[i] + '</span>';
-
+      numNameArr = {
+        '01': 'AA',
+        '02': '22',
+        '03': '33',
+        '04': '44',
+        '05': '55',
+        '06': '66',
+        '07': '77',
+        '08': '88',
+        '09': '99',
+        '10': '1010',
+        '11': 'JJ',
+        '12': 'QQ',
+        '13': 'KK',
+        'BX': '对子包选'
       };
       break;
     default:
+
+      numNameArr = {
+        '01': 'A',
+        '02': '2',
+        '03': '3',
+        '04': '4',
+        '05': '5',
+        '06': '6',
+        '07': '7',
+        '08': '8',
+        '09': '9',
+        '10': '10',
+        '11': 'J',
+        '12': 'Q',
+        '13': 'K',
+      };
       break;
     }
 
-    var compiled = _.template('<div data-zid="<%= zid%>" class="br-zhu-item clearfix"><b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-del">删除</a></div></div>');
+    obj.num = _this.setNameStr(obj.nums, numNameArr);
+
+    var compiled = _.template('<div data-zid="<%= zid%>" class="br-zhu-item clearfix"><b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>');
 
     var html = compiled(obj);
 
@@ -249,39 +344,43 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var nums = [];
     var obj = null;
     var s = [];
+    var sampleConut = 1;
 
     var a = {
-      'b0': [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
-      'b1': ['3A'],
-      'b2': ['111', '222', '333', '444', '555', '666'],
-      'b3': ['1', '2', '3', '4', '5', '6'],
-      'b4': ['3D'],
-      'b5': ['11*', '22*', '33*', '44*', '55*', '66*'],
-      'b6': ['1', '2', '3', '4', '5', '6'],
-      'b7': ['1', '2', '3', '4', '5', '6'],
+      'b0': ['01', '02', '03', '04', '05'],
+      'b1': ['01', '02', '03', '04'],
+      'b2': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+      'b3': ['01', '02', '03', '04'],
+      'b4': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13'],
+      'b5': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13'],
+      'b6': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13'],
     };
 
     switch (_this.playType) {
 
-    case 'b3':
-      s = _.sample(a[_this.playType], 3).sort(function (a, b) {
-        return a - b;
-      });
-      break;
-    case 'b6':
-      s = _.sample(a[_this.playType], 2);
-      s = s[0] + s[0] + '#' + s[1];
-      break;
     case 'b7':
-      s = _.sample(a[_this.playType], 2).sort(function (a, b) {
-        return a - b;
-      });
+      sampleConut = 2;
+      break;
+    case 'b8':
+      sampleConut = 3;
+      break;
+    case 'b9':
+      sampleConut = 4;
+      break;
+    case 'b10':
+      sampleConut = 5;
+      break;
+    case 'b11':
+      sampleConut = 6;
       break;
     default:
-      s = _.sample(a[_this.playType], 1);
       break;
 
     }
+
+    s = _.sample(a[_this.playType], sampleConut).sort(function (a, b) {
+      return a - b;
+    });
 
     if (_.isArray(s)) {
       nums = s;
@@ -317,30 +416,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     activeNumEl.each(function (index, el) {
       arr.push($(this).attr('data-num'));
     });
-
-    if (_this.playType === 'b6') {
-
-      var b6Row = {
-        e: [],
-        f: []
-      };
-
-      $('#j-area-' + _this.playType + ' .j-num-btn.active').each(function (index, el) {
-
-        var n = $(this).attr('data-num');
-
-        if (n.length === 1) {
-          b6Row.e.push(n);
-        }
-
-        if (n.length === 2) {
-          b6Row.f.push(n);
-        }
-
-      });
-
-      arr = [b6Row.f.join(',') + '#' + b6Row.e.join(',')];
-    }
 
     obj.nums = arr;
     obj.money = _this.chooseMoney;
@@ -414,39 +489,28 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var b6Row = null;
 
     switch (_this.playType) {
-    case 'b3':
+    case 'b7':
+      q = QUEUE.getACTotalNum(l, 2, 'C');
+      _this.chooseZhushu = q;
+      _this.chooseMoney = q * 2;
+      break;
+    case 'b8':
       q = QUEUE.getACTotalNum(l, 3, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
       break;
-    case 'b6':
-
-      b6Row = {
-        e: [],
-        f: []
-      };
-
-      $('#j-area-' + _this.playType + ' .j-num-btn.active').each(function (index, el) {
-
-        var n = $(this).attr('data-num');
-
-        if (n.length === 1) {
-          b6Row.e.push(n);
-        }
-
-        if (n.length === 2) {
-          b6Row.f.push(n);
-        }
-
-      });
-
-      q = b6Row.e.length * b6Row.f.length;
+    case 'b9':
+      q = QUEUE.getACTotalNum(l, 4, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
-
       break;
-    case 'b7':
-      q = QUEUE.getACTotalNum(l, 2, 'C');
+    case 'b10':
+      q = QUEUE.getACTotalNum(l, 5, 'C');
+      _this.chooseZhushu = q;
+      _this.chooseMoney = q * 2;
+      break;
+    case 'b11':
+      q = QUEUE.getACTotalNum(l, 6, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
       break;
@@ -1270,7 +1334,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           }
 
           lessSeconds = Math.floor((item.company_sell_etime - item.sys_time));
-
 
           // update k3 qihao
           K3.qihao = item.issue_num;

@@ -590,8 +590,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var submitBtn = bfbContent.find('.j-imme-follow');
 
     //重置input[type="text"]
-    gdjeContent.find('input[type="text"]').val("");
-    bfbContent.find('input[type="text"]').val("");
+    //gdjeContent.find('input[type="text"]').val("");
+    //bfbContent.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'gdje':
@@ -619,8 +619,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var submitBtn = _this.parents('.j-jiner-choose').siblings('.ljgd-btn-div').find('.j-imme-follow');
 
     var dzcs = _this.parents('.j-jiner-choose').siblings('.j-dzcs');
-    rengouJiner.find('input[type="text"]').val("");
-    dzcs.find('input[type="text"]').val("");
+    //rengouJiner.find('input[type="text"]').val("");
+    //dzcs.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'wux-jiner':
@@ -849,7 +849,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var v = $(this).val();
 
     var result = filterNum(v, max);
-
+    result = result > 100000 ? 100000 : result;
     $(this).val(result);
 
   });
@@ -858,7 +858,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var v = $(this).val();
 
     var result = filterNum(v, max);
-
+    result = result > 100000 ? 100000 : result;
     $(this).val(result);
 
   });
