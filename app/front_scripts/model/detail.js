@@ -86,8 +86,6 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
               var str = '<tr><td>' + n.id + '</td><td>' + APP.dateFormat(new Date(n.start_time*1000),'%Y-%M-%d %h:%m:%s',true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
 
-              // var str = '<td class="j-icon-tips" original-title="该自动投注由<span class=\'fc-3 mlr5\'>Raymond</span>计划生成">计划生成</td>';
-
               str += '<td></td></tr>'
 
               return str;
@@ -96,7 +94,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
           } else {
 
-            h += '<tr><td colspan="8">该模型您没有自动投注</td></tr>';
+            h += '<tr><td colspan="8">该模型您没有设置自动投注</td></tr>';
 
           }
 

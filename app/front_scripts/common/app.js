@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define(['jquery', 'bootstrap'], function($) {
   'use strict';
 
   var app = (function() {
@@ -128,7 +128,9 @@ define(['jquery'], function($) {
             })
             .done(function(data) {
               if (data.retCode == 100000) {
-                loginModal.hide();
+
+                loginModal.modal('hide');
+
                 _this.updateHeadUserInfo();
                 _this.onlyCheckLogin({
                   checkLogin: function() {
@@ -569,8 +571,10 @@ define(['jquery'], function($) {
           var _this = this;
           _this.el.hover(function() {
             _this.el.addClass('on');
+            _this.el.find('.j-white-tri').removeClass('icon-hdown').addClass('icon-hup');
           }, function() {
             _this.el.removeClass('on');
+            _this.el.find('.j-white-tri').removeClass('icon-hup').addClass('icon-hdown');
           });
         }
       };
@@ -578,6 +582,19 @@ define(['jquery'], function($) {
       menu.init({
         el: $('#choseCai')
       });
+
+      var hemaiNav = {
+        el: $('#j-hemai-nav'),
+        bindEvent : function(){
+          var _this = this;
+          _this.el.hover(function() {
+            _this.el.addClass('on');
+          }, function() {
+            _this.el.removeClass('on');
+          });
+        }
+      };
+      hemaiNav.bindEvent();
 
       _this.initLrkf();
       $('.modal').on('show.bs.modal', _this.centerModal);

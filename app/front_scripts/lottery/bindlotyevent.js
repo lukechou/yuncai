@@ -70,7 +70,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       lotyName: lotyName,
       payMoney: 0,
       isZhuiJia: 0,
-      box: $('#quick .box-left'),
+      box: $('#senior .box-left').eq(0),
       init: function () {
         var q = this.maxQiShu;
         q = Number($('#maxqishu').val());
@@ -1329,26 +1329,39 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   };
 
   // 绑定合买相关事件
+  function inputOnfocus(el) {
+    if ($.trim(el.val()) == el.attr('data-text')) {
+      el.parents('p').find('.j-btext-total').html(0)
+      el.val('')
+    }
+  }
+
+  function inputOnblur(el) {
+    var text = el.attr('data-text');
+    if ($.trim(el.val()) == '') {
+      el.val(text);
+      el.parents('p').find('.j-btext-total').html(text.length)
+    }
+  }
+
+  function reSetStrsize(t) {
+
+    var len = t.val().length;
+    var size = parseInt(t.attr('data-size'));
+
+    if (len <= size) {
+      t.parents('p').find('.j-btext-total').html(len)
+    } else {
+      t.val(t.val().slice(0, (size - 1)))
+      t.parents('p').find('.j-btext-total').html(size)
+    }
+  }
+
   ZHUI.bindHeMaiEvent = function () {
 
     $('.j-rengou,.j-share-num,.br-select,.j-baodi-check,.j-baodi-text').on('change', function (event) {
       ZHUI.setHeMaiTotal();
     });
-
-    function inputOnfocus(el) {
-      if ($.trim(el.val()) == el.attr('data-text')) {
-        el.parents('p').find('.j-btext-total').html(0)
-        el.val('')
-      }
-    }
-
-    function inputOnblur(el) {
-      var text = el.attr('data-text');
-      if ($.trim(el.val()) == '') {
-        el.val(text);
-        el.parents('p').find('.j-btext-total').html(text.length)
-      }
-    }
 
     $('.br-textarea,.j-project-title').on('focus', function (event) {
       inputOnfocus($(this));
@@ -1357,19 +1370,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     $('.br-textarea,.j-project-title').on('blur', function (event) {
       inputOnblur($(this));
     });
-
-    function reSetStrsize(t) {
-
-      var len = t.val().length;
-      var size = parseInt(t.attr('data-size'));
-
-      if (len <= size) {
-        t.parents('p').find('.j-btext-total').html(len)
-      } else {
-        t.val(t.val().slice(0, (size - 1)))
-        t.parents('p').find('.j-btext-total').html(size)
-      }
-    }
 
     $('.br-textarea,.j-project-title').on('keyup', function (event) {
       reSetStrsize($(this));
@@ -1707,7 +1707,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var redGroup = Config.box.find('.j-ball-red');
     var redGroupAc = redGroup.find('.active');
 
-    if ( $(this).parents('.j-ball-red').length) {
+    if ($(this).parents('.j-ball-red').length) {
 
       if (redGroupAc.length <= SEEDS[Config.lotyName].redMax) {
 
@@ -2233,6 +2233,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
   });
+
 
   // Senior Lottery Tabs Toggle
   $('#j-nav-tabs').on('click', 'a', function (event) {

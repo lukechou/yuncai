@@ -781,7 +781,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
       nh += '<td>' + n.project_issue + '</td>';
 
-      nh += '<td>'+n.mz+'</td>';
+      nh += '<td>' + n.mz + '</td>';
 
       nh += '</tr>';
       return nh;
@@ -810,12 +810,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   $body.on('click', '.j-stop-issue', function (event) {
     event.preventDefault();
+
     var f = _.find(Model.data, function (n) {
       return n.id === Model.rid;
     });
 
     APP.showTips({
-      text: '<div class="fs-12"><p>您对彩票模型' + modelId + '设置了自动投注，</p><p>总投注' + f.total_issue + '期，已投注<span class="fc-3 mlr5">' + f.complete_issue + '</span>期，累计投注额<span class="fc-3 mlr5">' + f.total_money + '</span>，累计奖金<span class="fc-3">' + f.total_bounty + '</span>元</p></div><div class="fs-12"><p>确认要终止该模型的自动投注吗？</p><p>终止后未进行的投注系统将不再执行自动投注</p></div>',
+      text: '<div class="fs-12"><p>您对彩票模型' + modelId + '设置了自动投注，</p><p>总投注' + f.total_issue + '期，已投注<span class="fc-3 mlr5">' + f.complete_issue + '</span>期，累计投注额<span class="fc-3 mlr5">' + f.project_money + '</span>，累计奖金<span class="fc-3">' + f.total_bounty + '</span>元</p></div><div class="fs-12"><p>确认要终止该模型的自动投注吗？</p><p>终止后未进行的投注系统将不再执行自动投注</p></div>',
       type: 2,
       onConfirm: function () {
 
@@ -1091,23 +1092,28 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   $('#j-auto-list').on('click', '.j-toggle-issue', function (event) {
     event.preventDefault();
 
-    if ($(this).hasClass('active')) {
+    var _this = $(this);
 
-      $(this).html('查看').removeClass('active');
-      $('#j-auto-list .j-tr-modify').remove();
-      $('#j-auto-list .j-modify-bottom').remove();
-      Model.rid = null;
+    APP.onlyCheckLogin({
+      checkLogin: function () {
+        if (_this.hasClass('active')) {
 
-    } else {
+          _this.html('查看').removeClass('active');
+          $('#j-auto-list .j-tr-modify').remove();
+          $('#j-auto-list .j-modify-bottom').remove();
+          Model.rid = null;
 
-      var rid = $(this).parents('tr').attr('data-rid');
-      Model.rid = rid;
-      getNewIssue();
+        } else {
 
-      $('.j-toggle-issue').html('查看').removeClass('active');
-      $(this).html('收起').addClass('active');
+          var rid = _this.parents('tr').attr('data-rid');
+          Model.rid = rid;
+          getNewIssue();
 
-    }
+          $('.j-toggle-issue').html('查看').removeClass('active');
+          _this.html('收起').addClass('active');
+        }
+      }
+    });
 
   });
 
@@ -1139,7 +1145,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     if (len === 0) {
       $('#j-auto-go').html(0);
-      $('#j-auto-list').html('<tr><td colspan="8">该模型您没有自动投注</td></tr>');
+      $('#j-auto-list').html('<tr><td colspan="9">该模型您没有设置自动投注</td></tr>');
+      $('#j-no-set').remove();
       return;
     }
 
@@ -1157,8 +1164,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
       var s = ['<td class="fc-7">进行中</td>', '<td>已完成</td>', '<td class="fc-3">已终止</td>', '<td class="fc-3">所有期执行完毕</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
 
-      var str = '<tr data-rid="' + n.id + '" data-statu="' + n.auto_status + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + Number(n.project_money).toFixed(2) + '</td><td>' + Number(n.total_bounty).toFixed(2) + '</td><td>' + Number(n.total_bounty).toFixed(2) + '</td>' + s[n.auto_status] + '<td><a href="javascript:;" class="j-toggle-issue">查看</a></td><td></td></tr>';
-      // '<td class="j-icon-tips" original-title="该自动投注由<span class=\'fc-3 mlr5\'>Raymond</span>计划生成">计划生成</td>'
+      var str = '<tr data-rid="' + n.id + '" data-statu="' + n.auto_status + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.profit_money + '</td><td>' + n.profit_rate + '%</td>' + s[n.auto_status] + '<td><a href="javascript:;" class="j-toggle-issue">查看</a></td><td></td></tr>';
+
+      // '<td class="j-icon-tips" original-title="该自动投注由<span class=\'fc-3 mlr5\'>Raymond</span>计划生成">计划生成</td>';
+
       return str;
 
     }).join('');

@@ -31,6 +31,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
   var PAGE7 = new pager(); //定制跟单详情
   var uid = $('.uid').attr('val');
   var loginUid = $('.login-uid').attr('val');
+  var reloadFlag;
 
   // 当前发起合买 分页函数
   PAGE1.loadLaunchHemaiList = function(obj) {
@@ -51,13 +52,13 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
             dataItem = detailData[i - 1];
             switch (dataItem.state) {
               case 0: //正常
-                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '"/>' + '</td><td><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + dataItem.joinURI + '" lotyplay="' + dataItem.lotyPlay + '" pid="' + dataItem.id + '">购买</button><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '"/>' + '</td><td class="td7"><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + dataItem.joinURI + '" lotyplay="' + dataItem.lotyPlay + '" pid="' + dataItem.id + '">购买</button><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
                 break;
               case 1: //撤单
-                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已撤单</span></td><td><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已撤单</span></td><td class="td7"><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
                 break;
               case 2: //满员
-                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已满员</span></td><td><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '">' + dataItem.qihao + '</td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已满员</span></td><td class="td7"><a target="_blank" href="' + dataItem.detailURI + '">详情</a></td></tr>';
                 break;
             }
           }
@@ -101,13 +102,13 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
             dataItem = detailData[i - 1];
             switch (dataItem.state) {
               case 0: //正常
-                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '"/>' + '</td><td><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + dataItem.joinURI + '" lotyplay="' + dataItem.lotyPlay + '" pid="' + dataItem.id + '">购买</button><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '"/>' + '</td><td class="td7"><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + dataItem.joinURI + '" lotyplay="' + dataItem.lotyPlay + '" pid="' + dataItem.id + '">购买</button><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
                 break;
               case 1: //撤单
-                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已撤单</span></td><td><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已撤单</span></td><td class="td7"><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
                 break;
               case 2: //满员
-                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已满员</span></td><td><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
+                htmlOutput += '<tr><td>' + dataItem.lotyPlay + '</td><td class="j-mqi" jmqi="' + dataItem.qihao + '"><a href="' + dataItem.user_profile_url + '" target="_blank">' + dataItem.username + '</a></td><td class="j-mtotal">' + dataItem.price + '</td><td>' + dataItem.unitPrice + '</td><td>' + dataItem.schedule + '%</td><td><span class="miss-tips">已满员</span></td><td class="td7"><a target="_blank"  href="' + dataItem.detailURI + '">详情</a></td></tr>';
                 break;
             }
           }
@@ -287,6 +288,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       });
 
 
+
       $(_this.config.pageElement).find('.back-page').on('click', function(event) {
         clickObj = this;
         newp = PAGE5.bindPageEventCommon(pagerObj, clickObj);
@@ -377,7 +379,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       var detailData = '';
       var dataItem = '';
       var j = 10 * (obj.page - 1) + 1;
-      console.log(data);
       if (data.retCode == 100000) {
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
@@ -556,7 +557,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
 
     if ('立即定制' == _this.text()) {
       _this.text('收起定制设置');
-      newRadio.html('<span><input type="radio" name="dzgd" id="gdje" checked="checked"><label for="gdje">按固定金额定制跟单</label></span><span><input type="radio" name="dzgd" id="bfb"><label for="bfb">按百分比定制跟单</label></span>');
+      newRadio.html('<span><input type="radio" class="gdje" checked="checked"><label>按固定金额定制跟单</label></span><span><input type="radio" class="bfb"><label>按百分比定制跟单</label></span>');
       targetTr.css({
         display: 'table-row'
       });
@@ -580,18 +581,15 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
 
     var _this = $(this);
 
-    var radioId = _this.find('input[type="radio"]').attr('id');
-
+    var radioId = _this.find('input[type="radio"]').attr('class');
+    _this.siblings('span').find('input[type="radio"]').removeAttr('checked');
+    _this.find('input[type="radio"]').prop('checked', true);
     var gdjeContent = _this.parents('.j-dzgd-choose').siblings('.j-dzgd-gdje-content');
     var bfbContent = _this.parents('.j-dzgd-choose').siblings('.j-dzgd-bfb-content');
-    var newRadio = '<span><input type="radio" name="jiner" checked="checked" id="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" name="jiner" id="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>';
+    var newRadio = '<span><input type="radio" checked="checked" class="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" class="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>';
     var pJinerChoose = bfbContent.find('.j-jiner-choose');
     var pRenGouChoose = bfbContent.find('.j-rengou-jiner');
     var submitBtn = bfbContent.find('.j-imme-follow');
-
-    //重置input[type="text"]
-    //gdjeContent.find('input[type="text"]').val("");
-    //bfbContent.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'gdje':
@@ -612,15 +610,13 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
   $(document).delegate('.j-jiner-choose span', 'click', function(event) {
 
     var _this = $(this);
-    var radioId = _this.find('input[type="radio"]').attr('id');
+    var radioId = _this.find('input[type="radio"]').attr('class');
     _this.siblings('span').find('input[type="radio"]').removeAttr('checked');
     _this.find('input[type="radio"]').prop('checked', true);
     var rengouJiner = _this.parents('.j-jiner-choose').next('.j-rengou-jiner');
     var submitBtn = _this.parents('.j-jiner-choose').siblings('.ljgd-btn-div').find('.j-imme-follow');
 
     var dzcs = _this.parents('.j-jiner-choose').siblings('.j-dzcs');
-    //rengouJiner.find('input[type="text"]').val("");
-    //dzcs.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'wux-jiner':
@@ -831,6 +827,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
             text: '跟单成功！',
             type: 1,
             onConfirm: function() {
+              reloadFlag = true;
+              window.name="set";
               window.location.reload();
             }
           });
@@ -975,7 +973,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           dataType: 'json'
         })
         .done(function(data) {
-          console.log(data);
           var trHtml = '<tr><td>' + data.lotyPlay + '</td><td class="j-mqi" jmqi="' + data.qihao + '">' + data.qihao + '</td><td class="j-mtotal">' + data.price + '</td><td>' + data.unitPrice +
             '</td><td>' + data.schedule + '%</td><td><input type="text" class="u-ci j-gou-count" placeholder="' + '剩余' + data.lessNum + '份" data-max="' + data.lessNum + '" maxlength="' + data.lessNum.toString().split('').length + '"/>' +
             '</td><td><button class="btn btn-s btn-c1 j-gou-btn" data-type="1" data-one="1.00" data-uri="' + data.joinURI +
@@ -1152,4 +1149,27 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       });
   };
 
+  function checkLastURL(){
+    var lastURL = document.referrer;
+    var checkURL = lastURL.substr(-18);
+    if(!!checkURL && checkURL == '/user/follow/index'){
+      $('#j-nav li').removeClass('active');
+      $('#j-nav li:nth-child(3)').addClass('active');
+      $('.j-per-index,j-per-his').hide();
+      $('.j-per-dzgd').show();
+    }
+
+  }
+  checkLastURL();
+
+  function checkReloadFlag(){
+    if(!!window.name && window.name=='set'){
+      $('#j-nav li').removeClass('active');
+      $('#j-nav li:nth-child(3)').addClass('active');
+      $('.j-per-index,j-per-his').hide();
+      $('.j-per-dzgd').show();
+    }
+    window.name="";
+  }
+  checkReloadFlag();
 });

@@ -130,18 +130,18 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     event.preventDefault();
 
     var $num = $(this);
-    var oVal = parseInt($num.val(),10);
+    var oVal = parseInt($num.val(), 10);
 
     if ($num.val() == '-') return;
 
-    if(oVal == -0) {
+    if (oVal == -0) {
 
       $num.val(0);
       oVal = 0;
 
     }
 
-    if(isNaN(oVal)){
+    if (isNaN(oVal)) {
       $(this).val($(this).val().replace(/[^0-9.-]/g, ''));
       oVal = $num.val();
     }
@@ -904,7 +904,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
               if (data.retCode === 100000) {
                 // APP.showTips('<p>自动投注设置成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
-                window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id='+modelId;
+                window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId;
               } else {
                 APP.showTips(data.retMsg);
               }

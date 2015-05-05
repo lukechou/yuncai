@@ -40,20 +40,21 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       var detailData = '';
       var dataItem = '';
       if (data.retCode == 100000) {
-        console.log(data);
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
-            switch (dataItem.follow_type) {
+            switch (parseInt(dataItem.follow_type)) {
               case 1:
                 htmlOutput += '<tr class="dzgd-tr"><td class="j-loty-name" loty-name="' + dataItem.loty_name + '" ldr-id="' + dataItem.ldr_id + '" leader-uid="' + dataItem.leader_uid + '" fid="' + dataItem.id + '" follow-type="' + dataItem.follow_type + '" follow-max-money="' + dataItem.follow_max_money + '">' + dataItem.loty_cnname + '</td><td class="leader-username"><a href="/user/profile/index/' + dataItem.leader_uid + '" target="_blank">' + dataItem.leader_username + '</a></td><td>' + dataItem.dateline + '</td><td><span class="fc-3">' + dataItem.follow_value + '</span>元</td><td class="j-cishu">' + dataItem.follow_times + '</td><td><button class="btn btn-sear btn-oper j-mod-dzgd">修改</button><a href="javascript:;" class="j-undo">撤销</a></td></tr>' + dzgdTr;
                 break;
               case 2:
                 htmlOutput += '<tr class="dzgd-tr"><td class="j-loty-name" loty-name="' + dataItem.loty_name + '" ldr-id="' + dataItem.ldr_id + '" leader-uid="' + dataItem.leader_uid + '" fid="' + dataItem.id + '" follow-type="' + dataItem.follow_type + '" follow-max-money="' + dataItem.follow_max_money + '">' + dataItem.loty_cnname + '</td><td class="leader-username"><a href="/user/profile/index/' + dataItem.leader_uid + '" target="_blank">' + dataItem.leader_username + '</a></td><td>' + dataItem.dateline + '</td><td><span class="fc-3">' + dataItem.follow_value + '</span>%</td><td class="j-cishu">' + dataItem.follow_times + '</td><td><button class="btn btn-sear btn-oper j-mod-dzgd">修改</button><a href="javascript:;" class="j-undo">撤销</a></td></tr>' + dzgdTr;
                 break;
+
             }
           }
+          htmlOutput += '<tr class="dzgd-tr-last"><td colspan="6"></td></tr>'
         } else {
           htmlOutput = '<tr><td colspan="6">当前没有跟单用户</td></tr>';
         }
@@ -133,11 +134,13 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var yuanBi = _this.parents('.dzgd-tr').find('.fc-3').text();
     var ciShu = _this.parents('td').siblings('.j-cishu').text();
     var followMaxMoney = parseInt(_this.parents('td').siblings('.j-loty-name').attr('follow-max-money'));
+
     if ('修改' == _this.text()) {
       _this.text('收起');
       switch (followType) {
         case '1':
-          newRadio.html('<span><input type="radio" name="dzgd" id="gdje" checked="checked"><label for="gdje">按固定金额定制跟单</label></span><span><input type="radio" name="dzgd" id="bfb"><label for="bfb">按百分比定制跟单</label></span>');
+          newRadio.html('<span><input type="radio" class="gdje" checked="checked"><label>按固定金额定制跟单</label></span><span><input type="radio" class="bfb"><label>按百分比定制跟单</label></span>');
+
           targetTr.css({
             display: 'table-row'
           });
@@ -148,7 +151,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           bfbContent.hide();
           break;
         case '2':
-          newRadio.html('<span><input type="radio" name="dzgd" id="gdje"><label for="gdje">按固定金额定制跟单</label></span><span><input type="radio" name="dzgd" id="bfb" checked="checked"><label for="bfb">按百分比定制跟单</label></span>');
+          newRadio.html('<span><input type="radio" class="gdje"><label>按固定金额定制跟单</label></span><span><input type="radio"  checked="checked" class="bfb"><label>按百分比定制跟单</label></span>');
           targetTr.css({
             display: 'table-row'
           });
@@ -158,11 +161,11 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           bfbContent.find('.j-max-buy-times').val(ciShu);
           switch(followMaxMoney){
             case 0 :
-              jinerChoose.html('<span><input type="radio" name="jiner" checked="checked" id="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" name="jiner" id="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>');
+              jinerChoose.html('<span><input type="radio" checked="checked" class="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" class="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>');
               rengouJiner.hide();
             break;
             default:
-            jinerChoose.html('<span><input type="radio" name="jiner" id="wux-jiner" /><label>&nbsp;无金额上限</label></span><span><input type="radio" name="jiner" id="set-up-jiner" checked="checked"/><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>');
+            jinerChoose.html('<span><input type="radio" class="wux-jiner" /><label>&nbsp;无金额上限</label></span><span><input type="radio"  class="set-up-jiner" checked="checked"/><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>');
               rengouJiner.show();
               bfbContent.find('.j-max-price').val(followMaxMoney);
             break;
@@ -181,21 +184,18 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     }
   });
 
-  $(document).delegate('.j-dzgd-choose span', 'click', function(event) {
+   $(document).delegate('.j-dzgd-choose span', 'click', function(event) {
     var _this = $(this);
-    var radioId = _this.find('input[type="radio"]').attr('id');
+    var radioId = _this.find('input[type="radio"]').attr('class');
     _this.siblings('span').find('input[type="radio"]').removeAttr('checked')
     _this.find('input[type="radio"]').prop('checked', true);
+
     var gdjeContent = _this.parents('.j-dzgd-choose').siblings('.j-dzgd-gdje-content');
     var bfbContent = _this.parents('.j-dzgd-choose').siblings('.j-dzgd-bfb-content');
-    var newRadio = '<span><input type="radio" name="jiner" checked="checked" id="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" name="jiner" id="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>';
+    var newRadio = '<span><input type="radio" checked="checked" class="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" class="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>';
     var pJinerChoose = bfbContent.find('.j-jiner-choose');
     var pRenGouChoose = bfbContent.find('.j-rengou-jiner');
     var submitBtn = bfbContent.find('.j-imme-follow');
-
-    //重置input[type="text"]
-    //gdjeContent.find('input[type="text"]').val("");
-    //bfbContent.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'gdje':
@@ -213,17 +213,16 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     }
   });
 
+
   $(document).delegate('.j-jiner-choose span', 'click', function(event) {
     var _this = $(this);
-    var radioId = _this.find('input[type="radio"]').attr('id');
+    var radioId = _this.find('input[type="radio"]').attr('class');
     _this.siblings('span').find('input[type="radio"]').removeAttr('checked');
     _this.find('input[type="radio"]').prop('checked', true);
     var rengouJiner = _this.parents('.j-jiner-choose').next('.j-rengou-jiner');
     var submitBtn = _this.parents('.j-jiner-choose').siblings('.ljgd-btn-div').find('.j-imme-follow');
 
     var dzcs = _this.parents('.j-jiner-choose').siblings('.j-dzcs');
-    //rengouJiner.find('input[type="text"]').val("");
-    //dzcs.find('input[type="text"]').val("");
 
     switch (radioId) {
       case 'wux-jiner':

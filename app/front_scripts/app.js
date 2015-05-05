@@ -372,10 +372,12 @@ APP.init = function() {
       var _this = this;
       _this.el.on('mouseout', function(event) {
         _this.el.removeClass('on');
+        _this.el.find('.j-white-tri').removeClass('icon-hup').addClass('icon-hdown');
       });
 
       _this.el.mouseover(function() {
         _this.el.addClass('on');
+        _this.el.find('.j-white-tri').removeClass('icon-hdown').addClass('icon-hup');
       });
     }
   };
@@ -383,6 +385,19 @@ APP.init = function() {
   menu.init({
     el: $('#choseCai')
   });
+
+  var hemaiNav = {
+        el: $('#j-hemai-nav'),
+        bindEvent : function(){
+          var _this = this;
+          _this.el.hover(function() {
+            _this.el.addClass('on');
+          }, function() {
+            _this.el.removeClass('on');
+          });
+        }
+      };
+      hemaiNav.bindEvent();
 
   APP.initLrkf();
 

@@ -14,6 +14,7 @@
 .per-bor { border: 1px solid #dfdfdf; }
 .per-com-table { font-size: 12px; width: 100%; text-align: center; border-bottom: 1px solid #dfdfdf; }
 .per-com-table tr { height: 35px; }
+.per-com-table tr.dzgd-tr-last{ height: 15px; }
 .per-com-table th { background: #f1f1f1; text-align: center; border-bottom: 1px solid #dfdfdf; }
 .per-now .title { height: 35px; line-height: 35px; font-size: 12px; font-weight: bold; padding-left: 20px; }
 .per-table .th1 { width: 136px; }
@@ -128,6 +129,7 @@
 
 /*start 个人中心 定制跟单详情*/
 .dzgd-detail-table { border-bottom: none; }
+.dzgd-detail-table .dzgd-tr td{ border-bottom: 1px dotted #dfdfdf; }
 .dzgd-detail-table .btn-oper { width: 50px; height: 25px; line-height: 12px; margin-right: 5px; }
 .dzgd-detail-table .th1 { width: 105px; }
 .dzgd-detail-table .th2 { width: 135px; }
@@ -141,3 +143,5 @@
 .follow-user-list .modal-dialog { width: 790px; height: 490px; }
 .follow-user-list .modal-body { padding: 0; height: 432px; }
 .j-user-follow-list-page-box { padding-right: 12px; }
+
+#j-launch-hemai-table .td7,#j-join-hemai-table .td7{text-align: right; padding-right: 17px;}

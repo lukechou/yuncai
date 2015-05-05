@@ -14,15 +14,13 @@
 .m-help-right { width: 780px; float: right }
 .m-help-right .panel { min-height: 540px; border: 1px #dfdfdf solid }
 .m-help-right .panel-heading { background: #f1f1f1; border-bottom: 1px #dfdfdf solid; height: 38px }
-
-
 .m-help-right .panel-body { font-size: 12px; padding: 0 }
 .j-page { padding: 40px 30px; display: none; line-height: 1.8 }
 .j-page.active { display: block }
 .j-page-0 p { text-indent: 24px }
 .j-page-1 { line-height: 2 }
 .j-page-6 { padding: 5px 30px 20px }
-.j-page-6 h4 { margin: 15px 0 5px; font-size: 16px }
+.j-page-6 h4 { margin: 15px 0 5px; font-size: 12px; font-family: "宋体"; font-weight: bold; }
 .j-page-6 p { margin: 0; padding-left: 16px }
 .j-page .m-ul li { margin-bottom: 10px }
 .j-page .title { font-size: 14px; font-weight: bold }
@@ -38,26 +36,8 @@
 .j-page-last .title { margin: 25px 0; font-size: 12px; text-align: center }
 .j-page-last .td-1 { width: 42px; padding-top: 0; vertical-align: baseline }
 .j-page-last .td-2 { width: 80px; padding-top: 0; vertical-align: baseline }
-
-
-
-.m-help-right .panel-title{ font-size: 14px; font-weight: bold;}
-.help-text{ font-size: 12px;}
-.help-text p{ margin-bottom: 5px;}
-.help-text .title{ margin:10px auto;}
-.help-text .title.fs-14{ font-size: 14px;}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.m-help-right .panel-title { font-size: 14px; font-weight: bold; font-family: "宋体"; }
+.help-text { font-size: 12px; }
+.help-text p { margin-bottom: 5px; }
+.help-text .title { margin: 10px auto; }
+.help-text .title.fs-14 { font-size: 14px; }

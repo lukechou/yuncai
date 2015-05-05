@@ -69,6 +69,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
      * buyType  购买类型 1-自购 2-合买
      * runTimer 当前期倒计时循环函数
      * kjStatus  开奖状态 0-页面初始化 1-已开奖 2-开奖中 3-开奖倒计时 4-等待开售
+     * modifyId  要修改的号码-ID
+     * modifyStatu  购彩状态 0-选号  1-修改
      *
      */
     var K3 = {
@@ -77,7 +79,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       qihao: _.escape($('#qihao').val()),
       lotyName: $('#j-lotyName').val(),
       lotyId: $('#j-track-lotyid').val(),
-      playType: 'b0',
+      playType: 'b1',
       chooseMoney: 0,
       chooseZhushu: 0,
       buyArr: [],
@@ -120,6 +122,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       waitStartTime: 0,
       alertQihao: null,
       waitSell: false,
+      modifyId: null,
+      modifyStatu: 0,
     };
 
     return K3;
@@ -155,6 +159,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     _this.updateTrackList();
+    updateCreatePartProjectParame();
 
   };
 
@@ -178,7 +183,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     return result;
   };
-
 
   K3.createOneNote = function (o) {
 
@@ -303,14 +307,29 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     obj.num = _this.setNameStr(obj.nums, numNameArr);
 
-    var compiled = _.template('<div data-zid="<%= zid%>" class="br-zhu-item clearfix"><b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>');
+    var compiled = null;
+    var html = null;
 
-    var html = compiled(obj);
+    if (_this.modifyStatu === 1) {
+      // 修改号码
+      compiled = _.template('<b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div>');
 
-    $('#code_list').append(html);
+      html = compiled(obj);
 
+      $('#code_list').find('[data-zid=' + _this.modifyId + ']').html(html);
+
+    } else {
+
+      compiled = _.template('<div data-zid="<%= zid%>" class="br-zhu-item clearfix"><b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>');
+
+      html = compiled(obj);
+
+      $('#code_list').append(html);
+
+    }
     // 更新底部金额部分
     _this.updateBottomUi();
+
   };
 
   // 随机添加 N 注
@@ -378,14 +397,28 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     }
 
-    s = _.sample(a[_this.playType], sampleConut).sort(function (a, b) {
-      return a - b;
-    });
+    if (a[_this.playType]) {
+
+      s = _.sample(a[_this.playType], sampleConut).sort(function (a, b) {
+        return a - b;
+      });
+
+    } else {
+
+      s = _.sample(a['b6'], sampleConut).sort(function (a, b) {
+        return a - b;
+      });
+
+    }
 
     if (_.isArray(s)) {
+
       nums = s;
+
     } else {
+
       nums.push(s);
+
     };
 
     obj = {
@@ -421,6 +454,31 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     obj.money = _this.chooseMoney;
 
     return obj;
+  };
+
+  K3.updateBuyArr = function () {
+
+    var _this = this;
+
+    var obj = _this.getObj();
+
+    //移除已存在选号
+    _.remove(_this.buyArr, function (i) {
+      return i.zid = _this.modifyId;
+    });
+
+    obj.zid = _this.modifyId;
+
+    // 创建投注html并插入buybox
+    _this.createOneNote(obj);
+
+    // 清楚选中区选中状态
+    _this.cleanNumBtn();
+
+    // 更新修改状态机
+    _this.modifyStatu = 0;
+
+    _this.toggleChooseToBuyBtn();
   };
 
   K3.getChooseToBuy = function () {
@@ -588,6 +646,55 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
+  K3.updateCardGroup = function (id) {
+
+    var _this = this;
+
+    _this.cleanNumBtn();
+
+    // 更新修改id
+    _this.modifyId = id;
+
+    // 更新状态机
+    _this.modifyStatu = 1;
+
+    // 选中卡牌
+    var c = _.find(_this.buyArr, function (i) {
+      return i.zid == _this.modifyId;
+    });
+
+    for (var i = 0; i < c.nums.length; i++) {
+      $('#j-area-' + _this.playType + ' [data-num=' + c.nums[i] + ']').addClass('active');
+    };
+
+    // 更改button状态
+    _this.updateMidTotal();
+    _this.toggleChooseToBuyBtn();
+
+  };
+
+  K3.toggleChooseToBuyBtn = function () {
+
+    var _this = this;
+
+    var btnEl = $('#choose_to_buy_tip');
+
+    //添加到投注列表
+    if (_this.modifyStatu === 0) {
+
+      btnEl.html('添加到投注列表');
+
+    }
+
+    //确认修改
+    if (_this.modifyStatu === 1) {
+
+      btnEl.html('确认修改');
+
+    }
+
+  };
+
   K3.removeBuyList = function (zid) {
 
     var _this = this;
@@ -595,7 +702,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _.remove(_this.buyArr, function (i) {
       return i.zid == zid;
     });
+
     _this.updateBottomUi();
+
   };
 
   K3.togglePlayTab = function () {
@@ -604,6 +713,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     _this.cleanNumBtn();
     _this.cleanBuyList();
+
+    // 移除修改状态
+    _this.modifyStatu = 0;
+    _this.toggleChooseToBuyBtn();
+
   };
 
   K3.getBuyArrTotalMoney = function () {
@@ -705,9 +819,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     text += '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text">';
 
-    // 购买类型判断 1-自购，2-追号
-    if (_this.buyType == 1) {
-
+    // 购买类型判断 1-自购，2-追号 3-合买
+    switch (_this.buyType) {
+    case 1:
       obj.qihaoId = _this.qihaoId;
       obj.qihao = _this.qihao;
       payMoney = m * obj.beishu;
@@ -715,9 +829,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       text += '<p>' + _this.lotyCnName + ' 第<span>' + obj.qihao + '</span>期</p>';
       text += '<p>共<span>' + obj.zhushu + '</span>注, 投注<span>' + obj.beishu + '</span>倍</p>';
       text += '<p>本次需支付<span class="fc-3">' + payMoney + '.00</span>元</p></div>';
-
-    } else if (_this.buyType == 2) {
-
+      break;
+    case 2:
       endminmoney = $('#is_end_zhongjiang')[0].checked ? 1 : 0;
 
       buyTypeUrlStr = 'buy-track';
@@ -732,10 +845,37 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       payMoney = _this.getTrackTotalMoney(_this.getBuyArrTotalMoney());
 
       text += '<p>追号<span>' + _this.trackData.length + '</span>期</p><p>本次需支付<span class="fc-3">' + payMoney + '</span>元</p></div>';
-    } else {
 
-      return;
+      break;
+    case 3:
+      obj.qihaoId = _this.qihaoId;
+      obj.qihao = _this.qihao;
 
+      obj.title = _.escape($('#title').val());
+      obj.textarea = _.escape($('#desc').val());
+      obj.shareNum = Number($('#share-num').val());
+      obj.buyNum = Number($('#part_buy').val());
+      obj.aegisNum = Number($('#part_aegis_num').val());
+      obj.extraPercent = $('#commission_percent').val();
+      obj.set = _.escape($('.br-set-group .br-set.active').html());
+
+      payMoney = m / obj.shareNum * (obj.buyNum + obj.aegisNum);
+
+      text += '<p>' + _this.lotyCnName + ' 第<span>' + obj.qihao + '</span>期</p><p>方案总金额<span class="fc-3">' + m + '</span>元</p><p>您认购<span>' + obj.buyNum + '</span>份';
+
+      if (obj.aegisNum > 0) {
+
+        text += ', 保底<span>' + obj.aegisNum + '</span>份</p><p>共需支付<span class="fc-3">' + payMoney + '</span>元</p>';
+
+      } else {
+
+        text += '</p><p>共需支付<span class="fc-3">' + payMoney + '</span>元</p>';
+
+      }
+
+      break;
+    default:
+      break;
     }
 
     url = '/lottery/kuaipin/' + buyTypeUrlStr + '/' + _this.lotyName + '/' + _this.buyCodesType[_this.playType];
@@ -953,6 +1093,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     K3.addManyItem(c);
   });
 
+  // 修改投注
+  $('#j-box-left').on('click', '.br-zhu-up', function (event) {
+    event.preventDefault();
+
+    var p = $(this).parents('.br-zhu-item');
+    var zid = Number(p.attr('data-zid'));
+
+    K3.updateCardGroup(zid);
+
+  });
+
   // del buy box list
   $('#j-box-left').on('click', '.br-zhu-del', function (event) {
     event.preventDefault();
@@ -989,30 +1140,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     $(this).toggleClass('active');
 
-    // b6-不同号复选控制
-    if (K3.playType === 'b6') {
-
-      var v = $(this).attr('data-num');
-      var el = null;
-
-      if (v.length === 1) {
-
-        el = $('#j-area-' + K3.playType + ' .j-num-btn[data-num=' + v + v + ']');
-
-      } else {
-
-        el = $('#j-area-' + K3.playType + ' .j-num-btn[data-num=' + v.charAt(0) + ']');
-
-      }
-
-      if (el.hasClass('active')) {
-
-        el.removeClass('active');
-
-      }
-
-    }
-
     K3.updateMidTotal();
 
   });
@@ -1027,16 +1154,32 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     if ($(this).hasClass('active')) {
-      K3.getChooseToBuy();
+
+      if (K3.modifyStatu === 1) {
+        K3.updateBuyArr();
+      } else {
+        K3.getChooseToBuy();
+      }
+
     } else {
+
       return;
+
     }
 
   });
 
   $('#clean_buy_code').on('click', function (event) {
     event.preventDefault();
+
     K3.cleanBuyList();
+
+    if (K3.modifyStatu === 1) {
+      // 有修改状态时
+      K3.modifyStatu = 0;
+      K3.toggleChooseToBuyBtn();
+    }
+
   });
 
   /**
@@ -1073,6 +1216,15 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       queryTrackIssueList(10);
 
       break;
+    case 3:
+
+      $('#track_desc').addClass('hide');
+      $('#buy_mutiple_span').show();
+
+      updateCreatePartProjectParame();
+      break;
+    default:
+      break;
     }
 
   });
@@ -1106,6 +1258,356 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
   });
+
+  /* 选号区按钮 */
+  $('#j-content').on('click', '.j-random', function (event) {
+    event.preventDefault();
+
+    K3.cleanNumBtn();
+
+    var b = $('#j-area-' + K3.playType + ' .j-num-btn');
+    var l = b.length;
+    var f = [];
+    var count = 1;
+    var index = null;
+
+    switch (K3.playType) {
+    case 'b7':
+      count = 2;
+      break;
+    case 'b8':
+      count = 3;
+      break;
+    case 'b9':
+      count = 4;
+      break;
+    case 'b10':
+      count = 5;
+      break;
+    case 'b11':
+      count = 6;
+      break;
+    default:
+      break;
+    }
+
+    for (var i = 0; i < l; i++) {
+      f.push(i);
+    };
+
+    index = _.sample(f, count);
+
+    if (count === 1) {
+      b.eq(index).addClass('active');
+    } else {
+      for (var i = 0; i < index.length; i++) {
+        b.eq(index[i]).addClass('active');
+      };
+    }
+
+    K3.updateMidTotal();
+
+    // animate
+    // $('#j-mask-main').html();
+    // $('#j-first-mask').show().addClass('animated');
+
+  });
+
+  $('#j-content').on('click', '.j-all', function (event) {
+    event.preventDefault();
+
+    $('#j-area-' + K3.playType + ' .j-num-btn').addClass('active');
+    K3.updateMidTotal();
+
+  });
+
+  $('#j-content').on('click', '.j-clear', function (event) {
+    event.preventDefault();
+    K3.cleanNumBtn();
+  });
+
+  /* 合买 */
+
+  // 我要分成多少份，最少一份，最多购买金额的数量
+  $("#share-num").on('change', function (event) {
+    updateCreatePartProjectParame();
+  });
+
+  // 我要认购的份数
+  $("#part_buy").on('change', function (event) {
+    updateCreatePartProjectParame();
+  });
+
+  // 我要提成比例
+  $('#commission_percent').on('change', function (event) {
+
+    var val = parseInt($(this).val()) || 0;
+
+    var rengouPercent = Math.floor($('#part_buy_percent').html());
+
+    if (val > rengouPercent) {
+
+      $("#part_buy").val(Math.ceil($("#commission_percent").val() / 100 * ($('#share-num').val() || 0)));
+
+      updateCreatePartProjectParame();
+
+    }
+
+  });
+
+  // 是否保底
+  $('#has_part_aegis').on('change', function (event) {
+
+    if ($(this)[0].checked) {
+
+      $('#part_aegis_num').removeAttr('disabled');
+
+    } else {
+
+      $('#part_aegis_num').attr('disabled', 'disabled');
+      $('#part_aegis_num').val(0);
+      $('#part_aegis_percent').html('0.00');
+
+    }
+
+    updateCreatePartProjectParame();
+
+  });
+
+  // 保底金额修改
+  $('#part_aegis_num').on('change', function (event) {
+
+    updateCreatePartProjectParame();
+
+  });
+
+  // 方案保密设置
+  $('.br-set-group').on('click', 'a', function (event) {
+
+    $(this).parents('.br-set-group').find('a').removeClass('active');
+
+    $(this).toggleClass('active');
+
+  });
+
+  $('.j-input-place').on('focus', function (event) {
+    inputOnfocus($(this));
+  });
+
+  $('.j-input-place').on('blur', function (event) {
+    inputOnblur($(this));
+  });
+
+  $('.j-input-place').on('keyup', function (event) {
+    reSetStrsize($(this));
+  });
+
+  $('#is_end_zhongjiang').on('change', function (event) {
+
+    if ($(this)[0].checked) {
+
+      $('#track_stop_money').removeAttr('disabled');
+
+    } else {
+
+      $('#track_stop_money').attr('disabled', 'disabled');
+      $('#part_aegis_num').val(0);
+
+    }
+
+  });
+
+  function inputOnfocus(el) {
+    if ($.trim(el.val()) == el.attr('data-text')) {
+      el.parents('p').find('.j-btext-total').html(0)
+      el.val('')
+    }
+  }
+
+  function inputOnblur(el) {
+    var text = el.attr('data-text');
+    if ($.trim(el.val()) == '') {
+      el.val(text);
+      el.parents('p').find('.j-btext-total').html(text.length)
+    }
+  }
+
+  function reSetStrsize(t) {
+
+    var len = t.val().length;
+    var size = parseInt(t.attr('data-size'));
+
+    if (len <= size) {
+      t.parents('p').find('.j-btext-total').html(len)
+    } else {
+      t.val(t.val().slice(0, (size - 1)))
+      t.parents('p').find('.j-btext-total').html(size)
+    }
+  }
+
+  function updateCreatePartProjectParame() {
+
+    // 总金额
+    var totalMoney = K3.getBuyArrTotalMoney();
+
+    // 获取份数 shareNum
+    var copies = $("#share-num").val() || totalMoney;
+
+    // 单份金额 iUnitPrice
+    var oneCopiesMoney = '';
+
+    // 认购金额
+    var rengouMoney = '';
+
+    // 认购份数
+    var rengouCopies = $('#part_buy').val();
+
+    // 认购百分比
+    var rengouPercent = '';
+
+    // 提成
+    var ticheng = $('#commission_percent').val() * 1 || 0;
+
+    // 保底金额 b-用户输入保底份数
+    // 保底份数 aegisNum
+    var baodiCopies = '';
+    var baodiPercent = '';
+    var b = parseInt($('#part_aegis_num').val()) || 0;
+
+    // 是否保底 hasPartAegis
+    var isBaodi = $('#has_part_aegis')[0].checked || false;
+
+    copies = Number(copies.replace(/[^0-9]/g, ''));
+    rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
+
+    // 无购买总金额
+    if (totalMoney <= 0) {
+      updatePartView(0, ticheng, 0, 0, 0, 0, 0);
+      return;
+    }
+
+    // 生成对应份数
+    if (totalMoney % copies === 0) {
+      oneCopiesMoney = totalMoney / copies;
+    } else {
+      oneCopiesMoney = 1;
+      copies = totalMoney;
+    }
+
+    // 认购份数小于0 或大于总份数时
+    if (rengouCopies <= 0) {
+      rengouCopies = 1;
+    }
+
+    if (copies < rengouCopies) {
+      rengouCopies = copies;
+    }
+
+    // 认购金额必须大于提成金额
+    if (ticheng > (rengouCopies / copies * 100)) {
+      rengouCopies = Math.ceil(copies * ticheng * 0.01);
+    }
+    rengouMoney = rengouCopies * oneCopiesMoney;
+
+    // 是否保底
+    if ($('#has_part_aegis')[0]) {
+      isBaodi = $('#has_part_aegis')[0].checked;
+    }
+
+    // 设置保底份数
+    if (isBaodi) {
+
+      $('#part_aegis_num')[0].disabled = false;
+
+      if (b === 0) {
+
+        if ((rengouCopies / copies) < 0.8) {
+          baodiCopies = Math.ceil(copies * 0.2);
+        } else {
+          baodiCopies = copies - rengouCopies;
+        }
+
+      } else {
+
+        if ((b + rengouCopies) < copies) {
+
+          if ((b / copies) < 0.2) {
+
+            if ((Math.ceil(copies * 0.2) + rengouCopies) > copies) {
+
+              baodiCopies = copies - rengouCopies;
+
+            } else {
+
+              baodiCopies = Math.ceil(copies * 0.2);
+            }
+
+          } else {
+
+            baodiCopies = b;
+
+          }
+
+        } else {
+
+          baodiCopies = copies - rengouCopies;
+
+        }
+
+      }
+
+      baodiPercent = (baodiCopies / copies * 100).toFixed(2);
+
+    } else {
+      $('#part_aegis_num')[0].disabled = true;
+      baodiCopies = 0;
+      baodiPercent = '0.00';
+    }
+
+    if (totalMoney === 0) {
+      rengouPercent = 0;
+    } else {
+      rengouPercent = (rengouCopies / copies * 100).toFixed(2);
+    }
+
+    updatePartView(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies);
+    return;
+
+  }
+
+  function updatePartView(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies) {
+
+    var gBuy = {};
+    var baodiTips = baodiCopies * oneCopiesMoney || 0;
+    var totalTips = (rengouCopies + baodiCopies) * oneCopiesMoney || 0;
+    if (copies === 0) {
+      oneCopiesMoney = 0;
+    }
+
+    // update partnerBuy
+    // 分成多少份,购买的份数,单份金额,提成比例,保底份数
+    gBuy.shareNum = copies;
+    gBuy.partBuyNum = rengouCopies;
+    gBuy.unitPrice = oneCopiesMoney;
+    gBuy.commissionPercent = parseInt($('#commission_percent').val());
+    gBuy.partAegisNum = baodiCopies;
+
+    // 分成多少份,每份金额,认购份数,提成百分比,认购百分比
+    $('#share-num').val(copies);
+    $('.j-unit-price').html(oneCopiesMoney);
+    $('#part_buy').val(rengouCopies);
+    $('#part_buy_percent').html(rengouPercent);
+
+    // 保底份数,保底百分比,认购,保底金额tips,共需支付金额tips
+    $('#part_aegis_num').val(baodiCopies);
+    $('#part_aegis_percent').html(baodiPercent);
+    $('#buy_money_tips').html(rengouCopies * oneCopiesMoney);
+    $('#aegis_money_tips').html(baodiTips);
+    $('#total_money_tips').html(totalTips);
+
+  }
+
+  /* 合买 End */
 
   function showTodayNum() {
     $('#j-award-more b').html('收起');
@@ -1315,7 +1817,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         var stopSale = '';
         var max = ~~$('#j-maxqishu').val() || 100;
         var q = '';
-        return;
+
         if (data.retCode === 100000) {
 
           stopSale = (0 === parseInt(item.sell_status, 10));
@@ -1376,6 +1878,40 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   }
 
+  function getOneCard(c) {
+
+    if (c && c.length === 3) {
+
+      var h = '<span class="m-card card-' + c.slice(0, 1) + '"><i class="iconfont icon-h' + c.slice(0, 1) + ' m-card-flow"></i><i class="iconfont icon-n' + c.slice(1) + ' m-card-num"></i></span>';
+      return h;
+    } else {
+
+      return '';
+
+    }
+
+  }
+
+  function formatCard(card) {
+
+    var html = '';
+
+    if (_.isArray(card)) {
+
+      for (var i = 0; i < card.length; i++) {
+
+        html += getOneCard(card[i]);
+      }
+
+    } else {
+
+      html = getOneCard(card);
+
+    }
+
+    return html;
+  }
+
   // 获取最新期数列表，更新右侧开奖信息，开奖公告
   function loadLastIssueList() {
 
@@ -1404,7 +1940,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
           for (var i = 0, len = item.length; i < len; i++) {
 
-            kjhmHtml = ('' == item[i]['kjhm']) ? '等待开奖' : '<span class="fc-3">' + item[i]['kjhm'] + '</span>';
+            if (item[i]['kjhm'] === '') {
+              kjhmHtml = '等待开奖'
+            } else {
+
+              kjhmHtml = formatCard(item[i]['kjhm'].split(' '));
+
+            }
 
             html += '<tr><td>' + item[i]['no'] + '期</td><td>' + kjhmHtml + '</td></tr>';
 
@@ -1417,10 +1959,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
             kjHTML = '';
             arrKJHM = lastData['kjhm'].split(' ');
 
-            for (var i = 0, len = arrKJHM.length; i < len; i++) {
-              kjHTML += '<span class="bg-3">' + arrKJHM[i] + '</span>';
-            }
-
+            kjHTML += formatCard(arrKJHM);
             html2 = '<p>' + K3.lotyCnName + ' 第<span class="fc-3 mlr5">' + lastData['no'] + '</span>期<span>开奖</span></p><p class="sub-content-num">' + kjHTML + '</p>';
 
           } else {
@@ -1494,6 +2033,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var html = '';
     var f = '';
     var beforeQi = null;
+    var xtText = '';
 
     if (!obj) {
       return;
@@ -1503,20 +2043,22 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       K3.currentKjStatus = 1;
     }
 
-    hz = getNumsHz(obj.nums);
     xt = getNumsXt(obj.nums);
 
     o = {
       qihao: obj.no,
       nums: obj.nums,
       xt: xt,
-      hz: hz
     };
 
     // 已开奖
     if (K3.currentKjStatus === 1) {
 
-      html = _.template('<p class="third-hd"><b>第<span class="mlr5"><%= qihao%></span>开奖号码：<% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></b>形态：<%= xt%></p><div class="third-box clearfix"><ul class="pull-left third-hisnum"><% _.forEach(nums, function(num) { %><li ><%- num %></li><% }); %></ul><div class="pull-right third-histext"><h5><%= hz%></h5><span>和值</span></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+      if(_.isArray(xt)){
+        xtText = xt.join(' ');
+      }
+
+      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖牌<span class="ml-10">牌型：<span class="fc-3 mlr5">'+xtText+'</span></b></p><div class="third-box clearfix card-big-group">' + formatCard(o.nums) + '</div>');
 
       $('#j-kj-box').html(html(o));
       return;
@@ -1526,12 +2068,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // 开奖中
     if (K3.currentKjStatus === 2) {
 
-      var rf = '<div class="num-group"><span class="num-1"></span><span class="num-2"></span><span class="num-3"></span><span class="num-4"></span><span class="num-5"></span><span class="num-6"></span></div>';
+      var rf = '<div class="num-group"><span class="card"></span></div>';
 
-      html = _.template('<p class="third-hd"><b>第<span class="mlr5"><%= qihao%></span>开奖号码：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li>' + rf + '</li><li>' + rf + '</li><li>' + rf + '</li></ul><div class="pull-right third-histext"><span class="third-kjing">开奖中</span></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖中：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li>' + rf + '</li><li>' + rf + '</li><li>' + rf + '</li></ul></div>');
 
       $('#j-kj-box').html(html(o));
-      runNumsAnimate();
+
       return;
     }
 
@@ -1540,28 +2082,27 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
       beforeQi = obj.item[1];
       obj.nums = beforeQi.kjhm;
-      hz = getNumsHz(obj.nums);
       xt = getNumsXt(obj.nums);
 
-      o.hz = hz;
       o.xt = xt;
       o.nums = obj.nums;
 
       if (obj.nums) {
-        f = '和值:</span> <b class="fc-3">' + o.hz + '</b>形态: ' + o.xt;
+        f = formatCard(o.nums.split(' '));
       } else {
         f = '<b class="fc-3">等待开奖</b>';
       }
 
       o.time = secondFormat(obj.lessTime).join(':');
 
-      html = _.template('<p class="third-hd fs-12">第<span class="mlr5">' + beforeQi.no + '</span>期开奖号码：<% _.forEach(nums, function(num) { %><i class="mlr2 icon icon-k3num<%= num %>"></i><% }); %>' + f + '</p><div class="third-timer"><h5>第<b class="fc-3 mlr5"><%= qihao%></b>期等待开奖：</h5><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p><div class="progress"><div class="progress-box"><div class="progress-bar progress-bar-danger" id="progress-bar"><i class="before"></i><i class="after"></i><i class="mid mid-1"></i><i class="mid mid-2"></i><i class="mid mid-3"></i></div></div></div></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+      html = _.template('<p class="third-hd fs-12">第<span class="mlr5 fc-3">' + beforeQi.no + '</span>期开奖号码：' + f + '</p><div class="third-timer"><h5>第<b class="fc-3 mlr5"><%= qihao%></b>期等待开奖：</h5><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p><div class="progress"><div class="progress-box"><div class="progress-bar progress-bar-danger" id="progress-bar"><i class="before"></i><i class="after"></i><i class="mid mid-1"></i><i class="mid mid-2"></i><i class="mid mid-3"></i></div></div></div></div>');
 
       K3.waitEndTime = obj.lessTime;
       K3.waitStartTime = obj.lessTime;
 
       runWaitTimeAnimate();
       $('#j-kj-box').html(html(o));
+
       return;
     }
 
@@ -1569,15 +2110,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
       beforeQi = obj.item[1];
       obj.nums = beforeQi.kjhm;
-      hz = getNumsHz(obj.nums);
       xt = getNumsXt(obj.nums);
 
-      o.hz = hz;
       o.xt = xt;
       o.nums = obj.nums;
 
       if (obj.nums) {
-        f = '和值:</span> <b class="fc-3">' + o.hz + '</b>形态: ' + o.xt;
+        f = '<br>形态: ' + o.xt;
       } else {
         f = '<b class="fc-3">等待开奖</b>';
       }
@@ -1596,7 +2135,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       }
 
       // 已开奖
-      html = _.template('<p class="third-hd fs-12">第<span class="mlr5">' + beforeQi.no + '</span>期开奖号码：<% _.forEach(nums, function(num) { %><i class="mlr2 icon icon-k3num<%= num %>"></i><% }); %>' + f + '</p><div class="third-box clearfix"><p class="wait-p1">第<span class="fc-3 mlr5"><%= qihao%></span>期</p><p class="wait-p2 fs-yh">' + d + '</p></div><a href="javascript:;" class="third-more">更多开奖号码</a>');
+      html = _.template('<p class="third-hd fs-12">第<span class="mlr5">' + beforeQi.no + '</span>期开奖号码：' + formatCard(o.nums.split(' ')) + ' ' + f + '</p><div class="third-box clearfix"><p class="wait-p1">第<span class="fc-3 mlr5"><%= qihao%></span>期</p><p class="wait-p2 fs-yh">' + d + '</p></div>');
 
       $('#j-kj-box').html(html(o));
       return;
@@ -1830,25 +2369,38 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   function getNumsXt(nums) {
 
-    var x = '';
-    var h = 0;
+    var x = [];
+    var c = '';
 
     if (nums && nums.length > 0) {
 
-      for (var i = 0; i < nums.length; i++) {
-        h += ~~(nums[i]);
-      };
+      var nums = ['401', '402', '403'];
 
-      if (h % 2 === 0) {
-        x += '<i class="icon icon-tips k3-bg4 mlr2">双</i>';
+      var n0 = Number(nums[0].slice(1));
+      var n1 = Number(nums[1].slice(1));
+      var n2 = Number(nums[2].slice(1));
+
+      if (nums[0].slice(0, 1) === nums[1].slice(0, 1) && nums[1].slice(0, 1) === nums[2].slice(0, 1)) {
+
+        x.push('同花');
+
+        if ((n0 + n2) === (n1 * 2)) {
+          x.push('顺子');
+          x.push('同花顺');
+        }
+
       } else {
-        x += '<i class="icon icon-tips k3-bg3 mlr2">单</i>';
+        if ((n0 + n2) === (n1 * 2)) {
+          x.push('顺子');
+        }
       }
 
-      if (h > 10) {
-        x += '<i class="icon icon-tips k3-bg1 mlr2">大</i>';
-      } else {
-        x += '<i class="icon icon-tips k3-bg2 mlr2">小</i>';
+      if(n0===n1 && n1 ===n2){
+        x.push('豹子');
+      }
+
+      if(n0===n1 && n1 !==n2){
+        x.push('对子');
       }
 
     } else {
@@ -1858,30 +2410,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     return x;
-  }
-
-  function runNumsAnimate() {
-
-    //号码滚动动画
-    var s = setInterval(function () {
-
-      $('#j-kjing-num .num-group').each(function (index, el) {
-        var g = $(this);
-
-        g.animate({
-            top: -69
-          },
-          100,
-          function () {
-            var h = g.find('span').first().clone();
-            g.find('span').first().remove();
-            g.css('top', 0).append(h);
-          });
-
-      });
-
-    }, 100);
-
   }
 
 });
