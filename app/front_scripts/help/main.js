@@ -12,11 +12,11 @@ require.config({
   }
 });
 
-require(['jquery', 'app'], function($, APP) {
+require(['jquery', 'app'], function ($, APP) {
 
   var page = null;
 
-  $('#j-nav').on('click', 'li', function() {
+  $('#j-nav').on('click', 'li', function () {
 
     // 是否多级导航
     if ($(this).hasClass('more')) {
@@ -33,7 +33,7 @@ require(['jquery', 'app'], function($, APP) {
 
   });
 
-  function togglePage(pageIndex) {
+  function togglePage(pageIndex, ps) {
 
     var leftNav = $('#j-nav [data-page=' + pageIndex + ']').find('a');
     var title = APP.filterStr(leftNav.html());
@@ -52,40 +52,61 @@ require(['jquery', 'app'], function($, APP) {
 
     // toggleRightMain
     if ($('.j-page-' + pageIndex).length === 0) {
-      getHelpHtml(pageIndex);
+      getHelpHtml(pageIndex, function () {
+        if (ps) {
+
+          var el = '#j-position-' + ps;
+
+          var top = $(el).offset().top;
+
+          $('body').animate({
+            scrollTop: top + 'px'
+          }, 200);
+
+        }
+      });
     } else {
       $('.j-page-' + pageIndex).fadeIn('300');
     }
 
   }
 
-
   function init() {
 
-    var pageIndex = APP.filterStr(APP.parseQueryString().page);
+    var params = APP.parseQueryString();
+    var pageIndex = APP.filterStr(params.page);
+    var ps = null;
 
     if (pageIndex === '') {
       pageIndex = 6;
     }
 
-    togglePage(pageIndex);
+    if (params.ps) {
+      ps = params.ps;
+    }
+
+    togglePage(pageIndex, ps);
     APP.updateHeadUserInfo();
   }
 
-  function getHelpHtml(pageIndex) {
+  function getHelpHtml(pageIndex, cb) {
 
     $.ajax({
         url: './doc/' + pageIndex + '.html',
         type: 'get',
         dataType: 'html',
       })
-      .done(function(d) {
+      .done(function (d) {
 
         $('#j-page-main').append(d);
         $('.j-page-' + pageIndex).fadeIn('300');
 
+        if (cb) {
+          cb();
+        }
+
       })
-      .fail(function() {
+      .fail(function () {
         console.log("error");
       });
 

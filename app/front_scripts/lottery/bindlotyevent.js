@@ -301,13 +301,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var params = (function () {
       var box = Config.box;
+
       var params = {
         lotyName: $('#lotyName').val(),
         playName: $('#playName').val(),
         qihaoId: $('#qihaoId').val(),
         qihao: $('#qihao').val(),
-        zhushu: box.find('.j-quick-zhu').html(),
-        beishu: box.find('.j-quick-bei').val(),
+        zhushu: Number(box.find('.j-quick-zhu').html()),
+        beishu: Number(box.find('.j-quick-bei').val()),
         qishu: 1,
         codes: COMMON.formarFormSub(box.find('.br-gou .br-zhu-item')),
         unikey: (new Date()).valueOf(), //Math.floor(Math.random() * 100000),
@@ -1457,10 +1458,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     if (m.hasClass('j-quick-qi')) {
+
       var z = parseInt(m.val()) || 1;
+
       if (z > Config.maxQiShu) {
         m.val(Config.maxQiShu)
       }
+
       if (z <= 0) {
         m.val(1)
       }
@@ -2234,7 +2238,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-
   // Senior Lottery Tabs Toggle
   $('#j-nav-tabs').on('click', 'a', function (event) {
     var i = $(this).parents('li').index();
@@ -2338,14 +2341,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var c = COMMON.checkParamsStatus(params, vote);
     if (!c) return false;
 
-    APP.checkLogin(Config.payMoney, {
-      enoughMoney: function () {
-        APP.showTips(vote.confirmHtml);
-        $('#buyConfirm').one('click', function (event) {
-          vote.callback();
-        });
-      }
-    });
+    buyLoty(vote, params);
 
   });
 
@@ -2384,7 +2380,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     params = COMMON.getCommonParams();
 
     // 判断购买方式 2追买 3合买
-    buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
+    buytype = getBuyType();
 
     moreParams = COMMON.getMoreAjaxParams(buytype, params.playName);
 
@@ -2449,14 +2445,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var c = COMMON.checkParamsStatus(params, vote);
     if (!c) return false;
 
-    APP.checkLogin(Config.payMoney, {
-      enoughMoney: function () {
-        APP.showTips(vote.confirmHtml);
-        $('#buyConfirm').one('click', function (event) {
-          vote.callback();
-        });
-      }
-    });
+    buyLoty(vote, params);
 
   });
 
@@ -2477,7 +2466,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // 胆拖玩法类型 为2 固定
     params.playName = 2;
     // 判断购买方式 2追买 3合买
-    buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
+    buytype = getBuyType();
 
     moreParams = COMMON.getMoreAjaxParams(buytype, params.playName);
 
@@ -2533,14 +2522,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var c = COMMON.checkParamsStatus(params, vote);
     if (!c) return false;
 
-    APP.checkLogin(Config.payMoney, {
-      enoughMoney: function () {
-        APP.showTips(vote.confirmHtml);
-        $('#buyConfirm').one('click', function (event) {
-          vote.callback();
-        });
-      }
-    });
+    buyLoty(vote, params);
 
   });
 
@@ -2560,7 +2542,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     params.beishu = 1;
 
     // 判断购买方式 2追买 3合买
-    var buytype = parseInt(box.find('.j-br-type .active').attr('data-buytype'));
+    var buytype = getBuyType();
 
     moreParams = COMMON.getMoreAjaxParams(buytype, params.playName);
 
@@ -2604,16 +2586,56 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var c = COMMON.checkParamsStatus(params, vote);
     if (!c) return false;
 
+    buyLoty(vote, params);
+
+  });
+
+  function getBuyType() {
+
+    var result = null;
+
+    // 判断购买方式 1-自购 2-追买 3-合买
+    result = parseInt(Config.box.find('.j-br-type .active').attr('data-buytype'));
+
+    return result;
+  }
+
+  function buyLoty(vote, params) {
+
+    var lessMoneyTips = '';
+
+    var lotyName = (params.lotyName == 'ssq') ? '双色球' : '大乐透';
+    var buyType = getBuyType();
+    var z = DLT.getZhuiJiaStatus();
+
+    if (buyType === 1) {
+      lessMoneyTips += '<p>' + lotyName + ' 第<span class="fc-3 mlr5">' + params.qihao + '</span>期</p>';
+      lessMoneyTips += '<p>共<span class="fc-3 mlr5">' + params.zhushu + '</span>注, 投注<span class="fc-3 mlr5">' + params.beishu + '</span>倍</p>';
+    } else if (buyType === 2) {
+      lessMoneyTips += '<p>追号<span class="fc-3 mlr5">' + params.qishu + '</span>期</p>';
+    } else if (buyType === 3){
+      lessMoneyTips += '<p>' + lotyName + ' 第<span class="fc-3 mlr5">' + params.qihao + '</span>期</p>';
+      lessMoneyTips += '<p>方案总金额<span class="fc-3 mlr5">' + params.zhushu * params.beishu * z + '.00</span>元</p>';
+      lessMoneyTips += '<p>您认购<span class="fc-3 mlr5">' + params.buyNum + '</span>份, 保底<span class="fc-3 mlr5">' + params.aegisNum + '</span>份</p>';
+    }else{
+      lessMoneyTips += '<p>多期投注：共<span class="fc-3 mlr5">' + params.zhushu + '</span>注，<span class="fc-3 mlr5">' + params.beishu + '</span>倍，<span class="fc-3 mlr5">' + params.qishu + '</span>期</p>';
+    }
+
+    lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + Config.payMoney + '.00</span>元';
+
     APP.checkLogin(Config.payMoney, {
+
       enoughMoney: function () {
+
         APP.showTips(vote.confirmHtml);
         $('#buyConfirm').one('click', function (event) {
           vote.callback();
         });
-      }
+      },
+      lessMoneyTips: lessMoneyTips
     });
 
-  });
+  }
 
   // 多期投注 - Submit
   $('#j-more-sub').on('click', function (event) {
@@ -2644,7 +2666,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           }
         })
         .fail(function () {
-          COMMON.onSubmitFail()
+          COMMON.onSubmitFail();
         });
     };
     vote.confirmHtml = {
@@ -2654,14 +2676,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var c = COMMON.checkParamsStatus(params, vote);
     if (!c) return false;
 
-    APP.checkLogin(Config.payMoney, {
-      enoughMoney: function () {
-        APP.showTips(vote.confirmHtml);
-        $('#buyConfirm').one('click', function (event) {
-          vote.callback();
-        });
-      }
-    });
+    buyLoty(vote, params);
 
   });
 
@@ -2679,14 +2694,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('.br-details').on('click', '.br-he-btn', function (event) {
     ZHUI.setHeMaiTotal();
   });
+
   ZHUI.bindHeMaiEvent();
-
-  // function initRightBox(){
-  //   var leftHeight = $('.box-left').height();
-  //   var rightTop = $('.box-right').css('marginTop').slice(0,2);
-  //   $('.box-right').height(leftHeight-rightTop);
-  // }
-
-  // initRightBox();
 
 });

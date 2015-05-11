@@ -32,7 +32,7 @@
 .j-page-l .m-ul img { width: 100%; margin-bottom: 40px }
 .j-page-l .m-ul li { margin-bottom: 0 }
 .j-page-last { line-height: 2 }
-.j-page-last h1 { margin-bottom: 25px; font-size: 14px; text-align: center; font-weight: bold }
+.j-page-last h1 { margin-bottom: 25px; font-size: 14px; text-align: center; font-weight: bold; font-family: "宋体"; }
 .j-page-last .title { margin: 25px 0; font-size: 12px; text-align: center }
 .j-page-last .td-1 { width: 42px; padding-top: 0; vertical-align: baseline }
 .j-page-last .td-2 { width: 80px; padding-top: 0; vertical-align: baseline }
@@ -41,3 +41,7 @@
 .help-text p { margin-bottom: 5px; }
 .help-text .title { margin: 10px auto; }
 .help-text .title.fs-14 { font-size: 14px; }
+.page-div .tiao-title { display: table-cell; width: 70px; }
+.page-div .tiao-content { display: table-cell; width: 645px; }
+
+

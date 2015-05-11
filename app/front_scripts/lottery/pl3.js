@@ -271,10 +271,13 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
         onConfirm: function () {
           $('#myModal').modal('hide');
           $('.br-details').find('tbody .br-zhui-c').each(function (index, el) {
-            _this.parents('tr').find('.j-money').html(0);
+            $(this).parents('tr').find('.j-money').html(0);
           });
           PL3.nav.small = type;
           smallToggleTabs();
+          if (type === 'many') {
+            PL3.G_BUY.buyType = 4;
+          }
         }
       });
     } else {
@@ -537,7 +540,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
    */
   PL3.chooseBuyBtn.on('click', function (event) {
 
-    if(!$(this).hasClass('active')){
+    if (!$(this).hasClass('active')) {
       return;
     }
 
@@ -621,7 +624,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
       }
       if (uploadArr.length === 0) {
         var uploadErrorTips = '<h5>请按照正确的格式填写：</h5><p>单式：1,2,3</p><p>复式：01,234,35</p>';
-        if(PL3.nav.big!=='zx'){
+        if (PL3.nav.big !== 'zx') {
           uploadErrorTips = '<h5>请按照正确的格式填写：</h5><p>单式：1,2,3</p><p>复式：0,1,2,3,4,5</p>';
         }
         APP.showTips(uploadErrorTips);
@@ -1234,7 +1237,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
     }
 
   });
-
 
   // 更新手动输入注数
   $('#sd_number').on('keyup', function (event) {
@@ -2000,6 +2002,32 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
       comfirmHtml = makeConfirmHtml(2, PL3.G_BUY.lotyCNName, 0, 0, 0, 0, 0, 0, parameter.qishu, PL3.G_BUY.money);
       break;
     }
+
+    var lessMoneyTips = '';
+
+    switch (PL3.G_BUY.buyType) {
+    case 1:
+      lessMoneyTips += '<p>' + PL3.G_BUY.lotyCNName + ' 第<span class="fc-3 mlr5">' + parameter.qihao + '</span>期</p>';
+      lessMoneyTips += '<p>共<span class="fc-3 mlr5">' + parameter.zhushu + '</span>注, 投注<span class="fc-3 mlr5">' + parameter.beishu + '</span>倍</p>';
+      break;
+    case 2:
+      lessMoneyTips += '<p>追号<span class="fc-3 mlr5">' + postIssueParameter.length + '</span>期</p>';
+      break;
+    case 3:
+      lessMoneyTips += '<p>' + PL3.G_BUY.lotyCNName + ' 第<span class="fc-3 mlr5">' + parameter.qihao + '</span>期</p>';
+      lessMoneyTips += '<p>方案总金额<span class="fc-3 mlr5">' + PL3.G_BUY.money + '.00</span>元</p>';
+      lessMoneyTips += '<p>您认购<span class="fc-3 mlr5">' + parameter.buyNum + '</span>份, 保底<span class="fc-3 mlr5">' + parameter.aegisNum + '</span>份</p>';
+      break;
+    case 4:
+      lessMoneyTips += '<p>多期投注：共<span class="fc-3 mlr5">' + parameter.zhushu + '</span>注，<span class="fc-3 mlr5">' + parameter.beishu + '</span>倍，<span class="fc-3 mlr5">' + parameter.qishu + '</span>期</p>';
+
+      break;
+    default:
+      break;
+    }
+
+    lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + PL3.G_BUY.payMoney + '.00</span>元';
+
     APP.checkLogin(PL3.G_BUY.payMoney, {
       enoughMoney: function () {
         APP.showTips({
@@ -2025,7 +2053,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
               buyFailure(PL3.G_BUY.lotyName, PL3.G_BUY.lotyCNName);
             });
         });
-      }
+      },
+      lessMoneyTips: lessMoneyTips
     });
 
   };

@@ -1,7 +1,7 @@
-define(['jquery', 'bootstrap'], function($) {
+define(['jquery', 'bootstrap'], function ($) {
   'use strict';
 
-  var app = (function() {
+  var app = (function () {
 
     function app(args) {
       // enforces new
@@ -11,29 +11,29 @@ define(['jquery', 'bootstrap'], function($) {
       // constructor body
     }
 
-    app.prototype = {};
-
-    /**
-     * APP Decimal
-     * @param  {Number}  num
-     * @return {Boolean}     [description]
+    /*
+     * checkBuyMoney  要购买彩种金额
+     * lessMoneyTips  余额不足提示HTML
+     * cb  登录后充值后自动购买回调
+     * userMoney  用户余额
      */
-    app.prototype.isDecimal = function(num) {
-      if (parseInt(num) == num) {
-        return false;
-      } else {
-        return true;
-      }
+    app.prototype = {
+      checkBuyMoney: null,
+      lessMoneyTips: null,
+      cb: null,
+      userMoney: null
     };
 
     /**
      * 全局通用登录弹出框
      * @return {null}
      */
-    app.prototype.showLoginBox = function(callback) {
+    app.prototype.showLoginBox = function (callback) {
 
       var _this = this;
       var loginModal = null;
+      var user = null;
+      var pwd = null;
 
       if (!$('#user-login')[0]) {
         var html = '<div id="j-login-modal" class="modal bs-example-modal-sm login-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="/html/user/find_psw.html">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
@@ -45,12 +45,17 @@ define(['jquery', 'bootstrap'], function($) {
       loginModal.modal('show');
 
       $('#user-login').unbind();
-      $('#user-login').on('click', function(event) {
 
-        var user = _this.filterStr($('#login-username').val());
-        var pwd = _this.filterStr($('#login-password').val());
+      ////////////////////show Login Modal///////////////////////
+
+      //////////////////////Model Login//////////////////////////
+      $('#user-login').on('click', function (event) {
+
+        user = _this.filterStr($('#login-username').val());
+        pwd = _this.filterStr($('#login-password').val());
 
         if (user && pwd) {
+
           $.ajax({
               url: '/account/userinfo/user/dologin',
               type: 'post',
@@ -60,99 +65,53 @@ define(['jquery', 'bootstrap'], function($) {
                 password: pwd
               },
             })
-            .done(function(data) {
-              if (data.retCode == 100000) {
-                loginModal.hide();
-                _this.updateHeadUserInfo();
-                if (_this.checkBuyMoney) {
-                  _this.checkLogin(_this.checkBuyMoney, {
-                    enoughMoney: function() {
-                      if (callback) {
-                        callback();
-                      }
-                    }
-                  });
-                }
-                return;
-              } else {
-                _this.showTips(data.retMsg);
-              }
-            })
-            .fail(function() {
-              _this.onServiceFail();
-            });
-        } else {
-          _this.showTips({
-            text: '帐号密码不能为空'
-          });
-          return;
-        }
+            .done(function (data) {
 
-      });
-
-    };
-
-    /**
-     * 全局通用登录弹出框
-     * @return {null}
-     */
-    app.prototype.onlyShowLoginBox = function(callback) {
-
-      var _this = this;
-      var loginModal = null;
-
-      if (!$('#user-login')[0]) {
-        var html = '<div id="j-login-modal" class="modal bs-example-modal-sm login-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>登录</div><div class="modal-body"><div class="login-form"><label for="user">用户名：</label><input type="text" id="login-username"/><a href="/account/register">注册新用户</a></div><div class="login-form"><label for="pwd">登录密码：</label><input type="password" id="login-password"/><a href="/html/user/find_psw.html">找回密码</a></div><button class="btn btn-danger" id="user-login">立即登录</button></div></div></div></div>';
-        $('body').append(html);
-      };
-
-      loginModal = $('#j-login-modal');
-      loginModal.on('show.bs.modal', _this.centerModal);
-      loginModal.modal('show');
-
-      $('#user-login').unbind();
-      $('#user-login').on('click', function(event) {
-
-        var user = _this.filterStr($('#login-username').val());
-        var pwd = _this.filterStr($('#login-password').val());
-
-        if (user && pwd) {
-          $.ajax({
-              url: '/account/userinfo/user/dologin',
-              type: 'post',
-              dataType: 'json',
-              data: {
-                username: user,
-                password: pwd
-              },
-            })
-            .done(function(data) {
               if (data.retCode == 100000) {
 
                 loginModal.modal('hide');
-
                 _this.updateHeadUserInfo();
-                _this.onlyCheckLogin({
-                  checkLogin: function() {
-                    if (callback) {
-                      callback();
-                      //window.location.reload();
-                    }
+
+                // 回调检测
+                if (_this.checkBuyMoney) {
+
+                  _this.checkLogin(_this.checkBuyMoney, {
+
+                    enoughMoney: function () {
+                      if (callback) {
+                        callback();
+                      }
+                    },
+                    lessMoneyTips: _this.lessMoneyTips
+                  });
+
+                } else {
+
+                  if (callback) {
+                    callback();
                   }
-                });
+
+                }
 
                 return;
+
               } else {
+
                 _this.showTips(data.retMsg);
+
               }
+
             })
-            .fail(function() {
+            .fail(function () {
               _this.onServiceFail();
             });
+
         } else {
+
           _this.showTips({
             text: '帐号密码不能为空'
           });
+
           return;
         }
 
@@ -160,86 +119,91 @@ define(['jquery', 'bootstrap'], function($) {
 
     };
 
-    app.prototype.updateHeadUserInfo = function() {
+    /**
+     * HandRetCode for Ajax
+     * @param  {retCode} retCode Ajax Respone Status
+     * @param  {retMsg} retMsg  Ajaxa Respone Msg
+     * @return {null}
+     */
+    app.prototype.handRetCode = function (retCode, retMsg, cb) {
+
+      var _this = this;
+
+      switch (retCode) {
+      case 120002:
+
+        _this.showLoginBox(cb);
+
+        break;
+
+      case 120001:
+
+        if (_this.lessMoneyTips) {
+          _this.onLessMoney(_this.lessMoneyTips);
+        }
+
+        break;
+      default:
+
+        _this.showTips({
+          text: retMsg
+        });
+
+        break;
+      }
+    };
+
+    app.prototype.onLessMoney = function (lessMoneyTips) {
+
+      var _this = this;
       var html = '';
-      $.ajax({
-          url: '/account/islogin',
-          type: 'get',
-          dataType: 'json',
-        })
-        .done(function(data) {
-          if (data.retCode === 100000) {
-            html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon icon-bor"></i></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><i class="icon icon-bor"></i><a href="/account/logout">退出</a><i class="icon icon-bor"></i><a href="/account/index" class="last">我的账户</a>';
-            $('#j-hd-top').html(html);
-          }
-        });
-    };
 
-    /**
-     * Update User Money
-     * @return {null}
-     */
-    app.prototype.updateUserMoney = function() {
-      $.ajax({
-          url: '/account/islogin',
-          type: 'get',
-          dataType: 'json',
-        })
-        .done(function(data) {
-          if (data.retCode === 100000) {
-            $('#userMoney').html(data.retData.money);
-          }
-        });
-    };
+      html += '<div class="lessbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="tipbox" id="j-modal-tipbox"><div class="less-text">';
+      html += '<h4>您的余额不足，请先充值</h4>' + lessMoneyTips;
 
-    /**
-     * HandRetCode for Ajax
-     * @param  {retCode} retCode Ajax Respone Status
-     * @param  {retMsg} retMsg  Ajaxa Respone Msg
-     * @return {null}
-     */
-    app.prototype.handRetCode = function(retCode, retMsg, callback) {
+      html += '<p>账&nbsp;户&nbsp;&nbsp;余&nbsp;额：<span class="fc-3 mlr5">' + _this.userMoney + '.00</span>元</p>';
+      html += '</div><div class="m-one-btn ml30"><a id="j-less-money" href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div></div>';
 
-      var _this = this;
-      switch (retCode) {
-        case 120002:
-          _this.showLoginBox(callback);
-          break;
-        case 120001:
-          _this.showTips({
-            html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
+      _this.showTips({
+        html: html
+      });
+
+      $('body').on('click', '#j-less-money', function (event) {
+
+        var h = '<h3>请在新打开的充值页面完成充值操作</h3><div class="m-btns"><button class="btn btn-danger" id="j-pay-success">已完成充值，继续投注</button><a href="/html/help/help.html?page=6&ps=pay" class="btn btn-gray fc-3d" target="_blank">付款遇到问题</a></div>';
+
+        $('#j-modal-tipbox').html(h);
+
+      });
+
+      $('body').on('click', '#j-pay-success', function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/account/islogin',
+            type: 'get',
+            dataType: 'json',
+          })
+          .done(function (D) {
+
+            var userMoney = Number(D.retData.money.replace(/,/g, ''));
+            _this.userMoney = userMoney;
+
+            if (_this.checkBuyMoney <= _this.userMoney) {
+              if (_this.cb) {
+                _this.cb();
+              }
+            } else {
+              $('#myModal').modal('hide');
+              _this.showTips({
+                text: '付款失败，账户余额不足，请及时充值！'
+              });
+            }
+
           });
-          break;
-        default:
-          _this.showTips({
-            text: retMsg
-          });
-          break;
-      }
-    };
 
-    /**
-     * HandRetCode for Ajax
-     * @param  {retCode} retCode Ajax Respone Status
-     * @param  {retMsg} retMsg  Ajaxa Respone Msg
-     * @return {null}
-     */
-    app.prototype.onlyHandRetCode = function(retCode, retMsg, callback) {
+      });
 
-      var _this = this;
-      switch (retCode) {
-        case 120002:
-          _this.onlyShowLoginBox(callback);
-          break;
-        case 120001:
-
-          break;
-        default:
-          _this.showTips({
-            text: retMsg
-          });
-          break;
-      }
     };
 
     /**
@@ -248,11 +212,30 @@ define(['jquery', 'bootstrap'], function($) {
      * @param  {Object} o.enoughMoney,
      * @return {null}
      */
-    app.prototype.checkLogin = function(money, o) {
+    app.prototype.checkLogin = function (money, o, notCheckMoney) {
 
       var _this = this;
+
       money = Number(money);
+
       _this.checkBuyMoney = money;
+
+      if (o.lessMoneyTips) {
+        _this.lessMoneyTips = o.lessMoneyTips;
+      } else {
+        _this.lessMoneyTips = '';
+      }
+
+      // 检测购买金额
+      if (o.enoughMoney) {
+
+        _this.cb = o.enoughMoney;
+
+      } else {
+
+        _this.cb = null;
+
+      }
 
       // check money type
       if ((typeof money) !== 'number') {
@@ -264,11 +247,13 @@ define(['jquery', 'bootstrap'], function($) {
           type: 'get',
           dataType: 'json',
         })
-        .done(function(D) {
+        .done(function (D) {
 
           if (D.retCode === 100000) {
 
             var userMoney = Number(D.retData.money.replace(/,/g, ''));
+
+            _this.userMoney = userMoney;
 
             if (userMoney != 0 && userMoney >= money) {
 
@@ -278,63 +263,32 @@ define(['jquery', 'bootstrap'], function($) {
 
             } else {
 
-              _this.showTips({
-                html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>',
-                title: '余额不足'
-              });
+              if (_this.lessMoneyTips) {
+                _this.onLessMoney(_this.lessMoneyTips);
+              }
 
             }
 
             if (o.always) o.always(userMoney);
 
           } else {
-            _this.handRetCode(D.retCode, D.retMsg, o.enoughMoney);
 
-          }
-        });
+            if (notCheckMoney) {
 
-    };
+              _this.handRetCode(D.retCode, D.retMsg, o.always);
 
-    /**
-     * Check User Status
-     * @return {null}
-     */
-    app.prototype.onlyCheckLogin = function(o) {
+            } else {
 
-      var _this = this;
+              _this.handRetCode(D.retCode, D.retMsg, o.enoughMoney);
 
-      $.ajax({
-          url: '/account/islogin',
-          type: 'get',
-          dataType: 'json',
-        })
-        .done(function(D) {
-          if (D.retCode === 100000) {
-            if (o.checkLogin) {
-              o.checkLogin();
             }
-          } else {
-            _this.onlyHandRetCode(D.retCode, D.retMsg, o.checkLogin);
-            return;
+
           }
         });
 
     };
 
-    app.prototype.checkUserLoginStatus = function() {
-
-      var _this = this;
-      var user = $('#myname');
-
-      if (user.length) {
-        return true;
-      } else {
-        return false;
-      }
-
-    };
-
-    app.prototype.createShowTipsHTML = function(obj) {
+    app.prototype.createShowTipsHTML = function (obj) {
 
       // 生成对应HTML
       var html = '';
@@ -343,15 +297,15 @@ define(['jquery', 'bootstrap'], function($) {
         html = '<div class="tipbox"><p>' + obj.text + '</p></div>';
 
         switch (type) {
-          case 1:
-            html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">' + obj.ensuretext + '</button></div>';
-            break;
-          case 2:
-            html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">' + obj.ensuretext + '</button><button class="btn btn-gray ml15" data-dismiss="modal">' + obj.canceltext + '</button></div>';
-            break;
-          default:
-            html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">' + obj.ensuretext + '</button></div>';
-            break;
+        case 1:
+          html += '<div class="m-onebtn"><button class="btn modal-sure-btn" id="j-modal-confirm">' + obj.ensuretext + '</button></div>';
+          break;
+        case 2:
+          html += '<div class="m-btns"><button class="btn btn-danger" id="j-modal-confirm">' + obj.ensuretext + '</button><button class="btn btn-gray ml15" data-dismiss="modal">' + obj.canceltext + '</button></div>';
+          break;
+        default:
+          html += '<div class="m-one-btn"><button class="btn" data-dismiss="modal">' + obj.ensuretext + '</button></div>';
+          break;
         }
       } else {
         html = obj.html;
@@ -380,7 +334,7 @@ define(['jquery', 'bootstrap'], function($) {
       $('#j-modal-confirm').unbind('click');
 
       if (obj.onConfirm) {
-        $('#j-modal-confirm').on('click', function(event) {
+        $('#j-modal-confirm').on('click', function (event) {
           event.preventDefault();
           obj.onConfirm();
         });
@@ -399,7 +353,7 @@ define(['jquery', 'bootstrap'], function($) {
      * onConfirm 确定按钮成功事件
      * @return {null}
      */
-    app.prototype.showTips = function(o) {
+    app.prototype.showTips = function (o) {
 
       var _this = this;
 
@@ -434,11 +388,24 @@ define(['jquery', 'bootstrap'], function($) {
 
     };
 
+    app.prototype.checkUserLoginStatus = function () {
+
+      var _this = this;
+      var user = $('#myname');
+
+      if (user.length) {
+        return true;
+      } else {
+        return false;
+      }
+
+    };
+
     /**
      * Modal Center
      * @return {[type]} null
      */
-    app.prototype.centerModal = function() {
+    app.prototype.centerModal = function () {
 
       $(this).css('display', 'block');
       var $dialog = $(this).find(".modal-dialog");
@@ -455,7 +422,7 @@ define(['jquery', 'bootstrap'], function($) {
      * Ajax ServiceFial ShowTips
      * @return {null}
      */
-    app.prototype.onServiceFail = function() {
+    app.prototype.onServiceFail = function () {
       this.showTips({
         text: '服务器繁忙,请稍后再试!'
       });
@@ -465,9 +432,9 @@ define(['jquery', 'bootstrap'], function($) {
      * 输入框获取丢失焦点element 监听
      * @return {[type]} [description]
      */
-    app.prototype.bindInputPlace = function() {
+    app.prototype.bindInputPlace = function () {
 
-      $('.j-input-place').on('focus', function(event) {
+      $('.j-input-place').on('focus', function (event) {
         var _this = $(this);
         var t = _this.attr('data-place');
         if (t == _this.val()) {
@@ -475,7 +442,7 @@ define(['jquery', 'bootstrap'], function($) {
         }
       });
 
-      $('.j-input-place').on('blur', function(event) {
+      $('.j-input-place').on('blur', function (event) {
         var _this = $(this);
         var t = _this.attr('data-place');
         if ('' == _this.val()) {
@@ -490,11 +457,11 @@ define(['jquery', 'bootstrap'], function($) {
      * @param  {String} str 输入框 Selector
      * @return {null}
      */
-    app.prototype.bindInputOnlyInt = function(str) {
+    app.prototype.bindInputOnlyInt = function (str) {
 
       if (typeof str === 'string') {
 
-        $(str).on('keyup paste', function(event) {
+        $(str).on('keyup paste', function (event) {
           event.preventDefault();
           $(this).val($(this).val().replace(/\D|^0/g, ''));
         });
@@ -509,46 +476,14 @@ define(['jquery', 'bootstrap'], function($) {
     };
 
     /**
-     * 过滤文本内容中含有的脚本等危险信息
-     * @param  {String} str 需要过滤的字符串
-     * @return {String}
-     */
-    app.prototype.filterStr = function(str) {
-      str = str || '';
-      str = decodeURIComponent(str);
-      str = str.replace(/<.*>/g, ''); // 过滤标签注入
-      str = str.replace(/(java|vb|action)script/gi, ''); // 过滤脚本注入
-      str = str.replace(/[\"\'][\s ]*([^=\"\'\s ]+[\s ]*=[\s ]*[\"\']?[^\"\']+[\"\']?)+/gi, ''); // 过滤HTML属性注入
-      str = str.replace(/[\s ]/g, '&nbsp;'); // 替换空格
-      return str;
-    };
-
-    /**
-     * 获取参数
-     * @param  {url} paraName 获取参数
-     * @return {String}
-     */
-    app.prototype.parseQueryString = function(url) {
-      var re = /[\?&]([^\?&=]+)=([^&]+)/g,
-        matcher = null,
-        items = {};
-      url = url || window.location.search;
-      while (null != (matcher = re.exec(url))) {
-        items[matcher[1]] = decodeURIComponent(matcher[2]);
-      }
-      return items;
-    };
-
-    /**
      * 初始化头部 导航 切换
      * @return null
      */
-    app.prototype.init = function() {
+    app.prototype.init = function () {
 
       var _this = this;
 
-
-      $('#j-header-login-btn').on('click', function(event) {
+      $('#j-header-login-btn').on('click', function (event) {
         event.preventDefault();
         /* Act on the event */
         var url = location.href.replace(location.origin, '');
@@ -558,7 +493,7 @@ define(['jquery', 'bootstrap'], function($) {
 
       var menu = {
         el: $('#choseCai'),
-        init: function(args) {
+        init: function (args) {
           var _this = this;
           for (var key in args) {
             if (args.hasOwnProperty(key)) {
@@ -567,12 +502,12 @@ define(['jquery', 'bootstrap'], function($) {
           }
           _this.bindEvent();
         },
-        bindEvent: function() {
+        bindEvent: function () {
           var _this = this;
-          _this.el.hover(function() {
+          _this.el.hover(function () {
             _this.el.addClass('on');
             _this.el.find('.j-white-tri').removeClass('icon-hdown').addClass('icon-hup');
-          }, function() {
+          }, function () {
             _this.el.removeClass('on');
             _this.el.find('.j-white-tri').removeClass('icon-hup').addClass('icon-hdown');
           });
@@ -585,11 +520,12 @@ define(['jquery', 'bootstrap'], function($) {
 
       var hemaiNav = {
         el: $('#j-hemai-nav'),
-        bindEvent : function(){
+        bindEvent: function () {
+
           var _this = this;
-          _this.el.hover(function() {
+          _this.el.hover(function () {
             _this.el.addClass('on');
-          }, function() {
+          }, function () {
             _this.el.removeClass('on');
           });
         }
@@ -601,30 +537,68 @@ define(['jquery', 'bootstrap'], function($) {
 
     };
 
-    app.prototype.initLrkf = function() {
+    // 侧栏客服
+    app.prototype.initLrkf = function () {
+
       var qq = ['2726429522'];
       var tel = '4008-898-310';
       var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
+      var link = null;
 
       $('body').append(side);
 
-      var link = $('#j-side .icon-text');
-      $("#j-side").hover(function() {
-        // link.show();
+      link = $('#j-side .icon-text');
+
+      $("#j-side").hover(function () {
         link.animate({
           'left': '-64px',
           'opacity': '1',
         }, 200)
-      }, function() {
-        // link.hide();
+      }, function () {
         link.animate({
           'left': '-70px',
           'opacity': '0',
         }, 200)
       });
+
     };
 
-    app.prototype.showStopSellModal = function(lotyName) {
+    /**
+     * Update User Money
+     * @return {null}
+     */
+    app.prototype.updateUserMoney = function () {
+      $.ajax({
+          url: '/account/islogin',
+          type: 'get',
+          dataType: 'json',
+        })
+        .done(function (data) {
+          if (data.retCode === 100000) {
+            $('#userMoney').html(data.retData.money);
+          }
+        });
+    };
+
+    // 更新用户信息
+    app.prototype.updateHeadUserInfo = function () {
+      var html = '';
+      $.ajax({
+          url: '/account/islogin',
+          type: 'get',
+          dataType: 'json',
+        })
+        .done(function (data) {
+          if (data.retCode === 100000) {
+            html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon icon-bor"></i></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><i class="icon icon-bor"></i><a href="/account/logout">退出</a><i class="icon icon-bor"></i><a href="/account/index" class="last">我的账户</a>';
+            $('#j-hd-top').html(html);
+          }
+        });
+    };
+
+    // 显示停售弹出层
+    app.prototype.showStopSellModal = function (lotyName) {
+
       var link = '';
       link += '<p>选择其它彩种投注 或 <a href="/">返回首页</a></p><ul>';
 
@@ -638,15 +612,66 @@ define(['jquery', 'bootstrap'], function($) {
 
       var html = '<img src="' + staticHostURI + '/front_images/stopsell.png" class="stopsell-img" alt="mask-main" alt="暂停销售"/><div class="stopsell-box"><h4>' + lotyName + ' 暂停销售</h4>' + link;
 
-      var modalHtml = '<div class="m-mask m-stopsell-mask" id="j-stopsell-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><div class="modal-header"><button type="button" class="close" id="j-stopsellmask-close"><i class="icon icon-close"></i></button><h4 class="modal-title">暂停销售</h4></div><div class="stopsell-body">' + html + '</div></div></div>'
+      var modalHtml = '<div class="m-mask m-stopsell-mask" id="j-stopsell-mask"><div class="m-mask-bg"></div><div class="m-mask-main"><div class="modal-header"><button type="button" class="close" id="j-stopsellmask-close"><i class="icon icon-close"></i></button><h4 class="modal-title">暂停销售</h4></div><div class="stopsell-body">' + html + '</div></div></div>';
+
       $('body').append(modalHtml);
       $('#j-stopsell-mask').show();
-      $('#j-stopsellmask-close').on('click', function(event) {
+
+      $('#j-stopsellmask-close').on('click', function (event) {
         $('#j-stopsell-mask').remove();
       });
+
     };
 
-    app.prototype.dateFormat = function(date, pattern, isFill) {
+    /**
+     * APP Decimal
+     * @param  {Number}  num
+     * @return {Boolean}
+     */
+    app.prototype.isDecimal = function (num) {
+      if (parseInt(num) == num) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+    /**
+     * 获取参数
+     * @param  {url} paraName 获取参数
+     * @return {String}
+     */
+    app.prototype.parseQueryString = function (url) {
+      var re = /[\?&]([^\?&=]+)=([^&]+)/g,
+        matcher = null,
+        items = {};
+      url = url || window.location.search;
+      while (null != (matcher = re.exec(url))) {
+        items[matcher[1]] = decodeURIComponent(matcher[2]);
+      }
+      return items;
+    };
+
+    /**
+     * 过滤文本内容中含有的脚本等危险信息
+     * @param  {String} str 需要过滤的字符串
+     * @return {String}
+     */
+    app.prototype.filterStr = function (str) {
+      str = str || '';
+      str = decodeURIComponent(str);
+      str = str.replace(/<.*>/g, ''); // 过滤标签注入
+      str = str.replace(/(java|vb|action)script/gi, ''); // 过滤脚本注入
+      str = str.replace(/[\"\'][\s ]*([^=\"\'\s ]+[\s ]*=[\s ]*[\"\']?[^\"\']+[\"\']?)+/gi, ''); // 过滤HTML属性注入
+      str = str.replace(/[\s ]/g, '&nbsp;'); // 替换空格
+      return str;
+    };
+
+    // 格式化 时间
+    // date  时间对象
+    // pattern  时间格式  '%Y-%M-%d %h:%m:%s'
+    // isFill  是否补零
+    app.prototype.dateFormat = function (date, pattern, isFill) {
 
       var Y = date.getFullYear();
 

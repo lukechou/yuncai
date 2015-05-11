@@ -17,6 +17,9 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .auto-list-table { border: none; }
 .empty-tip { line-height: 180px !important; }
 .auto-stop-nav { margin-top: 15px; }
+.auto-less { border: 1px solid #dfdfdf; border-width: 1px 1px 0; padding: 10px; text-align: left; position: relative; display: none;}
+.auto-less p { margin: 0 0 0 200px; line-height: 25px; }
+.auto-less .btn { position: absolute; right: 250px; top: 0; bottom: 0; margin: auto; height: 31px; }
 
 /* 底部提示 */
 .u-tipsbox { font-size: 12px; background: #f1f1f1; border: 1px #dfdfdf solid; padding: 10px 25px; margin-bottom: 15px; }
@@ -70,12 +73,9 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .list-table> tbody >.tr-modify:hover { background: #fbe6db; }
 .list-table > tbody > tr > .list-box { padding: 12px; }
 .box-table> thead > tr > th { background: #f9f9f9; }
-.box-table .td-active{ background: #ffe3e2;}
-.list-box .btn-sear{ float: right; position: relative; top: -30px; margin-right: 50px;}
-.m-table-one > tbody > tr.modify-bottom > td{ padding: 10px 0;}
-.m-table-one > tbody > tr.modify-bottom > td:hover{ background: #fff;}
-.modify-bottom .btn{ width: 160px; height: 40px; margin:0 10px;}
-.modify-bottom .btn-gray:hover{ background: url(../front_images/model/del-hover.png);}
-
-
-
+.box-table .td-active { background: #ffe3e2; }
+.list-box .btn-sear { float: right; position: relative; top: -30px; margin-right: 50px; }
+.m-table-one > tbody > tr.modify-bottom > td { padding: 10px 0; }
+.m-table-one > tbody > tr.modify-bottom > td:hover { background: #fff; }
+.modify-bottom .btn { width: 160px; height: 40px; margin: 0 10px; }
+.modify-bottom .btn-gray:hover { background: url(../front_images/model/del-hover.png); }

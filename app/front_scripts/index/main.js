@@ -24,6 +24,8 @@ require.config({
 
 require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick'], function ($, _, store, APP, index) {
 
+  var PayMoney = 0;
+
   index.seeds.ballNum = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
   index.seeds.digitalBallNum = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
   index.seeds.ssq = {
@@ -123,12 +125,10 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     index.parameter.codes = index.buyCodes[index.currLotyName];
     index.parameter.unikey = $.now();
 
-    APP.checkLogin(2, {
-      enoughMoney: function () {
-        showBuyLotyConfirmMask();
-      }
-    });
-
+    PayMoney = 2;
+    buy(function () {
+      showBuyLotyConfirmMask();
+    }, index.parameter);
   };
 
   function showBuyLotyConfirmMask() {
@@ -164,6 +164,29 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       onConfirm: function () {
         sendQuickBuyAjax();
       }
+    });
+
+  }
+
+  function buy(cb, params, isHemai) {
+
+    var lessMoneyTips = '';
+
+    // if (isHemai) {
+
+    //   lessMoneyTips += '<p>方案总金额<span class="fc-3 mlr5">' + params.zhushu * params.beishu * 2 + '.00</span>元</p>';
+    //   lessMoneyTips += '<p>您认购<span class="fc-3 mlr5">' + params.buyNum + '</span>份, 保底<span class="fc-3 mlr5">' + params.aegisNum + '</span>份</p>';
+
+    // } else {
+    //   lessMoneyTips += '<p>共<span class="fc-3 mlr5">' + params.zhushu + '</span>注，<span class="fc-3 mlr5">' + params.beishu + '</span>倍';
+
+    // }
+
+    lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + PayMoney + '.00</span>元';
+
+    APP.checkLogin(PayMoney, {
+      enoughMoney: cb,
+      lessMoneyTips: lessMoneyTips
     });
 
   }
@@ -332,6 +355,8 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       total: maxPrice
     };
 
+    PayMoney = buyNum;
+
     if (t.attr('data-gm')) {
 
       var min = Number(t.attr('data-gm'));
@@ -372,43 +397,44 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
       var html = '<div class="m-detail-box"><p>您对模型编号<span class="mlr-8 fc-3">' + obj.model_id + '</span>投注<span class="mlr-8 fc-3">' + obj.money + '</span>元，请确认</p><div class="btns">' + btnHTML + '<button class="btn btn-gray" data-dismiss="modal">取消</button></div></div>';
 
-      APP.checkLogin(buyNum, {
-        enoughMoney: function () {
+      buy(function () {
 
-          APP.showTips({
-            html: html
-          });
+        APP.showTips({
+          html: html
+        });
 
-          $('#buyConfirm').one('click', function (event) {
-            $.ajax({
-                url: '/lottery/trade/model-fast-buy',
-                type: 'POST',
-                dataType: 'json',
-                data: obj,
-              })
-              .done(function (data) {
-                if (data.retCode === 100000) {
-                  APP.showTips("购买成功，预祝您中奖.");
-                  APP.updateUserMoney();
-                } else {
-                  APP.showTips(data.retMsg);
-                }
-              })
-              .fail(function () {
-                APP.showTips("购彩火爆，服务器正在努力处理.");
-              });
-          });
-        }
+        $('#buyConfirm').one('click', function (event) {
+          $.ajax({
+              url: '/lottery/trade/model-fast-buy',
+              type: 'POST',
+              dataType: 'json',
+              data: obj,
+            })
+            .done(function (data) {
+              if (data.retCode === 100000) {
+                APP.showTips("购买成功，预祝您中奖.");
+                APP.updateUserMoney();
+              } else {
+                APP.showTips(data.retMsg);
+              }
+            })
+            .fail(function () {
+              APP.showTips("购彩火爆，服务器正在努力处理.");
+            });
+        });
+      }, obj);
 
-      });
     } else {
+
       //合买
       if (checkByNum(buyNum, maxNum)) {
-        APP.checkLogin(buyNum, {
-          enoughMoney: function () {
-            submitHemai();
-          }
-        });
+
+        buy(function () {
+
+          submitHemai();
+
+        }, obj);
+
       }
 
     }
@@ -459,7 +485,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
                 //if (index.modelLotyName === 'jczq') {
                 //  jczqIndex = dataItem[i]['joinURI'].split('/');
-                  //cnName = jczqCnNameObj[jczqIndex[jczqIndex.length - 1]];
+                //cnName = jczqCnNameObj[jczqIndex[jczqIndex.length - 1]];
                 //}
 
                 percent = (1 - (dataItem[i].lessNum / Number(dataItem[i].price))).toFixed(2) * 100;
@@ -794,35 +820,36 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
       var html = '<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p>双色球 第<span>' + params.qihao + '</span>期</p><p>共<span>' + params.zhushu + '</span>注, 投注<span>1</span>倍</p><p>本次需支付<span class="fc-3">' + params.zhushu * 2 + '.00</span>元</p><div class="btns">' + btnHTML + '<button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
 
-      APP.checkLogin(params.zhushu * 2, {
-        enoughMoney: function () {
-          APP.showTips({
-            html: html
-          });
+      PayMoney = params.zhushu * 2;
 
-          $('#buyConfirm').one('click', function (event) {
-            $.ajax({
-                url: '/lottery/digital/buy-self/ssq/0',
-                type: 'POST',
-                dataType: 'json',
-                data: params,
-              })
-              .done(function (data) {
-                if (data.retCode === 100000) {
-                  $('#j-xz-modal').modal('hide');
-                  APP.showTips("购买成功，预祝您中奖.");
-                  index.hasCreate[index.currLotyName] = false;
-                  APP.updateUserMoney();
-                } else {
-                  APP.showTips(data.retMsg);
-                }
-              })
-              .fail(function () {
-                APP.showTips("购彩火爆，服务器正在努力处理.");
-              });
-          });
-        }
-      });
+      buy(function () {
+        APP.showTips({
+          html: html
+        });
+
+        $('#buyConfirm').one('click', function (event) {
+          $.ajax({
+              url: '/lottery/digital/buy-self/ssq/0',
+              type: 'POST',
+              dataType: 'json',
+              data: params,
+            })
+            .done(function (data) {
+              if (data.retCode === 100000) {
+                $('#j-xz-modal').modal('hide');
+                APP.showTips("购买成功，预祝您中奖.");
+                index.hasCreate[index.currLotyName] = false;
+                APP.updateUserMoney();
+              } else {
+                APP.showTips(data.retMsg);
+              }
+            })
+            .fail(function () {
+              APP.showTips("购彩火爆，服务器正在努力处理.");
+            });
+        });
+      }, params);
+
     } else {
       APP.showTips('请先获取号码');
     }

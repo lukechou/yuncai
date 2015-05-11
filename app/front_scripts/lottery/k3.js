@@ -684,6 +684,16 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     url = '/lottery/kuaipin/' + buyTypeUrlStr + '/' + _this.lotyName + '/' + _this.buyCodesType[_this.playType];
 
+    var lessMoneyTips = '';
+
+    if (_this.buyType === 2) {
+      lessMoneyTips += '<p>追号<span class="fc-3 mlr5">' + obj.zhuihaoqihao.length + '</span>期</p>';
+    } else {
+      lessMoneyTips += '<p>' + _this.lotyCnName + ' 第<span class="fc-3 mlr5">' + _this.qihao + '</span>期</p>';
+      lessMoneyTips += '<p>共<span class="fc-3 mlr5">' + obj.zhushu + '</span>注, 投注<span class="fc-3 mlr5">' + obj.beishu + '</span>倍</p>';
+    }
+    lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + payMoney + '.00</span>元';
+
     APP.checkLogin(payMoney, {
 
       enoughMoney: function () {
@@ -696,7 +706,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
             _this.enoughMoneyCb(url, obj, payMoney);
           }
         });
-      }
+      },
+      lessMoneyTips: lessMoneyTips
 
     });
 
@@ -879,7 +890,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('#project_mutiple').on('keyup,change', function (event) {
+  $('#project_mutiple').on('keyup change', function (event) {
 
     var t = $(this);
     var r = t.attr('data-r');
@@ -1047,7 +1058,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
    * 切换购买方式
    */
 
-  $('#buy_type').on('click', 'li', function (event) {
+  $('#buy_type').on('click', '.j-tog-tab', function (event) {
     event.preventDefault();
 
     var me = $(this);
@@ -1754,7 +1765,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       n = (n >= 1) ? n : 1;
       n = n;
     }
-    n = n > 99999 ? 99999 : n;
+    n = n > 9999 ? 9999 : n;
     return n;
   };
 
@@ -1769,7 +1780,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     v = (v >= 1) ? v : 1;
-    v = v > 99999 ? 99999 : v;
+    v = v > 9999 ? 9999 : v;
 
     return v;
 

@@ -137,17 +137,19 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
     };
     outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购金额：<span class="fc-3">' + unitPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
 
-    APP.onlyCheckLogin({
-      checkLogin: function() {
+    APP.checkLogin(null, {
+      always: function(){
         APP.showTips({
-          text: outhtml,
-          type: 2,
-          onConfirm: function() {
-            confirmFollow(DATA, _this);
-          }
-        });
+        text: outhtml,
+        type: 2,
+        onConfirm: function() {
+          confirmFollow(DATA, _this);
+        }
+      })
       }
-    });
+    }, true);
+
+
   });
 
   function confirmFollow(DATA, _this) {

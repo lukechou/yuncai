@@ -117,12 +117,15 @@ $(function () {
                     //    dataItem.lotyCNName += '<i class="icon-font icon-f3" title="您设置自动投注已投注该模型">自</i>';
                     //}
                     dataItem.lotyCNName += '竞彩足球';
+                    
                     if (type == 3) {
                         projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看</a>';
                         continueBuy = '';
                     } else {
-                        projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
+                        //projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
+                    	 projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
                     }
+                    
                 } else {
                     projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
                 }
@@ -144,6 +147,7 @@ $(function () {
                         htmlOutput += '<td><a href="' + dataItem.buyURI + '">' + dataItem.projectNo + '</a></td><td>' + dataItem.money + '</td>';
                         htmlOutput += '<td class="' + isZhongJiang + '">' + dataItem.status + '</td>';
                         htmlOutput += '<td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                        
                         break;
                     case 0:
                         // 全部记录

@@ -150,7 +150,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
-            htmlOutput += '<tr><td>' + dataItem.modelNo + '</td><td>' + dataItem.date_str + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.modelNo + '</td><td>' + dataItem.money + '%</td><td>' + dataItem.status + '</td><td>' + '<a target="_blank" href="' + dataItem.detail_url + '">详情</a></td></tr>';
+            htmlOutput += '<tr><td>' + dataItem.modelNo + '</td><td>' + dataItem.date_str + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.modelNo + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + '<a target="_blank" href="' + dataItem.detail_url + '">详情</a></td></tr>';
           }
         } else {
           htmlOutput = '<tr><td colspan="7">无购买模型</td></tr>';
@@ -729,6 +729,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         };
         outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购金额：<span class="fc-3">' + unitPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
 
+
         break;
 
       case '1':
@@ -754,6 +755,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           data_type: dataType
         };
         outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购比例：<span class="fc-3">' + unitPercentage + '</span>%</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
+
 
         break;
 
@@ -794,20 +796,24 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           data_type: dataType
         };
         outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购比例：<span class="fc-3">' + unitPercentage + '</span>%</p><p>认购金额上限：<span class="fc-3">' + maxPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span></p><p>确认按以上信息进行跟单吗？</p></div></div>';
+
+
         break;
     }
 
-    APP.onlyCheckLogin({
-      checkLogin: function() {
+
+    APP.checkLogin(null, {
+      always: function(){
         APP.showTips({
-          text: outhtml,
-          type: 2,
-          onConfirm: function() {
-            confirmFollow(DATA, _this);
-          }
-        });
+        text: outhtml,
+        type: 2,
+        onConfirm: function() {
+          confirmFollow(DATA, _this);
+        }
+      })
       }
-    });
+    }, true);
+
 
   });
 
@@ -828,7 +834,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
             type: 1,
             onConfirm: function() {
               reloadFlag = true;
-              window.name="set";
+              window.name = "set";
               window.location.reload();
             }
           });
@@ -1149,10 +1155,10 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       });
   };
 
-  function checkLastURL(){
+  function checkLastURL() {
     var lastURL = document.referrer;
     var checkURL = lastURL.substr(-18);
-    if(!!checkURL && checkURL == '/user/follow/index'){
+    if (!!checkURL && checkURL == '/user/follow/index') {
       $('#j-nav li').removeClass('active');
       $('#j-nav li:nth-child(3)').addClass('active');
       $('.j-per-index,j-per-his').hide();
@@ -1162,14 +1168,14 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
   }
   checkLastURL();
 
-  function checkReloadFlag(){
-    if(!!window.name && window.name=='set'){
+  function checkReloadFlag() {
+    if (!!window.name && window.name == 'set') {
       $('#j-nav li').removeClass('active');
       $('#j-nav li:nth-child(3)').addClass('active');
       $('.j-per-index,j-per-his').hide();
       $('.j-per-dzgd').show();
     }
-    window.name="";
+    window.name = "";
   }
   checkReloadFlag();
 });

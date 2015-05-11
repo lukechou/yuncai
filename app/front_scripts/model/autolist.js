@@ -630,16 +630,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   $('#j-filter-statu').on('change', function (event) {
     event.preventDefault();
+
     var v = $(this).val();
 
-    if (v === 'all') {
-      $('#j-auto-list tr').show();
-    } else {
-
-      $('#j-auto-list tr').hide();
-      $('#j-auto-list tr[data-statu=' + v + ']').show();
-
-    }
+    initTable({
+      type: v
+    });
 
   });
 
@@ -1094,8 +1090,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     var _this = $(this);
 
-    APP.onlyCheckLogin({
-      checkLogin: function () {
+    APP.checkLogin(null, {
+      always: function () {
         if (_this.hasClass('active')) {
 
           _this.html('查看').removeClass('active');
@@ -1113,33 +1109,67 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
           _this.html('收起').addClass('active');
         }
       }
-    });
+    }, true);
 
   });
+
+  function filterItemStatu(type) {
+
+    var group = [];
+    var result = [];
+
+    if (type === 'all') {
+      group = [0, 1, 2, 3, 4];
+    } else if (type == '5') {
+      group = [1, 2, 3, 4];
+    } else {
+      group = [type];
+    }
+
+    var a = _.groupBy(Model.data, function (n) {
+      return n.auto_status
+    });
+
+    _.map(group, function (g) {
+      if (a[g] && _.isArray(a[g])) {
+        result = result.concat(a[g]);
+      }
+    });
+
+    return result;
+  }
 
   /**
    * 重绘表格
    * @param  {Number} page 第几页
    * @param  {String} rid  要打开的rid
+   * @param  {String} type  自动投注状态
    */
   function initTable(obj) {
 
     var page = null;
     var rid = null;
+    var type = null;
 
     if (obj) {
       page = obj.page;
       rid = obj.rid;
+      type = obj.type;
     }
 
     if (rid) {
       page = getRidPageIndex(rid);
     }
 
+    if (!type) {
+      type = 'all';
+    }
+
     var item = Model.data;
     var h = '';
-    var len = item.length;
-    var ingLen = _.filter(item, function (n) {
+    var len = null;
+
+    var ingLen = _.filter(Model.data, function (n) {
       return n.auto_status === '0';
     }).length;
 
@@ -1149,6 +1179,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       $('#j-no-set').remove();
       return;
     }
+
+    // 赛选数据类型
+    item = filterItemStatu(type);
+    len = item.length;
 
     // 数据分组
     var group = _.chunk(item, Model.pageSize);
@@ -1162,7 +1196,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     h = _.map(group[Model.pageIndex], function (n, i) {
 
-      var s = ['<td class="fc-7">进行中</td>', '<td>已完成</td>', '<td class="fc-3">已终止</td>', '<td class="fc-3">所有期执行完毕</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
+      var s = ['<td class="fc-7">进行中</td>', '<td>手动终止</td>', '<td class="fc-3">系统终止</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
 
       var str = '<tr data-rid="' + n.id + '" data-statu="' + n.auto_status + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.profit_money + '</td><td>' + n.profit_rate + '%</td>' + s[n.auto_status] + '<td><a href="javascript:;" class="j-toggle-issue">查看</a></td><td></td></tr>';
 
@@ -1175,6 +1209,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     // 组成分页组件
     if (Model.maxPage > 1) {
       createPageNav();
+    } else {
+      $('#j-page-box').hide();
     }
 
     // 更新页面
@@ -1243,7 +1279,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     var h = '<div class="pull-right pages">' + (Model.pageIndex + 1) + '/<span class="j-days">' + Model.maxPage + '</span>页<a href="javascript:;" id="j-back-page" class="mlr5">上一页</a><a href="javascript:;" id="j-next-page" class="mlr5">下一页</a><input type="text" value="1" class="govalue" id="j-pages-value"><button class="btn" id="j-pages-go" type="button">Go</button>页</div>';
 
-    $('#j-page-box').html(h);
+    $('#j-page-box').html(h).show();
 
   }
 
@@ -1254,6 +1290,27 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     index = _.indexOf(_.map(Model.data, 'id'), rid);
 
     return Math.floor(index / Model.pageSize);
+  }
+
+  function checkUserMoney(money) {
+    $.ajax({
+        url: '/account/islogin',
+        type: 'get',
+        dataType: 'json',
+      })
+      .done(function (D) {
+        if (D.retCode === 100000) {
+
+          var userMoney = Number(D.retData.money.replace(/,/g, ''));
+
+          if (userMoney < money) {
+            $('#j-less-pay').html(money);
+            $('#j-less-total').html(userMoney);
+            $('#j-less-need').html(money - userMoney);
+            $('#j-auto-less').show();
+          }
+        }
+      });
   }
 
   function updateMainAuto() {
@@ -1269,7 +1326,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       .done(function (data) {
 
         if (data.retCode === 100000) {
-          Model.data = data.retData;
+
+          Model.data = data.retData.data;
+          checkUserMoney(data.retData.will_cost_money);
 
           var rid = '';
           rid = APP.parseQueryString()['rid'] || null;

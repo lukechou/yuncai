@@ -66,14 +66,14 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
       })
       .done(function (data) {
 
-        var h = '';
-        var item = data.retData;
-        var len = item.length;
-        var ingLen = _.filter(item, function (n) {
-          return n.auto_status === '0';
-        }).length;
-
         if (data.retCode === 100000) {
+
+          var h = '';
+          var item = data.retData.data;
+          var len = item.length;
+          var ingLen = _.filter(item, function (n) {
+            return n.auto_status === '0';
+          }).length;
 
           $('#j-auto-count').html(len);
           $('#j-auto-go').html(ingLen);
@@ -84,7 +84,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
               var s = ['<td class="fc-7">进行中</td>', '<td>已完成</td>', '<td class="fc-3">已终止</td>', '<td class="fc-3">所有期执行完毕</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
 
-              var str = '<tr><td>' + n.id + '</td><td>' + APP.dateFormat(new Date(n.start_time*1000),'%Y-%M-%d %h:%m:%s',true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
+              var str = '<tr><td>' + n.id + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
 
               str += '<td></td></tr>'
 
@@ -94,6 +94,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
           } else {
 
+            $('#j-lookmore-link').hide();
             h += '<tr><td colspan="8">该模型您没有设置自动投注</td></tr>';
 
           }
@@ -108,7 +109,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
           });
 
         } else {
-          APP.showTips(data.retMsg);
+          // APP.showTips(data.retMsg);
         }
       });
 
@@ -257,6 +258,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
     Config.payMoney = money;
 
+    var lessMoneyTips = '';
+
+    lessMoneyTips += '<p>模型' + obj.model_id + '</p>';
+    lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + money + '.00</span>元</p>';
+
     APP.checkLogin(money, {
       enoughMoney: function () {
         APP.showTips({
@@ -291,7 +297,8 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
             });
           }
         });
-      }
+      },
+      lessMoneyTips: lessMoneyTips
     });
 
   });

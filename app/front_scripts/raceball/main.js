@@ -1133,17 +1133,17 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     Config.payMoney = 1;
     c = checkParams();
     if (c) {
-      APP.checkLogin(Config.payMoney, {
-        enoughMoney: function () {
 
-          html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元,共<span id="j-total-zhu">' + obj.zhushu + '</span>注,投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>,理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
-          $('#j-tips-table').html(t);
-          $('#j-modal-text').html(html);
-          H.setHeMaiTotal();
-          $('#ballModal').modal('show');
+      buy(function () {
 
-        }
-      });
+        html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元,共<span id="j-total-zhu">' + obj.zhushu + '</span>注,投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>,理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
+        $('#j-tips-table').html(t);
+        $('#j-modal-text').html(html);
+        H.setHeMaiTotal();
+        $('#ballModal').modal('show');
+
+      }, obj);
+
     }
 
   });
@@ -1165,17 +1165,40 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     Config.payMoney = obj.zhushu * 2 * obj.beishu / obj.shareNum * (obj.buyNum + obj.aegisNum);
 
-    APP.checkLogin(Config.payMoney, {
-      enoughMoney: function () {
-        buyTicket(obj, type, Config.lotyName);
-      }
-    });
+    buy(function () {
+      $('#myModal').modal('hide');
+      buyTicket(obj, type, Config.lotyName);
+    }, obj, true);
 
   });
 
+  function buy(cb, params, isHemai) {
+
+    var lessMoneyTips = '';
+    lessMoneyTips += '<p>' + Config.lotyCNName + '</p>';
+
+    if (isHemai) {
+
+      lessMoneyTips += '<p>方案总金额<span class="fc-3 mlr5">' + params.zhushu * params.beishu * 2 + '.00</span>元</p>';
+      lessMoneyTips += '<p>您认购<span class="fc-3 mlr5">' + params.buyNum + '</span>份, 保底<span class="fc-3 mlr5">' + params.aegisNum + '</span>份</p>';
+
+    } else {
+      lessMoneyTips += '<p>共<span class="fc-3 mlr5">' + params.zhushu + '</span>注，<span class="fc-3 mlr5">' + params.beishu + '</span>倍';
+
+    }
+
+    lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + Config.payMoney + '.00</span>元';
+
+    APP.checkLogin(Config.payMoney, {
+      enoughMoney: cb,
+      lessMoneyTips: lessMoneyTips
+    });
+
+  }
+
   // 立即购买
   $('#j-ljtzBtn').on('click', function (event) {
-    debugger;
+
     var obj = BET.getSubmitParams();
     var vote = {};
     var c = null;
@@ -1202,26 +1225,25 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     if (c) {
 
-      APP.checkLogin(Config.payMoney, {
-        enoughMoney: function () {
+      buy(function () {
 
-          APP.showTips({
-            html: vote.confirmHtml,
-            title: vote.title
-          });
+        APP.showTips({
+          html: vote.confirmHtml,
+          title: vote.title
+        });
 
-          $('#j-ljtz-box').mCustomScrollbar({
-            theme: "light-3",
-            mouseWheelPixels: 200
-          });
+        $('#j-ljtz-box').mCustomScrollbar({
+          theme: "light-3",
+          mouseWheelPixels: 200
+        });
 
-          $('#buyConfirm').one('click', function (event) {
+        $('#buyConfirm').one('click', function (event) {
 
-            buyTicket(obj, type, Config.lotyName);
-          });
+          buyTicket(obj, type, Config.lotyName);
+        });
 
-        }
-      });
+      }, obj);
+
     };
 
   });

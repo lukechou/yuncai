@@ -68,13 +68,20 @@ body { background: url(../front_images/klpk/bg.jpg) #212121 no-repeat center 0; 
 .br-input, .br-textarea, .br-select { color: #333; }
 .j-he-box { color: #4bb88f; }
 
+.less-text,.lessbox h3{ color: #4bb88f;}
+
+
+
+
+
+
 /* model */
-.friend-modal .modal-header { color: #4bb88f; border: none; background: #074a31; }
-.friend-modal .modal-body { background: #0e6e4c; }
-.frbox .text, .tipbox { color: #fff; }
+.friend-modal .modal-header,.login-modal .modal-header { color: #4bb88f; border: none; background: #074a31; }
+.friend-modal .modal-body,.login-modal .modal-body { background: #0e6e4c; }
+.frbox .text, .tipbox,.login-modal .modal-body .login-form,.login-modal .modal-body .login-form a { color: #fff; }
 .m-btns > .btn-gray { color: #3d3d3d; }
-.m-btns > .btn-danger, .m-one-btn .btn { border: none; background: #f88c35; }
-.m-btns > .btn-danger:hover, .m-one-btn .btn:hover { background: #fd8f37; }
+.m-btns > .btn-danger, .m-one-btn .btn,.login-modal .modal-body .btn { border: none; background: #f88c35; }
+.m-btns > .btn-danger:hover, .m-one-btn .btn:hover,.login-modal .modal-body .btn { background: #fd8f37; }
 
 /* top nav */
 .m-br-nav { width: 752px; height: 82px; padding: 7px 0 0; border-bottom: 3px #44c897 solid !important; border-radius: 10px 0 0 0; background: #0f7950; background-image: -moz-linear-gradient(top, #149b6a, #0c5a3b); background-image: -ms-linear-gradient(top, #149b6a, #0c5a3b); background-image: -webkit-linear-gradient(top, #149b6a, #0c5a3b); background-image: linear-gradient(top, #149b6a, #0c5a3b); box-shadow: 0 0 8px #000; }
@@ -211,7 +218,7 @@ body { background: url(../front_images/klpk/bg.jpg) #212121 no-repeat center 0; 
 .choose-as-btn b { font-size: 14px; }
 .choose-as-btn.last { margin-right: 0; }
 .choose-as-btn.active { cursor: pointer; border-color: #f13c38; }
-.bx-num { padding-top: 12px; }
+.bx-num { padding-top: 0; }
 .bx-num img { margin-top: 12px; }
 
 /* list-sz */
@@ -264,6 +271,14 @@ body { background: url(../front_images/klpk/bg.jpg) #212121 no-repeat center 0; 
 .m-card-num { font-size: 24px; position: relative; top: 2px; right: -2px; }
 .card-1, .card-3 { color: #3d3d3d; }
 .card-2, .card-4 { color: #f13c38; }
+
+.table .m-card{
+  width: 35px;
+  height: 25px;
+  line-height: 25px;
+}
+.table .m-card-flow { left:1px; top:0;}
+.table .m-card-num{ right:0; top:2px; font-size: 18px;}
 
 /* big card */
 .card-big-group .m-card { width: 51px; height: 66px; position: relative; }

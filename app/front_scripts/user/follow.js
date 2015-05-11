@@ -159,16 +159,16 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           bfbContent.show();
           bfbContent.find('.j-unit-percentage').val(yuanBi);
           bfbContent.find('.j-max-buy-times').val(ciShu);
-          switch(followMaxMoney){
-            case 0 :
+          switch (followMaxMoney) {
+            case 0:
               jinerChoose.html('<span><input type="radio" checked="checked" class="wux-jiner"><label>&nbsp;无金额上限</label></span><span><input type="radio" class="set-up-jiner"><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>');
               rengouJiner.hide();
-            break;
+              break;
             default:
-            jinerChoose.html('<span><input type="radio" class="wux-jiner" /><label>&nbsp;无金额上限</label></span><span><input type="radio"  class="set-up-jiner" checked="checked"/><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>');
+              jinerChoose.html('<span><input type="radio" class="wux-jiner" /><label>&nbsp;无金额上限</label></span><span><input type="radio"  class="set-up-jiner" checked="checked"/><label>&nbsp;设置金额上限</label><span class="gray-tips">(超过上限时，仅购买上限)</span></span>');
               rengouJiner.show();
               bfbContent.find('.j-max-price').val(followMaxMoney);
-            break;
+              break;
           }
           bfbContent.find('.j-imme-follow').text('确认修改');
           break;
@@ -184,7 +184,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     }
   });
 
-   $(document).delegate('.j-dzgd-choose span', 'click', function(event) {
+  $(document).delegate('.j-dzgd-choose span', 'click', function(event) {
     var _this = $(this);
     var radioId = _this.find('input[type="radio"]').attr('class');
     _this.siblings('span').find('input[type="radio"]').removeAttr('checked')
@@ -376,17 +376,17 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         break;
     }
 
-    APP.onlyCheckLogin({
-      checkLogin: function() {
+    APP.checkLogin(null, {
+      always: function() {
         APP.showTips({
           text: outhtml,
           type: 2,
           onConfirm: function() {
             confirmFollow(DATA, _this);
           }
-        });
+        })
       }
-    });
+    }, true);
 
   });
 

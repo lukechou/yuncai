@@ -1,7 +1,10 @@
-/**
- * 七乐彩的库文件
- */
-var QLC = {
+define(['jquery'], function ($) {
+  'use strict';
+
+  /**
+   * 七乐彩的库文件
+   */
+  var QLC = {
     digitalCodeConnector: ',',
     errorMsg: '',
     // digitalDescMap : {0:'第一位',1:'第二位',2:'第三位',3:'第四位',4:'第五位',5:'第六位',6:'第七位'},
@@ -14,10 +17,10 @@ var QLC = {
     maxIssueNum: 30,
     minIssueNum: 1,
     Normal: {
-        minCode: 1,
-        maxCode: 30,
-        oneBetCodeNum: 7,
-        codeRegex: /^((0[1-9]|[1-2][0-9]|30)[,]){6,14}(0[1-9]|[1-2][0-9]|30)$/,
+      minCode: 1,
+      maxCode: 30,
+      oneBetCodeNum: 7,
+      codeRegex: /^((0[1-9]|[1-2][0-9]|30)[,]){6,14}(0[1-9]|[1-2][0-9]|30)$/,
     },
 
     /**
@@ -26,14 +29,14 @@ var QLC = {
      * @return {[type]} [description]
      */
     getLastErrorMsg: function () {
-        return this.errorMsg;
+      return this.errorMsg;
     },
 
     /**
      * 获取直选注数
      */
     getNormalZhushu: function (codes) {
-        return Math.getCombineNum(codes.length, 7, 'C');
+      return Math.getCombineNum(codes.length, 7, 'C');
     },
 
     /**
@@ -46,7 +49,7 @@ var QLC = {
      * @return {[type]} [description]
      */
     produceOneBetCode: function () {
-        return this.produceCodes(this.Normal.oneBetCodeNum);
+      return this.produceCodes(this.Normal.oneBetCodeNum);
     },
 
     /**
@@ -59,16 +62,16 @@ var QLC = {
      * @return {[type]} [description]
      */
     produceCodes: function (codeNum) {
-        var produceCodes = [];
-        for (var m = codeNum - 1; m >= 0;) {
-            var currentCode = Math.getRandomInt(this.Normal.minCode, this.Normal.maxCode);
-            currentCode = currentCode < 10 ? ('0' + currentCode).toString() : currentCode.toString();
-            if ($.inArray(currentCode, produceCodes) < 0) {
-                m--;
-                produceCodes.push(currentCode);
-            }
+      var produceCodes = [];
+      for (var m = codeNum - 1; m >= 0;) {
+        var currentCode = Math.getRandomInt(this.Normal.minCode, this.Normal.maxCode);
+        currentCode = currentCode < 10 ? ('0' + currentCode).toString() : currentCode.toString();
+        if ($.inArray(currentCode, produceCodes) < 0) {
+          m--;
+          produceCodes.push(currentCode);
         }
-        return produceCodes.sort();
+      }
+      return produceCodes.sort();
     },
 
     /**
@@ -79,26 +82,28 @@ var QLC = {
      * @return {Boolean} [description]
      */
     isIllegalCode: function (code, callback) {
-        if (!this.Normal.codeRegex.test(code)) {
-            this.errorMsg = '';
-            this.errorMsg += '<h5>请按照正确的格式填写：</h5>';
-            this.errorMsg += '<p>单式：01,02,03,04,05,06,07</p>';
-            this.errorMsg += '<p>复式：01,02,03,04,05,06,07,08,09</p>';
-            this.errorMsg += '<p>每行最多可投注15个号码</p>';
-            return false;
+      if (!this.Normal.codeRegex.test(code)) {
+        this.errorMsg = '';
+        this.errorMsg += '<h5>请按照正确的格式填写：</h5>';
+        this.errorMsg += '<p>单式：01,02,03,04,05,06,07</p>';
+        this.errorMsg += '<p>复式：01,02,03,04,05,06,07,08,09</p>';
+        this.errorMsg += '<p>每行最多可投注15个号码</p>';
+        return false;
+      }
+      var returnZhushu = 0;
+      var allDigitalCodes = code.split(this.digitalCodeConnector);
+      var hash = {};
+      for (var m = 0; m < allDigitalCodes.length; m++) {
+        if (hash[allDigitalCodes[m]]) {
+          this.errorMsg = "重复投注了:" + allDigitalCodes[m];
+          return false;
         }
-        var returnZhushu = 0;
-        var allDigitalCodes = code.split(this.digitalCodeConnector);
-        var hash = {};
-        for (var m = 0; m < allDigitalCodes.length; m++) {
-            if (hash[allDigitalCodes[m]]) {
-                this.errorMsg = "重复投注了:" + allDigitalCodes[m];
-                return false;
-            }
-            hash[allDigitalCodes[m]] = true;
-        }
-        returnZhushu += this.getNormalZhushu(allDigitalCodes);
-        callback(allDigitalCodes, returnZhushu);
-        return true;
+        hash[allDigitalCodes[m]] = true;
+      }
+      returnZhushu += this.getNormalZhushu(allDigitalCodes);
+      callback(allDigitalCodes, returnZhushu);
+      return true;
     }
-};
+  };
+  return QLC;
+});

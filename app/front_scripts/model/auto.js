@@ -365,6 +365,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       }
 
       var addMoney = AUTO.addMoneyObj.eq(i).text();
+      AUTO.bountyMoneyObj.eq(i).text((parseInt(curVal) * ar).toFixed(2));
     }
 
   }
@@ -702,7 +703,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     }
 
     if (firstVal === '' || firstVal < BET_MIN || firstVal > BET_MAX || rNum.test(firstVal) || firstVal % 2 != 0) {
-      APP.showTips('每期的首期投注范围为30-500000，请重新设置');
+      APP.showTips('每期的首期投注范围为30-500000的偶数，请重新设置');
       return false;
     }
 
@@ -889,38 +890,45 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     $('#autoModal').modal('hide');
 
-    APP.checkLogin(AUTO.firstVal, {
-      always: function (m) {
-
-        if (m >= AUTO.firstVal) {
-
-          $.ajax({
-              url: '/lottery/model/autobuy/buy',
-              type: 'post',
-              dataType: 'json',
-              data: data,
-            })
-            .done(function (data) {
-
-              if (data.retCode === 100000) {
-                // APP.showTips('<p>自动投注设置成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
-                window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId;
-              } else {
-                APP.showTips(data.retMsg);
-              }
-
-            });
-        } else {
-
-          APP.showTips({
-            html: '<div class="tipbox"><p>您的余额不足,购买失败！</p><p>当前账户余额不足支付自动投注的首期金额</p><p>首期投注金额：<span class="fc-3">' + AUTO.firstVal + '</span>元</p><p>当前账户余额：<span class="fc-3">' + m + ' </span>元</p><div class="m-one-btn"><a href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div>'
-          });
-        }
-
-      }
-    });
+    autoBuy(data);
 
   });
+
+  function autoBuy(data) {
+
+    var payMoney = null;
+    if (autoType) {
+      payMoney = Number($('#j-data-body .j-num').eq(0).val());
+    } else {
+      payMoney = AUTO.firstVal;
+    }
+
+    var lessMoneyTips = '<p>当前账户余额不足支付自动投注的首期金额</p><p>首期投注金额：<span class="fc-3">' + payMoney + '.00</span>元</p>';
+
+    APP.checkLogin(payMoney, {
+      enoughMoney: function (m) {
+
+        $.ajax({
+            url: '/lottery/model/autobuy/buy',
+            type: 'post',
+            dataType: 'json',
+            data: data,
+          })
+          .done(function (data) {
+
+            if (data.retCode === 100000) {
+              // APP.showTips('<p>自动投注设置成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
+              window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId;
+            } else {
+              APP.showTips(data.retMsg);
+            }
+
+          });
+
+      },
+      lessMoneyTips: lessMoneyTips
+    });
+  }
 
   $('.j-inp-num').on('keyup paste', function (event) {
     event.preventDefault();
@@ -937,8 +945,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       return false;
     }
 
-    APP.onlyCheckLogin({
-      checkLogin: function () {
+    APP.checkLogin(null, {
+      always: function () {
 
         var ajaxDataObj = {};
 
@@ -998,7 +1006,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
         }
       }
-    });
+    }, true);
 
   });
 
@@ -1202,6 +1210,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
         AUTO.addMoneyObj.eq(i).text(curMoney)
       }
       var addMoney = AUTO.addMoneyObj.eq(i).text();
+      AUTO.bountyMoneyObj.eq(i).text((parseInt(curMoney) * ar).toFixed(2));
+
       //--------------------------------------
       //数据重新填充
       //--------------------------------------

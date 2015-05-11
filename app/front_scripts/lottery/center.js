@@ -202,13 +202,19 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
         html: h,
       };
 
-      APP.checkLogin(b * onePrice, {
+      var payMoney = b * onePrice;
+      var lessMoneyTips = '';
+      lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' +payMoney + '.00</span>元';
+
+
+      APP.checkLogin(payMoney, {
         enoughMoney: function () {
           APP.showTips(html);
           $('#buyConfirm').one('click', function (event) {
             submitHemai(data);
           });
-        }
+        },
+        lessMoneyTips:lessMoneyTips
       });
     }
   });

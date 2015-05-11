@@ -124,10 +124,77 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       waitSell: false,
       modifyId: null,
       modifyStatu: 0,
+      showStopControl: true
     };
 
     return K3;
   }());
+
+  K3.updateYilou = function () {
+
+    var _this = this;
+
+    $.ajax({
+        url: '/statistics/issue/yilou',
+        type: 'get',
+        dataType: 'json',
+        data: {
+          lottery_id: _this.lotyId,
+          issue: _this.qihao
+        },
+      })
+      .done(function (data) {
+
+        if (data.retCode === 100000) {
+
+          var map = {
+            b1: 8,
+            b2: 10,
+            b3: 11,
+            b4: 9,
+            b5: 7,
+            b6: 1,
+            b7: 2,
+            b8: 3,
+            b9: 4,
+            b10: 5,
+            b11: 6,
+          };
+
+          var y = data.retData[map[_this.playType]].split('|');
+
+          var maxYl = _.max(y);
+          var h = null;
+
+          for (var i = 0; i < y.length; i++) {
+
+            if (y[i] === maxYl) {
+              h = '<span class="fc-3">' + y[i] + '</span>';
+            } else {
+              h = y[i];
+            }
+
+            $('.j-choose-' + _this.playType + ' .j-yilou-num').eq(i).html(h);
+          };
+
+        }
+
+      });
+
+  };
+
+  K3.runYilou = function () {
+
+    var _this = this;
+
+    setInterval(function () {
+      _this.updateYilou();
+    }, 10000);
+
+  };
+
+  K3.updateYilou();
+  K3.runYilou();
 
   K3.reset = function () {
 
@@ -152,14 +219,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     $('#buy_zhushu').html(m / 2);
     $('#project_price').html(_this.beishu * m);
 
-    if (m > 0) {
-      $('#buy-submit').removeAttr('disabled');
-    } else {
-      $('#buy-submit').attr('disabled', true);
-    }
-
     _this.updateTrackList();
-    updateCreatePartProjectParame();
+    //updateCreatePartProjectParame();
 
   };
 
@@ -184,7 +245,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return result;
   };
 
-  K3.createOneNote = function (o) {
+  K3.createOneNote = function (o, isJx) {
 
     var _this = this;
 
@@ -310,7 +371,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var compiled = null;
     var html = null;
 
-    if (_this.modifyStatu === 1) {
+    if (_this.modifyStatu === 1 && !isJx) {
+
       // 修改号码
       compiled = _.template('<b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div>');
 
@@ -428,7 +490,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       playType: _this.playType,
     };
 
-    _this.createOneNote(obj);
+    _this.createOneNote(obj, true);
 
   };
 
@@ -464,7 +526,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     //移除已存在选号
     _.remove(_this.buyArr, function (i) {
-      return i.zid = _this.modifyId;
+      return i.zid == _this.modifyId;
     });
 
     obj.zid = _this.modifyId;
@@ -718,6 +780,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _this.modifyStatu = 0;
     _this.toggleChooseToBuyBtn();
 
+    K3.updateYilou();
+
   };
 
   K3.getBuyArrTotalMoney = function () {
@@ -880,6 +944,16 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     url = '/lottery/kuaipin/' + buyTypeUrlStr + '/' + _this.lotyName + '/' + _this.buyCodesType[_this.playType];
 
+    var lessMoneyTips = '';
+
+    if (_this.buyType === 2) {
+      lessMoneyTips += '<p>追号<span class="fc-3 mlr5">' + obj.zhuihaoqihao.length + '</span>期</p>';
+    } else {
+      lessMoneyTips += '<p>' + _this.lotyCnName + ' 第<span class="fc-3 mlr5">' + _this.qihao + '</span>期</p>';
+      lessMoneyTips += '<p>共<span class="fc-3 mlr5">' + obj.zhushu + '</span>注, 投注<span class="fc-3 mlr5">' + obj.beishu + '</span>倍</p>';
+    }
+    lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + payMoney + '.00</span>元';
+
     APP.checkLogin(payMoney, {
 
       enoughMoney: function () {
@@ -892,7 +966,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
             _this.enoughMoneyCb(url, obj, payMoney);
           }
         });
-      }
+      },
+      lessMoneyTips: lessMoneyTips
 
     });
 
@@ -971,10 +1046,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var v = val ? val : 1;
 
     if (isNaN(val) || val < 1) {
-      val = 1;
+
+      v = 1;
+
     } else {
+
       val = Math.ceil(val);
-      (val > 9999) && (val = 9999);
+      (val > 9999) && (v = 9999);
+
     }
 
     return v;
@@ -1010,7 +1089,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var val = parseInt($(this).val()) || 1;
 
     val = filterTrackNum(val);
-
+    debugger
     $(this).val(val);
 
     $('.br-details tbody .br-zhui-bei').val(val);
@@ -1041,6 +1120,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       return;
     } else if (K3.buyType === 2 && K3.trackData.length === 0) {
       APP.showTips('追号最少购买一期');
+    } else if (K3.buyArr.length === 0) {
+      APP.showTips('请至少选择1注号码投注');
     } else {
       K3.buyLoty();
     }
@@ -1075,7 +1156,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('#project_mutiple').on('keyup,change', function (event) {
+  $('#project_mutiple').on('keyup change', function (event) {
 
     var t = $(this);
     var r = t.attr('data-r');
@@ -1112,6 +1193,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var zid = Number(p.attr('data-zid'));
     K3.removeBuyList(zid);
     p.remove();
+
+    // 移除修改状态
+    K3.modifyStatu = 0;
+    K3.toggleChooseToBuyBtn();
 
   });
 
@@ -1156,7 +1241,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     if ($(this).hasClass('active')) {
 
       if (K3.modifyStatu === 1) {
+
         K3.updateBuyArr();
+
       } else {
         K3.getChooseToBuy();
       }
@@ -1186,10 +1273,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
    * 切换购买方式
    */
 
-  $('#buy_type').on('click', 'li', function (event) {
+  $('#buy_type').on('click', '.j-tog-tab', function (event) {
     event.preventDefault();
 
     var me = $(this);
+
     $('#buy_type li .icon').removeClass('icon-y2');
     me.find('.icon').addClass('icon-y2');
 
@@ -1825,13 +1913,23 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           // 判断是否停售
           if (stopSale) {
 
-            APP.showStopSellModal(K3.lotyCnName);
+            if (K3.showStopControl) {
+              APP.showStopSellModal(K3.lotyCnName);
+              $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('disabled', true);
 
-            $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('id', '');
+              $('#j-less-seconds').html('<i class="icon icon-k302">--</i><i class="icon icon-k302">--</i>');
+              K3.showStopControl = false;
+            }
 
-            $('#j-less-seconds').html('<i class="icon icon-k302">--</i><i class="icon icon-k302">--</i>');
+            callCurrentIssueNext(10);
 
             return;
+
+          } else {
+
+            K3.showStopControl = true;
+
+            $('#buy-submit').html('立即投注').addClass('btn-red').removeClass('btn-stop').removeAttr('disabled');
 
           }
 
@@ -1935,20 +2033,23 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         var lastData = item[0];
         var type = null;
         var lessTime = 0;
+        var xt = '';
+        var arr = [];
 
         if (data.retCode == 100000) {
 
           for (var i = 0, len = item.length; i < len; i++) {
 
             if (item[i]['kjhm'] === '') {
-              kjhmHtml = '等待开奖'
+              kjhmHtml = '等待开奖';
+              xt = '';
             } else {
-
-              kjhmHtml = formatCard(item[i]['kjhm'].split(' '));
-
+              arr = item[i]['kjhm'].split(' ');
+              kjhmHtml = formatCard(arr);
+              xt = getNumsXt(arr);
             }
 
-            html += '<tr><td>' + item[i]['no'] + '期</td><td>' + kjhmHtml + '</td></tr>';
+            html += '<tr><td>' + item[i]['no'] + '</td><td>' + kjhmHtml + '</td><td>' + xt + '</td></tr>';
 
           };
 
@@ -2054,11 +2155,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     // 已开奖
     if (K3.currentKjStatus === 1) {
 
-      if(_.isArray(xt)){
+      if (_.isArray(xt)) {
         xtText = xt.join(' ');
       }
 
-      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖牌<span class="ml-10">牌型：<span class="fc-3 mlr5">'+xtText+'</span></b></p><div class="third-box clearfix card-big-group">' + formatCard(o.nums) + '</div>');
+      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖牌<span class="ml-10">牌型：<span class="fc-3 mlr5">' + xtText + '</span></b></p><div class="third-box clearfix card-big-group">' + formatCard(o.nums) + '</div>');
 
       $('#j-kj-box').html(html(o));
       return;
@@ -2288,7 +2389,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       n = (n >= 1) ? n : 1;
       n = n;
     }
-    n = n > 99999 ? 99999 : n;
+    n = n > 9999 ? 9999 : n;
     return n;
   };
 
@@ -2303,7 +2404,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
 
     v = (v >= 1) ? v : 1;
-    v = v > 99999 ? 99999 : v;
+    v = v > 9999 ? 9999 : v;
 
     return v;
 
@@ -2374,38 +2475,47 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     if (nums && nums.length > 0) {
 
-      var nums = ['401', '402', '403'];
-
       var n0 = Number(nums[0].slice(1));
       var n1 = Number(nums[1].slice(1));
       var n2 = Number(nums[2].slice(1));
+      var nArr = [n0, n1, n2];
+
+      nArr.sort(function (a, b) {
+        return a - b;
+      });
 
       if (nums[0].slice(0, 1) === nums[1].slice(0, 1) && nums[1].slice(0, 1) === nums[2].slice(0, 1)) {
 
         x.push('同花');
 
-        if ((n0 + n2) === (n1 * 2)) {
-          x.push('顺子');
+        if ((nArr[0] + nArr[2]) === (nArr[1] * 2) && (nArr[0] + 1) === nArr[1]) {
+          x = [];
           x.push('同花顺');
         }
 
       } else {
-        if ((n0 + n2) === (n1 * 2)) {
+        if ((nArr[0] + nArr[2]) === (nArr[1] * 2) && (nArr[0] + 1) === nArr[1]) {
           x.push('顺子');
         }
       }
 
-      if(n0===n1 && n1 ===n2){
-        x.push('豹子');
-      }
+      if (nArr[0] === nArr[1] && nArr[1] === nArr[2]) {
 
-      if(n0===n1 && n1 !==n2){
-        x.push('对子');
+        x.push('豹子');
+
+      } else {
+
+        if (nArr[0] === nArr[1] || nArr[1] === nArr[2] || nArr[0] == nArr[2]) {
+
+          x.push('对子');
+
+        }
+
       }
 
     } else {
 
-      x = null;
+      x = '';
 
     }
 

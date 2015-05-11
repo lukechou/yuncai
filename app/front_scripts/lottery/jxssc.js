@@ -338,11 +338,9 @@ $(document).ready(function () {
    * 大小单双 单号码选中
    */
   $('.j-dxds-num-group').on('click', 'a', function (event) {
-    event.preventDefault();
-    /* Act on the event */
     var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
     var arr = null;
-    var num = $(this).html();
+    var num = $(this).html().slice(0,1);
     if (!G_CHOOSE.codes[dataBit]) {
       G_CHOOSE.codes[dataBit] = [];
     }
@@ -716,10 +714,10 @@ $(document).ready(function () {
     $('#choose_to_buy').removeClass('active');
     G_CHOOSE.init();*/
 
-    if ('[大小双单]' == $(this).parents('.pull-right').siblings('b').text()) {
+    /*if ('[大小双单]' == $(this).parents('.pull-right').siblings('b').text()) {
       $('.j-dxds-num-group a').removeClass('active');
     }
-
+*/
   });
 
   /**
@@ -1311,7 +1309,7 @@ $(document).ready(function () {
         break;
       case 'DXSD':
         $('.j-choose-code-' + codes.playType).find('.j-row-code[data-bit=' + i + '] a').each(function (index) {
-          for (var m = 0; m < codes.value[i].length; m++) {
+          for (var m = 0; m < codes.value.length; m++) {
             if ($(this).html().slice(0, 1) == codes.value[i][m]) {
               $(this).addClass('active');
               G_CHOOSE.codes[i].push(codes.value[i][m]);

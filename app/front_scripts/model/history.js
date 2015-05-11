@@ -73,6 +73,7 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function ($, APP, _) {
     var isZhong = '';
     var sg = '';
     var tzNr = '';
+    var autoBuyIcon = '';
 
     for (var i = data.length - 1; i >= 0; i--) {
       dataItem = data[i];
@@ -93,7 +94,13 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function ($, APP, _) {
 
       tzNr = dataItem.tzNr.join('');
 
-      html += '<td>' + dataItem.tzTime + '</td>';
+      if (dataItem.isAutoBuy) {
+        autoBuyIcon = '<i class="icon-font icon-f3" title="您设置自动投注已投注该模型">自</i>'
+      } else {
+        autoBuyIcon = '';
+      }
+
+      html += '<td>' + autoBuyIcon + dataItem.tzTime + '</td>';
       html += '<td class="">' + craeteTdHTML(dataItem.ssbh) + '</td>';
       html += '<td>' + craeteTdHTML(dataItem.dz) + '</td>';
       html += '<td class="fc-3">' + sg + '</td>';
