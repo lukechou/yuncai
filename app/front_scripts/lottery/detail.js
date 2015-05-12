@@ -225,8 +225,8 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       var nextPage = ((PAGE.config.page - 1) * 10 > 0) ? (PAGE.config.page - 1) * 10 : '';
       if (data.retCode == 100000) {
         for (var i = 0, len = data.retData.length; i < len; i++) {
-
-          if ($('#j-strLotyName').val() == "model") {
+          var lotyName = $('#j-strLotyName').val();
+          if (lotyName == "model") {
             htmlOutput += '<tr>\
                             <td class="w180">' + (i + 1 + nextPage) + '</td>\
                             <td>' + data.retData[i].code + '</td>\
@@ -235,8 +235,20 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                             <td>' + data.retData[i].money + '</td>\
                             <td>' + data.retData[i].status + '</td>\
                           </tr>';
-          } else {
-            htmlOutput += '<tr>\
+          } else if( (lotyName == 'gdx') || (lotyName == 'dlc') || (lotyName == 'syy') ||(lotyName == 'xjx') ||
+        		  (lotyName == 'lnx') || (lotyName == 'jxssc') || (lotyName == 'k3') ||(lotyName == 'jk3') ||
+        		  (lotyName == 'hbk3') || (lotyName == 'klpk') || (lotyName == 'gkl') ){
+        	  
+        	  htmlOutput += '<tr>\
+                  <td class="w180">' + (i + 1 + nextPage) + '</td>\
+                  <td>' + data.retData[i].code + '</td>\
+                  <td>' + data.retData[i].money / data.retData[i].multiple / 2 + '</td>\
+                  <td>' + data.retData[i].multiple + '</td>\
+                  <td>' + data.retData[i].money + '</td>\
+                  <td>' + data.retData[i].status + '</td>\
+                </tr>';
+          }else {
+        	  htmlOutput += '<tr>\
                             <td class="w180">' + (i + 1 + nextPage) + '</td>\
                             <td>' + data.retData[i].code + '</td>\
                             <td>' + data.retData[i].gg + '</td>\

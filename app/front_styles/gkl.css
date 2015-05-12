@@ -1,0 +1,56 @@
+/* Cover default*/
+.box-left { margin-top: 0; padding-top: 6px; }
+.box-left-rightnobor { border-right: none; }
+.box-right { margin-top: -63px; }
+.kjgg .sub-content { height: 60px; background: #fff; }
+.br-zhu-item b { width: 70px; }
+.m-brhd-logo { width: 83px; height: 78px; margin: 0 10px 0 15px; }
+/* top nav */
+.m-br-nav { width: 752px; padding: 0; background: #f5f5f5; }
+.m-br-nav > li { width: 12.5%; }
+.m-br-nav > li > a { font-size: 12px; line-height: 1.4; position: relative; display: block; width: 100%; height: auto; margin: 0; padding: 6px 15px; padding: 5px 0; text-align: center; border: none; border: 1px transparent solid; border-right: 1px #dfdfdf solid; border-bottom: none; border-radius: 0; background: #f1f1f1; }
+.m-br-nav > li.active > a, .m-br-nav > li > a:hover, .m-br-nav > li.active > a:hover, .m-br-nav > li.active > a:focus { line-height: 1.4; height: 62px; color: #fff; border: none; background: #3d3d3d; }
+.m-br-nav > li > a > span { font-family: 'simsun'; font-size: 12px; color: #8e8e8e; }
+.m-br-nav > li.active > a span, .m-br-nav > li > a:hover span { color: #fff; }
+.m-br-nav > li > a > b { font-family: 'simsun'; font-size: 14px; font-weight: bold; }
+.m-br-nav > li.active { top: 0; }
+
+
+.m-brhd-qi { top: 21px; }
+.m-brhd-time { line-height: 34px; bottom: 5px; height: 34px; color: #212121; }
+.m-brhd-time > span { float: right; }
+.m-brhd-time > span > span { display: block; float: left; }
+.m-brhd-time .m-time-djs { font-family: 'Arial'; font-size: 30px; font-weight: bold; width: 23px; height: 34px; margin: 0 2px 0 0; text-align: center; color: #00f50b; border-radius: 2px; background: #212121; }
+
+
+
+/* box-choose */
+.box-choose { display: none; }
+.box-choose.active { display: block; overflow: hidden; }
+.choose-bd { overflow: hidden; width: 636px; margin: auto; }
+.choose-ws { float: left; width: 90px; margin: 5px 0 0 0; }
+.choose-ws .choose-title { font-size: 12px; font-weight: bold; }
+.sel-num-title { font-size: 12px; line-height: 20px; height: 20px; margin: 10px 0 0 0; text-align: left; color: #717171; text-indent: 5px; background: url(../front_images/icon/yilou_bgd.png) center left no-repeat; }
+
+.list-ball { overflow: hidden; width: 430px; float: left; }
+
+.choose-bdsm{ width: 600px;}
+.choose-bdsm .list-ball{ width: 387px;}
+
+.list-ball li { float: left; width: 33px; margin: 0 10px 10px 0; }
+.list-ball li a { display: block; font-family: Arial; font-size: 16px; line-height: 33px; width: 100%; height: 33px; text-align: center; color: #222; outline: none; background: url(../front_images/ballicon/bsg.png) no-repeat; }
+.list-ball li a:hover, .list-ball li a:focus { text-decoration: none; }
+.list-ball li a.active { text-decoration: none; color: #fff; background: url(../front_images/ballicon/bsr.png) no-repeat; }
+.list-ball li em { font-size: 12px; display: inline-block; width: 100%; text-align: center; color: #b1b1b1; }
+.list-ball li span { font-size: 12px; font-weight: normal; line-height: 12px; position: relative; top: -4px; }
+.quick-method { float: left; width: 86px; margin: 0 0 0 30px; }
+.quick-method span, .quick-method-dt span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
+.quick-method span:hover { background: #ffd06b; color: #fff; }
+
+/* 今日开奖 */
+.bottomBox h3 { font-size: 12px; line-height: 15px; float: none; clear: both; height: 15px; padding: 11px 15px 11px; }
+.todaynum-table { border: none; }
+.todaynum-table > thead > tr > th { background: #f6f6f6; }
+.todaynum-table .awardTd { color: #f13c38; }
+.todaynum-table .period { color: #000; }
+.todaynum-table td { color: #848484; }

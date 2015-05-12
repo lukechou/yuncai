@@ -119,6 +119,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
 
     var lessSeconds = 0;
     var stopSale = false;
+    var costRealMoney = 0;
 
     function init() {
       G_BUY.init();
@@ -165,6 +166,10 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
 
             G_BUY.alertStopModal = G_BUY.qihao;
 
+            if (G_BUY.buyType == 2 && G_BUY.qihao !== data.retData[0].issue_num) {
+              $('.br-details thead .br-zhui-c')[0].checked = true;
+              queryTrackIssueList($('#issue_size').val());
+            }
             G_BUY.qihao = data.retData[0].issue_num;
             G_BUY.qihaoId = data.retData[0].id;
           }
@@ -350,9 +355,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
         $('#j-less-info').html('销售时间截止');
 
         loadCurrentIssue();
-        if (G_BUY.buyType == 2) {
-          queryTrackIssueList($('#issue_size').val());
-        }
+
       }
     }
 

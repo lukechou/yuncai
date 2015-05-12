@@ -148,7 +148,7 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 /* LessMoney Modal */
 .lessbox { width: 420px; overflow: hidden; padding: 5px 0 10px; }
 .lessbox .icon { float: left; position: relative; left: 60px; }
-.lessbox .tipbox { float: right; width: 300px; text-align: left;  }
+.lessbox .tipbox { float: right; width: 310px; text-align: left;  }
 .lessbox h3 { font-size: 16px; font-weight: bold; color: #333; margin: 10px auto 30px; }
 .lessbox .m-btns { margin: 0; width: 270px; }
 .lessbox .m-btns>.btn { margin: 0 10px 0 0; width: 100px;  padding: 6px 0; }
@@ -197,7 +197,7 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .m-num-tips > b { margin-right: 10px; }
 .m-num-title { height: 20px; clear: both; float: none; text-align: center; padding-top: 11px; font-size: 12px; margin: 20px 0 30px; }
 .m-num-title > p { background: #fff; padding: 0 10px; display: inline-block; position: relative; z-index: 10; }
-.m-num-title > i { display: block; margin: -19px 0 0 0; height: 1px; background: url(../front_images/bg-line.png) repeat-x; position: relative; z-index: 9; }
+.m-num-title > i { display: block; margin: -19px 0 0 -23px; height: 1px; background: url(../front_images/bg-line.png) repeat-x; position: relative; z-index: 9; width: 715px;}
 .m-num-title > p > b { padding-right: 5px; font-weight: bold; }
 .m-num-group { position: relative; margin: 0 0 40px -5px; }
 .m-num-group > a { font-size: 16px; font-weight: bold; line-height: 33px; float: left; width: 33px; height: 33px; margin: 5px 5px; text-align: center; color: #3d3d3d; background: url(../front_images/ballicon/bsg.png) no-repeat; }

@@ -50,7 +50,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       }
     }
   };
-  var K3 = (function () {
+  var GKL = (function () {
 
     /**
      * lotyCnName  彩种中文名
@@ -73,43 +73,35 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
      * modifyStatu  购彩状态 0-选号  1-修改
      *
      */
-    var K3 = {
+    var GKL = {
       lotyCnName: _.escape($('#j-lotyCnName').val()),
       qihaoId: _.escape($('#qihaoId').val()),
       qihao: _.escape($('#qihao').val()),
       lotyName: $('#j-lotyName').val(),
       lotyId: $('#j-track-lotyid').val(),
-      playType: 'b1',
+      playType: 'b0',
       chooseMoney: 0,
       chooseZhushu: 0,
       buyArr: [],
       playName: {
-        b0: '包选',
-        b1: '同花',
-        b2: '顺子',
-        b3: '同花顺',
-        b4: '豹子',
-        b5: '对子',
-        b6: '任选一',
-        b7: '任选二',
-        b8: '任选三',
-        b9: '任选四',
-        b10: '任选五',
-        b11: '任选六',
+        b0: '选一数投',
+        b1: '选一红投',
+        b2: '任选二',
+        b3: '任选三',
+        b4: '任选四',
+        b5: '任选五',
+        b6: '选二连组',
+        b7: '选三前组',
       },
       buyCodesType: {
-        b0: 'BX',
-        b1: 'TH',
-        b2: 'SZ',
-        b3: 'THS',
-        b4: 'BZ',
-        b5: 'DZ',
-        b6: 'R1',
-        b7: 'R2',
-        b8: 'R3',
-        b9: 'R4',
-        b10: 'R5',
-        b11: 'R6',
+        b0: 'F1',
+        b1: 'A1',
+        b2: 'R2',
+        b3: 'R3',
+        b4: 'R4',
+        b5: 'R5',
+        b6: 'B2',
+        b7: 'B3',
       },
       beishu: 1,
       trackData: [],
@@ -127,10 +119,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       showStopControl: true
     };
 
-    return K3;
+    return GKL;
   }());
 
-  K3.updateYilou = function () {
+  GKL.updateYilou = function () {
 
     var _this = this;
 
@@ -148,21 +140,21 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         if (data.retCode === 100000) {
 
           var map = {
-            b1: 8,
-            b2: 10,
-            b3: 11,
-            b4: 9,
-            b5: 7,
-            b6: 1,
-            b7: 2,
-            b8: 3,
-            b9: 4,
-            b10: 5,
-            b11: 6,
+            b0: 1,
+            b1: 2,
+            b2: 3,
+            b3: 4,
+            b4: 5,
+            b5: 6,
+            b6: 7,
+            b7: 8,
           };
 
           if (data.retData[map[_this.playType]]) {
             var y = data.retData[map[_this.playType]].split('|');
+            y = _.map(y, function (r) {
+              return Number(r);
+            });
             var maxYl = _.max(y);
             var h = null;
 
@@ -185,7 +177,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.runYilou = function () {
+  GKL.runYilou = function () {
 
     var _this = this;
 
@@ -195,10 +187,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.updateYilou();
-  K3.runYilou();
+  GKL.updateYilou();
+  GKL.runYilou();
 
-  K3.reset = function () {
+  GKL.reset = function () {
 
     var _this = this;
 
@@ -211,7 +203,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.updateBottomUi = function () {
+  GKL.updateBottomUi = function () {
 
     var _this = this;
     var m = 0;
@@ -226,18 +218,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.setNameStr = function (nums, numNameArr) {
+  GKL.setNameStr = function (nums) {
 
     var result = '';
 
-    if (numNameArr) {
-      for (var i = 0; i < nums.length; i++) {
-
-        result += '<span>' + numNameArr[nums[i]] + '</span>';
-
-      };
-    } else {
-
+    if (nums && _.isArray(nums)) {
       for (var i = 0; i < nums.length; i++) {
 
         result += '<span>' + nums[i] + '</span>';
@@ -247,7 +232,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return result;
   };
 
-  K3.createOneNote = function (o, isJx) {
+  GKL.createOneNote = function (o, isJx) {
 
     var _this = this;
 
@@ -263,112 +248,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       num: ''
     };
 
-    switch (_this.playType) {
-    case 'b0':
-      numNameArr = {
-        '01': '同花包选',
-        '02': '顺子包选',
-        '03': '同花顺包选',
-        '04': '豹子包选',
-        '05': '同花包选',
-      };
-      break;
-    case 'b1':
-
-      numNameArr = {
-        '01': '黑桃',
-        '02': '红心',
-        '03': '梅花',
-        '04': '方块',
-        'BX': '同花包选',
-      };
-
-      break;
-    case 'b2':
-      numNameArr = {
-        '01': 'A23',
-        '02': '234',
-        '03': '345',
-        '04': '456',
-        '05': '567',
-        '06': '678',
-        '07': '789',
-        '08': '8910',
-        '09': '910J',
-        '10': '10JQ',
-        '11': 'JQK',
-        '12': 'QKA',
-        'BX': '顺子包选'
-      };
-      break;
-    case 'b3':
-
-      numNameArr = {
-        '01': '黑桃顺子',
-        '02': '红心顺子',
-        '03': '梅花顺子',
-        '04': '方块顺子',
-        'BX': '同花顺包选',
-      };
-
-      break;
-    case 'b4':
-      numNameArr = {
-        '01': 'AAA',
-        '02': '222',
-        '03': '333',
-        '04': '444',
-        '05': '555',
-        '06': '666',
-        '07': '777',
-        '08': '888',
-        '09': '999',
-        '10': '101010',
-        '11': 'JJJ',
-        '12': 'QQQ',
-        '13': 'KKK',
-        'BX': '豹子包选'
-      };
-      break;
-    case 'b5':
-      numNameArr = {
-        '01': 'AA',
-        '02': '22',
-        '03': '33',
-        '04': '44',
-        '05': '55',
-        '06': '66',
-        '07': '77',
-        '08': '88',
-        '09': '99',
-        '10': '1010',
-        '11': 'JJ',
-        '12': 'QQ',
-        '13': 'KK',
-        'BX': '对子包选'
-      };
-      break;
-    default:
-
-      numNameArr = {
-        '01': 'A',
-        '02': '2',
-        '03': '3',
-        '04': '4',
-        '05': '5',
-        '06': '6',
-        '07': '7',
-        '08': '8',
-        '09': '9',
-        '10': '10',
-        '11': 'J',
-        '12': 'Q',
-        '13': 'K',
-      };
-      break;
-    }
-
-    obj.num = _this.setNameStr(obj.nums, numNameArr);
+    obj.num = _this.setNameStr(obj.nums);
 
     var compiled = null;
     var html = null;
@@ -397,7 +277,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   };
 
   // 随机添加 N 注
-  K3.addManyItem = function (count) {
+  GKL.addManyItem = function (count) {
 
     var _this = this;
 
@@ -420,7 +300,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.createOneItem = function () {
+  GKL.createOneItem = function () {
 
     var _this = this;
 
@@ -429,32 +309,40 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var s = [];
     var sampleConut = 1;
 
+    var allNums = ['01', '02', '03', '04', '05', '06', '07', '08', '09', 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+    var a = {};
+
     var a = {
-      'b0': ['01', '02', '03', '04', '05'],
-      'b1': ['01', '02', '03', '04'],
-      'b2': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-      'b3': ['01', '02', '03', '04'],
-      'b4': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13'],
-      'b5': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13'],
-      'b6': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13'],
+      'b0': allNums.slice(0, 18),
+      'b1': allNums.slice(18),
+      'b2': allNums,
+      'b3': allNums,
+      'b4': allNums,
+      'b5': allNums,
+      'b6': allNums,
+      'b7': allNums,
     };
 
     switch (_this.playType) {
 
-    case 'b7':
+    case 'b2':
       sampleConut = 2;
       break;
-    case 'b8':
+    case 'b3':
       sampleConut = 3;
       break;
-    case 'b9':
+    case 'b4':
       sampleConut = 4;
       break;
-    case 'b10':
+    case 'b5':
       sampleConut = 5;
       break;
-    case 'b11':
-      sampleConut = 6;
+    case 'b6':
+      sampleConut = 2;
+      break;
+    case 'b7':
+      sampleConut = 3;
       break;
     default:
       break;
@@ -468,11 +356,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       });
 
     } else {
-
-      s = _.sample(a['b6'], sampleConut).sort(function (a, b) {
-        return a - b;
-      });
-
+      return;
     }
 
     if (_.isArray(s)) {
@@ -496,7 +380,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.getObj = function () {
+  GKL.getObj = function () {
     var _this = this;
 
     var activeNumEl = $('#j-area-' + _this.playType + ' .j-num-btn.active');
@@ -520,7 +404,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return obj;
   };
 
-  K3.updateBuyArr = function () {
+  GKL.updateBuyArr = function () {
 
     var _this = this;
 
@@ -545,7 +429,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _this.toggleChooseToBuyBtn();
   };
 
-  K3.getChooseToBuy = function () {
+  GKL.getChooseToBuy = function () {
 
     var _this = this;
 
@@ -563,7 +447,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   // obj.nums  投注号码
   // obj.money 投注号码金额
   // obj.playType  投注玩法类型
-  K3.saveNumsObj = function (obj) {
+  GKL.saveNumsObj = function (obj) {
 
     var _this = this;
 
@@ -580,7 +464,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.cleanBuyList = function () {
+  GKL.cleanBuyList = function () {
 
     var _this = this;
 
@@ -590,7 +474,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.updateChooseToBuyBtn = function () {
+  GKL.updateChooseToBuyBtn = function () {
 
     var _this = this;
     var c = 'active';
@@ -602,7 +486,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
   };
 
-  K3.setChooseParams = function () {
+  GKL.setChooseParams = function () {
 
     var _this = this;
 
@@ -611,28 +495,33 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var b6Row = null;
 
     switch (_this.playType) {
-    case 'b7':
+    case 'b2':
       q = QUEUE.getACTotalNum(l, 2, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
       break;
-    case 'b8':
+    case 'b3':
       q = QUEUE.getACTotalNum(l, 3, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
       break;
-    case 'b9':
+    case 'b4':
       q = QUEUE.getACTotalNum(l, 4, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
       break;
-    case 'b10':
+    case 'b5':
       q = QUEUE.getACTotalNum(l, 5, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
       break;
-    case 'b11':
-      q = QUEUE.getACTotalNum(l, 6, 'C');
+    case 'b6':
+      q = QUEUE.getACTotalNum(l, 2, 'C');
+      _this.chooseZhushu = q;
+      _this.chooseMoney = q * 2;
+      break;
+    case 'b7':
+      q = QUEUE.getACTotalNum(l, 3, 'C');
       _this.chooseZhushu = q;
       _this.chooseMoney = q * 2;
       break;
@@ -644,7 +533,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.updateMidTotal = function () {
+  GKL.updateMidTotal = function () {
 
     var _this = this;
 
@@ -657,7 +546,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.cleanNumBtn = function () {
+  GKL.cleanNumBtn = function () {
 
     var _this = this;
     _this.chooseMoney = 0;
@@ -667,7 +556,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _this.updateMidTotal();
   };
 
-  K3.updateHzBallList = function (r) {
+  GKL.updateHzBallList = function (r) {
 
     var _this = this;
 
@@ -710,7 +599,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.updateCardGroup = function (id) {
+  GKL.updateCardGroup = function (id) {
 
     var _this = this;
 
@@ -737,7 +626,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.toggleChooseToBuyBtn = function () {
+  GKL.toggleChooseToBuyBtn = function () {
 
     var _this = this;
 
@@ -759,7 +648,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.removeBuyList = function (zid) {
+  GKL.removeBuyList = function (zid) {
 
     var _this = this;
 
@@ -771,7 +660,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.togglePlayTab = function () {
+  GKL.togglePlayTab = function () {
 
     var _this = this;
 
@@ -782,11 +671,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _this.modifyStatu = 0;
     _this.toggleChooseToBuyBtn();
 
-    K3.updateYilou();
+    GKL.updateYilou();
 
   };
 
-  K3.getBuyArrTotalMoney = function () {
+  GKL.getBuyArrTotalMoney = function () {
     var _this = this;
     var m = 0;
 
@@ -797,7 +686,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return m;
   };
 
-  K3.buySuccess = function (data, obj, payMoney) {
+  GKL.buySuccess = function (data, obj, payMoney) {
 
     var _this = this;
 
@@ -818,7 +707,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
   };
 
-  K3.enoughMoneyCb = function (url, obj, payMoney) {
+  GKL.enoughMoneyCb = function (url, obj, payMoney) {
 
     var _this = this;
 
@@ -834,7 +723,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.getCodes = function () {
+  GKL.getCodes = function () {
 
     var _this = this;
     var codes = [];
@@ -848,25 +737,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       bArr = bArr.concat(_this.buyArr[i].nums);
     };
 
-    if (_this.playType == 'b2') {
-
-      codes = [];
-
-      for (var i = 0; i < bArr.length; i++) {
-
-        codes.push(_this.buyCodesType[_this.playType] + '|' + bArr[i]);
-
-      };
-
-    }
-
     result = codes.join('$');
 
     return result;
 
   };
 
-  K3.buyLoty = function () {
+  GKL.buyLoty = function () {
 
     var _this = this;
     var url = '';
@@ -975,7 +852,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.onToggleBuyType = function (type) {
+  GKL.onToggleBuyType = function (type) {
 
     var _this = this;
 
@@ -986,7 +863,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.updateTrackList = function () {
+  GKL.updateTrackList = function () {
 
     var _this = this;
 
@@ -1028,7 +905,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  K3.getTrackTotalMoney = function (o) {
+  GKL.getTrackTotalMoney = function (o) {
     var _this = this;
 
     var r = 0;
@@ -1065,7 +942,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('.br-details').on('change', 'tbody .br-zhui-c', function (event) {
     event.preventDefault();
 
-    K3.updateTrackList();
+    GKL.updateTrackList();
 
   });
 
@@ -1081,7 +958,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       $('#track_issue_list .br-zhui-c').removeAttr('checked');
     }
 
-    K3.updateTrackList();
+    GKL.updateTrackList();
 
   });
 
@@ -1091,12 +968,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var val = parseInt($(this).val()) || 1;
 
     val = filterTrackNum(val);
-    debugger
+
     $(this).val(val);
 
     $('.br-details tbody .br-zhui-bei').val(val);
 
-    K3.updateTrackList();
+    GKL.updateTrackList();
 
   });
 
@@ -1109,7 +986,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     $(this).val(val);
 
-    K3.updateTrackList();
+    GKL.updateTrackList();
 
   });
 
@@ -1120,12 +997,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     if (!$('.j-sub-agreed')[0].checked) {
       APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
       return;
-    } else if (K3.buyType === 2 && K3.trackData.length === 0) {
+    } else if (GKL.buyType === 2 && GKL.trackData.length === 0) {
       APP.showTips('追号最少购买一期');
-    } else if (K3.buyArr.length === 0) {
+    } else if (GKL.buyArr.length === 0) {
       APP.showTips('请至少选择1注号码投注');
     } else {
-      K3.buyLoty();
+      GKL.buyLoty();
     }
 
   });
@@ -1173,7 +1050,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('#j-box-left').on('click', '.j-zhu-adds', function (event) {
     event.preventDefault();
     var c = ~~($(this).attr('data-zhu'));
-    K3.addManyItem(c);
+    GKL.addManyItem(c);
   });
 
   // 修改投注
@@ -1183,7 +1060,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var p = $(this).parents('.br-zhu-item');
     var zid = Number(p.attr('data-zid'));
 
-    K3.updateCardGroup(zid);
+    GKL.updateCardGroup(zid);
 
   });
 
@@ -1193,12 +1070,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var p = $(this).parents('.br-zhu-item');
     var zid = Number(p.attr('data-zid'));
-    K3.removeBuyList(zid);
+    GKL.removeBuyList(zid);
     p.remove();
 
     // 移除修改状态
-    K3.modifyStatu = 0;
-    K3.toggleChooseToBuyBtn();
+    GKL.modifyStatu = 0;
+    GKL.toggleChooseToBuyBtn();
 
   });
 
@@ -1216,8 +1093,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     $('.box-choose').removeClass('active');
     $('.j-choose-' + type).addClass('active');
 
-    K3.playType = type;
-    K3.togglePlayTab();
+    GKL.playType = type;
+    GKL.togglePlayTab();
 
   });
 
@@ -1227,7 +1104,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     $(this).toggleClass('active');
 
-    K3.updateMidTotal();
+    GKL.updateMidTotal();
 
   });
 
@@ -1235,19 +1112,19 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('#choose_to_buy').on('click', function (event) {
     event.preventDefault();
 
-    if (K3.buyArr.length >= 100) {
+    if (GKL.buyArr.length >= 100) {
       APP.showTips('您的投注号码多于100行，请返回重新选择');
       return;
     }
 
     if ($(this).hasClass('active')) {
 
-      if (K3.modifyStatu === 1) {
+      if (GKL.modifyStatu === 1) {
 
-        K3.updateBuyArr();
+        GKL.updateBuyArr();
 
       } else {
-        K3.getChooseToBuy();
+        GKL.getChooseToBuy();
       }
 
     } else {
@@ -1261,12 +1138,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   $('#clean_buy_code').on('click', function (event) {
     event.preventDefault();
 
-    K3.cleanBuyList();
+    GKL.cleanBuyList();
 
-    if (K3.modifyStatu === 1) {
+    if (GKL.modifyStatu === 1) {
       // 有修改状态时
-      K3.modifyStatu = 0;
-      K3.toggleChooseToBuyBtn();
+      GKL.modifyStatu = 0;
+      GKL.toggleChooseToBuyBtn();
     }
 
   });
@@ -1290,7 +1167,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     $('#buy_type').siblings('.tab-content').find('.tab-pane').removeClass('active');
     $(l).addClass('active');
 
-    K3.onToggleBuyType(t);
+    GKL.onToggleBuyType(t);
 
     switch (t) {
     case 1:
@@ -1327,93 +1204,78 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('#j-kj-box').on('click', '.third-more', function (event) {
+  $('.j-quick-method').on('click', '[data-type]', function (event) {
     event.preventDefault();
-    showTodayNum();
 
-    var top = $('#j-todaynum-table').offset().top;
+    var toggleType = $(this).attr('data-type');
+    var btnGroup = $('#j-area-' + GKL.playType + ' .j-num-btn');
+    var btnLen = btnGroup.length;
 
-    $("html, body").animate({
-      scrollTop: top + 'px'
-    }, 300);
+    GKL.cleanNumBtn();
 
-  });
-
-  $('#j-award-more').on('click', function (event) {
-    event.preventDefault();
-    if ($('#j-todaynum-table').hasClass('hide')) {
-      showTodayNum();
-    } else {
-      hideTodayNum();
+    if (toggleType === 'all') {
+      btnGroup.addClass('active');
     }
 
-  });
+    if (toggleType === 'odd') {
 
-  /* 选号区按钮 */
-  $('#j-content').on('click', '.j-random', function (event) {
-    event.preventDefault();
+      btnGroup.each(function (index, el) {
 
-    K3.cleanNumBtn();
+        var n = Number($(this).attr('data-num'));
 
-    var b = $('#j-area-' + K3.playType + ' .j-num-btn');
-    var l = b.length;
-    var f = [];
-    var count = 1;
-    var index = null;
+        if (_.isNumber(n) && n % 2 !== 0) {
+          $(this).addClass('active');
+        }
+      });
 
-    switch (K3.playType) {
-    case 'b7':
-      count = 2;
-      break;
-    case 'b8':
-      count = 3;
-      break;
-    case 'b9':
-      count = 4;
-      break;
-    case 'b10':
-      count = 5;
-      break;
-    case 'b11':
-      count = 6;
-      break;
-    default:
-      break;
     }
 
-    for (var i = 0; i < l; i++) {
-      f.push(i);
-    };
+    if (toggleType === 'even') {
 
-    index = _.sample(f, count);
+      btnGroup.each(function (index, el) {
 
-    if (count === 1) {
-      b.eq(index).addClass('active');
-    } else {
-      for (var i = 0; i < index.length; i++) {
-        b.eq(index[i]).addClass('active');
-      };
+        var n = Number($(this).attr('data-num'));
+
+        if (_.isNumber(n) && n % 2 === 0) {
+          $(this).addClass('active');
+        }
+      });
+
     }
 
-    K3.updateMidTotal();
+    if (toggleType === 'big') {
 
-    // animate
-    // $('#j-mask-main').html();
-    // $('#j-first-mask').show().addClass('animated');
+      btnGroup.each(function (index, el) {
 
-  });
+        var n = Number($(this).attr('data-num'));
+        var midNum = 10;
+        if (btnLen === 18) {
+          midNum = 9;
+        }
+        if (_.isNumber(n) && n > midNum) {
+          $(this).addClass('active');
+        }
+      });
 
-  $('#j-content').on('click', '.j-all', function (event) {
-    event.preventDefault();
+    }
 
-    $('#j-area-' + K3.playType + ' .j-num-btn').addClass('active');
-    K3.updateMidTotal();
+    if (toggleType === 'small') {
 
-  });
+      btnGroup.each(function (index, el) {
 
-  $('#j-content').on('click', '.j-clear', function (event) {
-    event.preventDefault();
-    K3.cleanNumBtn();
+        var n = Number($(this).attr('data-num'));
+        var midNum = 10;
+        if (btnLen === 18) {
+          midNum = 9;
+        }
+        if (_.isNumber(n) && n <= midNum) {
+          $(this).addClass('active');
+        }
+      });
+
+    }
+
+    GKL.updateMidTotal();
   });
 
   /* 合买 */
@@ -1538,7 +1400,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   function updateCreatePartProjectParame() {
 
     // 总金额
-    var totalMoney = K3.getBuyArrTotalMoney();
+    var totalMoney = GKL.getBuyArrTotalMoney();
 
     // 获取份数 shareNum
     var copies = $("#share-num").val() || totalMoney;
@@ -1719,7 +1581,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     loadNewestAward(); //最新中奖信息
     loadLastIssueList(); //最新中奖列表
     loadCurrentIssue(); //获取当前期
-    K3.statu = 1;
+    GKL.statu = 1;
 
     setInterval(function () {
 
@@ -1731,15 +1593,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   }
 
+  /* 倒计时 相关 Start */
+
   // 最新所有开奖公告
   function getAllAwardRecord() {
 
-    var url = '/lottery/award/kuaipin/' + K3.lotyName;
+    var url = '/lottery/award/kuaipin/' + GKL.lotyName;
     var tbody = $('#j-todaynum-table tbody');
 
     var tbodyQihao = tbody.attr('data-qihao');
 
-    if (tbodyQihao && tbodyQihao === K3.qihao) {
+    if (tbodyQihao && tbodyQihao === GKL.qihao) {
       return;
     } else {
 
@@ -1753,7 +1617,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         })
         .done(function (data) {
 
-          var q = K3.qihao.slice(0, K3.qihao.length - 2);
+          var q = GKL.qihao.slice(0, GKL.qihao.length - 2);
           var max = ~~$('#j-maxqishu').val();
 
           var maxLen = 84;
@@ -1849,7 +1713,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           };
 
           tbody.html(html);
-          tbody.attr('data-qihao', K3.qihao);
+          tbody.attr('data-qihao', GKL.qihao);
 
         });
     }
@@ -1864,7 +1728,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         type: 'GET',
         dataType: 'json',
         data: {
-          lotteryId: K3.lotyId
+          lotteryId: GKL.lotyId
         }
       })
       .done(function (data) {
@@ -1886,6 +1750,81 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       });
   }
 
+  function updateKjgg(kjNum, kjNo) {
+
+    var kjHTML = '等待开奖';
+    var arr = [];
+
+    if (kjNum != '') {
+
+      arr = kjNum.split(' ');
+      arr = _.map(arr, function (r) {
+        return '<span class="bg-3">' + r + '</span>';
+      });
+
+      kjHTML = arr.join('');
+    }
+
+    $('#j-last-issue-no').html(kjNo);
+    $('#j-new-num').html(kjHTML);
+
+  }
+
+  function updateKjList(item) {
+
+    var kjhmHtml = '';
+    var html = '';
+    for (var i = 0, len = item.length; i < len; i++) {
+
+      if (item[i]['kjhm'] === '') {
+        kjhmHtml = '等待开奖';
+      } else {
+        kjhmHtml = '<span class="fc-3">' + item[i]['kjhm'] + '</span>';
+      }
+
+      html += '<tr><td>' + item[i]['no'] + '</td><td>' + kjhmHtml + '</td></tr>';
+
+    };
+
+    $('#j-last-issue-n').html(html);
+
+  }
+
+  // 获取最新期数列表，更新右侧开奖信息，开奖公告
+  function loadLastIssueList() {
+
+    $.ajax({
+        url: '/lottery/issue/kuaipin/last-issue-n',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          loty_name: GKL.lotyName,
+          issue_num: 10
+        }
+      })
+      .done(function (data) {
+
+        var item = data.retData;
+        var lastData = item[0];
+        var type = null;
+        var lessTime = 0;
+        var xt = '';
+        var arr = [];
+        var kjNum = lastData['kjhm'];
+        var kjNo = lastData['no'];
+
+        if (data.retCode == 100000) {
+
+          //更新开奖列表
+          updateKjList(item);
+
+          //更新开奖公告
+          updateKjgg(kjNum, kjNo);
+
+        }
+      });
+  }
+
   // 获取当前期参数
   function loadCurrentIssue() {
 
@@ -1896,7 +1835,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         type: 'GET',
         dataType: 'json',
         data: {
-          lottery_id: K3.lotyId
+          lottery_id: GKL.lotyId
         }
       })
       .done(function (data) {
@@ -1906,20 +1845,21 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         var stopSale = '';
         var max = ~~$('#j-maxqishu').val() || 100;
         var q = '';
+        lessSeconds = Math.floor((item.company_sell_etime - item.sys_time));
 
         if (data.retCode === 100000) {
 
           stopSale = (0 === parseInt(item.sell_status, 10));
 
-          // 判断是否停售
+          // 判断是否停售  showStopControl-控制Modal弹出
           if (stopSale) {
 
-            if (K3.showStopControl) {
-              APP.showStopSellModal(K3.lotyCnName);
+            if (GKL.showStopControl) {
+              APP.showStopSellModal(GKL.lotyCnName);
               $('#buy-submit').html('暂停销售').removeClass('btn-red').addClass('btn-stop').attr('disabled', true);
 
-              $('#j-less-seconds').html('<i class="icon icon-k302">--</i><i class="icon icon-k302">--</i>');
-              K3.showStopControl = false;
+              $('#j-less-info').html('暂停销售');
+              GKL.showStopControl = false;
             }
 
             callCurrentIssueNext(10);
@@ -1928,29 +1868,24 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
           } else {
 
-            K3.showStopControl = true;
+            GKL.showStopControl = true;
 
             $('#buy-submit').html('立即投注').addClass('btn-red').removeClass('btn-stop').removeAttr('disabled');
 
           }
 
-          lessSeconds = Math.floor((item.company_sell_etime - item.sys_time));
-
-          // update k3 qihao
-          K3.qihao = item.issue_num;
-          K3.qihaoId = item.id;
-          q = (~~K3.qihao.slice(K3.qihao.length - 2)) - 1;
-
-          $('#j-sell-qi').html(q);
-          $('#j-less-qi').html(max - q);
+          // update loty Config
+          if (GKL.qihao != item.issue_num) {
+            GKL.qihao = item.issue_num;
+            GKL.qihaoId = item.id;
+          }
 
           // 小于0 等待开售中
           if (lessSeconds < 0) {
 
-            $('#j-second-hd').addClass('out')
-            $('#j-less-seconds').html('<h6>等待开售中..</h6>');
+            $('#j-less-info').html('销售时间截止');
 
-            K3.waitSell = true;
+            GKL.waitSell = true;
 
             loadLastIssueList();
 
@@ -1961,11 +1896,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
             timer(lessSeconds);
 
-            K3.waitSell = false;
+            GKL.waitSell = false;
 
             // update mid area
-            $('#j-second-hd').removeClass('out')
-            $('#j-dq-qihao').html(K3.qihao);
+            $('#j-current-issue').html(GKL.qihao);
             $('.br-details thead .br-zhui-c')[0].checked = true;
             queryTrackIssueList(v);
 
@@ -1979,298 +1913,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   }
 
-  function getOneCard(c) {
-
-    if (c && c.length === 3) {
-
-      var h = '<span class="m-card card-' + c.slice(0, 1) + '"><i class="iconfont icon-h' + c.slice(0, 1) + ' m-card-flow"></i><i class="iconfont icon-n' + c.slice(1) + ' m-card-num"></i></span>';
-      return h;
-    } else {
-
-      return '';
-
-    }
-
-  }
-
-  function formatCard(card) {
-
-    var html = '';
-
-    if (_.isArray(card)) {
-
-      for (var i = 0; i < card.length; i++) {
-
-        html += getOneCard(card[i]);
-      }
-
-    } else {
-
-      html = getOneCard(card);
-
-    }
-
-    return html;
-  }
-
-  // 获取最新期数列表，更新右侧开奖信息，开奖公告
-  function loadLastIssueList() {
-
-    $.ajax({
-        url: '/lottery/issue/kuaipin/last-issue-n',
-        type: 'GET',
-        dataType: 'json',
-        data: {
-          loty_name: K3.lotyName,
-          issue_num: 10
-        }
-      })
-      .done(function (data) {
-
-        var item = data.retData;
-        var html = '';
-        var html2 = '';
-        var kjhmHtml = '';
-        var kjHTML = '等待开奖';
-        var arrKJHM = '';
-        var lastData = item[0];
-        var type = null;
-        var lessTime = 0;
-        var xt = '';
-        var arr = [];
-
-        if (data.retCode == 100000) {
-
-          for (var i = 0, len = item.length; i < len; i++) {
-
-            if (item[i]['kjhm'] === '') {
-              kjhmHtml = '等待开奖';
-              xt = '';
-            } else {
-              arr = item[i]['kjhm'].split(' ');
-              kjhmHtml = formatCard(arr);
-              xt = getNumsXt(arr);
-            }
-
-            html += '<tr><td>' + item[i]['no'] + '</td><td>' + kjhmHtml + '</td><td>' + xt + '</td></tr>';
-
-          };
-
-          $('#j-last-issue-n').html(html);
-
-          if (lastData['kjhm'] != '') {
-
-            kjHTML = '';
-            arrKJHM = lastData['kjhm'].split(' ');
-
-            kjHTML += formatCard(arrKJHM);
-            html2 = '<p>' + K3.lotyCnName + ' 第<span class="fc-3 mlr5">' + lastData['no'] + '</span>期<span>开奖</span></p><p class="sub-content-num">' + kjHTML + '</p>';
-
-          } else {
-            html2 = '<p>' + K3.lotyCnName + ' 第<span class="fc-3 mlr5">' + lastData['no'] + '</span>期<span>开奖</span></p><p class="sub-content-num">' + kjHTML + '</p>';
-          }
-
-          $('#j-sub-content').html(html2);
-
-          // 开奖状态判断
-          if (lastData.kj_time <= lastData.server_time) {
-
-            if (arrKJHM) {
-              // 已开奖
-              K3.currentKjStatus = 1;
-            } else {
-              // 开奖中
-              K3.currentKjStatus = 2;
-            }
-
-            if (K3.waitSell) {
-              // 等待开售
-              K3.currentKjStatus = 4;
-            }
-
-          } else {
-            // 倒计时
-            K3.currentKjStatus = 3;
-            lessTime = lastData.kj_time - lastData.server_time;
-          }
-
-          if (K3.kjStatus !== K3.currentKjStatus || K3.currentKjStatus === 4) {
-
-            toggleKjbox({
-              nums: arrKJHM,
-              no: lastData['no'],
-              lessTime: lessTime,
-              item: item
-            });
-
-            K3.kjStatus = K3.currentKjStatus;
-
-          }
-
-        }
-      });
-  }
-
-  function getNumsHz(nums) {
-
-    var h = 0;
-
-    if (nums && nums.length > 0) {
-
-      for (var i = 0; i < nums.length; i++) {
-        h += ~~(nums[i]);
-      };
-
-    } else {
-      h = null;
-    }
-
-    return h;
-
-  }
-
-  function toggleKjbox(obj) {
-
-    var hz = 0;
-    var o = {};
-    var xt = '';
-    var html = '';
-    var f = '';
-    var beforeQi = null;
-    var xtText = '';
-
-    if (!obj) {
-      return;
-    }
-
-    if (!K3.currentKjStatus) {
-      K3.currentKjStatus = 1;
-    }
-
-    xt = getNumsXt(obj.nums);
-
-    o = {
-      qihao: obj.no,
-      nums: obj.nums,
-      xt: xt,
-    };
-
-    // 已开奖
-    if (K3.currentKjStatus === 1) {
-
-      if (_.isArray(xt)) {
-        xtText = xt.join(' ');
-      }
-
-      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖牌<span class="ml-10">牌型：<span class="fc-3 mlr5">' + xtText + '</span></b></p><div class="third-box clearfix card-big-group">' + formatCard(o.nums) + '</div>');
-
-      $('#j-kj-box').html(html(o));
-      return;
-
-    }
-
-    // 开奖中
-    if (K3.currentKjStatus === 2) {
-
-      var rf = '<div class="num-group"><span class="card"></span></div>';
-
-      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖中：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li>' + rf + '</li><li>' + rf + '</li><li>' + rf + '</li></ul></div>');
-
-      $('#j-kj-box').html(html(o));
-
-      return;
-    }
-
-    // 倒计时
-    if (K3.currentKjStatus === 3) {
-
-      beforeQi = obj.item[1];
-      obj.nums = beforeQi.kjhm;
-      xt = getNumsXt(obj.nums);
-
-      o.xt = xt;
-      o.nums = obj.nums;
-
-      if (obj.nums) {
-        f = formatCard(o.nums.split(' '));
-      } else {
-        f = '<b class="fc-3">等待开奖</b>';
-      }
-
-      o.time = secondFormat(obj.lessTime).join(':');
-
-      html = _.template('<p class="third-hd fs-12">第<span class="mlr5 fc-3">' + beforeQi.no + '</span>期开奖号码：' + f + '</p><div class="third-timer"><h5>第<b class="fc-3 mlr5"><%= qihao%></b>期等待开奖：</h5><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p><div class="progress"><div class="progress-box"><div class="progress-bar progress-bar-danger" id="progress-bar"><i class="before"></i><i class="after"></i><i class="mid mid-1"></i><i class="mid mid-2"></i><i class="mid mid-3"></i></div></div></div></div>');
-
-      K3.waitEndTime = obj.lessTime;
-      K3.waitStartTime = obj.lessTime;
-
-      runWaitTimeAnimate();
-      $('#j-kj-box').html(html(o));
-
-      return;
-    }
-
-    if (K3.currentKjStatus === 4) {
-
-      beforeQi = obj.item[1];
-      obj.nums = beforeQi.kjhm;
-      xt = getNumsXt(obj.nums);
-
-      o.xt = xt;
-      o.nums = obj.nums;
-
-      if (obj.nums) {
-        f = '<br>形态: ' + o.xt;
-      } else {
-        f = '<b class="fc-3">等待开奖</b>';
-      }
-
-      var d = '';
-      var kjhmArr = obj.item[0].kjhm.split(' ');
-
-      if (obj.item[0].kjhm) {
-
-        for (var i = 0; i < kjhmArr.length; i++) {
-          d += '<i class="mlr2 icon icon-k3num' + kjhmArr[i] + '"></i>';
-        };
-
-      } else {
-        d = '等待开奖中..';
-      }
-
-      // 已开奖
-      html = _.template('<p class="third-hd fs-12">第<span class="mlr5">' + beforeQi.no + '</span>期开奖号码：' + formatCard(o.nums.split(' ')) + ' ' + f + '</p><div class="third-box clearfix"><p class="wait-p1">第<span class="fc-3 mlr5"><%= qihao%></span>期</p><p class="wait-p2 fs-yh">' + d + '</p></div>');
-
-      $('#j-kj-box').html(html(o));
-      return;
-    }
-
-  }
-
-  function runWaitTimeAnimate() {
-
-    K3.runWaitTimer = setInterval(function () {
-
-      K3.waitEndTime--;
-
-      if (K3.waitEndTime > 0) {
-
-        //时间数字
-        $('#j-wait-time').html(secondFormat(K3.waitEndTime).join(':'));
-        // 进度条
-        $('.progress-bar').width((K3.waitEndTime / K3.waitStartTime) * 100 + '%');
-
-      } else {
-
-        // 清除倒计时, 获取最新期数列表
-        clearInterval(K3.runWaitTimer);
-        loadLastIssueList();
-
-      }
-
-    }, 1000);
-
-  }
+  /*  倒计时 End */
 
   function secondFormat(s) {
 
@@ -2313,13 +1956,20 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var html = '';
 
-    if (h.length === 3) {
-      html = '<i class="icon icon-k302">' + h[0] + '</i><i class="icon icon-k302">' + h[1] + '</i></i><i class="icon icon-k302">' + h[2] + '</i>';
-      $('#j-less-seconds').addClass('active').html(html);
-    } else {
-      html = '<i class="icon icon-k302">' + h[0] + '</i><i class="icon icon-k302">' + h[1] + '</i>';
-      $('#j-less-seconds').removeClass('active').html(html);
+    h = _.map(h, function (r) {
+
+
+      var a = String(r).split('');
+      return '<span class="m-time-djs" >' + a[0] + '</span><span class="m-time-djs" >' + a[1] + '</span>';
+    });
+
+    if(h.length ===3 ){
+      html = h[0]+'<span>时</span>'+h[1]+'<span>分</span>'+h[2]+'<span>秒</span>';
+    }else{
+      html = h[0]+'<span>分</span>'+h[1]+'<span>秒</span>';
     }
+
+    $('#j-less-info').html(html);
 
   }
 
@@ -2329,13 +1979,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     updateTimer(s);
 
     var now = ~~((new Date().getTime()) / 1000);
-    var q = $('#j-dq-qihao').html();
-    K3.nextTimer = now + s;
+    var q = $('#j-current-issue').html();
+    GKL.nextTimer = now + s;
 
-    K3.runTimer = setInterval(function () {
+    GKL.runTimer = setInterval(function () {
 
       var n = ~~((new Date().getTime()) / 1000);
-      var j = K3.nextTimer - n;
+      var j = GKL.nextTimer - n;
 
       if (j > 0) {
         updateTimer(j);
@@ -2343,15 +1993,15 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
         updateTimer(0);
 
-        if (K3.alertQihao !== q) {
+        if (GKL.alertQihao !== q) {
           APP.showTips("您好，第 " + q + '期已截止，投注时请确认您选择的期号。');
-          K3.alertQihao = q;
+          GKL.alertQihao = q;
         }
 
         loadLastIssueList();
 
-        if (K3.runTimer) {
-          clearInterval(K3.runTimer);
+        if (GKL.runTimer) {
+          clearInterval(GKL.runTimer);
         }
 
         loadCurrentIssue();
@@ -2417,9 +2067,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var m = $('#project_mutiple');
 
-    K3.beishu = v;
+    GKL.beishu = v;
     m.val(v);
-    K3.updateBottomUi();
+    GKL.updateBottomUi();
 
   }
 
@@ -2435,7 +2085,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     $('.br-details thead .br-zhui-bei').val(1);
 
     $.ajax({
-      url: '/lottery/issue/get-issue-list?lottery_id=' + K3.lotyId + '&issue_size=' + num,
+      url: '/lottery/issue/get-issue-list?lottery_id=' + GKL.lotyId + '&issue_size=' + num,
       type: 'GET',
       dataType: 'json',
     }).done(function (data) {
@@ -2452,7 +2102,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
           var m = i + 1;
 
-          var unitPrice = K3.getBuyArrTotalMoney();
+          var unitPrice = GKL.getBuyArrTotalMoney();
 
           html += '<tr><td>' + m + '</td><td><input type="checkbox" class="br-zhui-c" data-qihaoid="' + item[i][0] + '"data-qi="' + item[i][1] + '" checked="">' + item[i][1] + '期</td><td><input type="text" class="br-input br-zhui-bei" value="1">倍</td><td><span class="j-money">' + unitPrice + '</span>元</td><td><span class="ml15">' + item[i][2] + '</span></td></tr>';
         }
@@ -2460,69 +2110,15 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       }
 
       $('#track_issue_list').html(html);
-      K3.updateTrackList();
+      GKL.updateTrackList();
 
     }).fail(function () {
 
       $('#track_issue_list').html(html);
-      K3.updateTrackList();
+      GKL.updateTrackList();
 
     });
 
   };
-
-  function getNumsXt(nums) {
-
-    var x = [];
-    var c = '';
-
-    if (nums && nums.length > 0) {
-
-      var n0 = Number(nums[0].slice(1));
-      var n1 = Number(nums[1].slice(1));
-      var n2 = Number(nums[2].slice(1));
-      var nArr = [n0, n1, n2];
-
-      nArr.sort(function (a, b) {
-        return a - b;
-      });
-
-      if (nums[0].slice(0, 1) === nums[1].slice(0, 1) && nums[1].slice(0, 1) === nums[2].slice(0, 1)) {
-
-        x.push('同花');
-
-        if ((nArr[0] + nArr[2]) === (nArr[1] * 2) && (nArr[0] + 1) === nArr[1]) {
-          x = [];
-          x.push('同花顺');
-        }
-
-      } else {
-        if ((nArr[0] + nArr[2]) === (nArr[1] * 2) && (nArr[0] + 1) === nArr[1]) {
-          x.push('顺子');
-        }
-      }
-
-      if (nArr[0] === nArr[1] && nArr[1] === nArr[2]) {
-
-        x.push('豹子');
-
-      } else {
-
-        if (nArr[0] === nArr[1] || nArr[1] === nArr[2] || nArr[0] == nArr[2]) {
-
-          x.push('对子');
-
-        }
-
-      }
-
-    } else {
-
-      x = '';
-
-    }
-
-    return x;
-  }
 
 });

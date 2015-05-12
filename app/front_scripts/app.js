@@ -245,7 +245,6 @@ APP.showTips = function(o) {
   } else {
     obj.text = o;
   }
-
   _this.createShowTipsHTML(obj);
 
   $('#myModal').on('show.bs.modal', _this.centerModal);

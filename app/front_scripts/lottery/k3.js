@@ -1313,7 +1313,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   function loadCurrentIssue() {
 
     var v = $('#issue_size').val();
-    queryTrackIssueList(v);
 
     $.ajax({
         url: '/lottery/issue/get-cur-issue',
@@ -1350,7 +1349,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
           lessSeconds = Math.floor((item.company_sell_etime - item.sys_time));
 
-
           // update k3 qihao
           K3.qihao = item.issue_num;
           K3.qihaoId = item.id;
@@ -1381,6 +1379,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
             // update mid area
             $('#j-second-hd').removeClass('out')
             $('#j-dq-qihao').html(K3.qihao);
+            $('.br-details thead .br-zhui-c')[0].checked = true;
+            queryTrackIssueList(v);
 
           }
 

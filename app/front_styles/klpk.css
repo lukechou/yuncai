@@ -176,6 +176,7 @@ body { background: url(../front_images/klpk/bg.jpg) #212121 no-repeat center 0; 
 /* box-choose */
 .box-choose { display: none; }
 .box-choose.active { position: relative; left: -12px; display: block; }
+
 .choose-bd { position: relative; }
 .choose-btnbox { position: absolute; top: 0; right: 0; }
 .choose-btnbox a { font-size: 12px; line-height: 29px; display: block; width: 68px; height: 29px; margin-bottom: 10px; text-align: center; color: #fff; border: none; background: transparent; background-image: url(../front_images/klpk/klpk-group.png); background-position: -155px -48px; }

@@ -161,7 +161,7 @@ define(['jquery', 'bootstrap'], function ($) {
       html += '<div class="lessbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="tipbox" id="j-modal-tipbox"><div class="less-text">';
       html += '<h4>您的余额不足，请先充值</h4>' + lessMoneyTips;
 
-      html += '<p>账&nbsp;户&nbsp;&nbsp;余&nbsp;额：<span class="fc-3 mlr5">' + _this.userMoney + '.00</span>元</p>';
+      html += '<p>账&nbsp;户&nbsp;&nbsp;余&nbsp;额：<span class="fc-3 mlr5">' + (Number(_this.userMoney)).toFixed(2) + '</span>元</p>';
       html += '</div><div class="m-one-btn ml30"><a id="j-less-money" href="/account/top-up" class="btn btn-danger" target="_blank">立即充值</a></div></div></div>';
 
       _this.showTips({
@@ -380,7 +380,6 @@ define(['jquery', 'bootstrap'], function ($) {
       } else {
         obj.text = o;
       }
-
       _this.createShowTipsHTML(obj);
 
       $('#myModal').on('show.bs.modal', _this.centerModal);
