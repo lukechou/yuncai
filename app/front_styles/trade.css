@@ -25,7 +25,7 @@
 .br-tou .checkbox label a { color: #848484; }
 .br-zhu { margin: 30px 0 30px 42px; }
 .br-zhu-l { border: 1px #dfdfdf solid; width: 500px; height: 155px; font-size: 12px; overflow: auto; }
-.br-zhu-item { padding: 5px 10px; color: #f13c38; border-bottom: 1px #dfdfdf dashed; cursor: pointer; }
+.br-zhu-item { padding: 5px 10px; color: #f13c38; border-bottom: 1px #dfdfdf dotted; cursor: pointer; border-image: url(../front_images/bg-line.png) 1 1  repeat; border-width: 0 0 1px 0;}
 .br-zhu-item:hover, .br-zhu-item.active { background: #fcead3; }
 .br-zhu-item b { float: left; width: 65px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
 .br-zhu-item .list { float: left; display: inline; width: 245px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -43,7 +43,7 @@
 .input-br-zhu { margin: 30px 0; }
 .input-br-zhu-l { border: 1px #dfdfdf solid; width: 526px; height: 155px; font-size: 12px; overflow: auto; }
 /* Brings-details */
-.br-details { margin: 30px 0; }
+.br-details { margin: 30px 0 0 43px;width: 586px; }
 .box-left .br-type { background: #f1f1f1; padding: 6px 15px; border: 1px solid #dfdfdf; }
 .box-left .br-type>li.active>a, .br-type>li>a:hover, .br-type>li>a:hover, .br-type>li.active>a:hover, .br-type>li.active>a:focus { border-radius: 0; background: #f5f5f5; border: none !important; }
 .box-left .br-type>li>a { position: relative; padding: 0; border: 0; margin-left: 40px; color: #3d3d3d; }
@@ -90,7 +90,8 @@
 .sub-content .table>thead>tr>th, .sub-content .table>tbody>tr>td { text-align: center; }
 .sub-content .table>tbody>tr:nth-child(1) td { background: #fff; }
 .sub-content .table>tbody>tr>td { background: url(../front_images/bg-line.png) left top repeat-x; border: none; padding: 8px 0; }
-.sub-content .table>tbody>tr>td.right-qihao { padding: 8px 0; text-align: left; text-indent: 16px; }
+/* .sub-content .table>tbody>tr>td.right-qihao { padding: 8px 0; text-align: left; text-indent: 16px; } */
+.sub-content .table>tbody>tr>td.right-qihao { padding: 8px 0; text-align: center; }
 .sub-content .table>tbody>tr.first>td { border: none; }
 /* 开奖公告 */
 .kjgg .sub-content { padding: 5px 0 5px 16px; }
@@ -186,3 +187,4 @@
 .multiphase-box { position: relative; width: 100%; float: none; margin: 0 auto; display: block; border:none;}
 /* 彩种名称和描述css */
 .m-brhd-title >b { font-size: 22px; font-family: 'Microsoft Yahei'; }
+.w61{width: 61px;}

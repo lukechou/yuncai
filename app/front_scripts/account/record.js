@@ -19,6 +19,13 @@ $(function () {
             }
             this.appendTable(htmlOutput);
             record.type = obj.type;
+
+            $('.j-tips').tipsy({
+                gravity: 's',
+                html: true,
+                opacity: 1
+            });
+
         };
         PAGE.onFail = function () {
             return;
@@ -73,15 +80,12 @@ $(function () {
             page: 1,
             pageSize: 15,
         });
-
     });
 
     // Tab Toggle
     $('#nav-tabs').on("click", ' a', function () {
-
         var i = parseInt($(this).attr('data-type'));
         var days = $('.tab-pane').eq(i).find('.nearday').val() || 30;
-
         PAGE.pageTable = tables.eq(i).find('tbody');
         PAGE.loadOrderRecord({
             type: i,
@@ -89,7 +93,6 @@ $(function () {
             page: 1,
             pageSize: 15,
         });
-
     });
 
     /**
@@ -99,6 +102,7 @@ $(function () {
      * @return {craeteOutputHTML}
      */
     function craeteOutputHTML(data, type) {
+
         var dataSize = data.retData.data.length;
         var detailData = data.retData.data;
         var htmlOutput = '';
@@ -106,10 +110,11 @@ $(function () {
         var continueBuy = '';
         var isZhongJiang = '';
         var dataItem = '';
-
+        var statusHtml = '';
         if (dataSize > 0) {
             for (var i = 0; i < detailData.length; i++) {
                 dataItem = detailData[i];
+                statusHtml = '';
                 continueBuy = '<a  target="_blank" class="ml8" href="' + dataItem.buyURI + '">继续投注</a>';
                 if (dataItem.lotyCNName == '模型') {
                     dataItem.lotyCNName = '<i class="icon-font icon-f8" title="模型：' + dataItem.projectNo + '">模</i>';
@@ -117,22 +122,34 @@ $(function () {
                     //    dataItem.lotyCNName += '<i class="icon-font icon-f3" title="您设置自动投注已投注该模型">自</i>';
                     //}
                     dataItem.lotyCNName += '竞彩足球';
-                    
+
                     if (type == 3) {
                         projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看</a>';
                         continueBuy = '';
                     } else {
                         //projectDetailUrl = '<a href="javascript:;" class="j-history-more" data-order="' + dataItem.order_no + '">查看详情</a>';
-                    	 projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
+                        projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
                     }
-                    
+
                 } else {
                     projectDetailUrl = '<a  target="_blank" href="' + dataItem.detailURI + '">查看详情</a>';
                 }
+
                 if (dataItem.show == 0) {
                     continueBuy = '';
                     projectDetailUrl = '';
                 }
+
+                // 是否中奖
+                if (dataItem.bonus == 0) {
+                    statusHtml = dataItem.status;
+                } else {
+                    statusHtml = '中奖 <span style="color:red">' + dataItem.bonus + '</span>元';
+                    if (dataItem.tcbonus != '0.00') {
+                        statusHtml += '+[' + dataItem.tcbonus + '元<i class="icon icon-warm ps-t2 j-tips" original-title="发起人提成[' + dataItem.tcbonus + ']元"></i>]';
+                    }
+                }
+
                 switch (type) {
                     case 3:
                         // 模型投注记录
@@ -145,17 +162,17 @@ $(function () {
                         htmlOutput += '<td>' + dataItem.createTime + '</td>';
                         htmlOutput += '<td>' + dataItem.qihao + '</td>';
                         htmlOutput += '<td><a href="' + dataItem.buyURI + '">' + dataItem.projectNo + '</a></td><td>' + dataItem.money + '</td>';
-                        htmlOutput += '<td class="' + isZhongJiang + '">' + dataItem.status + '</td>';
+                        htmlOutput += '<td class="' + isZhongJiang + '">' + statusHtml + '</td>';
                         htmlOutput += '<td>' + projectDetailUrl + continueBuy + '</td></tr>';
-                        
+
                         break;
                     case 0:
                         // 全部记录
-                        htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                        htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '</td><td>' + statusHtml + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
                         break;
                     default:
                         // 默认
-                        htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
+                        htmlOutput += '<tr><td>' + dataItem.lotyCNName + '</td><td>' + dataItem.createTime + '</td><td>' + dataItem.money + '</td><td>' + statusHtml + '</td><td>' + projectDetailUrl + continueBuy + '</td></tr>';
                         break;
                 }
 

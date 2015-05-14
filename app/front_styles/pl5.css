@@ -7,10 +7,9 @@
 .pl5 .row-code .quick-method { float: left; margin: 0 0 0 40px; width: 86px; }
 .pl5 .row-code .quick-method span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
 .pl5 .row-code .quick-method span:hover { background: #ffd06b; color: #fff; }
-.pl5 .br-zhu { width: 610px; margin: 30px 20px 30px 30px; }
+.pl5 .br-zhu { width: 610px; }
 .pl5 .br-zhu-r { width: 80px; }
 .pl5 .br-zhu-item b { float: left; width: 65px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
-.br-zhu-l { width: 512px; }
 .pl5 .m-num-title-top { margin: 10px auto 24px; }
 .pl5 .m-num-title-top > p { font-size: 12px; width: 550px; padding: 0; }
 .pl5 .m-num-title-bottom { margin: 40px auto 30px }

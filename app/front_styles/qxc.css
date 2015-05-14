@@ -11,7 +11,6 @@
 .qxc .row-code .quick-method { float: left; width: 86px; margin: 0 0 0 40px; }
 .qxc .row-code .quick-method span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
 .qxc .row-code .quick-method span:hover { background: #ffd06b; color: #fff; }
-.qxc .br-zhu { width: 610px; margin: 30px 20px 30px 62px; }
+.qxc .br-zhu { width: 610px;}
 .qxc .br-zhu-r { width: 80px; }
 .qxc .br-zhu-item b { float: left; width: 65px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
-.br-zhu-l { width: 512px; }

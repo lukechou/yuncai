@@ -193,7 +193,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
 
             for (var i = 0, len = data.retData.length; i < len; i++) {
               var kjhmHtml = ('' == data.retData[i]['kjhm']) ? '等待开奖' : '<span class="fc-3">' + data.retData[i]['kjhm'] + '</span>';
-              html += '<tr><td class="right-qihao">' + data.retData[i]['no'] + '期</td><td>' + kjhmHtml + '</td></tr>';
+              html += '<tr><td class="right-qihao">' + data.retData[i]['no'] + '</td><td>' + kjhmHtml + '</td></tr>';
             };
 
             var kjHTML = '等待开奖';

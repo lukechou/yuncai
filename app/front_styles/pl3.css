@@ -14,7 +14,7 @@
 .pl3 .row-code .quick-method span:hover{background:#ffd06b;color:#fff;}
 .quick-method-dt{float:left;width:86px;margin:0 0 0 58px;}
 .quick-method-dt span:hover{background:#ffd06b;color:#fff;}
-.pl3 .br-zhu{width:610px;margin:30px 20px 30px 30px;}
+.pl3 .br-zhu{width:610px;}
 .pl3 .br-zhu-r{width:80px;}
 .pl3 .br-zhu-item b{float:left;width:75px;color:#3d3d3d;font-weight:normal;margin-right:3px;}
 .pl3 .multiphase-box{width:860px;height:315px;margin:25px auto;}
@@ -73,4 +73,3 @@
 .j-box-zx .j-nav-dt,
 .j-box-zx6 .j-nav-many,
 .j-box-zx3 .j-nav-many{display:none;}
-.br-zhu-l{width:512px;}

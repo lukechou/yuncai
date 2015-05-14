@@ -144,25 +144,16 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .m-btns > .btn { width: 90px; margin: 0 5px; }
 .m-one-btn .btn { padding: 5px 35px; color: #fff; background-color: #f13c38; }
 
-
 /* LessMoney Modal */
 .lessbox { width: 420px; overflow: hidden; padding: 5px 0 10px; }
 .lessbox .icon { float: left; position: relative; left: 60px; }
-.lessbox .tipbox { float: right; width: 310px; text-align: left;  }
+.lessbox .tipbox { float: right; width: 310px; text-align: left; }
 .lessbox h3 { font-size: 16px; font-weight: bold; color: #333; margin: 10px auto 30px; }
 .lessbox .m-btns { margin: 0; width: 270px; }
-.lessbox .m-btns>.btn { margin: 0 10px 0 0; width: 100px;  padding: 6px 0; }
-.lessbox .m-btns>.btn-danger{ width: 140px;}
-.less-text{
-  font-size: 12px;
-  color: #333;
-  position: relative; left: 30px;
-}
-.less-text h4{
-  font-size: 16px;
-  font-weight: bold;
-}
-
+.lessbox .m-btns>.btn { margin: 0 10px 0 0; width: 100px; padding: 6px 0; }
+.lessbox .m-btns>.btn-danger { width: 140px; }
+.less-text { font-size: 12px; color: #333; position: relative; left: 30px; }
+.less-text h4 { font-size: 16px; font-weight: bold; }
 
 /* Default Modal Class */
 .friend-modal .modal-header { padding: 10px 15px; color: #fff; background: #f13c38; }
@@ -197,7 +188,7 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .m-num-tips > b { margin-right: 10px; }
 .m-num-title { height: 20px; clear: both; float: none; text-align: center; padding-top: 11px; font-size: 12px; margin: 20px 0 30px; }
 .m-num-title > p { background: #fff; padding: 0 10px; display: inline-block; position: relative; z-index: 10; }
-.m-num-title > i { display: block; margin: -19px 0 0 -23px; height: 1px; background: url(../front_images/bg-line.png) repeat-x; position: relative; z-index: 9; width: 715px;}
+.m-num-title > i { display: block; margin: -19px 0 0 -23px; height: 1px; background: url(../front_images/bg-line.png) repeat-x; position: relative; z-index: 9; width: 715px; }
 .m-num-title > p > b { padding-right: 5px; font-weight: bold; }
 .m-num-group { position: relative; margin: 0 0 40px -5px; }
 .m-num-group > a { font-size: 16px; font-weight: bold; line-height: 33px; float: left; width: 33px; height: 33px; margin: 5px 5px; text-align: center; color: #3d3d3d; background: url(../front_images/ballicon/bsg.png) no-repeat; }
@@ -338,23 +329,22 @@ body { color: #3d3d3d; background: #fff; }
 /* All Page Seed Menu */
 .hd-nav .seed-nav > a { background: #f13c38; *height: 20px; }
 .hd-nav .seed-nav > a > .icon-hdown, .hd-nav .seed-nav > a > .icon-hup { float: right; margin-top: 9px; }
-
-/* .hd-nav .seed-nav > a.on > .icon-hdown { -webkit-transform: rotate(180deg); transform: rotate(180deg); } */
 .hd-nav .seed-nav > a, .hd-mask > li > a { width: 265px; padding: 6px 20px 6px 15px; }
 .hd-nav .seed-nav li > a.invalid { opacity: .5; color: #8a8a8a; }
 .hd-nav .seed-nav li > a.invalid:hover { cursor: default; background: #212121; }
 .hd-nav .seed-nav.on .hd-mask { display: block; }
 .hd-mask { position: absolute; z-index: 101; left: 0; display: none; width: 265px; height: 360px; background: #212121; }
 .hd-mask > li { width: 265px; height: 55px; }
-.hd-mask > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; display: block; color: #fff; border-bottom: 1px #2f3032 dotted; }
+.hd-mask > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; display: block; color: #fff; border-bottom: 1px #2f3032 dotted; height: 55px; }
 .hd-mask > li > a:hover { cursor: pointer; text-decoration: none; background: #1d1d1d; }
 .hd-mask > li > a.active { background: #1d1d1d; }
 .hd-mask > li > a > span { font-size: 12px; padding-left: 11px; color: #8a8a8a; }
 .hd-mask-icon { display: inline-block; width: 50px; }
 .hd-mask-icon > .icon { margin: auto; vertical-align: middle; }
-.hd-mask-list { overflow: hidden; width: 100%; padding: 10px 20px 6px 15px; }
-.hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 33%; text-align: left; }
-.hd-mask-list > li > a { font-size: 12px; line-height: 22px; display: block; color: #a5a5a5; }
+.hd-mask-list { overflow: hidden; width: 100%; height: 84px; }
+.hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 100%; text-align: left; }
+.hd-mask-list > li > a { font-size: 12px; line-height: 22px; display: block; color: #a5a5a5; padding-left: 11px; height: 28px; }
+.hd-mask-list > li > a:hover { background: #373738; text-decoration: none; }
 
 /* Footer */
 .ft, .ft-mn { overflow: hidden; }

@@ -35,21 +35,73 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       beishu: 1,
       uniqMatch: [],
       payMoney: 0,
-      lotyCNName:'胜负彩'
+      lotyCNName: '胜负彩',
+      indexMap: [3, 1, 0],
+      data: null,
+      qihao: $('#j-qihao').val(),
+      qihaoId: $('#j-qihao-id').val()
     };
 
     winlost.prototype.init = function () {
 
-      this.bindEvent();
+      var _this = this;
+
+      for (var prop in SPFDATA) {
+        if (SPFDATA.hasOwnProperty(prop)) {
+          _this.data = SPFDATA[prop];
+        }
+      }
+
+      _this.createTable();
+
+      _this.bindEvent();
+
+    };
+
+    winlost.prototype.createTable = function () {
+
+      var _this = this;
+      var html = '';
+      var d = _this.data;
+      var item = null;
+      var spArr = [];
+
+      html += '<dl class="j-data-dl">';
+
+      for (var i = 0; i < d.length; i++) {
+
+        item = d[i];
+        spArr = ['-', '-', '-'];
+
+        if (item.spf_gg_sp && _.isString(item.spf_gg_sp)) {
+          spArr = item.spf_gg_sp.split('|');
+        }
+
+        html += '<dd matchcode="' + item.matchcode + '" data-mindex="' + i + '">';
+        html += '<span class="co1">' + item.matchcode + '</span>';
+        html += '<span class="co2">' + item.league + '</span>';
+        html += '<span class="co3">' + item.game_start_time + '</span>';
+        html += '<span class="co4"><strong class="j-maind">' + item.home + '</strong>  <strong class="j-ked">' + item.away + '</strong></span>';
+        html += '<span class="co7 sp-btn j-sp-btn" index="0" data-item="胜" gametype="spf" sp="' + spArr[0] + '">3</span>';
+        html += '<span class="co8 sp-btn j-sp-btn" index="1" data-item="平" gametype="spf" sp="' + spArr[1] + '">1</span>';
+        html += '<span class="co9 sp-btn j-sp-btn" index="2" data-item="负" gametype="spf" sp="' + spArr[2] + '">0</span>';
+        html += '</dd>';
+
+      };
+
+      html += '</dl>';
+
+      $('#j-data-body').html(html);
+
     };
 
     winlost.prototype.getCodes = function (matchs, items) {
 
+      var _this = this;
       var f = null;
       var result = '';
       var arr = [];
       var rArr = [];
-      var indexMap = [3,1,0];
 
       for (var i = 0; i < matchs.length; i++) {
 
@@ -58,13 +110,13 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
         for (var j = 0; j < f.length; j++) {
 
-          arr.push(indexMap[f[j].index]);
+          arr.push(_this.indexMap[f[j].index]);
         };
 
         rArr.push(arr.join(','));
       };
 
-      result = rArr.join('|');
+      result = rArr.join('/');
 
       return result;
     };
@@ -94,12 +146,120 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       obj = {
         zhushu: _this.zhus,
         beishu: _this.beishu,
-        matchKeys: matchs.join(','),
         content: content,
+        qihao: _this.qihao,
+        qihaoId: _this.qihaoId,
+        unikey: $.now()
       };
 
       return obj;
 
+    };
+
+    winlost.prototype.getChooseGroupCode = function (group) {
+
+      var _this = this;
+      var r = '';
+
+      for (var i = 0; i < group.length; i++) {
+        r += _this.indexMap[group[i].index];
+      };
+
+      return r;
+    };
+
+    winlost.prototype.updateChooseDetail = function () {
+
+      var _this = this;
+      var matchs = _this.group;
+      var mLsContent1HTML = '';
+      var mLsContent2HTML = '';
+      var matchCount = 0;
+      var d = _this.data;
+      var midIndex = 7;
+      var item = null;
+
+      mLsContent1HTML = '<li class="t1">投注</li>';
+      mLsContent2HTML = '<li class="t1">投注</li>';
+
+      // 遍历所有对阵
+      for (var i = 0; i < d.length; i++) {
+
+        item = d[i];
+
+        if (i < midIndex) {
+
+          if (matchs[item.matchcode]) {
+            matchCount++;
+            mLsContent1HTML += '<li class="t2">' + _this.getChooseGroupCode(matchs[item.matchcode]) + '</li>';
+
+          } else {
+
+            mLsContent1HTML += '<li class="t2"></li>';
+
+          }
+
+        } else {
+
+          if (matchs[item.matchcode]) {
+            matchCount++;
+            mLsContent2HTML += '<li class="t2">' + _this.getChooseGroupCode(matchs[item.matchcode]) + '</li>';
+          } else {
+            mLsContent2HTML += '<li class="t2"></li>';
+          }
+
+        }
+
+      };
+
+      $('.j-m-lscontent1').html(mLsContent1HTML);
+      $('.j-m-lscontent2').html(mLsContent2HTML);
+      $('.j-gameNumber').text(i);
+
+    };
+
+    winlost.prototype.craeteTzTable = function () {
+
+      var _this = this;
+
+      var tzHtml = '';
+      var zdHtml = '';
+      var kdHtml = '';
+      var arr = [];
+      var result = '';
+      var matchcode = null;
+      var item = null;
+      var h = '';
+      var a = '';
+      var tmpHtml1 = '<table class="touzhu-table"><tr class="grey-bg"><td>场次</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr><tr class="h-100"><td>主队</td>';
+
+      var tmpHtml2 = '</tr><tr class="grey-bg"><td colspan="15" class="fc-3d">VS</td></tr><tr class="h-100"><td>客队</td>';
+
+      var tmpHtml3 = '</tr><tr class="grey-bg"><td>投注</td>';
+
+      var tmpHtml4 = '</tr></table>';
+
+      for (var i = 0; i < _this.data.length; i++) {
+
+        item = _this.data[i];
+        matchcode = item.matchcode;
+
+        h = item.home.replace(/\s/g, '');
+        a = item.away.replace(/\s/g, '');
+        zdHtml += '<td class="fc-3d">' + h + '</td>';
+        kdHtml += '<td class="fc-3d">' + a + '</td>';
+
+        arr = _.map(_this.group[matchcode], function (g) {
+          return _this.indexMap[g.index];
+        });
+
+        tzHtml += '<td class="fc-3d">' + arr.join(' ') + '</td>';
+
+      };
+
+      result = tmpHtml1 + zdHtml + tmpHtml2 + kdHtml + tmpHtml3 + tzHtml + tmpHtml4;
+
+      return result;
     };
 
     winlost.prototype.bindEvent = function () {
@@ -107,6 +267,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       var wlConfig = this;
 
       $('#j-touzhu-tips').on('click', function (event) {
+
         $('#j-touzhu-tipstext').toggle();
         $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
 
@@ -122,96 +283,80 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
             'top': '-200'
           });
         }
+
       });
 
-      $('.j-data-dl .co7,.j-data-dl .co8,.j-data-dl .co9').click(function (event) {
-        var mLsContent1HTML = '',
-          mLsContent2HTML = '',
-          i = 0;
+      $('#j-data-body').on('click', '.j-sp-btn', function (event) {
+        event.preventDefault();
+
         var _this = $(this);
         var index = _this.attr('index');
         var sp = _this.attr('sp');
         var title = _this.attr('data-item');
         var dzTab = _this.attr('gametype');
         var dd = _this.parents('dd');
+
         _this.toggleClass('active');
+
         if (_this.hasClass('active')) {
+
           wlConfig.addOneItem(index, dd, sp, title, dzTab);
+
         } else {
+
           wlConfig.removeOneItem(index, dd);
+
         }
+
         wlConfig.group = _.groupBy(wlConfig.match, function (match) {
+
           return match.matchcode;
+
         });
+
         wlConfig.uniqMatch = _.uniq(wlConfig.match, 'matchcode');
+
         if (wlConfig.uniqMatch.length == 14) {
+
           wlConfig.zhus = wlConfig.getTotalZhus();
           wlConfig.money = wlConfig.zhus * 2;
+
           $('.j-gameZhu').text(wlConfig.zhus);
           $('#j-totalMoney').text(wlConfig.money);
+
         } else if (wlConfig.uniqMatch.length < 14) {
+
           wlConfig.zhus = 0;
           wlConfig.money = 0;
+
           $('.j-gameZhu').text(wlConfig.zhus);
           $('#j-totalMoney').text(wlConfig.money);
+
         }
 
-        $('.j-data-dl dd').each(function (index, el) {
-          var _this = $(this);
-          var co7Obj = _this.find('.co7');
-          var co8Obj = _this.find('.co8');
-          var co9Obj = _this.find('.co9');
-          var co7isActive = co7Obj.hasClass('active');
-          var co8isActive = co8Obj.hasClass('active');
-          var co9isActive = co9Obj.hasClass('active');
-          var co7Val = '',
-            co8Val = '',
-            co9Val = '';
-          if (co7isActive) {
-            co7Val = co7Obj.text();
-          }
-          if (co8isActive) {
-            co8Val = co8Obj.text();
-          }
-          if (co9isActive) {
-            co9Val = co9Obj.text();
-          }
-          if (co7isActive || co8isActive || co9isActive) {
-            i++;
-          }
-          if (index < 7) {
-            mLsContent1HTML += '<li class="t2">' + co7Val + co8Val + co9Val + '</li>';
-          }
-          if (index >= 7) {
-            mLsContent2HTML += '<li class="t2">' + co7Val + co8Val + co9Val + '</li>';
-          }
+        wlConfig.updateChooseDetail();
 
-        });
-        mLsContent1HTML = '<li class="t1">投注</li>' + mLsContent1HTML;
-        mLsContent2HTML = '<li class="t1">投注</li>' + mLsContent2HTML;
-
-        $('.j-m-lscontent1').html('');
-        $('.j-m-lscontent1').html(mLsContent1HTML);
-        $('.j-m-lscontent2').html('');
-        $('.j-m-lscontent2').html(mLsContent2HTML);
-        $('.j-gameNumber').text(i);
         wlConfig.updateMoney();
 
       });
 
       $('#j-btn-clear').click(function (event) {
+
         $('.dataBody').find('span').removeClass('active');
         $('.j-m-lscontent1').html('<li class="t1">投注</li>');
         $('.j-m-lscontent2').html('<li class="t1">投注</li>');
+
         wlConfig.match = [];
         wlConfig.group = null;
         wlConfig.zhus = 0;
         wlConfig.money = 0;
         wlConfig.beishu = 1;
-        $('.j-gameNumber').text('0');
+
+        $('.j-gameNumber').text(0);
         $('.j-gameZhu').text(wlConfig.zhus);
         $('.j-quick-bei').val(wlConfig.beishu);
         $('#j-totalMoney').text(wlConfig.money);
+
       });
 
       $('.j-coutn-total').on('click', '.j-count', function (event) {
@@ -244,44 +389,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         wlConfig.updateMoney();
       });
 
-      function craeteTzTable() {
-
-        var tmpHtml1 = '<table class="touzhu-table"><tr class="grey-bg"><td>场次</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr><tr class="h-100"><td>主队</td>';
-
-        var tmpHtml2 = '</tr><tr class="grey-bg"><td colspan="15" class="fc-3d">VS</td></tr><tr class="h-100"><td>客队</td>';
-
-        var tmpHtml3 = '</tr><tr class="grey-bg"><td>投注</td>';
-
-        var tmpHtml4 = '</tr></table>';
-
-        var tzHtml = '';
-        var zdHtml = '';
-        var kdHtml = '';
-        var arr = [];
-        var result = '';
-
-        $('.j-data-dl dd').each(function (index, el) {
-
-          var _this = $(this);
-          var matchcode = $(this).attr('matchcode');
-
-          zdHtml += '<td class="fc-3d">' + _this.find('.j-maind').text() + '</td>';
-          kdHtml += '<td class="fc-3d">' + _this.find('.j-ked').text() + '</td>';
-
-          arr = _.map(wlConfig.group[matchcode], function (g) {
-            var indexMap = [3, 1, 0];
-            return indexMap[g.index];
-          });
-
-          tzHtml += '<td class="fc-3d">' + arr.join(' ') + '</td>';
-
-        });
-
-        result = tmpHtml1 + zdHtml + tmpHtml2 + kdHtml + tmpHtml3 + tzHtml + tmpHtml4;
-        return result;
-
-      }
-
       $('#j-ljtzBtn').on('click', function (event) {
 
         if (wlConfig.uniqMatch.length < 14) {
@@ -293,7 +400,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
         var tableHtml = '';
 
-        tableHtml = craeteTzTable();
+        tableHtml = wlConfig.craeteTzTable();
 
         wlConfig.payMoney = wlConfig.money;
 
@@ -306,7 +413,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
             title: '投注信息确认',
             className: 'touzhuinfo-modal',
             onConfirm: function () {
-              alert(1);
+              wlConfig.buy(params);
             }
           });
 
@@ -317,22 +424,22 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       $('#j-hemai').on('click', function (event) {
         event.preventDefault();
 
-        var obj = BET.getSubmitParams();
-        var type = 'buy-together';
+        var params = wlConfig.getSubmitParams();
 
-        obj.shareNum = $('#ballModal .j-share-num').val();
-        obj.buyNum = Number($('#ballModal .j-rengou').val());
-        obj.aegisNum = Number($('#ballModal .j-baodi-text').val());
+        params.shareNum = $('#share-num').val();
+        params.buyNum = Number($('#part_buy').val());
+        params.aegisNum = Number($('#part_aegis_num').val());
 
-        obj.tichengPercent = $('#ipt_extraPercent').val();
-        obj.shareLevel = $('#ballModal .br-set.active').attr('data-set');
-        obj.projectTitle = $('#ballModal .j-project-title').val();
-        obj.projectText = $('#ballModal .br-textarea').val();
+        params.tichengPercent = $('#commission_percent').val();
+        params.shareLevel = $('#hemaiModal .br-set.active').attr('data-set');
+        params.projectTitle = $('#title').val();
+        params.projectText = $('#desc').val();
 
-        Config.payMoney = obj.zhushu * 2 * obj.beishu / obj.shareNum * (obj.buyNum + obj.aegisNum);
+        Config.payMoney = params.zhushu * 2 * params.beishu / params.shareNum * (params.buyNum + params.aegisNum);
 
         wlConfig.buyLoty(function () {
 
+          wlConfig.buy(params, true);
           $('#hemaiModal').modal('hide');
 
         }, params, true);
@@ -351,7 +458,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
         var tableHtml = '';
 
-        tableHtml = craeteTzTable();
+        tableHtml = wlConfig.craeteTzTable();
 
         $('#j-modal-table').html(tableHtml);
 
@@ -364,6 +471,41 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
       });
 
+    };
+
+    winlost.prototype.buy = function (params, isHemai) {
+
+      var _this = this;
+      var type = 'buy-self';
+      var url = '';
+
+      if (isHemai) {
+        type = 'buy-together';
+      }
+
+      url = '/lottery/football/' + type + '/sfc';
+      $.ajax({
+          url: url,
+          type: 'post',
+          dataType: 'json',
+          data: params,
+        })
+        .done(function (data) {
+          if (data.retCode == 100000) {
+
+            store.set('lotyName', Config.lotyName);
+            store.set('payMoney', _this.payMoney);
+            store.set('projectNo', data.retData.projectNo);
+            store.set('lotyCNName', Config.lotyCNName);
+
+            window.location.href = '/html/lottery/trade/success.html';
+          } else {
+            APP.handRetCode(data.retCode, data.retMsg);
+          }
+        })
+        .fail(function () {
+          APP.onServiceFail();
+        });
     };
 
     winlost.prototype.buyLoty = function (cb, params, isHemai) {
@@ -422,14 +564,19 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
     }
 
     winlost.prototype.addOneItem = function (i, dd, sp, title, dzTab) {
+
       var code = dd.attr('matchcode');
+      var matchIndex = Number(dd.attr('data-mindex'));
+
       this.match.push({
         index: i,
         type: dzTab,
         matchcode: code,
         sp: sp,
-        title: title
+        title: title,
+        matchIndex: matchIndex
       });
+
     };
 
     winlost.prototype.removeOneItem = function (i, dd) {
@@ -582,7 +729,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
   }
 
   function updateCreatePartProjectParame() {
-    debugger;
+
     // 总金额
     var totalMoney = WINLOST.money;
 

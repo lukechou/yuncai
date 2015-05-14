@@ -89,8 +89,8 @@
 .dzgd-table1 .th5 { width: 115px; text-align: center; }
 .dzgd-table1 .th6 { width: 90px; padding-left: 17px; }
 .dzgd-table1 .th7 { width: 70px; text-align: center; }
-.dzgd-table1 .th8 { width: 70px; }
-.dzgd-table1 .th9 { width: 80px; }
+.dzgd-table1 .th8 { width: 70px; text-align: center; }
+.dzgd-table1 .th9 { width: 80px; text-align: center; }
 .dzgd-table1 .th10 { width: 96px; text-align: center; }
 .dzgd-table1 th i { position: absolute; margin: 2px 0 0 2px; cursor: pointer; }
 .dzgd-table1 td input.min-yuan, .dzgd-table1 td input.min-ci { height: 23px; border: 1px solid #dfdfdf; padding: 0 2px; }
@@ -99,9 +99,9 @@
 .dzgd-table1 .th2, .dzgd-table1 .th3, .dzgd-table1 .th4, .dzgd-table1 .td2, .dzgd-table1 .td3, .dzgd-table1 .td4 { text-align: left; }
 .dzgd-table1 .td5 { text-align: center; }
 .dzgd-table1 .td5span{ color: #F13C38; }
-.dzgd-table1 .td6, .dzgd-table1 .td7{ text-align: center; }
-.dzgd-table1 .td8, .dzgd-table1 .td9 { text-align: left; }
-.dzgd-table1 .td10 button, .dzgd-table1 .td10 a { height: 25px; border: none; width: 40px; text-align: center; border-radius: 3px; float: left; margin-left: 5px; line-height: 25px; }
+.dzgd-table1 .td6, .dzgd-table1 .td7,.dzgd-table1 .td8,.dzgd-table1 .td9{ text-align: center; }
+.dzgd-table1 .td10 button, .dzgd-table1 .td10 a { height: 25px; border: none; width: 40px; text-align: center; border-radius: 3px; float: left; margin-left: 5px; line-height: 25px;padding:0; }
+.dzgd-table1 .td10 button.btn-gray{background:#939393;color: #fff; }
 .dzgd-table1 .td10 a { text-decoration: none; }
 .dzgd-table1 .td10 .btn-white { border: 1px solid #DAD9D9; }
 

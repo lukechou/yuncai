@@ -1117,6 +1117,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       return;
     }
 
+    if (GKL.chooseZhushu > 10000) {
+      APP.showTips('您好，单个投注的金额应小于2万元，请返回重新选择');
+      return;
+    }
+
+
     if ($(this).hasClass('active')) {
 
       if (GKL.modifyStatu === 1) {

@@ -376,7 +376,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     if (_this.modifyStatu === 1 && !isJx) {
 
       // 修改号码
-      compiled = _.template('<b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div>');
+      compiled = _.template('<b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b class="moneytext"><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div>');
 
       html = compiled(obj);
 
@@ -384,7 +384,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     } else {
 
-      compiled = _.template('<div data-zid="<%= zid%>" class="br-zhu-item clearfix"><b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>');
+      compiled = _.template('<div data-zid="<%= zid%>" class="br-zhu-item clearfix"><b>[<%= title%>]</b><div class="list"><%= num%></div><div class="pull-right"><b class="moneytext"><i class="money"><%= money%></i>元</b><a href="javascript:;" class="br-zhu-up">修改</a><a href="javascript:;" class="br-zhu-del">删除</a></div></div>');
 
       html = compiled(obj);
 
@@ -1979,11 +1979,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   }
 
-  function getOneCard(c) {
+  function getOneCard(c, index) {
+
+    var f = '';
+
+    if (index || index == 0) {
+      f = 'm-card-' + index;
+    }
 
     if (c && c.length === 3) {
 
-      var h = '<span class="m-card card-' + c.slice(0, 1) + '"><i class="iconfont icon-h' + c.slice(0, 1) + ' m-card-flow"></i><i class="iconfont icon-n' + c.slice(1) + ' m-card-num"></i></span>';
+      var h = '<span class="m-card ' + f + ' card-' + c.slice(0, 1) + '"><i class="iconfont icon-h' + c.slice(0, 1) + ' m-card-flow"></i><i class="iconfont icon-n' + c.slice(1) + ' m-card-num"></i></span>';
       return h;
     } else {
 
@@ -2001,7 +2007,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
       for (var i = 0; i < card.length; i++) {
 
-        html += getOneCard(card[i]);
+        html += getOneCard(card[i], i);
       }
 
     } else {
@@ -2052,7 +2058,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
               xt = getNumsXt(arr);
             }
 
-            html += '<tr><td>' + item[i]['no'] + '</td><td>' + kjhmHtml + '</td><td>' + xt + '</td></tr>';
+            html += '<tr><td class="ctr1">' + item[i]['no'] + '</td><td>' + kjhmHtml + '</td><td class="ctr2">' + xt + '</td></tr>';
 
           };
 
@@ -2174,7 +2180,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
       var rf = '<div class="num-group"><span class="card"></span></div>';
 
-      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖中：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li>' + rf + '</li><li>' + rf + '</li><li>' + rf + '</li></ul></div>');
+      html = _.template('<p class="third-hd"><b>第<span class="mlr5 fc-3"><%= qihao%></span>开奖中：</b><% _.forEach(nums, function(num) { %><span class="fc-3 mlr5"><%- num %></span><% }); %></p><div class="third-box clearfix"><ul class="pull-left third-hisnum" id="j-kjing-num"><li class="kj-num-first">' + rf + '</li><li>' + rf + '</li><li>' + rf + '</li></ul></div>');
 
       $('#j-kj-box').html(html(o));
 
@@ -2194,12 +2200,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       if (obj.nums) {
         f = formatCard(o.nums.split(' '));
       } else {
-        f = '<b class="fc-3">等待开奖</b>';
+        f = '<b>等待开奖</b>';
       }
 
       o.time = secondFormat(obj.lessTime).join(':');
 
-      html = _.template('<p class="third-hd fs-12">第<span class="mlr5 fc-3">' + beforeQi.no + '</span>期开奖号码：' + f + '</p><div class="third-timer"><h5>第<b class="fc-3 mlr5"><%= qihao%></b>期等待开奖：</h5><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p><div class="progress"><div class="progress-box"><div class="progress-bar progress-bar-danger" id="progress-bar"><i class="before"></i><i class="after"></i><i class="mid mid-1"></i><i class="mid mid-2"></i><i class="mid mid-3"></i></div></div></div></div>');
+      html = _.template('<p class="third-hd fs-12">第<span class="mlr5">' + beforeQi.no + '</span>期开奖号码：' + f + '</p><div class="third-timer"><h5>第<b class="mlr5 fc-3"><%= qihao%></b>期等待开奖：</h5><p class="thired-timer-sp"><i class="icon icon-k303"></i><span id="j-wait-time"><%= time%></span></p></div>');
 
       K3.waitEndTime = obj.lessTime;
       K3.waitStartTime = obj.lessTime;
@@ -2257,8 +2263,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
         //时间数字
         $('#j-wait-time').html(secondFormat(K3.waitEndTime).join(':'));
-        // 进度条
-        $('.progress-bar').width((K3.waitEndTime / K3.waitStartTime) * 100 + '%');
 
       } else {
 

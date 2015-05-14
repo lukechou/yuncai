@@ -175,7 +175,16 @@ require(['jquery', 'lodash', 'store', 'app', 'PL5', 'bootstrap', 'core'], functi
     $('.j-quick-method').on('click', 'span', function (event) {
       event.preventDefault();
       /* Act on the event */
-      $(this).toggleClass('active');
+      //$(this).toggleClass('active');
+      var _this = $(this);
+      if(_this.hasClass('active')){
+        _this.removeClass('active');
+        _this.siblings('span').removeClass('active');
+      }else{
+        _this.addClass('active');
+        _this.siblings('span').removeClass('active');
+      }
+
       var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
       if (typeof G_CHOOSE.codes[0] === 'undefined') {
         G_CHOOSE.codes[0] = [];
@@ -186,10 +195,18 @@ require(['jquery', 'lodash', 'store', 'app', 'PL5', 'bootstrap', 'core'], functi
       case 'odd':
         $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
           $(this).removeClass('active');
-          if (index % 2 != 0) {
+          if(_this.hasClass('active')){
+            if (index % 2 != 0) {
+              $(this).addClass('active');
+              G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+            }
+          }else{
+            $(this).removeClass('active');
+          }
+          /*if (index % 2 != 0) {
             $(this).toggleClass('active');
             G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
+          }*/
         });
         break;
 
@@ -197,10 +214,18 @@ require(['jquery', 'lodash', 'store', 'app', 'PL5', 'bootstrap', 'core'], functi
       case 'even':
         $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
           $(this).removeClass('active');
-          if (index % 2 == 0) {
+          if(_this.hasClass('active')){
+            if (index % 2 == 0) {
+              $(this).addClass('active');
+              G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+            }
+          }else{
+            $(this).removeClass('active');
+          }
+          /*if (index % 2 == 0) {
             $(this).toggleClass('active');
             G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
+          }*/
         });
         break;
 
@@ -208,10 +233,18 @@ require(['jquery', 'lodash', 'store', 'app', 'PL5', 'bootstrap', 'core'], functi
       case 'big':
         $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
           $(this).removeClass('active');
-          if (index >= 5) {
+          if(_this.hasClass('active')){
+            if (index >= 5) {
+              $(this).addClass('active');
+              G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+            }
+          }else{
+            $(this).removeClass('active');
+          }
+          /*if (index >= 5) {
             $(this).toggleClass('active');
             G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
+          }*/
         });
         break;
 
@@ -219,18 +252,32 @@ require(['jquery', 'lodash', 'store', 'app', 'PL5', 'bootstrap', 'core'], functi
       case 'small':
         $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
           $(this).removeClass('active');
-          if (index <= 4) {
+          if(_this.hasClass('active')){
+            if (index <= 4) {
+              $(this).addClass('active');
+              G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+            }
+          }else{
+            $(this).removeClass('active');
+          }
+          /*if (index <= 4) {
             $(this).toggleClass('active');
             G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
-          }
+          }*/
         });
         break;
 
         // 全部
       case 'all':
         $(this).parents('.j-row-code').find('.j-num-group a').each(function (index) {
-          $(this).addClass('active');
-          G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+          if(_this.hasClass('active')){
+            $(this).addClass('active');
+            G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));
+          }else{
+            $(this).removeClass('active');
+          }
+          /*$(this).addClass('active');
+          G_CHOOSE.codes[0][dataBit].push(parseInt($(this).html()));*/
         });
         break;
 
@@ -243,6 +290,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL5', 'bootstrap', 'core'], functi
         break;
       }
       calculateChooseCodes();
+      console.log(G_CHOOSE.codes[0][0]);
     });
 
     /**

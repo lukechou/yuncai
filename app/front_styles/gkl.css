@@ -42,7 +42,7 @@
 .list-ball li a:hover, .list-ball li a:focus { text-decoration: none; }
 .list-ball li a.active { text-decoration: none; color: #fff; background: url(../front_images/ballicon/bsr.png) no-repeat; }
 .list-ball li em { font-size: 12px; display: inline-block; width: 100%; text-align: center; color: #b1b1b1; }
-.list-ball li span { font-size: 12px; font-weight: normal; line-height: 12px; position: relative; top: -4px; }
+
 .quick-method { float: left; width: 86px; margin: 0 0 0 30px; }
 .quick-method span, .quick-method-dt span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
 .quick-method span:hover { background: #ffd06b; color: #fff; }
