@@ -338,13 +338,15 @@ body { color: #3d3d3d; background: #fff; }
 .hd-mask > li > a { font-family: 'Microsoft Yahei'; font-size: 16px; display: block; color: #fff; border-bottom: 1px #2f3032 dotted; height: 55px; }
 .hd-mask > li > a:hover { cursor: pointer; text-decoration: none; background: #1d1d1d; }
 .hd-mask > li > a.active { background: #1d1d1d; }
-.hd-mask > li > a > span { font-size: 12px; padding-left: 11px; color: #8a8a8a; }
+.hd-mask > li > a > span { font-size: 12px; padding-left: 9px; color: #8a8a8a; }
 .hd-mask-icon { display: inline-block; width: 50px; }
 .hd-mask-icon > .icon { margin: auto; vertical-align: middle; }
-.hd-mask-list { overflow: hidden; width: 100%; height: 84px; }
-.hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 100%; text-align: left; }
-.hd-mask-list > li > a { font-size: 12px; line-height: 22px; display: block; color: #a5a5a5; padding-left: 11px; height: 28px; }
-.hd-mask-list > li > a:hover { background: #373738; text-decoration: none; }
+.hd-mask-list { width: 100%; height: 84px; }
+.hd-mask-list > li { line-height: 28px; height: 28px; position: relative; float: left; width: 100%; text-align: left; }
+.hd-mask-list > li > a { font-size: 12px; line-height: 22px; display: inline-block; color: #a5a5a5; text-align: left; height: 28px; width: 58px; }
+.hd-mask-list > li > span { display: inline-block; padding: 0 17px 0 11px; font-size: 12px; color: #686868; text-align: center; }
+.hd-mask-list > li:hover { background: #373738; }
+.hd-mask-list > li a:hover { text-decoration: none; }
 
 /* Footer */
 .ft, .ft-mn { overflow: hidden; }
@@ -394,14 +396,12 @@ body { color: #3d3d3d; background: #fff; }
 .login-modal .modal-body .login-form a { margin-left: 5px; color: #388bf1; }
 
 /* Home Logo */
-.icon-dlt-home-logo, .icon-jczq-home-logo, .icon-pl3-home-logo, .icon-pl5-home-logo, .icon-qlc-home-logo, .icon-qxc-home-logo, .icon-ssq-home-logo { background-image: url(../front_images/lottery/home-logo.png); }
-.icon-dlt-home-logo { width: 44px; height: 44px; background-position: 0 0; }
-.icon-jczq-home-logo { width: 44px; height: 44px; background-position: -44px 0; }
-.icon-pl3-home-logo { width: 44px; height: 44px; background-position: 0 -44px; }
-.icon-pl5-home-logo { width: 44px; height: 44px; background-position: -44px -44px; }
-.icon-qlc-home-logo { width: 43px; height: 43px; background-position: -88px -44px; }
-.icon-qxc-home-logo { width: 44px; height: 44px; background-position: 0 -88px; }
-.icon-ssq-home-logo { width: 44px; height: 44px; background-position: -88px 0; }
+.icon-dlt-home-logo, .icon-hbk3-home-logo, .icon-jclq-home-logo, .icon-jczq-home-logo, .icon-ssq-home-logo { background-image: url(../front_images/lottery/home-logo.png); }
+.icon-dlt-home-logo { background-position: 0px 0px; width: 44px; height: 44px; }
+.icon-hbk3-home-logo { background-position: -88px 0px; width: 42px; height: 42px; }
+.icon-jclq-home-logo { background-position: -44px -44px; width: 44px; height: 43px; }
+.icon-jczq-home-logo { background-position: -44px 0px; width: 44px; height: 44px; }
+.icon-ssq-home-logo { background-position: 0px -44px; width: 44px; height: 44px; }
 
 /* text */
 .redtext { color: red; }
@@ -439,3 +439,16 @@ body { color: #3d3d3d; background: #fff; }
 .dzgd-nav a { font-size: 14px; font-family: "微软雅黑"; color: #fff; text-decoration: none; display: block; }
 .dzgd-nav a:hover { color: #f13c38; }
 .hd-nav .hemai-nav.on .dzgd-nav { display: block; }
+.sub1-nav, .sub2-nav { position: absolute; left: 265px; background: #373738; width: 304px; height: 85px; z-index: 2; display: none; padding-left: 16px; }
+.sub1-nav { top: 0; }
+.sub2-nav { top: -28px; }
+.sub1-nav > a, .sub2-nav > a { color: #a5a5a5; display: inline-block; font-size: 12px; text-align: left; float: left; }
+.hd-mask-list .behover { display: block; }
+.hd-mask-list li i { float: right; margin: 8px 15px 0 0; }
+.hd-mask-list:hover i { display: none; }
+.hd-mask-list li a:hover { text-decoration: underline; }
+.w54 { width: 54px; }
+.w75 { width: 80px; }
+.w69 { width: 69px; }
+.w80 { width: 80px; }
+.w83 { width: 83px; }

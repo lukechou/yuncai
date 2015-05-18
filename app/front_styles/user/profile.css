@@ -12,9 +12,8 @@
 .awarded-cishu { font-size: 15px; margin: 4px 0 0 5px; }
 .per-nav { margin-top: 12px; border: 1px solid #dfdfdf; border-bottom: none; }
 .per-bor { border: 1px solid #dfdfdf; }
-.per-com-table { font-size: 12px; width: 100%; text-align: center; border-bottom: 1px solid #dfdfdf; }
+.per-com-table { font-size: 12px; width: 100%; text-align: center; }
 .per-com-table tr { height: 35px; }
-.per-com-table tr.dzgd-tr-last{ height: 15px; }
 .per-com-table th { background: #f1f1f1; text-align: center; border-bottom: 1px solid #dfdfdf; }
 .per-now .title { height: 35px; line-height: 35px; font-size: 12px; font-weight: bold; padding-left: 20px; }
 .per-table .th1 { width: 136px; }
@@ -50,8 +49,8 @@
 .icon-tridown, .j-per-modelmore { cursor: pointer; }
 .j-per-modelmore { float: right; font-weight: normal; }
 .icon-tridown, .icon-triup { margin-left: 3px; cursor: pointer; }
-.j-launch-hemai-page-box, .j-join-hemai-page-box, .j-nowbuy-model-page-box, .j-recent-news-page-box { padding-bottom: 10px; margin-right: 12px; }
-
+.j-launch-hemai-page-box, .j-join-hemai-page-box, .j-nowbuy-model-page-box, .j-recent-news-page-box { margin-right: 12px; }
+.j-launch-hemai-page-box .pages, .j-join-hemai-page-box .pages, .j-nowbuy-model-page-box .pages, .j-recent-news-page-box .pages{margin-bottom: 10px;}
 /*end 个人中心 首页*/
 
 /*start 个人中心 历史记录*/

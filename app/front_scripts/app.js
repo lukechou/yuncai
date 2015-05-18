@@ -386,17 +386,36 @@ APP.init = function() {
   });
 
   var hemaiNav = {
-        el: $('#j-hemai-nav'),
-        bindEvent : function(){
-          var _this = this;
-          _this.el.hover(function() {
-            _this.el.addClass('on');
-          }, function() {
-            _this.el.removeClass('on');
-          });
-        }
-      };
-      hemaiNav.bindEvent();
+    el: $('#j-hemai-nav'),
+    bindEvent: function() {
+      var _this = this;
+      _this.el.hover(function() {
+        _this.el.addClass('on');
+      }, function() {
+        _this.el.removeClass('on');
+      });
+    }
+  };
+  hemaiNav.bindEvent();
+
+  var subNav = {
+    bindEvent: function(obj) {
+      var _this = obj;
+      _this.el.hover(function() {
+        _this.target.addClass('behover');
+      }, function() {
+        _this.target.removeClass('behover');
+      });
+    }
+  };
+  subNav.bindEvent({
+    el: $('.j-num-li'),
+    target: $('.j-num-nav')
+  });
+  subNav.bindEvent({
+    el: $('.j-heighp-li'),
+    target: $('.j-heighp-nav')
+  });
 
   APP.initLrkf();
 

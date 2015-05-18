@@ -54,7 +54,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
 
             }
           }
-          htmlOutput += '<tr class="dzgd-tr-last"><td colspan="6"></td></tr>'
         } else {
           htmlOutput = '<tr><td colspan="6">当前没有跟单用户</td></tr>';
         }
@@ -68,6 +67,9 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         htmlOutput = '<tr><td colspan="6">' + data.retMsg + '</td></tr>';
       }
       this.appendTable(htmlOutput); //初始化表格
+      $('#j-dzgd-detail-table tr:last-child').prev('tr').find('td').css({
+        borderBottom: 'none'
+      });
     };
   };
 

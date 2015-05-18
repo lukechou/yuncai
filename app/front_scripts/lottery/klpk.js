@@ -5,17 +5,27 @@ require.config({
     bootstrap: '../lib/bootstrap.min',
     store: '../lib/store.min',
     app: '../common/app',
+    scroll: '../lib/jquery.mCustomScrollbar.concat.min',
   },
   shim: {
     bootstrap: {
       deps: ['jquery'],
       exports: 'jquery'
     },
+    scroll: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'scroll'], function ($, _, store, APP) {
   'use strict';
+
+  $("#j-klpk-track").mCustomScrollbar({
+    theme:"3d-thick",
+    scrollButtons:{enable:true},
+});
 
   var QUEUE = {};
 
@@ -1113,11 +1123,16 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
+  $('#j-sub-agreed').on('click', function(event) {
+    event.preventDefault();
+    $(this).toggleClass('icon-cka icon-ckd');
+  });
+
   // buy Loty
   $('#buy-submit').on('click', function (event) {
     event.preventDefault();
 
-    if (!$('.j-sub-agreed')[0].checked) {
+    if (!$('#j-sub-agreed').hasClass('icon-cka')) {
       APP.showTips('请先阅读并同意《委托投注规则》后才能继续');
       return;
     } else if (K3.buyType === 2 && K3.trackData.length === 0) {

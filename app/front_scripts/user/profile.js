@@ -72,6 +72,11 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         htmlOutput = '<tr><td colspan="7">' + data.retMsg + '</td></tr>';
       }
       this.appendTable(htmlOutput); //初始化表格
+      if(data.retCode==100000 && data.retData.size > 5){
+        $('#j-launch-hemai-table tr:last').css({
+          borderBottom: '1px solid #dfdfdf'
+        });
+      }
 
     };
   };
@@ -123,7 +128,11 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         htmlOutput = '<tr><td colspan="7">' + data.retMsg + '</td></tr>';
       }
       this.appendTable(htmlOutput); //初始化表格
-
+      if(data.retCode==100000 && data.retData.size > 5){
+        $('#j-join-hemai-table tr:last').css({
+          borderBottom: '1px solid #dfdfdf'
+        });
+      }
     };
   };
   // 页面初始化 第一次调用 分页组件
@@ -145,12 +154,13 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       var htmlOutput = '';
       var detailData = '';
       var dataItem = '';
+      var j = 5 * (obj.page - 1) + 1;
       if (data.retCode == 100000) {
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
-          for (var i = 1; i <= detailData.length; i++) {
+          for (var i = 1; i <= detailData.length; i++,j++) {
             dataItem = detailData[i - 1];
-            htmlOutput += '<tr><td>' + dataItem.modelNo + '</td><td>' + dataItem.date_str + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.modelNo + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + '<a target="_blank" href="' + dataItem.detail_url + '">详情</a></td></tr>';
+            htmlOutput += '<tr><td>' + j + '</td><td>' + dataItem.date_str + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.modelNo + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + '<a target="_blank" href="' + dataItem.detail_url + '">详情</a></td></tr>';
           }
         } else {
           htmlOutput = '<tr><td colspan="7">无购买模型</td></tr>';
@@ -164,7 +174,11 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         htmlOutput = '<tr><td colspan="7">' + data.retMsg + '</td></tr>';
       }
       this.appendTable(htmlOutput); //初始化表格
-
+      if(data.retCode==100000 && data.retData.size > 5){
+        $('#j-nowbuy-model-table tr:last').css({
+          borderBottom: '1px solid #dfdfdf'
+        });
+      }
     };
   };
   // 页面初始化 第一次调用 分页组件
@@ -485,7 +499,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
           type: 1
         }, newPageElement, newPageTable);
         break;
-      case '2': //1表示查看未结算记录
+      case '2': //1表示查看未开奖记录
         PAGE5.loadHisShowList({
           loty_name: _thisTrlotyName,
           page: 1, //第几页
@@ -527,7 +541,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
     var newSelect = _this.parents('.his-tr').next('.j-his-more-tr').find('.j-check-bonus-record');
     if ('展开详情' == _this.text()) {
       _this.text('收起');
-      newSelect.html('<option>查看全部记录</option><option value="1">查看中奖纪录</option><option value="2">查看未结算记录</option>');
+      newSelect.html('<option>查看全部记录</option><option value="1">查看中奖纪录</option><option value="2">查看未开奖记录</option>');
       target.css({
         display: 'table-row'
       });

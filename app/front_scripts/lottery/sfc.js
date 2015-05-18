@@ -35,7 +35,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       beishu: 1,
       uniqMatch: [],
       payMoney: 0,
-      lotyCNName: '胜负彩',
+      lotyCNName: Config.lotyCNName,
       indexMap: [3, 1, 0],
       data: null,
       qihao: $('#j-qihao').val(),
@@ -46,9 +46,9 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
       var _this = this;
 
-      for (var prop in SPFDATA) {
-        if (SPFDATA.hasOwnProperty(prop)) {
-          _this.data = SPFDATA[prop];
+      for (var prop in Config.MatchData) {
+        if (Config.MatchData.hasOwnProperty(prop)) {
+          _this.data = Config.MatchData[prop];
         }
       }
 
@@ -82,9 +82,9 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         html += '<span class="co2">' + item.league + '</span>';
         html += '<span class="co3">' + item.game_start_time + '</span>';
         html += '<span class="co4"><strong class="j-maind">' + item.home + '</strong>  <strong class="j-ked">' + item.away + '</strong></span>';
-        html += '<span class="co7 sp-btn j-sp-btn" index="0" data-item="胜" gametype="spf" sp="' + spArr[0] + '">3</span>';
-        html += '<span class="co8 sp-btn j-sp-btn" index="1" data-item="平" gametype="spf" sp="' + spArr[1] + '">1</span>';
-        html += '<span class="co9 sp-btn j-sp-btn" index="2" data-item="负" gametype="spf" sp="' + spArr[2] + '">0</span>';
+        html += '<span class="co7 sp-btn j-sp-btn" index="0" data-item="胜" gametype="spf" sp="' + spArr[0] + '">' + spArr[0] + '</span>';
+        html += '<span class="co8 sp-btn j-sp-btn" index="1" data-item="平" gametype="spf" sp="' + spArr[1] + '">' + spArr[1] + '</span>';
+        html += '<span class="co9 sp-btn j-sp-btn" index="2" data-item="负" gametype="spf" sp="' + spArr[2] + '">' + spArr[2] + '</span>';
         html += '</dd>';
 
       };
@@ -262,29 +262,31 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       return result;
     };
 
+    winlost.prototype.checkStatus = function () {
+
+      var _this = this;
+
+      var result = {
+        statu: true,
+        info: '',
+      };
+
+      if (!$('#j-agreen').hasClass('icon-cgou')) {
+        result.statu = false;
+        result.info = '请先阅读并同意《委托投注规则》后才能继续';
+
+      }else if (_this.uniqMatch.length < Config.matchsTotal) {
+        result.statu = false;
+        result.info = '请对' + Config.matchsTotal + '场比赛的赛过进行竞猜，每场比赛至少竞猜一个赛果';
+      }
+
+      return result;
+
+    };
+
     winlost.prototype.bindEvent = function () {
 
       var wlConfig = this;
-
-      $('#j-touzhu-tips').on('click', function (event) {
-
-        $('#j-touzhu-tipstext').toggle();
-        $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
-
-        if ($(this).find('.icon').hasClass('icon-bdown')) {
-
-          var asideBox = $('.j-navbar-wrapper').eq(1);
-          var asideBoxHeight = asideBox.height();
-          var bodyHeight = $('body').height();
-          var windowHeight = $(window).height();
-          var footerHeight = $('.ft').height();
-
-          asideBox.css({
-            'top': '-200'
-          });
-        }
-
-      });
 
       $('#j-data-body').on('click', '.j-sp-btn', function (event) {
         event.preventDefault();
@@ -316,7 +318,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
         wlConfig.uniqMatch = _.uniq(wlConfig.match, 'matchcode');
 
-        if (wlConfig.uniqMatch.length == 14) {
+        if (wlConfig.uniqMatch.length >= Config.matchsTotal) {
 
           wlConfig.zhus = wlConfig.getTotalZhus();
           wlConfig.money = wlConfig.zhus * 2;
@@ -324,7 +326,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
           $('.j-gameZhu').text(wlConfig.zhus);
           $('#j-totalMoney').text(wlConfig.money);
 
-        } else if (wlConfig.uniqMatch.length < 14) {
+        } else if (wlConfig.uniqMatch.length < Config.matchsTotal) {
 
           wlConfig.zhus = 0;
           wlConfig.money = 0;
@@ -391,10 +393,13 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
       $('#j-ljtzBtn').on('click', function (event) {
 
-        if (wlConfig.uniqMatch.length < 14) {
-          APP.showTips('请对14场比赛的赛过进行竞猜，每场比赛至少竞猜一个赛果');
+        var r = wlConfig.checkStatus();
+
+        if (!r.statu) {
+          APP.showTips(r.info);
           return;
         }
+
         var params = wlConfig.getSubmitParams();
         var confirmHtml = '<div class="ljtz-info"><p>投注金额：总计<strong class="fc-3"> ' + wlConfig.money + ' </strong>元，共<strong> ' + wlConfig.zhus + ' </strong>注，投注<strong> ' + wlConfig.beishu + ' </strong>倍</p></div>';
 
@@ -448,10 +453,12 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
       $('#j-fqhmBtn').on('click', function (event) {
 
-        if (wlConfig.uniqMatch.length < 14) {
-          APP.showTips('请对14场比赛的赛过进行竞猜，每场比赛至少竞猜一个赛果');
+        var r = wlConfig.checkStatus();
+        if (!r.statu) {
+          APP.showTips(r.info);
           return;
         }
+
         var params = wlConfig.getSubmitParams();
 
         var confirmHtml = '<div class="fqhm-info"><p>投注金额：总计<strong class="fc-3"> ' + wlConfig.money + ' </strong>元，共<strong> ' + wlConfig.zhus + ' </strong>注，投注<strong> ' + wlConfig.beishu + ' </strong>倍</p></div>'
@@ -483,7 +490,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         type = 'buy-together';
       }
 
-      url = '/lottery/football/' + type + '/sfc';
+      url = '/lottery/football/' + type + '/' + Config.lotyName;
       $.ajax({
           url: url,
           type: 'post',
@@ -546,6 +553,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       m.val(v);
 
     };
+
     winlost.prototype.filterNum = function (v, max) {
       if (v === '') {
         return v;
@@ -561,7 +569,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       }
       n = n > max ? max : n;
       return n;
-    }
+    };
 
     winlost.prototype.addOneItem = function (i, dd, sp, title, dzTab) {
 
@@ -580,30 +588,58 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
     };
 
     winlost.prototype.removeOneItem = function (i, dd) {
+
       var _this = this;
       var code = dd.attr('matchcode');
+
       _.remove(_this.match, function (o) {
         return (o.index == i && o.matchcode == code);
       });
+
     };
 
     winlost.prototype.getTotalZhus = function () {
-      var ms = this.uniqMatch;
+
       var _this = this;
-      var sum = 1;
-      for (var i = 0; i < 14; i++) {
-        sum = sum * _this.group[ms[i].matchcode].length;
+      var result = 0;
+      var n = 1;
+      var groupArr = [];
+
+      for (var prop in _this.group) {
+        if (_this.group.hasOwnProperty(prop)) {
+          groupArr.push(_this.group[prop]);
+        }
+      }
+
+      var allCombine = YC.Unit.explodeCombined(groupArr, Config.matchsTotal);
+
+      for (var i = allCombine.length - 1; i >= 0; i--) {
+
+        n = 1;
+
+        for (var j = allCombine[i].length - 1; j >= 0; j--) {
+          n *= allCombine[i][j].length;
+        };
+
+        result += n;
       };
-      return sum;
+
+      return result;
+
     };
+
     winlost.prototype.updateMoney = function () {
+
       var m = $('.j-quick-bei');
       var v = parseInt(m.val(), 10);
       this.money = this.zhus * 2 * v;
+
       $('#j-totalMoney').text(this.money);
+
     };
 
     return winlost;
+
   }());
 
   var WINLOST = new winlost();
@@ -891,5 +927,25 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
   }
 
   /* 合买 End */
+
+  $('#j-touzhu-tips').on('click', function (event) {
+
+    $('#j-touzhu-tipstext').toggle();
+    $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
+
+    if ($(this).find('.icon').hasClass('icon-bdown')) {
+
+      var asideBox = $('.j-navbar-wrapper').eq(1);
+      var asideBoxHeight = asideBox.height();
+      var bodyHeight = $('body').height();
+      var windowHeight = $(window).height();
+      var footerHeight = $('.ft').height();
+
+      asideBox.css({
+        'top': '-200'
+      });
+    }
+
+  });
 
 });
