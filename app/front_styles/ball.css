@@ -21,7 +21,7 @@
 .g-right .float-box { position: relative; z-index: 3; }
 
 /* 投注表格头部 */
-.dataHead { font-size: 12px; line-height: 60px; position: relative; z-index: 10; zoom: 1; height: 60px; margin-bottom: 0; text-align: center; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 1px 1px 0; background: #f1f1f1; }
+.dataHead { font-size: 12px; line-height: 61px; position: relative; z-index: 10; zoom: 1; height: 61px; margin-bottom: 0; text-align: center; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 1px 1px 0; background: #f1f1f1; }
 .dataHead.active { border-width: 1px 1px 1px 0; }
 .dataHead .icon-warm { cursor: pointer; }
 .datahead-tips { text-align: left; }
@@ -75,6 +75,13 @@
 .collect-body .row2-1 em { height: 37px; }
 .collect-body .row3-1 em { height: 37px; }
 .collect-body .row4-1 em { height: 39px; }
+.collect-body dl{width: 711px;}
+.collect-body dt{border-width: 0!important;}
+.collect-body dd{border-right: none!important;}
+.collect-body dd span.co1{border-left: none;}
+.collect-body .co6-1{  width: 218px;}
+.collect-body .btnBox em.lastOne{width: 57px;}
+.collect-body dl:last-child{ border-bottom:none;}
 .collect-title { background: #4bacea; height: 42px; line-height: 42px; color: #fff; font-weight: bold; padding-left: 10px; }
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
 .dataBody dl { position: relative; margin-bottom: 0; border-bottom: 1px solid #dfdfdf;}

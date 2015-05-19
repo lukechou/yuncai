@@ -290,7 +290,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL5', 'bootstrap', 'core'], functi
         break;
       }
       calculateChooseCodes();
-      console.log(G_CHOOSE.codes[0][0]);
     });
 
     /**

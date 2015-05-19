@@ -449,7 +449,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
       PL3.G_CHOOSE.codes[0] = [];
     }
     PL3.G_CHOOSE.codes[0][dataBit] = [];
-
     if (type) {
 
       row.find('.j-num-group a').removeClass('active');

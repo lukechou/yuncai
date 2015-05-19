@@ -576,6 +576,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       })
       .done(function (data) {
         if (data.retCode === 100000) {
+          console.log(data);
           $('#j-week-start').html(data.retData[0].username);
         }
       })

@@ -1,10 +1,23 @@
 var gulp = require('gulp');
 var del = require('del');
 var spritesmith = require('gulp.spritesmith');
-
+var uglify = require('gulp-uglify');
+var paths = {
+  scripts:['app/front_scripts/*.js','app/front_scripts/**/*.js']
+};
 gulp.task('clean', function (cb) {
   del(['dist/*.*'], cb);
 });
+
+
+gulp.task('scripts', ['clean'], function() {
+  // Minify and copy all JavaScript (except vendor scripts)
+  // with sourcemaps all the way down
+  return gulp.src(paths.scripts)
+      .pipe(uglify())
+    .pipe(gulp.dest('build/js'));
+});
+
 
 gulp.task('sprite', ['clean'], function () {
 

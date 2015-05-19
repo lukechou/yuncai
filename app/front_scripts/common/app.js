@@ -116,6 +116,11 @@ define(['jquery', 'bootstrap'], function($) {
         }
 
       });
+      $('#login-password').on('keydown', function(event) {
+        if (event.keyCode == "13") {
+          $('#user-login').click();
+        }
+      });
 
     };
 
@@ -484,6 +489,20 @@ define(['jquery', 'bootstrap'], function($) {
 
       var _this = this;
 
+      var u = window.location.href;
+      if (u.indexOf('hall') >= 0) {
+        $('.hd-nav li a.active').removeClass('active');
+        $('.j-nav-hall').addClass('active');
+      }
+      if (u.indexOf('project-center') >= 0 || u.indexOf('follow') >= 0) {
+        $('.hd-nav li a.active').removeClass('active');
+        $('.j-nav-center').addClass('active');
+      }
+      if (u.indexOf('award') >= 0) {
+        $('.hd-nav li a.active').removeClass('active');
+        $('.j-nav-award').addClass('active');
+      }
+
       $('#j-header-login-btn').on('click', function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -545,11 +564,11 @@ define(['jquery', 'bootstrap'], function($) {
       };
       subNav.bindEvent({
         el: $('.j-num-li'),
-        target : $('.j-num-nav')
+        target: $('.j-num-nav')
       });
       subNav.bindEvent({
         el: $('.j-heighp-li'),
-        target : $('.j-heighp-nav')
+        target: $('.j-heighp-nav')
       });
 
       _this.initLrkf();

@@ -150,6 +150,11 @@ APP.showLoginBox = function(callback) {
     }
 
   });
+  $('#login-password').on('keydown', function(event) {
+    if (event.keyCode == "13") {
+      $('#user-login').click();
+    }
+  });
 };
 
 APP.regStr = function(s) {
@@ -437,6 +442,10 @@ $(function() {
   if (u.indexOf('project-center') >= 0) {
     $('.hd-nav li a.active').removeClass('active');
     $('.j-nav-center').addClass('active');
+  }
+  if (u.indexOf('award') >= 0) {
+    $('.hd-nav li a.active').removeClass('active');
+    $('.j-nav-award').addClass('active');
   }
 
   $('#j-header-login-btn').on('click', function(event) {
