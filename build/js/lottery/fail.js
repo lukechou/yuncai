@@ -1,1 +1,0 @@
-$(function(){function e(){var e=store.get("lotyName"),t=store.get("lotyCNName");return store.enabled?($("#j-type").html(t).attr("href","/lottery/buy/"+e),void $("#j-jixu").attr("href","/lottery/buy/"+e)):void alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')}APP.updateHeadUserInfo(),e()});

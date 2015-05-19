@@ -240,7 +240,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .info-list .title { display: inline-block; width: 50px; text-align: right; }
 .info-list .value > input[type=radio] { position: relative; top: 2px; width: 10px; margin: 0 3px; }
 .info-list .value > input { width: 200px; background: #fff; }
-.info-list .value .btn-red { font-size: 14px; padding: 5px 0; \width: 100px; margin-top: 0; }
+.info-list .value .btn-red { font-size: 14px; padding: 5px 0; margin-top: 0; }
 .info-list .value > input, .info-list .value > select { padding: 5px 10px; border: 1px #dfdfdf solid; }
 .pwd-tips { display: none; }
 .pwd-tips i { position: relative; top: 6px; margin: 0 6px; }

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>彩胜网-彩票开奖-竞彩篮球</title>
+  <meta name="Keywords" content="彩胜网">
+  <meta name="Description" content="彩胜网">
+  <meta name="author" content="彩胜网">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="Shortcut Icon" href="favicon.ico" type="image/ico" />
+  <link rel="Bookmark" href="favicon.ico" type="image/ico" />
+  <link rel="stylesheet" href="front_styles/bootstrap.min.css?v=1.0.1">
+  <link rel="stylesheet" href="front_styles/global.css?v=1.1.0">
+  <link rel="stylesheet" href="front_styles/icon.css?v=1.1.0">
+  <link rel="stylesheet" href="front_styles/bootstrap-datetimepicker.min.css">
+  <link rel="stylesheet" href="front_styles/openlottery.css">
+  <style>
+    @font-face {
+      font-family: "iconfont";
+      src: url('front_styles/fonts/iconfont.eot');
+      src: url('front_styles/fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+      url('front_styles/fonts/iconfont.woff') format('woff'),
+      url('front_styles/fonts/iconfont.ttf') format('truetype'),
+      url('front_styles/fonts/iconfont.svg#iconfont') format('svg');
+    }
+    </style>
+</head>
+<body>
+
+  <div class="w985">
+    <div class="m-hdtop">
+      <span class="m-hdtop-title">您的位置：</span>
+      <a href="/index.html">彩胜网</a>
+      &gt;
+      <a href="/lottery/award/index">彩票开奖</a>
+      &gt; 竞彩篮球
+    </div>
+    <div class="opl">
+      <h3 class="opl-title">彩票最新开奖公告</h3>
+      <div class="opl-hd">
+        <div class="opl-hdl">
+          <div class="opl-imgbox">
+                    <div class="left">
+                        <img src="http://static3.yuncai.com/front_images/lottery/bjdc_logo.png" alt="足球单场" class="pull-left">
+                        <span>足球单场</span>
+                    </div>
+                    <div class="right">
+                        <h5>猜中一场即中奖</h5>
+                        <a href="/lottery/buy/bjdc" class="btn btn-red btn-big fs-yh">立即投注</a>
+                    </div>
+                </div>
+        </div>
+        <div class="opl-hdr">
+          <div class="opl-selgroup">
+            <div class="opl-sel opl-sel-first">
+              <span>彩种:</span>
+              <select id="j-lottery">
+                <option value="/lottery/award/kuaipin/gdx" >粤11选5</option>
+                <option value="/lottery/award/kuaipin/dlc" >赣11选5</option>
+                <option value="/lottery/award/kuaipin/syy" >十一运夺金</option>
+                <option value="/lottery/award/kuaipin/xjx" >新疆11选5</option>
+                <option value="/lottery/award/kuaipin/hbk3" >湖北快3</option>
+                <option value="/lottery/award/kuaipin/k3" >江苏快3</option>
+                <option value="/lottery/award/kuaipin/jk3" >吉林快3</option>
+                <option value="/lottery/award/kuaipin/gkl" >广东快乐10分</option>
+                <option value="/lottery/award/kuaipin/klpk" selected>竞彩篮球</option>
+                <option value="/lottery/award/kuaipin/jxssc" >江西时时彩</option>
+                <option value="/lottery/award/jingcai/jczq" >竞彩足球</option>
+                <option value="/lottery/award/bjdc/bjdc" >足球单场</option>
+                <option value="/lottery/award/digital/ssq" >双色球</option>
+                <option value="/lottery/award/digital/dlt" >大乐透</option>
+                <option value="/lottery/award/digital/pl3" >排列3</option>
+                <option value="/lottery/award/digital/pl5" >排列5</option>
+                <option value="/lottery/award/digital/fc3d" >福彩3D</option>
+                <option value="/lottery/award/digital/qxc" >七星彩</option>
+                <option value="/lottery/award/digital/qlc" >七乐彩</option>
+              </select>
+            </div>
+            <div class="opl-sel">
+              <span>开奖日期:</span>
+              <input type="text" id="j-form-date" value="2015-05-19"></div>
+          </div>
+        </div>
+      </div>
+      <div class="m-num-title">
+        <i></i>
+      </div>
+      <div class="opl-main">
+        <table class="table m-mn-table m-table-middle table-bordered opl-table" id="j-table">
+          <thead>
+            <tr>
+              <th width="50">场次</th>
+              <th width="120">赛事</th>
+              <th width="50">比赛时间</th>
+              <th>客队 VS 主队</th>
+              <th width="70">终场比分</th>
+              <th width="70">胜负赛果</th>
+              <th width="70">让分</th>
+              <th width="70">让分胜负</th>
+              <th width="70">预设总分</th>
+              <th width="70">大小分</th>
+              <th width="70">胜分差</th>
+            </tr>
+          </thead>
+          <tbody id="j-list-body">
+            <tr>
+              <td>001</td>
+              <td>NBA</td>
+              <td>16:30</td>
+              <td>火箭 快船</td>
+              <td>59：20</td>
+              <td>主胜</td>
+              <td>+7.5</td>
+              <td>让分主负</td>
+              <td>185</td>
+              <td>大分</td>
+              <td>客胜1-5</td>
+            </tr>
+          </tbody>
+          <!--tbody>
+            <tr>
+              <td colspan="11">
+                <a href="javascript:;" id="j-more-list" class="pull-right">更多</a>
+              </td>
+            </tr>
+          </tbody-->
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>var staticHostURI = ''; </script>
+  <script type="text/javascript">
+    var staticHostURI = 'http://static3.yuncai.com';
+    var query = '/lottery/award/kuaipin/klpk?day=';
+</script>
+  <script data-main="front_scripts/kjgg/main" src="front_scripts/lib/require.js"></script>
+</html >

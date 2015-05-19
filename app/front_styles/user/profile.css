@@ -67,7 +67,7 @@
 .per-his-table > tbody > tr.his-tr > td { border-bottom: 1px dotted #dfdfdf; }
 .j-more-his, .j-dzgd-div { background: #FBE6DB; border: 1px solid #F6C9B2; width: 100%; padding: 0 12px 12px 12px; }
 .more-his-choose { height: 40px; text-align: left; line-height: 40px; }
-.j-more-his table { margin: 0 auto width:960px; }
+.j-more-his table { margin: 0 auto; width:960px; }
 .j-more-his table tr th, .j-more-recent-news table tr td { height: 35px; text-align: center; }
 .j-more-his table tr th { background: #f1f1f1; }
 .j-more-his table tr td { background: #fff; }

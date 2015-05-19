@@ -1,1 +1,0 @@
-$(function(){$("#j-bind-sub").on("click",function(n){n.preventDefault(),$("#bind-form").hide(),$("#bindcard-suc").fadeIn()})});

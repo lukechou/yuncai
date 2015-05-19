@@ -1,6 +1,4 @@
-@CHARSET "UTF-8";
-.buy-sth{width:124px;font-size:16px;height:40px;height 40px;color:#fff;background:#f13c38;margin-bottom:120px;display:block;margin-left:auto;margin-right:auto;float:left;font-family:"Microsoft YaHei" ! important;line-height:24px;}
-.buy-sth:hover{background:#ff4a46;}
-.link-btn{line-height:36px;float:left;font-size:12px;margin-left:15px;}
-.btn-area{width:188px;margin:auto;overflow: hidden;}
-∆
+.buy-sth { width: 124px; font-size: 16px; height: 40px; color: #fff; background: #f13c38; margin-bottom: 120px; display: block; margin-left: auto; margin-right: auto; float: left; font-family: "Microsoft YaHei" ! important; line-height: 24px; }
+.buy-sth:hover { background: #ff4a46; }
+.link-btn { line-height: 36px; float: left; font-size: 12px; margin-left: 15px; }
+.btn-area { width: 188px; margin: auto; overflow: hidden; }
