@@ -91,8 +91,11 @@
 .page-hd .sticky .bei, .page-hd .sticky .head { margin-bottom: 6px; width: 96px; height: 96px; }
 .page-hd .head { width: 96px; height: 96px; margin-top: 15px; border-radius: 50%; }
 .page-hd p { margin-bottom: 3px; }
+.page-hd p a{font-size: 14px;color: #fff;}
 .page-hd .bottom { line-height: 30px; position: absolute; bottom: 0; width: 100%; height: 30px; margin-bottom: 0; background: rgba(0, 0, 0, .1); overflow: hidden; }
-.page-hd .bottom ul li { height: 30px; width: 132px; float: left; }
+.page-hd .bottom ul { overflow: hidden; float: left; }
+.page-hd .bottom ul li { height: 30px; float: left;margin:0 10px;}
+.page-hd .bottom ul li > a{font-size: 12px;}
 .page-hd .bottom span { color: #fedd00; }
 
 /* Page new */

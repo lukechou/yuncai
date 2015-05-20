@@ -64,7 +64,7 @@
 .bor-bot-none { border-bottom: none !important; }
 .ljtz-info { font-size: 12px; color: #3d3d3d; height: 40px; line-height: 40px; }
 .touzhu-table .grey-bg { background: #F1F1F1; height: 35px; }
-.touzhuinfo-modal .modal-dialog { width: 666px; }
+.touzhuinfo-modal .modal-dialog { width: 680px; }
 .touzhu-table { width: 100%; font-size: 12px; }
 .h-100 { height: 100px; }
 .touzhu-table { text-align: center; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
@@ -79,13 +79,4 @@
 .br-set { padding: 0 6px; height: 21px; line-height: 17px; text-align: center; display: block; border: 2px solid #dfdfdf; color: #333333; float: left; margin-right: 11px; }
 .br-textarea { width: 340px; height: 100px; }
 .br-textarea-tips { position: relative; top: -85px; left: 5px; }
-
-.btns{text-align: center;}
-
-
-
-
-
-
-
-
+.btns { text-align: center; }

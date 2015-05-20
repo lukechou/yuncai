@@ -347,7 +347,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	 */
 	$(".j-num-group").on('click', 'a', function (event) {
 		event.preventDefault();
-
 		var row = $(this).parents('.j-row-code');
 		var dataBit = parseInt(row.attr('data-bit'));
 		var arr = null;
@@ -541,7 +540,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	 * @return null
 	 */
 	PL3.chooseBuyBtn.on('click', function (event) {
-
 		if (!$(this).hasClass('active')) {
 			return;
 		}
@@ -744,7 +742,6 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	 */
 	$('.j-zhu-adds').on('click', function (event) {
 		event.preventDefault();
-
 		var betNum = parseInt($(this).attr('data-zhu'));
 		var getCodes = null;
 
@@ -760,7 +757,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		PL3.makeChooseCodeHtml(getCodes, true);
 		calculateBuyCodes();
 		updateCreatePartProjectParame();
-		PL3.G_CHOOSE.init();
+		//PL3.G_CHOOSE.init();
 
 	});
 

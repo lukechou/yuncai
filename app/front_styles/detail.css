@@ -151,7 +151,9 @@
 /*start 胜负彩任九场 方案详情页table*/
 .sfr9-detail-table .th1{width: 83px;}
 .sfr9-detail-table .th-per{width: 50px;}
-.sfr9-detail-table > tbody > tr > td.td-kjzt{border-right:none;}
+.sfr9-detail-table > tbody > tr > td.td-kjzt{border-right:none;   vertical-align: top;
+  text-align: left;
+  padding: 20px 0 0 20px;}
 /* .sfr9-detail-table .td-kjzt > div{  margin: 25px 0 0 25px;} */
 .sfr9-detail-table .td-kjzt .waitkj-text{font-size: 20px;color: #848484;  float: left;}
 .sfr9-detail-table .td-kjzt i{  margin: 7px 5px 0 38px;

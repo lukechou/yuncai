@@ -753,7 +753,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
     PL3.makeChooseCodeHtml(getCodes, true);
     calculateBuyCodes();
     updateCreatePartProjectParame();
-    PL3.G_CHOOSE.init();
+    //PL3.G_CHOOSE.init();
 
   });
 

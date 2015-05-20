@@ -364,7 +364,7 @@ body { color: #3d3d3d; background: #fff; }
 .ft-left-img2 { width: 85px; height: 87px; background-position: 0 0; }
 .ft-left-img3 { width: 95px; height: 81px; background-position: 0 -87px; }
 .ft-left-img4 { width: 76px; height: 83px; background-position: -85px 0; }
-.ft-l > ul > li > a { position: absolute; bottom: 0; left: 35px; color: #4e4e4e; }
+.ft-l > ul > li > a { position: absolute; bottom: 2px; left: 35px; color: #4e4e4e; }
 
 /* Footer Right */
 .ft-r { float: left; width: 720px; padding-left: 80px; *width: 640px; }

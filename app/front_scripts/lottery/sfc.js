@@ -45,10 +45,16 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
     winlost.prototype.init = function () {
 
       var _this = this;
+      var f = null;
+
+      _this.data = [];
 
       for (var prop in Config.MatchData) {
         if (Config.MatchData.hasOwnProperty(prop)) {
-          _this.data = Config.MatchData[prop];
+          f = Config.MatchData[prop];
+          if(f && _.isArray(f) && f.length){
+            _this.data = _this.data.concat(f);
+          }
         }
       }
 
@@ -78,7 +84,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         }
 
         html += '<dd matchcode="' + item.matchcode + '" data-mindex="' + i + '">';
-        html += '<span class="co1">' + item.matchcode + '</span>';
+        html += '<span class="co1">' + (i+1) + '</span>';
         html += '<span class="co2">' + item.league + '</span>';
         html += '<span class="co3">' + item.game_start_time + '</span>';
         html += '<span class="co4"><strong class="j-maind">' + item.home + '</strong>  <strong class="j-ked">' + item.away + '</strong></span>';
@@ -214,7 +220,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
       $('.j-m-lscontent1').html(mLsContent1HTML);
       $('.j-m-lscontent2').html(mLsContent2HTML);
-      $('.j-gameNumber').text(i);
+      $('.j-gameNumber').text(matchCount);
 
     };
 
@@ -277,7 +283,10 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
       }else if (_this.uniqMatch.length < Config.matchsTotal) {
         result.statu = false;
-        result.info = '请对' + Config.matchsTotal + '场比赛的赛过进行竞猜，每场比赛至少竞猜一个赛果';
+        result.info = '请对' + Config.matchsTotal + '场比赛的赛果进行竞猜，每场比赛至少竞猜一个赛果';
+      }else if(_this.zhus>10000){
+        result.statu = false;
+        result.info = '方案注数已超过<span class="fc-3 mlr-8">10000</span>注<br/><p class="fs-12">理性购彩,可适当减少投注</p>';
       }
 
       return result;
@@ -377,11 +386,19 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       });
 
       $('.j-quick-bei').on('change', function (event) {
+
         var v = $(this).val();
+
+        if(!v){
+          v = 1;
+          $(this).val(1);
+        }
         var result = wlConfig.filterNum(v, 99999);
+
         $(this).val(result);
         wlConfig.beishu = result;
         wlConfig.updateMoney();
+
       });
 
       $('.j-quick-bei').on('keyup', function (event) {
@@ -407,7 +424,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
         tableHtml = wlConfig.craeteTzTable();
 
-        wlConfig.payMoney = wlConfig.money;
+        Config.payMoney = wlConfig.money;
 
         wlConfig.buyLoty(function () {
 
@@ -470,10 +487,14 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         $('#j-modal-table').html(tableHtml);
 
         wlConfig.payMoney = 1;
+        Config.payMoney = 1;
 
         wlConfig.buyLoty(function () {
+
+          $('#share-num').val(wlConfig.money);
           $('#hemaiModal').modal('show');
           updateCreatePartProjectParame();
+
         }, params);
 
       });
@@ -501,7 +522,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
           if (data.retCode == 100000) {
 
             store.set('lotyName', Config.lotyName);
-            store.set('payMoney', _this.payMoney);
+            store.set('payMoney', Config.payMoney);
             store.set('projectNo', data.retData.projectNo);
             store.set('lotyCNName', Config.lotyCNName);
 
@@ -531,9 +552,9 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
       }
 
-      lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + _this.payMoney + '.00</span>元';
+      lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + Config.payMoney + '.00</span>元';
 
-      APP.checkLogin(_this.payMoney, {
+      APP.checkLogin(Config.payMoney, {
         enoughMoney: cb,
         lessMoneyTips: lessMoneyTips
       });
@@ -573,16 +594,21 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
     winlost.prototype.addOneItem = function (i, dd, sp, title, dzTab) {
 
+      var _this = this;
       var code = dd.attr('matchcode');
       var matchIndex = Number(dd.attr('data-mindex'));
 
-      this.match.push({
+      _this.match.push({
         index: i,
         type: dzTab,
         matchcode: code,
         sp: sp,
         title: title,
         matchIndex: matchIndex
+      });
+
+      _this.match = _.sortBy(_this.match, function(r){
+        return r.index;
       });
 
     };
@@ -630,11 +656,18 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
     winlost.prototype.updateMoney = function () {
 
-      var m = $('.j-quick-bei');
-      var v = parseInt(m.val(), 10);
-      this.money = this.zhus * 2 * v;
+      var _this = this;
+      var m = $('.j-quick-bei').val();
+      var v = parseInt(m, 10);
 
-      $('#j-totalMoney').text(this.money);
+      if(!m || isNaN(v)){
+        v = 1;
+      }
+
+      _this.money = _this.zhus * 2 * v;
+      _this.beishu = v;
+
+      $('#j-totalMoney').text(_this.money);
 
     };
 

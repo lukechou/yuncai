@@ -22,7 +22,7 @@ require.config({
 
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick'], function ($, _, store, APP, index) {
+require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick'], function($, _, store, APP, index) {
 
   var PayMoney = 0;
 
@@ -49,7 +49,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     blueTotal: 0,
   };
 
-  $('#j-tou a').on('click', function (event) {
+  $('#j-tou a').on('click', function(event) {
     if ($(this).attr('data-type') == 1) {
       $('#j-huan-one').fadeIn()
     } else {
@@ -58,7 +58,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
   });
 
   // 单场决胜选择
-  $('#j-d-tou').on('click', 'li', function (event) {
+  $('#j-d-tou').on('click', 'li', function(event) {
     $('#j-d-tou li').removeClass('active')
     $(this).addClass('active')
   });
@@ -78,12 +78,12 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     pauseOnDotsHover: true,
   });
 
-  $('#slick .slick-dots li').on('mouseover', function (event) {
+  $('#slick .slick-dots li').on('mouseover', function(event) {
     var dotIndex = $(this).index();
     $('#slick')[0].slick.slickGoTo(dotIndex);
   });
 
-  $('#slick').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+  $('#slick').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
     if (nextSlide === 1) {
       var w = ($(window).width() - 985) / 2 + 265;
       $('.bn3-left').width(w);
@@ -91,7 +91,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
   });
 
   // 快捷投注类型切换
-  $('#j-quick-buy-loty-type').on('click', 'a', function (event) {
+  $('#j-quick-buy-loty-type').on('click', 'a', function(event) {
 
     index.currLotyName = $(this).attr('data-seed');
 
@@ -100,17 +100,17 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
   });
 
-  $('#j-quick-buy-loty-detail .btn-change').on('click', function (event) {
+  $('#j-quick-buy-loty-detail .btn-change').on('click', function(event) {
     index.hasCreate[$(this).parents('.tab-pane').attr('id')] = false;
 
   });
 
-  $('#j-quick-buy-loty-detail .btn-red').on('click', function (event) {
+  $('#j-quick-buy-loty-detail .btn-red').on('click', function(event) {
     var lotyName = $(this).parents('.tab-pane').attr('id');
     quickBuyLottery();
   });
 
-  var quickBuyLottery = function () {
+  var quickBuyLottery = function() {
 
     index.parameter = {};
 
@@ -126,7 +126,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     index.parameter.unikey = $.now();
 
     PayMoney = 2;
-    buy(function () {
+    buy(function() {
       showBuyLotyConfirmMask();
     }, index.parameter);
   };
@@ -137,15 +137,15 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       cName = '';
 
     switch (index.currLotyName) {
-    case 'ssq':
-      cName = '双色球';
-      break;
-    case 'dlt':
-      cName = '大乐透';
-      break;
-    case 'pl5':
-      cName = '排列5';
-      break;
+      case 'ssq':
+        cName = '双色球';
+        break;
+      case 'dlt':
+        cName = '大乐透';
+        break;
+      case 'pl5':
+        cName = '排列5';
+        break;
     }
 
     qihao = '第' + index.parameter.qihao + '期';
@@ -161,7 +161,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     APP.showTips({
       text: h,
       type: 2,
-      onConfirm: function () {
+      onConfirm: function() {
         sendQuickBuyAjax();
       }
     });
@@ -199,7 +199,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         dataType: 'json',
         data: index.parameter,
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode === 100000) {
           APP.showTips("购买成功，预祝您中奖.");
           index.hasCreate[index.currLotyName] = false;
@@ -208,13 +208,13 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
           APP.showTips(data.retMsg);
         }
       })
-      .fail(function () {
+      .fail(function() {
         APP.showTips("购彩火爆，服务器正在努力处理.");
       });
   }
 
   // 合买选项卡切换
-  $('#j-model-nav').on('click', 'li', function (event) {
+  $('#j-model-nav').on('click', 'li', function(event) {
     var t = $(this);
     $('#j-model-nav .active').removeClass('active');
     t.addClass('active');
@@ -227,7 +227,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     getModelBuy(true);
   });
 
-  $('#j-buy-switch').on('click', 'span', function (event) {
+  $('#j-buy-switch').on('click', 'span', function(event) {
     event.preventDefault();
     $('#j-buy-switch span').addClass('unactive');
     $(this).removeClass('unactive');
@@ -237,22 +237,22 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     }
 
     switch ($(this).attr('data-buy-type')) {
-    case '0':
-      $('#j-model-more').html('更多模型').attr('href', '/lottery/trade/model-index');
-      $('#j-noproject-tips').html('当前期暂时还无人投注。亲，<a href="/lottery/trade/model-index" target="_blank" id="j-model-link">马上投注去</a>，您就是今天的彩胜第一人！');
-      getModelBuy(false);
-      $('#j-model-nav').addClass('hide');
-      break;
-    case '1':
-      $('#j-model-more').html('更多合买').attr('href', '/lottery/project-center/jczq');
-      $('#j-noproject-tips').html('当前暂无合买方案。亲，<a href="/lottery/buy/jczq" target="_blank" id="j-model-link">马上去发起</a>，您就是今天的彩胜第一发起人');
-      getModelBuy(true);
-      $('#j-model-nav').removeClass('hide');
-      break;
+      case '0':
+        $('#j-model-more').html('更多模型').attr('href', '/lottery/trade/model-index');
+        $('#j-noproject-tips').html('当前期暂时还无人投注。亲，<a href="/lottery/trade/model-index" target="_blank" id="j-model-link">马上投注去</a>，您就是今天的彩胜第一人！');
+        getModelBuy(false);
+        $('#j-model-nav').addClass('hide');
+        break;
+      case '1':
+        $('#j-model-more').html('更多合买').attr('href', '/lottery/project-center/jczq');
+        $('#j-noproject-tips').html('当前暂无合买方案。亲，<a href="/lottery/buy/jczq" target="_blank" id="j-model-link">马上去发起</a>，您就是今天的彩胜第一发起人');
+        getModelBuy(true);
+        $('#j-model-nav').removeClass('hide');
+        break;
     }
   });
 
-  var submitHemai = function () {
+  var submitHemai = function() {
 
     var h, template, qihao = '';
 
@@ -273,13 +273,13 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     APP.showTips({
       text: h,
       type: 2,
-      onConfirm: function () {
+      onConfirm: function() {
         sendHemaiAjax();
       }
     });
   };
 
-  var sendHemaiAjax = function () {
+  var sendHemaiAjax = function() {
     var obj = null;
     if (index.modelBuyParams) {
       obj = index.modelBuyParams;
@@ -296,7 +296,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
           unikey: (new Date()).valueOf(),
         },
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode == 100000) {
           if (obj.onSuccess) {
             obj.onSuccess();
@@ -305,18 +305,18 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
           APP.showTips({
             text: '合买成功!',
             type: 1,
-            onConfirm: function () {
+            onConfirm: function() {
               window.location.reload();
             }
           });
-          $('body').on('click', '.close', function (event) {
+          $('body').on('click', '.close', function(event) {
             window.location.reload();
           });
         } else {
           APP.handRetCode(data.retCode, data.retMsg, submitHemai);
         }
       })
-      .fail(function () {
+      .fail(function() {
         APP.onServiceFail();
       });
   };
@@ -339,7 +339,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
   }
 
   // 首页合买, 模型跟买
-  $('#owl-demo').on('click', '.j-model-buy', function (event) {
+  $('#owl-demo').on('click', '.j-model-buy', function(event) {
 
     var obj = {};
     var t = $(this);
@@ -397,20 +397,20 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
       var html = '<div class="m-detail-box"><p>您对模型编号<span class="mlr-8 fc-3">' + obj.model_id + '</span>投注<span class="mlr-8 fc-3">' + obj.money + '</span>元，请确认</p><div class="btns">' + btnHTML + '<button class="btn btn-gray" data-dismiss="modal">取消</button></div></div>';
 
-      buy(function () {
+      buy(function() {
 
         APP.showTips({
           html: html
         });
 
-        $('#buyConfirm').one('click', function (event) {
+        $('#buyConfirm').one('click', function(event) {
           $.ajax({
               url: '/lottery/trade/model-fast-buy',
               type: 'POST',
               dataType: 'json',
               data: obj,
             })
-            .done(function (data) {
+            .done(function(data) {
               if (data.retCode === 100000) {
                 APP.showTips("购买成功，预祝您中奖.");
                 APP.updateUserMoney();
@@ -418,7 +418,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                 APP.showTips(data.retMsg);
               }
             })
-            .fail(function () {
+            .fail(function() {
               APP.showTips("购彩火爆，服务器正在努力处理.");
             });
         });
@@ -429,7 +429,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       //合买
       if (checkByNum(buyNum, maxNum)) {
 
-        buy(function () {
+        buy(function() {
 
           submitHemai();
 
@@ -455,7 +455,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
           qid: index.modelLoty[index.modelLotyName].id
         },
       })
-      .done(function (data) {
+      .done(function(data) {
         var html = '';
         var dataItem = '';
         var dataArr = [];
@@ -542,7 +542,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
           onGetModelBuyError();
         }
       })
-      .fail(function () {
+      .fail(function() {
         onGetModelBuyError();
       });
   }
@@ -560,12 +560,20 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         type: 'get',
         dataType: 'json',
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode === 100000) {
-          $('#j-week-total').html(data.retData.totalPrize);
+          var l, d;
+          if (data.retData.totalPrize.indexOf('亿') != -1) {
+            l = data.retData.totalPrize.indexOf('万');
+            d = data.retData.totalPrize;
+            d = d.substring(0, l + 1) + '元';
+          } else {
+            d = data.retData.totalPrize;
+          }
+          $('#j-week-total').html(d);
         }
       })
-      .fail(function () {
+      .fail(function() {
         console.log("error");
       });
 
@@ -574,13 +582,15 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         type: 'get',
         dataType: 'json',
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode === 100000) {
-          console.log(data);
-          $('#j-week-start').html(data.retData[0].username);
+          if (data.retData[0].uid && data.retData[0].username) {
+            var weekStar = '<a href="/user/profile/index/' + data.retData[0].uid + '">' + data.retData[0].username + '</a>';
+            $('#j-week-start').html(weekStar);
+          }
         }
       })
-      .fail(function () {
+      .fail(function() {
         console.log("error");
       });
 
@@ -589,57 +599,81 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         type: 'get',
         dataType: 'json',
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode === 100000) {
           runStartList(data.retData);
         }
       })
-      .fail(function () {
+      .fail(function() {
         console.log("error");
       });
+  }
 
+  function runListAnimate(d,w, el, sp) {
+
+    var speed = sp==undefined ? d.length*7500 : sp*d.length*7500;
+    var wi = el.find('.j-run-item').width();
+
+    el.animate({
+        marginLeft: -w
+      },
+      speed,'linear',
+      function() {
+        var tmp  = $('#j-run-list ul').first().clone();
+        $('#j-run-list ul').first().remove();
+        $('#j-run-list').append(tmp);
+        $('#j-run-list').css('marginLeft',0);
+        runListAnimate(d,wi,el);
+      });
   }
 
   function runStartList(d) {
-
-    var delay = 300;
     var html = '';
     var item = '';
     var ul = '';
+    var name = '';
     var width = $('#j-week-text').width();
+    var intId = [];
+    var dataLen = d.length;
+    var runList = null;
+    var itemWidth = 0;
+    var firstLiWidth = 0;
 
-    html += '<ul id="j-run-list">';
+    html += '<ul class="j-run-item">';
 
-    for (var i = d.length - 1; i >= 0; i--) {
+    for (var i = dataLen - 1; i >= 0; i--) {
       item = d[i];
-      html += '<li>' + item.username.slice(0, 3) + '...中奖<span>' + item.bonus_money + '元</span></li>';
+      name = '<a href="/user/profile/index/' + item.uid + '">' + item.username + '</a>';
+      html += '<li>' + name + '中奖<span>' + item.bonus_money + '元</span></li>';
     };
 
     html += '</ul>';
 
+    html = '<div id="j-run-list" class="run-list">' + html + html + '</div>';
+
     $('#j-week-text').html(html);
-    ul = $('#j-run-list');
 
-    ul.width(d.length * width);
-    setInterval(function () {
-      ul.animate({
-          marginLeft: -width
-        },
-        300,
-        function () {
-          var h = ul.find('li').first().clone();
-          ul.find('li').first().remove();
-          ul.css('marginLeft', 0).append(h);
-        });
-    }, 4000);
+    runList = $('#j-run-list');
 
+    runList.width(dataLen * width * 2);
+    itemWidth = runList.find('.j-run-item').width();
+    firstLiWidth = Number(runList.find('.j-run-item li').eq(0).width()) + 20;
+    runListAnimate(d,itemWidth, runList);
+
+    runList.hover(function(){
+      $(this).stop();
+    },function(){
+      var ml = $(this).css('marginLeft').slice(1, -2);
+      var lv = 1-ml/itemWidth;
+      runListAnimate(d,itemWidth, runList,lv);
+    })
   }
 
   function showMask() {
 
     var imgArr = [];
 
-    $('#j-first-mask img').each(function (index, el) {
+    $('#j-first-mask img').each(function(index, el) {
 
       var newImg = new Image();
       var src = $(this).attr('data-src')
@@ -649,9 +683,9 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       $(this).attr('src', src);
     });
 
-    imgArr[1].onload = function () {
+    imgArr[1].onload = function() {
       $('#j-first-mask').show().addClass('animated');
-      $('#j-mask-close').one('click', function (event) {
+      $('#j-mask-close').one('click', function(event) {
         $('#j-first-mask').remove();
       });
     };
@@ -683,11 +717,11 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
   }
 
-  $('#j-xz-buy').on('click', function (event) {
+  $('#j-xz-buy').on('click', function(event) {
     $('#j-xz-modal').modal('show');
   });
 
-  $('#j-xz-nav').on('click', 'li', function (event) {
+  $('#j-xz-nav').on('click', 'li', function(event) {
     $('#j-xz-nav .active').removeClass('active');
     $(this).toggleClass('active');
     index.xz.randomNameIndex = $(this).index();
@@ -697,7 +731,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     index.xz.buyCodes = null;
   });
 
-  $('#j-xz-num').on('click', 'span', function (event) {
+  $('#j-xz-num').on('click', 'span', function(event) {
     $('#j-xz-num span.active').removeClass('active');
     $(this).toggleClass('active');
     index.xz.randomZhushu = Number(APP.filterStr($(this).html()));
@@ -726,7 +760,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       blueArr = index.seeds.ssq.blueBall.concat();
 
       if (index.xz.actLuckyNum > 16) {
-        _.remove(redArr, function (num) {
+        _.remove(redArr, function(num) {
           return num == actNum;
         });
 
@@ -742,7 +776,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
         } else {
 
-          _.remove(redArr, function (num) {
+          _.remove(redArr, function(num) {
             return num == actNum;
           });
 
@@ -753,7 +787,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
         }
 
       }
-      oneNum.red.sort(function (a, b) {
+      oneNum.red.sort(function(a, b) {
         return a - b;
       });
       returenArr.push(oneNum);
@@ -762,7 +796,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     return returenArr;
   }
 
-  $('#j-xz-getNum').on('click', function (event) {
+  $('#j-xz-getNum').on('click', function(event) {
 
     var arr = getXzNum(index.xz.actLuckyNum, index.xz.randomZhushu);
     var html = '';
@@ -792,7 +826,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     $('#j-num-list').html(html);
   });
 
-  $('#j-xz-ljtz').on('click', function (event) {
+  $('#j-xz-ljtz').on('click', function(event) {
 
     var codes = index.xz.buyCodes || false;
     var buyCodes = [];
@@ -823,19 +857,19 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
       PayMoney = params.zhushu * 2;
 
-      buy(function () {
+      buy(function() {
         APP.showTips({
           html: html
         });
 
-        $('#buyConfirm').one('click', function (event) {
+        $('#buyConfirm').one('click', function(event) {
           $.ajax({
               url: '/lottery/digital/buy-self/ssq/0',
               type: 'POST',
               dataType: 'json',
               data: params,
             })
-            .done(function (data) {
+            .done(function(data) {
               if (data.retCode === 100000) {
                 $('#j-xz-modal').modal('hide');
                 APP.showTips("购买成功，预祝您中奖.");
@@ -845,7 +879,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                 APP.showTips(data.retMsg);
               }
             })
-            .fail(function () {
+            .fail(function() {
               APP.showTips("购彩火爆，服务器正在努力处理.");
             });
         });
@@ -857,7 +891,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
   });
 
-  $('#j-xz-reset').on('click', function (event) {
+  $('#j-xz-reset').on('click', function(event) {
     $('#j-num-list').removeClass('main-many');
     $('#j-num-list').html('');
     index.xz.buyCodes = null;

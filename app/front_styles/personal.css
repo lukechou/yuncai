@@ -252,7 +252,7 @@
 
 /* 个人中心-绑定身份证 */
 .bind-form { width: 520px; margin: 35px 0 0 220px; }
-.bind-form .control-label { font-weight: normal; padding-right: 2px; float: left; width: 120px; }
+.bind-form .control-label { font-weight: normal; padding-right: 2px; float: left; width: 125px; }
 .bind-form .form-control { height: 28px; border: 1px #dfdfdf solid; border-radius: 0; width: 196px; display: inline-block; }
 .bind-form .control-right { width: 400px; float: left; }
 .bind-form .form-group > div { padding: 0; position: relative; }

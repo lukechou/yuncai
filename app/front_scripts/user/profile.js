@@ -72,7 +72,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         htmlOutput = '<tr><td colspan="7">' + data.retMsg + '</td></tr>';
       }
       this.appendTable(htmlOutput); //初始化表格
-      if(data.retCode==100000 && data.retData.size > 5){
+      if (data.retCode == 100000 && data.retData.size > 5) {
         $('#j-launch-hemai-table tr:last').css({
           borderBottom: '1px solid #dfdfdf'
         });
@@ -128,7 +128,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         htmlOutput = '<tr><td colspan="7">' + data.retMsg + '</td></tr>';
       }
       this.appendTable(htmlOutput); //初始化表格
-      if(data.retCode==100000 && data.retData.size > 5){
+      if (data.retCode == 100000 && data.retData.size > 5) {
         $('#j-join-hemai-table tr:last').css({
           borderBottom: '1px solid #dfdfdf'
         });
@@ -158,7 +158,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       if (data.retCode == 100000) {
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
-          for (var i = 1; i <= detailData.length; i++,j++) {
+          for (var i = 1; i <= detailData.length; i++, j++) {
             dataItem = detailData[i - 1];
             htmlOutput += '<tr><td>' + j + '</td><td>' + dataItem.date_str + '</td><td>' + dataItem.qihao + '</td><td>' + dataItem.modelNo + '</td><td>' + dataItem.money + '</td><td>' + dataItem.status + '</td><td>' + '<a target="_blank" href="' + dataItem.detail_url + '">详情</a></td></tr>';
           }
@@ -174,7 +174,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
         htmlOutput = '<tr><td colspan="7">' + data.retMsg + '</td></tr>';
       }
       this.appendTable(htmlOutput); //初始化表格
-      if(data.retCode==100000 && data.retData.size > 5){
+      if (data.retCode == 100000 && data.retData.size > 5) {
         $('#j-nowbuy-model-table tr:last').css({
           borderBottom: '1px solid #dfdfdf'
         });
@@ -256,15 +256,25 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
       var detailData = '';
       var dataItem = '';
       if (data.retCode == 100000) {
+        console.log(data);
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++) {
             dataItem = detailData[i - 1];
-            if (dataItem.detail_url) {
-              htmlOutput += '<tr><td>' + dataItem.create_time + '</td><td><a target="_blank" href="' + dataItem.detail_url + '">' + dataItem.title + '</a></td><td>' + dataItem.type + '</td><td>' + dataItem.project_price + '</td><td>' + dataItem.bonus + '</td><td>' + dataItem.join_num + '</td><td>' + dataItem.state + '</td></tr>';
-            } else {
-              htmlOutput += '<tr><td>' + dataItem.create_time + '</td><td></td><td>' + dataItem.type + '</td><td>' + dataItem.project_price + '</td><td>' + dataItem.bonus + '</td><td>' + dataItem.join_num + '</td><td>' + dataItem.state + '</td></tr>';
+            if (dataItem.bonus != 0) {
+              if (dataItem.detail_url) {
+                htmlOutput += '<tr><td>' + dataItem.create_time + '</td><td><a target="_blank" href="' + dataItem.detail_url + '">' + dataItem.title + '</a></td><td>' + dataItem.type + '</td><td>' + dataItem.project_price + '</td><td class="fc-3">' + dataItem.bonus + '</td><td>' + dataItem.join_num + '</td><td class="fc-3">' + dataItem.state + '</td></tr>';
+              } else {
+                htmlOutput += '<tr><td>' + dataItem.create_time + '</td><td></td><td>' + dataItem.type + '</td><td>' + dataItem.project_price + '</td><td class="fc-3">' + dataItem.bonus + '</td><td>' + dataItem.join_num + '</td><td class="fc-3">' + dataItem.state + '</td></tr>';
+              }
+            }else{
+              if (dataItem.detail_url) {
+                htmlOutput += '<tr><td>' + dataItem.create_time + '</td><td><a target="_blank" href="' + dataItem.detail_url + '">' + dataItem.title + '</a></td><td>' + dataItem.type + '</td><td>' + dataItem.project_price + '</td><td>' + dataItem.bonus + '</td><td>' + dataItem.join_num + '</td><td>' + dataItem.state + '</td></tr>';
+              } else {
+                htmlOutput += '<tr><td>' + dataItem.create_time + '</td><td></td><td>' + dataItem.type + '</td><td>' + dataItem.project_price + '</td><td>' + dataItem.bonus + '</td><td>' + dataItem.join_num + '</td><td>' + dataItem.state + '</td></tr>';
+              }
             }
+
           }
         } else {
           htmlOutput = '<tr><td colspan="7">无历史记录</td></tr>';
@@ -817,14 +827,14 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'PAGE'], function($, _
 
 
     APP.checkLogin(null, {
-      always: function(){
+      always: function() {
         APP.showTips({
-        text: outhtml,
-        type: 2,
-        onConfirm: function() {
-          confirmFollow(DATA, _this);
-        }
-      })
+          text: outhtml,
+          type: 2,
+          onConfirm: function() {
+            confirmFollow(DATA, _this);
+          }
+        })
       }
     }, true);
 

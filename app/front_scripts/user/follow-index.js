@@ -37,22 +37,33 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
       var detailData = '';
       var dataItem = '';
       var j = 20 * (obj.page - 1) + 1;
-      console.log(data);
+      var loginUserName = $('#myname').text();
       if (data.retCode == 100000) {
         if (data.retData.data.length > 0) {
           detailData = data.retData.data;
           for (var i = 1; i <= detailData.length; i++, j++) {
             dataItem = detailData[i - 1];
-            if(dataItem.followed){
-              if(dataItem.follow_type==1){
-                htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8">' + dataItem.follow_value + '元</td><td class="td9">' + dataItem.follow_times + '次</td>' + '<td class="td10"><button class="btn-gray" disabled>已定制</button><a class="btn-sear j-high-level" target="_blank" href="/account/customizegd">修改</a></td></tr>';
-              }else if(dataItem.follow_type==2){
-                htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8">' + dataItem.follow_value + '%</td><td class="td9">' + dataItem.follow_times + '次</td>' + '<td class="td10"><button class="btn-gray" disabled>已定制</button><a class="btn-sear j-high-level" target="_blank" href="/account/customizegd">修改</a></td></tr>';
+            if (loginUserName && dataItem.username == loginUserName) {
+              if (dataItem.followed) {
+                if (dataItem.follow_type == 1) {
+                  htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8">' + dataItem.follow_value + '元</td><td class="td9">' + dataItem.follow_times + '次</td>' + '<td class="td10"></td></tr>';
+                } else if (dataItem.follow_type == 2) {
+                  htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8">' + dataItem.follow_value + '%</td><td class="td9">' + dataItem.follow_times + '次</td>' + '<td class="td10"></td></tr>';
+                }
+              } else {
+                htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8"><input type="text" placeholder="最少1" class="min-yuan j-min-yuan"/>元</td><td class="td9"><input type="text" placeholder="最多999" class="min-ci j-min-ci"/>次</td>' + '<td class="td10"></td></tr>';
               }
-            }else{
-              htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8"><input type="text" placeholder="最少1" class="min-yuan j-min-yuan"/>元</td><td class="td9"><input type="text" placeholder="最多999" class="min-ci j-min-ci"/>次</td>' + '<td class="td10"><button class="btn-red j-dz-btn">定制</button><a class="btn-white j-high-level" target="_blank" href="/user/profile/index/' + 　dataItem.uid + '">高级</a></td></tr>';
+            } else {
+              if (dataItem.followed) {
+                if (dataItem.follow_type == 1) {
+                  htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8">' + dataItem.follow_value + '元</td><td class="td9">' + dataItem.follow_times + '次</td>' + '<td class="td10"><button class="btn-gray" disabled>已定制</button><a class="btn-sear j-high-level" target="_blank" href="/account/customizegd">修改</a></td></tr>';
+                } else if (dataItem.follow_type == 2) {
+                  htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8">' + dataItem.follow_value + '%</td><td class="td9">' + dataItem.follow_times + '次</td>' + '<td class="td10"><button class="btn-gray" disabled>已定制</button><a class="btn-sear j-high-level" target="_blank" href="/account/customizegd">修改</a></td></tr>';
+                }
+              } else {
+                htmlOutput += '<tr><td>' + j + '</td><td class="td2 j-user-name" csm-where="' + dataItem.csm_where + '" follow-id="' + dataItem.id + '" uid="' + dataItem.uid + '" loty-name="' + dataItem.loty_name + '"><a target="_blank" href="/user/profile/index/' + dataItem.uid + '">' + dataItem.username + '</a></td><td class="td3">' + dataItem.loty_cnname + '</td><td class="td5"><span class="td5span">' + dataItem.bonus_30day + '</span>元</td><td class="td6">' + dataItem.bonus_total + '元</td><td class="td7">' + dataItem.follower_num + '</td><td class="td8"><input type="text" placeholder="最少1" class="min-yuan j-min-yuan"/>元</td><td class="td9"><input type="text" placeholder="最多999" class="min-ci j-min-ci"/>次</td>' + '<td class="td10"><button class="btn-red j-dz-btn">定制</button><a class="btn-white j-high-level" target="_blank" href="/user/profile/index/' + 　dataItem.uid + '">高级</a></td></tr>';
+              }
             }
-
           }
         } else {
           htmlOutput = '<tr><td colspan="6">当前没有跟单用户</td></tr>';
@@ -99,14 +110,14 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
       page: 1,
       pageSize: 20,
       pageElement: '.j-dzgd-index-page-box',
-      sort_type : 2
+      sort_type: 2
     };
     if (!userName) {
       var DATA = {
         page: 1,
         pageSize: 20,
         pageElement: '.j-dzgd-index-page-box',
-        sort_type : 2
+        sort_type: 2
       };
     }
     $('.m-dzgd-nav').find('a').removeClass('active');
@@ -147,14 +158,14 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
     outhtml = '<div class="frbox"><img src="http://static3.yuncai.com/front_images/fail.png" alt="success" class="icon"><div class="text"><p>每次认购金额：<span class="fc-3">' + unitPrice + '</span>元</p><p>定制次数：<span class="fc-3">' + maxBuyTimes + '</span>次</p><p>确认按以上信息进行跟单吗？</p></div></div>';
 
     APP.checkLogin(null, {
-      always: function(){
+      always: function() {
         APP.showTips({
-        text: outhtml,
-        type: 2,
-        onConfirm: function() {
-          confirmFollow(DATA, _this);
-        }
-      })
+          text: outhtml,
+          type: 2,
+          onConfirm: function() {
+            confirmFollow(DATA, _this);
+          }
+        })
       }
     }, true);
 
@@ -184,14 +195,14 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
               page: 1,
               pageSize: 20,
               pageElement: '.j-dzgd-index-page-box',
-              sort_type : 2
+              sort_type: 2
             };
           } else {
             DATA = {
               page: 1,
               pageSize: 20,
               pageElement: '.j-dzgd-index-page-box',
-              sort_type : 2
+              sort_type: 2
             };
           }
           PAGE1.loadDZFollow(DATA);
@@ -235,7 +246,7 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
 
   });
   $(document).delegate('.j-high-level', 'click', function(event) {
-    setTimeout(function(){
+    setTimeout(function() {
       $('#j-nav li:nth-child(3)').click();
     }, 3000);
   });
@@ -269,7 +280,7 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
         pageElement: '.j-dzgd-index-page-box',
         sort_type: sortType
       };
-    }else{
+    } else {
       DATA = {
         page: 1,
         pageSize: 20,
@@ -309,7 +320,7 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
         pageElement: '.j-dzgd-index-page-box',
         sort_type: sortType
       };
-    }else{
+    } else {
       DATA = {
         page: 1,
         pageSize: 20,
@@ -349,7 +360,7 @@ require(['jquery', 'app', 'store', 'lodash', 'PAGE', 'bootstrap'], function($, A
         pageElement: '.j-dzgd-index-page-box',
         sort_type: sortType
       };
-    }else{
+    } else {
       DATA = {
         page: 1,
         pageSize: 20,

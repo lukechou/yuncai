@@ -315,7 +315,7 @@ APP.onServiceFail = function() {
 
 APP.initLrkf = function() {
   var qq = ['2726429522'];
-  var tel = '4008-898-310';
+  var tel = '400-8788-310';
   var side = '<div id="j-side" class="side"><a class="icon-text" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=' + qq[0] + '&amp;site=qq&amp;menu=yes" ></a></div>';
 
   $('body').append(side);

@@ -235,11 +235,11 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                             <td>' + data.retData[i].money + '</td>\
                             <td>' + data.retData[i].status + '</td>\
                           </tr>';
-          } else if( (lotyName == 'gdx') || (lotyName == 'dlc') || (lotyName == 'syy') ||(lotyName == 'xjx') ||
-        		  (lotyName == 'lnx') || (lotyName == 'jxssc') || (lotyName == 'k3') ||(lotyName == 'jk3') ||
-        		  (lotyName == 'hbk3') || (lotyName == 'klpk') || (lotyName == 'gkl') ){
-        	  
-        	  htmlOutput += '<tr>\
+          } else if ((lotyName == 'gdx') || (lotyName == 'dlc') || (lotyName == 'syy') || (lotyName == 'xjx') ||
+            (lotyName == 'lnx') || (lotyName == 'jxssc') || (lotyName == 'k3') || (lotyName == 'jk3') ||
+            (lotyName == 'hbk3') || (lotyName == 'klpk') || (lotyName == 'gkl')) {
+
+            htmlOutput += '<tr>\
                   <td class="w180">' + (i + 1 + nextPage) + '</td>\
                   <td>' + data.retData[i].code + '</td>\
                   <td>' + data.retData[i].money / data.retData[i].multiple / 2 + '</td>\
@@ -247,8 +247,8 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                   <td>' + data.retData[i].money + '</td>\
                   <td>' + data.retData[i].status + '</td>\
                 </tr>';
-          }else {
-        	  htmlOutput += '<tr>\
+          } else {
+            htmlOutput += '<tr>\
                             <td class="w180">' + (i + 1 + nextPage) + '</td>\
                             <td>' + data.retData[i].code + '</td>\
                             <td>' + data.retData[i].gg + '</td>\
@@ -443,17 +443,26 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
   $('#j-tab').on('click', 'a', function (event) {
     event.preventDefault();
     /* Act on the event */
+
     var tables = $('.tab-content .table');
     var index = parseInt($(this).attr('data-x'));
+    var colCount = 0;
+
+    colCount = tables.eq(index).find('thead th').length;
+
+    if (!colCount) {
+      colCount = 7;
+    }
+
     switch (index) {
     case 1:
       switch ($('#j-project-status').val()) {
       case '已撤单':
-        tables.eq(index).find('tbody').html('<tr><td colspan="7">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
+        tables.eq(index).find('tbody').html('<tr><td colspan="' + colCount + '">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
         break;
 
       case '待出票':
-        tables.eq(index).find('tbody').html('<tr><td colspan="7">等待出票中...</td></tr>');
+        tables.eq(index).find('tbody').html('<tr><td colspan="' + colCount + '">等待出票中...</td></tr>');
         break;
 
       default:
