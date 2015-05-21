@@ -52,16 +52,25 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       for (var prop in Config.MatchData) {
         if (Config.MatchData.hasOwnProperty(prop)) {
           f = Config.MatchData[prop];
-          if(f && _.isArray(f) && f.length){
+          if (f && _.isArray(f) && f.length) {
             _this.data = _this.data.concat(f);
           }
         }
       }
 
-      _this.createTable();
+      if (Config.serverTime == 1) {
 
-      _this.bindEvent();
+        APP.showStopSellModal(Config.lotyCNName);
+        $('#j-ljtzBtn,#j-fqhmBtn').addClass('btn-stop').html('暂停销售');
+        $('#j-ljtzBtn').attr('id', '');
+        $('#j-fqhmBtn').remove();
+        $('#j-data-body .data-loadbox').html(Config.lotyCNName + ' 暂停销售');
 
+      } else {
+        _this.createTable();
+
+        _this.bindEvent();
+      }
     };
 
     winlost.prototype.createTable = function () {
@@ -84,10 +93,10 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         }
 
         html += '<dd matchcode="' + item.matchcode + '" data-mindex="' + i + '">';
-        html += '<span class="co1">' + (i+1) + '</span>';
+        html += '<span class="co1">' + (i + 1) + '</span>';
         html += '<span class="co2">' + item.league + '</span>';
         html += '<span class="co3">' + item.game_start_time + '</span>';
-        html += '<span class="co4"><strong class="j-maind">' + item.home + '</strong>  <strong class="j-ked">' + item.away + '</strong></span>';
+        html += '<span class="co4"><strong class="hostTeam">' + item.home + '</strong>  <strong class="guestTeam">' + item.away + '</strong></span>';
         html += '<span class="co7 sp-btn j-sp-btn" index="0" data-item="胜" gametype="spf" sp="' + spArr[0] + '">' + spArr[0] + '</span>';
         html += '<span class="co8 sp-btn j-sp-btn" index="1" data-item="平" gametype="spf" sp="' + spArr[1] + '">' + spArr[1] + '</span>';
         html += '<span class="co9 sp-btn j-sp-btn" index="2" data-item="负" gametype="spf" sp="' + spArr[2] + '">' + spArr[2] + '</span>';
@@ -104,22 +113,35 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
     winlost.prototype.getCodes = function (matchs, items) {
 
       var _this = this;
-      var f = null;
       var result = '';
       var arr = [];
       var rArr = [];
+      var k = null;
+      var m = null;
+      var f = null;
 
-      for (var i = 0; i < matchs.length; i++) {
+      for (var i = 0; i < _this.data.length; i++) {
 
         arr = [];
-        f = items[matchs[i]];
+        k = _this.data[i];
+        m = k.matchcode;
 
-        for (var j = 0; j < f.length; j++) {
+        f = _this.group[m];
 
-          arr.push(_this.indexMap[f[j].index]);
-        };
+        if (f && f.length) {
 
-        rArr.push(arr.join(','));
+          for (var j = 0; j < f.length; j++) {
+            arr.push(_this.indexMap[f[j].index]);
+          };
+
+          rArr.push(arr.join(','));
+
+        } else {
+
+          rArr.push('^');
+
+        }
+
       };
 
       result = rArr.join('/');
@@ -281,10 +303,10 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         result.statu = false;
         result.info = '请先阅读并同意《委托投注规则》后才能继续';
 
-      }else if (_this.uniqMatch.length < Config.matchsTotal) {
+      } else if (_this.uniqMatch.length < Config.matchsTotal) {
         result.statu = false;
         result.info = '请对' + Config.matchsTotal + '场比赛的赛果进行竞猜，每场比赛至少竞猜一个赛果';
-      }else if(_this.zhus>10000){
+      } else if (_this.zhus > 10000) {
         result.statu = false;
         result.info = '方案注数已超过<span class="fc-3 mlr-8">10000</span>注<br/><p class="fs-12">理性购彩,可适当减少投注</p>';
       }
@@ -389,7 +411,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
 
         var v = $(this).val();
 
-        if(!v){
+        if (!v) {
           v = 1;
           $(this).val(1);
         }
@@ -607,7 +629,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         matchIndex: matchIndex
       });
 
-      _this.match = _.sortBy(_this.match, function(r){
+      _this.match = _.sortBy(_this.match, function (r) {
         return r.index;
       });
 
@@ -660,7 +682,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       var m = $('.j-quick-bei').val();
       var v = parseInt(m, 10);
 
-      if(!m || isNaN(v)){
+      if (!m || isNaN(v)) {
         v = 1;
       }
 
@@ -797,6 +819,12 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
     }
   }
 
+  $('#j-full-bao').on('change', function (event) {
+    event.preventDefault();
+    /* Act on the event */
+    updateCreatePartProjectParame();
+  });
+
   function updateCreatePartProjectParame() {
 
     // 总金额
@@ -826,8 +854,14 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
     var baodiPercent = '';
     var b = parseInt($('#part_aegis_num').val()) || 0;
 
-    // 是否保底 hasPartAegis
-    var isBaodi = $('#has_part_aegis')[0].checked || false;
+    // 是否保底
+    var isBaodi = true;
+    var isFullBao = $('#j-full-bao')[0].checked;
+    if (isFullBao) {
+      $('.j-baodi-text').attr('readonly', true);
+    } else {
+      $('.j-baodi-text').removeAttr('readonly');
+    }
 
     copies = Number(copies.replace(/[^0-9]/g, ''));
     rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
@@ -855,57 +889,33 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       rengouCopies = copies;
     }
 
+    if (rengouCopies / copies < .05) {
+      rengouCopies = Math.ceil(copies * .05);
+    }
+
     // 认购金额必须大于提成金额
     if (ticheng > (rengouCopies / copies * 100)) {
       rengouCopies = Math.ceil(copies * ticheng * 0.01);
     }
     rengouMoney = rengouCopies * oneCopiesMoney;
 
-    // 是否保底
-    if ($('#has_part_aegis')[0]) {
-      isBaodi = $('#has_part_aegis')[0].checked;
-    }
-
     // 设置保底份数
     if (isBaodi) {
 
       $('#part_aegis_num')[0].disabled = false;
 
-      if (b === 0) {
+      if ((b + rengouCopies) < copies) {
 
-        if ((rengouCopies / copies) < 0.8) {
-          baodiCopies = Math.ceil(copies * 0.2);
-        } else {
-          baodiCopies = copies - rengouCopies;
-        }
+        baodiCopies = b;
 
       } else {
 
-        if ((b + rengouCopies) < copies) {
+        baodiCopies = copies - rengouCopies;
 
-          if ((b / copies) < 0.2) {
+      }
 
-            if ((Math.ceil(copies * 0.2) + rengouCopies) > copies) {
-
-              baodiCopies = copies - rengouCopies;
-
-            } else {
-
-              baodiCopies = Math.ceil(copies * 0.2);
-            }
-
-          } else {
-
-            baodiCopies = b;
-
-          }
-
-        } else {
-
-          baodiCopies = copies - rengouCopies;
-
-        }
-
+      if (isFullBao) {
+        baodiCopies = copies - rengouCopies;
       }
 
       baodiPercent = (baodiCopies / copies * 100).toFixed(2);
@@ -953,6 +963,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
     // 保底份数,保底百分比,认购,保底金额tips,共需支付金额tips
     $('#part_aegis_num').val(baodiCopies);
     $('#part_aegis_percent').html(baodiPercent);
+    $('.j-baodi-percent').html(baodiPercent);
     $('#buy_money_tips').html(rengouCopies * oneCopiesMoney);
     $('#aegis_money_tips').html(baodiTips);
     $('#total_money_tips').html(totalTips);

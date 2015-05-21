@@ -1,4 +1,29 @@
-$(function () {
+require.config({
+  paths: {
+    jquery: '../lib/jquery',
+    bootstrap: '../lib/bootstrap.min',
+    app: '../common/app',
+    tipsy: '../lib/jquery.tipsy',
+    PAGE: 'pager'
+  },
+  shim: {
+    bootstrap: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
+    PAGE: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    }
+  },
+});
+
+require(['jquery', 'app', 'PAGE', 'bootstrap','tipsy'], function ($, APP) {
+
     'use strict';
 
     PAGE.loadOrderRecord = function (obj) {

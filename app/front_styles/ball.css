@@ -31,7 +31,7 @@
 .dataHead dd { position: relative; float: left; height: 60px; border-left: 1px solid #dfdfdf; }
 .dataHead span { line-height: 29px; display: block; height: 29px; border-bottom: 1px solid #dfdfdf; }
 .dataHead .co6 .btnBox, .dataHead .co7 .btnBox { margin-left: -1px; white-space: nowrap; border: none; }
-.dataHead .co6 .btnBox em { float: left; width: 56px; border-right: 1px #dfdfdf solid; }
+.dataHead .co6 .btnBox em { float: left; width: 59px; border-right: 1px #dfdfdf solid; }
 .imitateSelect:hover { text-decoration: none; }
 .dataHead .gameSeleList, .dataHead .optionList { position: absolute; z-index: 100; top: 59px; left: -1px; display: none; border: 1px solid #1962ae; }
 .dataHead .co2.hovered, .dataHead .co3.hovered { margin-top: -1px; border: 1px solid #1962ae; border-width: 1px 1px; background: #fff; }
@@ -44,7 +44,7 @@
 .dataHead .co7 .optionList { top: 29px; width: 100%; }
 .dataHead .co2, .dataHead .co3 { cursor: pointer; text-align: left; }
 .dataHead .co2 { padding-left: 36px; }
-.dataHead > .co3 { padding-left: 8px; }
+.dataHead > .co3 { padding-left: 6px; }
 
 /* 赛事筛选, 截止时间 */
 .dataHead .gameSeleList ul { overflow: hidden; }
@@ -56,35 +56,37 @@
 .dataHead .gameSeleList .btnBox label { margin: 0; }
 .dataHead .gameSeleList .btnBox label .icon { position: relative; top: 4px; left: -5px; }
 .dataHead .gameSeleList .btn-red { color: #fff; }
-.arrow { position: relative; left: 5px; display: inline-block; width: 8px; height: 4px; background: url(../front_images/help-nav-icon-new.png) no-repeat; }
+.arrow { position: relative; left: 0; display: inline-block; width: 8px; height: 4px; background: url(../front_images/help-nav-icon-new.png) no-repeat; }
 
 /* Row */
-.co1 { overflow: hidden; width: 45px; }
+.co1 { overflow: hidden; width: 38px; }
 .co2 { width: 110px; }
-.co3 { width: 80px; }
+.co3 { width: 70px; }
+.collect-body .co3 { width: 69px; }
 .co4 { width: 260px; }
-.co5, .dataBody .btnBox .rq { width: 49px; }
-.co6 { overflow: hidden; width: 168px; white-space: nowrap; }
-.co6-1 { width: 217px; }
+.co5, .dataBody .btnBox .rq { width: 57px; }
+.co6 { overflow: hidden; width: 177px; white-space: nowrap; }
+.co6-1 { width: 234px; }
 .co7 { width: 124px; }
 .co8 { position: absolute; right: 0; float: none; width: 60px; }
 
 /* dataBody */
-.collect-body { display: none; border: 1px #4bacea solid; }
-.collect-body .co1 { width: 43px; }
+.collect-body { display: none; border: 2px #4bacea solid; }
+.collect-body .co1 { width: 38px; }
 .collect-body .row2-1 em { height: 37px; }
-.collect-body .row3-1 em { height: 37px; }
+.collect-body .row3-1 em { height: 37px;width: 41px; }
 .collect-body .row4-1 em { height: 39px; }
-.collect-body dl{width: 711px;}
-.collect-body dt{border-width: 0!important;}
-.collect-body dd{border-right: none!important;}
-.collect-body dd span.co1{border-left: none;}
-.collect-body .co6-1{  width: 218px;}
-.collect-body .btnBox em.lastOne{width: 57px;}
-.collect-body dl:last-child{ border-bottom:none;}
+.collect-body dl { width: 711px; }
+.collect-body dt { border-width: 0 !important; }
+.collect-body dd { border-right: none !important; }
+.collect-body dd span.co1 { border-left: none; }
+.collect-body .co6-1 { width: 232px; }
+.collect-body .btnBox em.lastOne { width: 57px; }
+.collect-body dl:last-child { border-bottom: none; }
+
 .collect-title { background: #4bacea; height: 42px; line-height: 42px; color: #fff; font-weight: bold; padding-left: 10px; }
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
-.dataBody dl { position: relative; margin-bottom: 0; border-bottom: 1px solid #dfdfdf;}
+.dataBody dl { position: relative; margin-bottom: 0; border-bottom: 1px solid #dfdfdf; }
 
 /* dt */
 .dataBody dt { font-size: 12px; font-weight: normal; line-height: 40px; position: relative; height: 40px; padding-left: 10px; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 1px; }
@@ -97,6 +99,7 @@
 .dataBody dd, .dataBody span, .towLine em, .dataBody .btnBox em, .dataBody .no-support, .dataBody span.btnBox .block, .analyMoreTable th, .row3-1 em, .row2-1 em { line-height: 38px; height: 38px; }
 .dataBody dd { position: relative; z-index: 2; zoom: 1; border-right: 1px #dfdfdf solid; }
 .dataBody dd:hover { background: #f6f7f9; }
+.collect-body dd { width: 709px; }
 .dataBody dd span { font-family: 'simsun'; float: left; text-align: center; border: 1px solid #dfdfdf; border-right: none; border-bottom: 0; }
 .towLine { overflow: hidden; border: 0; border-bottom: none; }
 .towLine em { display: inline-block; width: 38px; }
@@ -107,7 +110,7 @@
 .dataBody dd .hostTeam, .dataBody dd .guestTeam { float: left; overflow: hidden; width: 48%; text-align: right; white-space: nowrap; }
 .dataBody dd .guestTeam { float: right; text-align: left; }
 .dataBody .btnBox { position: relative; border: 0; }
-.dataBody .btnBox em { display: block; float: left; width: 56px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
+.dataBody .btnBox em { display: block; float: left; width: 59px; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
 .dataBody .no-support { float: left; width: 168px; text-align: center; vertical-align: top; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
 .dataBody dd span.btnBox .block { width: 100%; margin-left: -1px; }
 .show-icon, .hide-icon { width: 7px; height: 6px; }
@@ -127,8 +130,10 @@
 .dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3, .row4, .row5 { display: none; }
 .row2 .btnBox, .row3 .btnBox { border: none; }
 .onlyBf .co4 { width: 260px; }
-.onlyZjq .co4 { width: 180px; }
-.onlyBqc .co4 { width: 178px; }
+.onlyZjq .co4 { width: 182px; }
+.onlyZjq .collect-body .co4{ width: 180px; }
+.onlyBqc .co4 { width: 177px; }
+.onlyBqc .collect-body .co4{width: 175px;}
 .onlyBf .co2, .onlyBqc .co2, .onlyZjq .co2 { width: 60px; }
 
 /* 胜平负 数据主体样式 */
@@ -159,9 +164,11 @@
 /* 总进球 */
 .onlyBf .no-support, .onlyZjq .no-support, .onlyBqc .no-support { width: 100%; border: none; }
 .onlyBf .row1, .onlyZjq .row3, .onlyBqc .row2 { display: block; }
-.onlyBf .row1 { width: 217px; }
-.onlyBqc .row2 { width: 316px; }
-.onlyZjq .row3 { width: 314px; }
+.onlyBf .row1 { width: 234px; }
+.onlyBf .collect-body .row1 { width: 232px; }
+.onlyBqc .row2 { width: 334px; }
+.onlyZjq .row3 { width: 329px; }
+
 .onlyBf .co2 { width: 91px; }
 .onlyBqc .co2 { width: 93px; }
 .onlyBf .co2 { width: 110px; }
@@ -175,14 +182,17 @@
 .row1-1 .btn.has { background-position: 0 -58px; }
 .row2-1 em, .row3-1 em, .row4-1 em, .row5 em { float: left; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 1px 0 0; }
 .row2 em, .row3 em { float: left; border-right: 1px #dfdfdf solid; }
-.row2 em, .row2-1 em { width: 35px; }
-.row3 em, .row3-1 em { width: 39px; }
+.row2 em, .row2-1 em { width: 37px; }
+.row3 em, .row3-1 em { width: 41px; }
 
 /* 混合投注 */
 .onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4 { line-height: 80px; height: 80px; }
 .onlyHhtz .dataBody dd { min-height: 80px; }
 .onlyHhtz .row4 { display: block; }
-.onlyHhtz .co4 { width: 260px; }
+.onlyHhtz .row4-1{  width: 189px;}
+.onlyHhtz .row4 em,.onlyHhtz .row4-1 em{width: 47px;}
+.onlyHhtz .collect-body .co4 { width: 260px; }
+.onlyHhtz .co4 { width: 262px; }
 .row4-1 { width: 197px; }
 .row4 em { float: left; width: 42px; border-right: 1px #dfdfdf solid; }
 .row4 em.last { width: 45px; }
@@ -273,7 +283,7 @@
 .qrtz-box .orderRule, .qrtz-box .orderRule a { color: #848484; }
 .qrtz-box .orderRule .icon { position: relative; top: 3px; margin-right: 5px; cursor: pointer; }
 .tzBtnBox { margin: 10px 0; }
-.tzBtnBox .ljtzBtn, .tzBtnBox .fqhmBtn { font-size: 14px; line-height: 38px; width: 48%; height: 38px; padding: 0; color: #fff; border: none; }
+.tzBtnBox .ljtzBtn, .tzBtnBox .fqhmBtn { font-size: 14px; line-height: 38px; width: 48%; height: 38px; padding: 0; color: #fff; border: none; font-family: "微软雅黑"; }
 .tzBtnBox .ljtzBtn { margin-right: 5px; }
 
 /* Tips */
@@ -394,11 +404,10 @@
 .ft-main .zhus h4 { line-height: 38px; float: left; height: 38px; margin: 0; }
 .ft-main .zhus h4 input { width: 200px; height: 38px; margin: 0 8px; padding: 0 15px; color: #848484; border: 2px #dfdfdf solid; }
 .ft-main .zhus .btn { font-family: 'Microsoft Yahei'; font-size: 16px; float: left; width: 175px; height: 38px; margin-left: 15px; padding: 0; }
-.ft-main .zhus .btn-auto{line-height: 38px;}
-
+.ft-main .zhus .btn-auto { line-height: 38px; }
 .main-auto { background: #fff; min-height: 200px; border-top: 1px #dfdfdf solid; padding: 10px 15px; display: none; }
 .main-auto h4 { font-size: 14px; font-weight: bold; margin-top: 0; }
-.main-auto .link-more{ font-size: 12px; font-weight: normal;}
+.main-auto .link-more { font-size: 12px; font-weight: normal; }
 .stop-box { line-height: 150px; font-size: 12px; }
 .table > tbody > tr > td.s-zhu { padding: 0; }
 .table > tbody > tr > td.s-zhu1 { width: 37px; }
@@ -445,9 +454,8 @@
 .history-main .table .bg-f4 { background: #f4f4f4 !important; }
 .no-datatips { line-height: 200px; height: 200px; }
 .history-main .table .h-look > td { padding: 15px; background: #e3e3e3; }
-.history-main .table .h-look > td td span {
-  display: block;
-}
+.history-main .table .h-look > td td span { display: block; }
+
 /* 投注确认 */
 .m-detail-box .btns { width: 210px; margin: auto; }
 .m-detail-box .btns .btn { width: 90px; margin: 0 5px; }

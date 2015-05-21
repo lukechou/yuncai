@@ -217,16 +217,28 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
   };
 
   PAGE.loadTicketRecord = function (obj) {
+
     PAGE.ajaxUrl = '/lottery/cp-detail/' + $('#j-strLotyName').val() + '/ajax';
     PAGE.pageElement = $('.j-page-box');
     PAGE.initAjax(obj);
+
     PAGE.onSuccess = function (data) {
+
       var htmlOutput = '';
       var nextPage = ((PAGE.config.page - 1) * 10 > 0) ? (PAGE.config.page - 1) * 10 : '';
+      var tdDataArr = [];
+      var lotyName = null;
+      var item = null;
+
       if (data.retCode == 100000) {
+
         for (var i = 0, len = data.retData.length; i < len; i++) {
-          var lotyName = $('#j-strLotyName').val();
+
+          lotyName = $('#j-strLotyName').val();
+          item = data.retData[i];
+
           if (lotyName == "model") {
+
             htmlOutput += '<tr>\
                             <td class="w180">' + (i + 1 + nextPage) + '</td>\
                             <td>' + data.retData[i].code + '</td>\
@@ -235,6 +247,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                             <td>' + data.retData[i].money + '</td>\
                             <td>' + data.retData[i].status + '</td>\
                           </tr>';
+
           } else if ((lotyName == 'gdx') || (lotyName == 'dlc') || (lotyName == 'syy') || (lotyName == 'xjx') ||
             (lotyName == 'lnx') || (lotyName == 'jxssc') || (lotyName == 'k3') || (lotyName == 'jk3') ||
             (lotyName == 'hbk3') || (lotyName == 'klpk') || (lotyName == 'gkl')) {
@@ -247,6 +260,28 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                   <td>' + data.retData[i].money + '</td>\
                   <td>' + data.retData[i].status + '</td>\
                 </tr>';
+
+          } else if ((lotyName == 'sfc') || ('r9' == lotyName)) {
+
+            tdDataArr = tdDataArr.concat(item.code);
+
+            if(item.money / item.multiple / 2 === 1){
+              tdDataArr.push('单式')
+            }else{
+              tdDataArr.push('复式')
+            }
+
+            tdDataArr.push(item.money / item.multiple / 2);
+            tdDataArr.push(item.multiple);
+
+            htmlOutput += '<tr><td> 选号</td>';
+
+            for (var i = 0; i < tdDataArr.length; i++) {
+              htmlOutput += '<td>'+tdDataArr[i]+'</td>';
+            };
+
+            htmlOutput += '</tr>';
+
           } else {
             htmlOutput += '<tr>\
                             <td class="w180">' + (i + 1 + nextPage) + '</td>\

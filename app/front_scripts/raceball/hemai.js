@@ -111,11 +111,6 @@ define(['jquery'], function ($) {
       }
       rengouMoney = rengouCopies * oneCopiesMoney;
 
-      // 是否保底
-      if (box.find('.j-baodi-check')[0]) {
-        isBaodi = box.find('.j-baodi-check')[0].checked;
-      }
-
       // 设置保底份数
       if (isBaodi) {
 

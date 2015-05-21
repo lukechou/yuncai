@@ -350,7 +350,7 @@ body { color: #3d3d3d; background: #fff; }
 
 /* Footer */
 .ft, .ft-mn { overflow: hidden; }
-.ft { width: 100%; height: 290px; color: #545454; background: #f1f1f1; }
+.ft { width: 100%; height: 290px; color: #545454; background: #f1f1f1; margin-top: 45px; }
 .ft-mn { padding-top: 25px; }
 
 /* Footer Left */

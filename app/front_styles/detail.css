@@ -149,13 +149,14 @@
 .card-1, .card-3 { color: #3d3d3d; }
 .card-2, .card-4 { color: #f13c38; }
 
-/* 详情底部表格1 */
-.mid-ttil { border: 1px #dfdfdf solid; border-width: 0 1px; }
-.d-table-one { font-size: 12px; margin-bottom: 0; text-align: center; border-top: 1px #dfdfdf solid; border-width: 1px 0 0 0; }
+/* 详情底部表格 */
+.mid-ttil{ border:1px #dfdfdf solid; border-width: 0 1px;}
+.d-table-one { font-size: 12px; margin-bottom: 0; text-align: center; border-top: 1px #dfdfdf solid; border-width:1px 0 0 0;}
 .d-table-one > thead > tr > th { font-weight: normal; text-align: center; border-bottom: 1px solid #dfdfdf; background: #f1f1f1; }
 .d-table-one > tbody > tr > td { vertical-align: middle; }
-.d-table-one > tbody > tr > td, .d-table-one > thead > tr > th { border: 1px #dfdfdf solid; padding: 8px 0; }
+.d-table-one > tbody > tr > td, .d-table-one > thead > tr > th { border: 1px #dfdfdf solid; padding:8px 0; }
 .d-table-one > tbody > tr { background: #fff; border-bottom: 1px #dfdfdf solid; }
+
 
 /* JCLQ-详情*/
 .d-table-jclq > thead { border: 1px #dfdfdf solid; border-width: 0 1px; }
@@ -173,3 +174,39 @@
 .sfcr9-td-ddkj i { margin: 5px 5px 0 38px; float: left; }
 .sfcr9-td-kjzt .jin-er { padding-left: 48px; font-weight: bold; }
 .table > tbody > tr > td.sfcr9-td-kjzt { vertical-align: top; text-align: left; padding: 20px 0 0 20px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
