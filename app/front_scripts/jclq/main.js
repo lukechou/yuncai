@@ -628,7 +628,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     arr.push('<span class="co3 gameTime"><i class="jtip">' + item.end_time + '</i></span>');
 
-    arr.push('<span class="co4"><em class="hostTeam" title="' + item.home_short + '"><b>' + item.home_short + '</b></em><em class="guestTeam" title="' + item.away_short + '"><b>' + item.away_short + '</b></em></span>');
+    arr.push('<span class="co4"><em class="guestTeam" title="' + item.away_short + '">客：' + item.away_short + '</em><em class="hostTeam" title="' + item.home_short + '">主：' + item.home_short + '</em></span>');
 
     return arr;
 
@@ -649,17 +649,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var rqspfTitle = ['让球胜', '让球平', '让球负'];
     var noSupportTips = '本场对阵不支持该玩法';
 
-    rqspfNum = Number(item['rqspf_rangqiu_num'])
 
-    if (rqspfNum > 0) {
-      rqspfNum = '<b class="fc-7">' + item['rqspf_rangqiu_num'] + '</b>';
-    }
-
-    if (rqspfNum < 0) {
-      rqspfNum = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
-    }
-
-    html += '<span class="row4-1"><em class="rq">0</em>';
+    html += '<span class="row4-1">';
     if (item.spf == 1) {
       html += BET.getSpBtn(item.spf, spfTitle, spfArr, 'spf');
     } else {
@@ -668,7 +659,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     html += '</span>';
 
-    html += '<span class="row4-1"><em class="rq">' + rqspfNum + '</em>';
+    html += '<span class="row4-1">';
     if (item.rqspf == 1) {
       html += BET.getSpBtn(item.rqspf, rqspfTitle, rqspfArr, 'rqspf', 3);
     } else {

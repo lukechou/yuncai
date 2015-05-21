@@ -43,7 +43,7 @@ define(['jquery', 'app'], function ($, APP) {
       maxBonus: null,
       bjdcPassWay: true,
       box: $('#bettingBox'),
-      tab: 'spf',
+      tab: 'hhtz',
       zjqSpValueArr: ['0', '1', '2', '3', '4', '5', '6', '7+'],
       bqcSpValueArr: ['胜胜', '胜平', '胜负', '平胜', '平平', '平负', '负胜', '负平', '负负'],
       rqspfSpValueArr: ['让球胜', '让球平', '让球负'],
@@ -61,7 +61,7 @@ define(['jquery', 'app'], function ($, APP) {
       this.bunch = [];
       this.dd = null;
       this.maxBonus = null;
-      this.tab = 'spf';
+      this.tab = 'hhtz';
       this.bindMain();
       this.bindRight();
 
