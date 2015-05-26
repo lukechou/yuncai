@@ -19,7 +19,8 @@
 .m-nav-l > li:nth-child(odd):after { position: absolute; top: 0; right: -10px; display: block; width: 1px; height: 14px; margin: 9px 0; content: ''; background: #dfdfdf; }
 .m-nav-l > li > a { padding: 5px 6px; color: #3d3d3d; }
 .m-nav-l > li > a:hover, .m-nav-l > li > a.active { text-decoration: none; color: #fff; border-radius: 2px; background: #f13c38; }
-.m-tab-nav > li > a:hover { border-left: none; }
+/* .m-tab-nav > li > a:hover { border-left: none; } */
+.m-tab-nav > li > a.nav-a2:hover{ border-left: none; }
 
 /* 个人中心-我的帐户 */
 .ps-mn { font-size: 12px; float: left; width: 780px; }

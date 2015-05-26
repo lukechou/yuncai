@@ -153,7 +153,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       fc3d: '福彩3D',
       qlc: '七乐彩',
       qxc: '七星彩',
-      bjdc:'足球单场'
+      bjdc:'足球单场',
+      sfc:'胜负彩',
+      r9:'任选九'
     };
     var mname = lotyNameObj[lotyName];
     var tabIndex = tr.find('.joinUrl').val().split('/');
@@ -380,7 +382,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
 
     footFixed();
     $(window).on('resize', function(event) {
-      footFixed();
+      //footFixed();
     });
 
   }

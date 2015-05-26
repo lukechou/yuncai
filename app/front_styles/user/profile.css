@@ -1,4 +1,5 @@
 /*start 个人中心 首页*/
+.frbox .text span{ margin:0;}
 .per-center { margin: 15px auto 80px; }
 .per-info { height: 176px; width: 100%; border: 1px solid #dfdfdf; padding: 27px 0 0 20px; }
 .per-info-img { margin-top: 8px; }
@@ -38,9 +39,10 @@
 .recent-news { margin-top: 12px; border: 1px solid #dfdfdf; }
 .recent-news div, .recent-news li, .recent-news span { font-size: 12px; }
 .recent-news .title { height: 35px; line-height: 35px; padding-left: 20px; font-size: 12px; font-weight: bold; background: #f1f1f1; }
-.recent-news-ul > li { border-bottom: 1px dotted #dfdfdf; list-style: disc inside; }
+.recent-news-ul > li { border-bottom: 1px dotted #dfdfdf; list-style: none; padding: 10px 0 8px 21px; position: relative; }
+.recent-news-ul > li:before { content: '.'; font-size: 20px; position: absolute; top: -1px; left: 6px; font-weight: bold; }
 .j-more-recent-news { background: #FBE6DB; border: 1px solid #F6C9B2; width: 100%; display: none; }
-.recent-news-ul > li > p { margin: 10px 0 8px 21px; }
+.recent-news-ul > li > p { padding: 0; margin: 0; }
 .recent-news-ul .date-str { float: right; margin-right: 20px; }
 .j-more-recent-news table { margin: 12px auto 12px; width: 960px; }
 .j-more-recent-news table tr th, .j-more-recent-news table tr td { height: 35px; text-align: center; }
@@ -50,7 +52,8 @@
 .j-per-modelmore { float: right; font-weight: normal; }
 .icon-tridown, .icon-triup { margin-left: 3px; cursor: pointer; }
 .j-launch-hemai-page-box, .j-join-hemai-page-box, .j-nowbuy-model-page-box, .j-recent-news-page-box { margin-right: 12px; }
-.j-launch-hemai-page-box .pages, .j-join-hemai-page-box .pages, .j-nowbuy-model-page-box .pages, .j-recent-news-page-box .pages{margin-bottom: 10px;}
+.j-launch-hemai-page-box .pages, .j-join-hemai-page-box .pages, .j-nowbuy-model-page-box .pages, .j-recent-news-page-box .pages { margin-bottom: 10px; }
+
 /*end 个人中心 首页*/
 
 /*start 个人中心 历史记录*/
@@ -67,7 +70,7 @@
 .per-his-table > tbody > tr.his-tr > td { border-bottom: 1px dotted #dfdfdf; }
 .j-more-his, .j-dzgd-div { background: #FBE6DB; border: 1px solid #F6C9B2; width: 100%; padding: 0 12px 12px 12px; }
 .more-his-choose { height: 40px; text-align: left; line-height: 40px; }
-.j-more-his table { margin: 0 auto; width:960px; }
+.j-more-his table { margin: 0 auto; width: 960px; }
 .j-more-his table tr th, .j-more-recent-news table tr td { height: 35px; text-align: center; }
 .j-more-his table tr th { background: #f1f1f1; }
 .j-more-his table tr td { background: #fff; }
@@ -128,7 +131,7 @@
 
 /*start 个人中心 定制跟单详情*/
 .dzgd-detail-table { border-bottom: none; }
-.dzgd-detail-table .dzgd-tr td{ border-bottom: 1px dotted #dfdfdf; }
+.dzgd-detail-table .dzgd-tr td { border-bottom: 1px dotted #dfdfdf; }
 .dzgd-detail-table .btn-oper { width: 50px; height: 25px; line-height: 12px; margin-right: 5px; }
 .dzgd-detail-table .th1 { width: 105px; }
 .dzgd-detail-table .th2 { width: 135px; }
@@ -136,11 +139,10 @@
 .dzgd-detail-table .th4 { width: 120px; }
 .dzgd-detail-table .th5 { width: 105px; }
 .dzgd-detail-table .th6 { width: 120px; }
-.undoModel .m-btns{width: 400px;}
+.undoModel .m-btns { width: 400px; }
 
 /*end 个人中心 定制跟单详情*/
 .follow-user-list .modal-dialog { width: 790px; height: 490px; }
 .follow-user-list .modal-body { padding: 0; height: 432px; }
 .j-user-follow-list-page-box { padding-right: 12px; }
-
-#j-launch-hemai-table .td7,#j-join-hemai-table .td7{text-align: right; padding-right: 17px;}
+#j-launch-hemai-table .td7, #j-join-hemai-table .td7 { text-align: right; padding-right: 17px; }

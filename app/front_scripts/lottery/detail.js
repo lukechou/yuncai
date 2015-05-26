@@ -21,8 +21,166 @@ require.config({
 });
 
 require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], function ($, _, store, APP) {
+
   'use strict';
+
+  /***
+      @Config  Request必须参数  必要
+      @PageTable 数据展示表格Element 必要
+      @ajaxUrl Request-Data-Url 必要
+      @initAjax 发送Ajax 请求 必要
+      @onSuccess 数据请求成功后回到函数,主要用于组织返回数据的HTML 必要
+      @onFail  数据请求失败回调 可选
+      @makePageHtml  组织分页栏HTML 默认
+      @bindPageEvent  绑定分页事件 默认
+      @Config.pageNum 分页页数 默认
+     ***/
+
+  var pager = (function () {
+    'use strict';
+
+    function pager(args) {
+      // enforces new
+      if (!(this instanceof pager)) {
+        return new pager(args);
+      }
+
+    }
+
+    pager.prototype = {
+      ajaxUrl: '',
+      config: {
+        pageNum: 0,
+      },
+      pageElement: null,
+      pageTable: null,
+      pageNext: 'j-next-page',
+      pageBack: 'j-next-page',
+      pageValue: 'j-next-page',
+      pageGo: 'j-pages-go',
+      onSuccess: null,
+    };
+
+    pager.prototype.bindPageEvent = function (callback) {
+
+      var _this = this;
+
+      if (!_this.pageElement) {
+        return;
+      }
+
+      _this.pageElement.find('.next-page').on('click', function (event) {
+
+        _this.config.page = parseInt(_this.config.page);
+        if (_this.config.page < _this.config.pageNum) {
+          _this.config.page += 1;
+          callback(_this.config);
+        }
+
+      });
+
+      _this.pageElement.find('.back-page').on('click', function (event) {
+
+        _this.config.page = parseInt(_this.config.page);
+        _this.config.page -= 1;
+        if (_this.config.page <= 0) {
+          _this.config.page = 1;
+        }
+        callback(_this.config);
+
+      });
+
+      _this.pageElement.find('.j-pages-value').on('change', function (event) {
+
+        var max = $(this).siblings('.j-days').html();
+        var go = parseInt($(this).val());
+
+        if (isNaN(go)) {
+          go = 1;
+        } else {
+          go = Math.ceil(go);
+        }
+
+        if (max < go) {
+          go = max;
+        }
+        if (go < 1) {
+          go = 1;
+        }
+        $(this).val(go);
+      });
+
+      _this.pageElement.find('.j-pages-go').on('click', function (event) {
+        _this.config.page = $(this).siblings('.j-pages-value').val() || 1;
+        callback(_this.config);
+      });
+
+    };
+
+    pager.prototype.appendTable = function (html) {
+      this.pageTable.html(html);
+    };
+
+    pager.prototype.makePageHtml = function (pageHtmlNode) {
+
+      if (this.pageElement || !pageHtmlNode) {
+        pageHtmlNode = this.pageElement;
+      }
+
+      if (this.config.pageNum <= 1) {
+        pageHtmlNode.html('');
+        return;
+      }
+
+      pageHtmlNode.html('<div class="pull-right pages">' + '<span class="j-page">' + this.config.page + '</span>/<span class="j-days">' + this.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="' + this.config.page + '" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>').show();
+
+    };
+
+    pager.prototype.initAjax = function (obj) {
+
+      var _this = this;
+      _this.config = obj;
+      $.ajax({
+          url: _this.ajaxUrl,
+          type: 'get',
+          dataType: 'json',
+          data: _this.config,
+        })
+        .done(function (data) {
+          _this.onSuccess(data);
+        })
+        .fail(function () {
+          _this.onFail();
+        });
+    };
+
+    pager.prototype.onFail = function () {
+
+      //APP.showTips('服务器繁忙,请稍后再试!');
+
+    };
+
+    return pager;
+  }());
+
+  var cancelPage = new pager();
+
+  var Detail = (function () {
+    'use strict';
+
+    var Detail = {
+      qihao: $('#j-qihao').val(),
+      lotyName: $('#j-strLotyName').val(),
+      lotyCNName: $('#j-loty-name').val(),
+      projectStatu: $('#j-project-status').val(),
+      colCount: 7
+    };
+
+    return Detail;
+  }());
+
   var rHd = $('.right-hd');
+
   if (rHd.length) {
     $('.left-hd').height(rHd[0].clientHeight);
   }
@@ -101,8 +259,6 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     var mtotal = $('#j-total').html();
     var mid = $('#j-qihao').val();
     var midHtml = '';
-    var mname = _.escape($.trim($('#j-loty-name').val()));
-    var html = '';
     var v = '';
     var max = '';
     var percent = '';
@@ -126,20 +282,28 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
             percent = (100 - ((max - v) * HeMai.dan / HeMai.total * 100)).toFixed(2);
 
             if (percent == 100) {
+
               $('#j-buy')[0].disabled = true;
               $('#buy-submit')[0].disabled = true;
+
               buy.buyTotal.val('').attr('placeholder', '剩余0份');
               $('#j-pro-bar').html('100%').width('100%');
+
               buy.buyMoney.html(0);
               HeMai = null;
               buy = null;
+
             } else {
+
               $('#j-max').html(max - v);
               $('#j-pro-bar').html(percent + '%').width(percent + '%');
+
               buy.buyTotal.val('').attr('placeholder', '剩余' + (max - v) + '份');
               buy.buyMoney.html(0);
               HeMai.max = max - v;
+
             }
+
             date = new Date();
             appendHtml = '<tr><td>' + ($('#messages tbody tr').length + 1) + '</td><td>' + $('#myname').html() + '</td><td>' + b + '</td><td>' + b + '</td><td>0.00</td><td>' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + '</td></tr>';
             $('#messages tbody').append(appendHtml);
@@ -147,18 +311,20 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
           }
         };
 
+        if (Detail.lotyName === 'r9' || Detail.lotyName === 'sfc') {
+
+          midHtml = '第' + Detail.qihao + '期';
+
+        }
+
         template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %></span>份</p><p>共需支付<span class="fc-3"><%= payMoney %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
 
         h = template({
-          lotyName: mname,
+          lotyName: Detail.lotyCNName,
           total: mtotal,
           pay: b,
           payMoney: b * onePrice
         });
-
-        html = {
-          html: h,
-        };
 
         var payMoney = b * onePrice;
         var lessMoneyTips = '';
@@ -166,7 +332,9 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
         APP.checkLogin(payMoney, {
           enoughMoney: function () {
-            APP.showTips(html);
+            APP.showTips({
+              html: h,
+            });
             $('#buyConfirm').one('click', function (event) {
               submitHemai(data);
             });
@@ -216,9 +384,46 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       });
   };
 
+  function getSfcR9Html(data) {
+
+    var item = null;
+    var tdDataArr = [];
+    var result = '';
+    var cancelStr = '';
+    var cancelHtml = '';
+
+    for (var i = 0; i < data.length; i++) {
+
+      item = data[i];
+
+      tdDataArr = [];
+      tdDataArr = tdDataArr.concat(item.code);
+
+      if (item.money / item.multiple / 2 === 1) {
+        tdDataArr.push('单式')
+      } else {
+        tdDataArr.push('复式')
+      }
+
+      tdDataArr.push(item.money / item.multiple / 2);
+      tdDataArr.push(item.multiple);
+
+      result += '<tr><td> 选号</td>';
+
+      for (var j = 0; j < tdDataArr.length; j++) {
+        result += '<td>' + tdDataArr[j] + '</td>';
+      };
+
+      result += '</tr>';
+
+    };
+
+    return result;
+  }
+
   PAGE.loadTicketRecord = function (obj) {
 
-    PAGE.ajaxUrl = '/lottery/cp-detail/' + $('#j-strLotyName').val() + '/ajax';
+    PAGE.ajaxUrl = '/lottery/cp-detail/' + Detail.lotyName + '/ajax';
     PAGE.pageElement = $('.j-page-box');
     PAGE.initAjax(obj);
 
@@ -226,15 +431,13 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
       var htmlOutput = '';
       var nextPage = ((PAGE.config.page - 1) * 10 > 0) ? (PAGE.config.page - 1) * 10 : '';
-      var tdDataArr = [];
-      var lotyName = null;
+      var lotyName = Detail.lotyName;
       var item = null;
 
       if (data.retCode == 100000) {
 
         for (var i = 0, len = data.retData.length; i < len; i++) {
 
-          lotyName = $('#j-strLotyName').val();
           item = data.retData[i];
 
           if (lotyName == "model") {
@@ -261,27 +464,6 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                   <td>' + data.retData[i].status + '</td>\
                 </tr>';
 
-          } else if ((lotyName == 'sfc') || ('r9' == lotyName)) {
-
-            tdDataArr = tdDataArr.concat(item.code);
-
-            if(item.money / item.multiple / 2 === 1){
-              tdDataArr.push('单式')
-            }else{
-              tdDataArr.push('复式')
-            }
-
-            tdDataArr.push(item.money / item.multiple / 2);
-            tdDataArr.push(item.multiple);
-
-            htmlOutput += '<tr><td> 选号</td>';
-
-            for (var i = 0; i < tdDataArr.length; i++) {
-              htmlOutput += '<td>'+tdDataArr[i]+'</td>';
-            };
-
-            htmlOutput += '</tr>';
-
           } else {
             htmlOutput += '<tr>\
                             <td class="w180">' + (i + 1 + nextPage) + '</td>\
@@ -295,13 +477,25 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
           }
 
         };
+
+        if (lotyName === 'sfc' || lotyName === 'r9') {
+
+          htmlOutput = getSfcR9Html(data.retData);
+
+        }
+
         PAGE.config.pageNum = Math.ceil(data.total / obj.pageSize);
         PAGE.makePageHtml();
         PAGE.bindPageEvent(PAGE.loadTicketRecord);
+
       } else {
-        htmlOutput = "<tr><td colspan='6'>" + data.retMsg + "</td></tr>";
+
+        htmlOutput = '<tr><td colspan="' + Detail.colCount + '">' + data.retMsg + '</td></tr>';
+
       }
+
       this.appendTable(htmlOutput);
+
     };
     PAGE.onFail = function () {
       return;
@@ -378,26 +572,20 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     });
 
     $('#j-tab li').on('click', function (event) {
-        var selctVal = $(this).find('a').html();
-        $('#j-just-showmein').hide();
-        $('#j-total-zhu').hide();
-        if (selctVal == '参与用户') {
-          $('#j-just-showmein').show();
-        } else if (selctVal == "选号详情") {
-          $('#j-total-zhu').show();
-        }
-      })
-      //$('#j-tab li:nth-child(2)').click(function(event) {
-      //    $('#j-total-zhu').css({
-      //        display: 'none'
-      //    });
-      //    $('#j-just-showmein').css({
-      //        display: 'block'
-      //    });
-      //});
+      var selctVal = $(this).find('a').html();
+      $('#j-just-showmein').hide();
+      $('#j-total-zhu').hide();
+      if (selctVal == '参与用户') {
+        $('#j-just-showmein').show();
+      } else if (selctVal == "选号详情") {
+        $('#j-total-zhu').show();
+      }
+    })
+
     if ($('#myname').text() != $('.j-user-details td:nth-child(2)').text()) {
       $('.j-co-opertd a').remove();
     }
+
     $('.j-cancalorder-oper').on('click', function (event) {
       var orderId = $(this).parents('tr').attr('data-id');
       APP.showTips({
@@ -450,59 +638,166 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
    * @return {null}
    */
   function touzhuNum() {
+
     var len = $('.j-tou-ls-box2').children('div').length;
     var sum = 0;
 
     if (len > 4) {
+
       $('.j-tzhm-more').css({
         display: 'block'
       });
+
       for (var i = 5; i <= len; i++) {
         $('.j-tou-ls-box2 div:nth-child(' + i + ')').css({
           display: 'none'
         });
       };
+
     }
 
     $('.j-tzhm-more').on('click', function (event) {
+
       APP.showTips({
         title: '投注号码',
         text: '<div class="tzhm-popdiv">' + $('#j-code-html').val() + '</div>'
       });
+
     });
 
   }
+
   touzhuNum();
+
+  // 任九 胜负彩 部分撤单 获取 撤单分页
+
+  cancelPage.loadCancelList = function (obj) {
+
+    var _this = cancelPage;
+
+    _this.ajaxUrl = '/lottery/cp-detail/' + Detail.lotyName + '/ajax'
+
+    _this.pageElement = $('#j-pager-box');
+    _this.config.pageElement = '#j-pager-box';
+    _this.pageTable = $('#j-cancel');
+    _this.initAjax(obj);
+
+    _this.onSuccess = function (data) {
+
+      var D = null;
+      var item = null;
+      var tdDataArr = [];
+      var cancelStr = '';
+      var cancelHtml = '';
+
+      if (data.retCode === 100000) {
+
+        D = data.retData;
+
+        for (var i = 0; i < D.length; i++) {
+
+          item = D[i];
+
+          tdDataArr = [];
+          tdDataArr = tdDataArr.concat(item.code);
+
+          if (item.money / item.multiple / 2 === 1) {
+            tdDataArr.push('单式')
+          } else {
+            tdDataArr.push('复式')
+          }
+
+          tdDataArr.push(item.money / item.multiple / 2);
+          tdDataArr.push(item.multiple);
+
+          cancelStr += '<tr><td> 选号</td>';
+
+          for (var j = 0; j < tdDataArr.length; j++) {
+            cancelStr += '<td>' + tdDataArr[j] + '</td>';
+          };
+
+          cancelStr += '</tr>';
+
+        };
+
+        cancelHtml = '<div class="ttil mid-ttil"><b>出票状态：已撤单</b></div><table class="table d-table-one"><thead><tr><th>场次</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>玩法</th><th>注数</th><th>倍数</th></tr></thead>' + cancelStr + '</table>';
+
+        _this.config.pageNum = Math.ceil(data.total / obj.pageSize);
+        _this.makePageHtml();
+        _this.bindPageEvent(_this.loadCancelList);
+        _this.appendTable(cancelHtml);
+
+      }
+    }
+  };
 
   // 底部tab切换
   $('#j-tab').on('click', 'a', function (event) {
     event.preventDefault();
-    /* Act on the event */
 
     var tables = $('.tab-content .table');
     var index = parseInt($(this).attr('data-x'));
+    var tbody = tables.eq(index).find('tbody');
+
     var colCount = 0;
-
     colCount = tables.eq(index).find('thead th').length;
-
     if (!colCount) {
       colCount = 7;
     }
 
+    Detail.colCount = colCount;
+
     switch (index) {
+
     case 1:
-      switch ($('#j-project-status').val()) {
+
+      switch (Detail.projectStatu) {
+
       case '已撤单':
-        tables.eq(index).find('tbody').html('<tr><td colspan="' + colCount + '">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
+        tbody.html('<tr><td colspan="' + colCount + '">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
         break;
 
       case '待出票':
-        tables.eq(index).find('tbody').html('<tr><td colspan="' + colCount + '">等待出票中...</td></tr>');
+        tbody.html('<tr><td colspan="' + colCount + '">等待出票中...</td></tr>');
         break;
+      case '部分撤单':
 
+        if (Detail.lotyName === 'sfc' || Detail.lotyName === 'r9') {
+
+          //撤单-分页模块
+          cancelPage.loadCancelList({
+            project_no: $('#j-projectNo').val(),
+            page: 1,
+            pageSize: 10,
+            type: 5
+          });
+
+          // Success-分页模块
+          PAGE.pageTable = tbody;
+          PAGE.loadTicketRecord({
+            project_no: $('#j-projectNo').val(),
+            page: 1,
+            pageSize: 10,
+            type: 4
+          });
+
+        } else {
+
+          // 获取 出票详情-分页模块
+          PAGE.pageTable = tbody;
+          PAGE.loadTicketRecord({
+            project_no: $('#j-projectNo').val(),
+            page: 1,
+            pageSize: 10,
+          });
+
+        }
+
+        break;
       default:
-        // getNewPage
-        PAGE.pageTable = tables.eq(index).find('tbody');
+
+        // 获取 出票详情-分页模块
+        PAGE.pageTable = tbody;
         PAGE.loadTicketRecord({
           project_no: $('#j-projectNo').val(),
           page: 1,

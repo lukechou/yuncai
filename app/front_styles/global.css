@@ -256,7 +256,7 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 
 /* 投注页-通用顶部样式 */
 .m-brhd { position: relative; padding: 10px 0; border-bottom: 3px #f13c38 solid; }
-.m-brhd-logo { width: 78px; height: 78px; margin: 0 10px 0 20px; }
+.m-brhd-logo { width: 78px; height: 78px; margin: 0 15px 0 15px; }
 .m-brhd-title { font-size: 16px; margin: 0; margin-top: 11px; }
 .m-brhd-title > b { font-size: 22px; }
 .m-brhd-group { position: absolute; bottom: 0; left: 109px; }
@@ -322,9 +322,9 @@ body { color: #3d3d3d; background: #fff; }
 .hd-logo img { width: 97px; height: 51px; }
 .hd-nav, .hd-nav > li > a { height: 36px; }
 .hd-nav > li { position: relative; float: left; }
-.hd-nav > li > a { font-family: 'Microsoft Yahei'; font-size: 18px; position: relative; display: block; padding: 8px 30px 4px; text-decoration: none; color: #fff; }
-.hd-nav > li > a.active { border-bottom: 3px #f13c38 solid; }
-.hd-nav > li > a:hover { border-bottom: 3px #f13c38 solid; }
+.hd-nav > li > a { font-family: 'Microsoft Yahei'; font-size: 18px; position: relative; display: block; padding: 7px 30px 5px; text-decoration: none; color: #fff; }
+.hd-nav > li > a.active { border-bottom: 4px #f13c38 solid; }
+.hd-nav > li > a:hover { border-bottom: 4px #f13c38 solid; }
 
 /* All Page Seed Menu */
 .hd-nav .seed-nav > a { background: #f13c38; *height: 20px; }
@@ -350,7 +350,7 @@ body { color: #3d3d3d; background: #fff; }
 
 /* Footer */
 .ft, .ft-mn { overflow: hidden; }
-.ft { width: 100%; height: 290px; color: #545454; background: #f1f1f1; margin-top: 45px; }
+.ft { width: 100%; height: 290px; color: #545454; background: #f1f1f1;}
 .ft-mn { padding-top: 25px; }
 
 /* Footer Left */
@@ -396,12 +396,14 @@ body { color: #3d3d3d; background: #fff; }
 .login-modal .modal-body .login-form a { margin-left: 5px; color: #388bf1; }
 
 /* Home Logo */
-.icon-dlt-home-logo, .icon-hbk3-home-logo, .icon-jclq-home-logo, .icon-jczq-home-logo, .icon-ssq-home-logo { background-image: url(../front_images/lottery/home-logo.png); }
-.icon-dlt-home-logo { background-position: 0px 0px; width: 44px; height: 44px; }
-.icon-hbk3-home-logo { background-position: -88px 0px; width: 42px; height: 42px; }
-.icon-jclq-home-logo { background-position: -44px -44px; width: 44px; height: 43px; }
-.icon-jczq-home-logo { background-position: -44px 0px; width: 44px; height: 44px; }
-.icon-ssq-home-logo { background-position: 0px -44px; width: 44px; height: 44px; }
+.icon-dlt-home-logo, .icon-hbk3-home-logo, .icon-jclq-home-logo, .icon-jczq-home-logo, .icon-ssq-home-logo { background-image: url(../front_images/lottery/home-logo.png); width: 43px;
+  height: 43px;}
+.icon-dlt-home-logo { background-position: 0px 0px;}
+.icon-hbk3-home-logo { background-position: -43px 0px; }
+.icon-jclq-home-logo { background-position: 0px -43px; }
+.icon-jczq-home-logo { background-position: -43px -43px; }
+.icon-ssq-home-logo { background-position: -86px 0px; }
+
 
 /* text */
 .redtext { color: red; }

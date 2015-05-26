@@ -5,18 +5,29 @@ require.config({
     bootstrap: '../lib/bootstrap.min',
     store: '../lib/store.min',
     app: '../common/app',
-    core: '../lib/core'
+    core: '../lib/core',
+    tipsy: '../lib/jquery.tipsy',
   },
   shim: {
     bootstrap: {
       deps: ['jquery'],
       exports: 'jquery'
-    }
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    },
   }
 });
 
-require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, _, APP, store) {
+require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], function ($, _, APP, store) {
   'use strict';
+
+  $('.j-icon').tipsy({
+    gravity: 'nw',
+    html: true,
+    opacity: 1
+  });
 
   var winlost = (function () {
 
@@ -82,6 +93,10 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
       var spArr = [];
 
       html += '<dl class="j-data-dl">';
+
+      d.sort(function (a, b) {
+        return Number(a.game_order) - Number(b.game_order);
+      });
 
       for (var i = 0; i < d.length; i++) {
 
@@ -380,6 +395,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         $('.j-m-lscontent2').html('<li class="t1">投注</li>');
 
         wlConfig.match = [];
+        wlConfig.uniqMatch = [];
         wlConfig.group = null;
         wlConfig.zhus = 0;
         wlConfig.money = 0;
@@ -389,7 +405,6 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         $('.j-gameZhu').text(wlConfig.zhus);
         $('.j-quick-bei').val(wlConfig.beishu);
         $('#j-totalMoney').text(wlConfig.money);
-
       });
 
       $('.j-coutn-total').on('click', '.j-count', function (event) {
@@ -479,8 +494,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core'], function ($, 
         params.projectTitle = $('#title').val();
         params.projectText = $('#desc').val();
 
-        Config.payMoney = params.zhushu * 2 * params.beishu / params.shareNum * (params.buyNum + params.aegisNum);
-
+        Config.payMoney = params.zhushu * 2 * params.beishu / params.shareNum * (params.buyNum + params.aegisNum);;
         wlConfig.buyLoty(function () {
 
           wlConfig.buy(params, true);

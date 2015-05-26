@@ -45,7 +45,7 @@
 
 .quick-method { float: left; width: 86px; margin: 0 0 0 30px; }
 .quick-method span, .quick-method-dt span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
-.quick-method span:hover { background: #ffd06b; color: #fff; }
+.quick-method span:hover,.quick-method span.active { background: #ffd06b; color: #fff; }
 
 /* 今日开奖 */
 .bottomBox h3 { font-size: 12px; line-height: 15px; float: none; clear: both; height: 15px; padding: 11px 15px 11px; }

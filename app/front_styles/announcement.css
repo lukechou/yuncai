@@ -34,7 +34,7 @@ body { color: #3d3d3d; background: #fff; }
 .hd-mask-list > li { line-height: 1.6; position: relative; float: left; width: 33%; text-align: left; }
 .hd-mask-list > li > a { font-size: 12px; display: block; color: #a5a5a5; } */
 /* footer */
-.ft { overflow: hidden; width: 100%; padding: 30px 0 50px 0; color: #545454; background: #f5f5f5; }
+/* .ft { overflow: hidden; width: 100%; padding: 30px 0 50px 0; color: #545454; background: #f5f5f5; }
 .ft-mn { padding-top: 25px; }
 .ft-l { float: left; width: 250px; height: 228px; padding-left: 20px; }
 .ft-l > ul { width: 100%; }
@@ -50,7 +50,7 @@ body { color: #3d3d3d; background: #fff; }
 .ft-list > li > h4 { font-size: 20px; }
 .ft-list > li > ul { font-size: 12px; padding: 0 0 0 16px; list-style: disc; }
 .ft-list > li > ul > li > a { line-height: 1.9; color: #545454; }
-.ft-service { font-size: 16px; font-family: '微软雅黑'; font-weight: bold; }
+.ft-service { font-size: 16px; font-family: '微软雅黑'; font-weight: bold; } */
 /* Help Nav */
 .m-help { margin-top: 15px; }
 .m-help-left { width: 220px; float: left; margin-right: 15px; }

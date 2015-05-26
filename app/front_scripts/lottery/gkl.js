@@ -14,13 +14,13 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store, APP) {
   'use strict';
 
   var QUEUE = {};
 
   // 计算阶乘的函数
-  QUEUE.a = function (n) {
+  QUEUE.a = function(n) {
     try {
       if (n == 1 || n == 2) {
         return n;
@@ -33,7 +33,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   };
 
   //计算排列组合的可能数目
-  QUEUE.getACTotalNum = function (n, m, type) {
+  QUEUE.getACTotalNum = function(n, m, type) {
     if (n == m) {
       return 1;
     } else if (n < m) {
@@ -50,7 +50,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       }
     }
   };
-  var GKL = (function () {
+  var GKL = (function() {
 
     /**
      * lotyCnName  彩种中文名
@@ -116,13 +116,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       waitSell: false,
       modifyId: null,
       modifyStatu: 0,
-      showStopControl: true
+      showStopControl: true,
+      G_CHOOSE: null
     };
 
     return GKL;
   }());
 
-  GKL.updateYilou = function () {
+  GKL.updateYilou = function() {
 
     var _this = this;
 
@@ -135,7 +136,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           issue: _this.qihao
         },
       })
-      .done(function (data) {
+      .done(function(data) {
 
         if (data.retCode === 100000) {
 
@@ -152,7 +153,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
           if (data.retData[map[_this.playType]]) {
             var y = data.retData[map[_this.playType]].split('|');
-            y = _.map(y, function (r) {
+            y = _.map(y, function(r) {
               return Number(r);
             });
             var maxYl = _.max(y);
@@ -177,11 +178,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.runYilou = function () {
+  GKL.runYilou = function() {
 
     var _this = this;
 
-    setInterval(function () {
+    setInterval(function() {
       _this.updateYilou();
     }, 10000);
 
@@ -190,7 +191,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   GKL.updateYilou();
   GKL.runYilou();
 
-  GKL.reset = function () {
+  GKL.reset = function() {
 
     var _this = this;
 
@@ -203,7 +204,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.updateBottomUi = function () {
+  GKL.updateBottomUi = function() {
 
     var _this = this;
     var m = 0;
@@ -218,7 +219,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.setNameStr = function (nums) {
+  GKL.setNameStr = function(nums) {
 
     var result = '';
 
@@ -232,7 +233,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return result;
   };
 
-  GKL.createOneNote = function (o, isJx) {
+  GKL.createOneNote = function(o, isJx) {
 
     var _this = this;
 
@@ -277,7 +278,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   };
 
   // 随机添加 N 注
-  GKL.addManyItem = function (count) {
+  GKL.addManyItem = function(count) {
 
     var _this = this;
 
@@ -300,7 +301,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.createOneItem = function () {
+  GKL.createOneItem = function() {
 
     var _this = this;
 
@@ -326,32 +327,32 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     switch (_this.playType) {
 
-    case 'b2':
-      sampleConut = 2;
-      break;
-    case 'b3':
-      sampleConut = 3;
-      break;
-    case 'b4':
-      sampleConut = 4;
-      break;
-    case 'b5':
-      sampleConut = 5;
-      break;
-    case 'b6':
-      sampleConut = 2;
-      break;
-    case 'b7':
-      sampleConut = 3;
-      break;
-    default:
-      break;
+      case 'b2':
+        sampleConut = 2;
+        break;
+      case 'b3':
+        sampleConut = 3;
+        break;
+      case 'b4':
+        sampleConut = 4;
+        break;
+      case 'b5':
+        sampleConut = 5;
+        break;
+      case 'b6':
+        sampleConut = 2;
+        break;
+      case 'b7':
+        sampleConut = 3;
+        break;
+      default:
+        break;
 
     }
 
     if (a[_this.playType]) {
 
-      s = _.sample(a[_this.playType], sampleConut).sort(function (a, b) {
+      s = _.sample(a[_this.playType], sampleConut).sort(function(a, b) {
         return a - b;
       });
 
@@ -380,7 +381,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.getObj = function () {
+  GKL.getObj = function() {
     var _this = this;
 
     var activeNumEl = $('#j-area-' + _this.playType + ' .j-num-btn.active');
@@ -394,24 +395,24 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     };
 
     // 获取投注号码
-    activeNumEl.each(function (index, el) {
+    activeNumEl.each(function(index, el) {
       arr.push($(this).attr('data-num'));
     });
 
     obj.nums = arr;
     obj.money = _this.chooseMoney;
-
+    GKL.G_CHOOSE = obj;
     return obj;
   };
 
-  GKL.updateBuyArr = function () {
+  GKL.updateBuyArr = function() {
 
     var _this = this;
 
     var obj = _this.getObj();
 
     //移除已存在选号
-    _.remove(_this.buyArr, function (i) {
+    _.remove(_this.buyArr, function(i) {
       return i.zid == _this.modifyId;
     });
 
@@ -429,7 +430,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _this.toggleChooseToBuyBtn();
   };
 
-  GKL.getChooseToBuy = function () {
+  GKL.getChooseToBuy = function() {
 
     var _this = this;
 
@@ -447,7 +448,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   // obj.nums  投注号码
   // obj.money 投注号码金额
   // obj.playType  投注玩法类型
-  GKL.saveNumsObj = function (obj) {
+  GKL.saveNumsObj = function(obj) {
 
     var _this = this;
 
@@ -464,7 +465,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.cleanBuyList = function () {
+  GKL.cleanBuyList = function() {
 
     var _this = this;
 
@@ -474,7 +475,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.updateChooseToBuyBtn = function () {
+  GKL.updateChooseToBuyBtn = function() {
 
     var _this = this;
     var c = 'active';
@@ -486,7 +487,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
   };
 
-  GKL.setChooseParams = function () {
+  GKL.setChooseParams = function() {
 
     var _this = this;
 
@@ -495,45 +496,45 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var b6Row = null;
 
     switch (_this.playType) {
-    case 'b2':
-      q = QUEUE.getACTotalNum(l, 2, 'C');
-      _this.chooseZhushu = q;
-      _this.chooseMoney = q * 2;
-      break;
-    case 'b3':
-      q = QUEUE.getACTotalNum(l, 3, 'C');
-      _this.chooseZhushu = q;
-      _this.chooseMoney = q * 2;
-      break;
-    case 'b4':
-      q = QUEUE.getACTotalNum(l, 4, 'C');
-      _this.chooseZhushu = q;
-      _this.chooseMoney = q * 2;
-      break;
-    case 'b5':
-      q = QUEUE.getACTotalNum(l, 5, 'C');
-      _this.chooseZhushu = q;
-      _this.chooseMoney = q * 2;
-      break;
-    case 'b6':
-      q = QUEUE.getACTotalNum(l, 2, 'C');
-      _this.chooseZhushu = q;
-      _this.chooseMoney = q * 2;
-      break;
-    case 'b7':
-      q = QUEUE.getACTotalNum(l, 3, 'C');
-      _this.chooseZhushu = q;
-      _this.chooseMoney = q * 2;
-      break;
-    default:
-      _this.chooseZhushu = l;
-      _this.chooseMoney = l * 2;
-      break;
+      case 'b2':
+        q = QUEUE.getACTotalNum(l, 2, 'C');
+        _this.chooseZhushu = q;
+        _this.chooseMoney = q * 2;
+        break;
+      case 'b3':
+        q = QUEUE.getACTotalNum(l, 3, 'C');
+        _this.chooseZhushu = q;
+        _this.chooseMoney = q * 2;
+        break;
+      case 'b4':
+        q = QUEUE.getACTotalNum(l, 4, 'C');
+        _this.chooseZhushu = q;
+        _this.chooseMoney = q * 2;
+        break;
+      case 'b5':
+        q = QUEUE.getACTotalNum(l, 5, 'C');
+        _this.chooseZhushu = q;
+        _this.chooseMoney = q * 2;
+        break;
+      case 'b6':
+        q = QUEUE.getACTotalNum(l, 2, 'C');
+        _this.chooseZhushu = q;
+        _this.chooseMoney = q * 2;
+        break;
+      case 'b7':
+        q = QUEUE.getACTotalNum(l, 3, 'C');
+        _this.chooseZhushu = q;
+        _this.chooseMoney = q * 2;
+        break;
+      default:
+        _this.chooseZhushu = l;
+        _this.chooseMoney = l * 2;
+        break;
     }
 
   };
 
-  GKL.updateMidTotal = function () {
+  GKL.updateMidTotal = function() {
 
     var _this = this;
 
@@ -546,7 +547,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.cleanNumBtn = function () {
+  GKL.cleanNumBtn = function() {
 
     var _this = this;
     _this.chooseMoney = 0;
@@ -556,7 +557,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _this.updateMidTotal();
   };
 
-  GKL.updateHzBallList = function (r) {
+  GKL.updateHzBallList = function(r) {
 
     var _this = this;
 
@@ -572,16 +573,16 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     switch (r.length) {
 
-    case 1:
-      n = a[r];
-      break;
+      case 1:
+        n = a[r];
+        break;
 
-    case 2:
-      n = _.intersection(a[r[0]], a[r[1]]);
-      break;
+      case 2:
+        n = _.intersection(a[r[0]], a[r[1]]);
+        break;
 
-    default:
-      break;
+      default:
+        break;
 
     }
 
@@ -599,7 +600,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.updateCardGroup = function (id) {
+  GKL.updateCardGroup = function(id) {
 
     var _this = this;
 
@@ -612,7 +613,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     _this.modifyStatu = 1;
 
     // 选中卡牌
-    var c = _.find(_this.buyArr, function (i) {
+    var c = _.find(_this.buyArr, function(i) {
       return i.zid == _this.modifyId;
     });
 
@@ -626,7 +627,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.toggleChooseToBuyBtn = function () {
+  GKL.toggleChooseToBuyBtn = function() {
 
     var _this = this;
 
@@ -648,11 +649,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.removeBuyList = function (zid) {
+  GKL.removeBuyList = function(zid) {
 
     var _this = this;
 
-    _.remove(_this.buyArr, function (i) {
+    _.remove(_this.buyArr, function(i) {
       return i.zid == zid;
     });
 
@@ -660,7 +661,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.togglePlayTab = function () {
+  GKL.togglePlayTab = function() {
 
     var _this = this;
 
@@ -675,7 +676,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.getBuyArrTotalMoney = function () {
+  GKL.getBuyArrTotalMoney = function() {
     var _this = this;
     var m = 0;
 
@@ -686,7 +687,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     return m;
   };
 
-  GKL.buySuccess = function (data, obj, payMoney) {
+  GKL.buySuccess = function(data, obj, payMoney) {
 
     var _this = this;
 
@@ -707,7 +708,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     }
   };
 
-  GKL.enoughMoneyCb = function (url, obj, payMoney) {
+  GKL.enoughMoneyCb = function(url, obj, payMoney) {
 
     var _this = this;
 
@@ -717,13 +718,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
         dataType: 'json',
         data: obj,
       })
-      .done(function (data) {
+      .done(function(data) {
         _this.buySuccess(data, obj, payMoney);
       });
 
   };
 
-  GKL.getCodes = function () {
+  GKL.getCodes = function() {
 
     var _this = this;
     var codes = [];
@@ -743,7 +744,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.buyLoty = function () {
+  GKL.buyLoty = function() {
 
     var _this = this;
     var url = '';
@@ -764,61 +765,61 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     // 购买类型判断 1-自购，2-追号 3-合买
     switch (_this.buyType) {
-    case 1:
-      obj.qihaoId = _this.qihaoId;
-      obj.qihao = _this.qihao;
-      payMoney = m * obj.beishu;
+      case 1:
+        obj.qihaoId = _this.qihaoId;
+        obj.qihao = _this.qihao;
+        payMoney = m * obj.beishu;
 
-      text += '<p>' + _this.lotyCnName + ' 第<span>' + obj.qihao + '</span>期</p>';
-      text += '<p>共<span>' + obj.zhushu + '</span>注, 投注<span>' + obj.beishu + '</span>倍</p>';
-      text += '<p>本次需支付<span class="fc-3">' + payMoney + '.00</span>元</p></div>';
-      break;
-    case 2:
-      endminmoney = $('#is_end_zhongjiang')[0].checked ? 1 : 0;
+        text += '<p>' + _this.lotyCnName + ' 第<span>' + obj.qihao + '</span>期</p>';
+        text += '<p>共<span>' + obj.zhushu + '</span>注, 投注<span>' + obj.beishu + '</span>倍</p>';
+        text += '<p>本次需支付<span class="fc-3">' + payMoney + '.00</span>元</p></div>';
+        break;
+      case 2:
+        endminmoney = $('#is_end_zhongjiang')[0].checked ? 1 : 0;
 
-      buyTypeUrlStr = 'buy-track';
+        buyTypeUrlStr = 'buy-track';
 
-      obj.zhuihaoqihao = [];
+        obj.zhuihaoqihao = [];
 
-      for (var i = 0, length1 = _this.trackData.length; i < length1; i++) {
-        obj.zhuihaoqihao.push(_this.trackData[i].tid + '|' + _this.trackData[i].qi + '|' + _this.trackData[i].bs);
-      }
+        for (var i = 0, length1 = _this.trackData.length; i < length1; i++) {
+          obj.zhuihaoqihao.push(_this.trackData[i].tid + '|' + _this.trackData[i].qi + '|' + _this.trackData[i].bs);
+        }
 
-      obj.endminmoney = endminmoney;
-      payMoney = _this.getTrackTotalMoney(_this.getBuyArrTotalMoney());
+        obj.endminmoney = endminmoney;
+        payMoney = _this.getTrackTotalMoney(_this.getBuyArrTotalMoney());
 
-      text += '<p>追号<span>' + _this.trackData.length + '</span>期</p><p>本次需支付<span class="fc-3">' + payMoney + '</span>元</p></div>';
+        text += '<p>追号<span>' + _this.trackData.length + '</span>期</p><p>本次需支付<span class="fc-3">' + payMoney + '</span>元</p></div>';
 
-      break;
-    case 3:
-      obj.qihaoId = _this.qihaoId;
-      obj.qihao = _this.qihao;
+        break;
+      case 3:
+        obj.qihaoId = _this.qihaoId;
+        obj.qihao = _this.qihao;
 
-      obj.title = _.escape($('#title').val());
-      obj.textarea = _.escape($('#desc').val());
-      obj.shareNum = Number($('#share-num').val());
-      obj.buyNum = Number($('#part_buy').val());
-      obj.aegisNum = Number($('#part_aegis_num').val());
-      obj.extraPercent = $('#commission_percent').val();
-      obj.set = _.escape($('.br-set-group .br-set.active').html());
+        obj.title = _.escape($('#title').val());
+        obj.textarea = _.escape($('#desc').val());
+        obj.shareNum = Number($('#share-num').val());
+        obj.buyNum = Number($('#part_buy').val());
+        obj.aegisNum = Number($('#part_aegis_num').val());
+        obj.extraPercent = $('#commission_percent').val();
+        obj.set = _.escape($('.br-set-group .br-set.active').html());
 
-      payMoney = m / obj.shareNum * (obj.buyNum + obj.aegisNum);
+        payMoney = m / obj.shareNum * (obj.buyNum + obj.aegisNum);
 
-      text += '<p>' + _this.lotyCnName + ' 第<span>' + obj.qihao + '</span>期</p><p>方案总金额<span class="fc-3">' + m + '</span>元</p><p>您认购<span>' + obj.buyNum + '</span>份';
+        text += '<p>' + _this.lotyCnName + ' 第<span>' + obj.qihao + '</span>期</p><p>方案总金额<span class="fc-3">' + m + '</span>元</p><p>您认购<span>' + obj.buyNum + '</span>份';
 
-      if (obj.aegisNum > 0) {
+        if (obj.aegisNum > 0) {
 
-        text += ', 保底<span>' + obj.aegisNum + '</span>份</p><p>共需支付<span class="fc-3">' + payMoney + '</span>元</p>';
+          text += ', 保底<span>' + obj.aegisNum + '</span>份</p><p>共需支付<span class="fc-3">' + payMoney + '</span>元</p>';
 
-      } else {
+        } else {
 
-        text += '</p><p>共需支付<span class="fc-3">' + payMoney + '</span>元</p>';
+          text += '</p><p>共需支付<span class="fc-3">' + payMoney + '</span>元</p>';
 
-      }
+        }
 
-      break;
-    default:
-      break;
+        break;
+      default:
+        break;
     }
 
     url = '/lottery/kuaipin/' + buyTypeUrlStr + '/' + _this.lotyName + '/' + _this.buyCodesType[_this.playType];
@@ -835,13 +836,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     APP.checkLogin(payMoney, {
 
-      enoughMoney: function () {
+      enoughMoney: function() {
 
         APP.showTips({
           text: text,
           title: '投注确认',
           type: 2,
-          onConfirm: function () {
+          onConfirm: function() {
             _this.enoughMoneyCb(url, obj, payMoney);
           }
         });
@@ -852,7 +853,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.onToggleBuyType = function (type) {
+  GKL.onToggleBuyType = function(type) {
 
     var _this = this;
 
@@ -863,7 +864,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.updateTrackList = function () {
+  GKL.updateTrackList = function() {
 
     var _this = this;
 
@@ -876,7 +877,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var o = _this.getBuyArrTotalMoney();
 
     // 更新 trackData
-    $('#track_issue_list').find('.br-zhui-c').each(function (index, el) {
+    $('#track_issue_list').find('.br-zhui-c').each(function(index, el) {
 
       var t = $(this);
       tid = t.attr('data-qihaoid');
@@ -905,7 +906,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   };
 
-  GKL.getTrackTotalMoney = function (o) {
+  GKL.getTrackTotalMoney = function(o) {
     var _this = this;
 
     var r = 0;
@@ -939,7 +940,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   };
 
   // 追号总期的期数改变
-  $('.br-details').on('change', 'tbody .br-zhui-c', function (event) {
+  $('.br-details').on('change', 'tbody .br-zhui-c', function(event) {
     event.preventDefault();
 
     GKL.updateTrackList();
@@ -947,11 +948,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // 追号总期的期数改变
-  $('.br-details').on('change', 'thead .br-zhui-c', function (event) {
+  $('.br-details').on('change', 'thead .br-zhui-c', function(event) {
     event.preventDefault();
 
     if ($(this)[0].checked) {
-      $('#track_issue_list .br-zhui-c').each(function (index, el) {
+      $('#track_issue_list .br-zhui-c').each(function(index, el) {
         $(this)[0].checked = true;
       });
     } else {
@@ -963,7 +964,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // 追号总期的倍数改变
-  $('.br-details').on('change', 'thead .br-zhui-bei', function (event) {
+  $('.br-details').on('change', 'thead .br-zhui-bei', function(event) {
 
     var val = parseInt($(this).val()) || 1;
 
@@ -978,7 +979,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // 追号每期的倍数改变
-  $('.br-details tbody').on('change', '.br-zhui-bei', function (event) {
+  $('.br-details tbody').on('change', '.br-zhui-bei', function(event) {
 
     var val = parseInt($(this).val()) || 1;
 
@@ -991,7 +992,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // buy Loty
-  $('#buy-submit').on('click', function (event) {
+  $('#buy-submit').on('click', function(event) {
     event.preventDefault();
 
     if (!$('.j-sub-agreed')[0].checked) {
@@ -1007,7 +1008,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('#issue_size').on('change', function (event) {
+  $('#issue_size').on('change', function(event) {
     event.preventDefault();
 
     var v = ~~$(this).val();
@@ -1015,7 +1016,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('#increase_mutiple').on('click', function (event) {
+  $('#increase_mutiple').on('click', function(event) {
 
     var m = $('#project_mutiple');
     var u = m.val();
@@ -1025,7 +1026,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('#decrease_mutiple').on('click', function (event) {
+  $('#decrease_mutiple').on('click', function(event) {
 
     var m = $('#project_mutiple');
     var u = m.val();
@@ -1035,7 +1036,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('#project_mutiple').on('keyup change', function (event) {
+  $('#project_mutiple').on('keyup change', function(event) {
 
     var t = $(this);
     var r = t.attr('data-r');
@@ -1047,14 +1048,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // 随机添加注数
-  $('#j-box-left').on('click', '.j-zhu-adds', function (event) {
+  $('#j-box-left').on('click', '.j-zhu-adds', function(event) {
     event.preventDefault();
     var c = ~~($(this).attr('data-zhu'));
     GKL.addManyItem(c);
   });
 
   // 修改投注
-  $('#j-box-left').on('click', '.br-zhu-up', function (event) {
+  $('#j-box-left').on('click', '.br-zhu-up', function(event) {
     event.preventDefault();
 
     var p = $(this).parents('.br-zhu-item');
@@ -1065,7 +1066,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // del buy box list
-  $('#j-box-left').on('click', '.br-zhu-del', function (event) {
+  $('#j-box-left').on('click', '.br-zhu-del', function(event) {
     event.preventDefault();
 
     var p = $(this).parents('.br-zhu-item');
@@ -1080,7 +1081,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // Toggle PlayTypeBox
-  $('#j-nav').on('click', 'li', function (event) {
+  $('#j-nav').on('click', 'li', function(event) {
     event.preventDefault();
 
     var t = $(this);
@@ -1093,23 +1094,88 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     $('.box-choose').removeClass('active');
     $('.j-choose-' + type).addClass('active');
 
+    $('.j-quick-method span').removeClass('active');
     GKL.playType = type;
     GKL.togglePlayTab();
 
   });
 
   // choose Num
-  $('#j-box-left').on('click', '.j-num-btn', function (event) {
+  $('#j-box-left').on('click', '.j-num-btn', function(event) {
     event.preventDefault();
+    var _this = $(this);
 
     $(this).toggleClass('active');
+    $(this).parents('.choose-bd').find('.j-quick-method').children('span').removeClass('active');
 
     GKL.updateMidTotal();
+    var obj = GKL.getObj();
+    debugger
+    console.log(obj);
+    judgeNum(obj, _this, GKL.playType);
 
   });
 
+  function judgeNum(G_CHOOSE, numObj, playType) {
+    var _this = numObj;
+    var i, odd = 0,
+      even = 0,
+      big = 0,
+      small = 0,
+      all = 0,
+      halfLen = 0;
+    switch(playType){
+      case 'b0' :
+        halfLen = 9;
+        break;
+      case 'b1' :
+        halfLen = 0;
+        break;
+      default :
+        halfLen = 10;
+        break;
+    }
+    if (G_CHOOSE.nums && G_CHOOSE.nums.length == halfLen) {
+      for (i = 0; i < 10; i++) {
+        if (G_CHOOSE.nums[i] % 2 == 1) {
+          odd++;
+        }
+        if (G_CHOOSE.nums[i] % 2 == 0) {
+          even++;
+        }
+        if (G_CHOOSE.nums[i] > halfLen) {
+          big++;
+        }
+        if (G_CHOOSE.nums[i] <= halfLen) {
+          small++;
+        }
+      }
+      if (odd == halfLen) {
+        _this.parents('.choose-bd').find('span').removeClass('active');
+        _this.parents('.choose-bd').find('span[data-type="odd"]').addClass('active');
+      }
+      if (even == halfLen) {
+        _this.parents('.choose-bd').find('span').removeClass('active');
+        _this.parents('.choose-bd').find('span[data-type="even"]').addClass('active');
+      }
+      if (big == halfLen) {
+        _this.parents('.choose-bd').find('span').removeClass('active');
+        _this.parents('.choose-bd').find('span[data-type="big"]').addClass('active');
+      }
+      if (small == halfLen) {
+        _this.parents('.choose-bd').find('span').removeClass('active');
+        _this.parents('.choose-bd').find('span[data-type="small"]').addClass('active');
+      }
+    } else if (G_CHOOSE.nums && G_CHOOSE.nums.length == (halfLen*2)){
+      _this.parents('.choose-bd').find('span').removeClass('active');
+      _this.parents('.choose-bd').find('span[data-type="all"]').addClass('active');
+    }
+  }
+
+
+
   // Choose to BuyBox
-  $('#choose_to_buy').on('click', function (event) {
+  $('#choose_to_buy').on('click', function(event) {
     event.preventDefault();
 
     if (GKL.buyArr.length >= 100) {
@@ -1138,10 +1204,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       return;
 
     }
+    $('.j-quick-method span').removeClass('active');
 
   });
 
-  $('#clean_buy_code').on('click', function (event) {
+  $('#clean_buy_code').on('click', function(event) {
     event.preventDefault();
 
     GKL.cleanBuyList();
@@ -1158,7 +1225,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
    * 切换购买方式
    */
 
-  $('#buy_type').on('click', '.j-tog-tab', function (event) {
+  $('#buy_type').on('click', '.j-tog-tab', function(event) {
     event.preventDefault();
 
     var me = $(this);
@@ -1176,128 +1243,163 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     GKL.onToggleBuyType(t);
 
     switch (t) {
-    case 1:
+      case 1:
 
-      $('#track_desc').addClass('hide');
-      $('#buy_mutiple_span').show();
-      break;
+        $('#track_desc').addClass('hide');
+        $('#buy_mutiple_span').show();
+        break;
 
-    case 2:
+      case 2:
 
-      $('#buy_mutiple_span').hide();
-      $('#track_desc').removeClass('hide');
-      queryTrackIssueList(10);
+        $('#buy_mutiple_span').hide();
+        $('#track_desc').removeClass('hide');
+        queryTrackIssueList(10);
 
-      break;
-    case 3:
+        break;
+      case 3:
 
-      $('#track_desc').addClass('hide');
-      $('#buy_mutiple_span').show();
+        $('#track_desc').addClass('hide');
+        $('#buy_mutiple_span').show();
 
-      updateCreatePartProjectParame();
-      break;
-    default:
-      break;
+        updateCreatePartProjectParame();
+        break;
+      default:
+        break;
     }
 
   });
 
   // toggle buyLoty Tips Box
-  $('#j-touzhu-tips').on('click', function (event) {
+  $('#j-touzhu-tips').on('click', function(event) {
 
     $('#j-touzhu-tipstext').toggle();
     $(this).find('.icon').toggleClass('icon-bup').toggleClass('icon-bdown');
 
   });
 
-  $('.j-quick-method').on('click', '[data-type]', function (event) {
+  $('.j-quick-method').on('click', '[data-type]', function(event) {
     event.preventDefault();
-
+    var _this = $(this);
     var toggleType = $(this).attr('data-type');
     var btnGroup = $('#j-area-' + GKL.playType + ' .j-num-btn');
     var btnLen = btnGroup.length;
 
     GKL.cleanNumBtn();
 
+    if ('clean' != toggleType) {
+      if (_this.hasClass('active')) {
+        _this.removeClass('active');
+        _this.siblings('span').removeClass('active');
+      } else {
+        _this.addClass('active');
+        _this.siblings('span').removeClass('active');
+      }
+    } else {
+      _this.siblings('span').removeClass('active');
+    }
+
     if (toggleType === 'all') {
-      btnGroup.addClass('active');
+      if (_this.hasClass('active')) {
+        btnGroup.addClass('active');
+      } else {
+        btnGroup.removeClass('active');
+      }
     }
 
     if (toggleType === 'odd') {
 
-      btnGroup.each(function (index, el) {
+      if (_this.hasClass('active')) {
 
-        var n = Number($(this).attr('data-num'));
+        btnGroup.each(function(index, el) {
 
-        if (_.isNumber(n) && n % 2 !== 0) {
-          $(this).addClass('active');
-        }
-      });
+          var n = Number($(this).attr('data-num'));
 
+          if (_.isNumber(n) && n % 2 !== 0) {
+            $(this).addClass('active');
+          }
+        });
+
+      } else {
+
+        btnGroup.removeClass('active');
+
+      }
     }
 
     if (toggleType === 'even') {
 
-      btnGroup.each(function (index, el) {
+      if (_this.hasClass('active')) {
 
-        var n = Number($(this).attr('data-num'));
+        btnGroup.each(function(index, el) {
 
-        if (_.isNumber(n) && n % 2 === 0) {
-          $(this).addClass('active');
-        }
-      });
+          var n = Number($(this).attr('data-num'));
 
+          if (_.isNumber(n) && n % 2 === 0) {
+            $(this).addClass('active');
+          }
+        });
+
+      } else {
+        btnGroup.removeClass('active');
+      }
     }
 
     if (toggleType === 'big') {
+      if (_this.hasClass('active')) {
 
-      btnGroup.each(function (index, el) {
+        btnGroup.each(function(index, el) {
 
-        var n = Number($(this).attr('data-num'));
-        var midNum = 10;
-        if (btnLen === 18) {
-          midNum = 9;
-        }
-        if (_.isNumber(n) && n > midNum) {
-          $(this).addClass('active');
-        }
-      });
+          var n = Number($(this).attr('data-num'));
+          var midNum = 10;
+          if (btnLen === 18) {
+            midNum = 9;
+          }
+          if (_.isNumber(n) && n > midNum) {
+            $(this).addClass('active');
+          }
+        });
 
+      } else {
+        btnGroup.removeClass('active');
+      }
     }
 
     if (toggleType === 'small') {
+      if (_this.hasClass('active')) {
+        btnGroup.each(function(index, el) {
 
-      btnGroup.each(function (index, el) {
-
-        var n = Number($(this).attr('data-num'));
-        var midNum = 10;
-        if (btnLen === 18) {
-          midNum = 9;
-        }
-        if (_.isNumber(n) && n <= midNum) {
-          $(this).addClass('active');
-        }
-      });
-
+          var n = Number($(this).attr('data-num'));
+          var midNum = 10;
+          if (btnLen === 18) {
+            midNum = 9;
+          }
+          if (_.isNumber(n) && n <= midNum) {
+            $(this).addClass('active');
+          }
+        });
+      } else {
+        btnGroup.removeClass('active');
+      }
     }
 
     GKL.updateMidTotal();
+
   });
 
   /* 合买 */
 
   // 我要分成多少份，最少一份，最多购买金额的数量
-  $("#share-num").on('change', function (event) {
+  $("#share-num").on('change', function(event) {
     updateCreatePartProjectParame();
   });
 
   // 我要认购的份数
-  $("#part_buy").on('change', function (event) {
+  $("#part_buy").on('change', function(event) {
     updateCreatePartProjectParame();
   });
 
   // 我要提成比例
-  $('#commission_percent').on('change', function (event) {
+  $('#commission_percent').on('change', function(event) {
 
     var val = parseInt($(this).val()) || 0;
 
@@ -1314,7 +1416,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // 是否保底
-  $('#has_part_aegis').on('change', function (event) {
+  $('#has_part_aegis').on('change', function(event) {
 
     if ($(this)[0].checked) {
 
@@ -1333,14 +1435,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
   });
 
   // 保底金额修改
-  $('#part_aegis_num').on('change', function (event) {
+  $('#part_aegis_num').on('change', function(event) {
 
     updateCreatePartProjectParame();
 
   });
 
   // 方案保密设置
-  $('.br-set-group').on('click', 'a', function (event) {
+  $('.br-set-group').on('click', 'a', function(event) {
 
     $(this).parents('.br-set-group').find('a').removeClass('active');
 
@@ -1348,19 +1450,19 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   });
 
-  $('.j-input-place').on('focus', function (event) {
+  $('.j-input-place').on('focus', function(event) {
     inputOnfocus($(this));
   });
 
-  $('.j-input-place').on('blur', function (event) {
+  $('.j-input-place').on('blur', function(event) {
     inputOnblur($(this));
   });
 
-  $('.j-input-place').on('keyup', function (event) {
+  $('.j-input-place').on('keyup', function(event) {
     reSetStrsize($(this));
   });
 
-  $('#is_end_zhongjiang').on('change', function (event) {
+  $('#is_end_zhongjiang').on('change', function(event) {
 
     if ($(this)[0].checked) {
 
@@ -1589,7 +1691,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     loadCurrentIssue(); //获取当前期
     GKL.statu = 1;
 
-    setInterval(function () {
+    setInterval(function() {
 
       getAllAwardRecord();
       loadNewestAward();
@@ -1621,7 +1723,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
             t: 'ajx'
           },
         })
-        .done(function (data) {
+        .done(function(data) {
 
           var q = GKL.qihao.slice(0, GKL.qihao.length - 2);
           var max = ~~$('#j-maxqishu').val();
@@ -1737,7 +1839,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           lotteryId: GKL.lotyId
         }
       })
-      .done(function (data) {
+      .done(function(data) {
 
         if (data.retCode === 100000) {
           var html = '';
@@ -1764,7 +1866,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     if (kjNum != '') {
 
       arr = kjNum.split(' ');
-      arr = _.map(arr, function (r) {
+      arr = _.map(arr, function(r) {
         return '<span class="bg-3">' + r + '</span>';
       });
 
@@ -1808,7 +1910,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           issue_num: 10
         }
       })
-      .done(function (data) {
+      .done(function(data) {
 
         var item = data.retData;
         var lastData = item[0];
@@ -1844,7 +1946,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
           lottery_id: GKL.lotyId
         }
       })
-      .done(function (data) {
+      .done(function(data) {
 
         var item = data.retData[0];
         var lessSeconds = '';
@@ -1913,7 +2015,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
         }
 
-      }).fail(function () {
+      }).fail(function() {
         callCurrentIssueNext(10);
       });
 
@@ -1962,17 +2064,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
     var html = '';
 
-    h = _.map(h, function (r) {
+    h = _.map(h, function(r) {
 
 
       var a = String(r).split('');
       return '<span class="m-time-djs" >' + a[0] + '</span><span class="m-time-djs" >' + a[1] + '</span>';
     });
 
-    if(h.length ===3 ){
-      html = h[0]+'<span>时</span>'+h[1]+'<span>分</span>'+h[2]+'<span>秒</span>';
-    }else{
-      html = h[0]+'<span>分</span>'+h[1]+'<span>秒</span>';
+    if (h.length === 3) {
+      html = h[0] + '<span>时</span>' + h[1] + '<span>分</span>' + h[2] + '<span>秒</span>';
+    } else {
+      html = h[0] + '<span>分</span>' + h[1] + '<span>秒</span>';
     }
 
     $('#j-less-info').html(html);
@@ -1988,7 +2090,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var q = $('#j-current-issue').html();
     GKL.nextTimer = now + s;
 
-    GKL.runTimer = setInterval(function () {
+    GKL.runTimer = setInterval(function() {
 
       var n = ~~((new Date().getTime()) / 1000);
       var j = GKL.nextTimer - n;
@@ -2028,7 +2130,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       time = 10000;
     }
 
-    var f = setTimeout(function () {
+    var f = setTimeout(function() {
       loadCurrentIssue();
     }, time);
 
@@ -2094,7 +2196,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       url: '/lottery/issue/get-issue-list?lottery_id=' + GKL.lotyId + '&issue_size=' + num,
       type: 'GET',
       dataType: 'json',
-    }).done(function (data) {
+    }).done(function(data) {
 
       var item = data.retData;
 
@@ -2118,7 +2220,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       $('#track_issue_list').html(html);
       GKL.updateTrackList();
 
-    }).fail(function () {
+    }).fail(function() {
 
       $('#track_issue_list').html(html);
       GKL.updateTrackList();

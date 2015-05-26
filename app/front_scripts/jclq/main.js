@@ -304,7 +304,6 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     $('#j-vote-nav .active').removeClass('active');
     $(this).parents('li').addClass('active');
 
-
     BET.toggleNav(gameTab, c);
     initDataBody();
 
@@ -416,7 +415,9 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     // 多少组, 每组多少人
     collectGroup = _.groupBy(collectObj, function (chr) {
+
       return chr.attr('data-time');
+
     });
 
     var collectHtml = '';
@@ -513,6 +514,87 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   /*****************交易区相关 Start******************/
 
+  function getSfButton(item, sp) {
+
+    var result = '';
+    var spArr = sp.split('|');
+    var titleArr = BET[BET.tab + 'SpValueArr'];
+
+    for (var i = 0; i < spArr.length; i++) {
+
+      result += '<span class="row-sf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="j-sp-btn sp-btn">' + spArr[i] + '</em></span>';
+
+    };
+
+    return result;
+  };
+
+  function getRfsfButton(item, sp, rq) {
+
+    var result = '';
+    var spArr = sp.split('|');
+    var titleArr = BET[BET.tab + 'SpValueArr'];
+
+    result = '<em class="rq">' + rq + '</em>';
+
+    for (var i = 0; i < spArr.length; i++) {
+
+      result += '<span class="row-rfsf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="j-sp-btn sp-btn">' + spArr[i] + '</em></span>';
+
+    };
+
+    return result;
+
+  };
+
+  function getDxfButton(item, sp, zf) {
+
+    var result = '';
+    var spArr = sp.split('|');
+    var titleArr = BET[BET.tab + 'SpValueArr'];
+
+    result = '<em class="dxf-yszf">' + zf + '</em>';
+
+    for (var i = 0; i < spArr.length; i++) {
+
+      result += '<span class="row-dxf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="j-sp-btn sp-btn">' + spArr[i] + '</em></span>';
+
+    };
+
+    return result;
+  };
+
+  function getSfcButton(item, sp) {
+
+    var result = '';
+    var spArr = sp.split('|');
+    var titleArr = BET[BET.tab + 'SpValueArr'];
+    var spArrOne = spArr.slice(0, 6);
+    var spArrTwo = spArr.slice(6);
+
+    result += '<span class="row-sfc">';
+    result += '<em class="first">客胜</em>'
+    for (var i = 0; i < spArrOne.length; i++) {
+
+      result += '<em index="' + i + '" data-item="客胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrOne[i] + '" class="j-sp-btn sp-btn">' + spArrOne[i] + '</em>';
+
+    };
+
+    result += '</span>';
+
+    result += '<span class="row-sfc">';
+    result += '<em class="first">主胜</em>'
+    for (var i = 0; i < spArrTwo.length; i++) {
+
+      result += '<em index="' + i + '" data-item="主胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrTwo[i] + '" class="j-sp-btn sp-btn">' + spArrTwo[i] + '</em>';
+
+    };
+
+    result += '</span>';
+
+    return result;
+  };
+
   /**
    * 创建数据主体
    * @param  {Object} data 对阵数据对象
@@ -531,68 +613,34 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
       item = data[i];
 
-      if (item[tab] == 1) {
-        bfLine = '<button class="btn j-show-bf"></button>';
-      } else {
-        bfLine = '<b class="no-support">本场对阵不支持该玩法</b>';
-      }
-
       dataLeftCommon = getDataLeftCommon(item, dTime);
       arr = arr.concat(dataLeftCommon);
 
-      if (tab === 'bf') {
+      if (tab === 'sf') {
 
-        arr.push('<span class="row1 row1-1">' + bfLine + '</span></dd>');
-
-      } else {
-
-        line = BET.craeteDateBtn(item[tab], item[tab + '_gg_sp']);
+        line = getSfButton(item[tab], item[tab + '_sp']);
 
       }
 
-      if (tab === 'rqspf') {
+      if (tab === 'rfsf') {
 
-        var rqspfNum = '';
-        rqspfNum = Number(item['rqspf_rangqiu_num'])
+        line = getRfsfButton(item[tab], item[tab + '_sp'], item.rfsf_rangfen_num);
 
-        if (rqspfNum > 0) {
-          rqspfNum = '<b class="fc-7">' + item['rqspf_rangqiu_num'] + '</b>';
-        }
-
-        if (rqspfNum < 0) {
-          rqspfNum = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
-        }
-
-        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + rqspfNum + '</em>' + line + '</div></span></dd>');
       }
 
-      if (tab === 'spf') {
-        var bjdcSpfRq = 0;
-        if (Config.lotyName === 'bjdc') {
-          bjdcSpfRq = Number(item['rqspf_rangqiu_num'])
+      if (tab === 'dxf') {
 
-          if (bjdcSpfRq > 0) {
-            bjdcSpfRq = '<b class="fc-7">' + item['rqspf_rangqiu_num'] + '</b>';
-          }
+        line = getDxfButton(item[tab], item[tab + '_sp'], item.dxf_reference);
 
-          if (bjdcSpfRq < 0) {
-            bjdcSpfRq = '<b class="fc-3">' + item['rqspf_rangqiu_num'] + '</b>';
-          }
-        }
-        arr.push('<span class="co6-1 btnBox towLine "><div class="line1 "><em class="rq">' + bjdcSpfRq + '</em>' + line + '</div></span></dd>');
       }
 
-      if (tab === 'bqc') {
-        arr.push('<span class="row2 row2-1">' + line + '</span></dd>');
+      if (tab === 'sfc') {
+
+        line = getSfcButton(item[tab], item[tab + '_sp']);
+
       }
 
-      if (tab === 'zjq') {
-        arr.push('<span class="row3 row3-1">' + line + '</span></dd>');
-      }
-
-      if (tab === 'sxds') {
-        arr.push('<span class="row5">' + line + '</span></dd>');
-      }
+      arr.push(line);
 
     };
 
@@ -608,19 +656,9 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   function getDataLeftCommon(item, dTime) {
 
     var isExpired = '';
-
-    if (Config.lotyName === 'bjdc' && item.is_expired == 1) {
-      isExpired = 'bjdc-expired';
-    }
-
     var arr = [];
-    var bjdcSpfStyle = 'isSpfShow';
 
-    if (Number(item.rqspf_rangqiu_num) !== 0) {
-      bjdcSpfStyle = 'isRqspfShow';
-    }
-
-    arr.push('<dd data-time="' + dTime + '" isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" isdg="0,1,0,0,0" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="j-data-dd ' + isExpired + ' ' + bjdcSpfStyle + '">');
+    arr.push('<dd data-time="' + dTime + '" isstop="0" matchcode="' + item.match_key + '" matchnumcn="' + item.week + item.game_order + '" starttime="' + item.game_start_time + '" endtime="' + item.end_time + '" hostname="' + item.home_short + '" guestname="' + item.away_short + '" leaguename="' + item.league + '" class="j-data-dd">');
 
     arr.push('<span class="co1"><i class="jtip" inf="' + item.week + item.game_order + '">' + item.game_order + '</i></span>');
 
@@ -634,38 +672,69 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   }
 
-  /**
-   * 创建混合投注html
-   * @param  {Object} item 对阵数据对象
-   * @return {String}      html
-   */
+  function getHhztBtnGp(item, titleArr, moreIndex) {
+
+      var html = '';
+      var hasSp = '';
+      var l = '';
+      var tab = ['sf', 'rqsf', 'dxf'];
+
+      if (!moreIndex) {
+        moreIndex = 0;
+      }
+
+      html += '<span class="row-hh">';
+
+      for (var i = 0, len = item.length; i < len; i++) {
+
+        if (item[i]) {
+
+          hasSp = 'j-sp-btn';
+
+        } else {
+
+          item[i] = '--';
+          hasSp = '';
+
+        }
+
+        if (i === (len - 1)) l = 'lastOne';
+
+        html += '<em index="' + (i + moreIndex) + '" data-item="' + titleArr[i] + '" gametype="' + tab[i] + '" sp="' + item[i] + '" class="' + l + ' ' + hasSp + ' sp-btn">' + item[i] + '</em>';
+
+      };
+
+      html += '</span>';
+
+      return html;
+    }
+    /**
+     * 创建混合投注html
+     * @param  {Object} item 对阵数据对象
+     * @return {String}      html
+     */
   function createHhtzBtnHtml(item) {
 
-    var rqspfNum = '';
     var html = '';
-    var spfArr = item['spf_gg_sp'].split('|');
-    var spfTitle = ['胜', '平', '负'];
-    var rqspfArr = item['rqspf_gg_sp'].split('|');
-    var rqspfTitle = ['让球胜', '让球平', '让球负'];
-    var noSupportTips = '本场对阵不支持该玩法';
 
+    var sfArr = item['sf_sp'].split('|');
+    var rqsfArr = item['rfsf_sp'].split('|');
+    var dxfArr = item['dxf_sp'].split('|');
 
-    html += '<span class="row4-1">';
-    if (item.spf == 1) {
-      html += BET.getSpBtn(item.spf, spfTitle, spfArr, 'spf');
-    } else {
-      html += noSupportTips;
-    }
+    var Title = [
+      ['主负', '让分客胜', '大分'],
+      ['主胜', '让分主胜', '小分']
+    ];
+    var spArr = [
+      [sfArr[0], rqsfArr[0], dxfArr[0]],
+      [sfArr[1], rqsfArr[1], dxfArr[1]],
+    ];
 
-    html += '</span>';
+    for (var i = 0; i < spArr.length; i++) {
 
-    html += '<span class="row4-1">';
-    if (item.rqspf == 1) {
-      html += BET.getSpBtn(item.rqspf, rqspfTitle, rqspfArr, 'rqspf', 3);
-    } else {
-      html += noSupportTips;
-    }
-    html += '</span>';
+      html += getHhztBtnGp(spArr[i], Title[i]);
+
+    };
 
     html += '<em class="tg-data j-show-hhtz">展开' + BET.hhtzIconHtml + '</em></dd>';
 
@@ -712,9 +781,13 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     }
 
     if (serverTime == 0) {
+
       $('#j-data-body').html(dataBodyHTML);
+
     } else {
+
       $('#j-data-body .data-loadbox').html(Config.lotyCNName + ' 暂停销售');
+
     }
 
   }
@@ -728,17 +801,20 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var h = '';
     var bTime = '12:00';
 
-    // head
     h += '<dl><dt>' + time + '(' + bTime + ' -- 次日' + bTime + ')<span class="j-match-size matchSize">' + dataCount + '</span>场比赛可投注<span class="cuspText fc-84 j-dataBody-toggle pull-right" data-show="1"><span class="j-nav-text">隐藏</span><i class="icon show-icon"></i></span></dt>';
 
-    if (BET.tab === 'hhtz') {
+    if (BET.tab === 'hh') {
+
       h += createHhtzHtml(data, d);
+
     } else {
+
       h += createDateMain(data, d);
+
     }
 
-    // foot
-    h += '</dl>'
+    h += '</dl>';
+
     return h;
   }
 

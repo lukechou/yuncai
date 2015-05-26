@@ -36,7 +36,7 @@
 .I1x5 .row-code .m-num-group > a { font-family: Arial; font-size: 16px; line-height: 33px; width: 33px; height: 33px; margin: 0 5px; }
 .I1x5 .row-code .quick-method { float: left; width: 86px; margin: 0 0 0 40px; }
 .I1x5 .row-code .quick-method span { font-size: 12px; line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; }
-.I1x5 .row-code .quick-method span:hover { color: #fff; background: #ffd06b; }
+.I1x5 .row-code .quick-method span:hover,.I1x5 .row-code .quick-method span.active { color: #fff; background: #ffd06b; }
 .I1x5 .mlr5 { font-weight: bold; }
 .I1x5 .br-zhu { width: 610px; margin: 30px auto; }
 .I1x5 .br-zhu-r { width: 80px; }

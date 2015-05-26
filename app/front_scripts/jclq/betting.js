@@ -31,24 +31,21 @@ define(['jquery', 'app'], function ($, APP) {
       bunch: [],
       collect: [],
       maxBunch: {
-        'spf': 8,
-        'rqspf': 8,
-        'bf': 4,
-        'zjq': 6,
-        'bqc': 4,
-        'hhtz': 8,
-        'sxds': 6
+        'sf': 8,
+        'rfsf': 8,
+        'dxf': 8,
+        'sfc': 4,
+        'hh': 8,
       },
       dd: null,
       maxBonus: null,
       bjdcPassWay: true,
       box: $('#bettingBox'),
-      tab: 'hhtz',
-      zjqSpValueArr: ['0', '1', '2', '3', '4', '5', '6', '7+'],
-      bqcSpValueArr: ['胜胜', '胜平', '胜负', '平胜', '平平', '平负', '负胜', '负平', '负负'],
-      rqspfSpValueArr: ['让球胜', '让球平', '让球负'],
-      spfSpValueArr: ['胜', '平', '负'],
-      sxdsSpValueArr: ['上单', '上双', '下单', '下双'],
+      tab: 'hh',
+      sfcSpValueArr: ['1-5', '6-10', '11-15', '16-20', '21-25', '26+'],
+      rfsfSpValueArr: ['让分客胜', '让分主胜'],
+      sfSpValueArr: ['主负', '主胜'],
+      dxfSpValueArr: ['大分', '小分'],
       hhtzIconHtml: '<i class="arrow-up"></i><i class="arrow-down"></i><i class="arrow-down2"></i>'
     };
 
@@ -61,13 +58,13 @@ define(['jquery', 'app'], function ($, APP) {
       this.bunch = [];
       this.dd = null;
       this.maxBonus = null;
-      this.tab = 'hhtz';
+      this.tab = 'hh';
       this.bindMain();
       this.bindRight();
 
     };
 
-    bet.prototype.toggleNav = function (t,c) {
+    bet.prototype.toggleNav = function (t, c) {
 
       var _this = this;
 
@@ -315,210 +312,6 @@ define(['jquery', 'app'], function ($, APP) {
       _this.setAllTotal();
     };
 
-    /**
-     *  Update Pass Way
-     */
-    bet.prototype.getBjdcZhggBunchHtml = function (len, maxLen) {
-
-      var _this = this;
-      var bunchHtml = '';
-      var isActiveBunch = '';
-      var isDg = '';
-      var cStr = '';
-      var obj = '';
-      var html = '';
-      var bunchMap = {
-        bunch2: [3],
-        bunch3: [4, 7],
-        bunch4: [5, 11, 15],
-        bunch5: [6, 16, 26, 31],
-        bunch6: [7, 22, 42, 57, 63]
-      };
-      var item = null;
-      var bunchCount = len;
-
-      if (bunchCount > maxLen) {
-        bunchCount = maxLen;
-      }
-
-      if (bunchCount > 6) {
-        bunchCount = 6;
-      }
-
-      for (var i = 2; i <= maxLen; i++) {
-        isActiveBunch = _.find(_this.bunch, function (bunch) {
-          return Number(bunch.slice(0, 1)) === i;
-        });
-
-        if (i > len && isActiveBunch) {
-          _.remove(_this.bunch, function (chr) {
-            return Number(chr.slice(0, 1)) === i;
-          });
-        }
-
-      };
-
-      for (var i = 2; i <= bunchCount; i++) {
-
-        item = bunchMap['bunch' + i];
-
-        for (var j = 0; j < item.length; j++) {
-
-          cStr = i + '_' + item[j];
-          isDg = i + '串' + item[j];
-
-          isActiveBunch = _.find(_this.bunch, function (bunch) {
-            return bunch === cStr;
-          });
-
-          if (isActiveBunch) {
-
-            obj = {
-              method: cStr,
-              isCheck: true,
-              active: 'active',
-              bunch: isDg
-            };
-
-          } else {
-
-            obj = {
-              method: cStr,
-              isCheck: false,
-              active: '',
-              bunch: isDg
-            };
-
-          }
-
-          html = _.template('<li class="jtip <%= active%>" data-method="<%= method%>" data-check="<%= isCheck%>"><%= bunch%></li>');
-          bunchHtml += html(obj);
-
-        };
-
-      };
-
-      return bunchHtml;
-    };
-
-    bet.prototype.getBjdcZyggBunchHtml = function (len, maxLen) {
-
-      var _this = this;
-      var bunchHtml = '';
-      var isActiveBunch = '';
-      var isDg = '';
-      var obj = '';
-      var html = '';
-
-      for (var i = 2; i <= maxLen; i++) {
-        isActiveBunch = _.find(_this.bunch, function (bunch) {
-          return Number(bunch.slice(0, 1)) === i;
-        });
-
-        if (i > len && isActiveBunch) {
-          _.remove(_this.bunch, function (chr) {
-            return Number(chr.slice(0, 1)) === i;
-          });
-        }
-
-      };
-
-      for (var i = 1; i <= len; i++) {
-
-        isActiveBunch = _.find(_this.bunch, function (bunch) {
-          return Number(bunch.slice(0, 1)) === i;
-        });
-
-        if (i === 1) {
-          isDg = '单关';
-        } else {
-          isDg = i + '串1';
-        }
-
-        if (isActiveBunch) {
-
-          obj = {
-            len: i,
-            isCheck: true,
-            active: 'active',
-            bunch: isDg
-          };
-
-        } else {
-
-          obj = {
-            len: i,
-            isCheck: false,
-            active: '',
-            bunch: isDg
-          };
-
-        }
-
-        if (i <= maxLen) {
-          html = _.template('<li class="jtip <%= active%>" id="j-me-<%= len%>" data-method="<%= len%>_1" data-check="<%= isCheck%>"><%= bunch%></li>');
-          bunchHtml += html(obj);
-        } else {
-          i = len + 1;
-        }
-
-      };
-
-      return bunchHtml;
-
-    };
-
-    /**
-     * 北京单场-组合过关
-     * len  对阵场数
-     * tip  对阵选择提示
-     * list 几串几dom
-     * bunchHtml  几串几html
-     * obj  生成html对象
-     * html  html生成
-     * bunchMap  组合过关映射数组
-     */
-    bet.prototype.setBjdcBox = function () {
-
-      var _this = this;
-      var len = _.uniq(_this.match, 'matchcode').length;
-      var tips = $('#poolErrorTips');
-      var list = $('#j-method-ls');
-      var bunchHtml = '';
-      var obj = null;
-      var html = '';
-      var maxLen = _this.maxBunch[_this.tab];
-
-      switch (_this.tab) {
-      case 'bqc':
-        maxLen = 6;
-        break;
-      case 'bf':
-        maxLen = 3;
-        break;
-      case 'spf':
-        maxLen = 15;
-        break;
-      default:
-        break;
-      }
-
-      if (len < 2) {
-
-        _this.bunch = [];
-        list.hide().html('');
-        tips.show();
-        return;
-
-      } else {
-        bunchHtml = _this.getBjdcZhggBunchHtml(len, maxLen);
-        tips.hide();
-        list.html(bunchHtml).show();
-        return;
-
-      }
-
-    };
 
     // 设置右侧第二个选项卡
     bet.prototype.setSecondBox = function () {

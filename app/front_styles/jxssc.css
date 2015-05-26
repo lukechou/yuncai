@@ -32,7 +32,7 @@
 .jxssc .row-code .quick-method { float: left; margin: 0 0 0 38px; font-size: 12px; width: 86px; }
 .jxssc .mlr5 { font-weight: bold; }
 .jxssc .row-code .quick-method span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
-.jxssc .row-code .quick-method span:hover { background: #ffd06b; color: #fff; }
+.jxssc .row-code .quick-method span:hover,.jxssc .row-code .quick-method span.active { background: #ffd06b; color: #fff; }
 .jxssc .br-zhu { width: 639px; margin: 30px auto; }
 .jxssc .br-zhu-r { width: 80px; }
 .jxssc .br-zhu-l { width: 522px; }

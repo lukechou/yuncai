@@ -6,7 +6,7 @@ require.config({
     store: '../lib/store.min',
     app: '../common/app',
     core: '../lib/core',
-    CoreJxssc : '../lottery/jxssc_core'
+    CoreJxssc: '../lottery/jxssc_core'
   },
   shim: {
     bootstrap: {
@@ -16,7 +16,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash',  'app', 'store', 'CoreJxssc','bootstrap', 'core'], function($, _,  APP, store,CoreJxssc) {
+require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], function($, _, APP, store, CoreJxssc) {
   'use strict';
 
 
@@ -344,6 +344,9 @@ require(['jquery', 'lodash',  'app', 'store', 'CoreJxssc','bootstrap', 'core'], 
       var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
       var arr = null;
       var num = $(this).html();
+      var _this = $(this);
+
+      $(this).parents('.j-row-code').find('.j-quick-method').children('span').removeClass('active');
       if (!G_CHOOSE.codes[dataBit]) {
         G_CHOOSE.codes[dataBit] = [];
       }
@@ -363,7 +366,55 @@ require(['jquery', 'lodash',  'app', 'store', 'CoreJxssc','bootstrap', 'core'], 
       $(this).toggleClass('active');
       calculateChooseCodes();
       displayChooseInfo();
+
+      judgeNum(G_CHOOSE, _this, dataBit);
+
     });
+
+    function judgeNum(G_CHOOSE, numObj, dataBit) {
+      var _this = numObj;
+      var i, odd = 0,
+        even = 0,
+        big = 0,
+        small = 0,
+        all = 0;
+        debugger;
+      if (G_CHOOSE.codes[dataBit] && G_CHOOSE.codes[dataBit].length == 5) {
+        for (i = 0; i < 5; i++) {
+          if (G_CHOOSE.codes[dataBit][i] % 2 == 1) {
+            odd++;
+          }
+          if (G_CHOOSE.codes[dataBit][i] % 2 == 0) {
+            even++;
+          }
+          if (G_CHOOSE.codes[dataBit][i] > 4) {
+            big++;
+          }
+          if (G_CHOOSE.codes[dataBit][i] <= 4) {
+            small++;
+          }
+        }
+        if (odd == 5) {
+          _this.parents('.j-row-code').find('span').removeClass('active');
+          _this.parents('.j-row-code').find('span[data-type="odd"]').addClass('active');
+        }
+        if (even == 5) {
+          _this.parents('.j-row-code').find('span').removeClass('active');
+          _this.parents('.j-row-code').find('span[data-type="even"]').addClass('active');
+        }
+        if (big == 5) {
+          _this.parents('.j-row-code').find('span').removeClass('active');
+          _this.parents('.j-row-code').find('span[data-type="big"]').addClass('active');
+        }
+        if (small == 5) {
+          _this.parents('.j-row-code').find('span').removeClass('active');
+          _this.parents('.j-row-code').find('span[data-type="small"]').addClass('active');
+        }
+      } else if (G_CHOOSE.codes[dataBit] && G_CHOOSE.codes[dataBit].length == 10) {
+        _this.parents('.j-row-code').find('span').removeClass('active');
+        _this.parents('.j-row-code').find('span[data-type="all"]').addClass('active');
+      }
+    }
 
     /**
      * 大小单双 单号码选中
@@ -400,64 +451,109 @@ require(['jquery', 'lodash',  'app', 'store', 'CoreJxssc','bootstrap', 'core'], 
      * 自助选号action
      */
     $('.j-quick-method').on('click', 'span', function(event) {
-      event.preventDefault();
-      /* Act on the event */
-      $(this).toggleClass('active');
+
+      //$(this).toggleClass('active');
+      var _this = $(this);
+
       var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
       G_CHOOSE.codes[dataBit] = [];
       // 和值玩法的选择要重写
+      if('clean' != $(this).attr('data-type')){
+        if (_this.hasClass('active')) {
+          _this.removeClass('active');
+          _this.siblings('span').removeClass('active');
+        } else {
+          _this.addClass('active');
+          _this.siblings('span').removeClass('active');
+        }
+      }else{
+        _this.siblings('span').removeClass('active');
+      }
+
       switch ($(this).attr('data-type')) {
         // 奇数
         case 'odd':
           $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
             $(this).removeClass('active');
-            if (index % 2 != 0) {
-              $(this).toggleClass('active');
-              // cleanAnotherBitData($(this).html(), dataBit);
-              G_CHOOSE.codes[dataBit].push($(this).html());
+            if (_this.hasClass('active')) {
+              if (index % 2 != 0) {
+                $(this).addClass('active');
+                G_CHOOSE.codes[dataBit].push(parseInt($(this).html()));
+              }
+            } else {
+              $(this).removeClass('active');
             }
+            /*if (index % 2 != 0) {
+              $(this).toggleClass('active');
+              G_CHOOSE.codes[dataBit].push($(this).html());
+            }*/
           });
           break;
           // 偶数
         case 'even':
           $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
             $(this).removeClass('active');
-            if (index % 2 == 0) {
-              // cleanAnotherBitData($(this).html(), dataBit);
+            if (_this.hasClass('active')) {
+              if (index % 2 == 0) {
+                $(this).addClass('active');
+                G_CHOOSE.codes[dataBit].push(parseInt($(this).html()));
+              }
+            } else {
+              $(this).removeClass('active');
+            }
+            /*if (index % 2 == 0) {
               $(this).toggleClass('active');
               G_CHOOSE.codes[dataBit].push($(this).html());
-            }
+            }*/
           });
           break;
           // 大数
         case 'big':
           $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
             $(this).removeClass('active');
-            if (index >= 5) {
-              // cleanAnotherBitData($(this).html(), dataBit);
+            if (_this.hasClass('active')) {
+              if (index >= 5) {
+                $(this).addClass('active');
+                G_CHOOSE.codes[dataBit].push(parseInt($(this).html()));
+              }
+            } else {
+              $(this).removeClass('active');
+            }
+            /*if (index >= 5) {
               $(this).toggleClass('active');
               G_CHOOSE.codes[dataBit].push($(this).html());
-            }
+            }*/
           });
           break;
           // 小数
         case 'small':
           $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
             $(this).removeClass('active');
-            if (index < 5) {
-              // cleanAnotherBitData($(this).html(), dataBit);
+            if (_this.hasClass('active')) {
+              if (index <= 4) {
+                $(this).addClass('active');
+                G_CHOOSE.codes[dataBit].push(parseInt($(this).html()));
+              }
+            } else {
+              $(this).removeClass('active');
+            }
+            /*if (index < 5) {
               $(this).toggleClass('active');
               G_CHOOSE.codes[dataBit].push($(this).html());
-            }
+            }*/
           });
           break;
           // 全部
         case 'all':
-          $(this).parents('.j-row-code').find('.j-num-group a').removeClass('active');
           $(this).parents('.j-row-code').find('.j-num-group a').each(function(index) {
-            // cleanAnotherBitData($(this).html(), dataBit);
-            $(this).toggleClass('active');
-            G_CHOOSE.codes[dataBit].push($(this).html());
+            if (_this.hasClass('active')) {
+              $(this).addClass('active');
+              G_CHOOSE.codes[dataBit].push(parseInt($(this).html()));
+            } else {
+              $(this).removeClass('active');
+            }
+            /*$(this).addClass('active');
+            G_CHOOSE.codes[dataBit].push(parseInt($(this).html()));*/
           });
           break;
 
@@ -1014,6 +1110,8 @@ require(['jquery', 'lodash',  'app', 'store', 'CoreJxssc','bootstrap', 'core'], 
       // 3, 显示当前tab所对应的选号区
       G_CHOOSE.playType = $(this).attr('data-playtype');
       var objCurrentSelectCodeArea = $("#j-box-left .j-choose-code-" + G_CHOOSE.playType);
+      $('.j-quick-method span').removeClass('active');
+
       switch (G_CHOOSE.playType) {
         case '2XZX':
           $('.j-choose-code-2XZX i.j-radio-unit:nth-child(1)').trigger('click');
@@ -1407,9 +1505,9 @@ require(['jquery', 'lodash',  'app', 'store', 'CoreJxssc','bootstrap', 'core'], 
               qihao: data.retData[i][1],
               mutiple: 1
             });
-            if(headCheck){
+            if (headCheck) {
               html += '<tr><td>' + m + '</td><td><input type="checkbox" class="br-zhui-c" data-qihaoid="' + data.retData[i][0] + '"data-qi="' + data.retData[i][1] + '" checked="">' + data.retData[i][1] + '期</td><td><input type="text" class="br-input br-zhui-bei" value="' + zhuibei + '">倍</td><td><span class="j-money">' + unitPrice + '</span>元</td><td><span class="ml15">' + data.retData[i][2] + '</span></td></tr>';
-            }else{
+            } else {
               html += '<tr><td>' + m + '</td><td><input type="checkbox" class="br-zhui-c" data-qihaoid="' + data.retData[i][0] + '"data-qi="' + data.retData[i][1] + '">' + data.retData[i][1] + '期</td><td><input type="text" class="br-input br-zhui-bei" value="' + zhuibei + '">倍</td><td><span class="j-money">' + unitPrice + '</span>元</td><td><span class="ml15">' + data.retData[i][2] + '</span></td></tr>';
             }
 

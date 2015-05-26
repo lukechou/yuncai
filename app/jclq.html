@@ -15,17 +15,19 @@
   <link rel="stylesheet" href="front_styles/global.css?v=1.1.0">
   <link rel="stylesheet" href="front_styles/icon.css?v=1.1.0">
   <link rel="stylesheet" href="front_styles/jquery.mCustomScrollbar.min.css">
-  <link rel="stylesheet" href="front_styles/jclq.css?version=1.0.0">
-</head>
+  <link rel="stylesheet" href="front_styles/jclq.css?version=1.0.0"></head>
 <body>
 
   <div class="raceball clearfix w985">
 
     <div class="m-brhd clearfix">
       <img src="front_images/lottery/jclq_logo.png" alt="竞彩篮球" class="pull-left m-brhd-logo" />
-      <h2 class="m-brhd-title"> <b>竞彩篮球</b><span class="ml15">返奖率高达73% , 过关固定赔率</span></h2>
+      <h2 class="m-brhd-title"> <b>竞彩篮球</b>
+        <span class="ml15">返奖率高达73% , 过关固定赔率</span>
+      </h2>
       <div class="m-brhd-group">
-        <a href="javascript:;" class="active">过关投注</a><a href="/lottery/project-center/jczq">参与合买</a>
+        <a href="javascript:;" class="active">过关投注</a>
+        <a href="/lottery/project-center/jczq">参与合买</a>
       </div>
       <div class="m-brhd-time">投注截止时间：赛前或官方截止前10分钟</div>
     </div>
@@ -34,409 +36,437 @@
     <div class="vote-nav">
       <ul class="nav nav-tabs m-br-nav" role="tablist" id="j-vote-nav">
         <li role="presentation" class="active">
-          <a href="javascript:;" data-game="hhtz" data-type="onlyHhtz">混合投注</a>
+          <a href="javascript:;" data-game="hh" data-type="onlyHh">混合投注</a>
         </li>
         <li role="presentation">
-          <a href="javascript:;" data-game="rqspf" data-type="onlyRqSpf">胜负</a>
+          <a href="javascript:;" data-game="sf" data-type="onlySf">胜负</a>
         </li>
         <li role="presentation">
-          <a href="javascript:;" data-game="bf" data-type="onlyBf">让分胜负</a>
+          <a href="javascript:;" data-game="rfsf" data-type="onlyRfsf">让分胜负</a>
         </li>
         <li role="presentation">
-          <a href="javascript:;" data-game="bqc" data-type="onlyBqc">大小分</a>
+          <a href="javascript:;" data-game="dxf" data-type="onlyDxf">大小分</a>
         </li>
         <li role="presentation">
-          <a href="javascript:;" data-game="zjq" data-type="onlyZjq">胜分差</a>
+          <a href="javascript:;" data-game="sfc" data-type="onlySfc">胜分差</a>
         </li>
-    </ul>
-  </div>
+      </ul>
+    </div>
 
-  <div class="g-left clearfix">
-    <div class="bettingBox onlyHhtz clearfix" id="bettingBox">
-      <dl class="dataHead j-navbar-wrapper">
-        <dd class="co1">场次</dd>
-        <dd class="co2 attentionMenu" id="j-show-option">
-          赛事<i class="arrow"></i>
-          <div class="hide-border"></div>
-          <div class="gameSeleList" id="gameSeleList">
-            <ul class="clearfix">
-                                                          <li>
-                        <i></i>葡萄牙超级联赛                      </li>
-                                          <li>
-                        <i></i>俄罗斯超级联赛                      </li>
-                                          <li>
-                        <i></i>意大利甲级联赛                      </li>
-                                          <li>
-                        <i></i>瑞典超级联赛                      </li>
-                                          <li>
-                        <i></i>英格兰超级联赛                      </li>
-                                                </ul>
-            <div class="btnBox">
-              <a href="javascript:;" class="btn btn-red" id="j-match-collect">确定</a>
+    <div class="g-left clearfix">
+      <div class="bettingBox onlyHh clearfix" id="bettingBox">
+        <dl class="dataHead j-navbar-wrapper">
+          <dd class="co1">场次</dd>
+          <dd class="co2 attentionMenu" id="j-show-option">
+            赛事 <i class="arrow"></i>
+            <div class="hide-border"></div>
+            <div class="gameSeleList" id="gameSeleList">
+              <ul class="clearfix">
+                <li> <i></i>
+                  葡萄牙超级联赛
+                </li>
+                <li>
+                  <i></i>
+                  俄罗斯超级联赛
+                </li>
+                <li>
+                  <i></i>
+                  意大利甲级联赛
+                </li>
+                <li>
+                  <i></i>
+                  瑞典超级联赛
+                </li>
+                <li>
+                  <i></i>
+                  英格兰超级联赛
+                </li>
+              </ul>
+              <div class="btnBox">
+                <a href="javascript:;" class="btn btn-red" id="j-match-collect">确定</a>
+              </div>
+            </div>
+          </dd>
+          <dd class="co3" id="j-changeTime">
+            <a href="#" class="imitateSelect" id="j-changeTimeText">截止时间</a>
+            <i class="arrow"></i>
+            <div class="hide-border"></div>
+            <div class="optionList co3">
+              <a href="javascript:;" data-timeType="starttime">比赛时间</a>
+              <a href="javascript:;" class="active" data-timeType="endtime">截止时间</a>
+            </div>
+          </dd>
+          <dd class="co4">客队 　 　 主队</dd>
+
+          <dd class="co6">
+            <span>投注区</span>
+            <span class="btnBox"> <em>主胜</em> <em>平</em>
+              <em class="nobor">主负</em>
+            </span>
+          </dd>
+
+          <dd class="row-hh-t">
+            <span>投注区</span>
+            <span class="nobor">
+              <em>胜负</em>
+              <em>让分胜负</em>
+              <em>大小分</em>
+              <em class="nobor last">胜分差</em>
+            </span>
+          </dd>
+          <!-- /.row-hh-t End -->
+
+          <dd class="row-sf-t">投注区/参考指数<i class="icon icon-warm ps-t2" original-title="胜负"></i></dd>
+          <!-- /.row-sf-t End -->
+
+          <dd class="co5">让球</dd>
+          <dd class="row-rfsf-t">投注区/参考指数<i class="icon icon-warm ps-t2" original-title="让球胜负"></i></dd>
+
+          <dd class="row-yszf">预设总分<i class="icon icon-warm ps-t2" original-title="预设总分的数值可能会随时变化，请以实际出票后的数据信息为准"></i></dd>
+          <dd class="row-dxf-t">投注区/参考指数<i class="icon icon-warm ps-t2" original-title="大小分"></i></dd>
+
+          <dd class="row-sfc-t">
+            <span>投注区/参考指数<i class="icon icon-warm ps-t2" original-title="大小分"></i></span>
+            <span class="nobor">
+              <em class="first">胜分差</em>
+              <em>1-5</em>
+              <em>6-10</em>
+              <em>11-15</em>
+              <em>16-20</em>
+              <em>21-25</em>
+              <em class="nobor">26+</em>
+            </span>
+          </dd>
+
+          </dl>
+          <!-- /.data-Head-->
+
+          <div id="j-game-select">
+
+            <div class="collect-body dataBody unAttention" id="j-collect-body">
+              <div class="collect-title">
+                <span class="mr10">我关注的赛事</span>
+                (
+                <span id="j-match-total"></span>
+                场比赛)
+              </div>
+            </div>
+            <!-- /.collect-body -->
+
+            <div class="dataBody unAttention" id="j-data-body">
+              <div class="data-loadbox">
+                <img class="center-block data-load" src="front_images/loader.gif" alt="loading..."/>
+              </div>
+            </div>
+            <!-- /.dataBody--> </div>
+          <!-- /.gameSelect--> </div>
+        <!-- /.bettingBox-->
+
+        <div class="m-down-tips">
+          <h3 id="j-touzhu-tips">
+            投注提示
+            <i class="icon icon-bup"></i>
+          </h3>
+          <ul id="j-touzhu-tipstext">
+            <li>
+              1、竞彩篮球全部玩法过关投注、及单关投注奖金为固定奖金，赛事选择界面显示仅为当前参考奖金。实际奖金以出票时刻固定奖金为准。
+            </li>
+            <li>
+              2、篮球竞猜全场比赛结果包含加时赛。让分只适合"让分胜负"玩法, "+"为客让主，"-"为主让客。即（主队得分±让分数）减客队得分，大于0为主队胜，小于0为主队负
+            </li>
+            <li>
+              3、竞彩篮球的官方销售时间为：周一、周二、周五 09:00-23:50 ，周三、周四7:30-23:50，周六、周日 09:00-00:50
+            </li>
+            <li>
+              4、单场投注，单注最高奖金限额为10万元，2或3场过关投注，单注最高奖金限额为20万元；4或5场过关投注，单注最高奖金限额为50万元；6场及以上过关投注，单注最高奖金限额100万元。
+            </li>
+            <li>5、胜负、让分胜负、大小分玩法最多过8关，胜分差玩法最多过4关。</li>
+            <li>6、投注成功与否以出票状态为准，“已出票”表示投注成功，“等待出票”表示正在出票中，“已撤单”表示投注失败；</li>
+            <li>7、若投注赛事取消、中断或改期，官方比赛彩果公布或确认取消将延后36小时，对应场次奖金派发或退款将同步延后处理。</li>
+
+          </ul>
+        </div>
+        <!-- /.m-down-tips--> </div>
+      <!-- /.g-left-->
+
+      <div class="g-right clearfix" id="j-right-box">
+        <div class="aside-box j-navbar-wrapper">
+
+          <div class="float-box">
+            <div class="unselect poolStep1" id="poolStep1">
+              <h2>
+                <i>1</i>
+                选号明细
+              </h2>
+              <ul class="m-lstitle clearfix">
+                <li class="t1 nobor">场次</li>
+                <li class="t2">主队　VS　客队</li>
+              </ul>
+
+              <div class="scrollMoni" >
+                <table id="selectGamePool" class="table">
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div class="unSeleTips">请在左侧至少选择2场比赛</div>
+            </div>
+
+            <div class="unselect poolStep2" id="poolStep2">
+              <h2>
+                <i>2</i>
+                过关方式
+              </h2>
+              <div class="methodContent">
+                <div id="j-game-method">
+                  <ul class="guoguanList clearfix" id="j-method-ls" methodtype="m_1"></ul>
+                  <p id="j-no-method" class="fs-12 text-center" style="display:none;">请选择过关方式</p>
+                </div>
+                <div class="unSeleTips" id="poolErrorTips">请在左侧至少选择2场比赛</div>
+              </div>
+            </div>
+
+            <div class="unselect" id="poolStep3">
+              <h2>
+                <i>3</i>
+                确认投注
+              </h2>
+              <div class="qrtz-box">
+                <div class="dott">
+                  我要买
+                  <div class="btn-group j-coutn-total">
+                    <button type="button" class="btn j-count" data-c="0">-</button>
+                    <input type="text" class="btn btn-results j-quick-bei" value="1" data-r="1" id="j-qiucksub-bei">
+                    <button type="button" class="btn j-count" data-c="1">+</button>
+                  </div>
+                  倍
+                </div>
+                <p class="fr">
+                  <a href="javascript:;" id="j-btn-clear">清空</a>
+                  您选择了： <strong id="gameNumber" class="fc-3">0</strong>
+                  场比赛，共 <strong id="gameZhu" class="fc-3">0</strong>
+                  注
+                </p>
+                <p>
+                  总金额：
+                  <strong><span id="totalMoney" class="fc-3 fs-20 totalMoney">0</span>
+                    元</strong>
+                </p>
+                <p>
+                  理论最高奖金：
+                  <strong><span id="maxbonus" class="fc-3">0.00</span>
+                    元</strong>
+                </p>
+                <p class="fc-84">特别提醒：实际奖金以最终出票时为准。</p>
+                <div class="tzBtnBox">
+                  <a class="btn ljtzBtn btn-red fs-yh" href="javascript:;" id="j-ljtzBtn">立即投注</a>
+                  <a class="btn fqhmBtn btn-sear" href="javascript:;" id="j-fqhmBtn">发起合买</a>
+                </div>
+                <div class="orderRule">
+                  <label id="orderRule">
+                    <i class="icon icon-cgou"></i>
+                    15
+        我已经阅读并同意
+                  </label>
+                  <a href="javascript:;" data-toggle="modal" data-target="#tradeModal">委托投注规则</a>
+                </div>
+                <input type="hidden" value="2013070515YX00602010" id="gameId" name="gameId"></div>
+            </div>
+
+            <div class="maskWrap" id="tipMark">
+              <div class="mask"></div>
             </div>
           </div>
-        </dd>
-        <dd class="co3" id="j-changeTime">
-          <a href="#" class="imitateSelect" id="j-changeTimeText">截止时间</a>
-          <i class="arrow"></i>
-          <div class="hide-border"></div>
-          <div class="optionList co3">
-            <a href="javascript:;" data-timeType="starttime">比赛时间</a>
-            <a href="javascript:;" class="active" data-timeType="endtime">截止时间</a>
-          </div>
-        </dd>
-        <dd class="co4">客队 　 　 主队</dd>
-        <dd class="co5">让球</dd>
-        <dd class="co6">
-          <span>投注区</span>
-          <span class="btnBox">
-            <em>主胜</em>
-            <em>平</em>
-            <em class="nobor">主负</em>
-          </span>
-        </dd>
-        <dd class="row1">选择比分进行投注/参考指数</dd>
-        <dd class="row2">
-        <span>半全场玩法:上半场比赛结果+全场比赛结果<i class="icon icon-warm ps-t2" original-title="<div class='datahead-tips'><div>示例：<div><p>上半场比分：3:2 <b>半场彩果：<span class='fc-3'>胜</span></b></p><p>全场比分：5:3 <b>全场彩果：<span class='fc-3'>胜</span></b></p><p><b>半全场彩果：<span class='fc-3'>胜胜</span></b></p></div>"></i></span>
-          <span class="nobor">
-            <em>胜胜</em>
-            <em>胜平</em>
-            <em>胜负</em>
-            <em>平胜</em>
-            <em>平平</em>
-            <em>平负</em>
-            <em>负胜</em>
-            <em>负平</em>
-            <em class="nobor">负负</em>
-          </span>
-        </dd>
-        <dd class="row3">
-          <span>总进球=主队进球数+客队进球数<i class="icon icon-warm ps-t2" original-title="<div class='datahead-tips'><div>示例：<div><p>完场比分：3:2 <b>总进球彩果：<span class='fc-3'>5</span></b></p><p>完场比分：5:3 <b>总进球彩果：<span class='fc-3'>7+</span></b></p></div>"></i></span>
-          <span class="nobor">
-            <em>0</em>
-            <em>1</em>
-            <em>2</em>
-            <em>3</em>
-            <em>4</em>
-            <em>5</em>
-            <em>6</em>
-            <em class="nobor">7+</em>
-          </span>
-        </dd>
-        <dd class="row4">
-          <span>投注区</span>
-          <span class="nobor">
-            <em>主胜</em>
-            <em>平</em>
-            <em>主负</em>
-            <em class="nobor last">更多</em>
-          </span>
-        </dd>
-    </dl>
-    <!-- /.data-Head-->
 
-    <div id="j-game-select">
-
-      <div class="collect-body dataBody unAttention" id="j-collect-body">
-        <div class="collect-title"><span class="mr10">我关注的赛事</span> (<span id="j-match-total"></span>场比赛)</div>
-      </div>
-      <!-- /.collect-body -->
-
-      <div class="dataBody unAttention" id="j-data-body">
-        <div class="data-loadbox">
-          <img class="center-block data-load" src="front_images/loader.gif" alt="loading..."/>
         </div>
+
       </div>
-      <!-- /.dataBody-->
-
-    </div>
-    <!-- /.gameSelect-->
-
-</div>
-<!-- /.bettingBox-->
-
-<div class="m-down-tips">
-<h3 id="j-touzhu-tips">
-  投注提示
-  <i class="icon icon-bup"></i>
-</h3>
-<ul id="j-touzhu-tipstext">
-<li>
-  1、竞彩篮球全部玩法过关投注、及单关投注奖金为固定奖金，赛事选择界面显示仅为当前参考奖金。实际奖金以出票时刻固定奖金为准。
-</li>
-<li>
-  2、篮球竞猜全场比赛结果包含加时赛。让分只适合"让分胜负"玩法, "+"为客让主，"-"为主让客。即（主队得分±让分数）减客队得分，大于0为主队胜，小于0为主队负
-</li>
-<li>
-  3、竞彩篮球的官方销售时间为：周一、周二、周五 09:00-23:50 ，周三、周四7:30-23:50，周六、周日 09:00-00:50
-</li>
-<li>
-  4、单场投注，单注最高奖金限额为10万元，2或3场过关投注，单注最高奖金限额为20万元；4或5场过关投注，单注最高奖金限额为50万元；6场及以上过关投注，单注最高奖金限额100万元。
-</li>
-<li>5、胜负、让分胜负、大小分玩法最多过8关，胜分差玩法最多过4关。</li>
-<li>6、投注成功与否以出票状态为准，“已出票”表示投注成功，“等待出票”表示正在出票中，“已撤单”表示投注失败；</li>
-<li>7、若投注赛事取消、中断或改期，官方比赛彩果公布或确认取消将延后36小时，对应场次奖金派发或退款将同步延后处理。</li>
-
-</ul>
-</div>
-<!-- /.m-down-tips-->
-</div>
-<!-- /.g-left-->
-<div class="g-right clearfix" id="j-right-box">
-<div class="aside-box j-navbar-wrapper">
-
-<div class="float-box">
-  <div class="unselect poolStep1" id="poolStep1">
-    <h2>
-      <i>1</i>
-      选号明细
-    </h2>
-    <ul class="m-lstitle clearfix">
-      <li class="t1 nobor">场次</li>
-      <li class="t2">主队　VS　客队</li>
-  </ul>
-
-  <div class="scrollMoni" >
-    <table id="selectGamePool" class="table">
-      <tbody></tbody>
-    </table>
+      <!-- /.g-right--> </div>
   </div>
-  <div class="unSeleTips">请在左侧至少选择2场比赛</div>
-  </div>
+  <!-- /.raceball-->
 
-<div class="unselect poolStep2" id="poolStep2">
-  <h2>
-    <i>2</i>
-    过关方式
-  </h2>
-  <div class="methodContent">
-    <div id="j-game-method">
-      <ul class="guoguanList clearfix" id="j-method-ls" methodtype="m_1"></ul>
-      <p id="j-no-method" class="fs-12 text-center" style="display:none;">请选择过关方式</p>
-    </div>
-    <div class="unSeleTips" id="poolErrorTips">请在左侧至少选择2场比赛</div>
-  </div>
-</div>
-
-<div class="unselect" id="poolStep3">
-  <h2>
-    <i>3</i>
-    确认投注
-  </h2>
-  <div class="qrtz-box">
-    <div class="dott">
-      我要买
-      <div class="btn-group j-coutn-total">
-        <button type="button" class="btn j-count" data-c="0">-</button>
-        <input type="text" class="btn btn-results j-quick-bei" value="1" data-r="1" id="j-qiucksub-bei">
-        <button type="button" class="btn j-count" data-c="1">+</button>
+  <div class="friend-modal ball-modal modal fade" id="ballModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-backdrop fade"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <i class="icon icon-close"></i>
+        </button>
+        <h4 class="modal-title j-apptips-title" id="myModalLabel">投注确认-竞彩篮球</h4>
       </div>
-      倍
-    </div>
-    <p class="fr">
-      <a href="javascript:;" id="j-btn-clear">清空</a>
-      您选择了： <strong id="gameNumber" class="fc-3">0</strong>
-      场比赛，共 <strong id="gameZhu" class="fc-3">0</strong>
-      注
-    </p>
-    <p>
-      总金额：
-      <strong><span id="totalMoney" class="fc-3 fs-20 totalMoney">0</span>
-        元</strong>
-    </p>
-    <p>
-      理论最高奖金：
-      <strong><span id="maxbonus" class="fc-3">0.00</span>
-        元</strong>
-    </p>
-    <p class="fc-84">特别提醒：实际奖金以最终出票时为准。</p>
-    <div class="tzBtnBox">
-      <a class="btn ljtzBtn btn-red fs-yh" href="javascript:;" id="j-ljtzBtn">立即投注</a>
-      <a class="btn fqhmBtn btn-sear" href="javascript:;" id="j-fqhmBtn">发起合买</a>
-    </div>
-    <div class="orderRule">
-      <label id="orderRule">
-        <i class="icon icon-cgou"></i>15
-        我已经阅读并同意
-      </label>
-      <a href="javascript:;" data-toggle="modal" data-target="#tradeModal">委托投注规则</a>
-    </div>
-    <input type="hidden" value="2013070515YX00602010" id="gameId" name="gameId">
-  </div>
-</div>
-
-  <div class="maskWrap" id="tipMark">
-    <div class="mask"></div>
-  </div>
-</div>
-
-</div>
-
-</div>
-<!-- /.g-right-->
-
-</div>
-<!-- /.raceball-->
-
-<div class="friend-modal ball-modal modal fade" id="ballModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-backdrop fade"></div>
-  <div class="modal-dialog">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>
-      <h4 class="modal-title j-apptips-title" id="myModalLabel">投注确认-竞彩篮球</h4>
-    </div>
-    <div class="modal-body fc-84">
-      <div class="ballbox">
-        <div class="text">
-          <div id="j-modal-text"></div>
-          <div id="j-ball-table" class="ball-tb">
-            <table class="table table-bordered ball-table">
-              <thead>
-                <tr>
-                  <th>场次</th>
-                  <th class="gameTeam">主队 VS 客队</th>
-                  <th style="width: 225px;">投注内容</th>
-                </tr>
-              </thead>
-              <tbody id="j-tips-table"></tbody>
-            </table>
-          </div>
-          <div class="br-together">
-            <p class="clearfix">
-    <span class="title">
-      <span class="fc-3">*</span>
-      我要分为
-    </span>
-    <input type="text" class="br-input w70 j-share-num" value="1">
-    <span class="fc-3d">份,每份</span>
-    <span class="fc-3 j-unit-price"></span>
-    元，每份至少1元，且必须能整除到元
-  </p>
-            <p class="clearfix">
-              <span class="title">
-                <span class="fc-3">*</span>
-                我要认购
-              </span>
-              <input type="text" class="br-input w70 j-rengou mr-5" value="1">
-              <span class="fc-3d">份,所占比例</span>
-              <span class="fc-3 j-rengou-percentage">2.50</span>
-              <span class="fc-3">%</span>
-              <span class="fc-84">(最低认购5%,且不能低于提成比例)</span>
-            </p>
-            <p class="clearfix">
-              <span class="title">我要提成</span>
-              <select id="ipt_extraPercent" class="br-select mr-5">
-                <option selected="selected" value="0">0%</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-              <span>(税后奖金的0%-10%)</span>
-            </p>
-            <p class="clearfix">
-              <span class="title">我要保底</span>
-              <span>
-                <input type="text" class="br-input w50 j-baodi-text mr-5" value="0" >
-                份, <input type="checkbox" class="mlr-8" id="j-full-bao">
-                <span>全保</span>
-                所占比例
-                <span class="fc-3">
-                  <span class="j-baodi-percent">0.00</span>
-                  %
+      <div class="modal-body fc-84">
+        <div class="ballbox">
+          <div class="text">
+            <div id="j-modal-text"></div>
+            <div id="j-ball-table" class="ball-tb">
+              <table class="table table-bordered ball-table">
+                <thead>
+                  <tr>
+                    <th>场次</th>
+                    <th class="gameTeam">主队 VS 客队</th>
+                    <th style="width: 225px;">投注内容</th>
+                  </tr>
+                </thead>
+                <tbody id="j-tips-table"></tbody>
+              </table>
+            </div>
+            <div class="br-together">
+              <p class="clearfix">
+                <span class="title">
+                  <span class="fc-3">*</span>
+                  我要分为
                 </span>
-                <span>什么是保底？<i class="icon icon-warm ps-t2" original-title="什么叫保底<br>合买保底发起时，系统将会先从发起人账户内扣除相应的金额，若合买失败，或者合买未全部跟满，则会使用设置的保底金额自动购买未满部分，以保证合买成功，若设置的保底金额还有剩余资金，将自动退回到发起人的账户内。"></i></span>
-              </span>
-            </p>
-            <p class="clearfix">
-              <span class="title">方案设置</span>
-              <span class="br-set-group">
-                <a href="javascript:;" data-set="1" class="br-set active">马上公开</a>
-                <a href="javascript:;" data-set="2" class="br-set">截止公开</a>
-                <a href="javascript:;" data-set="3" class="br-set">对跟单人公开</a>
-              </span>
-            </p>
-            <p class="clearfix">
-              <span class="title">方案标题</span>
-              <input type="text" data-text="中奖福地，合买必中！" data-size="10" value="中奖福地，合买必中！" class="br-input j-project-title mr-5">
-              <span class="fc-84">
-                已输入
-                <span class="j-btext-total">7</span>
-                个字,最多10个
-              </span>
-            </p>
-            <p class="clearfix m0">
-              <span class="title">方案描述</span>
-              <textarea class="br-textarea" data-text="来参与我的合买，一起中大奖吧！" data-size="200" rows="3" cols="60">来参与我的合买，一起中大奖吧！</textarea>
-              <span class="br-textarea-tips fc-84">
-                已输入
-                <span class="j-btext-total">15</span>
-                个字,最多200个
-              </span>
-            </p>
+                <input type="text" class="br-input w70 j-share-num" value="1">
+                <span class="fc-3d">份,每份</span>
+                <span class="fc-3 j-unit-price"></span>
+                元，每份至少1元，且必须能整除到元
+              </p>
+              <p class="clearfix">
+                <span class="title">
+                  <span class="fc-3">*</span>
+                  我要认购
+                </span>
+                <input type="text" class="br-input w70 j-rengou mr-5" value="1">
+                <span class="fc-3d">份,所占比例</span>
+                <span class="fc-3 j-rengou-percentage">2.50</span>
+                <span class="fc-3">%</span>
+                <span class="fc-84">(最低认购5%,且不能低于提成比例)</span>
+              </p>
+              <p class="clearfix">
+                <span class="title">我要提成</span>
+                <select id="ipt_extraPercent" class="br-select mr-5">
+                  <option selected="selected" value="0">0%</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+                <span>(税后奖金的0%-10%)</span>
+              </p>
+              <p class="clearfix">
+                <span class="title">我要保底</span>
+                <span>
+                  <input type="text" class="br-input w50 j-baodi-text mr-5" value="0" >
+                  份,
+                  <input type="checkbox" class="mlr-8" id="j-full-bao">
+                  <span>全保</span>
+                  所占比例
+                  <span class="fc-3">
+                    <span class="j-baodi-percent">0.00</span>
+                    %
+                  </span>
+                  <span>
+                    什么是保底？
+                    <i class="icon icon-warm ps-t2" original-title="什么叫保底<br>合买保底发起时，系统将会先从发起人账户内扣除相应的金额，若合买失败，或者合买未全部跟满，则会使用设置的保底金额自动购买未满部分，以保证合买成功，若设置的保底金额还有剩余资金，将自动退回到发起人的账户内。"></i>
+                  </span>
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="title">方案设置</span>
+                <span class="br-set-group">
+                  <a href="javascript:;" data-set="1" class="br-set active">马上公开</a>
+                  <a href="javascript:;" data-set="2" class="br-set">截止公开</a>
+                  <a href="javascript:;" data-set="3" class="br-set">对跟单人公开</a>
+                </span>
+              </p>
+              <p class="clearfix">
+                <span class="title">方案标题</span>
+                <input type="text" data-text="中奖福地，合买必中！" data-size="10" value="中奖福地，合买必中！" class="br-input j-project-title mr-5">
+                <span class="fc-84">
+                  已输入
+                  <span class="j-btext-total">7</span>
+                  个字,最多10个
+                </span>
+              </p>
+              <p class="clearfix m0">
+                <span class="title">方案描述</span>
+                <textarea class="br-textarea" data-text="来参与我的合买，一起中大奖吧！" data-size="200" rows="3" cols="60">来参与我的合买，一起中大奖吧！</textarea>
+                <span class="br-textarea-tips fc-84">
+                  已输入
+                  <span class="j-btext-total">15</span>
+                  个字,最多200个
+                </span>
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="btns">
-          <button class="btn btn-red" id="j-hemai">确定</button>
-          <button class="btn btn-gray" data-dismiss="modal">取消</button>
+          <div class="btns">
+            <button class="btn btn-red" id="j-hemai">确定</button>
+            <button class="btn btn-gray" data-dismiss="modal">取消</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script> var staticHostURI = ''; </script>
-<div class="friend-modal agreement-modal modal fade" id="tradeModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-     <div class="modal-backdrop fade"></div>
-     <div class="modal-dialog">
-       <div class="modal-header">
-         <button type="button" class="close" data-dismiss="modal">
-           <i class="icon icon-close"></i>
-         </button>
-         <h4 class="modal-title" id="myModalLabel">投注规则</h4>
-       </div>
-       <div class="modal-body text-center fc-84" id="tip-content">
-         <div class="agreement">
+  <script>var staticHostURI = ''; </script>
+  <div class="friend-modal agreement-modal modal fade" id="tradeModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-backdrop fade"></div>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <i class="icon icon-close"></i>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">投注规则</h4>
+      </div>
+      <div class="modal-body text-center fc-84" id="tip-content">
+        <div class="agreement">
           <div class="head">彩胜网服务协议</div>
-           <div class="mn">
-             <p>彩胜网的各项基于互联网以及通信网的相关服务（以下简称“服务”）的所有权及经营运作权，归深圳海铭创达科技有限公司所有。购买“数字化竞彩投注决策系统”生成的彩票投注方案（以下简称“彩票投注方案”）之前，您应当阅读并遵守《彩胜网服务协议》。彩胜网提供的服务将完全按照其发布的章程、服务条款和操作规则严格执行，您使用彩胜网的服务即视为您已阅读并同意本协议的约束。</p>
+          <div class="mn">
+            <p>
+              彩胜网的各项基于互联网以及通信网的相关服务（以下简称“服务”）的所有权及经营运作权，归深圳海铭创达科技有限公司所有。购买“数字化竞彩投注决策系统”生成的彩票投注方案（以下简称“彩票投注方案”）之前，您应当阅读并遵守《彩胜网服务协议》。彩胜网提供的服务将完全按照其发布的章程、服务条款和操作规则严格执行，您使用彩胜网的服务即视为您已阅读并同意本协议的约束。
+            </p>
             <p>1、彩胜网所提供的彩票投注服务均为经国家财政部批准发行的彩票品种，彩胜网的所有信息所显示的日期与时间均以北京时间为准。</p>
             <p>2、彩票投注方案的截止时间会提前于彩票终端系统的彩票销售截止时间，具体提前时间量根据不同彩票品种而定。</p>
             <p>3、彩胜网通过独有的算法并以模型的方式为用户提供相应的投注组合，用户可以通过选择模型的方式参与竟彩的投注。</p>
-            <p>4、为保障用户的合法权益，避免在中奖时因用户的所有账户安全信息与真实情况不符而发生纠纷，请用户注册之后认真填写账户安全信息项，请按照真实、准确、全面的原则填写，在账户安全信息中必须提供真实姓名、身份证号码及手机号码等。对因用户自身原因而造成的不能充值、不能兑奖、不能提取现金等情况，由用户承担一切责任。如果用户提供的账户安全资料包含有不真实的信息，彩胜网保留终止该用户继续使用彩胜网服务资格的权利。</p>
+            <p>
+              4、为保障用户的合法权益，避免在中奖时因用户的所有账户安全信息与真实情况不符而发生纠纷，请用户注册之后认真填写账户安全信息项，请按照真实、准确、全面的原则填写，在账户安全信息中必须提供真实姓名、身份证号码及手机号码等。对因用户自身原因而造成的不能充值、不能兑奖、不能提取现金等情况，由用户承担一切责任。如果用户提供的账户安全资料包含有不真实的信息，彩胜网保留终止该用户继续使用彩胜网服务资格的权利。
+            </p>
             <p>5、根据国家规定，禁止未满18周岁(未成年)者利用本平台购买彩票。同时，彩胜网不提倡学生购买彩票，包括在校大学生。</p>
             <p>6、彩胜网立足于服务彩民，所有注册用户购买彩票投注方案，彩胜网均不收取任何手续费，方案中奖获取的奖金亦为用户所有。</p>
             <p>7、彩胜网用户须同意代理购买、保管彩票、领取奖金和派发奖金的有关事宜。</p>
-            <p>8、购买彩票投注方案中奖奖金以彩票中心最终公布的开奖奖金为准；投注奖金为固定奖金。投注方案成功出票后，彩胜网会根据本站业务规则在投注记录中注明该方案投注详情、中奖情况及奖金供用户查询。</p>
-            <p>9、用户登录彩胜网之后选择彩票投注方案，并自主选择投注金额（不能低于最低投注金额），彩胜网对彩票投注方案不保证100%中奖。</p>
-            <p>10、为了加强对“竞彩”的销售管理，在销售过程中，根据投注额问题或突发事件等因素，彩票管理中心销售系统可能撤消或提前截止某场比赛的某些特定过关组合、特定结果选项的投注，暂停或提前截止针对某场比赛的所有投注。此种情况下，彩胜网对暂停或提前截止销售不承担任何责任。</p>
-            <p>11、因出票系统升级、官方停售、突然停电、网络异常等意外因素导致未能够出票完毕，彩胜网保有调整销售截止时间的权利，且不承担其他责任。</p>
-            <p>12、如遇用户投注的方案撤单，撤单金额为此投注方案未出票的全部金额，撤单金额将在官方销售截止前陆续返还至该用户的彩胜网资金账户。</p>
+            <p>
+              8、购买彩票投注方案中奖奖金以彩票中心最终公布的开奖奖金为准；投注奖金为固定奖金。投注方案成功出票后，彩胜网会根据本站业务规则在投注记录中注明该方案投注详情、中奖情况及奖金供用户查询。
+            </p>
+            <p>
+              9、用户登录彩胜网之后选择彩票投注方案，并自主选择投注金额（不能低于最低投注金额），彩胜网对彩票投注方案不保证100%中奖。
+            </p>
+            <p>
+              10、为了加强对“竞彩”的销售管理，在销售过程中，根据投注额问题或突发事件等因素，彩票管理中心销售系统可能撤消或提前截止某场比赛的某些特定过关组合、特定结果选项的投注，暂停或提前截止针对某场比赛的所有投注。此种情况下，彩胜网对暂停或提前截止销售不承担任何责任。
+            </p>
+            <p>
+              11、因出票系统升级、官方停售、突然停电、网络异常等意外因素导致未能够出票完毕，彩胜网保有调整销售截止时间的权利，且不承担其他责任。
+            </p>
+            <p>
+              12、如遇用户投注的方案撤单，撤单金额为此投注方案未出票的全部金额，撤单金额将在官方销售截止前陆续返还至该用户的彩胜网资金账户。
+            </p>
             <p>13、用户根据自愿原则，使用彩胜网“彩胜数字化竞彩决策系统”及投注服务，并对自己所提供的账户安全信息的真实性负责。</p>
             <p>14、彩胜网保留变更本协议条款的权利。</p>
-            <p>免责条款：本站模型提供的投注组合是以提高中奖率为宗旨，虽通过独有算法设计，并非提供盈利担保，仅供用户购买时参考，通过模型购买的投注组合是用户的自主选择，因投注而产生的一切收益和亏损由用户自行享有和承担。</p>
-           </div><!-- /.mn-->
-           <div class="foot">
-             <button class="btn btn-danger" data-dismiss="modal">同意协议</button>
-           </div>
-         </div><!-- /.agreement-->
-       </div><!-- /.modal-body-->
-     </div>
-   </div><script>
+            <p>
+              免责条款：本站模型提供的投注组合是以提高中奖率为宗旨，虽通过独有算法设计，并非提供盈利担保，仅供用户购买时参考，通过模型购买的投注组合是用户的自主选择，因投注而产生的一切收益和亏损由用户自行享有和承担。
+            </p>
+          </div>
+          <!-- /.mn-->
+          <div class="foot">
+            <button class="btn btn-danger" data-dismiss="modal">同意协议</button>
+          </div>
+        </div>
+        <!-- /.agreement--> </div>
+      <!-- /.modal-body--> </div>
+  </div>
+  <script>
   var Config = {
     lotyName:'jclq',
     lotyCNName:'竞彩篮球',
     payMoney:null
   };
-  var jczqData = {"1431792000":[{"id":"56471431","game_date":"20150517","game_order":"053","match_key":"150517053","league":"\u8461\u8404\u7259\u8d85\u7ea7\u8054\u8d5b","home":"\u535a\u963f\u7ef4\u65af\u5854","away":"\u8461\u8404\u7259\u56fd\u6c11","home_short":"\u535a\u963f\u7ef4\u65af\u5854","away_short":"\u8461\u8404\u7259\u56fd\u6c11","create_time":"1431913605","game_start_time":"03:00","half_home_score":"-1","half_away_score":"-1","home_score":"-1","away_score":"-1","is_defer":"0","is_sale":"1111111111","game_status":"0","is_confirm":"0","confirm_time":"1431913605","rqspf_rangqiu_num":"1","rqspf_gg_sp":"1.50|3.90|4.85","rqspf_dg_sp":"","rqspf_result":"","rqspf_fd_single_bonus":"0","rqspf_fd_sales_money":"0","rqspf_fd_bonus_zhushu":"0","spf_gg_sp":"2.92|3.10|2.18","spf_dg_sp":"","spf_result":"","spf_fd_single_bonus":"0","spf_fd_sales_money":"0","spf_fd_bonus_zhushu":"0","bf_gg_sp":"7.50|14.00|10.00|35.00|26.00|35.00|100.0|80.00|100.0|300.0|250.0|400.0|150.0|7.50|5.50|14.00|70.00|400.0|6.25|9.75|8.50|21.00|18.00|29.00|50.00|45.00|80.00|150.0|125.0|250.0|80.00","bf_dg_sp":"","bqc_result":"","bqc_fd_single_bonus":"0","bqc_fd_sales_money":"0","bqc_fd_bonus_zhushu":"0","zjq_gg_sp":"7.50|3.75|3.15|3.75|6.00|12.00|23.00|34.00","zjq_dg_sp":"","bf_result":"","bf_fd_single_bonus":"0","bf_fd_sales_money":"0","bf_fd_bonus_zhushu":"0","bqc_gg_sp":"4.60|14.00|29.00|6.50|4.20|4.90|33.00|14.00|3.50","bqc_dg_sp":"","zjqs_result":"","zjqs_fd_single_bonus":"0","zjqs_fd_sales_money":"0","zjqs_fd_bonus_zhushu":"0","last_manager":"","last_time":"0","league_color":"#695050","rqspf":"1","spf":"1","bqc":"1","bf":"1","zjq":"1","end_time":"23:30","week":"\u5468\u65e5","spf_gg_0":"2.92","spf_gg_1":"3.10","spf_gg_2":"2.18","rqspf_gg_0":"1.50","rqspf_gg_1":"3.90","rqspf_gg_2":"4.85","bf_gg_0":"7.50","bf_gg_1":"14.00","bf_gg_2":"10.00","bf_gg_3":"35.00","bf_gg_4":"26.00","bf_gg_5":"35.00","bf_gg_6":"100.0","bf_gg_7":"80.00","bf_gg_8":"100.0","bf_gg_9":"300.0","bf_gg_10":"250.0","bf_gg_11":"400.0","bf_gg_12":"150.0","bf_gg_13":"7.50","bf_gg_14":"5.50","bf_gg_15":"14.00","bf_gg_16":"70.00","bf_gg_17":"400.0","bf_gg_18":"6.25","bf_gg_19":"9.75","bf_gg_20":"8.50","bf_gg_21":"21.00","bf_gg_22":"18.00","bf_gg_23":"29.00","bf_gg_24":"50.00","bf_gg_25":"45.00","bf_gg_26":"80.00","bf_gg_27":"150.0","bf_gg_28":"125.0","bf_gg_29":"250.0","bf_gg_30":"80.00","bqc_gg_0":"4.60","bqc_gg_1":"14.00","bqc_gg_2":"29.00","bqc_gg_3":"6.50","bqc_gg_4":"4.20","bqc_gg_5":"4.90","bqc_gg_6":"33.00","bqc_gg_7":"14.00","bqc_gg_8":"3.50","zjq_gg_0":"7.50","zjq_gg_1":"3.75","zjq_gg_2":"3.15","zjq_gg_3":"3.75","zjq_gg_4":"6.00","zjq_gg_5":"12.00","zjq_gg_6":"23.00","zjq_gg_7":"34.00"}],"1431878400":[{"id":"56547069","game_date":"20150518","game_order":"001","match_key":"150518001","league":"\u4fc4\u7f57\u65af\u8d85\u7ea7\u8054\u8d5b","home":"\u4e4c\u62c9\u5c14","away":"\u83ab\u65af\u79d1\u8fea\u7eb3\u6469","home_short":"\u4e4c\u62c9\u5c14","away_short":"\u83ab\u65af\u79d1\u8fea\u7eb3\u6469","create_time":"1431913605","game_start_time":"22:00","half_home_score":"-1","half_away_score":"-1","home_score":"-1","away_score":"-1","is_defer":"0","is_sale":"1111111111","game_status":"0","is_confirm":"0","confirm_time":"1431913605","rqspf_rangqiu_num":"1","rqspf_gg_sp":"2.01|3.35|3.00","rqspf_dg_sp":"","rqspf_result":"","rqspf_fd_single_bonus":"0","rqspf_fd_sales_money":"0","rqspf_fd_bonus_zhushu":"0","spf_gg_sp":"4.65|3.60|1.59","spf_dg_sp":"","spf_result":"","spf_fd_single_bonus":"0","spf_fd_sales_money":"0","spf_fd_bonus_zhushu":"0","bf_gg_sp":"10.50|23.00|14.00|60.00|40.00|40.00|250.0|150.0|150.0|700.0|500.0|600.0|200.0|10.00|6.50|16.00|70.00|400.0|5.80|6.50|7.30|11.50|12.50|24.00|25.00|28.00|60.00|60.00|70.00|150.0|50.00","bf_dg_sp":"","bqc_result":"","bqc_fd_single_bonus":"0","bqc_fd_sales_money":"0","bqc_fd_bonus_zhushu":"0","zjq_gg_sp":"10.00|4.20|3.10|3.65|5.50|10.50|19.00|27.00","zjq_dg_sp":"","bf_result":"","bf_fd_single_bonus":"0","bf_fd_sales_money":"0","bf_fd_bonus_zhushu":"0","bqc_gg_sp":"7.50|16.00|24.00|10.00|5.10|4.00|39.00|16.00|2.30","bqc_dg_sp":"","zjqs_result":"","zjqs_fd_single_bonus":"0","zjqs_fd_sales_money":"0","zjqs_fd_bonus_zhushu":"0","last_manager":"","last_time":"0","league_color":"#40403e","rqspf":"1","spf":"1","bqc":"1","bf":"1","zjq":"1","end_time":"21:30","week":"\u5468\u4e00","spf_gg_0":"4.65","spf_gg_1":"3.60","spf_gg_2":"1.59","rqspf_gg_0":"2.01","rqspf_gg_1":"3.35","rqspf_gg_2":"3.00","bf_gg_0":"10.50","bf_gg_1":"23.00","bf_gg_2":"14.00","bf_gg_3":"60.00","bf_gg_4":"40.00","bf_gg_5":"40.00","bf_gg_6":"250.0","bf_gg_7":"150.0","bf_gg_8":"150.0","bf_gg_9":"700.0","bf_gg_10":"500.0","bf_gg_11":"600.0","bf_gg_12":"200.0","bf_gg_13":"10.00","bf_gg_14":"6.50","bf_gg_15":"16.00","bf_gg_16":"70.00","bf_gg_17":"400.0","bf_gg_18":"5.80","bf_gg_19":"6.50","bf_gg_20":"7.30","bf_gg_21":"11.50","bf_gg_22":"12.50","bf_gg_23":"24.00","bf_gg_24":"25.00","bf_gg_25":"28.00","bf_gg_26":"60.00","bf_gg_27":"60.00","bf_gg_28":"70.00","bf_gg_29":"150.0","bf_gg_30":"50.00","bqc_gg_0":"7.50","bqc_gg_1":"16.00","bqc_gg_2":"24.00","bqc_gg_3":"10.00","bqc_gg_4":"5.10","bqc_gg_5":"4.00","bqc_gg_6":"39.00","bqc_gg_7":"16.00","bqc_gg_8":"2.30","zjq_gg_0":"10.00","zjq_gg_1":"4.20","zjq_gg_2":"3.10","zjq_gg_3":"3.65","zjq_gg_4":"5.50","zjq_gg_5":"10.50","zjq_gg_6":"19.00","zjq_gg_7":"27.00"},{"id":"56547070","game_date":"20150518","game_order":"002","match_key":"150518002","league":"\u610f\u5927\u5229\u7532\u7ea7\u8054\u8d5b","home":"\u4f5b\u7f57\u4f26\u8428","away":"\u5e15\u5c14\u9a6c","home_short":"\u4f5b\u7f57\u4f26\u8428","away_short":"\u5e15\u5c14\u9a6c","create_time":"1431913605","game_start_time":"01:00","half_home_score":"-1","half_away_score":"-1","home_score":"-1","away_score":"-1","is_defer":"0","is_sale":"1111111111","game_status":"0","is_confirm":"0","confirm_time":"1431913605","rqspf_rangqiu_num":"-1","rqspf_gg_sp":"1.53|4.20|4.25","rqspf_dg_sp":"","rqspf_result":"","rqspf_fd_single_bonus":"0","rqspf_fd_sales_money":"0","rqspf_fd_bonus_zhushu":"0","spf_gg_sp":"1.12|6.50|13.00","spf_dg_sp":"","spf_result":"","spf_fd_single_bonus":"0","spf_fd_sales_money":"0","spf_fd_bonus_zhushu":"0","bf_gg_sp":"8.50|6.50|7.50|7.00|9.25|21.00|9.50|14.00|35.00|17.00|22.00|50.00|10.50|22.00|10.50|20.00|70.00|400.0|32.00|70.00|29.00|250.0|100.0|70.00|700.0|400.0|300.0|1000|1000|900.0|250.0","bf_dg_sp":"","bqc_result":"","bqc_fd_single_bonus":"0","bqc_fd_sales_money":"0","bqc_fd_bonus_zhushu":"0","zjq_gg_sp":"22.00|7.00|4.25|3.60|4.20|6.00|9.00|11.00","zjq_dg_sp":"","bf_result":"","bf_fd_single_bonus":"0","bf_fd_sales_money":"0","bf_fd_bonus_zhushu":"0","bqc_gg_sp":"1.45|24.00|100.0|3.65|9.00|25.00|22.00|24.00|19.00","bqc_dg_sp":"","zjqs_result":"","zjqs_fd_single_bonus":"0","zjqs_fd_sales_money":"0","zjqs_fd_bonus_zhushu":"0","last_manager":"","last_time":"0","league_color":"#2a5caa","rqspf":"1","spf":"1","bqc":"1","bf":"1","zjq":"1","end_time":"23:30","week":"\u5468\u4e00","spf_gg_0":"1.12","spf_gg_1":"6.50","spf_gg_2":"13.00","rqspf_gg_0":"1.53","rqspf_gg_1":"4.20","rqspf_gg_2":"4.25","bf_gg_0":"8.50","bf_gg_1":"6.50","bf_gg_2":"7.50","bf_gg_3":"7.00","bf_gg_4":"9.25","bf_gg_5":"21.00","bf_gg_6":"9.50","bf_gg_7":"14.00","bf_gg_8":"35.00","bf_gg_9":"17.00","bf_gg_10":"22.00","bf_gg_11":"50.00","bf_gg_12":"10.50","bf_gg_13":"22.00","bf_gg_14":"10.50","bf_gg_15":"20.00","bf_gg_16":"70.00","bf_gg_17":"400.0","bf_gg_18":"32.00","bf_gg_19":"70.00","bf_gg_20":"29.00","bf_gg_21":"250.0","bf_gg_22":"100.0","bf_gg_23":"70.00","bf_gg_24":"700.0","bf_gg_25":"400.0","bf_gg_26":"300.0","bf_gg_27":"1000","bf_gg_28":"1000","bf_gg_29":"900.0","bf_gg_30":"250.0","bqc_gg_0":"1.45","bqc_gg_1":"24.00","bqc_gg_2":"100.0","bqc_gg_3":"3.65","bqc_gg_4":"9.00","bqc_gg_5":"25.00","bqc_gg_6":"22.00","bqc_gg_7":"24.00","bqc_gg_8":"19.00","zjq_gg_0":"22.00","zjq_gg_1":"7.00","zjq_gg_2":"4.25","zjq_gg_3":"3.60","zjq_gg_4":"4.20","zjq_gg_5":"6.00","zjq_gg_6":"9.00","zjq_gg_7":"11.00"},{"id":"56547071","game_date":"20150518","game_order":"003","match_key":"150518003","league":"\u745e\u5178\u8d85\u7ea7\u8054\u8d5b","home":"\u54c8\u5c14\u59c6\u65af\u5854\u5fb7","away":"\u4f50\u52a0\u987f\u65af","home_short":"\u54c8\u5c14\u59c6\u65af\u5854\u5fb7","away_short":"\u4f50\u52a0\u987f\u65af","create_time":"1431913605","game_start_time":"01:00","half_home_score":"-1","half_away_score":"-1","home_score":"-1","away_score":"-1","is_defer":"0","is_sale":"0111111101","game_status":"0","is_confirm":"0","confirm_time":"1431913605","rqspf_rangqiu_num":"1","rqspf_gg_sp":"1.70|3.60|3.80","rqspf_dg_sp":"","rqspf_result":"","rqspf_fd_single_bonus":"0","rqspf_fd_sales_money":"0","rqspf_fd_bonus_zhushu":"0","spf_gg_sp":"3.35|3.35|1.90","spf_dg_sp":"","spf_result":"","spf_fd_single_bonus":"0","spf_fd_sales_money":"0","spf_fd_bonus_zhushu":"0","bf_gg_sp":"9.50|17.00|10.00|40.00|27.00|30.00|100.0|80.00|80.00|400.0|250.0|300.0|100.0|10.50|6.60|12.50|50.00|300.0|7.00|8.75|7.50|16.00|14.00|22.00|40.00|35.00|50.00|80.00|80.00|150.0|50.00","bf_dg_sp":"","bqc_result":"","bqc_fd_single_bonus":"0","bqc_fd_sales_money":"0","bqc_fd_bonus_zhushu":"0","zjq_gg_sp":"10.50|4.30|3.30|3.50|5.30|9.50|17.00|27.00","zjq_dg_sp":"","bf_result":"","bf_fd_single_bonus":"0","bf_fd_sales_money":"0","bf_fd_bonus_zhushu":"0","bqc_gg_sp":"5.10|14.00|24.00|7.00|5.00|4.75|33.00|14.00|2.90","bqc_dg_sp":"","zjqs_result":"","zjqs_fd_single_bonus":"0","zjqs_fd_sales_money":"0","zjqs_fd_bonus_zhushu":"0","last_manager":"","last_time":"0","league_color":"#459ce6","rqspf":"1","spf":"1","bqc":"1","bf":"1","zjq":"1","end_time":"23:30","week":"\u5468\u4e00","spf_gg_0":"3.35","spf_gg_1":"3.35","spf_gg_2":"1.90","rqspf_gg_0":"1.70","rqspf_gg_1":"3.60","rqspf_gg_2":"3.80","bf_gg_0":"9.50","bf_gg_1":"17.00","bf_gg_2":"10.00","bf_gg_3":"40.00","bf_gg_4":"27.00","bf_gg_5":"30.00","bf_gg_6":"100.0","bf_gg_7":"80.00","bf_gg_8":"80.00","bf_gg_9":"400.0","bf_gg_10":"250.0","bf_gg_11":"300.0","bf_gg_12":"100.0","bf_gg_13":"10.50","bf_gg_14":"6.60","bf_gg_15":"12.50","bf_gg_16":"50.00","bf_gg_17":"300.0","bf_gg_18":"7.00","bf_gg_19":"8.75","bf_gg_20":"7.50","bf_gg_21":"16.00","bf_gg_22":"14.00","bf_gg_23":"22.00","bf_gg_24":"40.00","bf_gg_25":"35.00","bf_gg_26":"50.00","bf_gg_27":"80.00","bf_gg_28":"80.00","bf_gg_29":"150.0","bf_gg_30":"50.00","bqc_gg_0":"5.10","bqc_gg_1":"14.00","bqc_gg_2":"24.00","bqc_gg_3":"7.00","bqc_gg_4":"5.00","bqc_gg_5":"4.75","bqc_gg_6":"33.00","bqc_gg_7":"14.00","bqc_gg_8":"2.90","zjq_gg_0":"10.50","zjq_gg_1":"4.30","zjq_gg_2":"3.30","zjq_gg_3":"3.50","zjq_gg_4":"5.30","zjq_gg_5":"9.50","zjq_gg_6":"17.00","zjq_gg_7":"27.00"},{"id":"56520970","game_date":"20150518","game_order":"004","match_key":"150518004","league":"\u82f1\u683c\u5170\u8d85\u7ea7\u8054\u8d5b","home":"\u897f\u5e03\u7f57\u59c6\u7ef4\u5947","away":"\u5207\u5c14\u897f","home_short":"\u897f\u5e03\u7f57\u59c6\u7ef4\u5947","away_short":"\u5207\u5c14\u897f","create_time":"1431913605","game_start_time":"03:00","half_home_score":"-1","half_away_score":"-1","home_score":"-1","away_score":"-1","is_defer":"0","is_sale":"1111111111","game_status":"0","is_confirm":"0","confirm_time":"1431913605","rqspf_rangqiu_num":"1","rqspf_gg_sp":"1.80|3.45|3.55","rqspf_dg_sp":"","rqspf_result":"","rqspf_fd_single_bonus":"0","rqspf_fd_sales_money":"0","rqspf_fd_bonus_zhushu":"0","spf_gg_sp":"3.90|3.40|1.75","spf_dg_sp":"","spf_result":"","spf_fd_single_bonus":"0","spf_fd_sales_money":"0","spf_fd_bonus_zhushu":"0","bf_gg_sp":"11.00|20.00|11.00|50.00|30.00|35.00|150.0|100.0|120.0|500.0|400.0|400.0|150.0|10.00|6.25|14.00|50.00|400.0|6.50|7.80|7.00|14.00|13.00|22.00|34.00|30.00|50.00|80.00|80.00|150.0|50.00","bf_dg_sp":"","bqc_result":"","bqc_fd_single_bonus":"0","bqc_fd_sales_money":"0","bqc_fd_bonus_zhushu":"0","zjq_gg_sp":"10.00|4.30|3.20|3.55|5.60|9.50|17.00|27.00","zjq_dg_sp":"","bf_result":"","bf_fd_single_bonus":"0","bf_fd_sales_money":"0","bf_fd_bonus_zhushu":"0","bqc_gg_sp":"6.50|15.00|24.00|8.00|4.80|4.30|33.00|15.00|2.60","bqc_dg_sp":"","zjqs_result":"","zjqs_fd_single_bonus":"0","zjqs_fd_sales_money":"0","zjqs_fd_bonus_zhushu":"0","last_manager":"","last_time":"0","league_color":"#ff3b3b","rqspf":"1","spf":"1","bqc":"1","bf":"1","zjq":"1","end_time":"23:30","week":"\u5468\u4e00","spf_gg_0":"3.90","spf_gg_1":"3.40","spf_gg_2":"1.75","rqspf_gg_0":"1.80","rqspf_gg_1":"3.45","rqspf_gg_2":"3.55","bf_gg_0":"11.00","bf_gg_1":"20.00","bf_gg_2":"11.00","bf_gg_3":"50.00","bf_gg_4":"30.00","bf_gg_5":"35.00","bf_gg_6":"150.0","bf_gg_7":"100.0","bf_gg_8":"120.0","bf_gg_9":"500.0","bf_gg_10":"400.0","bf_gg_11":"400.0","bf_gg_12":"150.0","bf_gg_13":"10.00","bf_gg_14":"6.25","bf_gg_15":"14.00","bf_gg_16":"50.00","bf_gg_17":"400.0","bf_gg_18":"6.50","bf_gg_19":"7.80","bf_gg_20":"7.00","bf_gg_21":"14.00","bf_gg_22":"13.00","bf_gg_23":"22.00","bf_gg_24":"34.00","bf_gg_25":"30.00","bf_gg_26":"50.00","bf_gg_27":"80.00","bf_gg_28":"80.00","bf_gg_29":"150.0","bf_gg_30":"50.00","bqc_gg_0":"6.50","bqc_gg_1":"15.00","bqc_gg_2":"24.00","bqc_gg_3":"8.00","bqc_gg_4":"4.80","bqc_gg_5":"4.30","bqc_gg_6":"33.00","bqc_gg_7":"15.00","bqc_gg_8":"2.60","zjq_gg_0":"10.00","zjq_gg_1":"4.30","zjq_gg_2":"3.20","zjq_gg_3":"3.55","zjq_gg_4":"5.60","zjq_gg_5":"9.50","zjq_gg_6":"17.00","zjq_gg_7":"27.00"},{"id":"56547073","game_date":"20150518","game_order":"005","match_key":"150518005","league":"\u610f\u5927\u5229\u7532\u7ea7\u8054\u8d5b","home":"\u90a3\u4e0d\u52d2\u65af","away":"\u5207\u585e\u7eb3","home_short":"\u90a3\u4e0d\u52d2\u65af","away_short":"\u5207\u585e\u7eb3","create_time":"1431913605","game_start_time":"03:00","half_home_score":"-1","half_away_score":"-1","home_score":"-1","away_score":"-1","is_defer":"0","is_sale":"1111111100","game_status":"0","is_confirm":"0","confirm_time":"1431913605","rqspf_rangqiu_num":"-2","rqspf_gg_sp":"1.95|4.20|2.65","rqspf_dg_sp":"","rqspf_result":"","rqspf_fd_single_bonus":"0","rqspf_fd_sales_money":"0","rqspf_fd_bonus_zhushu":"0","spf_gg_sp":"","spf_dg_sp":"","spf_result":"","spf_fd_single_bonus":"0","spf_fd_sales_money":"0","spf_fd_bonus_zhushu":"0","bf_gg_sp":"9.00|6.50|8.75|6.25|10.00|26.00|7.75|12.00|35.00|12.50|20.00|50.00|7.50|27.00|13.00|25.00|80.00|400.0|45.00|100.0|40.00|400.0|150.0|100.0|900.0|600.0|500.0|1000|1000|1000|400.0","bf_dg_sp":"","bqc_result":"","bqc_fd_single_bonus":"0","bqc_fd_sales_money":"0","bqc_fd_bonus_zhushu":"0","zjq_gg_sp":"27.00|8.50|4.70|3.80|4.00|5.50|8.00|8.50","zjq_dg_sp":"","bf_result":"","bf_fd_single_bonus":"0","bf_fd_sales_money":"0","bf_fd_bonus_zhushu":"0","bqc_gg_sp":"1.30|29.00|120.0|3.75|12.00|31.00|24.00|29.00|27.00","bqc_dg_sp":"","zjqs_result":"","zjqs_fd_single_bonus":"0","zjqs_fd_sales_money":"0","zjqs_fd_bonus_zhushu":"0","last_manager":"","last_time":"0","league_color":"#2a5caa","rqspf":"1","spf":"0","bqc":"1","bf":"1","zjq":"1","end_time":"23:30","week":"\u5468\u4e00","spf_gg_0":"","spf_gg_1":"","spf_gg_2":"","rqspf_gg_0":"1.95","rqspf_gg_1":"4.20","rqspf_gg_2":"2.65","bf_gg_0":"9.00","bf_gg_1":"6.50","bf_gg_2":"8.75","bf_gg_3":"6.25","bf_gg_4":"10.00","bf_gg_5":"26.00","bf_gg_6":"7.75","bf_gg_7":"12.00","bf_gg_8":"35.00","bf_gg_9":"12.50","bf_gg_10":"20.00","bf_gg_11":"50.00","bf_gg_12":"7.50","bf_gg_13":"27.00","bf_gg_14":"13.00","bf_gg_15":"25.00","bf_gg_16":"80.00","bf_gg_17":"400.0","bf_gg_18":"45.00","bf_gg_19":"100.0","bf_gg_20":"40.00","bf_gg_21":"400.0","bf_gg_22":"150.0","bf_gg_23":"100.0","bf_gg_24":"900.0","bf_gg_25":"600.0","bf_gg_26":"500.0","bf_gg_27":"1000","bf_gg_28":"1000","bf_gg_29":"1000","bf_gg_30":"400.0","bqc_gg_0":"1.30","bqc_gg_1":"29.00","bqc_gg_2":"120.0","bqc_gg_3":"3.75","bqc_gg_4":"12.00","bqc_gg_5":"31.00","bqc_gg_6":"24.00","bqc_gg_7":"29.00","bqc_gg_8":"27.00","zjq_gg_0":"27.00","zjq_gg_1":"8.50","zjq_gg_2":"4.70","zjq_gg_3":"3.80","zjq_gg_4":"4.00","zjq_gg_5":"5.50","zjq_gg_6":"8.00","zjq_gg_7":"8.50"}]};
+  var jczqData = {"1432483200":[{"id":"2","game_date":"20150525","game_order":255,"match_key":"150525301","league":"\u7f8e\u56fd\u804c\u4e1a\u7bee\u7403\u8054\u76df","league_title":"NBA","game_start_time":"09:00","home":"\u4f11\u65af\u6566\u706b\u7bad","away":"\u91d1\u5dde\u52c7\u58eb","home_short":"\u706b\u7bad","away_short":"\u52c7\u58eb","home_score":"-1","away_score":"-1","home_sort":"0","away_sort":"0","is_defer":"0","is_sale":"01111111","game_status":"0","is_confirm":"0","confirm_time":"1432533913","rfsf_rangfen_num":"5","rfsf_sp":"1.70|1.79","rfsf_result":"","sf_sp":"2.16|1.46","sf_result":"","dxf_sp":"1.70|1.79","dxf_reference":"213.5","dxf_result":"","sfc_sp":"4.65|5.20|9.50|20.50|40.00|50.00|3.95|3.90|5.80|10.00|17.00|19.00","sfc_result":"0","create_time":"1432533913","last_manager":"","last_time":"0","qq_id":"11394706","league_color":"#40403e","rqsf":"1","sf":"1","bqc":"1","bf":"1","zjq":"1","end_time":"08:30","week":"\u5468\u4e00"}],"1432569600":[{"id":"3","game_date":"20150526","game_order":255,"match_key":"150526301","league":"\u7f8e\u56fd\u804c\u4e1a\u7bee\u7403\u8054\u76df","league_title":"NBA","game_start_time":"08:30","home":"\u514b\u5229\u592b\u5170\u9a91\u58eb","away":"\u4e9a\u7279\u5170\u5927\u8001\u9e70","home_short":"\u514b\u5229\u592b\u5170\u9a91\u58eb","away_short":"\u4e9a\u7279\u5170\u5927\u8001\u9e70","home_score":"-1","away_score":"-1","home_sort":"0","away_sort":"0","is_defer":"0","is_sale":"01111111","game_status":"0","is_confirm":"0","confirm_time":"1432533913","rfsf_rangfen_num":"-9","rfsf_sp":"1.70|1.79","rfsf_result":"","sf_sp":"1.11|4.05","sf_result":"","dxf_sp":"1.70|1.79","dxf_reference":"192.5","dxf_result":"","sfc_sp":"4.55|3.30|4.05|6.10|8.30|10.00|6.80|9.50|18.50|44.00|100.0|150.0","sfc_result":"0","create_time":"1432533913","last_manager":"","last_time":"0","qq_id":"11395712","league_color":"#40403e","rqsf":"1","sf":"1","bqc":"1","bf":"1","zjq":"1","end_time":"08:00","week":"\u5468\u4e8c"}]};
   var serverTime = '0';
 </script>
-<script data-main="front_scripts/jclq/main" src="front_scripts/lib/require.js"></script>
+  <script data-main="front_scripts/jclq/main" src="front_scripts/lib/require.js"></script>
 </body>
 </html>
