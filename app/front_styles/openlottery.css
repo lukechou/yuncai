@@ -8,8 +8,8 @@
 .opl-hdl { width: 50%; float: left; }
 .opl-imgbox { margin-top: 25px; padding-left: 30px; }
 .opl-imgbox .left { width: 80px; float: left; text-align: center; }
-.opl-imgbox .left img { width: 80px; }
-.opl-imgbox .left span { font-weight: bold; font-size: 16px; margin-top: 5px; }
+.opl-imgbox .left img { width: 80px; margin-bottom: 5px;}
+.opl-imgbox .left span { font-weight: bold; font-size: 16px;}
 
 /* opl head left-right */
 .opl-imgbox .right { margin-left: 120px; }

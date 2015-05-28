@@ -494,8 +494,9 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
       }
 
-      this.appendTable(htmlOutput);
-
+      if (data.retData.length > 0) {
+        this.appendTable(htmlOutput);
+      }
     };
     PAGE.onFail = function () {
       return;
@@ -720,12 +721,15 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
         };
 
-        cancelHtml = '<div class="ttil mid-ttil"><b>出票状态：已撤单</b></div><table class="table d-table-one"><thead><tr><th>场次</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>玩法</th><th>注数</th><th>倍数</th></tr></thead>' + cancelStr + '</table>';
+        cancelHtml = '<div class="ttil mid-ttil"><b>出票状态：已撤单</b></div><table class="table d-table-one d-table-cp"><thead><tr><th class="cp-cc">场次</th><th class="cp-num">1</th><th class="cp-num">2</th><th class="cp-num">3</th><th class="cp-num">4</th><th class="cp-num">5</th><th class="cp-num">6</th><th class="cp-num">7</th><th class="cp-num">8</th><th class="cp-num">9</th><th class="cp-num">10</th><th class="cp-num">11</th><th class="cp-num">12</th><th class="cp-num">13</th><th class="cp-num">14</th><th class="cp-num">玩法</th><th class="cp-num">注数</th><th class="cp-num">倍数</th></tr></thead>' + cancelStr + '</table>';
 
         _this.config.pageNum = Math.ceil(data.total / obj.pageSize);
         _this.makePageHtml();
         _this.bindPageEvent(_this.loadCancelList);
-        _this.appendTable(cancelHtml);
+
+        if (D.length > 0) {
+          _this.appendTable(cancelHtml);
+        }
 
       }
     }
@@ -760,7 +764,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       case '待出票':
         tbody.html('<tr><td colspan="' + colCount + '">等待出票中...</td></tr>');
         break;
-      case '部分撤单':
+      default:
 
         if (Detail.lotyName === 'sfc' || Detail.lotyName === 'r9') {
 
@@ -793,16 +797,6 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
         }
 
-        break;
-      default:
-
-        // 获取 出票详情-分页模块
-        PAGE.pageTable = tbody;
-        PAGE.loadTicketRecord({
-          project_no: $('#j-projectNo').val(),
-          page: 1,
-          pageSize: 10,
-        });
         break;
       }
     }

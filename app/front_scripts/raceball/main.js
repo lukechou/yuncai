@@ -972,20 +972,17 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   var buyTicket = function (obj, type, lotyName) {
 
     var u = 'jingcai';
-    var l = '';
 
     if (lotyName === 'bjdc') {
       u = 'bjdc';
       obj['qihaoId'] = _.escape($.trim($('#j-qihao-id').val()));
       obj['qihao'] = _.escape($.trim($('#j-qihao').val()));
-    } else {
-      l = '_gg';
     }
 
     obj.unikey = $.now();
 
     $.ajax({
-        url: '/lottery/' + u + '/' + type + '/' + lotyName + '/' + BET.tab + l,
+        url: '/lottery/' + u + '/' + type + '/' + lotyName + '/' + BET.tab,
         type: 'POST',
         dataType: 'json',
         data: obj

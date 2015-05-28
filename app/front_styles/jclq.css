@@ -23,7 +23,7 @@
 /* 投注表格头部 */
 .dataHead { font-size: 12px; line-height: 61px; position: relative; z-index: 10; zoom: 1; height: 61px; margin-bottom: 0; text-align: center; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 1px 1px 0; background: #f1f1f1; }
 .dataHead.active { border-width: 1px 1px 1px 0; }
-.dataHead .icon-warm { cursor: pointer; }
+.dataHead .icon-warm { cursor: pointer; margin-left: 3px; }
 .datahead-tips { text-align: left; }
 .datahead-tips p { margin: 0 !important; padding: 0; }
 .datahead-tips p b { font-weight: bold; margin-left: 10px; }
@@ -116,9 +116,9 @@
 .hide-icon { background: url(../front_images/jczq/hide-icon.png) no-repeat; }
 
 /* btn background */
-.sp-btn { cursor: pointer; background: url(../front_images/jczq/default.png); display: block; }
+.sp-btn { cursor: pointer; background: url(../front_images/jczq/default.png); display: block; overflow: hidden; }
 .sp-btn.hover { color: #3d3d3d; background: url(../front_images/jczq/hover.png); }
-.sp-btn.active { color: #fff; background: #f13c38; }
+.sp-btn.active { color: #fff; background: url(../front_images/jczq/active.png); }
 .sp-btn.active > div { color: #fff; }
 .co6-1 em.hover, .co6-1 em.active, .co7 em.hover a, .co7 em.active a { color: #fff; }
 
@@ -129,25 +129,33 @@
 .dataBody .co1, .dataBody .co2, .dataBody .co3, .dataBody .co4 { line-height: 80px; height: 80px; }
 .dataHead .co5, .dataHead .co6, .row-hh-t, .row-hh, .row-sf, .row-sf-t, .row-rfsf-t, .rq, .row-rfsf, .row-dxf-t, .row-dxf, .row-yszf, .row-sfc-t, .row-sfc { display: none; }
 .onlyBf .co2, .onlyBqc .co2, .onlyZjq .co2 { width: 60px; }
+.cm-sp-l, .cm-sp-r { width: 50%; }
+.cm-sp-l { float: left; text-align: right; padding-right: 10px; }
+.cm-sp-r { float: right; text-align: left; padding-left: 10px; font-weight: bold; }
+.sfc-sp-btn { font-weight: bold; }
 
 /* 混合投注 */
-.onlyHh .row-hh-t, .onlyHh .row-hh { display: block; }
+.onlyHhtz .row-hh-t, .onlyHhtz .row-hh { display: block; }
 .row-hh-t { width: 352px; }
-.row-hh { width: 307px; }
-.row-hh-t em, .row-hh em { float: left; width: 102px; border-right: 1px #dfdfdf solid; }
-.onlyHh .dataBody .row-hh, .row-hh em { line-height: 40px; height: 40px; }
-.onlyHh .row-hh-t em.last { width: 45px; }
+.row-hh { width: 293px; }
+.row-hh-t em, .row-hh em { float: left; width: 85px; border-right: 1px #dfdfdf solid; }
+.onlyHhtz .dataBody .row-hh, .row-hh em { line-height: 40px; height: 40px; }
+.onlyHhtz .row-hh-t em.last { width: 60px; }
+.hh-sp-l { float: left; margin-left: 12px; }
+.hh-sp-r { float: right; margin-right: 12px; }
+.row-hh-t .hh-dxf, .row-hh .hh-dxf { width: 121px; }
+.hh-rfsf.active .hh-sp-l, .hh-dxf.active .hh-sp-l { color: #fff; }
 
 /* 胜负 */
 .onlySf .dataBody .row-sf { display: block; width: 352px; line-height: 40px; height: 40px; }
-.onlySf .dataBody .row-sf .sp-btn { display: block; }
+.onlySf .dataBody .row-sf .sp-btn { display: block; font-weight: bold; }
 .onlySf .row-sf-t { display: block; width: 352px; }
 
 /* 让分 胜负*/
 .onlyRfsf .row-rfsf-t, .onlyRfsf .row-rfsf, .onlyRfsf .co5, .rq { display: block }
 .row-rfsf-t { width: 303px; }
 .onlyRfsf .dataBody .row-rfsf { width: 303px; line-height: 40px; height: 40px; }
-.rq { float: left; cursor: pointer; text-align: center; vertical-align: top; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; height: 80px; line-height: 80px; }
+.rq { float: left; cursor: pointer; text-align: center; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; height: 80px; line-height: 80px; }
 
 /* 大小分 */
 .onlyDxf .row-dxf-t, .onlyDxf .row-dxf, .onlyDxf .row-yszf { display: block; }
@@ -161,40 +169,48 @@
 .row-sfc-t { width: 352px; }
 .row-sfc-t em { float: left; width: 50px; border-right: 1px #dfdfdf solid; }
 .row-sfc-t em.first { width: 51px; }
-.onlySfc .dataBody .row-sfc{ width: 352px; line-height: 40px; height: 40px;}
-.row-sfc em{ width: 50px; float: left;  border-left: 1px solid #dfdfdf;}
-.row-sfc em.first{ border:none; width: 51px;}
+.onlySfc .dataBody .row-sfc { width: 352px; line-height: 40px; height: 40px; }
+.row-sfc em { width: 50px; float: left; border-left: 1px solid #dfdfdf; }
+.row-sfc em.first { border: none; width: 51px; }
 
 /* 比分 */
 .dataBody .lastOne { border-right: none; }
 .dataBody .bf-box, .bf-nobor, .dataBody .bf-box:hover { background: #fbe6db; }
 .dataBody .bf-box { height: 139px; border: 1px #f6c9b2 solid; border-width: 1px 0 0 1px; }
 .analyMoreTable { width: 680px; margin: 10px 0 0 10px; table-layout: fixed; text-align: center; background: #fff; }
+.analyMoreTable .sp-btn { display: table-cell; }
 .analyMoreTable .sp-btn > div { color: #000; }
 .analyMoreTable th { font-weight: 700; width: 60px; text-align: center; border: 1px solid #dfdfdf; }
-.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; color: #888; border: 1px solid #dfdfdf; width: 45px; }
+.analyMoreTable td { line-height: 16px; padding: 3px 0; cursor: pointer; color: #888; border: 1px solid #dfdfdf; width: 45px; font-weight: bold; }
 .analyMoreTable2 th { width: 95px; }
 .analyMoreTable2 td { width: 45px; }
 .analyMoreTable2 td.no-all { width: 585px; }
-.bf-nobor { position: absolute; top: -3px; right: 0; width: 218px; height: 5px; }
-.bf-nosupport { line-height: 150px; text-align: center; }
+.analyMoreTable thead th, .analyMoreTable thead td { background: #fdf3ee; color: #848484; }
+.hhtz-bbor, .hhtz-rbor { position: absolute; background: #f6c9b2; }
+.hhtz-bbor { width: 100%; height: 1px; bottom: 0; }
+.hhtz-rbor { height: 100%; width: 1px; right: 0; }
+.analyMoreTable .sfc-box-btn { color: #111; }
+.analyMoreTable .sfc-box-btn.active { color: #fff; }
 
 /* 展开 */
-.onlyHh .tg-data { line-height: 80px; position: absolute; right: 0; display: block; overflow: hidden; width: 45px; height: 80px; text-align: center; text-indent: -5px; border: 1px #dfdfdf solid; border-right: none; }
-.dataBody .hhtz-box { height: 226px; }
-.onlyHh .tg-data.has, .onlyHh .tg-data.has:hover { color: #fff; background: url(../front_images/jczq/h-active.png); }
+.onlyHhtz .tg-data { line-height: 80px; position: absolute; right: 0; display: block; overflow: hidden; height: 80px; text-align: center; text-indent: -5px; border: 1px #dfdfdf solid; border-right: none; }
+.dataBody .hhtz-box { height: 150px; }
+.onlyHhtz .tg-data.has, .onlyHhtz .tg-data.has:hover { color: #fff; background: url(../front_images/jczq/h-active.png); }
 .dataBody .tg-data { background: url(../front_images/jczq/h-default.png); }
 .dataBody .tg-data:hover { cursor: pointer; color: #3d3d3d; background: url(../front_images/jczq/h-hover.png); }
 .dataBody .tg-data .arrow-up, .dataBody .tg-data .arrow-down, .dataBody .tg-data .arrow-down2 { position: absolute; top: 39px; right: 2px; display: none; width: 9px; height: 4px; }
 .dataBody .tg-data .arrow-up { background: url(../front_images/jczq/arrow-up.png) no-repeat; }
 .dataBody .tg-data .arrow-down { display: block; background: url(../front_images/jczq/arrow-down.png) no-repeat; }
 .dataBody .tg-data .arrow-down2 { background: url(../front_images/jczq/arrow-down2.png) no-repeat; }
-.onlyHh .tg-data.has .arrow-down2 { display: block; }
-.onlyHh .tg-data.active .arrow-up { display: block; }
-.onlyHh .tg-data.active .arrow-down, .onlyHh .tg-data.has .arrow-down { display: none; }
-.dataBody .tg-data.active { border-left: none; background: #fbe6db; }
+.onlyHhtz .tg-data.has .arrow-down2 { display: block; }
+.onlyHhtz .tg-data.active .arrow-up { display: block; }
+.onlyHhtz .tg-data.active .arrow-down, .onlyHhtz .tg-data.has .arrow-down { display: none; }
+.dataBody .tg-data.active { border-left: none; background: #fbe6db; border-color: #f6c9b2; }
+.dataBody .tg-data.active .sfc-lbor { position: absolute; background: #f6c9b2; top: 0; height: 100%; width: 1px; left: 0; }
+.dataBody dd.hhtz-tg-active { border-color: #f6c9b2; }
 .dataBody .tg-data.active .arrow-up { display: block; }
-.hhtz-nobor { position: absolute; top: -3px; right: 0; width: 45px; height: 5px; background: #fbe6db; }
+.onlyHhtz .tg-data { width: 60px; }
+.hhtz-nobor { position: absolute; top: -3px; right: 1px; height: 5px; background: #fbe6db; width: 59px; }
 
 /* Right */
 .qrtz-box a { color: #3d3d3d; }
@@ -225,19 +241,19 @@
 .scrollMoni .icoDan:hover { color: #f13c38; border-color: #f13c38; }
 .scrollMoni .icoDan:focus { color: #f13c38; border-color: #f13c38; }
 .scrollMoni .icoDan.disable { color: #dfdfdf; }
-.scrollMoni .table .gameOption .betList { padding: 0 0 0 25px; }
+.scrollMoni .table .gameOption .betList { padding: 0 0 0 15px; }
 .scrollMoni .table .gameOption .betList p { margin-bottom: 0; }
-.block { line-height: 24px; float: left; width: 65px; height: 24px; margin: 0 10px 6px 0; text-align: center; color: #fff; }
-.block { background: #f13c38; }
+.block { line-height: 24px; float: left; width: 76px; height: 24px; margin: 0 5px 6px 0; text-align: center; color: #fff; }
+.block { background: #fc9c05; }
 .block0, .block3 { background: #f13c38; }
 .block1, .block4 { background: #f88c35; }
 .block2, .block5 { background: #448b3b; }
 .block0:focus, .block1:focus, .block2:focus { text-decoration: none; }
 .poolStep1 .block:hover, .poolStep1 .block0:hover, .poolStep1 .block1:hover, .poolStep1 .block2:hover { text-decoration: none; text-indent: 9999px; }
+.poolStep1 .block:hover { background: #fc9c05; }
 .poolStep1 .block0:hover { background: url(../front_images/jczq/close.png) #f13c38 no-repeat center center; }
 .poolStep1 .block1:hover { background: url(../front_images/jczq/close.png) #f88c35 no-repeat center center; }
 .poolStep1 .block2:hover { background: url(../front_images/jczq/close.png) #448b3b no-repeat center center; }
-.poolStep1 .block:hover { background: url(../front_images/jczq/close.png) #f13c38 no-repeat center center; }
 .poolStep2 .guoguanList { display: none; }
 .guoguanList { padding: 8px 0 8px 25px; }
 .guoguanList .jtip { line-height: 20px; float: left; width: 65px; height: 24px; margin: 0 5px 5px 0; cursor: pointer; text-align: center; color: #3d3d3d; border: 2px #dfdfdf solid; }
@@ -264,7 +280,6 @@
 .tzBtnBox .ljtzBtn { margin-right: 5px; }
 
 /* Tips */
-.ball-modal .modal-dialog { font-size: 12px; width: 720px; }
 .mlr-8 { margin: 0 8px; }
 .ballbox { color: #3d3d3d; }
 .ballbox .text b { font-weight: bold; }
@@ -275,10 +290,10 @@
 .br-set:hover, .br-set.active { text-decoration: none; color: #f13c38; border-color: #f13c38; }
 .br-set:focus { text-decoration: none; }
 .br-input, .br-textarea, .br-select { font-size: 12px; padding: 2px; border: 1px solid #dfdfdf; background: #fff; }
-.br-textarea { width: 390px; height: 100px; }
+.br-textarea { width: 390px; height: 75px; }
 .br-together p { position: relative; }
-.br-textarea-tips { position: absolute; top: 0; right: 30px; width: 150px; }
-.ball-table { width: 500px; margin: auto; color: #3d3d3d; }
+.br-textarea-tips { position: absolute; top: 0; right: 15px; width: 150px; }
+.ball-table { width: 510px; margin: auto; color: #3d3d3d; }
 .ball-table thead tr th, .ball-table tbody tr td, .ball-table tbody tr th { border-color: #dfdfdf; }
 .ball-table thead tr th { border-bottom: none; background: #f5f5f5; }
 .ball-tb { max-height: 150px; }
@@ -289,7 +304,7 @@
 .ljtz-box thead tr th, .ljtz-box tbody tr td, .ljtz-box tbody tr th { line-height: 24px; text-align: center; border-color: #dfdfdf; }
 .ljtz-box thead tr th { border-bottom: none; background: #f5f5f5; }
 .ljtz-box .block0, .ljtz-box .block1, .ljtz-box .block2 { width: 40px; }
-.ljtz-box .block { width: 40px; }
+.ljtz-box .block { width: 65px; margin-right: 12px; }
 .ljtz-box .btns .btn { padding: 5px 35px; }
 .ljtz-box .btns .btn-danger { margin-right: 10px; }
 .ljtz-box .icoDel, .text .icoDel { display: none; }
@@ -460,12 +475,12 @@
 
 /* tipsy Style */
 .tipsy { font-size: 10px; position: absolute; z-index: 100000; padding: 5px; }
-.tipsy-inner { max-width: 465px; padding: 5px 8px 4px 8px; text-align: center; color: #333; border: 1px #f69100 solid; background: #fefaf5; }
-.tipsy-arrow { line-height: 0; position: absolute; width: 0; height: 0; border: 5px dashed #fefaf5; }
-.tipsy-arrow-n { border-bottom-color: #fefaf5; }
-.tipsy-arrow-s { border-top-color: #fefaf5; }
-.tipsy-arrow-e { border-left-color: #fefaf5; }
-.tipsy-arrow-w { border-right-color: #fefaf5; }
+.tipsy-inner { max-width: 465px; padding: 5px 8px 4px 8px; text-align: center; color: #333; border: 1px #f69100 solid; background: #fff3de; }
+.tipsy-arrow { line-height: 0; position: absolute; width: 0; height: 0; border: 5px dashed #fff3de; }
+.tipsy-arrow-n { border-bottom-color: #fff3de; }
+.tipsy-arrow-s { border-top-color: #fff3de; }
+.tipsy-arrow-e { border-left-color: #fff3de; }
+.tipsy-arrow-w { border-right-color: #fff3de; }
 .tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -5px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
 .tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
 .tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
@@ -474,3 +489,10 @@
 .tipsy-se .tipsy-arrow { right: 10px; bottom: 0; border-top-style: solid; border-right-color: transparent; border-bottom: none; border-left-color: transparent; }
 .tipsy-e .tipsy-arrow { top: 50%; right: 0; margin-top: -5px; border-top-color: transparent; border-right: none; border-bottom-color: transparent; border-left-style: solid; }
 .tipsy-w .tipsy-arrow { top: 50%; left: 0; margin-top: -5px; border-top-color: transparent; border-right-style: solid; border-bottom-color: transparent; border-left: none; }
+
+/* Modal Reset */
+.friend-modal .modal-dialog { width: 650px; }
+.table>tbody>tr>td.ljtz-main { padding-left: 22px; padding-bottom: 0; }
+.ball-modal .modal-dialog { font-size: 12px; width: 700px; }
+.table>tbody>tr>td.hm-main { padding-bottom: 0; padding-right: 2px; }
+.hm-main .block { width: 65px; }

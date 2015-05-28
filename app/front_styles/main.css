@@ -416,6 +416,7 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .buyok .top-title a { padding: 0 5px; color: #3d3d3d; }
 .buyok .main { width: 100%; height: 649px; margin-bottom: 130px; border: 1px #dfdfdf solid; }
 .main .m-box { width: 560px; margin: 87px auto 0; }
+.main .cz-suc-box{ width: 310px;}
 .main .m-box .icon { float: left; }
 .main .m-box .text { font-size: 12px; margin-left: 75px; }
 .main .m-box h4 { font-size: 20px; font-weight: bold; margin-bottom: 15px; }

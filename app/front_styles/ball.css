@@ -74,7 +74,7 @@
 .collect-body { display: none; border: 2px #4bacea solid; }
 .collect-body .co1 { width: 38px; }
 .collect-body .row2-1 em { height: 37px; }
-.collect-body .row3-1 em { height: 37px;width: 41px; }
+.collect-body .row3-1 em { height: 37px; width: 41px; }
 .collect-body .row4-1 em { height: 39px; }
 .collect-body dl { width: 711px; }
 .collect-body dt { border-width: 0 !important; }
@@ -83,7 +83,6 @@
 .collect-body .co6-1 { width: 232px; }
 .collect-body .btnBox em.lastOne { width: 57px; }
 .collect-body dl:last-child { border-bottom: none; }
-
 .collect-title { background: #4bacea; height: 42px; line-height: 42px; color: #fff; font-weight: bold; padding-left: 10px; }
 .dataBody { font-size: 12px; position: relative; zoom: 1; color: #3d3d3d; }
 .dataBody dl { position: relative; margin-bottom: 0; border-bottom: 1px solid #dfdfdf; }
@@ -131,9 +130,9 @@
 .row2 .btnBox, .row3 .btnBox { border: none; }
 .onlyBf .co4 { width: 260px; }
 .onlyZjq .co4 { width: 182px; }
-.onlyZjq .collect-body .co4{ width: 180px; }
+.onlyZjq .collect-body .co4 { width: 180px; }
 .onlyBqc .co4 { width: 177px; }
-.onlyBqc .collect-body .co4{width: 175px;}
+.onlyBqc .collect-body .co4 { width: 175px; }
 .onlyBf .co2, .onlyBqc .co2, .onlyZjq .co2 { width: 60px; }
 
 /* 胜平负 数据主体样式 */
@@ -168,7 +167,6 @@
 .onlyBf .collect-body .row1 { width: 232px; }
 .onlyBqc .row2 { width: 334px; }
 .onlyZjq .row3 { width: 329px; }
-
 .onlyBf .co2 { width: 91px; }
 .onlyBqc .co2 { width: 93px; }
 .onlyBf .co2 { width: 110px; }
@@ -189,8 +187,8 @@
 .onlyHhtz .dataBody .co1, .onlyHhtz .dataBody .co2, .onlyHhtz .dataBody .co3, .onlyHhtz .dataBody .co4 { line-height: 80px; height: 80px; }
 .onlyHhtz .dataBody dd { min-height: 80px; }
 .onlyHhtz .row4 { display: block; }
-.onlyHhtz .row4-1{  width: 189px;}
-.onlyHhtz .row4 em,.onlyHhtz .row4-1 em{width: 47px;}
+.onlyHhtz .row4-1 { width: 189px; }
+.onlyHhtz .row4 em, .onlyHhtz .row4-1 em { width: 47px; }
 .onlyHhtz .collect-body .co4 { width: 260px; }
 .onlyHhtz .co4 { width: 262px; }
 .row4-1 { width: 197px; }
@@ -322,19 +320,19 @@
 
 /* 彩票模型 */
 .search-wrap, .search-result, .result-tip { font-size: 12px; }
-.search-wrap { width: 100%; padding: 10px 25px; border: 1px solid #dfdfdf; background: #f5f5f5; }
+.search-wrap { width: 100%; padding: 15px 25px; border: 1px solid #dfdfdf; background: #f5f5f5; }
 .search-detail-box { padding: 0 0 10px 0; }
 .search-detail-box .btn { font-size: 12px; padding: 5px; border: none; }
 .search-detail-box input { width: 148px; padding: 5px; color: #848484; border: 1px solid #dfdfdf; }
 .search-items-box { border-top: none; }
 .search-form-wrap { float: left; width: 834px; }
 .search-form-wrap ul { margin: 0 0 0 -10px; }
-.search-form-wrap li { float: left; height: 24px; margin: 0 0 8px 10px; }
+.search-form-wrap li { float: left; height: 24px; margin: 0 0 10px 10px; }
 .search-form-wrap li input { line-height: 20px; width: 50px; height: 20px; padding: 0 2px; border: 1px solid #dfdfdf; }
 .search-form-wrap li select { width: 194px; height: 26px; padding: 3px 5px; border: 1px #dfdfdf solid; }
 .search-opr { float: right; width: 72px; margin-right: 10px; }
 .search-opr .btn-sear { font-size: 12px; width: 72px; height: 24px; padding: 0; }
-.search-result { padding: 10px 25px; }
+.search-result { padding: 10px 25px 0; }
 .result-table { padding-bottom: 25px; border: 1px #dfdfdf solid; }
 .result-table .m-mn-table { border-width: 0 0 1px 0; }
 .result-tip { margin: 10px 25px 25px; color: #848484; }
@@ -362,6 +360,22 @@
 .his-link { font-size: 12px; position: absolute; z-index: 95; left: 200px; padding: 12px 0 0; text-decoration: underline; color: #fff; }
 .chart { display: none; height: 240px; background: #000; }
 .caret { display: inline-block; width: 0; height: 0; margin-left: 2px; vertical-align: middle; border-top: 4px solid; border-right: 4px solid transparent; border-left: 4px solid transparent; }
+.new-guide { margin: 10px 10px 0 0; font-size: 12px; cursor: pointer; }
+.new-guide i { float: left; margin: -1px 5px 0 0; }
+.slideDown { animation-name: slideDown; -webkit-animation-name: slideDown; animation-duration: .5s; -webkit-animation-duration: .5s; animation-timing-function: ease; -webkit-animation-timing-function: ease; visibility: visible !important; }
+.animated { -webkit-animation-duration: .5s; animation-duration: .5s; -webkit-animation-fill-mode: both; animation-fill-mode: both; }
+.m-mask-main { width: 997px; height: 512px; top: 245px; bottom: inherit; }
+.m-mask { position: absolute; }
+body { position: relative; }
+.guide-close, .guide-next { display: block; position: absolute; cursor: pointer; }
+.guide-close { width: 32px; height: 32px; right: 6px; top: 4px; }
+.guide-next { width: 161px; height: 46px; }
+.guide-next1 { left: 418px; top: 466px; }
+.guide-next2 { left: 418px; top: 581px; }
+.guide-next3 { left: 398px; top: 458px; }
+.guide-next4 { left: 418px; top: 296px; }
+.fake-data { position: absolute; z-index: -1; top: 265px; left: 6px; }
+
 
 /* 我的模型 */
 .u-modlezhus { font-size: 12px; line-height: 200px; height: 200px; text-align: center; }

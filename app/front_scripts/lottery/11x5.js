@@ -491,7 +491,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
             } else {
               $(this).removeClass('active');
             }
-            $(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');
+            /*$(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');*/
             /*if (index % 2 == 0) {
               $(this).toggleClass('active');
               cleanAnotherBitData($(this).html(), dataBit);
@@ -513,7 +513,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
             } else {
               $(this).removeClass('active');
             }
-            $(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');
+            /*$(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');*/
             /*if (index % 2 != 0) {
               cleanAnotherBitData($(this).html(), dataBit);
               $(this).toggleClass('active');
@@ -534,7 +534,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
             } else {
               $(this).removeClass('active');
             }
-            $(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');
+            /*$(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');*/
             /*if (index > 5) {
               cleanAnotherBitData($(this).html(), dataBit);
               $(this).toggleClass('active');
@@ -555,7 +555,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
             } else {
               $(this).removeClass('active');
             }
-            $(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');
+            /*$(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');*/
             /*if (index <= 5) {
               cleanAnotherBitData($(this).html(), dataBit);
               $(this).toggleClass('active');
@@ -573,7 +573,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
             } else {
               $(this).removeClass('active');
             }
-            $(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');
+            /*$(this).parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');*/
             /*cleanAnotherBitData($(this).html(), dataBit);
             $(this).addClass('active');
             G_CHOOSE.codes[dataBit].push($(this).html());*/
@@ -590,6 +590,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
       }
       calculateChooseCodes();
       displayChooseInfo();
+      judgeAllNum(G_CHOOSE);
     });
 
     /**
@@ -682,6 +683,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
           }
           break;
       }
+      $('.j-choose-code-' + G_CHOOSE.playType).find('.j-quick-method').find('span').removeClass('active');
       if (bool) {
         calculateBuyCodes();
         displayBuyInfo();
@@ -737,7 +739,63 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
       }
       reflectChooseCode($(this).attr('databit'));
       $('#choose_to_buy').addClass('active');
+
+      $('#choose_to_buy_tip').html('添加投注号码');
+      judgeAllNum(G_CHOOSE);
+
     });
+
+    function judgeAllNum(G_CHOOSE) {
+      var len = G_CHOOSE.codes.length;
+      var i, j, odd = 0,
+        even = 0,
+        big = 0,
+        small = 0,
+        all = 0,
+        methodObj;
+      for (var i = 0; i < len; i++) {
+        odd = 0;
+        even = 0;
+        big = 0;
+        small = 0;
+        all = 0;
+        methodObj = $('.j-choose-code-' + G_CHOOSE.playType).find('.j-row-code[data-bit="' + i + '"]').find('.j-quick-method');
+        methodObj.find('span').removeClass('active');
+        if (G_CHOOSE.codes[i] && G_CHOOSE.codes[i].length == 5) {
+          for (j = 0; j < 5; j++) {
+            if (G_CHOOSE.codes[i][j] % 2 == 0) {
+              even++;
+            }
+            if (G_CHOOSE.codes[i][j] > 6) {
+              big++;
+            }
+          }
+          if (even == 5) {
+            methodObj.find('span[data-type="even"]').addClass('active');
+          }
+          if (big == 5) {
+            methodObj.find('span[data-type="big"]').addClass('active');
+          }
+        } else if (G_CHOOSE.codes[i] && G_CHOOSE.codes[i].length == 6) {
+          for (j = 0; j < 6; j++) {
+            if (G_CHOOSE.codes[i][j] % 2 == 1) {
+              odd++;
+            }
+            if (G_CHOOSE.codes[i][j] <= 6) {
+              small++;
+            }
+          }
+          if (odd == 6) {
+            methodObj.find('span[data-type="odd"]').addClass('active');
+          }
+          if (small == 6) {
+            methodObj.find('span[data-type="small"]').addClass('active');
+          }
+        } else if (G_CHOOSE.codes[i] && G_CHOOSE.codes[i].length == 11) {
+          methodObj.find('span[data-type="all"]').addClass('active');
+        }
+      }
+    }
 
     /**
      * 删除投注号码
@@ -774,6 +832,8 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
         codeKey: objectKey,
         codeObj: $(this).parents('.br-zhu-item')
       };
+      judgeAllNum(G_CHOOSE);
+
     });
 
     /**

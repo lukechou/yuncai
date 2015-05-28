@@ -19,8 +19,9 @@
 .m-nav-l > li:nth-child(odd):after { position: absolute; top: 0; right: -10px; display: block; width: 1px; height: 14px; margin: 9px 0; content: ''; background: #dfdfdf; }
 .m-nav-l > li > a { padding: 5px 6px; color: #3d3d3d; }
 .m-nav-l > li > a:hover, .m-nav-l > li > a.active { text-decoration: none; color: #fff; border-radius: 2px; background: #f13c38; }
+
 /* .m-tab-nav > li > a:hover { border-left: none; } */
-.m-tab-nav > li > a.nav-a2:hover{ border-left: none; }
+.m-tab-nav > li > a.nav-a2:hover { border-left: none; }
 
 /* 个人中心-我的帐户 */
 .ps-mn { font-size: 12px; float: left; width: 780px; }
@@ -164,7 +165,7 @@
 .safecard .panel { min-height: 320px; }
 .safecard .panel-body { padding: 10px 0 50px; }
 .safecard .confirm-text { width: 220px; margin: auto; padding-left: 25px; }
-.no-event{ color: #a7a5a5;}
+.no-event { color: #a7a5a5; }
 
 /* 个人中心-充值 */
 .recharge { padding: 25px 20px; background: #fff; }
@@ -298,7 +299,6 @@
 .next-text .more { margin-left: 70px; }
 .graytext { color: #a5a5a5; }
 
-
 /* tipsy Style */
 .tipsy { font-size: 10px; position: absolute; z-index: 100000; padding: 5px; }
 .tipsy-inner { max-width: 465px; padding: 5px 8px 4px 8px; text-align: center; color: #333; border: 1px #f69100 solid; background: #fefaf5; }
@@ -315,3 +315,11 @@
 .tipsy-se .tipsy-arrow { right: 10px; bottom: 0; border-top-style: solid; border-right-color: transparent; border-bottom: none; border-left-color: transparent; }
 .tipsy-e .tipsy-arrow { top: 50%; right: 0; margin-top: -5px; border-top-color: transparent; border-right: none; border-bottom-color: transparent; border-left-style: solid; }
 .tipsy-w .tipsy-arrow { top: 50%; left: 0; margin-top: -5px; border-top-color: transparent; border-right-style: solid; border-bottom-color: transparent; border-left: none; }
+
+/* 个人中心-隐私 */
+.privacy .panel-heading .panel-title { font-size: 14px; font-family: "微软雅黑"; font-weight: bold; }
+.privacy .btn { width: 138px; font-size: 14px; height: 32px; padding: 5px 0 0 0; margin: 0;}
+.privacy .panel-body { text-align: center; padding: 150px 0 276px 0; }
+.privacy .tips { margin-top: 10px; }
+.privacy .tips i { vertical-align: middle; margin-top: -2px; }
+.privacy .tips span { color: #848484; }

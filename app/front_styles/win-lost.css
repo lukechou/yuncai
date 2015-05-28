@@ -42,10 +42,11 @@
 .unselect h2 i { font: 700 22px/33px Verdana; margin-right: 5px; }
 .m-lstitle, .m-lscontent { font-size: 12px; width: 258px; border-bottom: 1px #dfdfdf solid; height: 30px; line-height: 30px; }
 .m-lstitle { background: #f1f1f1; }
-.m-lstitle li, .m-lscontent li { float: left; text-align: center; height: 30px; line-height: 30px; }
-.t1 { width: 38px; border-right: 1px #dfdfdf solid; }
+.m-lstitle li, .m-lscontent li { float: left; text-align: center; height: 30px; line-height: 30px;   border-right: 1px #dfdfdf solid;}
+.m-lstitle li.last, .m-lscontent li.last{ border:none;}
+.t1 { width: 34px; border-right: 1px #dfdfdf solid; }
 .m-lscontent .t1 { background: #f1f1f1; }
-.t2 { width: 31px; }
+.t2 { width: 32px; }
 .win-lost .g-right { float: left; margin-left: 12px; border: 1px #dfdfdf solid; border-top: none; font-size: 12px; }
 .total-zhu-div { text-align: center; line-height: 30px; height: 30px; }
 .total-zhu-div b { display: inline-block; margin: 0 5px; }
@@ -71,7 +72,7 @@
   padding: 0; }
 .touzhuinfo-modal .modal-dialog { width: 680px; }
 .touzhu-table { width: 100%; font-size: 12px; }
-.h-100 { height: 100px; }
+.h-100 { height: 80px; }
 .touzhu-table { text-align: center; border: 1px solid #dfdfdf; border-width: 1px 0 0 1px; }
 .touzhu-table td { border: 1px solid #dfdfdf; border-width: 0 1px 1px 0; width: 40px; }
 .h-100 .fc-3d { padding: 0 10px; }
@@ -84,8 +85,8 @@
 .br-input, .br-textarea, .br-select { background: #fff; border: 1px solid #dfdfdf; padding: 2px; font-size: 12px; }
 .br-set:hover, .br-set.active { text-decoration: none; color: #f13c38; border-color: #f13c38; }
 .br-set { padding: 0 6px; height: 21px; line-height: 17px; text-align: center; display: block; border: 2px solid #dfdfdf; color: #333333; float: left; margin-right: 11px; }
-.br-textarea { width: 340px; height: 100px; }
-.br-textarea-tips { position: relative; top: -85px; left: 5px; }
+.br-textarea { width: 340px; height: 70px; }
+.br-textarea-tips { position: relative; top: -55px; left: 5px; }
 .btns { text-align: center; }
 
 .data-load { margin: auto; }

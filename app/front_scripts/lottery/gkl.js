@@ -1062,8 +1062,67 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
     var zid = Number(p.attr('data-zid'));
 
     GKL.updateCardGroup(zid);
+    var obj = GKL.getObj();
+    judgeAllNum(GKL.G_CHOOSE);
 
   });
+
+  function judgeAllNum(G_CHOOSE) {
+    var i, odd = 0,
+      even = 0,
+      big = 0,
+      small = 0,
+      all = 0,
+      halfLen = 0,
+      methodObj;
+    switch(G_CHOOSE.playType){
+      case 'b0' :
+        halfLen = 9;
+        break;
+      case 'b1' :
+        halfLen = 0;
+        break;
+      default :
+        halfLen = 10;
+        break;
+    }
+    methodObj = $('.j-choose-' + G_CHOOSE.playType).find('.j-quick-method');
+    if (G_CHOOSE.nums && G_CHOOSE.nums.length == halfLen) {
+      for (i = 0; i < 10; i++) {
+        if (G_CHOOSE.nums[i] % 2 == 1) {
+          odd++;
+        }
+        if (G_CHOOSE.nums[i] % 2 == 0) {
+          even++;
+        }
+        if (G_CHOOSE.nums[i] > halfLen) {
+          big++;
+        }
+        if (G_CHOOSE.nums[i] <= halfLen) {
+          small++;
+        }
+      }
+      if (odd == halfLen) {
+        methodObj.find('span').removeClass('active');
+        methodObj.find('span[data-type="odd"]').addClass('active');
+      }
+      if (even == halfLen) {
+        methodObj.find('span').removeClass('active');
+        methodObj.find('span[data-type="even"]').addClass('active');
+      }
+      if (big == halfLen) {
+        methodObj.find('span').removeClass('active');
+        methodObj.find('span[data-type="big"]').addClass('active');
+      }
+      if (small == halfLen) {
+        methodObj.find('span').removeClass('active');
+        methodObj.find('span[data-type="small"]').addClass('active');
+      }
+    } else if (G_CHOOSE.nums && G_CHOOSE.nums.length == (halfLen*2)){
+      methodObj.find('span').removeClass('active');
+      methodObj.find('span[data-type="all"]').addClass('active');
+    }
+  }
 
   // del buy box list
   $('#j-box-left').on('click', '.br-zhu-del', function(event) {
@@ -1110,8 +1169,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
 
     GKL.updateMidTotal();
     var obj = GKL.getObj();
-    debugger
-    console.log(obj);
     judgeNum(obj, _this, GKL.playType);
 
   });
@@ -1171,8 +1228,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
       _this.parents('.choose-bd').find('span[data-type="all"]').addClass('active');
     }
   }
-
-
 
   // Choose to BuyBox
   $('#choose_to_buy').on('click', function(event) {

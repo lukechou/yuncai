@@ -409,8 +409,10 @@ require(['jquery', 'lodash', 'store', 'app', 'QXC', 'bootstrap', 'core'], functi
             }
           }
           bool = makeChooseCodeHtml(G_CHOOSE.codes);
+
           break;
       }
+      $('.j-quick-method span').removeClass('active');
       if (bool) {
         calculateBuyCodes();
         updateCreatePartProjectParame();
@@ -477,7 +479,57 @@ require(['jquery', 'lodash', 'store', 'app', 'QXC', 'bootstrap', 'core'], functi
       }
       reflectChooseCode($(this).attr('databit'));
       $('#choose_to_buy').addClass('active');
+      judgeAllNum(G_CHOOSE);
     });
+
+    function judgeAllNum(G_CHOOSE) {
+      var len = G_CHOOSE.codes[0].length;
+      var i, j, odd = 0,
+        even = 0,
+        big = 0,
+        small = 0,
+        all = 0,
+        methodObj;
+      for (var i = 0; i < len; i++) {
+        odd = 0;
+        even = 0;
+        big = 0;
+        small = 0;
+        all = 0;
+        methodObj = $('.j-row-code[data-bit="' + i + '"]').find('.j-quick-method');
+        methodObj.find('span').removeClass('active');
+        if (G_CHOOSE.codes[0][i] && G_CHOOSE.codes[0][i].length == 5) {
+          for (j = 0; j < 5; j++) {
+            if (G_CHOOSE.codes[0][i][j] % 2 == 1) {
+              odd++;
+            }
+            if (G_CHOOSE.codes[0][i][j] % 2 == 0) {
+              even++;
+            }
+            if (G_CHOOSE.codes[0][i][j] > 4) {
+              big++;
+            }
+            if (G_CHOOSE.codes[0][i][j] <= 4) {
+              small++;
+            }
+          }
+          if (odd == 5) {
+            methodObj.find('span[data-type="odd"]').addClass('active');
+          }
+          if (even == 5) {
+            methodObj.find('span[data-type="even"]').addClass('active');
+          }
+          if (big == 5) {
+            methodObj.find('span[data-type="big"]').addClass('active');
+          }
+          if (small == 5) {
+            methodObj.find('span[data-type="small"]').addClass('active');
+          }
+        } else if (G_CHOOSE.codes[0][i] && G_CHOOSE.codes[0][i].length == 10) {
+          methodObj.find('span[data-type="all"]').addClass('active');
+        }
+      }
+    }
 
     /**
      * 删除投注号码
@@ -522,6 +574,7 @@ require(['jquery', 'lodash', 'store', 'app', 'QXC', 'bootstrap', 'core'], functi
         codeKey: objectKey,
         codeObj: $(this).parents('.br-zhu-item')
       };
+      judgeAllNum(G_CHOOSE);
     });
 
     /**

@@ -245,6 +245,63 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
   });
 
+  $('.j-new-guide').on('click', function(event) {
+    event.preventDefault();
+    //$('#j-guide1').show().addClass('animated');
+    $('#j-guide1').slideDown('normal', function() {
+      $('.raceball').css({
+        marginBottom: '170px'
+      });
+    });
+
+  });
+
+  $('body').on('click', '.j-next1', function(event) {
+    event.preventDefault();
+    $('#j-guide1').hide();
+    $('#j-guide2').slideDown('normal', function() {
+      $('.raceball').css({
+        marginBottom: '170px'
+      });
+    });
+  });
+
+  $('body').on('click', '.j-close', function(event) {
+    event.preventDefault();
+    $(this).parents('.j-m-mask').hide();
+    $('.raceball').css({
+      marginBottom: '80px'
+    });
+  });
+
+  $('body').on('click', '.j-next2', function(event) {
+    event.preventDefault();
+    $('#j-guide2').hide();
+    $('#j-guide3').slideDown('normal', function() {
+      $('.raceball').css({
+        marginBottom: '170px'
+      });
+    });
+  });
+
+  $('body').on('click', '.j-next3', function(event) {
+    event.preventDefault();
+    $('#j-guide3').hide();
+    $('#j-guide4').slideDown('normal', function() {
+      $('.raceball').css({
+        marginBottom: '170px'
+      });
+    });
+  });
+
+  $('body').on('click', '.j-next4', function(event) {
+    event.preventDefault();
+    $('#j-guide4').hide();
+    $('.raceball').css({
+      marginBottom: '80px'
+    });
+  });
+
   function createShaiLiHtml() {
     var saveWrapHtml = '',
       k;
@@ -435,6 +492,38 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     }
   }
 
+  function getGuide(newGuide) {
+
+    if (!newGuide) {
+      newGuide = 'lock';
+    }
+
+    var f = store.get('firstVisitGuide');
+
+    if (f) {
+
+      if (f == newGuide) {
+        return;
+      } else {
+        store.set('firstVisitGuide', newMask);
+        showGuide();
+      }
+
+    } else {
+      store.set('firstVisitGuide', 'lock');
+      showGuide();
+    }
+
+  }
+
+  function showGuide() {
+    $('#j-guide1').slideDown('normal', function() {
+      $('.raceball').css({
+        marginBottom: '170px'
+      });
+    });
+  }
+
   function init() {
 
     modelInit();
@@ -442,6 +531,8 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     setTableThLink();
 
     checkMorning();
+
+    getGuide();
   }
 
   init();

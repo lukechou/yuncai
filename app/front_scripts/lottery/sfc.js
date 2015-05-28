@@ -221,24 +221,31 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
       var d = _this.data;
       var midIndex = 7;
       var item = null;
+      var lastIndex = '';
 
       mLsContent1HTML = '<li class="t1">投注</li>';
       mLsContent2HTML = '<li class="t1">投注</li>';
 
       // 遍历所有对阵
-      for (var i = 0; i < d.length; i++) {
+      for (var i = 0, len = d.length; i < len; i++) {
 
         item = d[i];
+
+        if(i === (len - 1) || i ===6){
+          lastIndex = 'last';
+        }else{
+          lastIndex = '';
+        }
 
         if (i < midIndex) {
 
           if (matchs[item.matchcode]) {
             matchCount++;
-            mLsContent1HTML += '<li class="t2">' + _this.getChooseGroupCode(matchs[item.matchcode]) + '</li>';
+            mLsContent1HTML += '<li class="t2 ' + lastIndex + '">' + _this.getChooseGroupCode(matchs[item.matchcode]) + '</li>';
 
           } else {
 
-            mLsContent1HTML += '<li class="t2"></li>';
+            mLsContent1HTML += '<li class="t2 ' + lastIndex + '"></li>';
 
           }
 
@@ -246,17 +253,17 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
 
           if (matchs[item.matchcode]) {
             matchCount++;
-            mLsContent2HTML += '<li class="t2">' + _this.getChooseGroupCode(matchs[item.matchcode]) + '</li>';
+            mLsContent2HTML += '<li class="t2 ' + lastIndex + '">' + _this.getChooseGroupCode(matchs[item.matchcode]) + '</li>';
           } else {
-            mLsContent2HTML += '<li class="t2"></li>';
+            mLsContent2HTML += '<li class="t2 ' + lastIndex + '"></li>';
           }
 
         }
 
       };
 
-      $('.j-m-lscontent1').html(mLsContent1HTML);
-      $('.j-m-lscontent2').html(mLsContent2HTML);
+      $('#j-m-lscontent1').html(mLsContent1HTML);
+      $('#j-m-lscontent2').html(mLsContent2HTML);
       $('.j-gameNumber').text(matchCount);
 
     };
@@ -289,6 +296,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
 
         h = item.home.replace(/\s/g, '');
         a = item.away.replace(/\s/g, '');
+
         zdHtml += '<td class="fc-3d">' + h + '</td>';
         kdHtml += '<td class="fc-3d">' + a + '</td>';
 
@@ -391,8 +399,8 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
       $('#j-btn-clear').click(function (event) {
 
         $('.dataBody').find('span').removeClass('active');
-        $('.j-m-lscontent1').html('<li class="t1">投注</li>');
-        $('.j-m-lscontent2').html('<li class="t1">投注</li>');
+        $('#j-m-lscontent1 .t2').html('');
+        $('#j-m-lscontent2 .t2').html('');
 
         wlConfig.match = [];
         wlConfig.uniqMatch = [];

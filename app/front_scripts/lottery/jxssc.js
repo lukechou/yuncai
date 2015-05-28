@@ -378,7 +378,6 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
         big = 0,
         small = 0,
         all = 0;
-        debugger;
       if (G_CHOOSE.codes[dataBit] && G_CHOOSE.codes[dataBit].length == 5) {
         for (i = 0; i < 5; i++) {
           if (G_CHOOSE.codes[dataBit][i] % 2 == 1) {
@@ -756,6 +755,7 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
           bool = makeChooseCodeHtml(G_CHOOSE.playType, G_CHOOSE.codes);
           break;
       }
+      $('.j-choose-code-' + G_CHOOSE.playType).find('.j-quick-method span').removeClass('active');
       if (bool) {
         calculateBuyCodes();
         displayBuyInfo();
@@ -813,7 +813,60 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
       }
       reflectChooseCode($(this).attr('databit'));
       $('#choose_to_buy').addClass('active');
+
+      $('#choose_to_buy_tip').html('添加投注号码');
+      judgeAllNum(G_CHOOSE);
+
     });
+
+    function judgeAllNum(G_CHOOSE) {
+      var len = G_CHOOSE.codes.length;
+      var i, j, odd = 0,
+        even = 0,
+        big = 0,
+        small = 0,
+        all = 0,
+        methodObj;
+      for (var i = 0; i < len; i++) {
+        odd = 0;
+        even = 0;
+        big = 0;
+        small = 0;
+        all = 0;
+        methodObj = $('.j-choose-code-' + G_CHOOSE.playType).find('.j-row-code[data-bit="' + i + '"]').find('.j-quick-method');
+        methodObj.find('span').removeClass('active');
+        if (G_CHOOSE.codes[i] && G_CHOOSE.codes[i].length == 5) {
+          for (j = 0; j < 5; j++) {
+            if (G_CHOOSE.codes[i][j] % 2 == 0) {
+              even++;
+            }
+            if (G_CHOOSE.codes[i][j] > 4) {
+              big++;
+            }
+            if (G_CHOOSE.codes[i][j] % 2 == 1) {
+              odd++;
+            }
+            if (G_CHOOSE.codes[i][j] <= 4) {
+              small++;
+            }
+          }
+          if (even == 5) {
+            methodObj.find('span[data-type="even"]').addClass('active');
+          }
+          if (big == 5) {
+            methodObj.find('span[data-type="big"]').addClass('active');
+          }
+          if (odd == 5) {
+            methodObj.find('span[data-type="odd"]').addClass('active');
+          }
+          if (small == 5) {
+            methodObj.find('span[data-type="small"]').addClass('active');
+          }
+        } else if (G_CHOOSE.codes[i] && G_CHOOSE.codes[i].length == 10) {
+          methodObj.find('span[data-type="all"]').addClass('active');
+        }
+      }
+    }
 
     /**
      * 删除投注号码
@@ -861,6 +914,8 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
         codeKey: objectKey,
         codeObj: $(this).parents('.br-zhu-item')
       };
+      judgeAllNum(G_CHOOSE);
+
     });
 
     /**
