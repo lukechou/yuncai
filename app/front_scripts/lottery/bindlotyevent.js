@@ -1130,15 +1130,19 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
 
   // 更新合买 总金额
   ZHUI.setHeMaiTotal = function () {
-
     var box = Config.box;
 
     if (Config.playType === 'dqtz') return;
-    // 总金额
-    var totalMoney = box.find('.j-quick-total').html() * 1;
+
+    var totalMoney = box.find('.j-quick-total').html() * 1;  // 总金额
+    var $shareEl = box.find('.j-share-num');   //划分份数DOM
+    var $partEl = box.find('.j-rengou');     //认购份数DOM
+    var $commissionEl = box.find('.br-select');  //提成比例DOM
+    var $partAegisEl = box.find('.j-baodi-text');  //保底分数DOM
+    var $hasPartEl = box.find('.j-baodi-check');  //是否保底checkbox DOM
 
     // 获取份数
-    var copies = box.find('.j-share-num').val() || 0;
+    var copies = $shareEl.val() || 0;
 
     // 单份金额
     var oneCopiesMoney = '';
@@ -1147,18 +1151,18 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     var rengouMoney = '';
 
     // 认购份数
-    var rengouCopies = box.find('.j-rengou').val();
+    var rengouCopies = $partEl.val();
 
     // 认购百分比
     var rengouPercent = '';
 
     // 提成
-    var ticheng = box.find('.br-select').val() * 1 || 0;
+    var ticheng = $commissionEl.val() * 1 || 0;
 
     // 保底金额 b-用户输入保底份数
     var baodiCopies = '';
     var baodiPercent = '';
-    var b = parseInt(box.find('.j-baodi-text').val()) || 0;
+    var b = parseInt($partAegisEl.val()) || 0;
     var isBaodi = false;
 
     copies = Number(copies.replace(/[^0-9]/g, ''));
@@ -1192,6 +1196,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       rengouCopies = copies;
     }
 
+    if (rengouCopies / copies < .05) {
+      rengouCopies = Math.ceil(copies * .05);
+    }
+
     // 认购金额必须大于提成金额
     if (ticheng > (rengouCopies / copies * 100)) {
       rengouCopies = Math.ceil(copies * ticheng * 0.01);
@@ -1199,14 +1207,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     rengouMoney = rengouCopies * oneCopiesMoney;
 
     // 是否保底
-    if (box.find('.j-baodi-check')[0]) {
-      isBaodi = box.find('.j-baodi-check')[0].checked;
+    if ($hasPartEl[0]) {
+      isBaodi = $hasPartEl[0].checked;
     }
 
     // 设置保底份数
     if (isBaodi) {
 
-      box.find('.j-baodi-text')[0].disabled = false;
+      $partAegisEl[0].disabled = false;
 
       if (b === 0) {
 
@@ -1248,11 +1256,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
       baodiPercent = (baodiCopies / copies * 100).toFixed(2);
 
     } else {
-      box.find('.j-baodi-text')[0].disabled = true;
+      $partAegisEl[0].disabled = true;
       baodiCopies = 0;
       baodiPercent = '0.00';
     }
 
+    //copies是分成的份数、rengouCopies是认购的份数、rengouPercent是认购所占比例的百分比
     if (totalMoney === 0) {
       rengouPercent = 0;
     } else {
@@ -2201,42 +2210,6 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function ($, _, store
     ZHUI.setHeMaiTotal();
   });
 
-  /**
-   *Bind Other Tabs Toggle Event
-   */
-  // Quick, senior toggle
-  $('#j-brhd-group a').on('click', function (event) {
-
-    if ($(this).hasClass('active')) {
-
-      return;
-
-    } else {
-
-      $('#j-brhd-group .active').removeClass('active');
-
-      var t = parseInt($(this).attr('data-t'));
-
-      if (t) {
-
-        $('#quick').addClass('hidden');
-        $('#senior').removeClass('hidden');
-        Config.box = $('#senior .box-left').eq(0);
-
-      } else {
-
-        $('#senior').addClass('hidden');
-        $('#quick').removeClass('hidden');
-        Config.box = $('#quick .box-left');
-
-      }
-
-      $(this).addClass('active');
-      return;
-
-    }
-
-  });
 
   // Senior Lottery Tabs Toggle
   $('#j-nav-tabs').on('click', 'a', function (event) {

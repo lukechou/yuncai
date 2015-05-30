@@ -2,14 +2,15 @@
 .opl { border: 1px #dfdfdf solid; font-size: 12px; margin-bottom: 50px; }
 .opl-title { height: 40px; line-height: 40px; background: #f1f1f1; font-size: 16px; font-weight: bold; margin: 0; padding-left: 20px; border-bottom: 1px #dfdfdf solid; }
 .opl-hd { overflow: hidden; padding-bottom: 20px; }
-.m-num-title > i{ width: 100%; margin:-19px auto 0;}
-.m-num-title{ margin-bottom: 0;}
+.m-num-title > i { width: 100%; margin: -19px auto 0; }
+.m-num-title { margin-bottom: 0; }
+
 /* opl head left*/
 .opl-hdl { width: 50%; float: left; }
 .opl-imgbox { margin-top: 25px; padding-left: 30px; }
 .opl-imgbox .left { width: 80px; float: left; text-align: center; }
-.opl-imgbox .left img { width: 80px; margin-bottom: 5px;}
-.opl-imgbox .left span { font-weight: bold; font-size: 16px;}
+.opl-imgbox .left img { width: 80px; margin-bottom: 5px; }
+.opl-imgbox .left span { font-weight: bold; font-size: 16px; }
 
 /* opl head left-right */
 .opl-imgbox .right { margin-left: 120px; }
@@ -35,6 +36,7 @@
 
 /* opl table */
 .opl-table { margin-bottom: 20px; }
+.opl-table thead>tr>th, .opl-table tbody>tr>td { vertical-align: middle; }
 .opl-table > tbody > tr { background: #fff; }
 .leag { color: #fff; }
 .opl-table>tbody+tbody { border-top: none; }
@@ -91,7 +93,4 @@
 .icon-arrow-down { background-position: -312px -96px }
 
 /* 任九 胜负彩 开奖公告*/
-.sfc-table > tbody > tr > td, .sfc-table > thead > tr > th {
-  border: 1px #dfdfdf solid;
-}
-
+.sfc-table > tbody > tr > td, .sfc-table > thead > tr > th { border: 1px #dfdfdf solid; }

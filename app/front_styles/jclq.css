@@ -40,7 +40,8 @@
 .dataHead .gameSeleList { top: 58px; overflow: hidden; width: 295px; margin-left: 0; padding: 5px 0; background: #fff; }
 .dataHead .optionList { padding: 0; border-top: 0; background: #fff; }
 .dataHead .optionList a, .dataHead .optionList a:visited { line-height: 24px; display: block; height: 24px; color: #333; text-align: center; }
-.dataHead .optionList a.active, .dataHead .optionList a:hover { text-decoration: none; color: #fff; background: #0d67c4; }
+.dataHead .optionList a.active { text-decoration: none; color: #fff; background: #0d67c4; }
+.dataHead .optionList a:hover{ text-decoration: none;}
 .dataHead .co7 .optionList { top: 29px; width: 100%; }
 .dataHead .co2, .dataHead .co3 { cursor: pointer; text-align: left; }
 .dataHead .co2 { padding-left: 20px; }

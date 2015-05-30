@@ -1641,12 +1641,15 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	PL3.G_BUY.hemaiTotalMoney = 0;
 
 	function updateCreatePartProjectParame() {
+		var totalMoney = PL3.G_BUY.money;   // 总金额
+		var $shareEl = $('#share-num');   //划分份数DOM
+		var $partEl = $('#part_buy');     //认购份数DOM
+		var $commissionEl = $('#commission_percent');  //提成比例DOM
+		var $partAegisEl = $('#part_aegis_num');  //保底分数DOM
+		var $hasPartEl = $('#has_part_aegis');  //是否保底checkbox DOM
 
-		// 总金额
-		var totalMoney = PL3.G_BUY.money;
-
-		// 获取份数 shareNum
-		var copies = $("#share-num").val() || totalMoney;
+		// 获取划分份数 shareNum
+		var copies = $shareEl.val() || totalMoney;
 
 		// 单份金额 iUnitPrice
 		var oneCopiesMoney = '';
@@ -1655,22 +1658,22 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		var rengouMoney = '';
 
 		// 认购份数
-		var rengouCopies = $('#part_buy').val();
+		var rengouCopies = $partEl.val();
 
 		// 认购百分比
 		var rengouPercent = '';
 
 		// 提成
-		var ticheng = $('#commission_percent').val() * 1 || 0;
+		var ticheng = $commissionEl.val() * 1 || 0;
 
 		// 保底金额 b-用户输入保底份数
 		// 保底份数 aegisNum
 		var baodiCopies = '';
 		var baodiPercent = '';
-		var b = parseInt($('#part_aegis_num').val()) || 0;
+		var b = parseInt($partAegisEl.val()) || 0;
 
 		// 是否保底 hasPartAegis
-		var isBaodi = $('#has_part_aegis')[0].checked || false;
+		var isBaodi = $hasPartEl[0].checked || false;
 
 		copies = Number(copies.replace(/[^0-9]/g, ''));
 		rengouCopies = Number(rengouCopies.replace(/[^0-9]/g, ''));
@@ -1703,6 +1706,10 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			rengouCopies = copies;
 		}
 
+		if (rengouCopies / copies < .05) {
+      rengouCopies = Math.ceil(copies * .05);
+    }
+
 		// 认购金额必须大于提成金额
 		if (ticheng > (rengouCopies / copies * 100)) {
 			rengouCopies = Math.ceil(copies * ticheng * 0.01);
@@ -1710,14 +1717,14 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		rengouMoney = rengouCopies * oneCopiesMoney;
 
 		// 是否保底
-		if ($('#has_part_aegis')[0]) {
-			isBaodi = $('#has_part_aegis')[0].checked;
+		if ($hasPartEl[0]) {
+			isBaodi = $hasPartEl[0].checked;
 		}
 
 		// 设置保底份数
 		if (isBaodi) {
 
-			$('#part_aegis_num')[0].disabled = false;
+			$partAegisEl[0].disabled = false;
 
 			if (b === 0) {
 
@@ -1759,7 +1766,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			baodiPercent = (baodiCopies / copies * 100).toFixed(2);
 
 		} else {
-			$('#part_aegis_num')[0].disabled = true;
+			$partAegisEl[0].disabled = true;
 			baodiCopies = 0;
 			baodiPercent = '0.00';
 		}

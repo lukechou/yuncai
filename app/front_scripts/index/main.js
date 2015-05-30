@@ -643,7 +643,11 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
     for (var i = dataLen - 1; i >= 0; i--) {
       item = d[i];
-      name = '<a href="/user/profile/index/' + item.uid + '">' + item.username + '</a>';
+      if(d[i].uid){
+        name = '<a href="/user/profile/index/' + item.uid + '">' + item.username + '</a>';
+      }else{
+        name = item.username;
+      }
       html += '<li>' + name + '中奖<span>' + item.bonus_money + '元</span></li>';
     };
 

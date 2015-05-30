@@ -1,6 +1,7 @@
 /* 方案详情页 */
 .xiang .tab-content { margin-bottom: 45px; border: 1px #dfdfdf solid; border-top: none; }
 .xiang .tab-content .ttil { font-size: 12px; padding: 8px 20px; }
+.xiang .tab-content .mid-ttil{ border: 1px #dfdfdf solid; border-width: 0 1px;}
 .xiang .tab-content .ttil span { margin-right: 20px; }
 .xiang .tab-content .ttil input { position: relative; top: 3px; }
 .xiang .m-mn-table tr td { vertical-align: middle; word-break: break-all; border-top: none; line-height: 1.7; }
@@ -23,23 +24,23 @@
 .xiang .rball { background: #f13c38; }
 .xiang .bball { background: #5198f1; }
 .xiang .head .time { margin-right: 10px; }
-.xiang .box .left-hd, .xiang .box .right-hd { min-height: 210px; }
+.xiang .box .left-hd, .xiang .box .right-hd { min-height: 250px; }
 .xiang .box .left { font-size: 12px; float: left; width: 230px; }
 .xiang .box .left-hd { margin: 0 10px; text-align: center; border-bottom: 1px #dfdfdf dotted; }
-.xiang .box .left-hd > img { margin: 25px 0 5px; }
+.xiang .box .left-hd > img { margin: 45px 0 5px; }
 .xiang .box .left-hd > p { margin-bottom: 5px; }
 .xiang .box .left-hd > .user { font-size: 14px; font-weight: bold; }
 .xiang .box .left-ft { padding: 15px 15px 15px 20px; }
 .xiang .box .left-ft .links { margin-top: 30px; }
 .xiang .box .left-ft .links a { font-size: 12px; }
 .xiang .box .left-ft .links .btn { margin-right: 8px; padding: 5px 9px; color: #3d3d3d; background: #ddd; }
-.xiang .box .right { float: right; width: 753px; border-left: 1px #dfdfdf solid; }
+.xiang .box .right { float: right; width: 753px; border-left: 1px #dfdfdf solid; min-height: 310px;}
 .xiang .box .right-ft { height: 150px; border-top: 1px #dfdfdf solid; background: #f1f1f1; }
 .xiang .box .right-ft .btn-big { margin: 15px auto 10px; width: 162px; }
 .xiang .box .right-ft p { font-size: 12px; padding: 15px 0 10px; text-align: center; }
 .xiang .box .right-ft p input { width: 100px; padding: 3px 5px; color: #848484; border: 1px #dfdfdf solid; background: #fff; }
 .xiang .box .right-ft p .fc-3 { font-weight: bold; margin: 0 5px; }
-.xiang .box .right-hd { padding: 10px 0; }
+.xiang .box .right-hd { padding: 20px 0 0; }
 .xiang .box .right-hd .table { padding: 0 20px; background: #fff; }
 .xiang .box .right-hd .table, .xiang .box .right-hd ul { font-size: 12px; width: 712px; margin: auto; }
 .xiang .box .right-hd ul li { margin-bottom: 10px; }
@@ -68,7 +69,18 @@
 .pd-th8 { width: 270px; }
 .table-thead-white > thead > tr > th { background: none; }
 .table-th-noborbot > thead > tr > th { border-bottom: none; }
-
+.hm-table>tbody>tr:nth-child(even){
+  background: #fff;
+}
+.hm-table>tbody>tr:nth-child(odd){
+  background: #f5f5f5;
+}
+.hm-table > tbody > tr.hm-row-1 {
+  border-top:none!important;
+}
+.hm-table > thead > tr th,.hm-table > thead > tr{
+  border-bottom: none!important;
+}
 /* 详情页 投注内容*/
 .m-result { border-left: 1px solid #dfdfdf; padding: 0 8px; }
 .m-result0 { border: none; }

@@ -4,6 +4,7 @@
 .bettingBox { border: 1px solid #dfdfdf; border-top: none; }
 .win-lost .g-left { float: left; }
 .dataHead { font-size: 12px; line-height: 60px; position: relative; z-index: 10; zoom: 1; height: 60px; margin-bottom: 0; text-align: center; color: #3d3d3d; border: 1px solid #dfdfdf; border-width: 0 0 1px 0; background: #f1f1f1; width: 711px; }
+.dataHead-r9{ border:none;}
 .dataHead dd { position: relative; float: left; height: 60px; border-left: 1px solid #dfdfdf; }
 .co1 { width: 33px; overflow: hidden; border-left: none !important; }
 
@@ -64,6 +65,7 @@
 .qrtz-box .orderRule .icon { position: relative; top: 3px; margin-right: 5px; cursor: pointer; }
 .dott .btn { height: 26px; padding: 2px 8px; border: 1px #dfdfdf solid; background: #f1f1f1; }
 .dott .btn-results { width: 50px; padding: 2px 5px; background: #fff; }
+.tzBtnBox .ljtzBtn.btn-stop{ background: #f1f1f1; color:#adadad; border:1px #dfdfdf solid;}
 .dataBody dd:hover { background: #f6f7f9; }
 .bor-bot-none { border-bottom: none !important; }
 .ljtz-info { font-size: 12px; color: #3d3d3d; height: 40px; line-height: 40px; }
@@ -90,7 +92,7 @@
 .btns { text-align: center; }
 
 .data-load { margin: auto; }
-.data-loadbox { width: 100%; height: 200px; padding-top: 100px; text-align: center; border-top: 1px #dfdfdf solid; border-width: 1px 1px 0; }
+.data-loadbox { width: 100%; height: 200px; padding-top: 100px; text-align: center; }
 
 
 /* tipsy Style */

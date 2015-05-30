@@ -466,7 +466,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
           } else {
             htmlOutput += '<tr>\
-                            <td class="w180">' + (i + 1 + nextPage) + '</td>\
+                            <td>' + (i + 1 + nextPage) + '</td>\
                             <td>' + data.retData[i].code + '</td>\
                             <td>' + data.retData[i].gg + '</td>\
                             <td>' + data.retData[i].money / data.retData[i].multiple / 2 + '</td>\

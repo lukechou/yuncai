@@ -40,7 +40,8 @@
 .dataHead .gameSeleList { top: 58px; overflow: hidden; width: 295px; margin-left: 0; padding: 5px 0; background: #fff; }
 .dataHead .optionList { padding: 0; border-top: 0; background: #fff; }
 .dataHead .optionList a, .dataHead .optionList a:visited { line-height: 24px; display: block; height: 24px; color: #333; text-align: center; }
-.dataHead .optionList a.active, .dataHead .optionList a:hover { text-decoration: none; color: #fff; background: #0d67c4; }
+.dataHead .optionList a:hover{ text-decoration: none;}
+.dataHead .optionList a.active{ text-decoration: none; color: #fff; background: #0d67c4; }
 .dataHead .co7 .optionList { top: 29px; width: 100%; }
 .dataHead .co2, .dataHead .co3 { cursor: pointer; text-align: left; }
 .dataHead .co2 { padding-left: 36px; }
@@ -125,7 +126,7 @@
 
 /* 投注表格主体 */
 .data-load { margin: auto; }
-.data-loadbox { width: 100%; height: 200px; padding-top: 100px; text-align: center; border: 1px #dfdfdf solid; border-width: 1px 1px 0; }
+.data-loadbox { width: 100%; height: 200px; padding-top: 100px; text-align: center; border: 1px #dfdfdf solid; border-width: 0 1px 1px; }
 .dataHead .co5, .dataHead .co6, .dataBody .towLine .line2, .dataBody .towLine .line1, .row1, .row2, .row3, .row4, .row5 { display: none; }
 .row2 .btnBox, .row3 .btnBox { border: none; }
 .onlyBf .co4 { width: 260px; }

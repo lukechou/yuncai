@@ -394,13 +394,19 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
 
         wlConfig.updateMoney();
 
+        // 无数据不要左侧格子
+        if(!wlConfig.match.length){
+          $('#j-m-lscontent1').html('<li class="t1">投注</li>');
+        $('#j-m-lscontent2').html('<li class="t1">投注</li>');
+        }
+
       });
 
       $('#j-btn-clear').click(function (event) {
 
         $('.dataBody').find('span').removeClass('active');
-        $('#j-m-lscontent1 .t2').html('');
-        $('#j-m-lscontent2 .t2').html('');
+        $('#j-m-lscontent1').html('<li class="t1">投注</li>');
+        $('#j-m-lscontent2').html('<li class="t1">投注</li>');
 
         wlConfig.match = [];
         wlConfig.uniqMatch = [];
@@ -848,12 +854,16 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
   });
 
   function updateCreatePartProjectParame() {
+    var totalMoney = WINLOST.money;   // 总金额
+    var $shareEl = $('#share-num');   //划分份数DOM
+    var $partEl = $('#part_buy');     //认购份数DOM
+    var $commissionEl = $('#commission_percent');  //提成比例DOM
+    var $partAegisEl = $('#part_aegis_num');  //保底分数DOM
+    var $fullBaoEl = $('#j-full-bao');  //是否保底checkbox DOM
 
-    // 总金额
-    var totalMoney = WINLOST.money;
 
-    // 获取份数 shareNum
-    var copies = $("#share-num").val() || totalMoney;
+    // 获取划分份数 shareNum
+    var copies = $shareEl.val() || totalMoney;
 
     // 单份金额 iUnitPrice
     var oneCopiesMoney = '';
@@ -862,23 +872,23 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
     var rengouMoney = '';
 
     // 认购份数
-    var rengouCopies = $('#part_buy').val();
+    var rengouCopies = $partEl.val();
 
     // 认购百分比
     var rengouPercent = '';
 
     // 提成
-    var ticheng = $('#commission_percent').val() * 1 || 0;
+    var ticheng = $commissionEl.val() * 1 || 0;
 
     // 保底金额 b-用户输入保底份数
     // 保底份数 aegisNum
     var baodiCopies = '';
     var baodiPercent = '';
-    var b = parseInt($('#part_aegis_num').val()) || 0;
+    var b = parseInt($partAegisEl.val()) || 0;
 
     // 是否保底
     var isBaodi = true;
-    var isFullBao = $('#j-full-bao')[0].checked;
+    var isFullBao = $fullBaoEl[0].checked;
     if (isFullBao) {
       $('.j-baodi-text').attr('readonly', true);
     } else {
@@ -924,7 +934,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
     // 设置保底份数
     if (isBaodi) {
 
-      $('#part_aegis_num')[0].disabled = false;
+      $partAegisEl[0].disabled = false;
 
       if ((b + rengouCopies) < copies) {
 
@@ -943,7 +953,7 @@ require(['jquery', 'lodash', 'app', 'store', 'bootstrap', 'core', 'tipsy'], func
       baodiPercent = (baodiCopies / copies * 100).toFixed(2);
 
     } else {
-      $('#part_aegis_num')[0].disabled = true;
+      $partAegisEl[0].disabled = true;
       baodiCopies = 0;
       baodiPercent = '0.00';
     }

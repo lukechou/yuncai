@@ -21,10 +21,11 @@
 .hall-list .disabled a { cursor: not-allowed; }
 .hall-list .disabled .l-group > a { cursor: not-allowed; color: #c3c3c3; }
 .hall-list .disabled img { cursor: not-allowed; opacity: .5; filter: alpha(opacity=50); }
+.hall-list-img-wrapper img { width: 134px; height: 134px; }
 .hall-list > li a:hover { text-decoration: none; }
 .hall-list .li-disabled a:hover { cursor: not-allowed; text-decoration: none; }
 .hall-list > li a.disabled .tips { display: none; }
-.hall-list > li h4 { font-size: 16px; font-weight: bold; margin: 9px 0 5px; }
+.hall-list > li h4 { font-size: 16px; font-weight: bold; margin: 12px 0 5px; }
 .hall-list > li h4 > .tips { font-size: 12px; font-weight: normal; position: relative; top: -1px; display: inline-block; margin: 0; padding: 2px 5px; color: #fff; border-radius: 2px; background: #db2b28; }
 
 /* List-1 */

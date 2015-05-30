@@ -49,7 +49,7 @@
 .box-left .br-type>li>a { position: relative; padding: 0; border: 0; margin-left: 40px; color: #3d3d3d; }
 .box-left .br-type>li>a>.icon { position: absolute; top: 2px; left: -20px; }
 /* Brings-Together */
-.br-together, .br-zhui { background: #fff; border: 1px #dddedf solid; border-top: none; padding: 15px 13px; font-size: 12px; color: #848484; }
+.br-together, .br-zhui { background: #fff; border: 1px #dddedf solid; border-top: none; padding: 15px 0 15px 10px; font-size: 12px; color: #848484; }
 .br-together .title { width: 60px; display: inline-block; text-align: right; margin-right: 5px; float: left; color: #3d3d3d; }
 .br-set { padding: 0 6px; height: 21px; line-height: 17px; text-align: center; display: block; border: 2px solid #dfdfdf; color: #333333; float: left; margin-right: 11px; }
 .br-set:hover, .br-set.active { text-decoration: none; color: #f13c38; border-color: #f13c38; }
@@ -82,6 +82,7 @@
 .more-detail { float: right; margin-right: 10px; font: 12px/34px 'simsun'; }
 .more-detail a { color: #848484; text-decoration: none; }
 .more-detail a:hover { color: #0d67c4; }
+.more-detail a:visited{ color:#111;}
 /* 开奖公告 */
 /* 表格格式 */
 .sub-content { font-size: 12px; }
