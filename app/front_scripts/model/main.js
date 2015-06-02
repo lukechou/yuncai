@@ -470,7 +470,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
     model.bindCollectEvent();
 
-    $('.data-tip').tipsy({
+    $('.data-tip,.j-icon-tips').tipsy({
       fade: true,
       gravity: 's',
       html: true,

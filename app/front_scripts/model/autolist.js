@@ -19,7 +19,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, _, store, APP) {
   'use strict';
 
   // Config-Constant
@@ -386,7 +386,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   // 表格计算事件
   // 修改比例-添加比例
-  $body.on('click', '.j-add', function (event) {
+  $body.on('click', '.j-add', function(event) {
 
     event.preventDefault();
 
@@ -409,7 +409,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     }
 
-    AUTO.timer = setTimeout(function () {
+    AUTO.timer = setTimeout(function() {
 
       if (AUTO.autoType) {
         oVal += 2;
@@ -423,7 +423,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改比例-减少比例
-  $body.on('click', '.j-reduce', function (event) {
+  $body.on('click', '.j-reduce', function(event) {
     event.preventDefault();
 
     var $num = $(this).siblings('.j-num');
@@ -446,7 +446,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     }
 
-    AUTO.timer = setTimeout(function () {
+    AUTO.timer = setTimeout(function() {
 
       if (AUTO.autoType) {
 
@@ -463,7 +463,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改比例-手动输入
-  $body.on('keyup', '.j-num', function (event) {
+  $body.on('keyup', '.j-num', function(event) {
     event.preventDefault();
 
     var $num = $(this);
@@ -474,7 +474,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.timer);
     }
 
-    AUTO.timer = setTimeout(function () {
+    AUTO.timer = setTimeout(function() {
 
       if (AUTO.autoType) {
         countPercentFn($num, oVal);
@@ -487,10 +487,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改比例-失去焦点
-  $body.on('blur', '.j-num', function (event) {
+  $body.on('blur', '.j-num', function(event) {
     event.preventDefault();
 
-    if (AUTO.autoType === 0) {
+    if (AUTO.autoType == 0) {
 
       var $num = $(this);
       var oVal = $num.val();
@@ -506,7 +506,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改金额-添加
-  $body.on('click', '.j-add-m', function (event) {
+  $body.on('click', '.j-add-m', function(event) {
     event.preventDefault();
 
     var curInputEl = $(this).siblings('.j-cur-input');
@@ -528,14 +528,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.mTimer);
     }
 
-    AUTO.mTimer = setTimeout(function () {
+    AUTO.mTimer = setTimeout(function() {
       countCurFn(curInputEl, oVal);
     }, 100);
 
   });
 
   // 修改金额-减少
-  $body.on('click', '.j-reduce-m', function (event) {
+  $body.on('click', '.j-reduce-m', function(event) {
     event.preventDefault();
 
     var curInputEl = $(this).siblings('.j-cur-input');
@@ -553,14 +553,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.mTimer);
     }
 
-    AUTO.mTimer = setTimeout(function () {
+    AUTO.mTimer = setTimeout(function() {
       countCurFn(curInputEl, oVal)
     }, 100);
 
   });
 
   // 修改金额-手动输入
-  $body.on('keyup', '.j-cur-input', function (event) {
+  $body.on('keyup', '.j-cur-input', function(event) {
     event.preventDefault();
 
     var $this = $(this);
@@ -596,7 +596,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.mTimer);
     }
 
-    AUTO.mTimer = setTimeout(function () {
+    AUTO.mTimer = setTimeout(function() {
       countCurFn($this, oVal)
     }, 100);
     if (oVal > 30) {
@@ -605,7 +605,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   });
 
-  $body.on('blur', '.j-cur-input', function (event) {
+  $body.on('blur', '.j-cur-input', function(event) {
     event.preventDefault();
 
     var $this = $(this);
@@ -613,7 +613,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   });
 
-  $('#j-auto-list').on('click', '.j-modify', function (event) {
+  $('#j-auto-list').on('click', '.j-modify', function(event) {
     event.preventDefault();
 
     $('.j-edit').removeClass('hide');
@@ -628,7 +628,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     $('.j-modify-bottom').removeClass('hide');
   });
 
-  $('#j-filter-statu').on('change', function (event) {
+  $('#j-filter-statu').on('change', function(event) {
     event.preventDefault();
 
     var v = $(this).val();
@@ -648,8 +648,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   function createTrHtml(item) {
 
     var h = '';
-    var r = _.find(Model.data, function (n) {
-      return n.id === Model.rid
+    var r = _.find(Model.data, function(n) {
+      return n.id == Model.rid
     });
     var stopTips = ['盈利以后自动终止', '完成所有期数后终止'];
     var arr = [];
@@ -677,7 +677,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     h += '<th>累计投注金额（元）</th><th>当期预计奖金（元）</th><th>投注期号</th><th>当期命中情况</th></tr></thead><tbody id="j-data-body">';
 
-    arr = _.map(item.autobuyIssueList, function (n, i) {
+    arr = _.map(item.autobuyIssueList, function(n, i) {
 
       var nh = '';
 
@@ -804,17 +804,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   }
 
-  $body.on('click', '.j-stop-issue', function (event) {
+  $body.on('click', '.j-stop-issue', function(event) {
     event.preventDefault();
 
-    var f = _.find(Model.data, function (n) {
-      return n.id === Model.rid;
+    var f = _.find(Model.data, function(n) {
+      return n.id == Model.rid;
     });
 
     APP.showTips({
       text: '<div class="fs-12"><p>您对彩票模型' + modelId + '设置了自动投注，</p><p>总投注' + f.total_issue + '期，已投注<span class="fc-3 mlr5">' + f.complete_issue + '</span>期，累计投注额<span class="fc-3 mlr5">' + f.project_money + '</span>，累计奖金<span class="fc-3">' + f.total_bounty + '</span>元</p></div><div class="fs-12"><p>确认要终止该模型的自动投注吗？</p><p>终止后未进行的投注系统将不再执行自动投注</p></div>',
       type: 2,
-      onConfirm: function () {
+      onConfirm: function() {
 
         $.ajax({
             url: '/lottery/model/autobuy/cancel',
@@ -825,7 +825,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
               auto_id: Model.rid
             },
           })
-          .done(function (data) {
+          .done(function(data) {
 
             if (data.retCode === 100000) {
 
@@ -833,7 +833,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
               APP.showTips({
                 text: '已取消自动投注',
                 type: 1,
-                onConfirm: function () {
+                onConfirm: function() {
                   window.location.href = '/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId;
                 }
               });
@@ -850,7 +850,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   });
 
-  $body.on('click', '#j-modify-cancel', function (event) {
+  $body.on('click', '#j-modify-cancel', function(event) {
     event.preventDefault();
 
     initTable({
@@ -859,7 +859,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   });
 
-  $body.on('click', '#j-modify-confirm', function (event) {
+  $body.on('click', '#j-modify-confirm', function(event) {
     event.preventDefault();
 
     createBuyModal();
@@ -875,11 +875,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var bountyObj = b.find('.j-bounty-money');
     var html = '';
 
-    $body.find('input[name]').each(function () {
+    $body.find('input[name]').each(function() {
 
       var name = $(this).attr('name') + '';
 
-      if (name === 'autostop') {
+      if (name == 'autostop') {
         return;
       }
 
@@ -894,7 +894,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     if (data['current_rate']) {
 
-      $.each(issueNumObj, function (index, val) {
+      $.each(issueNumObj, function(index, val) {
         html += '<tr>';
         html += '<td class="w150">' + $(this).html() + '</td>';
         html += '<td class="w150">' + data['current_rate'][index] + '</td>';
@@ -906,7 +906,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
     } else {
 
-      $.each(issueNumObj, function (index, val) {
+      $.each(issueNumObj, function(index, val) {
         html += '<tr>';
         html += '<td class="w200">' + $(this).html() + '</td>';
         html += '<td>' + data['current_money'][index] + '</td>';
@@ -922,7 +922,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   function createBuyModal() {
 
-    var item = _.find(Model.data, function (n) {
+    var item = _.find(Model.data, function(n) {
       return n.id == Model.rid;
     });
     var autoType = ~~item['auto_type'];
@@ -961,14 +961,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   }
 
-  $('#j-auto-buy').on('click', function (event) {
+  $('#j-auto-buy').on('click', function(event) {
     event.preventDefault();
     updateIssue();
   });
 
   function updateIssue() {
 
-    var item = _.find(Model.data, function (n) {
+    var item = _.find(Model.data, function(n) {
       return n.id == Model.rid;
     });
 
@@ -986,7 +986,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var issueNum = [];
     var stopType = clearVal($('[name="autostop"]:checked').val());
 
-    $('[data-issuenum]').each(function (index, el) {
+    $('[data-issuenum]').each(function(index, el) {
       issueNum.push($(this).attr('data-issuenum'));
     });
 
@@ -997,11 +997,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       issue_num: issueNum
     };
 
-    $body.find('input[name]').each(function () {
+    $body.find('input[name]').each(function() {
 
       var name = $(this).attr('name') + '';
 
-      if (name === 'autostop') {
+      if (name == 'autostop') {
         return;
       }
 
@@ -1037,7 +1037,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
         dataType: 'json',
         data: data,
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode === 100000) {
           $('#autoModal').modal('hide');
           APP.showTips('<p>自动投注修改成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
@@ -1064,7 +1064,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
             t: $.now()
           },
         })
-        .done(function (data) {
+        .done(function(data) {
 
           if (data.retCode == 100000) {
 
@@ -1085,13 +1085,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   }
 
-  $('#j-auto-list').on('click', '.j-toggle-issue', function (event) {
+  $('#j-auto-list').on('click', '.j-toggle-issue', function(event) {
     event.preventDefault();
 
     var _this = $(this);
 
     APP.checkLogin(null, {
-      always: function () {
+      always: function() {
         if (_this.hasClass('active')) {
 
           _this.html('查看').removeClass('active');
@@ -1126,11 +1126,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       group = [type];
     }
 
-    var a = _.groupBy(Model.data, function (n) {
+    var a = _.groupBy(Model.data, function(n) {
       return n.auto_status
     });
 
-    _.map(group, function (g) {
+    _.map(group, function(g) {
       if (a[g] && _.isArray(a[g])) {
         result = result.concat(a[g]);
       }
@@ -1169,11 +1169,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var h = '';
     var len = null;
 
-    var ingLen = _.filter(Model.data, function (n) {
-      return n.auto_status === '0';
+    var ingLen = _.filter(Model.data, function(n) {
+      return n.auto_status == '0';
     }).length;
 
-    if (len === 0) {
+    if (len == 0) {
       $('#j-auto-go').html(0);
       $('#j-auto-list').html('<tr><td colspan="9">该模型您没有设置自动投注</td></tr>');
       $('#j-no-set').remove();
@@ -1188,13 +1188,13 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var group = _.chunk(item, Model.pageSize);
     Model.maxPage = Math.ceil(len / Model.pageSize);
 
-    if (page) {
+    if (page && page >= 0) {
       Model.pageIndex = page;
     } else {
       Model.pageIndex = 0;
     }
 
-    h = _.map(group[Model.pageIndex], function (n, i) {
+    h = _.map(group[Model.pageIndex], function(n, i) {
 
       var s = ['<td class="fc-7">进行中</td>', '<td>手动终止</td>', '<td class="fc-3">系统终止</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
 
@@ -1225,7 +1225,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   }
 
-  $('#j-page-box').on('click', '#j-back-page', function (event) {
+  $('#j-page-box').on('click', '#j-back-page', function(event) {
     event.preventDefault();
 
     Model.pageIndex--;
@@ -1239,7 +1239,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     });
   });
 
-  $('#j-page-box').on('click', '#j-next-page', function (event) {
+  $('#j-page-box').on('click', '#j-next-page', function(event) {
     event.preventDefault();
 
     Model.pageIndex++;
@@ -1253,7 +1253,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     });
   });
 
-  $('#j-page-box').on('click', '#j-pages-go', function (event) {
+  $('#j-page-box').on('click', '#j-pages-go', function(event) {
     event.preventDefault();
 
     var v = ~~$('#j-pages-value').val();
@@ -1298,7 +1298,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
         type: 'get',
         dataType: 'json',
       })
-      .done(function (D) {
+      .done(function(D) {
         if (D.retCode === 100000) {
 
           var userMoney = Number(D.retData.money.replace(/,/g, ''));
@@ -1323,7 +1323,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
           model_id: modelId,
         },
       })
-      .done(function (data) {
+      .done(function(data) {
 
         if (data.retCode === 100000) {
 

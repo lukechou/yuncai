@@ -108,14 +108,6 @@ a.list-group-item-2:hover, a.list-group-item-2.active { padding-left: 25px; colo
 .m-hm-fi input { width: 90px; }
 .m-hm-fi .btn { position: relative; padding: 0; width: 54px; height: 25px; }
 
-/*****************************Project Center End*****************************/
-
-/****************************Project Detial Start****************************/
-
-/****************************Project Detial End****************************/
-
-/****************************Personal Detial Start****************************/
-
 /* 个人中心 */
 .personal { width: 985px; margin: auto; padding: 12px 0 30px; }
 .personal .m-tab-nav { padding: 6px 0 0 15px; }

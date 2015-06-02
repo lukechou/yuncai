@@ -17,7 +17,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function ($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function($, _, store, chart, APP, model) {
   'use strict';
 
   var active = 'icon-y2';
@@ -36,13 +36,13 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
     model.bindCollectEvent();
 
-    $('#j-star-select, #j-time-select').on('change', function (event) {
+    $('#j-star-select, #j-time-select').on('change', function(event) {
       event.preventDefault();
       var star = Number($('#j-star-select').val());
       var time = $('#j-time-select').val();
       var trIndex = 1;
 
-      $('#track_detail_list tr').each(function (index, el) {
+      $('#track_detail_list tr').each(function(index, el) {
 
         var trStar = $(this).attr('data-star') * 1;
         var trTime = $(this).attr('data-time') * 1000;
@@ -99,7 +99,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
 
   function getDelId() {
     var delIdArr = [];
-    $('#j-collect-table tbody .' + active).each(function (index, el) {
+    $('#j-collect-table tbody .' + active).each(function(index, el) {
       delIdArr.push($(this).attr('data-modelId'));
     });
     return delIdArr;
@@ -114,12 +114,12 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
   }
 
   function updateTableIndex() {
-    $('#j-collect-table tbody .index').each(function (index, el) {
+    $('#j-collect-table tbody .index').each(function(index, el) {
       $(this).html(index + 1);
     });
   }
 
-  $('#j-collect-table').on('click', 'thead .icon', function (event) {
+  $('#j-collect-table').on('click', 'thead .icon', function(event) {
 
     var t = $(this),
       delId;
@@ -134,7 +134,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     toggleDelBtn(delId);
   });
 
-  $('#j-collect-table').on('click', 'tbody .icon', function (event) {
+  $('#j-collect-table').on('click', 'tbody .icon', function(event) {
     var t = $(this),
       delId = '';
     $(this).toggleClass(noActive + ' ' + active);
@@ -143,13 +143,13 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     if (delId == 0) $('#j-collect-table thead .' + active).removeClass(active).addClass(noActive);
   });
 
-  $('#j-del-manycollect').on('click', '.btn-del-collect', function (event) {
+  $('#j-del-manycollect').on('click', '.btn-del-collect', function(event) {
     event.preventDefault();
 
     APP.showTips({
       text: '是否删除该收藏？',
       type: 2,
-      onConfirm: function () {
+      onConfirm: function() {
         var delId = getDelId();
         var obj = {
           model_id: delId.join(','),
@@ -162,7 +162,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
             dataType: 'json',
             data: obj,
           })
-          .done(function (D) {
+          .done(function(D) {
             if (D.retCode === 100000) {
               for (var i = delId.length - 1; i >= 0; i--) {
                 $('#track_detail_list tr[data-modelid=' + delId[i] + ']').remove();
@@ -172,7 +172,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
               APP.showTips({
                 text: '恭喜您，批量取消收藏成功！',
                 type: 1,
-                onConfirm: function () {
+                onConfirm: function() {
                   window.location.reload();
                 }
               })
@@ -181,7 +181,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
             }
 
           })
-          .fail(function () {
+          .fail(function() {
             APP.onServiceFail();
           });
       }
@@ -191,13 +191,13 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
   });
 
   // 显示曲线图
-  $('#track_detail_list').on('click', '.j-show-chart', function (event) {
+  $('#track_detail_list').on('click', '.j-show-chart', function(event) {
 
     if (event.target.tagName === 'TD') {
       var a = 'active';
       var id = $(this).attr('data-modelId');
       var colspan = $(this).find('td').length;
-      var chartHTML = '<div class="chart-box"><a href="/lottery/model/history-data" class="his-link" title="查看历史数据">查看历史数据</a><div class="chart-loading" id="j-chart-loder"><img src="' + Config.staticHostURI + '/front_images/loader.gif" alt="Logding.."/></div><div class="chart" id="chart"></div></div>';
+      var chartHTML = '<div class="chart-box"><a href="/lottery/model/history-data?day=30&type=0&model_id=' + id + '" class="his-link" title="查看历史数据">查看历史数据</a><div class="chart-loading" id="j-chart-loder"><img src="' + Config.staticHostURI + '/front_images/loader.gif" alt="Logding.."/></div><div class="chart" id="chart"></div></div>';
       var tr = '<tr id="chart-tr"><td colspan="' + colspan + '" style="padding:0;">' + chartHTML + '</td></tr>';
       if (!id) return;
       if (!$(this).hasClass(a)) {

@@ -32,23 +32,23 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core', 'scrollUp'], function ($, _, BET, APP, store, H) {
+require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 'scroll', 'tipsy', 'core', 'scrollUp'], function($, _, BET, APP, store, H) {
   'use strict';
 
   // 返回顶部
-  var scrollUp = (function () {
+  var scrollUp = (function() {
 
     var scrollUp = {
       el: $('#scrollUp'),
-      init: function () {
+      init: function() {
 
         $.scrollUp({
           scrollText: '<div class="scroll-icon"><i class="icon icon-link-top"></i></div><div class="scroll-text">返回顶部</div>',
         });
 
-        this.el.hover(function () {
+        this.el.hover(function() {
           $(this).addClass('active');
-        }, function () {
+        }, function() {
           $(this).removeClass('active');
         });
 
@@ -60,12 +60,12 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   }());
 
   // 顶部导航 悬浮
-  var scrollMenu = (function () {
+  var scrollMenu = (function() {
 
     var scrollMenu = {
       el: $('.j-navbar-wrapper'),
       top: 300,
-      init: function (argm) {
+      init: function(argm) {
 
         var _this = this;
         if (argm) {
@@ -78,7 +78,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
         $(window).scrollTop(0);
 
-        $(window).scroll(function (event) {
+        $(window).scroll(function(event) {
 
           var winTop = $(this).scrollTop();
 
@@ -91,7 +91,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         });
 
       },
-      isLessTop: function () {
+      isLessTop: function() {
 
         var _this = this;
         var rightBox = _this.el.eq(1);
@@ -106,7 +106,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         _this.el.eq(0).removeClass('active');
 
       },
-      isMoreTop: function (winTop) {
+      isMoreTop: function(winTop) {
 
         var _this = this;
         var setTop = 0;
@@ -202,17 +202,17 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   //赛事筛选切换
-  $('#j-show-option').hover(function () {
+  $('#j-show-option').hover(function() {
     $(this).addClass('hovered');
     $('#gameSeleList').show();
 
-  }, function () {
+  }, function() {
     $(this).removeClass('hovered');
     $('#gameSeleList').hide();
   });
 
   // 收藏星星 点击事件
-  $('#gameSeleList').on('click', 'li', function (event) {
+  $('#gameSeleList').on('click', 'li', function(event) {
 
     var isAllHide = false;
     var t = $(this);
@@ -221,7 +221,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     // 切换星星颜色,赛事筛选数据
     if (t.hasClass(ac)) {
-      _.remove(BET.collect, function (chr) {
+      _.remove(BET.collect, function(chr) {
         return chr === matchTypeText;
       });
       t.removeClass(ac);
@@ -237,7 +237,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   //普通过关,组合过关切换
-  $('#j-gg-tab').on('click', 'li', function (event) {
+  $('#j-gg-tab').on('click', 'li', function(event) {
 
     var t = $(this);
     var isZhBunch = Number(t.attr('data-bunch'));
@@ -262,13 +262,13 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 收藏确认按钮
-  $('#j-match-collect').on('click', function (event) {
+  $('#j-match-collect').on('click', function(event) {
 
     var start = [];
 
     if ($('#gameSeleList .icon').hasClass('icon-cgou')) {
 
-      $('#gameSeleList li.active').each(function (index, el) {
+      $('#gameSeleList li.active').each(function(index, el) {
         start.push($.trim($(this).text()));
       });
 
@@ -287,7 +287,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 是否记住收藏信息 暂时不做
-  $('#gameSeleList').on('click', '.icon', function (event) {
+  $('#gameSeleList').on('click', '.icon', function(event) {
 
     var t = $(this);
     t.toggleClass('icon-cbox').toggleClass('icon-cgou');
@@ -295,16 +295,16 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 截止时间
-  $('#j-changeTime').hover(function () {
+  $('#j-changeTime').hover(function() {
     $(this).addClass('hovered');
     $(this).find('.optionList').show();
-  }, function () {
+  }, function() {
     $(this).removeClass('hovered');
     $(this).find('.optionList').hide();
   });
 
   // 截止时间,比赛时间切换
-  $('#j-changeTime .optionList').on('click', 'a', function (event) {
+  $('#j-changeTime .optionList').on('click', 'a', function(event) {
 
     var type = $(this).attr('data-timeType');
 
@@ -312,7 +312,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     $(this).addClass('active');
     $('#j-changeTimeText').html($(this).html());
 
-    $('.dataBody dd').each(function (index, el) {
+    $('.dataBody dd').each(function(index, el) {
       var time = $(this).attr(type);
       $(this).find('.co3 .jtip').html(time);
     });
@@ -320,7 +320,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // Toggle Buy Type
-  $('#j-vote-nav').on('click', 'a', function (event) {
+  $('#j-vote-nav').on('click', 'a', function(event) {
 
     var type = $(this).attr('data-type');
     var gameTab = $(this).attr('data-game');
@@ -351,7 +351,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     // 如果是移除
     if (isRemove) {
 
-      collectBody.find('.j-data-dd').each(function (index, el) {
+      collectBody.find('.j-data-dd').each(function(index, el) {
 
         var m = $(this).attr('matchcode');
         var ne = $(this).html();
@@ -373,7 +373,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     }
 
     // 生成收藏数据,隐藏已收藏数据
-    $('#j-game-select .j-data-dd').each(function (index, el) {
+    $('#j-game-select .j-data-dd').each(function(index, el) {
 
       var t = $(this);
       var matchcode = t.attr('matchcode');
@@ -427,7 +427,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     //关注赛事分组
 
     // 多少组, 每组多少人
-    collectGroup = _.groupBy(collectObj, function (chr) {
+    collectGroup = _.groupBy(collectObj, function(chr) {
 
       return chr.attr('data-time');
 
@@ -463,11 +463,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     collectBody.find('.j-data-dd').show();
 
     // 更新 数据主体DT比赛场数统计
-    $('#j-data-body dl').each(function (index, el) {
+    $('#j-data-body dl').each(function(index, el) {
 
       var totalM = 0;
 
-      $(this).find('.j-data-dd').each(function (index, el) {
+      $(this).find('.j-data-dd').each(function(index, el) {
 
         if (!$(this).is(':hidden')) {
           totalM++;
@@ -490,7 +490,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   }
 
   //底部提示切换
-  var showTipMask = function () {
+  var showTipMask = function() {
     var b = $('#j-game-method');
     var top = b[0].offsetTop;
     var m = $('#tipMark');
@@ -503,8 +503,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       top: top,
     });
     var count = 0;
-    var times = function () {
-      m.fadeToggle('fast', function () {});
+    var times = function() {
+      m.fadeToggle('fast', function() {});
       if (count > 5) {
         clearInterval(f);
       }
@@ -532,10 +532,16 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var result = '';
     var spArr = sp.split('|');
     var titleArr = BET[BET.tab + 'SpValueArr'];
+    var btnEvent = 'j-sp-btn';
+
+    if (spArr.length !== 2) {
+      spArr = ['--', '--'];
+      btnEvent = '';
+    }
 
     for (var i = 0; i < spArr.length; i++) {
 
-      result += '<span class="row-sf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="j-sp-btn sp-btn"><i class="cm-sp-l">'+titleArr[i]+'</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
+      result += '<span class="row-sf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
 
     };
 
@@ -548,6 +554,12 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var spArr = sp.split('|');
     var titleArr = BET[BET.tab + 'SpValueArr'];
     var rqColor = '';
+    var btnEvent = 'j-sp-btn';
+
+    if (spArr.length !== 2) {
+      spArr = ['--', '--'];
+      btnEvent = '';
+    }
 
     if (rq > 0) {
       rqColor = 'fc-3';
@@ -559,7 +571,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     for (var i = 0; i < spArr.length; i++) {
 
-      result += '<span class="row-rfsf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="j-sp-btn sp-btn"><i class="cm-sp-l">'+titleArr[i]+'</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
+      result += '<span class="row-rfsf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
 
     };
 
@@ -572,12 +584,18 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var result = '';
     var spArr = sp.split('|');
     var titleArr = BET[BET.tab + 'SpValueArr'];
+    var btnEvent = 'j-sp-btn';
+
+    if (spArr.length !== 2) {
+      spArr = ['--', '--'];
+      btnEvent = '';
+    }
 
     result = '<em class="dxf-yszf">' + zf + '</em>';
 
     for (var i = 0; i < spArr.length; i++) {
 
-      result += '<span class="row-dxf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="j-sp-btn sp-btn"><i class="cm-sp-l">'+titleArr[i]+'</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
+      result += '<span class="row-dxf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
 
     };
 
@@ -591,12 +609,18 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var titleArr = BET[BET.tab + 'SpValueArr'];
     var spArrOne = spArr.slice(0, 6);
     var spArrTwo = spArr.slice(6);
+    var btnEvent = 'j-sp-btn';
+
+    if (spArr.length !== 12) {
+      spArr = ['--', '--'];
+      btnEvent = '';
+    }
 
     result += '<span class="row-sfc">';
     result += '<em class="first">客胜</em>'
     for (var i = 0; i < spArrOne.length; i++) {
 
-      result += '<em index="' + i + '" data-item="客胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrOne[i] + '" class="j-sp-btn sp-btn sfc-sp-btn">' + spArrOne[i] + '</em>';
+      result += '<em index="' + i + '" data-item="客胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrOne[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrOne[i] + '</em>';
 
     };
 
@@ -606,7 +630,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     result += '<em class="first">主胜</em>'
     for (var i = 0; i < spArrTwo.length; i++) {
 
-      result += '<em index="' + (i + 6) + '" data-item="主胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrTwo[i] + '" class="j-sp-btn sp-btn sfc-sp-btn">' + spArrTwo[i] + '</em>';
+      result += '<em index="' + (i + 6) + '" data-item="主胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrTwo[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrTwo[i] + '</em>';
 
     };
 
@@ -891,7 +915,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
    * @param  {String} lotyName 彩种类型
    * @return {null}
    */
-  var buyTicket = function (obj, type, lotyName) {
+  var buyTicket = function(obj, type, lotyName) {
 
     var u = 'jingcai';
 
@@ -903,7 +927,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         dataType: 'json',
         data: obj
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode == 100000) {
 
           store.set('lotyName', Config.lotyName);
@@ -915,7 +939,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
           APP.handRetCode(data.retCode, data.retMsg);
         }
       })
-      .fail(function () {
+      .fail(function() {
         APP.onServiceFail();
       });
   };
@@ -924,7 +948,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
    * 弹出前对阵合法性检测
    * @return {Boolean} 是否合法
    */
-  var checkParams = function () {
+  var checkParams = function() {
 
     var matchLen = _.uniq(BET.match, 'matchcode').length;
 
@@ -976,7 +1000,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   }
 
   // 合买
-  $('#j-fqhmBtn').on('click', function (event) {
+  $('#j-fqhmBtn').on('click', function(event) {
 
     var obj = BET.getSubmitParams();
     var c = null;
@@ -986,7 +1010,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var tr = $('#selectGamePool tbody tr');
     var t = '';
     $('.j-share-num').val(obj.zhushu * 2 * obj.beishu);
-    tr.each(function (index, el) {
+    tr.each(function(index, el) {
       var e = tr.eq(index);
       if (index % 2 == 0) {
         t += '<tr><td>' + e.find('.t1').html() + '</td><td>' + e.find('.t2').html() + '</td>';
@@ -999,7 +1023,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     c = checkParams();
     if (c) {
 
-      buy(function () {
+      buy(function() {
 
         html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元,共<span id="j-total-zhu">' + obj.zhushu + '</span>注,投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>,理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
         $('#j-tips-table').html(t);
@@ -1014,7 +1038,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 确认合买
-  $('#j-hemai').on('click', function (event) {
+  $('#j-hemai').on('click', function(event) {
 
     var obj = BET.getSubmitParams();
     var type = 'buy-together';
@@ -1030,7 +1054,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     Config.payMoney = obj.zhushu * 2 * obj.beishu / obj.shareNum * (obj.buyNum + obj.aegisNum);
 
-    buy(function () {
+    buy(function() {
       $('#myModal').modal('hide');
       buyTicket(obj, type, Config.lotyName);
     }, obj, true);
@@ -1038,7 +1062,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   });
 
   // 立即购买
-  $('#j-ljtzBtn').on('click', function (event) {
+  $('#j-ljtzBtn').on('click', function(event) {
 
     var obj = BET.getSubmitParams();
     var vote = {};
@@ -1049,7 +1073,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var bunch = obj.bunch.replace(/\_/g, '串');
     bunch = bunch.replace('1串1', '单关');
 
-    tr.each(function (index, el) {
+    tr.each(function(index, el) {
 
       var e = tr.eq(index);
 
@@ -1074,7 +1098,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     if (c) {
 
-      buy(function () {
+      buy(function() {
 
         APP.showTips({
           html: vote.confirmHtml,
@@ -1086,7 +1110,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
           mouseWheelPixels: 200
         });
 
-        $('#buyConfirm').one('click', function (event) {
+        $('#buyConfirm').one('click', function(event) {
 
           buyTicket(obj, type, Config.lotyName);
         });

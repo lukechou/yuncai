@@ -1,7 +1,7 @@
-define(['jquery', 'app'], function ($, APP) {
+define(['jquery', 'app'], function($, APP) {
   'use strict';
 
-  var model = (function () {
+  var model = (function() {
 
     function model(args) {
       // enforces new
@@ -10,7 +10,7 @@ define(['jquery', 'app'], function ($, APP) {
       }
     }
 
-    model.prototype.init = function (args) {
+    model.prototype.init = function(args) {
 
       for (var prop in args) {
         if (args.hasOwnProperty(prop)) {
@@ -24,7 +24,7 @@ define(['jquery', 'app'], function ($, APP) {
        * Star Click Event
        * @return null
        */
-      _this.starList.on('click', function (event) {
+      _this.starList.on('click', function(event) {
         event.preventDefault();
         var index = _this.starList.index(this);
         var dataTip = $(this).data('tip');
@@ -47,7 +47,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    model.prototype.controlStar = function () {
+    model.prototype.controlStar = function() {
 
       var _this = this;
       var stared = 'i-collect-star-y';
@@ -61,7 +61,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    model.prototype.setModelModal = function () {
+    model.prototype.setModelModal = function() {
 
       var _this = this;
       _this.controlStar();
@@ -71,7 +71,7 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    model.prototype.resetModelModal = function () {
+    model.prototype.resetModelModal = function() {
 
       var _this = this;
       _this.userId = null;
@@ -85,60 +85,36 @@ define(['jquery', 'app'], function ($, APP) {
     };
 
 
-    model.prototype.bindCollectEvent = function () {
+    model.prototype.bindCollectEvent = function() {
       var _this = this;
 
       /**
        * 显示收藏提示框
        * @return null
        */
-      $('.j-collect-show').on('click', function (event) {
+      $('.j-collect-show').on('click', function(event) {
         event.preventDefault();
+
         var modelId = $(this).attr('data-modelid');
         var isModify = $(this).attr('data-modify') == 1 ? true : false;
+
         _this.isModify = isModify;
         _this.modelId = modelId;
 
         if (!APP.checkUserLoginStatus()) {
-          APP.showLoginBox();
+          APP.showLoginBox(function() {
+            _this.sureModify(isModify);
+          });
           return;
-        }
+        } else {
+          _this.sureModify(isModify);
 
-        $('#j-isModify').addClass('hide');
-        $('#j-modal-id').html(_this.modelId).attr('data-modalid', _this.modelId);
-        _this.resetModelModal();
-        _this.modal.modal('show');
-
-        if (isModify) {
-          $.ajax({
-              url: '/lottery/trade/get-model-collect-data',
-              type: 'get',
-              dataType: 'json',
-              data: {
-                model_id: _this.modelId
-              },
-            })
-            .done(function (D) {
-              var data = D.retData.data;
-              if (D.retCode === 100000) {
-                $('#j-isModify').removeClass('hide');
-                $('#j-collect-date').html(data.create_time);
-                _this.userId = data.user_id;
-                _this.starLevel = data.star_level;
-                _this.starComment = D.retData.star_comment[data.star_level];
-                _this.modelComment = data.model_comment;
-                _this.setModelModal();
-              }
-            })
-            .fail(function () {
-              APP.onServiceFail();
-            });
         }
 
       });
 
       // collect save
-      $('#j-collect-submit').on('click', function (event) {
+      $('#j-collect-submit').on('click', function(event) {
 
         var obj = {
           model_id: _this.modelId,
@@ -151,7 +127,7 @@ define(['jquery', 'app'], function ($, APP) {
       });
 
       // collect cancel
-      $('.j-collect-cancel').on('click', function (event) {
+      $('.j-collect-cancel').on('click', function(event) {
         if (!_this.userId) return;
         var obj = {
           model_id: _this.modelId,
@@ -163,13 +139,53 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    model.prototype.cancelCollect = function (obj) {
+    model.prototype.sureModify = function(isModify) {
+
+      var _this = this;
+
+      $('#j-isModify').addClass('hide');
+      $('#j-modal-id').html(_this.modelId).attr('data-modalid', _this.modelId);
+      _this.resetModelModal();
+      _this.modal.modal('show');
+
+      if (isModify) {
+        $.ajax({
+            url: '/lottery/trade/get-model-collect-data',
+            type: 'get',
+            dataType: 'json',
+            data: {
+              model_id: _this.modelId
+            },
+          })
+          .done(function(D) {
+            var data = D.retData.data;
+            if (D.retCode === 100000) {
+
+              $('#j-isModify').removeClass('hide');
+              $('#j-collect-date').html(data.create_time);
+              _this.userId = data.user_id;
+              _this.starLevel = data.star_level;
+              _this.starComment = D.retData.star_comment[data.star_level];
+              _this.modelComment = data.model_comment;
+              _this.setModelModal();
+
+            }
+          })
+          .fail(function() {
+            APP.onServiceFail();
+          });
+      }
+
+      $('#j-no-logined').remove();
+    };
+
+    model.prototype.cancelCollect = function(obj) {
       var _this = this;
 
       APP.showTips({
         text: '是否取消该收藏?',
         type: 2,
-        onConfirm: function () {
+        onConfirm: function() {
           var o = obj;
           $.ajax({
               url: '/lottery/trade/model-cancel-collect',
@@ -177,10 +193,10 @@ define(['jquery', 'app'], function ($, APP) {
               dataType: 'json',
               data: o,
             })
-            .done(function () {
+            .done(function() {
               _this.onCollectCancel(o.model_id);
             })
-            .fail(function () {
+            .fail(function() {
               APP.onServiceFail();
             });
         }
@@ -188,47 +204,53 @@ define(['jquery', 'app'], function ($, APP) {
 
     };
 
-    model.prototype.saveCollect = function (obj) {
+    model.prototype.saveCollect = function(obj) {
+
       var _this = this;
+
       $.ajax({
           url: '/lottery/trade/model-collect',
           type: 'get',
           dataType: 'json',
           data: obj,
         })
-        .done(function (D) {
+        .done(function(D) {
           if (D.retCode === 100000) {
+
             var el = $('.j-collect-show[data-modelid=' + obj.model_id + ']');
+
             if (!el.hasClass('i-collect-star-y')) {
               el.html('修改收藏').attr('data-modify', 1);
             }
-            _this.modal.on('hidden.bs.modal', function (e) {
-              if (_this.isModify) D.retMsg = '修改成功';
-              APP.showTips({
-                text: D.retMsg,
-                type: 1,
-                onConfirm: function () {
-                  window.location.reload();
-                }
-              });
-            });
-            _this.modal.modal('hide');
 
+            _this.modal.on('hidden.bs.modal', function(e) {
+
+              if (_this.isModify) D.retMsg = '修改成功';
+
+              APP.showTips(D.retMsg);
+
+              $('#myModal').on('hidden.bs.modal', function(e) {
+                window.location.reload();
+              });
+
+            });
+
+            _this.modal.modal('hide');
           } else {
             APP.handRetCode(D.retCode, D.retMsg);
           }
 
         })
-        .fail(function () {
+        .fail(function() {
           APP.onServiceFail();
         });
     };
 
-    model.prototype.onCollectCancel = function (id) {
+    model.prototype.onCollectCancel = function(id) {
       var _this = this;
       if (_this.isCollectPage) {
         $('#track_detail_list tr[data-modelid=' + id + ']').remove();
-        $('#j-collect-table tbody .index').each(function (index, el) {
+        $('#j-collect-table tbody .index').each(function(index, el) {
           $(this).html(index + 1);
         });
       } else {
@@ -237,7 +259,7 @@ define(['jquery', 'app'], function ($, APP) {
 
       _this.modal.modal('hide');
       APP.showTips({
-        text:'成功删除该收藏',
+        text: '成功删除该收藏',
       });
     };
 

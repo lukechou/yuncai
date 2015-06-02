@@ -22,7 +22,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function ($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function($, _, store, chart, APP, model) {
   'use strict';
 
   var modelId = _.escape($.trim($('#j-module-id').val()));
@@ -64,15 +64,15 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
           model_id: modelId,
         },
       })
-      .done(function (data) {
+      .done(function(data) {
 
         if (data.retCode === 100000) {
 
           var h = '';
           var item = data.retData.data;
           var len = item.length;
-          var ingLen = _.filter(item, function (n) {
-            return n.auto_status === '0';
+          var ingLen = _.filter(item, function(n) {
+            return n.auto_status == '0';
           }).length;
 
           $('#j-auto-count').html(len);
@@ -80,11 +80,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
           if (len > 0) {
 
-            h = _.map(item, function (n, i) {
+            h = _.map(item, function(n, i) {
 
               var s = ['<td class="fc-7">进行中</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>'];
 
-              var str = '<tr><td>' + (i+1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
+              var str = '<tr><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
 
               str += '<td></td></tr>'
 
@@ -136,11 +136,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
   var buyArr = [];
 
   // 获取赔率
-  $('#track_detail_list tr').each(function (index, el) {
+  $('#track_detail_list tr').each(function(index, el) {
 
     var a = [];
     var t = 0;
-    $(this).find('.j-pei').each(function (i, el) {
+    $(this).find('.j-pei').each(function(i, el) {
       t = Number($(this).text());
       a.push(t);
     });
@@ -148,9 +148,9 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
   });
 
   //获取投注内容
-  $('#track_detail_list .j-text').each(function (index, el) {
+  $('#track_detail_list .j-text').each(function(index, el) {
     var b = [];
-    $(this).find('span').each(function (i, el) {
+    $(this).find('span').each(function(i, el) {
       var t = '';
       if ($(this).text() === '胜') t = 0;
       if ($(this).text() === '平') t = 1;
@@ -209,7 +209,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
   }
 
   //未到时间又有键盘事件就取消原来要执行的函数
-  $fee.keyup(function () {
+  $fee.keyup(function() {
     if (feeTimer) {
       clearTimeout(feeTimer); //取消上次执行事件
     }
@@ -218,19 +218,19 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
   //输入金额
   var defaultVal = $fee.val();
-  $fee.focus(function () {
+  $fee.focus(function() {
     if (defaultVal == $fee.val()) {
       $fee.val('').removeClass('gray');
     }
   });
 
-  $fee.blur(function () {
+  $fee.blur(function() {
     if ('' == $fee.val()) {
       $fee.val(defaultVal).addClass('gray');
     }
   });
 
-  $('#j-buy').on('click', function (event) {
+  $('#j-buy').on('click', function(event) {
     event.preventDefault();
 
     window.Config = {};
@@ -264,13 +264,13 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + money + '.00</span>元</p>';
 
     APP.checkLogin(money, {
-      enoughMoney: function () {
+      enoughMoney: function() {
         APP.showTips({
           title: '投注确认',
           html: html,
-          callback: function () {
+          callback: function() {
             $('#buyConfirm').unbind('click');
-            $('#buyConfirm').on('click', function (event) {
+            $('#buyConfirm').on('click', function(event) {
               event.preventDefault();
               $.ajax({
                   url: '/lottery/trade/model-fast-buy',
@@ -278,12 +278,12 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
                   dataType: 'json',
                   data: obj,
                 })
-                .done(function (D) {
-                  if (D.retCode === 100000) {
+                .done(function(D) {
+                if (D.retCode === 100000) {
                     APP.showTips({
                       type: 1,
                       text: '\u8d2d\u4e70\u6210\u529f',
-                      onConfirm: function () {
+                      onConfirm: function() {
                         window.location.reload();
                       }
                     });
@@ -291,7 +291,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
                     APP.handRetCode(D.retCode, D.retMsg);
                   }
                 })
-                .fail(function () {
+                .fail(function() {
                   APP.onServiceFail();
                 });
             });
@@ -309,7 +309,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     return html;
   }
 
-  var x = setInterval(function () {
+  var x = setInterval(function() {
     updateStopTime();
   }, 1000);
 
@@ -332,7 +332,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
       html = '本模型离当前投注截止还剩<span id="j-day">' + d + '</span>天<span id="j-hour">' + h + '</span>小时<span id="j-minute">' + m + '</span>分<span id="j-second">' + s + '</span>秒';
     } else {
       html = '本模型当期已截止投注';
-      $('#j-stop-td').html('已截止');
+      $('#j-stop-td').html('<span class="fc-green">已截止</span>');
       clearInterval(x);
       $('#j-ft-main').hide();
       $('#j-stop-box').removeClass('hide');

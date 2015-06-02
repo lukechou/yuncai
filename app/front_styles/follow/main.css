@@ -1,56 +1,24 @@
-/** { margin: 0; padding: 0; box-sizing: border-box; }*/
-
-/* start bootstrap.css */
-
-/*a { color: #0d67c4; text-decoration: none; }*/
-
-/*.btn { display: inline-block; margin-bottom: 0; font-weight: normal; text-align: center; vertical-align: middle; touch-action: manipulation; cursor: pointer; background-image: none; border: 1px solid transparent; white-space: nowrap; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; border-radius: 0; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }*/
-
-/*.clearfix:before, .clearfix:after, .dl-horizontal dd:before, .dl-horizontal dd:after, .container:before, .container:after, .container-fluid:before, .container-fluid:after, .row:before, .row:after, .form-horizontal .form-group:before, .form-horizontal .form-group:after, .btn-toolbar:before, .btn-toolbar:after, .btn-group-vertical>.btn-group:before, .btn-group-vertical>.btn-group:after, .nav:before, .nav:after, .navbar:before, .navbar:after, .navbar-header:before, .navbar-header:after, .navbar-collapse:before, .navbar-collapse:after, .pager:before, .pager:after, .panel-body:before, .panel-body:after, .modal-footer:before, .modal-footer:after { content: " "; display: table; }*/
-
-/**:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }*/
-
-/*.clearfix:after, .dl-horizontal dd:after, .container:after, .container-fluid:after, .row:after, .form-horizontal .form-group:after, .btn-toolbar:after, .btn-group-vertical>.btn-group:after, .nav:after, .navbar:after, .navbar-header:after, .navbar-collapse:after, .pager:after, .panel-body:after, .modal-footer:after { clear: both; }*/
-
-/*td, th { padding: 0; }*/
-
-/*table { border-collapse: collapse; border-spacing: 0; }*/
-
-/* end bootstrap.css */
-
-/* start global.css */
-
-/*.w985 { width: 985px; margin: auto; }*/
-
-/*ul, ol { margin: 0; padding: 0; list-style: none; }*/
-
-/*address, caption, cite, code, dfn, em, th, var, i { font-weight: 500; font-style: normal; }*/
-
-/*.icon { display: inline-block; }*/
-
-/*.btn-sear { color: #fff; background: #f88c35; }*/
-
-/*.btn { border-radius: 2px; font-size: 12px; }*/
-
-/* end global.css */
-
 /* start 定制跟单.css */
 .customize { overflow: hidden; padding: 12px 0; }
 .customize-l { float: left; width: 185px; }
 .customize-r { float: right; width: 800px; padding-left: 12px; }
-.m-dzgd-nav, .m-dzgd-fdph, .m-dzgd-help { font-size: 12px; background: #f1f1f1; }
-.m-dzgd-help i.icon-follow-dot{margin: 10px 5px 0 0;float: left;}
+.m-dzgd-nav,
+.m-dzgd-fdph,
+.m-dzgd-help { font-size: 12px; background: #fff; }
+.m-dzgd-help i.icon-follow-dot { margin: 10px 5px 0 0; float: left; }
 .m-dzgd-nav h2 { font-size: 16px; font-weight: bold; margin: 0; padding: 10px 20px; color: #fff; background: #f13c38; font-family: "微软雅黑"; }
 .m-dzgd-nav ul { border-right: 1px #dfdfdf solid; border-left: 1px #dfdfdf solid; padding: 5px 0; }
 .m-dzgd-nav ul > li.title { font-weight: bold; padding: 5px 20px; }
 .m-dzgd-nav ul > li > a { display: block; padding: 5px 20px; color: #3d3d3d; }
-.m-dzgd-nav ul > li > a.active { background: #e1e1e1; color: #0d67c4; text-decoration: none; }
+.m-dzgd-nav ul > li > a.active { background: #f1f1f1; color: #0d67c4; text-decoration: none; text-indent: 6px; }
 .m-dzgd-nav ul > li > a:hover { text-decoration: none; color: #0d67c4; }
 .m-dzgd-nav ul li i { float: right; color: #fff; text-align: center; margin: 5px 10px 0 0; }
 .m-dzgd-nav .line { width: 93%; margin: auto; border-bottom: 1px #d8d8d8 dotted; }
 .m-dzgd-nav ul.last { border-bottom: 1px #dfdfdf solid; }
-.m-dzgd-fdph, .m-dzgd-help { border: 1px solid #dfdfdf; margin: 10px 0; }
-.m-dzgd-fdph .title, .m-dzgd-help .title { height: 25px; background: #DDDEDF; font-weight: bold; padding-left: 20px; line-height: 25px; }
+.m-dzgd-fdph,
+.m-dzgd-help { border: 1px solid #dfdfdf; margin: 10px 0 80px; }
+.m-dzgd-fdph .title,
+.m-dzgd-help .title { height: 25px; background: #f1f1f1; font-weight: bold; padding-left: 20px; line-height: 25px; }
 .d-fdph-th1 { width: 70px; }
 .d-fdph-th2 { width: 75px; }
 .d-fdph-th3 { width: 35px; }
@@ -66,11 +34,11 @@
 .m-dzgd-help ul li a { color: #3d3d3d; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block; width: 150px; }
 .m-dzgd-help ul li a:hover { color: #0C67C4; }
 .m-dzgd-rtbox { font-size: 12px; padding: 17px 21px 18px 20px; border: 1px #dfdfdf solid; background: #f1f1f1; margin-bottom: 12px; }
-.dzgd-r-title{  float: left;}
+.dzgd-r-title { float: left; }
 .dzgd-r-title span { font-size: 21px; font-weight: 900; font-family: "微软雅黑"; color: #404040; float: left; }
-.dzgd-r-title i{ float: left;margin: 10px 5px 0 0; }
-.dzgd-r-title .btn-white{margin: 5px 0 0 10px; border: 1px solid #DAD9D9;}
-.my-dzgd-btn { height: 24px; padding: 0 10px; margin-left: 5px; line-height: 23px; }
+.dzgd-r-title i { float: left; margin: 10px 5px 0 0; }
+.dzgd-r-title .btn-white { margin: 5px 0 0 10px; border: 1px solid #DAD9D9; }
+.my-dzgd-btn { height: 28px; padding: 0; margin-left: 5px; line-height: 28px; width: 92px; }
 .dzgd-r-ser { float: right; }
 .dzgd-r-ser input[type=text] { width: 120px; height: 23px; border: 1px solid #dfdfdf; padding: 0 5px; float: left; }
 .dzgd-r-ser button { height: 23px; padding: 0 10px; margin-left: 5px; line-height: 23px; }
@@ -83,26 +51,35 @@
 .dzgd-table > tbody >tr:nth-child(odd) { background: #f1f1f1; }
 .dzgd-table th { font-weight: normal; color: #848484; }
 .dzgd-table1 { border-bottom: 1px dotted #dfdfdf; margin-bottom: 25px; width: 100%; }
-.dzgd-table1 .th1 { width: 40px; text-align: center; }
-.dzgd-table1 .th2 { width: 60px; }
-.dzgd-table1 .th3 { width: 65px; }
+.dzgd-table1 .th1 { width: 45px; text-align: center; }
+.dzgd-table1 .th3 { width: 77px; }
 .dzgd-table1 .th4 { width: 100px; }
 .dzgd-table1 .th5 { width: 115px; text-align: center; }
 .dzgd-table1 .th6 { width: 90px; padding-left: 17px; }
-.dzgd-table1 .th7 { width: 70px; text-align: center; }
-.dzgd-table1 .th8 { width: 70px; text-align: center; }
-.dzgd-table1 .th9 { width: 80px; text-align: center; }
-.dzgd-table1 .th10 { width: 96px; text-align: center; }
+.dzgd-table1 .th7 { width: 80px; text-align: center; }
+.dzgd-table1 .th8 { width: 75px; text-align: center; }
+.dzgd-table1 .th9 { width: 90px; text-align: center; }
+.dzgd-table1 .th10 { width: 92px; text-align: center; }
 .dzgd-table1 th i { position: absolute; margin: 2px 0 0 2px; cursor: pointer; }
-.dzgd-table1 td input.min-yuan, .dzgd-table1 td input.min-ci { height: 23px; border: 1px solid #dfdfdf; padding: 0 2px; }
-.dzgd-table1 td .min-yuan { width: 40px; text-align: center; margin-left: 3px; }
-.dzgd-table1 td .min-ci { width: 55px; text-align: center; margin-left: 3px;}
-.dzgd-table1 .th2, .dzgd-table1 .th3, .dzgd-table1 .th4, .dzgd-table1 .td2, .dzgd-table1 .td3, .dzgd-table1 .td4 { text-align: left; }
+.dzgd-table1 td input.min-yuan,
+.dzgd-table1 td input.min-ci { height: 23px; border: 1px solid #dfdfdf; padding: 0 2px; margin-right: 3px; }
+.dzgd-table1 td .min-yuan { width: 40px; text-align: center; }
+.dzgd-table1 td .min-ci { width: 55px; text-align: center; }
+.dzgd-table1 .th2,
+.dzgd-table1 .th3,
+.dzgd-table1 .th4,
+.dzgd-table1 .td2,
+.dzgd-table1 .td3,
+.dzgd-table1 .td4 { text-align: left; }
 .dzgd-table1 .td5 { text-align: center; }
-.dzgd-table1 .td5span{ color: #F13C38; }
-.dzgd-table1 .td6, .dzgd-table1 .td7,.dzgd-table1 .td8,.dzgd-table1 .td9{ text-align: center; }
-.dzgd-table1 .td10 button, .dzgd-table1 .td10 a { height: 25px; border: none; width: 40px; text-align: center; border-radius: 3px; float: left; margin-left: 5px; line-height: 25px;padding:0; }
-.dzgd-table1 .td10 button.btn-gray{background:#939393;color: #fff; }
+.dzgd-table1 .td5span { color: #F13C38; }
+.dzgd-table1 .td6,
+.dzgd-table1 .td7,
+.dzgd-table1 .td8,
+.dzgd-table1 .td9 { text-align: center; }
+.dzgd-table1 .td10 button,
+.dzgd-table1 .td10 a { height: 25px; border: none; width: 40px; text-align: center; border-radius: 3px; float: left; margin-left: 3px; line-height: 25px; padding: 0; }
+.dzgd-table1 .td10 button.btn-gray { background: #939393; color: #fff; }
 .dzgd-table1 .td10 a { text-decoration: none; }
 .dzgd-table1 .td10 .btn-white { border: 1px solid #DAD9D9; }
 
