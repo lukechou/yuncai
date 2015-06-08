@@ -161,7 +161,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   //页面初始化
   function pageInit() {
-
+    var matchCount = [];
     // 停售检测
     if (serverTime == 1) {
 
@@ -174,7 +174,17 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     } else {
 
       // 初始化表单
-      initDataBody();
+      for (var prop in jczqData) {
+        if (jczqData.hasOwnProperty(prop)) {
+          matchCount.push(jczqData[prop]);
+        }
+      }
+
+      if (matchCount.length) {
+        initDataBody();
+      } else {
+        $('#j-data-body').html('<div class="data-loadbox">温馨提示：今天暂无比赛，去“<a href="/lottery/buy/jczq">竞彩足球</a>”看看吧</div>');
+      }
     }
 
     scrollUp.init();
@@ -321,7 +331,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   // Toggle Buy Type
   $('#j-vote-nav').on('click', 'a', function(event) {
-
+    var matchCount = [];
     var type = $(this).attr('data-type');
     var gameTab = $(this).attr('data-game');
     var c = 'bettingBox clearfix ' + type;
@@ -330,7 +340,18 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     $(this).parents('li').addClass('active');
 
     BET.toggleNav(gameTab, c);
-    initDataBody();
+
+    for (var prop in jczqData) {
+      if (jczqData.hasOwnProperty(prop)) {
+        matchCount.push(jczqData[prop]);
+      }
+    }
+
+    if (matchCount.length) {
+      initDataBody();
+    } else {
+    $('#j-data-body').html('<div class="data-loadbox">温馨提示：今天暂无比赛，去“<a href="/lottery/buy/jczq">竞彩足球</a>”看看吧</div>');
+    }
 
     $('#j-collect-body .j-data-dd').remove();
     updateAfterCollectUi();
@@ -539,10 +560,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       btnEvent = '';
     }
 
-    for (var i = 0; i < spArr.length; i++) {
-
+    for (var i = spArr.length - 1; i >= 0; i--) {
       result += '<span class="row-sf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
-
     };
 
     return result;
@@ -569,10 +588,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     result = '<em class="rq ' + rqColor + '">' + rq + '</em>';
 
-    for (var i = 0; i < spArr.length; i++) {
-
+    for (var i = spArr.length - 1; i >= 0; i--) {
       result += '<span class="row-rfsf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
-
     };
 
     return result;
@@ -590,6 +607,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       spArr = ['--', '--'];
       btnEvent = '';
     }
+
+    spArr.reverse();
 
     result = '<em class="dxf-yszf">' + zf + '</em>';
 
@@ -617,10 +636,11 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     }
 
     result += '<span class="row-sfc">';
-    result += '<em class="first">客胜</em>'
-    for (var i = 0; i < spArrOne.length; i++) {
+    result += '<em class="first">客胜</em>';
 
-      result += '<em index="' + i + '" data-item="客胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrOne[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrOne[i] + '</em>';
+    for (var i = 0; i < spArrTwo.length; i++) {
+
+      result += '<em index="' + (i + 6) + '" data-item="客胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrTwo[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrTwo[i] + '</em>';
 
     };
 
@@ -628,9 +648,9 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     result += '<span class="row-sfc">';
     result += '<em class="first">主胜</em>'
-    for (var i = 0; i < spArrTwo.length; i++) {
+    for (var i = 0; i < spArrOne.length; i++) {
 
-      result += '<em index="' + (i + 6) + '" data-item="主胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrTwo[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrTwo[i] + '</em>';
+      result += '<em index="' + i + '" data-item="主胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrOne[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrOne[i] + '</em>';
 
     };
 
@@ -718,85 +738,85 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   function getHhztBtnGp(item, titleArr, moreIndex, rf, zf) {
 
-      var html = '';
-      var hasSp = '';
-      var l = '';
-      var tab = ['sf', 'rfsf', 'dxf'];
-      var leftTips = '';
-      var typeClass = '';
-      var rfClass = '';
+    var html = '';
+    var hasSp = '';
+    var l = '';
+    var tab = ['sf', 'rfsf', 'dxf'];
+    var leftTips = '';
+    var typeClass = '';
+    var rfClass = '';
 
-      if (!moreIndex) {
-        moreIndex = 0;
+    if (!moreIndex) {
+      moreIndex = 0;
+    }
+
+    html += '<span class="row-hh">';
+
+    for (var i = 0, len = item.length; i < len; i++) {
+
+      if (item[i]) {
+
+        hasSp = 'j-sp-btn';
+
+      } else {
+
+        item[i] = '--';
+        hasSp = '';
+
       }
 
-      html += '<span class="row-hh">';
+      if (i === (len - 1)) l = 'lastOne';
 
-      for (var i = 0, len = item.length; i < len; i++) {
+      leftTips = '';
 
-        if (item[i]) {
+      typeClass = 'hh-' + tab[i];
 
-          hasSp = 'j-sp-btn';
-
+      if (tab[i] === 'sf') {
+        if (moreIndex) {
+          leftTips = '<i class="hh-sp-l">客胜</i>';
         } else {
+          leftTips = '<i class="hh-sp-l">主胜</i>';
+        }
+      }
 
-          item[i] = '--';
-          hasSp = '';
+      if (tab[i] === 'rfsf') {
 
+        if (rf > 0) {
+          rfClass = 'fc-3';
+        } else {
+          rfClass = 'fc-7';
         }
 
-        if (i === (len - 1)) l = 'lastOne';
-
-        leftTips = '';
-
-        typeClass = 'hh-' + tab[i];
-
-        if (tab[i] === 'sf') {
-          if (moreIndex) {
-            leftTips = '<i class="hh-sp-l">主胜</i>';
-          } else {
-            leftTips = '<i class="hh-sp-l">主负</i>';
-          }
+        if (!moreIndex) {
+          rf = (rf > 0) ? '+' + rf : rf;
+          leftTips = '<strong class="hh-sp-l ' + rfClass + '">' + rf + '</strong>';
         }
 
-        if (tab[i] === 'rfsf') {
+      }
 
-          if (rf > 0) {
-            rfClass = 'fc-3';
-          } else {
-            rfClass = 'fc-7';
-          }
+      if (tab[i] === 'dxf') {
 
-          if (moreIndex) {
-            rf = (rf > 0) ? '+' + rf : rf;
-            leftTips = '<strong class="hh-sp-l ' + rfClass + '">' + rf + '</strong>';
-          }
-
+        if (moreIndex) {
+          leftTips = '<i class="hh-sp-l fc-84">小于' + zf + '</i>';
+        } else {
+          leftTips = '<i class="hh-sp-l fc-84">大于' + zf + '</i>';
         }
 
-        if (tab[i] === 'dxf') {
+      }
 
-          if (moreIndex) {
-            leftTips = '<i class="hh-sp-l fc-84">大于' + zf + '</i>';
-          } else {
-            leftTips = '<i class="hh-sp-l fc-84">小于' + zf + '</i>';
-          }
+      html += '<em index="' + (i + moreIndex) + '" data-item="' + titleArr[i] + '" gametype="' + tab[i] + '" sp="' + item[i] + '" class="' + l + ' ' + hasSp + ' sp-btn ' + typeClass + '">' + leftTips + '<b class="hh-sp-r">' + item[i] + '</b></em>';
 
-        }
+    };
 
-        html += '<em index="' + (i + moreIndex) + '" data-item="' + titleArr[i] + '" gametype="' + tab[i] + '" sp="' + item[i] + '" class="' + l + ' ' + hasSp + ' sp-btn ' + typeClass + '">' + leftTips + '<b class="hh-sp-r">' + item[i] + '</b></em>';
+    html += '</span>';
 
-      };
-
-      html += '</span>';
-
-      return html;
-    }
-    /**
-     * 创建混合投注html
-     * @param  {Object} item 对阵数据对象
-     * @return {String}      html
-     */
+    return html;
+  }
+  /**
+   * 创建混合投注html
+   * @param  {Object} item 对阵数据对象
+   * @return {String}      html
+   */
   function createHhtzBtnHtml(item) {
 
     var html = '';
@@ -806,8 +826,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var dxfArr = item['dxf_sp'].split('|');
 
     var Title = [
-      ['主负', '让分客胜', '大分'],
-      ['主胜', '让分主胜', '小分']
+      ['主胜', '让分主胜', '大分'],
+      ['客胜', '让分客胜', '小分']
     ];
     var spArr = [
       [sfArr[0], rfsfArr[0], dxfArr[0]],
@@ -815,7 +835,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     ];
     var index = 0;
 
-    for (var i = 0; i < spArr.length; i++) {
+    for (var i = spArr.length - 1; i >= 0; i--) {
 
       index = (i > 0) ? i * 3 : 0;
       html += getHhztBtnGp(spArr[i], Title[i], index, item.rfsf_rangfen_num, item.dxf_reference);
@@ -1025,7 +1045,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
       buy(function() {
 
-        html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元,共<span id="j-total-zhu">' + obj.zhushu + '</span>注,投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>,理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
+        html = '<p><b>投注金额：</b>总计<span id="j-total-money" class="fc-3 mlr-8">' + obj.zhushu * 2 * obj.beishu + '</span>元，共<span id="j-total-zhu">' + obj.zhushu + '</span>注，投注<span id="j-total-bei">' + obj.beishu + '</span>倍</p><p><b>过关方式：</b><span id="j-total-bunch">' + bunch + '</span>，理论最高奖金<span id="j-lilu-award" class="fc-3 mlr-8">' + BET.maxBonus + '</span>元</p>';
         $('#j-tips-table').html(t);
         $('#j-modal-text').html(html);
         H.setHeMaiTotal();
@@ -1092,7 +1112,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     Config.payMoney = BET.zhushu * 2 * BET.beishu;
 
     vote.title = '投注信息确认';
-    vote.confirmHtml = '<div class="ljtz-box"><div class="text"><p>投注金额：总计<b class="fc-3 mlr5">' + Config.payMoney + '</b>元，共<b class="mlr5">' + obj.zhushu + '</b>注，投注<b class="mlr5">' + obj.beishu + '</b>倍</p><div class="ljtz-main" id="j-ljtz-box"><table class="table table-bordered m-table-middle"><thead><tr><th width="115">场次</th><th class="gameTeam" width="220">主队 VS 客队</th><th>投注内容</th></tr></thead><tbody>' + tbodyHtml + '</tbody></table></div><p>过关方式：' + bunch + ', 理论最高奖金：<b class="fc-3 mlr5">' + BET.maxBonus + '</b>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
+    vote.confirmHtml = '<div class="ljtz-box"><div class="text"><p>投注金额：总计<b class="fc-3 mlr5">' + Config.payMoney + '</b>元，共<b class="mlr5">' + obj.zhushu + '</b>注，投注<b class="mlr5">' + obj.beishu + '</b>倍</p><div class="ljtz-main" id="j-ljtz-box"><table class="table table-bordered m-table-middle"><thead><tr><th width="115">场次</th><th class="gameTeam" width="220">客队 VS 主队</th><th>投注内容</th></tr></thead><tbody>' + tbodyHtml + '</tbody></table></div><p>过关方式：' + bunch + '， 理论最高奖金：<b class="fc-3 mlr5">' + BET.maxBonus + '</b>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>';
 
     c = checkParams();
 
@@ -1102,7 +1122,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
         APP.showTips({
           html: vote.confirmHtml,
-          title: vote.title
+          title: vote.title,
+          className: 'jclqbuy-modal'
         });
 
         $('#j-ljtz-box').mCustomScrollbar({
@@ -1113,6 +1134,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         $('#buyConfirm').one('click', function(event) {
 
           buyTicket(obj, type, Config.lotyName);
+
         });
 
       }, obj);

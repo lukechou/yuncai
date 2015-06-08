@@ -303,14 +303,24 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
   });
 
   function createShaiLiHtml() {
-    var saveWrapHtml = '',
-      k;
+
+    var saveWrapHtml = '';
+    var k = '';
+    var index = 0;
+    var c = '';
+
     for (k in saveData) {
+
       k = _.escape($.trim(k));
+
+      c = (index % 2 === 0) ? 'save-name-odd' : 'save-name-even';
       if (saveData[k]) {
-        saveWrapHtml += '<li><a href="javascrip:;" class="j-save-name save-name show" data-name="' + k + '" title="' + k + '">' + k + '</a> <a href="javascript:;" class="j-save-del i-close-gray" data-id="' + saveData[k].search_id + '"></a></li>'
+        saveWrapHtml += '<li class="' + c + '"><a href="javascrip:;" class="j-save-name save-name show" data-name="' + k + '" title="' + k + '">' + k + '</a> <a href="javascript:;" class="j-save-del i-close-gray" data-id="' + saveData[k].search_id + '"></a></li>'
       }
+
+      index++;
     }
+
     $('#j-save-wrap').html(saveWrapHtml);
     $('#j-load-tips').remove();
   }
@@ -470,11 +480,11 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
 
     model.bindCollectEvent();
 
-    $('.data-tip,.j-icon-tips').tipsy({
+    $('.j-icon-tips').tipsy({
       fade: true,
       gravity: 's',
       html: true,
-      opacity: 1
+      opacity: 1,
     });
   }
 

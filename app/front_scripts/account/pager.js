@@ -35,7 +35,7 @@ var PAGE = (function () {
         pageHtmlNode.html('');
         return;
       }
-      pageHtmlNode.html('<div class="pages">' + this.config.page + '/<span class="j-days">' + this.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="' + this.config.page + '" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>').show();
+      pageHtmlNode.html('<div class="pull-right pages">' + this.config.page + '/<span class="j-days">' + this.config.pageNum + '</span>页<a href="javascript:;" class="back-page" >上一页</a><a href="javascript:;" class="next-page">下一页</a><input type="text" value="' + this.config.page + '" class="govalue j-pages-value"><button class="btn j-pages-go" type="button">Go</button>页</div>').show();
     },
     initAjax: function (obj) {
 

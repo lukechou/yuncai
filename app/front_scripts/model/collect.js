@@ -4,6 +4,7 @@ require.config({
     lodash: '../lib/lodash.compat.min',
     store: '../lib/store.min',
     bootstrap: '../lib/bootstrap.min',
+    tipsy: '../lib/jquery.tipsy',
     app: '../common/app',
     model: 'model',
     chart: 'chart',
@@ -13,17 +14,29 @@ require.config({
     bootstrap: {
       deps: ['jquery'],
       exports: 'jquery'
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
     }
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function($, _, store, chart, APP, model) {
   'use strict';
 
   var active = 'icon-y2';
   var noActive = 'icon-y';
 
   function init() {
+
+    $('.j-icon-tips').tipsy({
+      fade: true,
+      gravity: 's',
+      html: true,
+      opacity: 1
+    });
+
     model.init({
       modal: $('#collect'),
       starList: $('.td-star-level a'),

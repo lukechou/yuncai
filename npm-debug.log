@@ -1,0 +1,259 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'generator-gulp-webapp',
+1 verbose cli   'generator-mocha' ]
+2 info using npm@2.9.1
+3 info using node@v0.12.3
+4 verbose install initial load of /usr/local/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/lib/package.json
+6 silly cache add args [ 'generator-gulp-webapp', null ]
+7 verbose cache add spec generator-gulp-webapp
+8 silly cache add args [ 'generator-mocha', null ]
+9 verbose cache add spec generator-mocha
+10 silly cache add parsed spec { raw: 'generator-gulp-webapp',
+10 silly cache add   scope: null,
+10 silly cache add   name: 'generator-gulp-webapp',
+10 silly cache add   rawSpec: '',
+10 silly cache add   spec: '*',
+10 silly cache add   type: 'range' }
+11 silly addNamed generator-gulp-webapp@*
+12 verbose addNamed "*" is a valid semver range for generator-gulp-webapp
+13 silly addNameRange { name: 'generator-gulp-webapp', range: '*', hasData: false }
+14 silly mapToRegistry name generator-gulp-webapp
+15 silly mapToRegistry using default registry
+16 silly mapToRegistry registry https://registry.npmjs.org/
+17 silly mapToRegistry uri https://registry.npmjs.org/generator-gulp-webapp
+18 verbose addNameRange registry:https://registry.npmjs.org/generator-gulp-webapp not in flight; fetching
+19 silly cache add parsed spec { raw: 'generator-mocha',
+19 silly cache add   scope: null,
+19 silly cache add   name: 'generator-mocha',
+19 silly cache add   rawSpec: '',
+19 silly cache add   spec: '*',
+19 silly cache add   type: 'range' }
+20 silly addNamed generator-mocha@*
+21 verbose addNamed "*" is a valid semver range for generator-mocha
+22 silly addNameRange { name: 'generator-mocha', range: '*', hasData: false }
+23 silly mapToRegistry name generator-mocha
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry https://registry.npmjs.org/
+26 silly mapToRegistry uri https://registry.npmjs.org/generator-mocha
+27 verbose addNameRange registry:https://registry.npmjs.org/generator-mocha not in flight; fetching
+28 verbose request uri https://registry.npmjs.org/generator-gulp-webapp
+29 verbose request no auth needed
+30 info attempt registry request try #1 at 12:30:49 AM
+31 verbose request id ae07dbdc45b800d6
+32 verbose etag "9OBKV5FVGX0EMPVBE6H3EM3QH"
+33 http request GET https://registry.npmjs.org/generator-gulp-webapp
+34 verbose request uri https://registry.npmjs.org/generator-mocha
+35 verbose request no auth needed
+36 info attempt registry request try #1 at 12:30:49 AM
+37 verbose etag "4MG1NM5P4WCWKBY3PKY7PZ03P"
+38 http request GET https://registry.npmjs.org/generator-mocha
+39 http 304 https://registry.npmjs.org/generator-mocha
+40 silly get cb [ 304,
+40 silly get   { date: 'Tue, 02 Jun 2015 16:30:49 GMT',
+40 silly get     via: '1.1 varnish',
+40 silly get     'cache-control': 'max-age=60',
+40 silly get     etag: '"4MG1NM5P4WCWKBY3PKY7PZ03P"',
+40 silly get     age: '0',
+40 silly get     connection: 'keep-alive',
+40 silly get     'x-served-by': 'cache-sjc3134-SJC',
+40 silly get     'x-cache': 'MISS',
+40 silly get     'x-cache-hits': '0',
+40 silly get     'x-timer': 'S1433262649.436680,VS0,VE35',
+40 silly get     vary: 'Accept' } ]
+41 verbose etag https://registry.npmjs.org/generator-mocha from cache
+42 verbose get saving generator-mocha to /Users/yipraymond/.npm/registry.npmjs.org/generator-mocha/.cache.json
+43 silly addNameRange number 2 { name: 'generator-mocha', range: '*', hasData: true }
+44 silly addNameRange versions [ 'generator-mocha',
+44 silly addNameRange   [ '0.1.0',
+44 silly addNameRange     '0.1.1',
+44 silly addNameRange     '0.1.2',
+44 silly addNameRange     '0.1.3',
+44 silly addNameRange     '0.1.4',
+44 silly addNameRange     '0.1.5',
+44 silly addNameRange     '0.1.6',
+44 silly addNameRange     '0.1.7' ] ]
+45 silly addNamed generator-mocha@0.1.7
+46 verbose addNamed "0.1.7" is a plain semver version for generator-mocha
+47 silly cache afterAdd generator-mocha@0.1.7
+48 verbose afterAdd /Users/yipraymond/.npm/generator-mocha/0.1.7/package/package.json not in flight; writing
+49 verbose afterAdd /Users/yipraymond/.npm/generator-mocha/0.1.7/package/package.json written
+50 http 304 https://registry.npmjs.org/generator-gulp-webapp
+51 silly get cb [ 304,
+51 silly get   { date: 'Tue, 02 Jun 2015 16:30:49 GMT',
+51 silly get     via: '1.1 varnish',
+51 silly get     'cache-control': 'max-age=60',
+51 silly get     etag: '"9OBKV5FVGX0EMPVBE6H3EM3QH"',
+51 silly get     age: '0',
+51 silly get     connection: 'keep-alive',
+51 silly get     'x-served-by': 'cache-sjc3121-SJC',
+51 silly get     'x-cache': 'MISS',
+51 silly get     'x-cache-hits': '0',
+51 silly get     'x-timer': 'S1433262649.353392,VS0,VE163',
+51 silly get     vary: 'Accept' } ]
+52 verbose etag https://registry.npmjs.org/generator-gulp-webapp from cache
+53 verbose get saving generator-gulp-webapp to /Users/yipraymond/.npm/registry.npmjs.org/generator-gulp-webapp/.cache.json
+54 silly addNameRange number 2 { name: 'generator-gulp-webapp', range: '*', hasData: true }
+55 silly addNameRange versions [ 'generator-gulp-webapp',
+55 silly addNameRange   [ '0.0.1',
+55 silly addNameRange     '0.0.3',
+55 silly addNameRange     '0.0.4',
+55 silly addNameRange     '0.0.5',
+55 silly addNameRange     '0.0.6',
+55 silly addNameRange     '0.0.7',
+55 silly addNameRange     '0.0.8',
+55 silly addNameRange     '0.1.0',
+55 silly addNameRange     '0.2.0',
+55 silly addNameRange     '0.3.0' ] ]
+56 silly addNamed generator-gulp-webapp@0.3.0
+57 verbose addNamed "0.3.0" is a plain semver version for generator-gulp-webapp
+58 silly cache afterAdd generator-gulp-webapp@0.3.0
+59 verbose afterAdd /Users/yipraymond/.npm/generator-gulp-webapp/0.3.0/package/package.json not in flight; writing
+60 verbose afterAdd /Users/yipraymond/.npm/generator-gulp-webapp/0.3.0/package/package.json written
+61 silly install resolved [ { name: 'generator-mocha',
+61 silly install resolved     version: '0.1.7',
+61 silly install resolved     description: 'Yeoman generator for Mocha',
+61 silly install resolved     keywords:
+61 silly install resolved      [ 'yeoman-generator',
+61 silly install resolved        'scaffold',
+61 silly install resolved        'unit',
+61 silly install resolved        'test',
+61 silly install resolved        'testing',
+61 silly install resolved        'bdd',
+61 silly install resolved        'tdd',
+61 silly install resolved        'mocha' ],
+61 silly install resolved     author: { name: 'The Yeoman Team' },
+61 silly install resolved     repository:
+61 silly install resolved      { type: 'git',
+61 silly install resolved        url: 'git+https://github.com/yeoman/generator-mocha.git' },
+61 silly install resolved     scripts: { test: 'mocha --reporter spec' },
+61 silly install resolved     dependencies: { 'yeoman-generator': '^0.17.0' },
+61 silly install resolved     devDependencies: { mocha: '*' },
+61 silly install resolved     peerDependencies: { yo: '>=1.0.0' },
+61 silly install resolved     engines: { node: '>=0.10.0', npm: '>=1.2.10' },
+61 silly install resolved     license: 'BSD',
+61 silly install resolved     files: [ 'generators' ],
+61 silly install resolved     gitHead: '537a9a1a51787a5cb2b80e83ee5b6628f41ed400',
+61 silly install resolved     bugs: { url: 'https://github.com/yeoman/generator-mocha/issues' },
+61 silly install resolved     homepage: 'https://github.com/yeoman/generator-mocha',
+61 silly install resolved     _id: 'generator-mocha@0.1.7',
+61 silly install resolved     _shasum: 'cf3e401d0e78924e5909a89dcf86a003e84e0f5b',
+61 silly install resolved     _from: 'generator-mocha@*',
+61 silly install resolved     _npmVersion: '2.7.4',
+61 silly install resolved     _nodeVersion: '0.12.2',
+61 silly install resolved     _npmUser: { name: 'sindresorhus', email: 'sindresorhus@gmail.com' },
+61 silly install resolved     maintainers: [ [Object], [Object], [Object], [Object], [Object] ],
+61 silly install resolved     dist:
+61 silly install resolved      { shasum: 'cf3e401d0e78924e5909a89dcf86a003e84e0f5b',
+61 silly install resolved        tarball: 'http://registry.npmjs.org/generator-mocha/-/generator-mocha-0.1.7.tgz' },
+61 silly install resolved     directories: {},
+61 silly install resolved     _resolved: 'https://registry.npmjs.org/generator-mocha/-/generator-mocha-0.1.7.tgz',
+61 silly install resolved     readme: 'ERROR: No README data found!' },
+61 silly install resolved   { name: 'generator-gulp-webapp',
+61 silly install resolved     version: '0.3.0',
+61 silly install resolved     description: 'Scaffold out a front-end web app',
+61 silly install resolved     license: 'BSD',
+61 silly install resolved     repository:
+61 silly install resolved      { type: 'git',
+61 silly install resolved        url: 'git+https://github.com/yeoman/generator-gulp-webapp.git' },
+61 silly install resolved     author: { name: 'The Yeoman Team' },
+61 silly install resolved     main: 'app/index.js',
+61 silly install resolved     engines: { node: '>=0.10.0', npm: '>=1.3' },
+61 silly install resolved     scripts: { test: 'mocha --reporter spec' },
+61 silly install resolved     files: [ 'app' ],
+61 silly install resolved     keywords:
+61 silly install resolved      [ 'yeoman-generator',
+61 silly install resolved        'web',
+61 silly install resolved        'app',
+61 silly install resolved        'front-end',
+61 silly install resolved        'h5bp',
+61 silly install resolved        'modernizr',
+61 silly install resolved        'jquery',
+61 silly install resolved        'gulp' ],
+61 silly install resolved     dependencies:
+61 silly install resolved      { chalk: '^0.5.1',
+61 silly install resolved        wiredep: '^2.2.2',
+61 silly install resolved        'yeoman-generator': '^0.18.5',
+61 silly install resolved        yosay: '^1.0.0' },
+61 silly install resolved     peerDependencies: { yo: '>=1.0.0', 'generator-mocha': '>=0.1.0', gulp: '>=3.5.0' },
+61 silly install resolved     devDependencies: { mocha: '*' },
+61 silly install resolved     gitHead: '79416053d903c1157c10214881d555ee03777833',
+61 silly install resolved     bugs: { url: 'https://github.com/yeoman/generator-gulp-webapp/issues' },
+61 silly install resolved     homepage: 'https://github.com/yeoman/generator-gulp-webapp',
+61 silly install resolved     _id: 'generator-gulp-webapp@0.3.0',
+61 silly install resolved     _shasum: '55f491c9c8ba92532d035b3dd7cb9ea8455d19ca',
+61 silly install resolved     _from: 'generator-gulp-webapp@*',
+61 silly install resolved     _npmVersion: '2.1.10',
+61 silly install resolved     _nodeVersion: '0.10.31',
+61 silly install resolved     _npmUser: { name: 'silvenon', email: 'matija.marohnic@gmail.com' },
+61 silly install resolved     maintainers: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+61 silly install resolved     dist:
+61 silly install resolved      { shasum: '55f491c9c8ba92532d035b3dd7cb9ea8455d19ca',
+61 silly install resolved        tarball: 'http://registry.npmjs.org/generator-gulp-webapp/-/generator-gulp-webapp-0.3.0.tgz' },
+61 silly install resolved     directories: {},
+61 silly install resolved     _resolved: 'https://registry.npmjs.org/generator-gulp-webapp/-/generator-gulp-webapp-0.3.0.tgz',
+61 silly install resolved     readme: 'ERROR: No README data found!' } ]
+62 info install generator-mocha@0.1.7 into /usr/local/lib
+63 info install generator-gulp-webapp@0.3.0 into /usr/local/lib
+64 info installOne generator-mocha@0.1.7
+65 verbose installOne of generator-mocha to /usr/local/lib not in flight; installing
+66 info installOne generator-gulp-webapp@0.3.0
+67 verbose installOne of generator-gulp-webapp to /usr/local/lib not in flight; installing
+68 verbose lock using /Users/yipraymond/.npm/_locks/generator-mocha-61e557bff6e23a34.lock for /usr/local/lib/node_modules/generator-mocha
+69 verbose lock using /Users/yipraymond/.npm/_locks/generator-gulp-webapp-d88240e1c211c4cf.lock for /usr/local/lib/node_modules/generator-gulp-webapp
+70 silly install write writing generator-mocha 0.1.7 to /usr/local/lib/node_modules/generator-mocha
+71 silly install write writing generator-gulp-webapp 0.3.0 to /usr/local/lib/node_modules/generator-gulp-webapp
+72 verbose unbuild lib/node_modules/generator-mocha
+73 verbose unbuild lib/node_modules/generator-gulp-webapp
+74 info preuninstall generator-mocha@0.1.7
+75 info uninstall generator-mocha@0.1.7
+76 info preuninstall generator-gulp-webapp@0.3.0
+77 verbose unbuild rmStuff generator-mocha@0.1.7 from /usr/local/lib/node_modules
+78 info postuninstall generator-mocha@0.1.7
+79 info uninstall generator-gulp-webapp@0.3.0
+80 silly gentlyRm /usr/local/lib/node_modules/generator-mocha is being purged from base /usr/local
+81 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/generator-mocha
+82 verbose unbuild rmStuff generator-gulp-webapp@0.3.0 from /usr/local/lib/node_modules
+83 info postuninstall generator-gulp-webapp@0.3.0
+84 silly vacuum-fs purging /usr/local/lib/node_modules/generator-mocha
+85 silly gentlyRm /usr/local/lib/node_modules/generator-gulp-webapp is being purged from base /usr/local
+86 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/generator-gulp-webapp
+87 silly vacuum-fs purging /usr/local/lib/node_modules/generator-gulp-webapp
+88 verbose unlock done using /Users/yipraymond/.npm/_locks/generator-mocha-61e557bff6e23a34.lock for /usr/local/lib/node_modules/generator-mocha
+89 verbose unlock done using /Users/yipraymond/.npm/_locks/generator-gulp-webapp-d88240e1c211c4cf.lock for /usr/local/lib/node_modules/generator-gulp-webapp
+90 verbose stack Error: EACCES, rmdir '/usr/local/lib/node_modules/generator-mocha'
+90 verbose stack     at Error (native)
+91 verbose cwd /cores/yuncai
+92 error Darwin 14.3.0
+93 error argv "node" "/usr/local/bin/npm" "install" "-g" "generator-gulp-webapp" "generator-mocha"
+94 error node v0.12.3
+95 error npm  v2.9.1
+96 error path /usr/local/lib/node_modules/generator-mocha
+97 error code EACCES
+98 error errno -13
+99 error Error: EACCES, rmdir '/usr/local/lib/node_modules/generator-mocha'
+99 error     at Error (native)
+99 error  { [Error: EACCES, rmdir '/usr/local/lib/node_modules/generator-mocha']
+99 error   errno: -13,
+99 error   code: 'EACCES',
+99 error   path: '/usr/local/lib/node_modules/generator-mocha' }
+100 error Please try running this command again as root/Administrator.
+101 verbose exit [ -13, true ]
+102 verbose unbuild lib/node_modules/generator-mocha
+103 info preuninstall generator-mocha@0.1.7
+104 info uninstall generator-mocha@0.1.7
+105 verbose unbuild rmStuff generator-mocha@0.1.7 from /usr/local/lib/node_modules
+106 info postuninstall generator-mocha@0.1.7
+107 silly gentlyRm /usr/local/lib/node_modules/generator-mocha is being purged from base /usr/local
+108 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/generator-mocha
+109 silly vacuum-fs purging /usr/local/lib/node_modules/generator-mocha
+110 error error rolling back Error: EACCES, rmdir '/usr/local/lib/node_modules/generator-mocha'
+110 error error rolling back     at Error (native)
+110 error error rolling back  { [Error: EACCES, rmdir '/usr/local/lib/node_modules/generator-mocha']
+110 error error rolling back   errno: -13,
+110 error error rolling back   code: 'EACCES',
+110 error error rolling back   path: '/usr/local/lib/node_modules/generator-mocha' }

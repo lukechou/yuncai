@@ -23,7 +23,7 @@ require.config({
 
 });
 
-require(['jquery', 'app', 'zclip', 'bootstrap', 'datetimepicker'], function ($, APP, ZeroClipboard) {
+require(['jquery', 'app', 'zclip', 'bootstrap', 'datetimepicker'], function($, APP, ZeroClipboard) {
 
   function initClip() {
 
@@ -34,11 +34,11 @@ require(['jquery', 'app', 'zclip', 'bootstrap', 'datetimepicker'], function ($, 
     });
 
     var client = new ZeroClipboard($(".j-zclip"));
-    client.on("ready", function (readyEvent) {
+    client.on("ready", function(readyEvent) {
 
-      client.on("beforecopy", function (event) {});
+      client.on("beforecopy", function(event) {});
 
-      client.on("aftercopy", function (event) {
+      client.on("aftercopy", function(event) {
         alert("复制成功!");
       });
 
@@ -49,7 +49,7 @@ require(['jquery', 'app', 'zclip', 'bootstrap', 'datetimepicker'], function ($, 
   function pageInit() {
 
     // 表格展开隐藏
-    $('#j-table').on('click', '.j-nav-text', function (event) {
+    $('#j-table').on('click', '.j-nav-text', function(event) {
       event.preventDefault();
 
       var t = $(this);
@@ -95,10 +95,10 @@ require(['jquery', 'app', 'zclip', 'bootstrap', 'datetimepicker'], function ($, 
       minView: 2,
       forceParse: 0,
       format: 'yyyy-mm-dd',
-    }).on('changeDate', function (ev) {
+    }).on('changeDate', function(ev) {
       var date = $('#j-form-date').val();
       window.location.href = query + date;
-    }).on('show', function () {
+    }).on('show', function() {
       $('.datetimepicker').css('top', '244px');
     });
 

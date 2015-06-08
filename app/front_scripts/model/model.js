@@ -236,6 +236,7 @@ define(['jquery', 'app'], function($, APP) {
             });
 
             _this.modal.modal('hide');
+
           } else {
             APP.handRetCode(D.retCode, D.retMsg);
           }

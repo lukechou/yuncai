@@ -15,18 +15,18 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function($, _, store, APP) {
 
   'use strict';
 
   // 合买大厅分页
-  PAGE.loadPrjctLst = function (obj) {
+  PAGE.loadPrjctLst = function(obj) {
     var path = window.location.pathname.replace(/\/*$/, '');
     PAGE.ajaxUrl = path + '/ajax';
     PAGE.pageElement = $('#j-page-area');
     PAGE.initAjax(obj);
 
-    PAGE.onSuccess = function (data) {
+    PAGE.onSuccess = function(data) {
 
       var htmlOutput = '';
       var htmlStatu = '';
@@ -41,24 +41,24 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
         for (var i = 1; i <= detailData.length; i++) {
           dataItem = detailData[i - 1];
           switch (obj.status) {
-          case '2':
-            htmlStatu = '<span class="miss-tips">已满员</span>';
-            htmlUse =
-              '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
+            case '2':
+              htmlStatu = '<span class="miss-tips">已满员</span>';
+              htmlUse =
+                '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
                 <input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" />\
                 <input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-            break;
-          case '3':
-            htmlStatu = '<span class="miss-tips">已撤单</span>';
-            htmlUse =
-              '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
+              break;
+            case '3':
+              htmlStatu = '<span class="miss-tips">已撤单</span>';
+              htmlUse =
+                '<a class="miss-dan" href="' + dataItem.detailURI + '">详情</a>\
                 <input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" />\
                 <input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-            break;
-          default:
-            htmlStatu = '<input type="text" class="text-left u-ci w50 j-gou-count" placeholder="剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
-            htmlUse = '<button data-type="1" data-one="' + dataItem.unitPrice + '" class="text-left btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
-            break;
+              break;
+            default:
+              htmlStatu = '<input type="text" class="text-left u-ci w50 j-gou-count" placeholder="剩余' + dataItem.lessNum + '份" data-max="' + dataItem.lessNum + '" maxlength="' + dataItem.lessNum.toString().split('').length + '">';
+              htmlUse = '<button data-type="1" data-one="' + dataItem.unitPrice + '" class="text-left btn btn-s btn-c1 j-gou-btn">购买</button><a href="' + dataItem.detailURI + '">详情</a><input type="hidden" name="joinUrl" class="joinUrl" value="' + dataItem.joinURI + '" /><input type="hidden" name="pid" class="pid" value="' + dataItem.id + '" />';
+              break;
           }
           htmlOutput +=
             '<tr>\
@@ -87,12 +87,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       $("tbody tr:nth-child(odd) td").css("background", "#f1f1f1");
     };
 
-    PAGE.onFail = function () {
+    PAGE.onFail = function() {
       return;
     };
   };
 
-  var submitHemai = function (obj) {
+  var submitHemai = function(obj) {
 
     $.ajax({
         url: obj.joinURI,
@@ -104,7 +104,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           unikey: (new Date()).valueOf()
         },
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode == 100000) {
           if (obj.onSuccess) {
             obj.onSuccess();
@@ -113,24 +113,24 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
           APP.showTips({
             text: '合买成功!',
             type: 1,
-            onConfirm: function () {
+            onConfirm: function() {
               window.location.reload();
             }
           });
-          $('body').on('click', '.close', function (event) {
+          $('body').on('click', '.close', function(event) {
             window.history.go(0);
           });
         } else {
           APP.handRetCode(data.retCode, data.retMsg);
         }
       })
-      .fail(function () {
+      .fail(function() {
         APP.onServiceFail();
       });
 
   };
 
-  $('#j-gou').on('click', '.j-gou-btn', function () {
+  $('#j-gou').on('click', '.j-gou-btn', function() {
 
     var tr = $(this).parents('tr');
     var count = tr.find('.j-gou-count');
@@ -153,9 +153,10 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       fc3d: '福彩3D',
       qlc: '七乐彩',
       qxc: '七星彩',
-      bjdc:'足球单场',
-      sfc:'胜负彩',
-      r9:'任选九'
+      bjdc: '足球单场',
+      sfc: '胜负彩',
+      r9: '任选九',
+      jclq: '竞彩篮球'
     };
     var mname = lotyNameObj[lotyName];
     var tabIndex = tr.find('.joinUrl').val().split('/');
@@ -165,12 +166,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
       'rqspf_gg': '让球胜平负',
       'zjq_gg': '总进球',
       'bf_gg': '比分',
-      'hhtz_gg':'混合投注',
-      'zjq':'总进球',
-      'bf':'比分',
-      'sxds':'上下单双',
-      'spf':'胜平负',
-      'bqc':'半全场'
+      'hhtz_gg': '混合投注',
+      'zjq': '总进球',
+      'bf': '比分',
+      'sxds': '上下单双',
+      'spf': '胜平负',
+      'bqc': '半全场',
+      sf: '胜负',
+      rfsf: '让分胜负',
+      hhtz: '混合投注',
+      sfc: '胜分差',
+      dxf: '大小分',
     };
 
     var tabHtml = tab[tabIndex[tabIndex.length - 1]] || '';
@@ -180,7 +186,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
         byNum: b,
         joinURI: tr.find('.joinUrl').val(),
         prjctId: tr.find('.pid').val(),
-        onSuccess: function (d) {
+        onSuccess: function(d) {
           max = max - b;
           count.attr({
             'placeholder': '最多' + max,
@@ -206,17 +212,17 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
 
       var payMoney = b * onePrice;
       var lessMoneyTips = '';
-      lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' +payMoney + '.00</span>元';
+      lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + payMoney + '.00</span>元';
 
 
       APP.checkLogin(payMoney, {
-        enoughMoney: function () {
+        enoughMoney: function() {
           APP.showTips(html);
-          $('#buyConfirm').one('click', function (event) {
+          $('#buyConfirm').one('click', function(event) {
             submitHemai(data);
           });
         },
-        lessMoneyTips:lessMoneyTips
+        lessMoneyTips: lessMoneyTips
       });
     }
   });
@@ -238,11 +244,11 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     return c;
   }
 
-  $('body').on('click', '#hemaiRefresh', function (event) {
+  $('body').on('click', '#hemaiRefresh', function(event) {
     window.location.reload();
   });
 
-  $('#projectList').on('change', '.j-gou-count', function (event) {
+  $('#projectList').on('change', '.j-gou-count', function(event) {
     var max = $(this).attr('data-max');
     var v = Number($(this).val());
 
@@ -256,7 +262,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
 
   });
 
-  $('#searchBtn').on('click', function (event) {
+  $('#searchBtn').on('click', function(event) {
     event.preventDefault(); /* Act on the event */
 
     // icon icon-down-active
@@ -276,7 +282,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     PAGE.loadPrjctLst(obj);
   });
 
-  $('.j-sort-schedule').on('click', function (event) {
+  $('.j-sort-schedule').on('click', function(event) {
     event.preventDefault();
     /* Act on the event */
     var sortType = 1;
@@ -302,7 +308,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     });
   });
 
-  $('.j-sort-project-price').on('click', function (event) {
+  $('.j-sort-project-price').on('click', function(event) {
     event.preventDefault();
     /* Act on the event */
     var sortType = 3;
@@ -328,7 +334,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     });
   });
 
-  $('.j-sort-unit-price').on('click', function (event) {
+  $('.j-sort-unit-price').on('click', function(event) {
     event.preventDefault();
     /* Act on the event */
     var sortType = 5;
@@ -396,9 +402,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'pager'], function ($,
     var d = a - b - c;
 
     if (d > 0) {
-      f.css('marginTop',d);
+      f.css('marginTop', d);
     } else {
-      f.css('marginTop',0);
+      f.css('marginTop', 0);
     }
 
   }

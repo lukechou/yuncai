@@ -3,6 +3,7 @@ require.config({
     jquery: '../lib/jquery',
     lodash: '../lib/lodash.compat.min',
     store: '../lib/store.min',
+    tipsy: '../lib/jquery.tipsy',
     bootstrap: '../lib/bootstrap.min',
     app: '../common/app',
     model: 'model',
@@ -13,11 +14,15 @@ require.config({
     bootstrap: {
       deps: ['jquery'],
       exports: 'jquery'
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
     }
   }
 });
 
-require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], function($, _, store, chart, APP, model) {
+require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function($, _, store, chart, APP, model) {
   'use strict';
 
   model.init({
@@ -27,6 +32,13 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
     modelId: null,
     starComment: '',
     modelComment: ''
+  });
+
+  $('.j-icon-tips').tipsy({
+    fade: true,
+    gravity: 's',
+    html: true,
+    opacity: 1
   });
 
   model.bindCollectEvent();
@@ -41,7 +53,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
       var chartHTML = '<div class="chart-box"><a href="/lottery/model/history-data" class="his-link" title="查看历史数据">查看历史数据</a><div class="chart-loading" id="j-chart-loder"><img src="' + Config.staticHostURI + '/front_images/loader.gif" alt="Logding.."/></div><div class="chart" id="chart"></div></div>';
       var tr = '<tr id="chart-tr"><td colspan="' + colspan + '" style="padding:0;">' + chartHTML + '</td></tr>';
 
-      if(!id) return;
+      if (!id) return;
       if (!$(this).hasClass(a)) {
         $('.j-show-chart').removeClass(a);
         $(this).addClass(a);
@@ -52,7 +64,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap'], fun
           chartEl: $('#chart')
         });
         chart.getChartData(id);
-      }else{
+      } else {
         $(this).removeClass('active');
         $('#chart-tr').remove();
       }

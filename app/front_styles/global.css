@@ -1,6 +1,4 @@
 .icon-f7 { background: #f13c38; }
-textarea:focus,
-input:focus { outline: none; border-color: #3880C9 !important; }
 
 /* BackGround Class */
 .bg-0 { background: #cf3430; }
@@ -86,6 +84,7 @@ textarea { resize: none; word-wrap: break-word; }
 .w180 { width: 180px; }
 .ps-t2 { position: relative; top: 2px; }
 .ps-t-2 { position: relative; top: -2px; }
+.textleft { text-align: left !important; }
 
 /* Width Class */
 .w40 { width: 40px; }
@@ -103,15 +102,15 @@ textarea { resize: none; word-wrap: break-word; }
 .w230 { width: 230px; }
 
 /* Paging Class */
-.pages { font-size: 12px; margin-top: 10px; margin: 10px auto 0; width: 300px; text-align: center; }
+.pages { font-size: 12px; margin-top: 10px; }
 .pages .back-page,
-.pages .next-page { margin: 0 5px 0 15px; }
+.pages .next-page { margin: 0 0 0 15px; }
 .pages .govalue { width: 50px; height: 25px; margin-left: 10px; padding: 0 5px; border: 1px #dfdfdf solid; }
 .pages button { line-height: 25px; height: 25px; margin: -2px 10px 0 -5px; padding: 0 4px; color: #333; border: 1px #dfdfdf solid; background: #f5f5f5; }
 
 /* Icon Class */
 .icon { display: inline-block; }
-.icon-font { font-size: 12px; line-height: 18px; display: inline-block; width: 18px; height: 18px; margin-left: 5px; padding: 0 2px; color: #fff; border-radius: 2px; }
+.icon-font { font-size: 12px; line-height: 18px; display: inline-block; width: 18px; height: 18px; margin-left: 5px; padding: 0 2px; color: #fff; border-radius: 2px; font-family: 'simsun'; }
 .icon-m3 { width: 13px; height: 12px; background: url(../front_images/jczq/m3.png) no-repeat; }
 .icon-f0 { background: #ba0000; }
 .icon-f1 { background: #0db59f; }
@@ -140,6 +139,7 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .btn-add2 > .icon { position: absolute; top: 14px; left: 15px; }
 .btn-add.active,
 .btn-add2.active { background: #f88c35; color: #fff; border-color: transparent; }
+.btn-cancel { background: #f1f1f1; color: #adadad; border: 1px #dfdfdf solid; }
 .btn-s { font-size: 12px; padding: 3px 8px; color: #fff; }
 .btn-c2 { background: #f5f5f5; }
 .btn-clean { line-height: 26px; width: 70px; height: 26px; padding: 0; }
@@ -280,18 +280,19 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .m-de-hd > label { font-weight: normal; }
 .m-de-hd > .btn { width: 70px; height: 26px; padding: 0; }
 .m-panel { min-height: 540px; border: 1px #dfdfdf solid; }
-.m-panel .panel-title { font-family: 'Microsoft Yahei'; color: #3d3d3d; }
-.m-panel .panel-heading { border-bottom: 1px #dfdfdf solid; background: #dddedf; }
+.m-panel .panel-title { font-family: 'simsun'; font-weight: bold; color: #3d3d3d; }
+.m-panel .panel-heading { border-bottom: 1px #dfdfdf solid; background: #f1f1f1; }
 
 /* 高级投注-二级TABS导航 */
 .m-br-nav { padding: 6px 0 0 20px; background: #f1f1f1; }
 .m-br-nav > li { margin-bottom: 0; }
 .m-br-nav > li.active { position: relative; top: 1px; }
 .m-br-nav > li > a { font-size: 12px; margin: 0; padding: 0; height: 28px; line-height: 28px; width: 88px; text-align: center; color: #3d3d3d; border: 1px transparent solid; border-bottom: none; border-radius: 0; background: #f1f1f1; }
-.m-br-nav > li > a:hover { background: #f5f5f5; border-color: transparent; }
+.m-br-nav > li > a:hover { background: #f1f1f1; border-color: transparent; }
 .m-br-nav > li.active > a,
 .m-br-nav > li.active > a:hover,
 .m-br-nav > li.active > a:focus { border-top: 2px #f13c38 solid; border-right: 1px #dfdfdf solid; border-bottom: none; border-left: 1px #dfdfdf solid; border-radius: 0; background: #fff; font-weight: bold; color: #3d3d3d; line-height: 26px; }
+.m-br-nav-bor { border: 1px #dfdfdf solid; }
 
 /* 投注页-通用顶部样式 */
 .m-brhd { position: relative; padding: 10px 0; border-bottom: 3px #f13c38 solid; }
@@ -410,6 +411,7 @@ body { color: #3d3d3d; background: #fff; }
 .ft-left-img2 { width: 85px; height: 87px; background-position: 0 0; }
 .ft-left-img3 { width: 95px; height: 81px; background-position: 0 -87px; }
 .ft-left-img4 { width: 76px; height: 83px; background-position: -85px 0; }
+.ft-l > ul > li > a { position: absolute; bottom: 2px; left: 35px; color: #4e4e4e; }
 
 /* Footer Right */
 .ft-r { float: left; width: 720px; padding-left: 80px; *width: 640px; }
@@ -505,3 +507,20 @@ body { color: #3d3d3d; background: #fff; }
 .w69 { width: 69px; }
 .w80 { width: 80px; }
 .w83 { width: 83px; }
+
+/* tipsy Style */
+.tipsy { font-size: 10px; position: absolute; z-index: 100000; padding: 5px; }
+.tipsy-inner { max-width: 465px; padding: 5px 8px 5px 8px; text-align: left; color: #333; border: 1px #f69100 solid; background: #fff3de; }
+.tipsy-arrow { position: absolute; background: url(../front_images/tipsy-arrow-n.png); height: 5px; width: 11px; }
+.tipsy-arrow-n { border-bottom-color: #fff3de; }
+.tipsy-arrow-s { border-top-color: #fff3de; }
+.tipsy-arrow-e { border-left-color: #fff3de; }
+.tipsy-arrow-w { border-right-color: #fff3de; }
+.tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -5px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
+.tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
+.tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-top: none; border-right-color: transparent; border-bottom-style: solid; border-left-color: transparent; }
+.tipsy-s .tipsy-arrow { bottom: 1px; left: 50%; margin-left: -5px; }
+.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-right-color: transparent; border-bottom: none; border-left-color: transparent; }
+.tipsy-se .tipsy-arrow { right: 10px; bottom: 0; border-top-style: solid; border-right-color: transparent; border-bottom: none; border-left-color: transparent; }
+.tipsy-e .tipsy-arrow { top: 50%; right: 0; margin-top: -5px; border-top-color: transparent; border-right: none; border-bottom-color: transparent; border-left-style: solid; }
+.tipsy-w .tipsy-arrow { top: 50%; left: 0; margin-top: -5px; border-top-color: transparent; border-right-style: solid; border-bottom-color: transparent; border-left: none; }

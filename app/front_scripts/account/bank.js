@@ -3,7 +3,8 @@ require.config({
     jquery: '../lib/jquery',
     bootstrap: '../lib/bootstrap.min',
     app: '../common/app',
-    inp: '../account/inp'
+    inp: '../account/inp',
+    tipsy: '../lib/jquery.tipsy',
   },
   shim: {
     bootstrap: {
@@ -13,17 +14,28 @@ require.config({
     inp: {
       deps: ['jquery'],
       exports: 'inp'
+    },
+    tipsy: {
+      deps: ['jquery'],
+      exports: 'jquery'
     }
   },
 });
 
-require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
+require(['jquery', 'app', 'inp', 'bootstrap', 'tipsy'], function($, APP, inp) {
 
   inp.init({
     parentClass: '.form-group'
   });
 
-  $('#j-yinhang').on('change', function () {
+  $('.j-icon-tips').tipsy({
+    fade: true,
+    gravity: 's',
+    html: true,
+    opacity: 1,
+  });
+
+  $('#j-yinhang').on('change', function() {
 
     var v = $(this).val();
 
@@ -34,7 +46,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
   });
 
   // 确认绑定button
-  $('#j-bind-sub').on('click', function (event) {
+  $('#j-bind-sub').on('click', function(event) {
     event.preventDefault();
 
     var info = {};
@@ -84,7 +96,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
   });
 
   //用户在输入银行卡号时须放大当前已输入的号码
-  $('#j-card,#j-confirm-card').on('keyup', function (event) {
+  $('#j-card,#j-confirm-card').on('keyup', function(event) {
     event.preventDefault();
 
     var t = $(this);
@@ -99,7 +111,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
 
   });
 
-  $('#j-card,#j-confirm-card').on('blur', function (event) {
+  $('#j-card,#j-confirm-card').on('blur', function(event) {
 
     var t = $(this);
     var tips = t.siblings('.j-card-tips');
@@ -107,7 +119,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
 
   });
 
-  $('#j-confirm-card').on('blur keyup', function (event) {
+  $('#j-confirm-card').on('blur keyup', function(event) {
     event.preventDefault();
 
 
@@ -147,7 +159,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
           password: info.pwd
         },
       })
-      .done(function (data) {
+      .done(function(data) {
 
         if (data.retCode == 100000) {
 
@@ -163,7 +175,7 @@ require(['jquery', 'app', 'inp', 'bootstrap'], function ($, APP, inp) {
         }
 
       })
-      .fail(function () {
+      .fail(function() {
         APP.showTips('服务器繁忙请稍后再试！');
       });
   }

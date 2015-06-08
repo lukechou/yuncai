@@ -19,7 +19,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, _, store, APP) {
   'use strict';
 
   // Config-Constant
@@ -60,7 +60,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   // 表格计算事件
   // 修改比例-添加比例
-  $body.on('click', '.j-add', function (event) {
+  $body.on('click', '.j-add', function(event) {
     event.preventDefault();
 
     var $num = $(this).siblings('.j-num');
@@ -80,7 +80,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.timer);
     }
 
-    AUTO.timer = setTimeout(function () {
+    AUTO.timer = setTimeout(function() {
       if (autoType) {
         oVal += 2;
         countPercentFn($num, oVal);
@@ -93,7 +93,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改比例-减少比例
-  $body.on('click', '.j-reduce', function (event) {
+  $body.on('click', '.j-reduce', function(event) {
     event.preventDefault();
 
     var $num = $(this).siblings('.j-num');
@@ -113,7 +113,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.timer);
     }
 
-    AUTO.timer = setTimeout(function () {
+    AUTO.timer = setTimeout(function() {
 
       if (autoType) {
         oVal -= 2;
@@ -126,7 +126,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改比例-手动输入
-  $body.on('keyup', '.j-num', function (event) {
+  $body.on('keyup', '.j-num', function(event) {
     event.preventDefault();
 
     var $num = $(this);
@@ -150,7 +150,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.timer);
     }
 
-    AUTO.timer = setTimeout(function () {
+    AUTO.timer = setTimeout(function() {
 
       if (autoType) {
         countPercentFn($num, oVal);
@@ -163,7 +163,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改比例-失去焦点
-  $body.on('blur', '.j-num', function (event) {
+  $body.on('blur', '.j-num', function(event) {
     event.preventDefault();
 
     if (autoType === 0) {
@@ -182,7 +182,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   // 修改金额-添加
-  $body.on('click', '.j-add-m', function (event) {
+  $body.on('click', '.j-add-m', function(event) {
     event.preventDefault();
 
     var curInputEl = $(this).siblings('.j-cur-input');
@@ -204,14 +204,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.mTimer);
     }
 
-    AUTO.mTimer = setTimeout(function () {
+    AUTO.mTimer = setTimeout(function() {
       countCurFn(curInputEl, oVal);
     }, 100);
 
   });
 
   // 修改金额-减少
-  $body.on('click', '.j-reduce-m', function (event) {
+  $body.on('click', '.j-reduce-m', function(event) {
     event.preventDefault();
 
     var curInputEl = $(this).siblings('.j-cur-input');
@@ -229,14 +229,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.mTimer);
     }
 
-    AUTO.mTimer = setTimeout(function () {
+    AUTO.mTimer = setTimeout(function() {
       countCurFn(curInputEl, oVal)
     }, 100);
 
   });
 
   // 修改金额-手动输入
-  $body.on('keyup', '.j-cur-input', function (event) {
+  $body.on('keyup', '.j-cur-input', function(event) {
     event.preventDefault();
 
     var $this = $(this);
@@ -271,7 +271,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       clearTimeout(AUTO.mTimer);
     }
 
-    AUTO.mTimer = setTimeout(function () {
+    AUTO.mTimer = setTimeout(function() {
       countCurFn($this, oVal)
     }, 100);
     if (oVal > 30) {
@@ -280,7 +280,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
 
   });
 
-  $body.on('blur', '.j-cur-input', function (event) {
+  $body.on('blur', '.j-cur-input', function(event) {
     event.preventDefault();
 
     $(this).val($(this).val().replace(/[^0-9]/g, ''));
@@ -437,7 +437,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     });
 
     //投注类型切换
-    $('[name="autotype"]').on('change', function (event) {
+    $('[name="autotype"]').on('change', function(event) {
       event.preventDefault();
 
       var v = $(this).val();
@@ -465,7 +465,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     });
 
     //期数获焦提示
-    $issue.focus(function () {
+    $issue.focus(function() {
 
       if (1 == autoType) {
 
@@ -488,7 +488,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     });
 
     //期数改变投注额提示
-    $issue.keyup(function () {
+    $issue.keyup(function() {
 
       if (autoType === 1) {
 
@@ -647,7 +647,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
         html += '<a href="javascript:;" class="i-reduce j-reduce">-</a>';
         html += '<input maxLength="6" data-val="' + curRate + '" class="j-num edit-num"  title="范围为 -100%-1000%"  type="text" name="current_rate[]" value="' + curRate + '">';
         html += '<a href="javascript:;" class="i-add j-add">+</a>';
-        html += '</span>%</span></td>';
+        html += '</span> %</span></td>';
 
       }
 
@@ -742,7 +742,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
           'total_money': AUTO.totalVal
         },
       })
-      .done(function (json) {
+      .done(function(json) {
 
         if (json.retCode === 100000) {
 
@@ -842,7 +842,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   }
 
   // 投注
-  $('#j-auto-buy').on('click', function (event) {
+  $('#j-auto-buy').on('click', function(event) {
     event.preventDefault();
 
     /*
@@ -878,7 +878,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
       auto_type: autoType,
     };
 
-    $('#j-data-body').find('input[name]').each(function () {
+    $('#j-data-body').find('input[name]').each(function() {
       var name = $(this).attr('name') + '';
       if (name.length !== 0) {
         if (!data[name]) {
@@ -906,7 +906,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     var lessMoneyTips = '<p>当前账户余额不足支付自动投注的首期金额</p><p>首期投注金额：<span class="fc-3">' + payMoney + '.00</span>元</p>';
 
     APP.checkLogin(payMoney, {
-      enoughMoney: function (m) {
+      enoughMoney: function(m) {
 
         $.ajax({
             url: '/lottery/model/autobuy/buy',
@@ -914,7 +914,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
             dataType: 'json',
             data: data,
           })
-          .done(function (data) {
+          .done(function(data) {
 
             if (data.retCode === 100000) {
               // APP.showTips('<p>自动投注设置成功</p><p>投注模型：' + modelId + '，系统会在' + stopHtml + '。</p>');
@@ -930,14 +930,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     });
   }
 
-  $('.j-inp-num').on('keyup paste', function (event) {
+  $('.j-inp-num').on('keyup paste', function(event) {
     event.preventDefault();
     $(this).val($(this).val().replace(/[^0-9]/g, ''));
   });
 
   // 确认自动投注
 
-  $('#j-count-confirm').on('click', function (event) {
+  $('#j-count-confirm').on('click', function(event) {
     event.preventDefault();
 
     if (!AUTO.changedfrom) {
@@ -946,7 +946,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
     }
 
     APP.checkLogin(null, {
-      always: function () {
+      always: function() {
 
         var ajaxDataObj = {};
 
@@ -1011,7 +1011,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
   });
 
   //切换投注分配
-  $modifyBtn.on('click', function (event) {
+  $modifyBtn.on('click', function(event) {
     event.preventDefault();
 
     $('.j-edit').removeClass('hide');
@@ -1023,7 +1023,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function ($,
    * 绑定分配事件
    * autoType  自动投注类型 0-间隔比例型 1-固定收益型
    */
-  $('#j-count').on('click', function (event) {
+  $('#j-count').on('click', function(event) {
     event.preventDefault();
 
     AUTO.changedfrom = true;

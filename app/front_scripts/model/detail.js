@@ -83,8 +83,8 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
             h = _.map(item, function(n, i) {
 
               var s = ['<td class="fc-7">进行中</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>', '<td class="fc-3">已结束</td>'];
-
-              var str = '<tr><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
+              var trBg = (n.auto_status == 0) ? '' : 'bg-gray';
+              var str = '<tr class="' + trBg + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.total_bounty + '</td>' + s[n.auto_status] + '<td><a href="/lottery/model/autobuy/auto-buy-detail?model_id=' + modelId + '&rid=' + n.id + '" target="_blank">查看</a></td>';
 
               str += '<td></td></tr>'
 
@@ -279,7 +279,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
                   data: obj,
                 })
                 .done(function(D) {
-                if (D.retCode === 100000) {
+                  if (D.retCode === 100000) {
                     APP.showTips({
                       type: 1,
                       text: '\u8d2d\u4e70\u6210\u529f',

@@ -12,14 +12,19 @@
 .login-right form p { font-size: 12px; margin-top: 30px; text-align: right; }
 .login-right form p > a { padding: 0 10px; color: #3d3d3d; }
 .login-right form p > a.first { border-right: 1px #afafaf solid; }
+
 /* Register Page */
 .register { padding: 15px 0 75px 0; }
 .register .panel-heading { padding-left: 20px; border-radius: 0; background: #f1f1f1; }
 .register .panel-heading h3 { font-size: 20px; font-weight: bold; }
-.register .panel-body { background: #fff; height: 462px;}
+.register .panel-body { background: #fff; height: 462px; }
+
 /* Resister form */
-.register form .form-group, .register form .check-img { height: 34px; }
-.register-ft, .register form .controls-inp, .register form .form-control { width: 216px; }
+.register form .form-group,
+.register form .check-img { height: 34px; }
+.register-ft,
+.register form .controls-inp,
+.register form .form-control { width: 216px; }
 .register form { width: 296px; margin: auto; padding: 80px 0 0; }
 .register form .form-group { margin-bottom: 12px; }
 .register form .control-lab { font-size: 12px; font-weight: normal; float: left; width: 80px; margin-bottom: 0; padding: 7px 2px 0 0; text-align: right; }
@@ -29,21 +34,25 @@
 .register form .check-input { float: left; width: 100px; margin-right: 16px; }
 .register form .check-img { width: 100px; }
 .register form .check-link { font-size: 12px; position: absolute; top: 8px; right: -55px; }
-.pos-relative{ position: relative; }
-.icon-gray-cha{ position: absolute;right: 0;top: 0; z-index: 1; right: 10px; top: 12px; cursor: pointer; }
-.icon-login-user,.icon-login-pass{ position: absolute; top: 12px; left: 11px; }
+.pos-relative { position: relative; }
+.icon-gray-cha { position: absolute; right: 0; top: 0; z-index: 1; right: 10px; top: 12px; cursor: pointer; }
+.icon-login-user,
+.icon-login-pass { position: absolute; top: 12px; left: 11px; }
+
 /* Register footer section */
 .register-ft { font-size: 12px; float: right; margin: 10px 0 80px 0; }
 .register-ft p { margin: 10px 0; }
 .register-ft .btn-red { font-size: 14px; }
+
 /* Register success */
 .reg-success { display: none; margin-left: 296px; padding: 80px 0 290px 0; height: 370px; }
 .reg-success .tips-box { margin-top: -10px; margin-left: 15px; }
 .reg-success .tips-box h3 { font-size: 18px; font-weight: bold; }
 .reg-success .tips-box ul { font-size: 12px; padding: 25px 0 0 0; }
-.reg-success .tips-box ul li{ margin-bottom: 11px; }
+.reg-success .tips-box ul li { margin-bottom: 11px; }
 .reg-success .tips-box .tips { font-size: 12px; margin-top: 24px; }
-.reg-success .tips-box .btn-big{ margin-top: 2px; }
+.reg-success .tips-box .btn-big { margin-top: 2px; width: 114px; height: 32px; font-size: 14px; padding: 0; line-height: 32px; }
+
 /* 404 Page */
 .btn-missback { font-size: 20px; display: block; width: 190px; margin: 15px auto 120px; padding: 8px 30px; color: #3d3d3d; border: 1px #4899f3 solid; background: #fff; }
 .btn-missback:hover { color: #fff; background: #4899f3; }

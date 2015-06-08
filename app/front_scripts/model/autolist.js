@@ -657,7 +657,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
     ar = item.modelInfo.ar;
 
-    h += '<tr class="tr-modify j-tr-modify"><td colspan="9" class="list-box"><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<span class="fc-3 mlr5">' + info.complete_issue + '</span>期，累计投注<span class="fc-3 mlr5">' + r.project_money + '</span>元，累积奖金<span class="fc-3 mlr5">' + r.total_bounty + '</span>元</p>';
+    h += '<tr class="tr-modify j-tr-modify"><td colspan="9" class="list-box"><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<b class="fc-3 mlr5">' + info.complete_issue + '</b>期，累计投注<b class="fc-3 mlr5">' + r.project_money + '</b>元，累积奖金<b class="fc-3 mlr5">' + r.total_bounty + '</b>元</p>';
 
     h += '<p class="text-left text-fen"><span>投注资金分配详情:</span>';
 
@@ -777,7 +777,15 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
       nh += '<td>' + n.project_issue + '</td>';
 
-      nh += '<td>' + n.mz + '</td>';
+      if (n.mz === '是') {
+
+        nh += '<td class="bg-mz">' + n.mz + '</td>';
+
+      } else {
+
+        nh += '<td>' + n.mz + '</td>';
+
+      }
 
       nh += '</tr>';
       return nh;
@@ -1150,6 +1158,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
     var page = null;
     var rid = null;
     var type = null;
+    var isMoreYke = '';
+    var isMoreYkl = '';
 
     if (obj) {
       page = obj.page;
@@ -1196,9 +1206,12 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
     h = _.map(group[Model.pageIndex], function(n, i) {
 
-      var s = ['<td class="fc-7">进行中</td>', '<td>手动终止</td>', '<td class="fc-3">系统终止</td>', '<td class="fc-3">完成期数系统终止</td>', '<td class="fc-3">符合条件系统终止</td>'];
+      var s = ['<td class="fc-7">进行中</td>', '<td class="fc-8">手动终止</td>', '<td class="fc-9">系统终止</td>', '<td class="fc-9">完成期数系统终止</td>', '<td class="fc-9">符合条件系统终止</td>'];
 
-      var str = '<tr data-rid="' + n.id + '" data-statu="' + n.auto_status + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td>' + n.profit_money + '</td><td>' + n.profit_rate + '%</td>' + s[n.auto_status] + '<td><a href="javascript:;" class="j-toggle-issue">查看</a></td><td></td></tr>';
+      isMoreYke = (n.profit_money > 0) ? 'fc-3' : '';
+      isMoreYkl = (n.profit_rate > 0) ? 'fc-3' : '';
+
+      var str = '<tr data-rid="' + n.id + '" data-statu="' + n.auto_status + '"><td>' + (i + 1) + '</td><td>' + APP.dateFormat(new Date(n.start_time * 1000), '%Y-%M-%d %h:%m:%s', true) + '</td><td>' + n.complete_issue + '/' + n.total_issue + '</td><td>' + n.project_money + '</td><td class="' + isMoreYke + '">' + n.profit_money + '</td><td class="' + isMoreYke + '">' + n.profit_rate + '%</td>' + s[n.auto_status] + '<td><a href="javascript:;" class="j-toggle-issue">查看</a></td><td></td></tr>';
 
       // '<td class="j-icon-tips" original-title="该自动投注由<span class=\'fc-3 mlr5\'>Raymond</span>计划生成">计划生成</td>';
 

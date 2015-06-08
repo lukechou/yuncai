@@ -2,15 +2,16 @@
 .opl { border: 1px #dfdfdf solid; font-size: 12px; margin-bottom: 50px; }
 .opl-title { height: 40px; line-height: 40px; background: #f1f1f1; font-size: 16px; font-weight: bold; margin: 0; padding-left: 20px; border-bottom: 1px #dfdfdf solid; }
 .opl-hd { overflow: hidden; padding-bottom: 20px; }
-.m-num-title > i { width: 100%; margin: -19px auto 0; }
-.m-num-title { margin-bottom: 0; }
+.m-num-title > i { width: 100%; margin: 0 auto 0; }
+.m-num-title { margin: 0 auto 30px; padding: 0; height: 1px; }
 
 /* opl head left*/
 .opl-hdl { width: 50%; float: left; }
 .opl-imgbox { margin-top: 25px; padding-left: 30px; }
-.opl-imgbox .left { width: 80px; float: left; text-align: center; }
-.opl-imgbox .left img { width: 80px; margin-bottom: 5px; }
+.opl-imgbox .left { width: 80px; height: 106px; float: left; text-align: center; position: absolute; top: 0; margin: auto; bottom: 0; }
+.opl-imgbox .left img { width: 80px; height: 80px; margin-bottom: 5px; }
 .opl-imgbox .left span { font-weight: bold; font-size: 16px; }
+.opl-hd { position: relative; }
 
 /* opl head left-right */
 .opl-imgbox .right { margin-left: 120px; }
@@ -29,23 +30,26 @@
 .opl-sel-first { margin-right: 20px; }
 .opl-sel select { border: 1px #dfdfdf solid; width: 85px; height: 25px; }
 .opl-sel-first select { width: 110px; }
-.opl-sel input { width: 110px; text-align: center; }
+.opl-sel input { border: 1px #dfdfdf solid; width: 110px; text-align: center; }
 
 /* opl main */
 .opl-main { width: 920px; margin: auto; }
 
 /* opl table */
 .opl-table { margin-bottom: 20px; }
-.opl-table thead>tr>th, .opl-table tbody>tr>td { vertical-align: middle; }
+.opl-table thead>tr>th,
+.opl-table tbody>tr>td { vertical-align: middle; }
 .opl-table > tbody > tr { background: #fff; }
 .leag { color: #fff; }
 .opl-table>tbody+tbody { border-top: none; }
 .opl-table-nav td { padding-left: 10px !important; }
 .opl-table-nav .icon { margin-left: 5px; }
-.teaml, .teamr { width: 50%; }
+.teaml,
+.teamr { width: 50%; }
 .teaml { float: left; text-align: right; padding-right: 8px; }
 .teamr { float: right; text-align: left; padding-left: 8px; }
-.show-icon, .hide-icon { width: 7px; height: 6px; }
+.show-icon,
+.hide-icon { width: 7px; height: 6px; }
 .show-icon { background: url(../front_images/jczq/show-icon.png) no-repeat; }
 .hide-icon { background: url(../front_images/jczq/hide-icon.png) no-repeat; }
 .btn-bm { margin: 0 auto 20px; width: 145px; display: block; }
@@ -53,7 +57,9 @@
 .opl-table .num-gp span { margin: 0 3px; }
 
 /* 开奖号码 */
-.m-num-group-red > a.active, .m-num-group-blue > a.active, .m-num-group-red > a.active-blue { width: 26px; height: 26px; line-height: 26px; color: #fff; }
+.m-num-group-red > a.active,
+.m-num-group-blue > a.active,
+.m-num-group-red > a.active-blue { width: 26px; height: 26px; line-height: 26px; color: #fff; }
 .m-num-group-red > a.active { background: url(../front_images/ballicon/br-26.png) no-repeat; }
 .m-num-group-red > a.active-blue { background: url(../front_images/ballicon/bb-26.png) no-repeat; }
 .m-num-group-blue > a.active { background: url(../front_images/ballicon/bb-26.png) no-repeat; }
@@ -77,8 +83,10 @@
 .icon-n11:before { content: "\e609"; }
 .icon-n12:before { content: "\e60b"; }
 .icon-n13:before { content: "\e60a"; }
-.card-fc1, .card-fc3 { color: #333; }
-.card-fc2, .card-fc4 { color: #f13c38; }
+.card-fc1,
+.card-fc3 { color: #333; }
+.card-fc2,
+.card-fc4 { color: #f13c38; }
 .m-card { width: 48px; height: 28px; background: url(../front_images/kjgg/card-bg.png); display: inline-block; line-height: 28px; margin-right: 5px; }
 .m-card-flow { position: relative; top: -3px; left: 6px; font-size: 14px; }
 .m-card-num { position: relative; top: 2px; right: -5px; font-size: 24px; }
@@ -86,11 +94,15 @@
 /* Common */
 .noborl { border-left: none !important; }
 .noborr { border-right: none !important; }
-.icon-arrow-left, .icon-arrow-right, .icon-arrow-up, .icon-arrow-down { display: inline-block; width: 14px; height: 14px; margin-top: 1px; *margin-right: .3em; line-height: 14px; vertical-align: text-top; background-image: url("../img/glyphicons-halflings.png"); background-position: 14px 14px; background-repeat: no-repeat }
+.icon-arrow-left,
+.icon-arrow-right,
+.icon-arrow-up,
+.icon-arrow-down { display: inline-block; width: 14px; height: 14px; margin-top: 1px; *margin-right: .3em; line-height: 14px; vertical-align: text-top; background-image: url("../img/glyphicons-halflings.png"); background-position: 14px 14px; background-repeat: no-repeat }
 .icon-arrow-left { background-position: -240px -96px }
 .icon-arrow-right { background-position: -264px -96px }
 .icon-arrow-up { background-position: -289px -96px }
 .icon-arrow-down { background-position: -312px -96px }
 
 /* 任九 胜负彩 开奖公告*/
-.sfc-table > tbody > tr > td, .sfc-table > thead > tr > th { border: 1px #dfdfdf solid; }
+.sfc-table > tbody > tr > td,
+.sfc-table > thead > tr > th { border: 1px #dfdfdf solid; }

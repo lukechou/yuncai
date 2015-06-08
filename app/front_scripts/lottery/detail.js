@@ -20,7 +20,7 @@ require.config({
   }
 });
 
-require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], function ($, _, store, APP) {
+require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], function($, _, store, APP) {
 
   'use strict';
 
@@ -36,7 +36,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       @Config.pageNum 分页页数 默认
      ***/
 
-  var pager = (function () {
+  var pager = (function() {
     'use strict';
 
     function pager(args) {
@@ -61,7 +61,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       onSuccess: null,
     };
 
-    pager.prototype.bindPageEvent = function (callback) {
+    pager.prototype.bindPageEvent = function(callback) {
 
       var _this = this;
 
@@ -69,7 +69,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
         return;
       }
 
-      _this.pageElement.find('.next-page').on('click', function (event) {
+      _this.pageElement.find('.next-page').on('click', function(event) {
 
         _this.config.page = parseInt(_this.config.page);
         if (_this.config.page < _this.config.pageNum) {
@@ -79,7 +79,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
       });
 
-      _this.pageElement.find('.back-page').on('click', function (event) {
+      _this.pageElement.find('.back-page').on('click', function(event) {
 
         _this.config.page = parseInt(_this.config.page);
         _this.config.page -= 1;
@@ -90,7 +90,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
       });
 
-      _this.pageElement.find('.j-pages-value').on('change', function (event) {
+      _this.pageElement.find('.j-pages-value').on('change', function(event) {
 
         var max = $(this).siblings('.j-days').html();
         var go = parseInt($(this).val());
@@ -110,18 +110,18 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
         $(this).val(go);
       });
 
-      _this.pageElement.find('.j-pages-go').on('click', function (event) {
+      _this.pageElement.find('.j-pages-go').on('click', function(event) {
         _this.config.page = $(this).siblings('.j-pages-value').val() || 1;
         callback(_this.config);
       });
 
     };
 
-    pager.prototype.appendTable = function (html) {
+    pager.prototype.appendTable = function(html) {
       this.pageTable.html(html);
     };
 
-    pager.prototype.makePageHtml = function (pageHtmlNode) {
+    pager.prototype.makePageHtml = function(pageHtmlNode) {
 
       if (this.pageElement || !pageHtmlNode) {
         pageHtmlNode = this.pageElement;
@@ -136,7 +136,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
     };
 
-    pager.prototype.initAjax = function (obj) {
+    pager.prototype.initAjax = function(obj) {
 
       var _this = this;
       _this.config = obj;
@@ -146,15 +146,15 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
           dataType: 'json',
           data: _this.config,
         })
-        .done(function (data) {
+        .done(function(data) {
           _this.onSuccess(data);
         })
-        .fail(function () {
+        .fail(function() {
           _this.onFail();
         });
     };
 
-    pager.prototype.onFail = function () {
+    pager.prototype.onFail = function() {
 
       //APP.showTips('服务器繁忙,请稍后再试!');
 
@@ -165,7 +165,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
   var cancelPage = new pager();
 
-  var Detail = (function () {
+  var Detail = (function() {
     'use strict';
 
     var Detail = {
@@ -226,16 +226,16 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     return results;
   }
 
-  $('body').on('click', '#hemaiRefresh', function (event) {
+  $('body').on('click', '#hemaiRefresh', function(event) {
     window.location.reload();
   });
 
-  $('#j-buy').on('keyup', function (event) {
+  $('#j-buy').on('keyup', function(event) {
     $(this).val($(this).val().replace(/\D|^0/g, ''));
     updateBuyMoneyTotal();
   });
 
-  $('#j-buy').on('change', function () {
+  $('#j-buy').on('change', function() {
     var v = parseInt(buy.buyTotal.val());
     if (isNaN(v)) {
       buy.buyTotal.val(HeMai.max);
@@ -249,7 +249,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     updateBuyMoneyTotal();
   });
 
-  $('#buy-submit').on('click', function () {
+  $('#buy-submit').on('click', function() {
 
     var isAgreen = $('#j-isAgreen')[0].checked;
     var template = '';
@@ -275,7 +275,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
           byNum: b,
           joinURI: $('#j-joinURI').val(),
           prjctId: $('#j-projectId').val(),
-          onSuccess: function () {
+          onSuccess: function() {
 
             v = parseInt(buy.buyTotal.val());
             max = parseInt(HeMai.max);
@@ -331,11 +331,11 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
         lessMoneyTips += '<p>本次需支付：<span class="fc-3 mlr5">' + payMoney + '.00</span>元';
 
         APP.checkLogin(payMoney, {
-          enoughMoney: function () {
+          enoughMoney: function() {
             APP.showTips({
               html: h,
             });
-            $('#buyConfirm').one('click', function (event) {
+            $('#buyConfirm').one('click', function(event) {
               submitHemai(data);
             });
           },
@@ -347,7 +347,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
   });
 
-  var submitHemai = function (obj) {
+  var submitHemai = function(obj) {
 
     $.ajax({
         url: obj.joinURI,
@@ -359,7 +359,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
           unikey: (new Date()).valueOf(),
         },
       })
-      .done(function (data) {
+      .done(function(data) {
         if (data.retCode == 100000) {
           if (obj.onSuccess) {
             obj.onSuccess();
@@ -368,18 +368,18 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
           APP.showTips({
             text: '合买成功!',
             type: 1,
-            onConfirm: function () {
+            onConfirm: function() {
               window.location.reload();
             }
           });
-          $('body').on('click', '.close', function (event) {
+          $('body').on('click', '.close', function(event) {
             window.history.go(0);
           });
         } else {
           APP.handRetCode(data.retCode, data.retMsg);
         }
       })
-      .fail(function () {
+      .fail(function() {
         APP.onServiceFail();
       });
   };
@@ -421,13 +421,13 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     return result;
   }
 
-  PAGE.loadTicketRecord = function (obj) {
+  PAGE.loadTicketRecord = function(obj) {
 
     PAGE.ajaxUrl = '/lottery/cp-detail/' + Detail.lotyName + '/ajax';
     PAGE.pageElement = $('.j-page-box');
     PAGE.initAjax(obj);
 
-    PAGE.onSuccess = function (data) {
+    PAGE.onSuccess = function(data) {
 
       var htmlOutput = '';
       var nextPage = ((PAGE.config.page - 1) * 10 > 0) ? (PAGE.config.page - 1) * 10 : '';
@@ -498,7 +498,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
         this.appendTable(htmlOutput);
       }
     };
-    PAGE.onFail = function () {
+    PAGE.onFail = function() {
       return;
     };
   };
@@ -519,24 +519,24 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       }
     }
 
-    $(".j-hm-cxfa").click(function (event) {
+    $(".j-hm-cxfa").click(function(event) {
       APP.showTips({
         title: '撤单确认',
         text: '<div class="hm-cdqr1"><i class="icon icon-fail"></i>您是否确认撤销本次合买方案？<dvi>',
         type: 2,
-        onConfirm: function () {
+        onConfirm: function() {
           $.ajax({
               url: cancelURI,
               type: 'get',
               dataType: 'json'
             })
-            .done(function (data) {
+            .done(function(data) {
               if (data.retCode == 100000) {
                 APP.showTips({
                   title: '撤单确认',
                   text: '<div class="hm-cdqr2"><i class="icon icon-dui"></i><div class="cdqr2-div1">已撤销本次合买方案</div><div class="cdqr2-div2">投注金额将自动返还到您的账户上</div></div>',
                   type: 1,
-                  onConfirm: function () {
+                  onConfirm: function() {
                     $('#myModal').modal('hide');
                     window.location.reload();
                   }
@@ -545,7 +545,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                 APP.handRetCode(data.retCode, data.retMsg);
               }
             })
-            .fail(function () {
+            .fail(function() {
               APP.onServiceFail();
             });
         }
@@ -563,7 +563,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
   //撤销订单
   function checkCancelOrder() {
-    $('#j-tab li:nth-child(1)').click(function (event) {
+    $('#j-tab li:nth-child(1)').click(function(event) {
       $('#j-total-zhu').css({
         display: 'block'
       });
@@ -572,7 +572,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       });
     });
 
-    $('#j-tab li').on('click', function (event) {
+    $('#j-tab li').on('click', function(event) {
       var selctVal = $(this).find('a').html();
       $('#j-just-showmein').hide();
       $('#j-total-zhu').hide();
@@ -587,25 +587,25 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       $('.j-co-opertd a').remove();
     }
 
-    $('.j-cancalorder-oper').on('click', function (event) {
+    $('.j-cancalorder-oper').on('click', function(event) {
       var orderId = $(this).parents('tr').attr('data-id');
       APP.showTips({
         title: '撤单确认',
         text: '<div class="hm-cdqr1"><i class="icon icon-fail"></i>您是否确认撤销该合买订单？ <dvi>',
         type: 2,
-        onConfirm: function () {
+        onConfirm: function() {
           $.ajax({
               url: cancelOrderURI + orderId,
               type: 'get',
               dataType: 'json'
             })
-            .done(function (data) {
+            .done(function(data) {
               if (data.retCode == 100000) {
                 APP.showTips({
                   title: '撤单确认',
                   text: '<div class="hm-cdqr2"><i class="icon icon-dui"></i><div class="cdqr2-div1">已撤销该合买订单</div><div class="cdqr2-div2">投注金额将自动返还到您的账户上</div></div>',
                   type: 1,
-                  onConfirm: function () {
+                  onConfirm: function() {
                     $('#myModal').modal('hide');
                     window.location.reload();
                   }
@@ -614,15 +614,15 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                 APP.handRetCode(data.retCode, data.retMsg);
               }
             })
-            .fail(function () {
+            .fail(function() {
               APP.onServiceFail();
             });
         }
       });
     });
-    $('#j-ck').on('click', function (event) {
+    $('#j-ck').on('click', function(event) {
       var selected = ($('#j-ck').is(':checked'));
-      $('.j-user-details').each(function (index) {
+      $('.j-user-details').each(function(index) {
         if (selected && ($(this).attr('data-uid') != $('#j-login-uid').val())) {
           $(this).hide();
         } else {
@@ -657,7 +657,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
     }
 
-    $('.j-tzhm-more').on('click', function (event) {
+    $('.j-tzhm-more').on('click', function(event) {
 
       APP.showTips({
         title: '投注号码',
@@ -672,7 +672,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
   // 任九 胜负彩 部分撤单 获取 撤单分页
 
-  cancelPage.loadCancelList = function (obj) {
+  cancelPage.loadCancelList = function(obj) {
 
     var _this = cancelPage;
 
@@ -683,7 +683,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     _this.pageTable = $('#j-cancel');
     _this.initAjax(obj);
 
-    _this.onSuccess = function (data) {
+    _this.onSuccess = function(data) {
 
       var D = null;
       var item = null;
@@ -736,7 +736,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
   };
 
   // 底部tab切换
-  $('#j-tab').on('click', 'a', function (event) {
+  $('#j-tab').on('click', 'a', function(event) {
     event.preventDefault();
 
     var tables = $('.tab-content .table');
@@ -753,67 +753,67 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
     switch (index) {
 
-    case 1:
+      case 1:
 
-      switch (Detail.projectStatu) {
+        switch (Detail.projectStatu) {
 
-      case '已撤单':
-        tbody.html('<tr><td colspan="' + colCount + '">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
-        break;
+          case '已撤单':
+            tbody.html('<tr><td colspan="' + colCount + '">您的方案已撤单，系统会自动将投注金退款到您的账户</td></tr>');
+            break;
 
-      case '待出票':
-        tbody.html('<tr><td colspan="' + colCount + '">等待出票中...</td></tr>');
-        break;
-      default:
+          case '待出票':
+            tbody.html('<tr><td colspan="' + colCount + '">等待出票中...</td></tr>');
+            break;
+          default:
 
-        if (Detail.lotyName === 'sfc' || Detail.lotyName === 'r9') {
+            if (Detail.lotyName === 'sfc' || Detail.lotyName === 'r9') {
 
-          //撤单-分页模块
-          cancelPage.loadCancelList({
-            project_no: $('#j-projectNo').val(),
-            page: 1,
-            pageSize: 10,
-            type: 5
-          });
+              //撤单-分页模块
+              cancelPage.loadCancelList({
+                project_no: $('#j-projectNo').val(),
+                page: 1,
+                pageSize: 10,
+                type: 5
+              });
 
-          // Success-分页模块
-          PAGE.pageTable = tbody;
-          PAGE.loadTicketRecord({
-            project_no: $('#j-projectNo').val(),
-            page: 1,
-            pageSize: 10,
-            type: 4
-          });
+              // Success-分页模块
+              PAGE.pageTable = tbody;
+              PAGE.loadTicketRecord({
+                project_no: $('#j-projectNo').val(),
+                page: 1,
+                pageSize: 10,
+                type: 4
+              });
 
-        } else {
+            } else {
 
-          // 获取 出票详情-分页模块
-          PAGE.pageTable = tbody;
-          PAGE.loadTicketRecord({
-            project_no: $('#j-projectNo').val(),
-            page: 1,
-            pageSize: 10,
-          });
+              // 获取 出票详情-分页模块
+              PAGE.pageTable = tbody;
+              PAGE.loadTicketRecord({
+                project_no: $('#j-projectNo').val(),
+                page: 1,
+                pageSize: 10,
+              });
 
+            }
+
+            break;
         }
-
-        break;
-      }
     }
   });
 
-  $('.j-cancel-project').on('click', function (event) {
+  $('.j-cancel-project').on('click', function(event) {
     var requestURI = $(this).attr('data-c');
     APP.showTips({
       text: "您是否确认撤销本次合买方案？",
       type: 2,
-      onConfirm: function () {
+      onConfirm: function() {
         $.ajax({
             url: requestURI,
             type: 'get',
             dataType: 'json'
           })
-          .done(function (data) {
+          .done(function(data) {
             if (data.retCode == 100000) {
               var html = '<div class="tipbox">' +
                 '<p>已撤销本次合买方案</p>' +
@@ -825,7 +825,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                 '</div>';
               APP.showTips({
                 html: html,
-                onConfirm: function () {
+                onConfirm: function() {
                   window.location.reload();
                 }
               });
@@ -834,22 +834,22 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
               APP.showTips({
                 text: data.retMsg,
                 type: 1,
-                onConfirm: function () {
+                onConfirm: function() {
                   window.location.reload();
                 }
               });
             }
           })
-          .fail(function () {
+          .fail(function() {
             APP.onServiceFail();
           });
       }
     });
   });
 
-  $('.j-cancel-select-project').on('click', function (event) {
+  $('.j-cancel-select-project').on('click', function(event) {
     var projectIds = [];
-    $('input[name="ids"]:checked').each(function () {
+    $('input[name="ids"]:checked').each(function() {
       projectIds.push($(this).val())
     });
     if (projectIds.length < 1) {
@@ -865,18 +865,18 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       type: 2,
       ensuretext: '确认取消',
       canceltext: '继续追号',
-      onConfirm: function () {
+      onConfirm: function() {
         $.ajax({
             url: cancelURI + projectIds.join(','),
             type: 'get',
             dataType: 'json'
           })
-          .done(function (data) {
+          .done(function(data) {
             if (data.retCode == 100000) {
               APP.showTips({
                 text: '取消追号成功',
                 type: 1,
-                onConfirm: function () {
+                onConfirm: function() {
                   window.location.reload();
                 }
               });
@@ -884,7 +884,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
               APP.handRetCode(data.retCode, data.retMsg);
             }
           })
-          .fail(function () {
+          .fail(function() {
             APP.onServiceFail();
           });
       }
