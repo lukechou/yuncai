@@ -50,7 +50,7 @@
 /* 个人中心-我的帐户 */
 .ps-mn { font-size: 12px; float: left; width: 780px; }
 .ps-mn-info { padding: 28px 0 0 25px; border: 1px #dfdfdf solid; background: #dddedf; position: relative; }
-.ps-mn-info-img { margin-top: 8px; }
+.ps-mn-info-img { margin-top: 8px; width: 117px; height: 117px; border-radius: 50%; }
 .ps-mn-box { margin-left: 25px; padding-top: 7px; }
 .ps-mn-box p { line-height: 1; }
 .ps-mn-box p.fs-16 { margin-top: 18px; }
@@ -92,10 +92,11 @@
 .rebates-hd input { padding-left: 10px; height: 26px; border: 1px #dfdfdf solid; width: 130px; }
 .rebates-hd .btn-sear { margin-left: 3px; height: 26px; line-height: 26px; width: 60px; padding: 0; font-weight: normal; }
 .rebates-body .table { border: none; border-top: 1px #dfdfdf solid; }
-.rebates-body .table .point { color: #f13c38; width: 50px; text-align: center; height: 28px; line-height: 28px; margin-top: 4px; }
+.rebates-body .table .point { color: #3d3d3d; width: 40px; text-align: center; height: 26px; line-height: 26px; margin-top: 4px; border: 1px #dfdfdf solid; }
 .rebates-body .table .point.clean { border: none; background: transparent; }
 .rebates-body .agent-point { margin: 0 2px; }
 .rebates-body .agent-point.dis { color: #848484; }
+.rebates-body .btn { line-height: 26px; height: 26px; padding: 0 12px; margin: 0 2px; }
 .rebates-ft { font-size: 12px; padding: 0 20px 0; text-align: center; }
 .rebates-ft p { margin-bottom: 0; }
 .rebates-ft .tips { padding-top: 10px; }
@@ -156,10 +157,8 @@
 .info-head h2 { font-size: 24px; margin: 0; position: absolute; top: 30px; left: 120px; }
 .info-head a { position: absolute; top: 70px; left: 120px; }
 .info .panel { min-height: 540px; border: 1px #dfdfdf solid; }
-.info .panel-heading { border-bottom: 1px #dfdfdf solid; background: #f1f1f1; }
 .info .panel-heading .panel-title { font-size: 14px; font-family: "simsun"; font-weight: bold; }
-.info .panel-body { padding: 0 15px 15px 0; position: relative; }
-.info-text { margin: 51px 0 0 250px; }
+.info .panel-body { padding: 0 15px 15px 0; overflow: hidden; }
 .info .info-list .title { font-size: 12px; width: 64px; }
 .info-list { margin-bottom: 10px; }
 .info-list .title { display: inline-block; width: 50px; text-align: right; }
@@ -175,22 +174,25 @@
 .info-text2 { position: relative; display: none; }
 .info-text2 .user-head { position: absolute; left: -100px; display: none; width: 74px; height: 74px; }
 .info-text2 .info-list { margin-left: 80px; }
-.info-tg { position: absolute; top: 0; left: 0; width: 100%; height: 500px; background: #fff; display: block; }
+.info .info-text-2 { margin: 51px 0 0 250px; }
+
+/* 基本资料-上传头像 */
+.info-tg { top: 0; left: 0; width: 100%; min-height: 500px; background: #fff; display: none; }
 .info-tgbox { width: 700px; margin: 25px auto 0; }
 .info-tgbox h4 { color: #848484; margin: 0; }
 .info-tg-btns { text-align: center; }
 .info-tg-btns .btn { width: 70px; margin: 0 5px; }
-.info-tg-mask { width: 100%; margin: 15px auto; }
-.tg-left { float: left; width: 500px; background: #f1f1f1; height: 350px; }
+.info-tg-mask { width: 100%; margin: 15px auto; overflow: hidden; }
+.tg-left { float: left; width: 500px; background: #f1f1f1; min-height: 350px; }
 .tg-left .choose-btn { background: #333; color: #fff; display: block; margin: 170px auto 0; width: 120px; height: 40px; font-size: 18px; }
-.tg-right { float: left; margin-left: 30px; width: 140px; background: #f1f1f1; text-align: center; }
-.tg-right h5 { }
+.tg-right { float: right; margin-left: 30px; width: 140px; background: #f1f1f1; text-align: center; }
 .head-img { background: #333; margin: 10px auto; border-radius: 50%; }
 .head-first { width: 117px; height: 117px; }
 .head-second { width: 96px; height: 96px; }
 .head-third { width: 72px; height: 72px; }
 .info-tgbox button { background: transparent; border: none; }
 .tg-reup { visibility: hidden; }
+.tg-reup.active { visibility: visible; }
 
 /* 个人中心-账户安全 */
 .safe { padding: 30px 40px; background: #fff; }

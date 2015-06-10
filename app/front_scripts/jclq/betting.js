@@ -316,13 +316,13 @@ define(['jquery', 'app'], function($, APP) {
       var obj = '';
       var html = '';
       var bunchMap = {
-        bunch2: [3],
-        bunch3: [3, 4, 6, 7],
-        bunch4: [4, 5, 6, 10, 11, 14, 15],
-        bunch5: [5, 6, 10, 15, 16, 20, 25, 26, 30, 31],
-        bunch6: [6, 7, 15, 20, 21, 22, 35, 41, 42, 50, 56, 57, 62, 63],
-        bunch7: [7, 8, 21, 35, 120, 127],
-        bunch8: [8, 9, 28, 56, 70, 247, 255]
+        bunch2: [],
+        bunch3: [3, 4],
+        bunch4: [4, 5, 6, 11],
+        bunch5: [5, 6, 10, 16, 20, 26],
+        bunch6: [6, 7, 15, 20, 22, 35, 42, 50, 57],
+        bunch7: [7, 8, 21, 35, 120],
+        bunch8: [8, 9, 28, 56, 70, 247]
       };
 
       var item = null;
@@ -1452,7 +1452,7 @@ define(['jquery', 'app'], function($, APP) {
         var h = null;
         var method = t.attr('data-method') || null;
 
-        if (Config.lotyName === 'bjdc' && !_this.bjdcPassWay) {
+        if (!_this.bjdcPassWay) {
           _this.bunch = [];
           $('#j-method-ls .jtip').removeClass(a);
         }

@@ -63,7 +63,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap'], function($, APP) {
       if (data.retCode == 100000) {
 
         htmlOutput = craeteOutputHTML(data.retData);
-        PAGE.config.pageNum = Math.ceil(data.retData.size / obj.pageSize);
+        PAGE.config.pageNum = Math.ceil(data.totalRecord / obj.pageSize);
         PAGE.makePageHtml();
         PAGE.bindPageEvent(PAGE.loadOrderRecord);
 

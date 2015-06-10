@@ -70,9 +70,15 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
       identity = (item.identity == 1) ? '下级' : '自己';
 
       html += '<tr>';
-      html += '<td>' + (i + 1) + '</td><td>' + item['create_time'] + '</td><td>' + item['username'] + '</td><td>' + identity + '</td><td>' + item['limit'] + '</td><td>' + item['total_money'] + '</td>';
+      html += '<td>' + (i + 1) + '</td><td>' + item['create_time'] + '</td><td>' + item['username'] + '</td><td>' + identity + '</td>';
 
-      html += '<td><input type="text" value="' + item['rebate'] + '%" class="point clean j-rebate-val" disabled></td><td data-url="' + item['rebate_url'] + '"><a href="javascript:;" class="agent-point j-agent-rebase" >修改返点</a><a href="javascript:;" class="agent-point j-agent-proxy" data-url="' + item['change_proxy_limit_url'] + '">返点代理限额</a><a class="btn btn-red hide j-btn-confirm" href="javascript:;">确认</a> <a class="btn btn-cancel hide j-btn-cancel" href="javascript:;">取消</a></td>';
+      html += '<td><span class="j-proxy-view">' + item['used_limit'] + '/' + item['proxy_limit'] + '</span><span class="j-proxy-edit proxy-edit hide">' + item['used_limit'] + '/<input type="type" value="' + item['proxy_limit'] + '" class="j-proxy-val point"></span></td>';
+
+      html += '<td>' + item['total_money'] + '</td>';
+
+      html += '<td><span class="j-rebate-view">' + item['rebate'] + '%</span><span class="j-rebate-edit hide"><input type="text" value="' + item['rebate'] + '" class="j-rebate-val point"></span></td>';
+
+      html += '<td data-url="' + item['rebate_url'] + '" data-id="' + item['id'] + '" data-uid="' + item['uid'] + '"><a href="javascript:;" class="agent-point j-agent-rebase" >修改返点</a><a href="javascript:;" class="agent-point j-agent-proxy dis" data-url="' + item['change_proxy_limit_url'] + '">返点代理限额</a><a class="btn btn-red hide j-btn-confirm" href="javascript:;">确认</a> <a class="btn btn-cancel hide j-btn-cancel" href="javascript:;">取消</a></td>';
 
       html += '</tr>';
 
@@ -94,7 +100,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
       if (data.retCode == 100000) {
 
         htmlOutput = craeteOutputHTML(data.retData);
-        PAGE.config.pageNum = Math.ceil(data.retData.size / obj.pageSize);
+        PAGE.config.pageNum = Math.ceil(data.totalRecord / obj.pageSize);
         PAGE.makePageHtml();
         PAGE.bindPageEvent(PAGE.loadOrderRecord);
 
@@ -181,7 +187,9 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
         td.find('.btn').removeClass('hide');
         td.find('.j-agent-rebase,.j-agent-proxy').addClass('hide');
         td.attr('data-method', 0);
-        $(this).parents('tr').find('.j-rebate-val').removeClass('clean').removeAttr('disabled');
+
+        $(this).parents('tr').find('.j-rebate-view').addClass('hide');
+        $(this).parents('tr').find('.j-rebate-edit').removeClass('hide');
 
       });
 
@@ -193,11 +201,38 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
         td.find('.j-agent-rebase,.j-agent-proxy').addClass('hide');
         td.attr('data-method', 1);
 
+        $(this).parents('tr').find('.j-proxy-view').addClass('hide');
+        $(this).parents('tr').find('.j-proxy-edit').removeClass('hide');
+
       });
 
       $(_this.tbody).on('click', '.j-btn-confirm', function(event) {
         event.preventDefault();
-        debugger
+
+        var rebateId = '';
+        var rebate = '';
+        var uid = '';
+        var proxyLimit = '';
+        var td = $(this).parents('td');
+        var method = td.attr('data-method');
+        var tr = $(this).parents('tr');
+
+        rebateId = td.attr('data-id');
+        rebate = tr.find('.j-rebate-val').val();
+
+        uid = td.attr('data-uid');
+        proxyLimit = tr.find('.j-proxy-val').val();
+
+        if (method == 0) {
+          _this.updateRebate(rebateId, rebate, tr);
+        }
+
+        if (method == 1) {
+          _this.updateProxy(uid, proxyLimit, tr);
+        }
+
+
+
       });
 
       $(_this.tbody).on('click', '.j-btn-cancel', function(event) {
@@ -205,14 +240,97 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
         var td = $(this).parents('td');
 
-        td.find('.j-rebate-val').addClass('clean').attr('disabled', true);
-        td.find('.btn').addClass('hide');
-        td.find('.j-agent-rebase,.j-agent-proxy').removeClass('hide');
+        td.parents('tr').find('.btn').addClass('hide');
+        td.parents('tr').find('.j-rebate-edit,.j-proxy-edit').addClass('hide');
+        td.parents('tr').find('.j-rebate-view,.j-proxy-view,.j-agent-proxy,.j-agent-rebase').removeClass('hide');
 
       });
 
     };
 
+    AgentUser.prototype.updateProxy = function(uid, proxy_limit, tr) {
+
+      $.ajax({
+          url: '/account/my-agent-user/change_limit/ajax',
+          type: 'get',
+          dataType: 'json',
+          data: {
+            uid: uid,
+            'proxy_limit': proxy_limit
+          },
+        })
+        .done(function(data) {
+          if (data.retCode == 100000) {
+
+            APP.showTips({
+              text: '成功修改返点。',
+              type: 1,
+              onConfirm: function() {
+                window.location.reload();
+              }
+            });
+
+            $('body').on('click', '.close', function(event) {
+
+              window.history.go(0);
+
+            });
+
+          } else {
+
+            APP.showTips(data.retMsg);
+
+          }
+        })
+        .fail(function() {
+          APP.onServiceFail();
+        })
+
+    };
+
+    AgentUser.prototype.updateRebate = function(rebateId, rebate, tr) {
+
+
+      $.ajax({
+          url: '/account/my-agent-user/change_rebate/ajax',
+          type: 'get',
+          dataType: 'json',
+          data: {
+            rebate_id: rebateId,
+            rebate: rebate
+          },
+        })
+        .done(function(data) {
+
+          if (data.retCode == 100000) {
+
+            APP.showTips({
+              text: '成功修改返点。',
+              type: 1,
+              onConfirm: function() {
+                window.location.reload();
+              }
+            });
+
+            $('body').on('click', '.close', function(event) {
+
+              window.history.go(0);
+
+            });
+
+          } else {
+
+            APP.showTips(data.retMsg);
+
+          }
+        })
+        .fail(function() {
+
+          APP.onServiceFail();
+
+        });
+
+    };
     AgentUser.prototype.getPage = function() {
 
       var _this = this;
