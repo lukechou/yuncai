@@ -220,7 +220,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     // 收藏星星 点击事件
     $('#gameSeleList').on('click', 'li', function(event) {
-
+      debugger
       var isAllHide = false;
       var t = $(this);
       var matchTypeText = _.escape($.trim(t.text()));
@@ -245,7 +245,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     // 收藏确认按钮
     $('#j-match-collect').on('click', function(event) {
-
+      debugger
       var start = [];
 
       if ($('#gameSeleList .icon').hasClass('icon-cgou')) {
@@ -445,11 +445,14 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         if (isZhBunch) {
           BET.bjdcPassWay = false;
           BET.setBjdcBox();
+          $('#selectGamePool').find('tr.gameTitle').find('.j-dan').removeClass('active').addClass('dan-disabled');
+          BET.danMatchCode = [];
         } else {
           BET.bjdcPassWay = true;
           BET.setSecondBox();
+          $('#selectGamePool').find('tr.gameTitle').find('.j-dan').removeClass('dan-disabled');
+          BET.danMatchCode = [];
         }
-
       });
 
     }
@@ -1024,8 +1027,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     // head
     h += '<dl><dt>' + time + '(' + bTime + ' -- 次日' + bTime + ')<span class="j-match-size matchSize">' + dataCount + '</span>场比赛可投注<span class="cuspText fc-84 j-dataBody-toggle pull-right" data-show="1"><span class="j-nav-text">隐藏</span><i class="icon show-icon"></i></span></dt>';
-
-    if (BET.tab === 'hhtz') {
+    if (BET && BET.tab && BET.tab === 'hhtz') {
       h += createHhtzHtml(data, d);
     } else {
       h += createDateMain(data, d);
@@ -1215,29 +1217,29 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
   // 初始化用户收藏 暂时不做
   function gameSeleListInit() {
 
-    // var start = store.get('startArr');
+    var start = store.get('startArr');
 
-    // if (start) {
+    if (start) {
 
-    //   $('#gameSeleList li').each(function (index, el) {
-    //     if (_.indexOf(start, $.trim($(this).text())) >= 0) {
-    //       $(this).addClass('active');
-    //     } else {
-    //       $(this).removeClass('active');
-    //     }
-    //   });
+      $('#gameSeleList li').each(function (index, el) {
+        if (_.indexOf(start, $.trim($(this).text())) >= 0) {
+          $(this).addClass('active');
+        } else {
+          $(this).removeClass('active');
+        }
+      });
 
-    //   $('.gameSelect dd').each(function (index, el) {
-    //     if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
-    //       $(this).hide();
-    //     } else {
-    //       $(this).show();
-    //     }
-    //   });
+      $('.gameSelect dd').each(function (index, el) {
+        if (_.indexOf(start, $(this).attr('leaguename')) < 0) {
+          $(this).hide();
+        } else {
+          $(this).show();
+        }
+      });
 
-    //   setToggleBtn(start);
+      setToggleBtn(start);
 
-    // }
+    }
 
   }
 

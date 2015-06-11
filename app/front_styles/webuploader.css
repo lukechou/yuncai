@@ -1,9 +1,10 @@
 .webuploader-element-invisible { position: absolute !important; clip: rect(1px 1px 1px 1px); /* IE6, IE7 */ clip: rect(1px, 1px, 1px, 1px); }
-.webuploader-pick { position: relative; display: block; cursor: pointer; background: #333; color: #fff; text-align: center; border-radius: 3px; overflow: hidden; }
+.webuploader-pick { position: relative; display: block; cursor: pointer; background: #fff; color: #3d3d3d; text-align: center; border-radius: 3px; overflow: hidden; border: 1px #ccc solid; }
+.webuploader-pick .glyphicon { font-size: 28px; font-weight: bold; position: relative; right: 10px; top: 5px; }
 .webuploader-container { position: relative; margin: 160px auto 0; }
 .webuploader-pick,
-.webuploader-container { width: 120px; height: 38px; line-height: 38px; }
-.webuploader-pick-hover { background: #333; }
+.webuploader-container { width: 141px; height: 40px; font-size: 16px; line-height: 40px; }
+.webuploader-pick-hover { background: #fff; }
 .webuploader-pick-disable { opacity: 0.6; pointer-events: none; }
 
 /*!

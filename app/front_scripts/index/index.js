@@ -1,6 +1,6 @@
-define(['jquery'], function ($) {
+define(['jquery'], function($) {
   'use strict';
-  var index = (function () {
+  var index = (function() {
 
     function index(args) {
       // enforces new
@@ -12,7 +12,7 @@ define(['jquery'], function ($) {
 
     index.prototype = {
       systemTime: 0,
-      isSellStop:true,
+      isSellStop: true,
       currLotyName: 'dlt',
       hasCreate: {
         'ssq': false,
@@ -32,7 +32,7 @@ define(['jquery'], function ($) {
       seeds: {}
     };
 
-    index.prototype.init = function (args) {
+    index.prototype.init = function(args) {
 
       var _this = this;
 
@@ -42,9 +42,8 @@ define(['jquery'], function ($) {
       $('#choseCai a').toggleClass('on');
 
       _this.getQuickStopTime();
-      _this.updateHeadUserInfo();
 
-      var i = setInterval(function () {
+      var i = setInterval(function() {
         _this.timer4lottery();
         _this.systemTime++;
       }, 1000);
@@ -53,7 +52,7 @@ define(['jquery'], function ($) {
 
     };
 
-    index.prototype.timer4lottery = function () {
+    index.prototype.timer4lottery = function() {
 
       var _this = this;
 
@@ -103,25 +102,25 @@ define(['jquery'], function ($) {
         redGroup = _.sample(_this.seeds[_this.currLotyName].redBall, _this.seeds[_this.currLotyName].redTotal);
         blueGroup = _.sample(_this.seeds[_this.currLotyName].blueBall, _this.seeds[_this.currLotyName].blueTotal);
 
-        if(_this.currLotyName!=='pl5'){
+        if (_this.currLotyName !== 'pl5') {
           redGroup.sort();
           blueGroup.sort();
         }
         num = 0;
 
         switch (_this.currLotyName) {
-        case 'ssq':
-          _this.buyCodes[_this.currLotyName] = redGroup.join(',') + '|' + blueGroup.join(',');
-          break;
-        case 'dlt':
-          _this.buyCodes[_this.currLotyName] = redGroup.join(',') + '|' + blueGroup.join(',');
-          break;
-        case 'pl5':
-          _this.buyCodes[_this.currLotyName] = redGroup.join(',');
-          break;
+          case 'ssq':
+            _this.buyCodes[_this.currLotyName] = redGroup.join(',') + '|' + blueGroup.join(',');
+            break;
+          case 'dlt':
+            _this.buyCodes[_this.currLotyName] = redGroup.join(',') + '|' + blueGroup.join(',');
+            break;
+          case 'pl5':
+            _this.buyCodes[_this.currLotyName] = redGroup.join(',');
+            break;
         }
 
-        lotyDomObj.find('.tou-ls li').each(function (index, el) {
+        lotyDomObj.find('.tou-ls li').each(function(index, el) {
 
           $(this).html((redGroup.length > index) ? redGroup[index] : blueGroup[index - redGroup.length]);
 
@@ -133,7 +132,7 @@ define(['jquery'], function ($) {
 
     };
 
-    index.prototype.getQuickStopTime = function () {
+    index.prototype.getQuickStopTime = function() {
 
       var _this = this;
       $.ajax({
@@ -141,29 +140,13 @@ define(['jquery'], function ($) {
           type: 'GET',
           dataType: 'json',
         })
-        .done(function (data) {
+        .done(function(data) {
           if (data.retCode == 100000) {
             _this.systemTime = data.retData.sys_time;
           } else {
             console.log(data.retMsg)
           }
         });
-
-    };
-
-    index.prototype.updateHeadUserInfo = function () {
-
-      var html = '';
-      $.ajax({
-        url: '/account/islogin',
-        type: 'get',
-        dataType: 'json',
-      }).done(function (data) {
-        if (data.retCode === 100000) {
-          html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon icon-bor"></i></span>' + data.retData.username + '       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><i class="icon icon-bor"></i><a href="/account/logout">退出</a><i class="icon icon-bor"></i><a href="/account/index" class="last">我的账户</a>';
-          $('#j-hd-top').html(html);
-        }
-      });
 
     };
 

@@ -434,6 +434,22 @@ $(function() {
 
   APP.init();
 
+  $('body').on('click', '#j-proxy-link', function(event) {
+    event.preventDefault();
+
+    var url = $(this).attr('data-url') || '';
+
+    if (url) {
+
+      APP.showTips({
+        title: '代理链接',
+        text: '<p>请将下面的链接复制给你好友：</p><p>' + url + '</p>'
+      });
+
+    }
+
+  });
+
   var u = window.location.href;
   if (u.indexOf('hall') >= 0) {
     $('.hd-nav li a.active').removeClass('active');

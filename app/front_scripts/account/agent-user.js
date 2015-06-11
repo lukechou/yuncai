@@ -76,7 +76,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
       html += '<td>' + item['total_money'] + '</td>';
 
-      html += '<td><span class="j-rebate-view">' + item['rebate'] + '%</span><span class="j-rebate-edit hide"><input type="text" value="' + item['rebate'] + '" class="j-rebate-val point"></span></td>';
+      html += '<td><span class="j-rebate-view fc-3">' + item['rebate'] + '%</span><span class="j-rebate-edit hide"><input type="text" value="' + item['rebate'] + '" class="j-rebate-val point"></span></td>';
 
       html += '<td data-url="' + item['rebate_url'] + '" data-id="' + item['id'] + '" data-uid="' + item['uid'] + '"><a href="javascript:;" class="agent-point j-agent-rebase" >修改返点</a><a href="javascript:;" class="agent-point j-agent-proxy dis" data-url="' + item['change_proxy_limit_url'] + '">返点代理限额</a><a class="btn btn-red hide j-btn-confirm" href="javascript:;">确认</a> <a class="btn btn-cancel hide j-btn-cancel" href="javascript:;">取消</a></td>';
 

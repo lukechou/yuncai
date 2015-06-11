@@ -24,6 +24,8 @@ require.config({
 
 require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick'], function($, _, store, APP, index) {
 
+  APP.updateHeadUserInfo();
+
   var PayMoney = 0;
 
   index.seeds.ballNum = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35'];
@@ -494,7 +496,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
                   btnHTML = '<button class="btn j-model-buy btn-red" data-id="' + dataItem[i].id + '" data-max="' + dataItem[i].price + '" data-url="' + dataItem[i].joinURI + '">确定</button>';
                 }
 
-                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/front_images/index/index-hd.png" alt="head" class="head"><p><a class="username" href="' + dataItem[i].user_profile_url + '">' + dataItem[i].username + '</a></p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + dataItem[i]['playCnName'] + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份">' + btnHTML + '</div></div></div>');
+                dataArr.push('<div class="item m-he-box"><div class="top"><img src="/user/profile/head-pic/' + dataItem[i].uid + '" alt="head" class="head"><p><a class="username" href="' + dataItem[i].user_profile_url + '">' + dataItem[i].username + '</a></p><p class="zj">累计中奖：<span>' + dataItem[i].totalMoney + '</span>元</p></div><div class="bottom"><div class="title">' + dataItem[i]['playCnName'] + '<a href="' + dataItem[i].detailURI + '" class="link">详情</a></div><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + percent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + percent + '%;"></div></div><div class="gen"><span class="gen-one">每份' + dataItem[i].unitPrice + '元</span><input type="text" class="j-input-place" data-max="' + dataItem[i].lessNum + '" data-place="剩余' + dataItem[i].lessNum + '份" value="剩余' + dataItem[i].lessNum + '份">' + btnHTML + '</div></div></div>');
               } else {
 
                 if (!index.isSellStop) {
@@ -503,7 +505,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
                 dataArr.push('<div class="item m-he-box">\
                           <div class="top">\
-                              <img src="/front_images/index/index-hd.png" alt="head" class="head">\
+                              <img src="/user/profile/head-pic/' + dataItem[i].uid + '" alt="head" class="head">\
                               <p><a class="username" href="' + dataItem[i].user_profile_url + '">' + dataItem[i].username + '</a></p>\
                               <p class="zj">\
                                   最近30天盈利金额：<span class="fs-24">' + dataItem[i].money + '</span>\
@@ -587,6 +589,7 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
           if (data.retData[0].uid && data.retData[0].username) {
             var weekStar = '<a href="/user/profile/index/' + data.retData[0].uid + '">' + data.retData[0].username + '</a>';
             $('#j-week-start').html(weekStar);
+            $('#j-week-user-headpic').attr('src', '/user/profile/head-pic/' + data.retData[0].uid);
           }
         }
       })
@@ -609,21 +612,21 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
       });
   }
 
-  function runListAnimate(d,w, el, sp) {
+  function runListAnimate(d, w, el, sp) {
 
-    var speed = sp==undefined ? d.length*7500 : sp*d.length*7500;
+    var speed = sp == undefined ? d.length * 7500 : sp * d.length * 7500;
     var wi = el.find('.j-run-item').width();
 
     el.animate({
         marginLeft: -w
       },
-      speed,'linear',
+      speed, 'linear',
       function() {
-        var tmp  = $('#j-run-list ul').first().clone();
+        var tmp = $('#j-run-list ul').first().clone();
         $('#j-run-list ul').first().remove();
         $('#j-run-list').append(tmp);
-        $('#j-run-list').css('marginLeft',0);
-        runListAnimate(d,wi,el);
+        $('#j-run-list').css('marginLeft', 0);
+        runListAnimate(d, wi, el);
       });
   }
 
@@ -643,9 +646,9 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
 
     for (var i = dataLen - 1; i >= 0; i--) {
       item = d[i];
-      if(d[i].uid){
+      if (d[i].uid) {
         name = '<a href="/user/profile/index/' + item.uid + '">' + item.username + '</a>';
-      }else{
+      } else {
         name = item.username;
       }
       html += '<li>' + name + '中奖<span>' + item.bonus_money + '元</span></li>';
@@ -662,14 +665,14 @@ require(['jquery', 'lodash', 'store', 'app', 'index', 'owl', 'bootstrap', 'slick
     runList.width(dataLen * width * 2);
     itemWidth = runList.find('.j-run-item').width();
     firstLiWidth = Number(runList.find('.j-run-item li').eq(0).width()) + 20;
-    runListAnimate(d,itemWidth, runList);
+    runListAnimate(d, itemWidth, runList);
 
-    runList.hover(function(){
+    runList.hover(function() {
       $(this).stop();
-    },function(){
+    }, function() {
       var ml = $(this).css('marginLeft').slice(1, -2);
-      var lv = 1-ml/itemWidth;
-      runListAnimate(d,itemWidth, runList,lv);
+      var lv = 1 - ml / itemWidth;
+      runListAnimate(d, itemWidth, runList, lv);
     })
   }
 

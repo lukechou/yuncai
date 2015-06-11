@@ -29,7 +29,7 @@
 .xiang .box .right-hd { min-height: 250px; }
 .xiang .box .left { font-size: 12px; float: left; width: 230px; }
 .xiang .box .left-hd { margin: 0 10px; text-align: center; border-bottom: 1px #dfdfdf dotted; }
-.xiang .box .left-hd > img { margin: 45px 0 5px; }
+.xiang .box .left-hd > img { margin: 45px 0 5px; width: 117px; height: 117px; border-radius: 50%; }
 .xiang .box .left-hd > p { margin-bottom: 5px; }
 .xiang .box .left-hd > .user { font-size: 14px; font-weight: bold; }
 .xiang .box .left-ft { padding: 15px 15px 15px 20px; }
@@ -75,6 +75,7 @@
 .pd-th6 { width: 114px; }
 .pd-th7 { width: 114px; }
 .pd-th8 { width: 270px; }
+.pd-th9 { width: 100px; }
 .table-thead-white > thead > tr > th { background: none; }
 .table-th-noborbot > thead > tr > th { border-bottom: none; }
 .hm-table>tbody>tr:nth-child(even) { background: #fff; }

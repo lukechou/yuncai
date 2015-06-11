@@ -191,7 +191,11 @@ require(['jquery', 'app', 'webuploader', 'bootstrap', 'cropper'], function($, AP
             id: '#filePicker',
             multiple: false
           },
-
+          accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+          },
           // 设置用什么方式去生成缩略图。
           thumb: {
             width: 120,
@@ -208,11 +212,6 @@ require(['jquery', 'app', 'webuploader', 'bootstrap', 'cropper'], function($, AP
           // 禁掉分块传输，默认是开起的。
           chunked: false,
 
-          // 禁掉上传前压缩功能，因为会手动裁剪。
-          compress: false,
-
-          // fileSingleSizeLimit: 2 * 1024 * 1024,
-
           server: '/account/set-head-pic',
           swf: '../webuploader/Uploader.swf',
           fileNumLimit: 1,
@@ -222,21 +221,91 @@ require(['jquery', 'app', 'webuploader', 'bootstrap', 'cropper'], function($, AP
           }
         });
 
-        uploader.on('uploadSuccess', function(event) {
-          APP.showTips({
-            text: '修改头像成功!',
-            type: 1,
-            onConfirm: function() {
-              window.location.reload();
-            }
-          });
-          $('body').on('click', '.close', function(event) {
-            window.history.go(0);
-          });
+        uploader.option( // 禁掉上传前压缩功能，因为会手动裁剪。
+          'compress', {
+            width: 120,
+            height: 120,
+            // 图片质量，只有type为`image/jpeg`的时候才有效。
+            quality: 90,
+
+            // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+            allowMagnify: false,
+
+            // 是否允许裁剪。
+            crop: false,
+
+            // 是否保留头部meta信息。
+            preserveHeaders: true,
+
+            // 如果发现压缩后文件大小比原来还大，则使用原来图片
+            // 此属性可能会影响图片自动纠正功能
+            noCompressIfLarger: false,
+
+            // 单位字节，如果图片大小小于此值，不会采用压缩。
+            compressSize: 0
+          }
+        );
+
+        uploader.on('uploadError', function() {
+
+          APP.onServiceFail();
         });
 
+        uploader.on('uploadSuccess', function(file, data) {
+
+          if (data.retCode === 100000) {
+            APP.showTips({
+              text: '更换头像成功',
+              type: 1,
+              onConfirm: function() {
+                window.location.reload();
+              }
+            });
+            $('body').on('click', '.close', function(event) {
+              window.history.go(0);
+            });
+          } else {
+            APP.showTips(data.retMsg);
+          }
+        });
+
+        uploader.on('beforeFileQueued', function() {
+
+          $('#j-uploader-container').addClass('webuploader-element-invisible');
+
+        });
+
+        uploader.on('fileDequeued', function(file) {
+
+          $('#j-uploader-container').removeClass('webuploader-element-invisible');
+          $('.img-preview').html('');
+          $('.img-container').addClass('hide');
+          Croper.setSource('');
+          uploader.refresh();
+
+        });
+
+        function reviewImage() {
+
+          $('#j-tg-reup').on('click', function(event) {
+
+            uploader.removeFile(file);
+            $('#j-uploader-container [type=file]').trigger('click');
+
+            $('#j-tg-reup').unbind('click');
+
+          });
+
+        }
+
         uploader.on('fileQueued', function(_file) {
+
           file = _file;
+
+          $('#j-tg-reup').addClass('active');
+
+
+          reviewImage();
 
           uploader.makeThumb(file, function(error, src) {
 
@@ -246,8 +315,12 @@ require(['jquery', 'app', 'webuploader', 'bootstrap', 'cropper'], function($, AP
             }
 
             selectCb(src);
+            $('.img-container').removeClass('hide');
 
           }, FRAME_WIDTH, 1); // 注意这里的 height 值是 1，被当成了 100% 使用。
+
+
+
         });
       },
 
@@ -263,6 +336,7 @@ require(['jquery', 'app', 'webuploader', 'bootstrap', 'cropper'], function($, AP
           height: data.height,
           scale: data.scale
         };
+
       },
 
       upload: function() {
@@ -270,11 +344,7 @@ require(['jquery', 'app', 'webuploader', 'bootstrap', 'cropper'], function($, AP
       }
     }
 
-    // $('#j-tg-reup').on('click', function(event) {
-    //   event.preventDefault();
-    //   debugger
-    //   uploader.reset();
-    // });
+
   })();
 
   // ---------------------------------
@@ -390,9 +460,12 @@ require(['jquery', 'app', 'webuploader', 'bootstrap', 'cropper'], function($, AP
 
     // 当用户选择上传的时候，开始上传。
     Croper.setCallback(function(data) {
+
       Uploader.crop(data);
       Uploader.upload();
+
     });
+
   });
 
 

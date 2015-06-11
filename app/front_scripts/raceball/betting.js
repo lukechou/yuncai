@@ -30,6 +30,7 @@ define(['jquery', 'app'], function($, APP) {
       match: [],
       bunch: [],
       collect: [],
+      danMatchCode: [],
       maxBunch: {
         'spf': 8,
         'rqspf': 8,
@@ -172,68 +173,79 @@ define(['jquery', 'app'], function($, APP) {
       // 对阵分组
       var matchs = _.groupBy(_this.match, 'matchcode');
 
-      for (var key in matchs) {
-        if (matchs.hasOwnProperty(key)) {
+      var sortMatchs = [];
+      var key = '';
 
-          oneMatchLink = '';
-          bfLinkObj = {
-            s: [],
-            p: [],
-            f: []
-          };
+      for (var prop in matchs) {
+        if (matchs.hasOwnProperty(prop)) {
+          sortMatchs.push(Number(prop));
+        }
+      }
 
-          dd = $('.j-data-dd[matchcode=' + key + ']');
+      sortMatchs.sort(function(a, b) {
+        return a - b;
+      });
 
-          matchcode = key;
-          matchnumcn = dd.attr('matchnumcn');
-          hostname = dd.attr('hostname');
-          guestname = dd.attr('guestname');
+      for (var i = 0; i < sortMatchs.length; i++) {
 
-          html += '<tr matchcode="' + matchcode + '" class="gameTitle">';
+        key = sortMatchs[i];
+        oneMatchLink = '';
+        bfLinkObj = {
+          s: [],
+          p: [],
+          f: []
+        };
 
-          html += '<th class="t1"><a class="icoDel j-del-all" href="javascript:;">&times;</a>' + matchnumcn + '</th>';
+        dd = $('.j-data-dd[matchcode=' + key + ']');
 
-          html += '<th class="t2"><span class="t2-left">' + hostname + '</span><span class="t2-right">' + guestname + '</span></th></tr>';
+        matchcode = key;
+        matchnumcn = dd.attr('matchnumcn');
+        hostname = dd.attr('hostname');
+        guestname = dd.attr('guestname');
 
-          // 选项排序
-          oneMatch = matchs[key].sort(function(a, b) {
-            return a.index - b.index;
-          });
+        html += '<tr matchcode="' + matchcode + '" class="gameTitle">';
 
-          for (var j = 0, jLen = oneMatch.length; j < jLen; j++) {
+        html += '<th class="t1"><a class="icoDel j-del-all" href="javascript:;">&times;</a>' + matchnumcn + '</th>';
 
-            item = oneMatch[j];
+        html += '<th class="t2"><span class="t2-left">' + hostname + '</span><span class="t2-right">' + guestname + '</span><span class="t3-right j-dan">胆</span></th></tr>';
 
-            if (_this.tab === 'bf') {
+        // 选项排序
+        oneMatch = matchs[key].sort(function(a, b) {
+          return a.index - b.index;
+        });
 
-              bfLinkObj[_this.getBfLinkGroupIndex(item.title)].push(_this.createLinkHtml(item, matchcode));
+        for (var j = 0, jLen = oneMatch.length; j < jLen; j++) {
 
-            } else {
-              oneMatchLink += _this.createLinkHtml(item, matchcode);
-            }
-
-          };
+          item = oneMatch[j];
 
           if (_this.tab === 'bf') {
 
-            for (var prop in bfLinkObj) {
-              if (bfLinkObj.hasOwnProperty(prop)) {
+            bfLinkObj[_this.getBfLinkGroupIndex(item.title)].push(_this.createLinkHtml(item, matchcode));
 
-                if (bfLinkObj[prop].length) {
-                  oneMatchLink += '<div class="m-bf-group">';
-                  oneMatchLink += bfLinkObj[prop].join('');
-                  oneMatchLink += '</div>';
-                }
-
-              }
-            }
-
+          } else {
+            oneMatchLink += _this.createLinkHtml(item, matchcode);
           }
 
-          html += '<tr class="gameOption" matchcode="' + matchcode + '"><td colspan="5" class="betList">' + oneMatchLink + '</td></tr>';
+        };
+
+        if (_this.tab === 'bf') {
+
+          for (var prop in bfLinkObj) {
+            if (bfLinkObj.hasOwnProperty(prop)) {
+
+              if (bfLinkObj[prop].length) {
+                oneMatchLink += '<div class="m-bf-group">';
+                oneMatchLink += bfLinkObj[prop].join('');
+                oneMatchLink += '</div>';
+              }
+
+            }
+          }
 
         }
-      }
+
+        html += '<tr class="gameOption" matchcode="' + matchcode + '"><td colspan="5" class="betList">' + oneMatchLink + '</td></tr>';
+      };
 
       // 更新选中对阵信息
       $('#selectGamePool tbody').html(html);
@@ -997,45 +1009,60 @@ define(['jquery', 'app'], function($, APP) {
           '1_1': [1],
           '2_1': [2],
           //'2_3': [1, 2],
+          '2_3': [],
           '3_1': [3],
           '3_3': [2],
           '3_4': [2, 3],
           //'3_6': [1, 2],
           //'3_7': [1, 2, 3],
+          '3_6': [],
+          '3_7': [],
           '4_1': [4],
           '4_4': [3],
           '4_5': [3, 4],
           '4_6': [2],
           //'4_10': [1, 2],
+          '4_10': [],
           '4_11': [2, 3, 4],
           //'4_14': [1, 2, 3],
           //'4_15': [1, 2, 3, 4],
+          '4_14': [],
+          '4_15': [],
           '5_1': [5],
           '5_5': [4],
           '5_6': [4, 5],
           '5_10': [2],
           //'5_15': [1, 2],
+          '5_15': [],
           '5_16': [3, 4, 5],
           '5_20': [2, 3],
           //'5_25': [1, 2, 3],
+          '5_25': [],
           '5_26': [2, 3, 4, 5],
           //'5_30': [1, 2, 3, 4],
           //'5_31': [1, 2, 3, 4, 5],
+          '5_30': [],
+          '5_31': [],
           '6_1': [6],
           '6_6': [5],
           '6_7': [5, 6],
           '6_15': [2],
           '6_20': [3],
           //'6_21': [1, 2],
+          '6_21': [],
           '6_22': [4, 5, 6],
           '6_35': [2, 3],
           //'6_41': [1, 2, 3],
+          '6_41': [],
           '6_42': [3, 4, 5, 6],
           '6_50': [2, 3, 4],
           //'6_56': [1, 2, 3, 4],
+          '6_56': [],
           '6_57': [2, 3, 4, 5, 6],
           //'6_62': [1, 2, 3, 4, 5],
           //'6_63': [1, 2, 3, 4, 5, 6],
+          '6_62': [],
+          '6_63': [],
           '7_1': [7],
           '7_7': [6],
           '7_8': [6, 7],
@@ -1043,6 +1070,7 @@ define(['jquery', 'app'], function($, APP) {
           '7_35': [4],
           '7_120': [2, 3, 4, 5, 6, 7],
           //'7_127': [1, 2, 3, 4, 5, 6, 7],
+          '7_127': [],
           '8_1': [8],
           '8_8': [7],
           '8_9': [7, 8],
@@ -1051,6 +1079,7 @@ define(['jquery', 'app'], function($, APP) {
           '8_70': [4],
           '8_247': [2, 3, 4, 5, 6, 7, 8],
           //'8_255': [1, 2, 3, 4, 5, 6, 7, 8],
+          '8_255': [],
           '9_1': [9],
           '10_1': [10],
           '11_1': [11],
@@ -1064,12 +1093,16 @@ define(['jquery', 'app'], function($, APP) {
 
       var matchkeySp = {};
       var matchkeySpArr = [];
+      var danArr = [];
+      var danLen, dTmp, aArr = [],
+        combinedDataTmp = [];
 
       for (var prop in group) {
         if (group.hasOwnProperty(prop)) {
           maxList.push(_.max(group[prop], 'sp'));
         }
       }
+
 
       if (chuanArr.length != 0) {
 
@@ -1092,7 +1125,36 @@ define(['jquery', 'app'], function($, APP) {
 
           for (var k = 0; k < mapBjdcChuanguanDetail[chuanArr[i]].length; k++) {
             var bunchIndex = mapBjdcChuanguanDetail[chuanArr[i]][k];
-            var combinedData = YC.Unit.explodeCombined(matchkeys, bunchIndex);
+            var combinedData = YC.Unit.explodeCombined(matchkeys, bunchIndex); //每次串的组合情况
+            danLen = _this.danMatchCode.length;
+            if (danLen != 0) { //如果有选择胆
+              combinedDataTmp = [];
+              aArr = [];
+              for (var a = 0; a < combinedData.length; a++) {
+                dTmp = 0;
+                for (var b = 0; b < combinedData[a].length; b++) {
+                  for (var c = 0; c < danLen; c++) {
+                    if (_this.danMatchCode[c] == combinedData[a][b]) {
+                      dTmp++;
+                    }
+                  }
+                }
+
+                if (dTmp == danLen) {
+                  aArr.push(a);
+                }
+              } //end for a
+
+              for (var a = 0; a < combinedData.length; a++) {
+                for (var b = 0; b < aArr.length; b++) {
+                  if (aArr[b] == a) {
+                    combinedDataTmp[b] = combinedData[a];
+                  }
+                }
+              }
+              combinedData = combinedDataTmp;
+
+            }
 
             for (var m = combinedData.length - 1; m >= 0; m--) {
 
@@ -1117,6 +1179,7 @@ define(['jquery', 'app'], function($, APP) {
 
         }
       }
+
 
       result.maxBonus *= _this.beishu * 2;
       result.maxBonus = result.maxBonus.toFixed(2);
@@ -1256,6 +1319,9 @@ define(['jquery', 'app'], function($, APP) {
       var matchs = [];
       var content = null;
       var uniqMatch = null;
+      var matchKeys, matchsTmp = [],
+        c = [],
+        o = {};
 
       // get Params
       uniqMatch = _.uniq(_this.match, 'matchcode').sort(function(a, b) {
@@ -1266,16 +1332,33 @@ define(['jquery', 'app'], function($, APP) {
         matchs.push(uniqMatch[i].matchcode);
       };
 
-      content = _this.getSubContent(matchs);
+      matchsTmp = _this.danMatchCode.concat(matchs);
+      for (var i = 0; i < matchsTmp.length; i++) {
+        (matchsTmp[i] in o) ? o[matchsTmp[i]]++: o[matchsTmp[i]] = 1;
+      }
+      for (var x in o) {
+        if (o[x] == 1) {
+          c.push(x);
+        }
+      }
+
+      matchs = c;
+
+      if (_this.danMatchCode.length) {
+        matchKeys = _this.danMatchCode.join(',') + '@' + matchs.join(',');
+        content = _this.getSubContent(_this.danMatchCode) + '|' + _this.getSubContent(matchs);
+      } else {
+        matchKeys = matchs.join(',');
+        content = _this.getSubContent(matchs);
+      }
 
       obj = {
         zhushu: _this.zhushu,
         beishu: _this.beishu,
-        matchKeys: matchs.join(','),
+        matchKeys: matchKeys,
         bunch: _this.bunch.join(','),
         content: content,
       };
-
       return obj;
 
     };
@@ -1739,6 +1822,8 @@ define(['jquery', 'app'], function($, APP) {
         //1表示不停售，0表示停售
         var dgSale = t.parents('.j-dg-sale').attr('dg-sale');
         var ggSale = t.parents('.j-dg-sale').attr('gg-sale');
+        var minBunch, flag, matchLenAfter;
+
 
         if (t.hasClass('rq')) {
           return;
@@ -1753,9 +1838,9 @@ define(['jquery', 'app'], function($, APP) {
           t.siblings('.j-bf-all').removeClass(a + ' ' + h);
           t.removeClass(a);
           _this.removeOneItem(index, dd);
-
+          flag = 'minus';
         } else {
-
+          flag = 'plus';
           t.removeClass(h).addClass(a);
           _this.addOneItem(index, dd, sp, title, dzTab, dgSale, ggSale);
 
@@ -1768,6 +1853,113 @@ define(['jquery', 'app'], function($, APP) {
 
           if (allSp) {
             t.siblings('.j-bf-all').addClass(a);
+          }
+
+        }
+
+
+        matchLenAfter = _.uniq(_this.match, 'matchcode').length;
+        minBunch = _this.bunch[0] ? _this.bunch[0].slice(0, -2) : '';
+        var jDan = $('#selectGamePool').find('tr.gameTitle').find('.j-dan');
+        if (matchLenAfter < 3 || (minBunch && (minBunch == matchLenAfter || minBunch == '1'))) {
+
+          jDan.removeClass('active').addClass('dan-disabled');
+          _this.danMatchCode = [];
+
+          //处理串
+          $('#j-method-ls li').removeClass('active').removeClass('disabled-chuan');
+          //在_this.bunch中有的置为active
+          for (var i = 0; i < _this.bunch.length; i++) {
+            $('#j-method-ls').find('li.jtip[data-method="' + _this.bunch[i] + '"]').addClass('active');
+          }
+
+        } else if (!_this.danMatchCode.length && !minBunch) {
+          //既没有选串，没有选择胆
+          jDan.removeClass('active').removeClass('dan-disabled');
+          $('#j-method-ls li').removeClass('active').removeClass('disabled-chuan');
+
+        } else if (_this.danMatchCode.length && !minBunch) {
+          //选择了胆，没有选择串
+
+          if (matchLenAfter < matchLen) {
+            _.remove(_this.danMatchCode, function(d) {
+              return d == matchcode;
+            });
+
+          } else {
+
+          }
+
+          jDan.removeClass('active').removeClass('dan-disabled');
+          for (var i = 0; i < _this.danMatchCode.length; i++) {
+            $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').addClass('active');
+          }
+
+          //处理串
+          $('#j-method-ls li').removeClass('active').removeClass('disabled-chuan');
+
+          $('#j-method-ls li').each(function(index, el) {
+            var t = $(this);
+            var dm = t.attr('data-method');
+            var dm0 = t.attr('data-method').slice(0, -2);
+            if (dm0 <= _this.danMatchCode.length) {
+              t.addClass('disabled-chuan');
+              _.remove(_this.bunch, function(b) {
+                return b == dm;
+              });
+            }
+          });
+
+        } else if (_this.danMatchCode.length && minBunch) {
+          //胆串都选择了
+
+          //前提是对阵数减少了
+          if (matchLenAfter < matchLen) {
+
+            _.remove(_this.danMatchCode, function(d) {
+              return d == matchcode;
+            });
+
+          } else {
+
+          }
+
+          if (_this.danMatchCode.length < minBunch - 1) {
+            //胆数<最小串数-1
+
+            //存在胆串中的active，其余保持正常状态
+            jDan.removeClass('active').removeClass('dan-disabled');
+            for (var i = 0; i < _this.danMatchCode.length; i++) {
+              $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').addClass('active');
+            }
+
+            //处理串
+            $('#j-method-ls li').removeClass('active').removeClass('disabled-chuan'); //所有的串先保持正常状态
+            $('#j-method-ls li').each(function(index, el) { //比胆数小于等于的置为disabled
+              var t = $(this);
+              var dm = t.attr('data-method');
+              var dm0 = t.attr('data-method').slice(0, -2);
+              if (dm0 <= _this.danMatchCode.length) {
+                t.addClass('disabled-chuan');
+                _.remove(_this.bunch, function(b) {
+                  return b == dm;
+                });
+              }
+            });
+            //在_this.bunch中有的置为active
+            for (var i = 0; i < _this.bunch.length; i++) {
+              $('#j-method-ls').find('li.jtip[data-method="' + _this.bunch[i] + '"]').addClass('active');
+            }
+
+
+          } else if (_this.danMatchCode.length == minBunch - 1) {
+            //胆数=最小串数-1
+
+            //存在胆串中的active，其余保持disabled状态
+            jDan.removeClass('active').addClass('dan-disabled');
+            for (var i = 0; i < _this.danMatchCode.length; i++) {
+              $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+            } //end for
           }
 
         }
@@ -1965,9 +2157,14 @@ define(['jquery', 'app'], function($, APP) {
 
       $('#j-method-ls').on('click', '.jtip', function(event) {
         var t = $(this);
+        if (t.hasClass('disabled-chuan')) {
+          return;
+        }
         var a = 'active';
         var h = null;
         var method = t.attr('data-method') || null;
+        var minBunch, matchLen, maxDanLen, activeLen, hasActive;
+        var jDan = $('#selectGamePool').find('tr.gameTitle').find('.j-dan');
 
         if (!_this.bjdcPassWay) {
           _this.bunch = [];
@@ -1977,8 +2174,79 @@ define(['jquery', 'app'], function($, APP) {
         t.toggleClass(a);
         h = t.hasClass(a);
         t.attr('data-check', h);
-
         _this.toggleBunch(h, method);
+
+        if ($('#j-gg-tab').find('li.active').attr('data-bunch') == '0') { //如果是自由过关方式
+          matchLen = _.uniq(_this.match, 'matchcode').length; //已选择的对阵数
+          minBunch = _this.bunch[0] ? _this.bunch[0].slice(0, -2) : ''; //最小串数
+          activeLen = $('#selectGamePool').find('.j-dan.active').length; //已选择的胆数
+          hasActive = t.hasClass('active');
+
+          if (minBunch) { //说明有选择串数
+            maxDanLen = minBunch - 1; //最多可选胆数
+          } else {
+            maxDanLen = matchLen;
+          }
+
+          if (minBunch) { //已选择串数
+            if (minBunch == matchLen || minBunch == '1') {
+              //)如果已选择的最小串数=对阵数 or 最小串数是单关
+              jDan.removeClass('active').addClass('dan-disabled');
+              _this.danMatchCode = [];
+
+            } else if (_this.danMatchCode.length == minBunch - 1) {
+              //胆数=最小串数-1
+
+              //存在胆串中的active，其余保持disabled状态
+              jDan.removeClass('active').addClass('dan-disabled');
+
+              for (var i = 0; i < _this.danMatchCode.length; i++) {
+                $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+              }
+
+            } else if (_this.danMatchCode.length < minBunch - 1) {
+              //胆数<最小串数-1
+
+              //重置胆字状态，存在胆串中的active
+              jDan.removeClass('active').removeClass('dan-disabled');
+
+              for (var i = 0; i < _this.danMatchCode.length; i++) {
+                $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+              }
+
+            }
+
+
+          } else { //未选择串数
+
+            //重置胆字状态，存在胆串中的active
+            jDan.removeClass('active').removeClass('dan-disabled');
+
+            for (var i = 0; i < _this.danMatchCode.length; i++) {
+              $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+            }
+
+            //重置几串几状态
+
+            $('#j-method-ls li').removeClass('active').removeClass('disabled-chuan');
+
+            $('#j-method-ls li').each(function(index, el) {
+              var t = $(this);
+              var dm = t.attr('data-method');
+              var dm0 = t.attr('data-method').slice(0, -2);
+              if (dm0 <= _this.danMatchCode.length) {
+                t.addClass('disabled-chuan');
+                _.remove(_this.bunch, function(b) {
+                  return b == dm;
+                })
+              }
+            });
+          } //end minBunch
+
+
+        }
+
+
         _this.setAllTotal();
 
       });
@@ -2095,6 +2363,76 @@ define(['jquery', 'app'], function($, APP) {
         if (_this.match == 0) $('#poolStep1 .unSeleTips').show();
 
         _this.setSecondBox();
+        _this.setAllTotal();
+
+      });
+
+      $('#selectGamePool').on('click', '.j-dan', function(event) {
+        var minBunch, matchLen, maxDanLen, activeLen, danMatchLen;
+        var t = $(this);
+        if (t.hasClass('dan-disabled')) {
+          return;
+        }
+        var hasActive = t.hasClass('active');
+        var jDan = $('#selectGamePool').find('tr.gameTitle').find('.j-dan');
+        var trParent = t.parents('tr.gameTitle');
+        var tMatchCode = trParent.attr('matchcode');
+
+        matchLen = _.uniq(_this.match, 'matchcode').length; //已选择的对阵数
+        minBunch = _this.bunch[0] ? _this.bunch[0].slice(0, -2) : ''; //最小串数
+        activeLen = $('#selectGamePool').find('.j-dan.active').length; //已选择的胆数
+
+        if (minBunch) {
+          maxDanLen = minBunch - 1; //最多可选胆数
+        } else {
+          maxDanLen = matchLen;
+        }
+
+        if (hasActive) {
+
+          t.removeClass('active');
+          _.remove(_this.danMatchCode, function(d) {
+            return d == tMatchCode;
+          });
+          if (activeLen == maxDanLen) {
+            $('#selectGamePool').find('tr.gameTitle').find('.j-dan.dan-disabled').removeClass('dan-disabled');
+          }
+
+        } else {
+
+          t.addClass('active');
+          _this.danMatchCode.push(tMatchCode);
+          _this.danMatchCode = _.uniq(_this.danMatchCode);
+
+          if (activeLen == maxDanLen - 1) {
+
+            jDan.removeClass('active').addClass('dan-disabled');
+
+            for (var i = 0; i < _this.danMatchCode.length; i++) {
+              $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+            }
+
+          }
+
+        }
+        $('#j-method-ls li').removeClass('disabled-chuan');
+        danMatchLen = _this.danMatchCode.length;
+        $('#j-method-ls li').each(function(index, el) {
+          var t = $(this);
+          var tBunch = t.attr('data-method');
+          var chuan = t.attr('data-method').slice(0, -2);
+
+          if (chuan <= danMatchLen) {
+
+            t.removeClass('active').addClass('disabled-chuan');
+            _.remove(_this.bunch, function(o) {
+              return tBunch == o;
+            });
+
+          }
+
+        });
+
         _this.setAllTotal();
 
       });

@@ -8,7 +8,8 @@ define(['jquery', 'bootstrap'], function($) {
       if (!(this instanceof app)) {
         return new app(args);
       }
-      // constructor body
+
+      this.init();
     }
 
     /*
@@ -481,6 +482,28 @@ define(['jquery', 'bootstrap'], function($) {
 
     };
 
+    app.prototype.bindProxyLink = function() {
+
+      var _this = this;
+
+      $('body').on('click', '#j-proxy-link', function(event) {
+        event.preventDefault();
+
+        var url = $(this).attr('data-url') || '';
+
+        if (url) {
+
+          _this.showTips({
+            title: '代理链接',
+            text: '<p>请将下面的链接复制给你好友：</p><p>' + url + '</p>'
+          });
+
+        }
+
+      });
+
+    };
+
     /**
      * 初始化头部 导航 切换
      * @return null
@@ -490,6 +513,8 @@ define(['jquery', 'bootstrap'], function($) {
       var _this = this;
 
       var u = window.location.href;
+
+
       if (u.indexOf('hall') >= 0) {
         $('.hd-nav li a.active').removeClass('active');
         $('.j-nav-hall').addClass('active');
@@ -572,6 +597,9 @@ define(['jquery', 'bootstrap'], function($) {
       });
 
       _this.initLrkf();
+
+      _this.bindProxyLink();
+
       $('.modal').on('show.bs.modal', _this.centerModal);
 
     };
@@ -621,17 +649,34 @@ define(['jquery', 'bootstrap'], function($) {
 
     // 更新用户信息
     app.prototype.updateHeadUserInfo = function() {
+
       var html = '';
+      var proxyHtml = '';
+      var item = '';
+
       $.ajax({
           url: '/account/islogin',
           type: 'get',
           dataType: 'json',
         })
         .done(function(data) {
+
           if (data.retCode === 100000) {
-            html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon icon-bor"></i></span><span id="myname">' + data.retData.username + '</span>       账户余额:<span id="userMoney">' + data.retData.money + '</span>元<a href="/account/top-up" class="active">充值</a><i class="icon icon-bor"></i><a href="/account/logout">退出</a><i class="icon icon-bor"></i><a href="/account/index" class="last">我的账户</a>';
+
+            item = data.retData;
+
+            if (item['is_proxy'] == 3) {
+
+              proxyHtml = '<a href="javascript:;" id="j-proxy-link" data-url="' + item['$proxy_url'] + '">代理链接</a><i class="icon icon-bor"></i>';
+
+            }
+
+            html = '<span>欢迎来到彩胜网&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;<i class="icon icon-bor"></i></span><span id="myname">' + item.username + '</span>账户余额:<span id="userMoney">' + item.money + '</span>元<a href="/account/top-up" class="active">充值</a><i class="icon icon-bor"></i>' + proxyHtml + '<a href="/account/logout">退出</a><i class="icon icon-bor"></i><a href="/account/index" class="last">我的账户</a>';
+
             $('#j-hd-top').html(html);
+
           }
+
         });
     };
 
@@ -779,8 +824,6 @@ define(['jquery', 'bootstrap'], function($) {
   }());
 
   var a = new app();
-
-  a.init();
 
   return a;
 
