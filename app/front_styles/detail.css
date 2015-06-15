@@ -1,5 +1,5 @@
 /* 方案详情页 */
-.xiang .tab-content { margin-bottom: 45px; border: 1px #dfdfdf solid; border-top: none; }
+.xiang .tab-content { margin-bottom: 92px; border: 1px #dfdfdf solid; border-top: none; }
 .xiang .tab-content .ttil { font-size: 12px; padding: 8px 20px; }
 .xiang .tab-content .mid-ttil { border: 1px #dfdfdf solid; border-width: 0 1px; }
 .xiang .tab-content .ttil span { margin-right: 20px; }
@@ -36,7 +36,7 @@
 .xiang .box .left-ft .links { margin-top: 30px; }
 .xiang .box .left-ft .links a { font-size: 12px; }
 .xiang .box .left-ft .links .btn { margin-right: 8px; padding: 5px 9px; color: #3d3d3d; background: #ddd; }
-.xiang .box .right { float: right; width: 753px; border-left: 1px #dfdfdf solid; min-height: 310px; }
+.xiang .box .right { float: right; width: 753px; border-left: 1px #dfdfdf solid; min-height: 374px; }
 .xiang .box .right-ft { height: 150px; border-top: 1px #dfdfdf solid; background: #f1f1f1; }
 .xiang .box .right-ft .btn-big { margin: 15px auto 10px; width: 162px; }
 .xiang .box .right-ft p { font-size: 12px; padding: 15px 0 10px; text-align: center; }
@@ -48,10 +48,10 @@
 .xiang .box .right-hd ul { font-size: 12px; width: 712px; margin: auto; }
 .xiang .box .right-hd ul li { margin-bottom: 10px; }
 .xiang .box .right-hd ul li .progress { position: relative; top: 6px; display: inline-block; width: 500px; margin: 0; background: #DFDFDF; }
-.xiang .box .right-hd ul li .progress-bar { background: #f13c38; font-family: "微软雅黑"; font-weight: bold; font-size: 14px; }
+.xiang .box .right-hd ul li .progress-bar { background: #f13c38; font-family: 'Microsoft Yahei'; font-weight: bold; font-size: 14px; }
 .xiang .box .right-hd ul li .pro-tips { line-height: 22px; display: inline-block; min-width: 67px; height: 22px; padding: 0 3px; text-align: center; }
 .xiang .box .right-hd .table td { font-size: 12px; padding: 8px 10px 8px 20px; }
-.xiang .box .right-hd .table td > span { font-size: 16px; font-weight: bold; display: block; margin-top: 3px; font-family: "微软雅黑"; }
+.xiang .box .right-hd .table td > span { font-size: 16px; font-weight: bold; display: block; margin-top: 3px; font-family: 'Microsoft Yahei'; }
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,
@@ -104,7 +104,7 @@
 .j-hm-cxfa { color: #0D67C4; display: inline-block; margin: 0 3px; }
 .j-hm-cxfa:hover { text-decoration: none; cursor: pointer; }
 .hm-cdqr1,
-.hm-cdqr2 { position: relative; font-family: "微软雅黑"; color: #3D3D3D; }
+.hm-cdqr2 { position: relative; font-family: 'Microsoft Yahei'; color: #3D3D3D; }
 .hm-cdqr1 { height: 55px; font-size: 16px; font-weight: bold; padding: 10px 0 0 28px; }
 .hm-cdqr1 i,
 .hm-cdqr2 i { position: absolute; left: 30px; top: -1px; }
@@ -158,6 +158,10 @@
 .d-table-one > tbody > tr > td,
 .d-table-one > thead > tr > th { border: 1px #dfdfdf solid; padding: 8px 0; }
 .d-table-one > tbody > tr { background: #fff; border-bottom: 1px #dfdfdf solid; }
+
+
+/* 数字彩-详情 */
+.d-table-num > thead > tr > th{ background: #fff;}
 
 /* JCLQ-详情*/
 .jclq-content { border: none !important; }

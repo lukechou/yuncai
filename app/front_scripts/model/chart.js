@@ -217,11 +217,11 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 				// y轴样式
 				yAxis: {
 					gridLineColor: '#707073',
-					align: 'left',
+
 					labels: {
 						style: {
-							color: '#E0E0E3'
-						}
+							color: '#E0E0E3',
+						},
 					},
 					lineColor: '#707073',
 					minorGridLineColor: '#505053',
@@ -229,7 +229,8 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 					tickWidth: 1,
 					title: {
 						style: {
-							color: '#f22'
+							color: '#f22',
+							align: 'left',
 						}
 					}
 				},
@@ -513,8 +514,7 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 					}
 					_this.createChart();
 				})
-				.fail(function() {
-				});
+				.fail(function() {});
 
 		};
 

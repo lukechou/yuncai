@@ -207,7 +207,11 @@ define(['jquery', 'app'], function($, APP) {
 
         html += '<th class="t1"><a class="icoDel j-del-all" href="javascript:;">&times;</a>' + matchnumcn + '</th>';
 
-        html += '<th class="t2"><span class="t2-left">' + hostname + '</span><span class="t2-right">' + guestname + '</span><span class="t3-right j-dan">胆</span></th></tr>';
+        if ($('#j-gg-tab').find('li.active').attr('data-bunch') == '0') { //如果是自由过关方式
+          html += '<th class="t2"><span class="t2-left">' + hostname + '</span><span class="t2-right">' + guestname + '</span><span class="t3-right j-dan">胆</span></th></tr>';
+        }else{
+          html += '<th class="t2"><span class="t2-left">' + hostname + '</span><span class="t2-right">' + guestname + '</span></th></tr>';
+        }
 
         // 选项排序
         oneMatch = matchs[key].sort(function(a, b) {
@@ -1964,6 +1968,8 @@ define(['jquery', 'app'], function($, APP) {
 
         }
 
+        _this.setAllTotal();
+
       });
 
       //  Buy Main Toggle
@@ -2219,28 +2225,33 @@ define(['jquery', 'app'], function($, APP) {
 
           } else { //未选择串数
 
-            //重置胆字状态，存在胆串中的active
-            jDan.removeClass('active').removeClass('dan-disabled');
+            if (matchLen < 3) {
+              jDan.removeClass('active').addClass('dan-disabled');
+            } else {
+              //重置胆字状态，存在胆串中的active
+              jDan.removeClass('active').removeClass('dan-disabled');
 
-            for (var i = 0; i < _this.danMatchCode.length; i++) {
-              $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+              for (var i = 0; i < _this.danMatchCode.length; i++) {
+                $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+              }
+
+              //重置几串几状态
+
+              $('#j-method-ls li').removeClass('active').removeClass('disabled-chuan');
+
+              $('#j-method-ls li').each(function(index, el) {
+                var t = $(this);
+                var dm = t.attr('data-method');
+                var dm0 = t.attr('data-method').slice(0, -2);
+                if (dm0 <= _this.danMatchCode.length) {
+                  t.addClass('disabled-chuan');
+                  _.remove(_this.bunch, function(b) {
+                    return b == dm;
+                  })
+                }
+              });
             }
 
-            //重置几串几状态
-
-            $('#j-method-ls li').removeClass('active').removeClass('disabled-chuan');
-
-            $('#j-method-ls li').each(function(index, el) {
-              var t = $(this);
-              var dm = t.attr('data-method');
-              var dm0 = t.attr('data-method').slice(0, -2);
-              if (dm0 <= _this.danMatchCode.length) {
-                t.addClass('disabled-chuan');
-                _.remove(_this.bunch, function(b) {
-                  return b == dm;
-                })
-              }
-            });
           } //end minBunch
 
 
@@ -2294,6 +2305,26 @@ define(['jquery', 'app'], function($, APP) {
         //var totalLinks = $(this).parents("p").siblings('p');
         //var aLinks = $(this).siblings('a');
         var removeItem = '';
+        var t = $(this);
+        var parentTr = t.parents('tr.gameOption');
+        var tMatchcode = parentTr.attr('matchcode');
+        var danObj = parentTr.prev('tr.gameTitle').find('.j-dan');
+        var minBunch = _this.bunch[0] ? _this.bunch[0].slice(0, -2) : '';
+        var jDan = $('#selectGamePool').find('tr.gameTitle').find('.j-dan');
+
+        if (danObj.hasClass('active')) {
+          _.remove(_this.danMatchCode, function(d) {
+            return d == tMatchcode;
+          });
+        }
+
+        //处理胆
+
+        //重置胆
+        jDan.removeClass('active').removeClass('dan-disabled');
+        for (var i = 0; i < _this.danMatchCode.length; i++) {
+          $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+        }
 
         if (totalLinks.length == 0) {
           removeItem = $('#selectGamePool tr[matchcode=' + code + ']');
@@ -2311,12 +2342,14 @@ define(['jquery', 'app'], function($, APP) {
         actItem.removeClass('active');
 
         _.remove(_this.match, function(o) {
-          return (o.index == i && o.matchcode == code);
+          //return (o.index == i && o.matchcode == code);
+          return o.matchcode == code;
         });
 
         if (_this.match == 0) {
           $('#poolStep1 .unSeleTips').show();
         }
+
 
         _this.setSecondBox();
         _this.setAllTotal();
@@ -2345,6 +2378,26 @@ define(['jquery', 'app'], function($, APP) {
         var code = $(this).parents('tr').attr('matchcode');
         var removeItem = $('#selectGamePool tr[matchcode=' + code + ']');
         var actItem = $('#bettingBox dd[matchcode=' + code + ']').find('.j-sp-btn.active,.j-bf-all');
+        var t = $(this);
+        var parentTr = t.parents('tr.gameTitle');
+        var tMatchcode = parentTr.attr('matchcode');
+        var danObj = parentTr.find('.j-dan');
+        var minBunch = _this.bunch[0] ? _this.bunch[0].slice(0, -2) : '';
+        var jDan = $('#selectGamePool').find('tr.gameTitle').find('.j-dan');
+
+        if (danObj.hasClass('active')) {
+          _.remove(_this.danMatchCode, function(d) {
+            return d == tMatchcode;
+          });
+        }
+
+        //处理胆
+
+        //重置胆
+        jDan.removeClass('active').removeClass('dan-disabled');
+        for (var i = 0; i < _this.danMatchCode.length; i++) {
+          $('#selectGamePool').find('tr.gameTitle[matchcode="' + _this.danMatchCode[i] + '"]').find('.j-dan').removeClass('dan-disabled').addClass('active');
+        }
 
         removeItem.remove();
         actItem.removeClass('active hover');

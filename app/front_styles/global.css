@@ -233,7 +233,6 @@ input:-webkit-autofill { border: 1px solid #ccc !important; -webkit-box-shadow: 
 .m-num-clean:hover { cursor: pointer; }
 
 /* Common Table Style Class */
-.m-user-table > tbody > tr > td,
 .personal .m-mn-table > tbody > tr > td { padding: 0 5px; height: 35px; line-height: 35px; border-top: none; }
 .m-mn-table { font-size: 12px; margin-bottom: 0; text-align: center; border-top: 1px #dfdfdf solid; }
 .m-mn-table > thead > tr > th { font-weight: normal; text-align: center; border-bottom: 1px solid #dfdfdf; background: #f1f1f1; }
@@ -409,7 +408,7 @@ body { color: #3d3d3d; background: #fff; }
 .ft-left-img2 { width: 85px; height: 87px; background-position: 0 0; }
 .ft-left-img3 { width: 95px; height: 81px; background-position: 0 -87px; }
 .ft-left-img4 { width: 76px; height: 83px; background-position: -85px 0; }
-.ft-l > ul > li > a { position: absolute; bottom: 2px; left: 35px; color: #4e4e4e; }
+.ft-l > ul > li > span{ position: absolute; bottom: 2px; left: 35px; color: #4e4e4e; }
 
 /* Footer Right */
 .ft-r { float: left; width: 720px; padding-left: 80px; *width: 640px; }

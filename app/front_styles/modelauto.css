@@ -18,13 +18,21 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .auto-list-table { border: none; }
 .empty-tip { line-height: 180px !important; }
 .auto-stop-nav { margin-top: 15px; }
-.auto-less { border: 1px solid #dfdfdf; border-width: 1px 1px 0; padding: 10px; text-align: left; position: relative; display: none; }
-.auto-less .auto-less-box { margin: 0 0 0 170px; line-height: 25px; }
-.auto-less .auto-less-box p { margin-bottom: 0; }
-.auto-less .btn { position: absolute; right: 290px; top: 0; bottom: 0; margin: auto; height: 40px; line-height: 40px; padding: 0; width: 100px; font-size: 16px; }
+.auto-less { border: 1px solid #dfdfdf; border-width: 1px 1px 0; padding: 16px 0 0 22px; text-align: left; position: relative; display: none; height: 85px; }
+.auto-less .auto-less-box { margin: 0; line-height: 25px; }
+.auto-less .auto-less-box p { margin-bottom: 0; display: block; }
+.auto-less .auto-less-box .auto-less-p{position: relative; display: inline-block; }
+.auto-less .btn {   position: absolute;
+  right: -212px;
+  top: 5px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  width: 164px;
+  font-size: 16px; }
 
 /* 底部提示 */
-.u-tipsbox { font-size: 12px; background: #f1f1f1; border: 1px #dfdfdf solid; padding: 20px 25px; margin-bottom: 15px; }
+.u-tipsbox { font-size: 12px; background: #f1f1f1; border: 1px #dfdfdf solid; padding: 20px 22px; margin-bottom: 15px; }
 .u-tipsbox h5 { font-size: 12px; margin-top: 0; font-weight: bold; font-family: 'simsun'; }
 .u-tipsbox p { margin-bottom: 0; line-height: 2; }
 .u-tipsbox2 { background: #fff; }
@@ -76,10 +84,16 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 
 /* auto model list */
 .list-table> tbody > tr:hover { background: #fcead3 }
-.list-table> tbody >.tr-modify { background: #fbe6db; border: #f6c9b2 solid 1px; }
+.list-table> tbody >.tr-modify { background: #fbe6db; border: #f6c9b2 solid 1px;  }
+.icon-trmodify{   position: absolute;
+  background: url(../front_images/model/modify-arrow.png);
+  width: 13px;
+  height: 7px;
+  right: 129px;
+  top: -7px;}
 .tr-modify .list-box .text-left { margin-bottom: 5px; }
 .list-table> tbody >.tr-modify:hover { background: #fbe6db; }
-.list-table > tbody > tr > .list-box { padding: 12px 12px 3px; }
+.list-table > tbody > tr > .list-box { position: relative; padding: 12px 12px 3px; }
 .box-table> thead > tr > th { background: #f9f9f9; }
 .box-table .td-active { background: #ffe3e2; }
 .list-box .btn-sear { float: right; position: relative; top: -25px; margin-right: 25px; font-family: 'Microsoft Yahei'; font-size: 14px; padding: 0; width: 140px; height: 34px; line-height: 34px; font-weight: bold; }

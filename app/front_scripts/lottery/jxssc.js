@@ -109,10 +109,10 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
   };
 
   function init() {
-      G_BUY.init();
-      G_CHOOSE.init();
-    }
-    // myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
+    G_BUY.init();
+    G_CHOOSE.init();
+  }
+  // myriabCodes, thousandCodes, hundredCodes, tenCodes, digitalCodes
   $(document).ready(function() {
     init();
     var lessSeconds = 0;
@@ -215,8 +215,8 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
             for (var int = 0; int < data.retData.length; int++) {
               if (int > 5) break;
               html += "<tr>";
-              html += "<td>" + data.retData[int].username + "</td>";
-              html += "<td>" + data.retData[int].bonus_before_tax + "</td>";
+              html += "<td class='zxzj-l'>" + data.retData[int].username + "</td>";
+              html += "<td class='zxzj-r'>" + data.retData[int].bonus_before_tax + "</td>";
               html += "</tr>";
             }
             $('#j-new-bonus-list').html((html == '') ? '<tr><td colspan="2">暂无相关中奖纪录</td></tr>' : html);
@@ -457,7 +457,7 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
       var dataBit = parseInt($(this).parents('.j-row-code').attr('data-bit'));
       G_CHOOSE.codes[dataBit] = [];
       // 和值玩法的选择要重写
-      if('clean' != $(this).attr('data-type')){
+      if ('clean' != $(this).attr('data-type')) {
         if (_this.hasClass('active')) {
           _this.removeClass('active');
           _this.siblings('span').removeClass('active');
@@ -465,7 +465,7 @@ require(['jquery', 'lodash', 'app', 'store', 'CoreJxssc', 'bootstrap', 'core'], 
           _this.addClass('active');
           _this.siblings('span').removeClass('active');
         }
-      }else{
+      } else {
         _this.siblings('span').removeClass('active');
       }
 

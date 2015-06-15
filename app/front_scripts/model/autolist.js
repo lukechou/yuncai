@@ -657,7 +657,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
     ar = item.modelInfo.ar;
 
-    h += '<tr class="tr-modify j-tr-modify"><td colspan="9" class="list-box"><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<b class="fc-3 mlr5">' + info.complete_issue + '</b>期，累计投注<b class="fc-3 mlr5">' + r.project_money + '</b>元，累积奖金<b class="fc-3 mlr5">' + r.total_bounty + '</b>元</p>';
+    h += '<tr class="tr-modify j-tr-modify">';
+
+    h += '<td colspan="9" class="list-box"><i class="icon icon-trmodify"></i><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<b class="fc-3 mlr5">' + info.complete_issue + '</b>期，累计投注<b class="fc-3 mlr5">' + r.project_money + '</b>元，累积奖金<b class="fc-3 mlr5">' + r.total_bounty + '</b>元</p>';
 
     h += '<p class="text-left text-fen"><span>投注资金分配详情:</span>';
 

@@ -432,6 +432,8 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         var t = $(this);
         var isZhBunch = Number(t.attr('data-bunch'));
         var tipsArr = ['请选择至少一场比赛进行投注', '请选择至少两场比赛进行投注'];
+        var t2Obj = $('#selectGamePool').find('.gameTitle').find('.t2');
+        var matchLen = Number(_.uniq(BET.match, 'matchcode').length);
         if (!t.hasClass('active')) {
           BET.bunch = [];
           BET.setAllTotal();
@@ -442,17 +444,29 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
         $('.j-unselect-tips').html(tipsArr[isZhBunch]);
 
-        if (isZhBunch) {
+        if (isZhBunch) {//表示点击了组合过关
           BET.bjdcPassWay = false;
           BET.setBjdcBox();
           $('#selectGamePool').find('tr.gameTitle').find('.j-dan').removeClass('active').addClass('dan-disabled');
           BET.danMatchCode = [];
-        } else {
+
+          //处理胆字，组合过关不要显示胆字，自由过关要显示
+          t2Obj.find('.j-dan').remove();
+
+        } else {//表示点击了自由过关
           BET.bjdcPassWay = true;
           BET.setSecondBox();
           $('#selectGamePool').find('tr.gameTitle').find('.j-dan').removeClass('dan-disabled');
           BET.danMatchCode = [];
+
+          if(matchLen < 3){
+            t2Obj.append('<span class="t3-right j-dan dan-disabled">胆</span>');
+          }else{
+            t2Obj.append('<span class="t3-right j-dan">胆</span>');
+          }
+
         }
+
       });
 
     }
@@ -727,7 +741,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         //某一场对阵相同的玩法，过关停售、单场不停售，前端显示这场对阵，但选择串关投注时隐藏串关过关方式；或没有下一行，底边框要有
         tmpHtml5 = '<span class="row1 row1-1 dg-hint j-dg-hint j-dg-sale" dg-sale="1" gg-sale="0">' + bfLine + '<i class="icon icon-green-tri-2"></i><i class="dan-tips">单</i></span></dd>';
 
-        tmpAllStopHtml = '<span class="row1 row1-1 j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本对阵过关、单场均停售</span></dd>'
+        tmpAllStopHtml = '<span class="row1 row1-1 j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本场对阵不支持该玩法</span></dd>'
 
         jointArr(item, nextItem, 'bf_dg_sale', 'bf', tmpHtml1, tmpHtml2, tmpHtml3, tmpHtml4, tmpHtml5, tmpAllStopHtml, arr, i, len);
 
@@ -756,7 +770,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         tmpHtml3 = '<span class="co6-1 btnBox towLine j-dg-sale" dg-sale="0" gg-sale="1"><div class="line1"><em class="rq">' + rqspfNum + '</em>' + line + '</div></span></dd>';
         tmpHtml4 = '<span class="co6-1 btnBox towLine dg-hint-nbot j-dg-hint-nbot j-dg-sale" dg-sale="1" gg-sale="0"><div class="line1"><em class="rq">' + rqspfNum + '</em>' + line + '</div><i class="icon icon-green-tri-2"></i><i class="dan-tips">单</i></span></dd>';
         tmpHtml5 = '<span class="co6-1 btnBox towLine dg-hint j-dg-hint j-dg-sale" dg-sale="1" gg-sale="0"><div class="line1"><em class="rq">' + rqspfNum + '</em>' + line + '</div><i class="icon icon-green-tri-2"></i><i class="dan-tips">单</i></span></dd>';
-        tmpAllStopHtml = '<span class="co6-1 btnBox towLine j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本对阵过关、单场均停售</span></dd>';
+        tmpAllStopHtml = '<span class="co6-1 btnBox towLine j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本场对阵不支持该玩法</span></dd>';
 
         jointArr(item, nextItem, 'rqspf_dg_sale', 'rqspf', tmpHtml1, tmpHtml2, tmpHtml3, tmpHtml4, tmpHtml5, tmpAllStopHtml, arr, i, len);
 
@@ -781,7 +795,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         tmpHtml3 = '<span class="co6-1 btnBox towLine j-dg-sale" dg-sale="0" gg-sale="1"><div class="line1"><em class="rq">' + bjdcSpfRq + '</em>' + line + '</div></span></dd>';
         tmpHtml4 = '<span class="co6-1 btnBox towLine dg-hint-nbot j-dg-hint-nbot j-dg-sale" dg-sale="1" gg-sale="0"><div class="line1"><em class="rq">' + bjdcSpfRq + '</em>' + line + '</div><i class="icon icon-green-tri-2"></i><i class="dan-tips">单</i></span></dd>';
         tmpHtml5 = '<span class="co6-1 btnBox towLine dg-hint j-dg-hint j-dg-sale" dg-sale="1" gg-sale="0"><div class="line1"><em class="rq">' + bjdcSpfRq + '</em>' + line + '</div><i class="icon icon-green-tri-2"></i><i class="dan-tips">单</i></span></dd>';
-        tmpAllStopHtml = '<span class="co6-1 btnBox towLine j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本对阵过关、单场均停售</span></dd>';
+        tmpAllStopHtml = '<span class="co6-1 btnBox towLine j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本场对阵不支持该玩法</span></dd>';
 
         jointArr(item, nextItem, 'spf_dg_sale', 'spf', tmpHtml1, tmpHtml2, tmpHtml3, tmpHtml4, tmpHtml5, tmpAllStopHtml, arr, i, len);
 
@@ -796,7 +810,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         tmpHtml3 = '<span class="row2 row2-1 j-dg-sale" dg-sale="0" gg-sale="1">' + line + '</span></dd>';
         tmpHtml4 = '<span class="row2 row2-1 dg-hint-nbot j-dg-hint-nbot j-dg-sale" dg-sale="1" gg-sale="0">' + line + '<i class="icon icon-green-tri-1"></i></span></dd>';
         tmpHtml5 = '<span class="row2 row2-1 dg-hint j-dg-hint j-dg-sale" dg-sale="1" gg-sale="0">' + line + '<i class="icon icon-green-tri-1"></i></span></dd>';
-        tmpAllStopHtml = '<span class="row2 row2-1 j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本对阵过关、单场均停售</span></dd>';
+        tmpAllStopHtml = '<span class="row2 row2-1 j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本场对阵不支持该玩法</span></dd>';
 
         jointArr(item, nextItem, 'bqc_dg_sale', 'bqc', tmpHtml1, tmpHtml2, tmpHtml3, tmpHtml4, tmpHtml5, tmpAllStopHtml, arr, i, len);
 
@@ -811,7 +825,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
         tmpHtml3 = '<span class="row3 row3-1 j-dg-sale" dg-sale="0" gg-sale="1">' + line + '</span></dd>';
         tmpHtml4 = '<span class="row3 row3-1 dg-hint-nbot j-dg-hint-nbot j-dg-sale" dg-sale="1" gg-sale="0">' + line + '<i class="icon icon-green-tri-1"></i></span></dd>';
         tmpHtml5 = '<span class="row3 row3-1 dg-hint j-dg-hint j-dg-sale" dg-sale="1" gg-sale="0">' + line + '<i class="icon icon-green-tri-1"></i></span></dd>';
-        tmpAllStopHtml = '<span class="row3 row3-1 j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本对阵过关、单场均停售</span></dd>';
+        tmpAllStopHtml = '<span class="row3 row3-1 j-dg-sale ggdg-all-stop" dg-sale="0" gg-sale="0">本场对阵不支持该玩法</span></dd>';
 
         jointArr(item, nextItem, 'zjq_dg_sale', 'zjq', tmpHtml1, tmpHtml2, tmpHtml3, tmpHtml4, tmpHtml5, tmpAllStopHtml,arr, i, len);
 
@@ -1350,11 +1364,18 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var tr = $('#selectGamePool tbody tr');
     var tbodyHtml = '';
     var bunch = obj.bunch.replace(/\_/g, '串');
+    var danIsActive,t2Html;
     bunch = bunch.replace('1串1', '单关');
     tr.each(function(index, el) {
       var e = tr.eq(index);
+      danIsActive = e.find('.j-dan') ? e.find('.j-dan').hasClass('active') : false;
       if (index % 2 == 0) {
-        tbodyHtml += '<tr><td>' + e.find('.t1').html() + '</td><td>' + e.find('.t2').html() + '</td>';
+        if(danIsActive){
+          t2Html = e.find('.t2').html();
+        }else{
+          t2Html = e.find('.t2-left').html() + e.find('.t2-right').html();
+        }
+        tbodyHtml += '<tr><td>' + e.find('.t1').html() + '</td><td>' + t2Html + '</td>';
       } else {
         tbodyHtml += '<td>' + e.find('.betList').html() + '</td></tr>';
       }

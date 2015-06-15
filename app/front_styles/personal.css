@@ -72,7 +72,7 @@
 .ps-table { height: 169px; }
 .ps-mn-info,
 .ps-table thead th { background: #f1f1f1; }
-.ps-mn .m-tips-box { padding-bottom: 13px; padding: 20px 0 20px 40px; }
+.ps-mn .m-tips-box { padding-bottom: 13px; padding: 12px 0 12px 40px; }
 .ps-mn .m-tips-box p { margin-bottom: 6px; }
 .ps-table > tbody > tr.no-record > td { background: #fff; height: 315px; vertical-align: middle; }
 .ps-table { font-size: 12px; text-align: center; border: 1px #dfdfdf solid; }
@@ -216,6 +216,8 @@
 .safe-ul li i.safe-i-wrapper > i.icon-pass { margin-left: -2px; }
 .safe-ul .title { font-size: 12px; font-weight: 700; display: inline-block; width: 78px; }
 .safe-ul .txt { display: inline-block; width: 420px; }
+.safe-ul .txt span{ color: #f13c38; }
+.safe-ul .txt .graytext{ color: #a5a5a5;}
 .safe-ul .opr { display: inline-block; float: right; float: right; width: 80px; text-align: center; }
 .safe-ul .opr .btn { font-size: 12px; color: #3d3d3d; }
 .safemobile .info-list .title { width: 73px; }

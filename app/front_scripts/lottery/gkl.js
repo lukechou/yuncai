@@ -1075,14 +1075,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
       all = 0,
       halfLen = 0,
       methodObj;
-    switch(G_CHOOSE.playType){
-      case 'b0' :
+    switch (G_CHOOSE.playType) {
+      case 'b0':
         halfLen = 9;
         break;
-      case 'b1' :
+      case 'b1':
         halfLen = 0;
         break;
-      default :
+      default:
         halfLen = 10;
         break;
     }
@@ -1118,7 +1118,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
         methodObj.find('span').removeClass('active');
         methodObj.find('span[data-type="small"]').addClass('active');
       }
-    } else if (G_CHOOSE.nums && G_CHOOSE.nums.length == (halfLen*2)){
+    } else if (G_CHOOSE.nums && G_CHOOSE.nums.length == (halfLen * 2)) {
       methodObj.find('span').removeClass('active');
       methodObj.find('span[data-type="all"]').addClass('active');
     }
@@ -1181,14 +1181,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
       small = 0,
       all = 0,
       halfLen = 0;
-    switch(playType){
-      case 'b0' :
+    switch (playType) {
+      case 'b0':
         halfLen = 9;
         break;
-      case 'b1' :
+      case 'b1':
         halfLen = 0;
         break;
-      default :
+      default:
         halfLen = 10;
         break;
     }
@@ -1223,7 +1223,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
         _this.parents('.choose-bd').find('span').removeClass('active');
         _this.parents('.choose-bd').find('span[data-type="small"]').addClass('active');
       }
-    } else if (G_CHOOSE.nums && G_CHOOSE.nums.length == (halfLen*2)){
+    } else if (G_CHOOSE.nums && G_CHOOSE.nums.length == (halfLen * 2)) {
       _this.parents('.choose-bd').find('span').removeClass('active');
       _this.parents('.choose-bd').find('span[data-type="all"]').addClass('active');
     }
@@ -1901,8 +1901,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap'], function($, _, store,
           for (var int = 0; int < data.retData.length; int++) {
             if (int > 5) break;
             html += "<tr>";
-            html += "<td>" + data.retData[int].username + "</td>";
-            html += "<td>" + data.retData[int].bonus_before_tax + "</td>";
+            html += "<td class='zxzj-l'>" + data.retData[int].username + "</td>";
+            html += "<td class='zxzj-r'>" + data.retData[int].bonus_before_tax + "</td>";
             html += "</tr>";
           }
           $('#j-new-bonus-list').html((html == '') ? '<tr><td colspan="2">暂无相关中奖纪录</td></tr>' : html);

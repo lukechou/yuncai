@@ -227,8 +227,8 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
             for (var int = 0; int < data.retData.length; int++) {
               if (int > 5) break;
               html += "<tr>";
-              html += "<td>" + data.retData[int].username + "</td>";
-              html += "<td>" + data.retData[int].bonus_before_tax + "</td>";
+              html += "<td class='zxzj-l'>" + data.retData[int].username + "</td>";
+              html += "<td class='zxzj-r'>" + data.retData[int].bonus_before_tax + "</td>";
               html += "</tr>";
             }
             $('#j-new-bonus-list').html((html == '') ? '<tr><td colspan="2">暂无相关中奖纪录</td></tr>' : html);
@@ -401,7 +401,7 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
 
     function judgeNum(G_CHOOSE, numObj) {
       var _this = numObj;
-      var i,j, odd = 0,
+      var i, j, odd = 0,
         even = 0,
         big = 0,
         small = 0,
@@ -427,8 +427,8 @@ require(['jquery', 'lodash', 'store', 'app', 'Core11x5', 'bootstrap', 'core'], f
             _this.parents('#j_normal_choose_code').find('.j-row-code[data-bit="' + i + '"]').find('span[data-type="odd"]').addClass('active');
           }
           if (small == 6) {
-             _this.parents('#j_normal_choose_code').find('.j-row-code[data-bit="' + i + '"]').find('span').removeClass('active');
-             _this.parents('#j_normal_choose_code').find('.j-row-code[data-bit="' + i + '"]').find('span[data-type="small"]').addClass('active');
+            _this.parents('#j_normal_choose_code').find('.j-row-code[data-bit="' + i + '"]').find('span').removeClass('active');
+            _this.parents('#j_normal_choose_code').find('.j-row-code[data-bit="' + i + '"]').find('span[data-type="small"]').addClass('active');
           }
         } else if (G_CHOOSE.codes[i] && G_CHOOSE.codes[i].length == 5) {
           for (j = 0; j < 5; j++) {
