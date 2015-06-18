@@ -659,7 +659,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
     h += '<tr class="tr-modify j-tr-modify">';
 
-    h += '<td colspan="9" class="list-box"><i class="icon icon-trmodify"></i><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<b class="fc-3 mlr5">' + info.complete_issue + '</b>期，累计投注<b class="fc-3 mlr5">' + r.project_money + '</b>元，累积奖金<b class="fc-3 mlr5">' + r.total_bounty + '</b>元</p>';
+    h += '<td colspan="9" class="list-box">';
+
+    h += '<div class="tr-modify-hd"><i class="icon icon-trmodify"></i><p class="text-left">总投注<span class="mlr5">' + r.total_issue + '</span>期，已投注<b class="fc-3 mlr5">' + info.complete_issue + '</b>期，累计投注<b class="fc-3 mlr5">' + r.project_money + '</b>元，累积奖金<b class="fc-3 mlr5">' + r.total_bounty + '</b>元</p>';
 
     h += '<p class="text-left text-fen"><span>投注资金分配详情:</span>';
 
@@ -667,7 +669,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
       h += '<span id="j-percent-edit-wrap"><a href="javascript:;" class="j-modify">修改投注分配</a> <i class="icon icon-warm ps-t2 j-icon-tips" original-title="可自行修改投注增加比例或者档期投注金额,系统将按照您修改后的投注分配进行投注"></i></span><button class="btn btn-sear j-stop-issue">手动终止自动投注</button>';
     }
 
-    h += '</p>';
+    h += '</p></div>';
 
     h += '<table class="table m-table-one box-table"><thead><tr><th>期数</th>';
 
@@ -677,7 +679,9 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
       h += '<th>当前投注金额（元）</th>';
     }
 
-    h += '<th>累计投注金额（元）</th><th>当期预计奖金（元）</th><th>投注期号</th><th>当期命中情况</th></tr></thead><tbody id="j-data-body">';
+    h += '<th>累计投注金额（元）</th><th>当期预计奖金（元）</th><th>投注期号</th><th>当期命中情况</th></tr></thead></table>';
+
+    h += '<div class="auto-list auto-list-2"><table class="table m-table-one box-table"><tbody id="j-data-body">';
 
     arr = _.map(item.autobuyIssueList, function(n, i) {
 
@@ -796,7 +800,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
     h += arr.join('');
 
-    h += '</tbody></table><p class="text-left text-stop" id="j-text-stop">终止自动投注的条件：<span class="fc-3">' + stopTips[info.stop_type] + '</span></p><p class="auto-stop-nav text-left hide">'
+    h += '</tbody></table></div><p class="text-left text-stop" id="j-text-stop">终止自动投注的条件：<span class="fc-3">' + stopTips[info.stop_type] + '</span></p><p class="auto-stop-nav text-left hide">'
 
     if (info.stop_type == 1) {
       h += '请选择终止自动投注的条件：<input type="radio" name="autostop" checked="checked" value="1">完成所有期数后终止<input type="radio" name="autostop" value="0">盈利以后自动终止';

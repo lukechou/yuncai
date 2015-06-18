@@ -66,3 +66,33 @@
 
 /* 小类切换 */
 .j-box-zx .j-nav-dt, .j-box-zx6 .j-nav-many, .j-box-zx3 .j-nav-many { display: none; }
+
+/* 福彩-3d */
+.fc3d .m-brhd-ti { color: #848484; font-size: 12px; margin-left: 20px; }
+.fc3d .m-brhd-group > a { padding: 0; line-height: 36px; text-align: center; }
+.fc3d .m-brhd-qi { font-size: 12px; right: 11px; top: 28px; }
+.w54 { width: 54px; }
+.w68 { width: 68px; }
+.w40 { width: 40px; }
+.w80 { width: 80px; }
+.box-d1-d1 { display: none; }
+
+/* 福彩-3d 1d 切换 */
+.j-box-d1 .j-box-d1 .box-d1-d1 { display: block; }
+.j-box-d1 .j-box-cd1 .box-d1-d1{}
+
+/* 福彩-3d 2d 切换 */
+
+/* 福彩-3d 通选 切换 */
+
+/* 福彩-3d 包选 切换 */
+
+/* 福彩-3d 和数 切换 */
+
+/* 福彩-3d 大小 切换 */
+
+/* 福彩-3d 奇数 切换 */
+
+/* 福彩-3d 三同 切换 */
+
+/* 福彩-3d 拖拉机 切换 */

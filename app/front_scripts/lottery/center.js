@@ -1,3 +1,4 @@
+/* 合买大厅 */
 require.config({
   paths: {
     jquery: '../lib/jquery',

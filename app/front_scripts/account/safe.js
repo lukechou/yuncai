@@ -1,4 +1,18 @@
-$(function () {
+require.config({
+  paths: {
+    jquery: '../lib/jquery',
+    bootstrap: '../lib/bootstrap.min',
+    app: '../common/app',
+  },
+  shim: {
+    bootstrap: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    }
+  },
+});
+
+require(['jquery', 'app', 'bootstrap'], function($, APP) {
 
   function checkUserSafeStatus() {
 
@@ -25,7 +39,7 @@ $(function () {
 
     var s = checkUserSafeStatus();
 
-    if(s!==2){
+    if (s !== 2) {
       $('#j-safe-tips').removeClass('hide');
     }
 

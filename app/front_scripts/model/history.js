@@ -75,12 +75,17 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function($, APP, _) {
     var tzNr = '';
     var autoBuyIcon = '';
     var noPadTop = '';
+    var len = data.length - 1;
 
-    for (var i = data.length - 1; i >= 0; i--) {
+    for (var i = len; i >= 0; i--) {
 
       dataItem = data[i];
 
-      noPadTop = (i === 0) ? '' : 'no-pad-top';
+      noPadTop = (i === len) ? 'no-pad-bottom' : 'no-pad-mid';
+
+      if (i === 0 && len >= 1) {
+        noPadTop = 'no-pad-top';
+      }
 
       html += '<tr class="h-look j-look ' + noPadTop + '" data-no="' + rowIndex + '"><td  colspan="5"><div class="look-box"><table class="table m-mn-table m-table-border m-table-middle"><thead><tr><th width="193">投注时间</th><th width="94">赛事编号</th><th width="192">对阵</th><th width="46">赛果</th><th width="90">投注内容</th><th width="90">投注注数</th><th>投注金额（元）</th><th width="90">状态</th></tr></thead><tbody><tr>';
 
@@ -105,7 +110,7 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function($, APP, _) {
         autoBuyIcon = '';
       }
 
-      html += '<td>' + autoBuyIcon + dataItem.tzTime + '</td>';
+      html += '<td>' + autoBuyIcon + dataItem.tzTime.slice(5) + '</td>';
       html += '<td class="">' + craeteTdHTML(dataItem.ssbh) + '</td>';
       html += '<td>' + craeteTdHTML(dataItem.dz) + '</td>';
       html += '<td><span class="bg-3">' + sg + '</span></td>';

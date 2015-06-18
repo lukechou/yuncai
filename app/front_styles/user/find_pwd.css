@@ -1,250 +1,63 @@
-.find-pwd {
-	padding: 8px 0 130px 0;
-}
+.find-pwd { padding: 8px 0 130px 0; }
+label { padding: 2px; font-size: 12px; }
+.find-pwd .form-group { margin-bottom: 40px }
+.find-pwd .panel-body { padding: 70px 0 280px 0; }
+.find-pwd .bd { min-height: 300px; }
 
-label {
-	padding: 2px;
-	font-size: 12px;
-}
-
-.find-pwd .form-group {
-	margin-bottom: 40px
-}
-
-.find-pwd .panel-body {
-	padding: 70px 0 280px 0;
-}
-
-.find-pwd .bd {
-	min-height: 300px;
-}
 /* Common Style */
-.prompt {
-	color: #848484;
-	text-align: center;
-}
+.prompt { color: #848484; text-align: center; }
+.prompt em { font-weight: bold; color: #3d3d3d; }
+.btn-red { background: #f13c38; padding: 5px 30px; color: #fff; font-size: 12px; }
+.btn-next { background: #dfdfdf; color: #3d3d3d; padding: 5px 30px; font-size: 12px; }
+.btn-next:hover, .btn-get:hover { background: #f13c38; color: #fff; }
+.btn-get { padding: 2px 15px; font-size: 12px; }
+.f-tips { position: absolute; top: 0; border: 1px #f13c38 solid; font-size: 12px; line-height: 28px; display: none; height: 27px; }
+.send_resut { color: #f13c38; padding-left: 10px; }
+.f-tips i { float: left; margin: 3px 5px; }
+.f-step, .mobile-way, .email-way, .reset-pwd, .reg-success, .email-sure { display: none; }
+input { padding: 3px 5px; width: 158px; border: 1px #dfdfdf solid; }
 
-.prompt em {
-	font-weight: bold;
-	color: #3d3d3d;
-}
-
-.btn-red {
-	background: #f13c38;
-	padding: 5px 30px;
-	color: #fff;
-	font-size: 12px;
-}
-
-.btn-next {
-	background: #dfdfdf;
-	color: #3d3d3d;
-	padding: 5px 30px;
-	font-size: 12px;
-}
-
-.btn-next:hover,.btn-get:hover {
-	background: #f13c38;
-	color: #fff;
-}
-
-.btn-get {
-	padding: 2px 15px;
-	font-size: 12px;
-}
-
-.f-tips {
-	position: absolute;
-	top: 0;
-	border: 1px #f13c38 solid;
-	font-size: 12px;
-	line-height: 28px;
-	display: none;
-	height: 27px;
-}
-
-.send_resut {
-	color: #f13c38;
-	padding-left: 10px;
-}
-
-.f-tips i {
-	float: left;
-	margin: 3px 5px;
-}
-
-.f-step,.mobile-way,.email-way,.reset-pwd,.reg-success,.email-sure {
-	display: none;
-}
-
-input {
-	padding: 3px 5px;
-	width: 158px;
-	border: 1px #dfdfdf solid;
-}
 /* 输入用户名 */
-.f-setuser {
-	width: 255px;
-	margin: auto;
-	position: relative;
-}
+.f-setuser { width: 255px; margin: auto; position: relative; }
+.f-setuser .pull-right { width: 190px; }
+.f-setuser .pull-right .btn { margin-top: 15px; font-size: 12px; }
+.f-settips { right: -126px; width: 151px; }
 
-.f-setuser .pull-right {
-	width: 190px;
-}
-
-.f-setuser .pull-right .btn {
-	margin-top: 15px;
-	font-size: 12px;
-}
-
-.f-settips {
-	right: -126px;
-	width: 151px;
-}
 /* 选择找回密码方式 */
-.f-step-ls {
-	width: 651px;
-	overflow: hidden;
-	margin: 65px auto 0;
-}
+.f-step-ls { width: 651px; overflow: hidden; margin: 65px auto 0; }
+.f-step-ls li { float: left; width: 217px; text-align: center; cursor: pointer; }
+.f-step-ls li p { font-weight: bold; margin-top: 15px; }
 
-.f-step-ls li {
-	float: left;
-	width: 217px;
-	text-align: center;
-	cursor: pointer;
-}
-
-.f-step-ls li p {
-	font-weight: bold;
-	margin-top: 15px;
-}
 /* 手机找回密码 */
-.mobile-way .main {
-	width: 210px;
-	margin: auto;
-	position: relative;
-}
-
-.mobile-way .main .text {
-	font-size: 12px;
-	float: left;
-	width: 72px;
-	padding-top: 40px;
-}
-
-.mobile-way .main .pull-right {
-	width: 130px;
-}
-
-.mobile-way .main .pull-right .mobile-text {
-	padding: 3px 5px;
-	width: 100%;
-	border: 1px #dfdfdf solid;
-	margin: 10px 0 15px;
-}
-
-.mobile-tips {
-	right: -145px;
-	width: 135px;
-	top: 33px;
-}
+.mobile-way .main { width: 210px; margin: auto; position: relative; }
+.mobile-way .main .text { font-size: 12px; float: left; width: 72px; padding-top: 40px; }
+.mobile-way .main .pull-right { width: 130px; }
+.mobile-way .main .pull-right .mobile-text { padding: 3px 5px; width: 100%; border: 1px #dfdfdf solid; margin: 10px 0 15px; }
+.mobile-tips { right: -145px; width: 135px; top: 33px; }
 
 /* 重置密码输入 */
-.reset-box {
-	width: 300px;
-	margin: 50px auto 0;
-	position: relative;
-}
-
-.reset-box .pull-left {
-	width: 70px;
-	text-align: right;
-}
-
-.reset-box .pull-right {
-	width: 230px;
-}
-
-.reset-box .pull-left label {
-	margin: 7px 0 8px;
-}
-
-.reset-box .pull-right input {
-	margin-bottom: 8px;
-}
-
-.reset-box .reset-tips {
-	right: -104px;
-	width: 167px;
-	top: 37px;
-}
+.reset-box { width: 300px; margin: 50px auto 0; position: relative; }
+.reset-box .pull-left { width: 70px; text-align: right; }
+.reset-box .pull-right { width: 230px; }
+.reset-box .pull-left label { margin: 7px 0 8px; }
+.reset-box .pull-right input { margin-bottom: 8px; }
+.reset-box .reset-tips { right: -104px; width: 167px; top: 37px; }
 
 /* 发送邮件成功*/
-.email-box {
-	width: 350px;
-	margin: 15px auto;
-	text-align: left;
-}
-
-.email-box label {
-	float: left;
-	width: 100px;
-}
-
-.email-box .pull-right {
-	width: 250px;
-	position: relative;
-}
-
-.mail-tips {
-	width: 150px;
-	left: 164px;
-}
-
-.email-box .pull-right .btn {
-	margin-top: 15px;
-}
-
-.email-sure .m-tips-box {
-	font-size: 12px;
-	width: 550px;
-	margin: auto;
-	text-align: left;
-}
+.email-box { width: 350px; margin: 15px auto; text-align: left; }
+.email-box label { float: left; width: 100px; }
+.email-box .pull-right { width: 250px; position: relative; }
+.mail-tips { width: 150px; left: 164px; }
+.email-box .pull-right .btn { margin-top: 15px; }
+.email-sure .m-tips-box { font-size: 12px; width: 550px; margin: auto; text-align: left; }
 
 /* 手机号码绑定图标样式 */
-.mobile,.mobile_active,.email,.email_active {
-	width: 129px;
-	height: 130px;
-	margin: auto;
-}
-
-.mobile {
-	background-image: url(http://static2.360mao.com/front_images/find_pwd/mobile.png)
-}
-
-.mobile_active {
-	background-image: url(http://static2.360mao.com/front_images/find_pwd/mobile_active.png)
-}
-
-.email {
-	background-image: url(http://static2.360mao.com/front_images/find_pwd/email.png)
-}
-
-.email_active {
-	background-image: url(http://static2.360mao.com/front_images/find_pwd/email_active.png)
-}
-
-.disable {
-	pointer-events: none;
-}
+.mobile, .mobile_active, .email, .email_active { width: 129px; height: 130px; margin: auto; }
+.mobile { background-image: url(http://static2.360mao.com/front_images/find_pwd/mobile.png) }
+.mobile_active { background-image: url(http://static2.360mao.com/front_images/find_pwd/mobile_active.png) }
+.email { background-image: url(http://static2.360mao.com/front_images/find_pwd/email.png) }
+.email_active { background-image: url(http://static2.360mao.com/front_images/find_pwd/email_active.png) }
+.disable { pointer-events: none; }
 
 /* 再次发送按钮样式 */
-.send-mail {
-	position: absolute;
-	margin: 28px 0 0 8px;
-	font-size: 12px;
-	width: 100%;
-}
+.send-mail { position: absolute; margin: 28px 0 0 8px; font-size: 12px; width: 100%; }

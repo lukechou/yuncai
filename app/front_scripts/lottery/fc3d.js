@@ -140,19 +140,34 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			zx: ['cgtz', 'hz', 'up', 'many'],
 			zx6: ['cgtz', 'hz', 'dt', 'up'],
 			zx3: ['cgtz', 'hz', 'dt', 'up'],
+			d1: ['d1', 'cd1'],
+			d2: ['d2', 'cd2'],
+			tx: ['tx'],
+			bx: ['bx3', 'bx6'],
+			hs: ['hs'],
+			dx: ['dx'],
+			qo: ['qo'],
+			st: ['st'],
+			tlj: ['tlj'],
 			init: function(args) {
+
 				var _this = this;
+
 				for (var prop in args) {
 					if (args.hasOwnProperty(prop)) {
 						_this[prop] = args[prop];
 					}
 				}
+
 			},
 			reset: function() {
+
 				var _this = this;
+
 				_this.big = 'zx';
 				_this.small = 'cgtz';
 				_this.toggleTabs();
+
 			},
 			toggleTabs: function() {
 
@@ -160,8 +175,11 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 				var smallIndex = _.indexOf(_this[_this.big], _this.small);
 				var a = 'active';
 
+				// 如果对应的 小类不再 其对应数组 则 默认为常规投注
 				if (smallIndex < 0) {
+
 					_this.small = 'cgtz';
+
 				}
 
 				_this.bigEl.find('a.active').removeClass(a);
@@ -217,6 +235,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		$('#j-touzhu-tipstext').toggle();
 
 	});
+
 	/**
 	 * 玩法切换 - 大类
 	 *
@@ -224,14 +243,25 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	$('#j-hd-nav').on('click', 'a', function(event) {
 
 		var type = $(this).attr('data-type');
+		var newMethodArr = ['d1', 'd2', 'tx', 'bx', 'hs', 'dx', 'qo', 'st', 'tlj'];
+
 		$('.j-quick-method span').removeClass('active');
+
 		if (type) {
 			type = _.escape(type);
 		} else {
 			return;
 		}
 
+		if (_.indexOf(newMethodArr, type) >= 0) {
+
+			PL3.nav.small = PL3.nav[type][0];
+
+		}
+
+
 		if (PL3.G_BUY.codes.length >= 1) {
+
 			APP.showTips({
 				title: '友情提示',
 				text: '切换玩法将会清空您的号码',
@@ -245,9 +275,12 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 					smallToggleTabs();
 				}
 			});
+
 		} else {
+
 			PL3.nav.big = type;
 			smallToggleTabs();
+
 		}
 
 	});
@@ -260,33 +293,46 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 		var _this = $(this);
 		var type = _.escape(_this.attr('data-stype'));
-		var li = _this.parents('li');
+
 		$('.j-quick-method span').removeClass('active');
 
 		if (PL3.G_BUY.codes.length >= 1) {
+
 			APP.showTips({
 				title: '友情提示',
 				text: '切换玩法将会清空您的号码',
 				type: 2,
 				onConfirm: function() {
+
 					$('#myModal').modal('hide');
+
 					$('.br-details').find('tbody .br-zhui-c').each(function(index, el) {
+
 						$(this).parents('tr').find('.j-money').html(0);
+
 					});
+
 					PL3.nav.small = type;
 					smallToggleTabs();
+
 					if (type === 'many') {
 						PL3.G_BUY.buyType = 4;
 					}
+
 				}
 			});
+
 		} else {
+
 			PL3.nav.small = type;
 			smallToggleTabs();
+
 		}
 
 		if (type === 'many') {
+
 			PL3.G_BUY.buyType = 4;
+
 		}
 
 	});
@@ -295,42 +341,94 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 
 		var b = PL3.nav.big;
 		var s = PL3.nav.small;
-		if (b === 'zx' && s === 'dt') {
-			s = 'cgtz';
-		}
+
+		// 玩法映射
+		var methodMap = {
+			'd1': 40,
+			'cd1': 41,
+			'd2': 42,
+			'cd2': 43,
+			'tx': 44,
+			'bx3': 45,
+			'bx6': 46,
+			'hs': 47,
+			'dx': 48,
+			'qo': 49,
+			'st': 50,
+			'tlj': 51,
+		};
+
+		// 设置 选号区域
 		PL3.ballAear = $('.box-' + b + '-' + s + ' .j_normal_choose_code');
 
-		if (b === 'zx' && s === 'cgtz') {
-			$('.j-jx-zhus').show();
-		} else {
-			$('.j-jx-zhus').hide();
+		// 直选的胆拖相当于 常规投注
+		if (b === 'zx' && s === 'dt') {
+
+			s = 'cgtz';
+
 		}
 
-		if (s === 'up') {
-			PL3.G_BUY.isManual = true;
+		// 直选常规投注
+		if (b === 'zx' && s === 'cgtz') {
+
+			$('.j-jx-zhus').show();
+
 		} else {
+
+			$('.j-jx-zhus').hide();
+
+		}
+
+		// 粘贴上传的情况
+		if (s === 'up') {
+
+			PL3.G_BUY.isManual = true;
+
+		} else {
+
 			PL3.G_BUY.isManual = false;
+
 		}
 
 		if (b === 'zx') {
-			if (s === 'cgtz') PL3.playName = 10;
-			if (s === 'hz') PL3.playName = 12;
-			if (s === 'many') PL3.playName = 10;
-			if (s === 'up') PL3.playName = 10;
+
+			methodMap = {
+				'cgtz': 10,
+				'hz': 12,
+				'many': 10,
+				'up': 10,
+			};
+
 		}
 
 		if (b === 'zx3') {
-			if (s === 'cgtz') PL3.playName = 20;
-			if (s === 'dt') PL3.playName = 21;
-			if (s === 'hz') PL3.playName = 22;
-			if (s === 'up') PL3.playName = 20;
+
+			methodMap = {
+				'cgtz': 20,
+				'dt': 21,
+				'hz': 22,
+				'up': 20,
+			};
+
 		}
 
 		if (b === 'zx6') {
-			if (s === 'cgtz') PL3.playName = 30;
-			if (s === 'dt') PL3.playName = 31;
-			if (s === 'hz') PL3.playName = 32;
-			if (s === 'up') PL3.playName = 30;
+
+			methodMap = {
+				'cgtz': 30,
+				'dt': 31,
+				'hz': 32,
+				'up': 30,
+			};
+
+		}
+
+
+
+		if (methodMap[s]) {
+
+			PL3.playName = methodMap[s];
+
 		}
 
 		$('#buy-submit').attr("disabled", "disabled");
@@ -339,6 +437,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		clean4CutBuyType();
 		updateCreatePartProjectParame();
 		initBuyType();
+
 	}
 
 	/**
@@ -348,6 +447,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	 */
 	$(".j-num-group").on('click', 'a', function(event) {
 		event.preventDefault();
+
 		var _this = $(this);
 		var row = _this.parents('.j-row-code');
 		var dataBit = parseInt(row.attr('data-bit'));
@@ -367,7 +467,7 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		arr = getChooseCodes(dataBit);
 
 		codesLen = PL3.G_CHOOSE.codes[0][dataBit].length + 1;
-
+		debugger
 		// 胆拖判断 阻止选号
 		if (s === 'dt' && isDt) {
 
@@ -384,13 +484,18 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		}
 		//切换选球状态
 		if (s === 'dt') {
+
 			arr2 = getChooseCodes(dataBit2);
 
 			if (ballState) {
+
 				_.pull(arr, num);
+
 			} else {
+
 				arr.push(num);
 				_.pull(arr2, num);
+
 			}
 
 			PL3.G_CHOOSE.codes[0][dataBit] = arr;
@@ -402,7 +507,9 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			if ($(this).hasClass('active')) {
 				row.siblings('.j-row-code').find('[data-num=' + num + ']').removeClass('active');
 			}
+
 			judgeNum(PL3.G_CHOOSE, _this, dataBit, 'dt');
+
 		} else {
 
 			if (ballState) {
@@ -414,28 +521,36 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 			PL3.G_CHOOSE.codes[0][dataBit] = arr;
 			PL3.G_CHOOSE.codes[0][dataBit].sort();
 			$(this).toggleClass('active');
+
 			judgeNum(PL3.G_CHOOSE, _this, dataBit);
+
 		}
 
 		calculateChooseCodes();
 
 	});
 
-	function judgeNum(G_CHOOSE, numObj, dataBit , isDt) {
+	function judgeNum(G_CHOOSE, numObj, dataBit, isDt) {
+
 		var _this = numObj;
 		var i, odd = 0,
 			even = 0,
 			big = 0,
 			small = 0,
 			all = 0;
+
 		_this.parents('.j-row-code').find('span').removeClass('active');
-		if(isDt){
+
+		if (isDt) {
+
 			dataBit = 1;
 			_this.parents('.j-row-code').find('span').removeClass('active');
 			_this.parents('.j-row-code').siblings('.j-row-code').find('span').removeClass('active');
+
 		}
 
 		if (G_CHOOSE.codes[0][dataBit] && G_CHOOSE.codes[0][dataBit].length == 5) {
+
 			for (i = 0; i < 5; i++) {
 				if (G_CHOOSE.codes[0][dataBit][i] % 2 == 1) {
 					odd++;
@@ -450,31 +565,45 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 					small++;
 				}
 			}
+
 			if (odd == 5) {
 				_this.parents('.j-row-code').find('span[data-type="odd"]').addClass('active');
 			}
+
 			if (even == 5) {
 				_this.parents('.j-row-code').find('span[data-type="even"]').addClass('active');
 			}
+
 			if (big == 5) {
 				_this.parents('.j-row-code').find('span[data-type="big"]').addClass('active');
 			}
+
 			if (small == 5) {
 				_this.parents('.j-row-code').find('span[data-type="small"]').addClass('active');
 			}
+
 		} else if (G_CHOOSE.codes[0][dataBit] && G_CHOOSE.codes[0][dataBit].length == 10) {
+
 			_this.parents('.j-row-code').find('span[data-type="all"]').addClass('active');
+
 		}
+
 	}
 
 	function getChooseCodes(dataBit) {
+
 		if (typeof PL3.G_CHOOSE.codes[0] === 'undefined') {
+
 			PL3.G_CHOOSE.codes[0] = [];
+
 		}
 
 		if (typeof PL3.G_CHOOSE.codes[0][dataBit] === 'undefined') {
+
 			PL3.G_CHOOSE.codes[0][dataBit] = [];
+
 		}
+
 		return PL3.G_CHOOSE.codes[0][dataBit].concat();
 	}
 
@@ -908,53 +1037,53 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	});
 
 	function judgeAllNum(G_CHOOSE) {
-      var len = G_CHOOSE.codes[0].length;
-      var i, j, odd = 0,
-        even = 0,
-        big = 0,
-        small = 0,
-        all = 0,
-        methodObj;
-      for (var i = 0; i < len; i++) {
-        odd = 0;
-        even = 0;
-        big = 0;
-        small = 0;
-        all = 0;
-        methodObj = $('.j-row-code[data-bit="' + i + '"]').find('.j-quick-method');
-        methodObj.find('span').removeClass('active');
-        if (G_CHOOSE.codes[0][i] && G_CHOOSE.codes[0][i].length == 5) {
-          for (j = 0; j < 5; j++) {
-            if (G_CHOOSE.codes[0][i][j] % 2 == 1) {
-              odd++;
-            }
-            if (G_CHOOSE.codes[0][i][j] % 2 == 0) {
-              even++;
-            }
-            if (G_CHOOSE.codes[0][i][j] > 4) {
-              big++;
-            }
-            if (G_CHOOSE.codes[0][i][j] <= 4) {
-              small++;
-            }
-          }
-          if (odd == 5) {
-            methodObj.find('span[data-type="odd"]').addClass('active');
-          }
-          if (even == 5) {
-            methodObj.find('span[data-type="even"]').addClass('active');
-          }
-          if (big == 5) {
-            methodObj.find('span[data-type="big"]').addClass('active');
-          }
-          if (small == 5) {
-            methodObj.find('span[data-type="small"]').addClass('active');
-          }
-        } else if (G_CHOOSE.codes[0][i] && G_CHOOSE.codes[0][i].length == 10) {
-          methodObj.find('span[data-type="all"]').addClass('active');
-        }
-      }
-    }
+		var len = G_CHOOSE.codes[0].length;
+		var i, j, odd = 0,
+			even = 0,
+			big = 0,
+			small = 0,
+			all = 0,
+			methodObj;
+		for (var i = 0; i < len; i++) {
+			odd = 0;
+			even = 0;
+			big = 0;
+			small = 0;
+			all = 0;
+			methodObj = $('.j-row-code[data-bit="' + i + '"]').find('.j-quick-method');
+			methodObj.find('span').removeClass('active');
+			if (G_CHOOSE.codes[0][i] && G_CHOOSE.codes[0][i].length == 5) {
+				for (j = 0; j < 5; j++) {
+					if (G_CHOOSE.codes[0][i][j] % 2 == 1) {
+						odd++;
+					}
+					if (G_CHOOSE.codes[0][i][j] % 2 == 0) {
+						even++;
+					}
+					if (G_CHOOSE.codes[0][i][j] > 4) {
+						big++;
+					}
+					if (G_CHOOSE.codes[0][i][j] <= 4) {
+						small++;
+					}
+				}
+				if (odd == 5) {
+					methodObj.find('span[data-type="odd"]').addClass('active');
+				}
+				if (even == 5) {
+					methodObj.find('span[data-type="even"]').addClass('active');
+				}
+				if (big == 5) {
+					methodObj.find('span[data-type="big"]').addClass('active');
+				}
+				if (small == 5) {
+					methodObj.find('span[data-type="small"]').addClass('active');
+				}
+			} else if (G_CHOOSE.codes[0][i] && G_CHOOSE.codes[0][i].length == 10) {
+				methodObj.find('span[data-type="all"]').addClass('active');
+			}
+		}
+	}
 
 	/**
 	 * 删除投注号码
@@ -1641,12 +1770,12 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 	PL3.G_BUY.hemaiTotalMoney = 0;
 
 	function updateCreatePartProjectParame() {
-		var totalMoney = PL3.G_BUY.money;   // 总金额
-		var $shareEl = $('#share-num');   //划分份数DOM
-		var $partEl = $('#part_buy');     //认购份数DOM
-		var $commissionEl = $('#commission_percent');  //提成比例DOM
-		var $partAegisEl = $('#part_aegis_num');  //保底分数DOM
-		var $hasPartEl = $('#has_part_aegis');  //是否保底checkbox DOM
+		var totalMoney = PL3.G_BUY.money; // 总金额
+		var $shareEl = $('#share-num'); //划分份数DOM
+		var $partEl = $('#part_buy'); //认购份数DOM
+		var $commissionEl = $('#commission_percent'); //提成比例DOM
+		var $partAegisEl = $('#part_aegis_num'); //保底分数DOM
+		var $hasPartEl = $('#has_part_aegis'); //是否保底checkbox DOM
 
 		// 获取划分份数 shareNum
 		var copies = $shareEl.val() || totalMoney;
@@ -1707,8 +1836,8 @@ require(['jquery', 'lodash', 'store', 'app', 'PL3', 'bootstrap', 'core'], functi
 		}
 
 		if (rengouCopies / copies < .05) {
-      rengouCopies = Math.ceil(copies * .05);
-    }
+			rengouCopies = Math.ceil(copies * .05);
+		}
 
 		// 认购金额必须大于提成金额
 		if (ticheng > (rengouCopies / copies * 100)) {

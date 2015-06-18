@@ -1,3 +1,4 @@
+/*竞彩足球，北京单场，彩票模型，模型历史数据，模型收藏*/
 /* Ball */
 .raceball { margin: 15px auto 80px; }
 .raceball .m-brhd { border: 1px #dfdfdf solid; border-bottom: 3px #f13c38 solid; }
@@ -194,7 +195,7 @@
 .row1-1, .row2-1, .row3-1 { border: 1px #dfdfdf solid; }
 .dataBody .lastOne { border-right: none; }
 .row1-1.on { background: #e3e3e3; }
-.row1-1 .btn { font-size: 12px; width: 130px; height: 29px; padding: 0; color: #fff; border: none; background-image: url(../front_images/jczq/bf.png); background-position: 0 -29px; }
+.row1-1 .btn { font-size: 12px; width: 130px; height: 29px; padding: 0; color: #fff; border: none; background-image: url(../front_images/jczq/bf.png); background-position: 0 -29px; margin-top: -3px; }
 .row1-1 .btn:hover { background-position: 0 -87px; }
 .row1-1 .btn.active { background-position: 0 0; }
 .row1-1 .btn.has { background-position: 0 -58px; }
@@ -254,7 +255,7 @@
 .t2-right { float: left; width: 42%; text-align: left; padding-left: 6px; }
 .t3-right { float: left; text-align: center; margin-right: 0; border: 1px solid #aaaaaa; width: 21px; height: 20px; border-radius: 3px; cursor: pointer; color: #404040;line-height: 19px;}
 .t3-right.active{color: #f13f3b;border-color: #f13f3b;}
-.dan-disabled { text-decoration: line-through; color: #a0a0a0; border-color: #c4c4c4;}
+.dan-disabled { text-decoration: line-through; color: #a0a0a0; border-color: #c4c4c4;cursor: default;}
 .t3 { width: 35px; }
 .scrollMoni { font-size: 12px; display: none; max-height: 280px; }
 .scrollMoni .table { margin: 0; }
@@ -401,7 +402,7 @@
 .raceball .m-mn-table > tbody > tr > td { border: none; }
 .chart-loading { position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 32px; height: 32px; margin: auto; }
 .chart-box { position: relative; height: 240px; padding: 0 20px; background: #041226; }
-.his-link { font-size: 12px; position: absolute; z-index: 95; left: 200px; padding: 12px 0 0; text-decoration: underline; color: #fff; }
+.his-link { font-size: 12px; position: absolute; z-index: 95; left: 200px; padding: 14px 0 0; text-decoration: underline; color: #fff; }
 .chart { display: none; height: 240px; background: #000; }
 .caret { display: inline-block; width: 0; height: 0; margin-left: 2px; vertical-align: middle; border-top: 4px solid; border-right: 4px solid transparent; border-left: 4px solid transparent; }
 .sort-btn.on .caret { border-bottom: 4px solid; border-top-color: transparent; position: relative; top: -2px; }
@@ -524,7 +525,9 @@
 .history-main .table thead .tr-nobor th { border-bottom: none; }
 .no-datatips { line-height: 200px; height: 200px; }
 .history-main .table .h-look > td { padding: 14px; background: #e3e3e3; }
+.history-main .table .no-pad-mid > td{ padding-top: 0; padding-bottom: 0;}
 .history-main .table .no-pad-top > td{ padding-top: 0;}
+.history-main .table .no-pad-bottom > td{ padding-bottom: 0;}
 .history-main .table .h-look > td td span { display: block; }
 .history-main .n-less-link { color: #ccc; }
 .history-ft-table > tbody > tr > td { font-size: 12px; padding-left: 65px; border-color: #dfdfdf; }

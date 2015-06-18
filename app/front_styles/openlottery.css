@@ -17,7 +17,7 @@
 .opl-imgbox .right { margin-left: 120px; }
 .opl-imgbox .right h5 { position: relative; top: 15px; font-size: 18px; font-weight: bold; }
 .opl-imgbox .right .btn-red { margin: 24px auto 10px; width: 145px; height: 45px; padding: 0; line-height: 45px; }
-.opl-imgbox .right .btn-fb { margin: 0; position: absolute; top: 50px; left: 320px; }
+.opl-imgbox .right .btn-fb { margin: 12px 0 0; }
 .text-box { position: relative; top: 15px; }
 .text-box li { margin-bottom: 12px; }
 .text-box li.last { position: relative; top: 3px; }

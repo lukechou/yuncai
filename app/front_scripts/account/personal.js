@@ -1,4 +1,20 @@
-$(function () {
+require.config({
+  paths: {
+    jquery: '../lib/jquery',
+    bootstrap: '../lib/bootstrap.min',
+    app: '../common/app',
+  },
+  shim: {
+    bootstrap: {
+      deps: ['jquery'],
+      exports: 'jquery'
+    }
+  },
+});
+
+require(['jquery', 'app', 'bootstrap'], function($, APP) {
+
+  'use strict';
 
   /**
    * Create Td HTML
@@ -41,7 +57,7 @@ $(function () {
           order_no: modelId
         },
       })
-      .done(function (data) {
+      .done(function(data) {
 
         if (data.retCode == 100000) {
           var dataItem = data.retData[0];
@@ -61,13 +77,13 @@ $(function () {
           APP.handRetCode(data.retCode, data.retMsg);
         }
       })
-      .fail(function () {
+      .fail(function() {
         APP.onServiceFail();
       });
   }
 
   // Read Model Record Detail
-  $('#j-table-main').on('click', '.j-history-more', function (event) {
+  $('#j-table-main').on('click', '.j-history-more', function(event) {
     event.preventDefault();
 
     var _this = $(this);

@@ -82,15 +82,13 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 						color: 'yellow',
 						dashStyle: 'solid',
 						zIndex: 2,
-						label: {
-
-						}
 					}],
 					labels: {
-						align: 'right',
+						align: 'left',
 						y: 5,
-						x: -5
+						x: -930
 					},
+					tickPosition: 'outside',
 					showLastLabel: true,
 					tickPositions: [(Number(_this.yMin) - 0.05).toFixed(2), (Number(_this.yMin) + (_this.yMax - _this.yMin) / 3).toFixed(2), (Number(_this.yMin) + (_this.yMax - _this.yMin) / 3 * 2).toFixed(2), (Number(_this.yMax) + 0.05).toFixed(2)]
 				},
@@ -147,7 +145,7 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 				buttons: [{
 					type: 'second', //按天数输出，每月为30天
 					count: 90,
-					text: '90'
+					text: '90',
 				}, {
 					type: 'second',
 					count: 180,
@@ -217,22 +215,13 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 				// y轴样式
 				yAxis: {
 					gridLineColor: '#707073',
-
 					labels: {
 						style: {
 							color: '#E0E0E3',
 						},
 					},
-					lineColor: '#707073',
 					minorGridLineColor: '#505053',
-					tickColor: '#707073',
 					tickWidth: 1,
-					title: {
-						style: {
-							color: '#f22',
-							align: 'left',
-						}
-					}
 				},
 				legend: {
 					itemStyle: {
@@ -300,7 +289,7 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 						fill: '#adadad',
 						stroke: '#000',
 						style: {
-							color: '#3d3d3d'
+							color: '#3d3d3d',
 						},
 						states: {
 							hover: {

@@ -242,6 +242,9 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
       updateAfterCollectUi(false);
     }
 
+    $('.j-show-hhtz').removeClass('active');
+    $('.j-bf-box').hide();
+
     return;
 
   });
@@ -339,6 +342,25 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     $('#j-vote-nav .active').removeClass('active');
     $(this).parents('li').addClass('active');
 
+    switch (type) {
+      case 'onlyHhtz':
+        $('.j-unSeleTips').text('请在左侧至少选择2场比赛');
+        $('.j-dg-choose').hide();
+        $('.j-mt-left').addClass('mt12');
+        $('.j-mt-right').removeClass('mt35').addClass('mt12');
+        break;
+      default:
+        $('.j-unSeleTips').text('请在左侧列表中选择投注比赛');
+        $('.j-dg-choose').show();
+        $('.j-dg-tips').find('input[type="checkbox"]').prop({
+          'checked': true
+        });
+        $('.j-dg-itips').show();
+        $('.j-mt-left').removeClass('mt12');
+        $('.j-mt-right').removeClass('mt12').addClass('mt35');
+        break;
+    }
+
     BET.toggleNav(gameTab, c);
 
     for (var prop in jczqData) {
@@ -350,7 +372,7 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     if (matchCount.length) {
       initDataBody();
     } else {
-    $('#j-data-body').html('<div class="data-loadbox">温馨提示：今天暂无比赛，去“<a href="/lottery/buy/jczq">竞彩足球</a>”看看吧</div>');
+      $('#j-data-body').html('<div class="data-loadbox">温馨提示：今天暂无比赛，去“<a href="/lottery/buy/jczq">竞彩足球</a>”看看吧</div>');
     }
 
     $('#j-collect-body .j-data-dd').remove();
@@ -548,12 +570,14 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
   /*****************交易区相关 Start******************/
 
-  function getSfButton(item, sp) {
-
+  function getSfButton(ggFlag, sp, dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem) {
     var result = '';
     var spArr = sp.split('|');
     var titleArr = BET[BET.tab + 'SpValueArr'];
     var btnEvent = 'j-sp-btn';
+    var emHtml = '';
+    var tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml;
+    var tmpBotHtml1, tmpBotHtml2, tmpBotHtml3;
 
     if (spArr.length !== 2) {
       spArr = ['--', '--'];
@@ -561,19 +585,109 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     }
 
     for (var i = spArr.length - 1; i >= 0; i--) {
-      result += '<span class="row-sf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
+
+      emHtml = '<em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em>';
+
+      //过关、单关都不停售，top要边框
+      //过关停售、单关不停售，top要边框
+      tmpTopHtml1 = '<span class="row-sf row-dg-top j-dg-sale j-dg-hint-top" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '<s class="icon icon-green-tri-2"></s><s class="dan-tips">单</s></span>';
+
+      //过关不停售、单关停售，top不用边框
+      tmpTopHtml2 = '<span class="row-sf j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      //过关、单关都停售，top不用边框
+      tmpTopAllStopHtml = '<span class="row-sf row-dg-stop j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">本场对阵不支持该玩法</span>';
+
+
+      //过关、单关都不停售。有下一行，且下一行，单关不停售，过关不用管，不要底边框
+      //过关停售、单场不停售，前端显示这场对阵，但选择串关投注时隐藏串关过关方式；且不是最后一行，底边框要没有
+      tmpBotHtml1 = '<span class="row-sf row-dg-bot row-dg-nbot j-dg-hint-nbot j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      //过关、单关都不停售。有下一行，且下一行，单关停售，过关不用管，要底边框
+      //过关、单关都不停售。没有下一行，要底边框
+      //过关停售、单场不停售，前端显示这场对阵，但选择串关投注时隐藏串关过关方式；且没有下一行，底边框要有
+      tmpBotHtml2 = '<span class="row-sf row-dg-bot j-dg-sale j-dg-hint-bot" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      //过关不停售、单场停售，前端显示这场对阵，但选择单关投注时隐藏单关过关方式，不用边框
+      tmpBotHtml3 = '<span class="row-sf j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      //过关、单关都停售，为空
+      result += joinResult(emHtml, tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml, tmpBotHtml1, tmpBotHtml2, tmpBotHtml3, i, dgFlag, ggFlag, nextItem, nextItemDgBool);
+
     };
 
     return result;
+
   };
 
-  function getRfsfButton(item, sp, rq) {
+  function joinResult(emHtml, tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml, tmpBotHtml1, tmpBotHtml2, tmpBotHtml3, i, dgFlag, ggFlag, nextItem, nextItemDgBool) {
+    var result = '';
+    if (i % 2 == 1) { //top的
 
+      if (dgFlag == '1') {
+        //过关、单关都不停售
+        //过关停售、单关不停售
+        result += tmpTopHtml1;
+
+      } else if (ggFlag == '1' && dgFlag == '0') {
+        //过关不停售、单关停售
+        result += tmpTopHtml2;
+
+      } else if (ggFlag == '0' && dgFlag == '0') {
+        //过关、单关都停售
+        result += tmpTopAllStopHtml;
+      }
+
+    } else { //bottom的
+
+      /*
+        bottom与top有所区别，因为要考虑底部边框问题，所以要判断有没有下一行：
+        1.如果没有下一行，有单关就加单关边框，需要底边框，没有不用加
+        2.如果有下一行，要判断下一行有没有单关，有单关，就不需要加底边框，没有，就加
+        tmpBotHtml1 -- 有单关，没有底边框
+        tmpBotHtml2 -- 有单关，有底边框
+        tmpBotHtml3 -- 没有单关
+
+
+        1.单关不停售
+        2.过关不停售、单关停售
+        3.过关、单关都停售
+       */
+
+      if (dgFlag == '1' && nextItem && nextItemDgBool) {
+        //单关不停售，有下一行，且下一行有单关，不要底边框
+        result += tmpBotHtml1;
+
+      } else if ((dgFlag == '1' && nextItem && !nextItemDgBool) || (dgFlag == '1' && !nextItem)) {
+        //单关不停售，有下一行，且下一行没有单关，要底边框
+        //单关不停售，没有下一行，要底边框
+        result += tmpBotHtml2;
+
+      } else if (dgFlag == '0' && ggFlag == '1') {
+        //过关不停售、单关停售
+        result += tmpBotHtml3;
+
+      } else if (dgFlag == '0' && ggFlag == '0') {
+        //过关、单关都停售
+        //result += tmpBotHtml3;
+      }
+
+    }
+
+    return result;
+
+  }
+
+
+  function getRfsfButton(ggFlag, sp, rq, dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem) {
     var result = '';
     var spArr = sp.split('|');
     var titleArr = BET[BET.tab + 'SpValueArr'];
     var rqColor = '';
     var btnEvent = 'j-sp-btn';
+    var emHtml = '';
+    var tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml;
+    var tmpBotHtml1, tmpBotHtml2, tmpBotHtml3;
 
     if (spArr.length !== 2) {
       spArr = ['--', '--'];
@@ -589,19 +703,38 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     result = '<em class="rq ' + rqColor + '">' + rq + '</em>';
 
     for (var i = spArr.length - 1; i >= 0; i--) {
-      result += '<span class="row-rfsf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
+
+      emHtml = '<em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em>';
+
+      tmpTopHtml1 = '<span class="row-rfsf row-dg-top j-dg-sale j-dg-hint-top" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '<s class="icon icon-green-tri-2"></s><s class="dan-tips">单</s></span>';
+
+      tmpTopHtml2 = '<span class="row-rfsf j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '<s class="icon icon-green-tri-2"></s><s class="dan-tips">单</s></span>';
+
+      tmpTopAllStopHtml = '<span class="row-rfsf row-dg-stop j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">本场对阵不支持该玩法</span>';
+
+      tmpBotHtml1 = '<span class="row-rfsf row-dg-bot row-dg-nbot j-dg-hint-nbot j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      tmpBotHtml2 = '<span class="row-rfsf row-dg-bot j-dg-sale j-dg-hint-bot" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      tmpBotHtml3 = '<span class="row-rfsf j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      result += joinResult(emHtml, tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml, tmpBotHtml1, tmpBotHtml2, tmpBotHtml3, i, dgFlag, ggFlag, nextItem, nextItemDgBool);
+
     };
 
     return result;
 
   };
 
-  function getDxfButton(item, sp, zf) {
+  function getDxfButton(ggFlag, sp, zf, dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem) {
 
     var result = '';
     var spArr = sp.split('|');
     var titleArr = BET[BET.tab + 'SpValueArr'];
     var btnEvent = 'j-sp-btn';
+    var emHtml = '';
+    var tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml;
+    var tmpBotHtml1, tmpBotHtml2, tmpBotHtml3;
 
     if (spArr.length !== 2) {
       spArr = ['--', '--'];
@@ -612,16 +745,30 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
 
     result = '<em class="dxf-yszf">' + zf + '</em>';
 
-    for (var i = 0; i < spArr.length; i++) {
+    for (var i = spArr.length - 1; i >= 0; i--) {
 
-      result += '<span class="row-dxf"><em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em></span>';
+      emHtml = '<em index="' + i + '" data-item="' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArr[i] + '" class="' + btnEvent + ' sp-btn"><i class="cm-sp-l">' + titleArr[i] + '</i><i class="cm-sp-r">' + spArr[i] + '</i></em>';
+
+      tmpTopHtml1 = '<span class="row-dxf row-dg-top j-dg-sale j-dg-hint-top" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '<s class="icon icon-green-tri-2"></s><s class="dan-tips">单</s></span>';
+
+      tmpTopHtml2 = '<span class="row-dxf j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '<s class="icon icon-green-tri-2"></s><s class="dan-tips">单</s></span>';
+
+      tmpTopAllStopHtml = '<span class="row-dxf row-dg-stop j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">本场对阵不支持该玩法</span>';
+
+      tmpBotHtml1 = '<span class="row-dxf row-dg-bot row-dg-nbot j-dg-hint-nbot j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      tmpBotHtml2 = '<span class="row-dxf row-dg-bot j-dg-sale j-dg-hint-bot" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      tmpBotHtml3 = '<span class="row-dxf j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">' + emHtml + '</span>';
+
+      result += joinResult(emHtml, tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml, tmpBotHtml1, tmpBotHtml2, tmpBotHtml3, i, dgFlag, ggFlag, nextItem, nextItemDgBool);
 
     };
 
     return result;
   };
 
-  function getSfcButton(item, sp) {
+  function getSfcButton(ggFlag, sp, dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem) {
 
     var result = '';
     var spArr = sp.split('|');
@@ -629,28 +776,92 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var spArrOne = spArr.slice(0, 6);
     var spArrTwo = spArr.slice(6);
     var btnEvent = 'j-sp-btn';
+    var tmpTopHtml1, tmpTopHtml2, tmpTopAllStopHtml;
+    var tmpBotHtml1, tmpBotHtml2, tmpBotHtml3;
 
     if (spArr.length !== 12) {
       spArr = ['--', '--'];
       btnEvent = '';
     }
 
-    result += '<span class="row-sfc">';
-    result += '<em class="first">客胜</em>';
+    tmpTopHtml1 = '<span class="row-sfc row-dg-top row-sfc-top j-dg-sale j-dg-hint-top" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '"><s class="icon icon-green-tri-1"></s><em class="first">客胜</em>';
+
+    tmpTopHtml2 = '<span class="row-sfc j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '"><em class="first">客胜</em>';
+
+    tmpTopAllStopHtml = '<span class="row-sfc row-dg-stop j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '">本场对阵不支持该玩法';
+
+
+
+    if (dgFlag == '1') {
+      //过关、单关都不停售
+      //过关停售、单关不停售
+      result += tmpTopHtml1;
+
+    } else if (ggFlag == '1' && dgFlag == '0') {
+      //过关不停售、单关停售
+      result += tmpTopHtml2;
+
+    } else if (ggFlag == '0' && dgFlag == '0') {
+      //过关、单关都停售
+      result += tmpTopAllStopHtml;
+    }
+
+    /*result += '<span class="row-sfc">';
+
+    result += '<em class="first">客胜</em>';*/
 
     for (var i = 0; i < spArrTwo.length; i++) {
 
-      result += '<em index="' + (i + 6) + '" data-item="客胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrTwo[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrTwo[i] + '</em>';
+      if (ggFlag == '0' && dgFlag == '0') {
+
+        break;
+
+      } else {
+        result += '<em index="' + (i + 6) + '" data-item="客胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrTwo[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrTwo[i] + '</em>';
+      }
 
     };
 
     result += '</span>';
 
-    result += '<span class="row-sfc">';
-    result += '<em class="first">主胜</em>'
+    tmpBotHtml1 = '<span class="row-sfc row-dg-bot row-sfc-bot row-dg-nbot j-dg-hint-nbot j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '"><em class="first">主胜</em>';
+
+    tmpBotHtml2 = '<span class="row-sfc row-dg-bot row-sfc-bot j-dg-sale j-dg-hint-bot" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '"><em class="first">主胜</em>';
+
+    tmpBotHtml3 = '<span class="row-sfc j-dg-sale" dg-sale="' + dgFlag + '" gg-sale="' + ggFlag + '"><em class="first">主胜</em>';
+
+    if (dgFlag == '1' && nextItem && nextItemDgBool) {
+      //单关不停售，有下一行，且下一行有单关，不要底边框
+      result += tmpBotHtml1;
+
+    } else if ((dgFlag == '1' && nextItem && !nextItemDgBool) || (dgFlag == '1' && !nextItem)) {
+      //单关不停售，有下一行，且下一行没有单关，要底边框
+      //单关不停售，没有下一行，要底边框
+      result += tmpBotHtml2;
+
+    } else if (dgFlag == '0' && ggFlag == '1') {
+      //过关不停售、单关停售
+      result += tmpBotHtml3;
+
+    } else if (dgFlag == '0' && ggFlag == '0') {
+      //过关、单关都停售
+      //result += tmpBotHtml3;
+    }
+
+    /*result += '<span class="row-sfc">';
+    result += '<em class="first">主胜</em>';*/
+
     for (var i = 0; i < spArrOne.length; i++) {
 
-      result += '<em index="' + i + '" data-item="主胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrOne[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrOne[i] + '</em>';
+      if (ggFlag == '0' && dgFlag == '0') {
+
+        break;
+
+      } else {
+
+        result += '<em index="' + i + '" data-item="主胜' + titleArr[i] + '" gametype="' + BET.tab + '" sp="' + spArrOne[i] + '" class="' + btnEvent + ' sp-btn sfc-sp-btn">' + spArrOne[i] + '</em>';
+
+      }
 
     };
 
@@ -670,37 +881,65 @@ require(['jquery', 'lodash', 'betting', 'app', 'store', 'hemai', 'bootstrap', 's
     var dataLeftCommon = [];
     var line = '';
     var item = null;
+    var nextItem = null;
     var tab = BET.tab;
     var bfLine = '';
+    var itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool;
+    var dgFlag, ggFlag, dgSale, ggSale;
 
     for (var i = 0, len = data.length; i < len; i++) {
 
       item = data[i];
+      nextItem = null;
+      if (i < len - 1) {
+        nextItem = data[i + 1];
+      }
+      dgFlag = item[tab + '_dg_sale'];
+      ggFlag = item[tab];
+      dgSale = tab + '_dg_sale';
+      ggSale = tab;
+
+      if (item[dgSale]) {
+        itemDgBool = !!Number(item[dgSale]);
+      }
+
+      if (nextItem && nextItem[dgSale]) {
+        nextItemDgBool = !!Number(nextItem[dgSale]);
+      }
+
+      if (item[ggSale]) {
+        itemGgBool = !!Number(item[ggSale]);
+      }
+
+      if (nextItem && nextItem[ggSale]) {
+        nextItemGgBool = !!Number(nextItem[ggSale]);
+      }
 
       dataLeftCommon = getDataLeftCommon(item, dTime);
       arr = arr.concat(dataLeftCommon);
 
       if (tab === 'sf') {
 
-        line = getSfButton(item[tab], item[tab + '_sp']);
+        //item[tab]是过关标识，item[tab + '_dg_sale']是指单关标识
+        line = getSfButton(ggFlag, item[tab + '_sp'], dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem);
 
       }
 
       if (tab === 'rfsf') {
 
-        line = getRfsfButton(item[tab], item[tab + '_sp'], item.rfsf_rangfen_num);
+        line = getRfsfButton(ggFlag, item[tab + '_sp'], item.rfsf_rangfen_num, dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem);
 
       }
 
       if (tab === 'dxf') {
 
-        line = getDxfButton(item[tab], item[tab + '_sp'], item.dxf_reference);
+        line = getDxfButton(ggFlag, item[tab + '_sp'], item.dxf_reference, dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem);
 
       }
 
       if (tab === 'sfc') {
 
-        line = getSfcButton(item[tab], item[tab + '_sp']);
+        line = getSfcButton(ggFlag, item[tab + '_sp'], dgFlag, itemDgBool, nextItemDgBool, itemGgBool, nextItemGgBool, nextItem);
 
       }
 

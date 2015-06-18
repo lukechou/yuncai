@@ -32,7 +32,9 @@ require(['jquery', 'app', 'PAGE', 'bootstrap'], function($, APP) {
 
 
     if (res.size <= 0) {
-      html = "<tr><td colspan='8'>没有数据</td></tr>";
+
+      html = "<tr><td colspan='5'>没有数据</td></tr>";
+      $('.j-page-box').hide();
       return html;
     }
 
@@ -41,7 +43,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap'], function($, APP) {
       item = data[i];
 
       html += '<tr>';
-      html += '<td>' + item['create_time'] + '</td><td>' + item['username'] + '</td><td>' + item['buy_price'] + '</td><td>' + item['rebate_money'] + '</td>';
+      html += '<td>' + item['loty_cnname'] + '</td><td>' + item['create_time'] + '</td><td>' + item['username'] + '</td><td>' + item['buy_price'] + '</td><td>' + item['rebate_money'] + '</td>';
 
       html += '</tr>';
 
@@ -65,11 +67,12 @@ require(['jquery', 'app', 'PAGE', 'bootstrap'], function($, APP) {
         htmlOutput = craeteOutputHTML(data.retData);
         PAGE.config.pageNum = Math.ceil(data.totalRecord / obj.pageSize);
         PAGE.makePageHtml();
-        PAGE.bindPageEvent(PAGE.loadOrderRecord);
+        PAGE.bindPageEvent(PAGE.loadAgentUser);
 
       } else {
 
         htmlOutput = "<tr><td colspan='8'>" + data.retMsg + "</td></tr>";
+        $('.j-page-box').hide();
 
       }
 

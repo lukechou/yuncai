@@ -818,7 +818,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
     var bodyHtml = $('#j-data-body').html();
     var headHtml = '';
-    var titleHtml = '您对模型<span class="mlr5">' + modelId + '</span> 设置了' + AUTO.issueVal + '期的自动投注 总投注金额为<b class="mlr5 fc-3">' + AUTO.totalVal + '</b>元（<span class="fc-84">系统会按期自动投注</span>）';
+    var titleHtml = '您对模型<span class="mlr5">' + modelId + '</span> 设置了<b class="mlr5 fc-3">' + AUTO.issueVal + '</b>期的自动投注 总投注金额为<b class="mlr5 fc-3">' + AUTO.totalVal + '</b>元（<span class="fc-84">系统会按期自动投注</span>）';
     var stopHtml = '';
 
     if (clearVal($('[name="autostop"]:checked').val())) {

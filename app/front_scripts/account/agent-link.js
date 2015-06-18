@@ -37,7 +37,7 @@ require(['jquery', 'app', 'zclip', 'bootstrap'], function($, APP, ZeroClipboard)
       client.on("beforecopy", function(event) {});
 
       client.on("aftercopy", function(event) {
-        alert("复制成功!");
+        APP.showTips("复制成功!");
       });
 
     });

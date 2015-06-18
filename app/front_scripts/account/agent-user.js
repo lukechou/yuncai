@@ -1,3 +1,8 @@
+/**
+ * 下级管理
+ *
+ */
+
 require.config({
   paths: {
     jquery: '../lib/jquery',
@@ -37,6 +42,74 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
     meridiem: ["上午", "下午"]
   };
 
+  var date = new Date();
+  var today = formatDate(date);
+  var startDay = formatDate(new Date(date - 7 * 24 * 60 * 60 * 1000));
+
+
+  function formatDate(date) {
+
+    return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+
+  }
+
+   function filterNum(v) {
+
+    var reNum = '';
+
+    // '/\D|^0/g'
+
+    reNum = v.replace(/[^0-9.]/g, '');
+
+    return reNum;
+
+    };
+
+  function bindValEvent(){
+
+    $('.j-rebate-val.proxy,.j-rebate-val').on('keyup', function(event) {
+
+      var v = filterNum($(this).val());
+
+      $(this).val(v);
+
+    });
+
+    $('.j-rebate-val').on('change', function(event) {
+
+      var v = Number(filterNum($(this).val()));
+      var a = '';
+      var s = '';
+
+      if(v){
+
+        if(APP.isDecimal(v)){
+
+          var a = v.toFixed(1) + '';
+
+          v = v.toFixed(1);
+
+          s = a.split('.');
+
+          if(s[1]==5 || s[1]==0){
+
+          }else{
+
+            v = s[0];
+
+          }
+
+        }
+
+      }
+
+      $(this).val(v);
+
+
+    });
+
+  }
+
   // 时间控件初始化
   $('#j-datetime-start,#j-datetime-end').datetimepicker({
     language: 'zh-CN',
@@ -48,7 +121,12 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
     minView: 2,
     forceParse: 0,
     format: 'yyyy-mm-dd',
+    startDate: '2012-01-01',
+    endDate: today
   });
+
+  $('#j-datetime-start').val(startDay);
+  $('#j-datetime-end').val(today);
 
   // 分页模块
   function craeteOutputHTML(res) {
@@ -67,6 +145,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
     for (var i = 0; i < data.length; i++) {
 
       item = data[i];
+
       identity = (item.identity == 1) ? '下级' : '自己';
 
       html += '<tr>';
@@ -78,7 +157,27 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
       html += '<td><span class="j-rebate-view fc-3">' + item['rebate'] + '%</span><span class="j-rebate-edit hide"><input type="text" value="' + item['rebate'] + '" class="j-rebate-val point"></span></td>';
 
-      html += '<td data-url="' + item['rebate_url'] + '" data-id="' + item['id'] + '" data-uid="' + item['uid'] + '"><a href="javascript:;" class="agent-point j-agent-rebase" >修改返点</a><a href="javascript:;" class="agent-point j-agent-proxy dis" data-url="' + item['change_proxy_limit_url'] + '">返点代理限额</a><a class="btn btn-red hide j-btn-confirm" href="javascript:;">确认</a> <a class="btn btn-cancel hide j-btn-cancel" href="javascript:;">取消</a></td>';
+      if (item.identity == 1) {
+
+        html += '<td data-url="' + item['rebate_url'] + '" data-id="' + item['id'] + '" data-uid="' + item['uid'] + '"><a href="javascript:;" class="agent-point j-agent-rebase" >修改返点</a>';
+
+        if(item['rebate'] == 0 || item['proxy_type'] == 5){
+
+          html += '<a href="javascript:;" class="agent-point">返点代理限额</a>';
+
+        }else{
+
+          html += '<a href="javascript:;" class="agent-point j-agent-proxy" data-url="' + item['change_proxy_limit_url'] + '">返点代理限额</a>';
+
+        }
+
+        html +='<a class="btn btn-red hide j-btn-confirm" href="javascript:;">确认</a> <a class="btn btn-cancel hide j-btn-cancel" href="javascript:;">取消</a></td>';
+
+      } else {
+
+        html += '<td></td>';
+
+      }
 
       html += '</tr>';
 
@@ -111,7 +210,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
       }
 
       this.appendTable(htmlOutput);
-
+      bindValEvent();
     };
 
     PAGE.onFail = function() {
@@ -156,8 +255,12 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
       PAGE.pageTable = $(_this.tbody);
 
-      _this.lotyname = 'jclq';
+      // 默认参数
+      _this.lotyname = $('#j-type').val();
+      _this.timeStart = formatDate(new Date(date - 7 * 24 * 60 * 60 * 1000));
+      _this.timeEnd = today;
 
+      // 获取数据，事件绑定
       _this.getPage();
 
       _this.bindEvent();
@@ -176,10 +279,38 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
         _this.timeEnd = $('#j-datetime-end').val();
         _this.username = APP.filterStr($('#j-username').val());
 
-        _this.getPage();
+        var start = getDateTime(_this.timeStart);
+        var end = getDateTime(_this.timeEnd);
+        var step = end - start;
+
+        if (start && end) {
+
+          if (step < 0) {
+
+            APP.showTips('起始时间不得大于结束时间');
+            return;
+
+          } else {
+
+            if (step > 30 * 24 * 60 * 60 * 1000) {
+              APP.showTips('最多查询跨度为30天');
+            } else {
+              _this.getPage();
+            }
+
+          }
+
+        } else {
+
+          _this.getPage();
+
+        }
+
+
 
       });
 
+      // 修改返点
       $(_this.tbody).on('click', '.j-agent-rebase', function(event) {
         event.preventDefault();
 
@@ -193,6 +324,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
       });
 
+      // 修改返点代理限额
       $(_this.tbody).on('click', '.j-agent-proxy', function(event) {
         event.preventDefault();
 
@@ -206,6 +338,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
       });
 
+      // 确认修改
       $(_this.tbody).on('click', '.j-btn-confirm', function(event) {
         event.preventDefault();
 
@@ -224,14 +357,12 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
         proxyLimit = tr.find('.j-proxy-val').val();
 
         if (method == 0) {
-          _this.updateRebate(rebateId, rebate, tr);
+          _this.updateRebate(rebateId, rebate, tr, uid);
         }
 
         if (method == 1) {
           _this.updateProxy(uid, proxyLimit, tr);
         }
-
-
 
       });
 
@@ -248,7 +379,10 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
     };
 
+    //修改代理限额
     AgentUser.prototype.updateProxy = function(uid, proxy_limit, tr) {
+
+      var _this = this;
 
       $.ajax({
           url: '/account/my-agent-user/change_limit/ajax',
@@ -256,7 +390,8 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
           dataType: 'json',
           data: {
             uid: uid,
-            'proxy_limit': proxy_limit
+            proxy_limit: proxy_limit,
+            lotyname:_this.lotyname
           },
         })
         .done(function(data) {
@@ -288,8 +423,10 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
     };
 
-    AgentUser.prototype.updateRebate = function(rebateId, rebate, tr) {
+    // 修改返点
+    AgentUser.prototype.updateRebate = function(rebateId, rebate, tr, uid) {
 
+      var _this = this;
 
       $.ajax({
           url: '/account/my-agent-user/change_rebate/ajax',
@@ -297,7 +434,9 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
           dataType: 'json',
           data: {
             rebate_id: rebateId,
-            rebate: rebate
+            rebate: rebate,
+            uid: uid,
+            lotyname: _this.lotyname
           },
         })
         .done(function(data) {
@@ -348,6 +487,22 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
     return AgentUser;
   }());
+
+  function getDateTime(str) {
+
+    var t = '';
+    var s = '';
+
+    s = str.split('-');
+
+    if (s.length === 3) {
+      t = new Date(s[0], s[1], s[2]).getTime();
+    } else {
+      t = null;
+    }
+
+    return t;
+  }
 
   var agent = new AgentUser();
 

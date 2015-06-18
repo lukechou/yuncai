@@ -15,21 +15,15 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 .text-fen span a { font-weight: normal; }
 .auto-bd .m-table-one> thead > tr > th { background: #f9f9f9; }
 .auto-list { overflow-y: auto; border: 1px #dfdfdf solid; border-width: 0 1px 1px; background: #fff; max-height: 351px; border-bottom: none; }
+.auto-list-2 { border: none; position: relative; top: -1px; }
 .auto-list-table { border: none; }
 .empty-tip { line-height: 180px !important; }
 .auto-stop-nav { margin-top: 15px; }
 .auto-less { border: 1px solid #dfdfdf; border-width: 1px 1px 0; padding: 16px 0 0 22px; text-align: left; position: relative; display: none; height: 85px; }
 .auto-less .auto-less-box { margin: 0; line-height: 25px; }
 .auto-less .auto-less-box p { margin-bottom: 0; display: block; }
-.auto-less .auto-less-box .auto-less-p{position: relative; display: inline-block; }
-.auto-less .btn {   position: absolute;
-  right: -212px;
-  top: 5px;
-  height: 40px;
-  line-height: 40px;
-  padding: 0;
-  width: 164px;
-  font-size: 16px; }
+.auto-less .auto-less-box .auto-less-p { position: relative; display: inline-block; }
+.auto-less .btn { position: absolute; right: -212px; top: 5px; height: 40px; line-height: 40px; padding: 0; width: 164px; font-size: 16px; }
 
 /* 底部提示 */
 .u-tipsbox { font-size: 12px; background: #f1f1f1; border: 1px #dfdfdf solid; padding: 20px 22px; margin-bottom: 15px; }
@@ -51,12 +45,8 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 
 /* table col*/
 .edit-wrap { border: 1px solid #ccc; display: inline-block; vertical-align: middle; width: 150px; height: 27px; margin: 0 auto; position: relative; }
-.i-reduce,
-.i-add { display: block; width: 25px; height: 25px; background: #f2f2f2; position: absolute; top: 0; font-size: 14px; font-weight: bold; line-height: 25px; color: #5b5b5b; }
-.i-reduce:hover,
-.i-add:hover,
-.i-reduce:focus,
-.i-add:focus { text-decoration: none; background: url(../front_images/model/btn-bg.png); }
+.i-reduce, .i-add { display: block; width: 25px; height: 25px; background: #f2f2f2; position: absolute; top: 0; font-size: 14px; font-weight: bold; line-height: 25px; color: #5b5b5b; }
+.i-reduce:hover, .i-add:hover, .i-reduce:focus, .i-add:focus { text-decoration: none; background: url(../front_images/model/btn-bg.png); }
 .i-add { right: 0; }
 .i-reduce { left: 0; }
 .edit-num { position: absolute; left: 25px; top: 0; height: 25px; line-height: 25px; width: 98px; border: 1px #dfdfdf solid; border-width: 0 1px; text-align: center; }
@@ -84,19 +74,16 @@ input[type='radio'] { width: 14px !important; height: 14px !important; margin: 0
 
 /* auto model list */
 .list-table> tbody > tr:hover { background: #fcead3 }
-.list-table> tbody >.tr-modify { background: #fbe6db; border: #f6c9b2 solid 1px;  }
-.icon-trmodify{   position: absolute;
-  background: url(../front_images/model/modify-arrow.png);
-  width: 13px;
-  height: 7px;
-  right: 129px;
-  top: -7px;}
-.tr-modify .list-box .text-left { margin-bottom: 5px; }
+.list-table> tbody >.tr-modify { background: #fbe6db; border: #f6c9b2 solid 1px; }
+.icon-trmodify { position: absolute; background: url(../front_images/model/modify-arrow.png); width: 13px; height: 7px; right: 129px; top: -7px; }
+.tr-modify .list-box .text-left { margin-bottom: 0; }
+.tr-modify-hd { height: 50px; }
+.tr-modify .list-box .text-fen { margin-top: 5px; }
 .list-table> tbody >.tr-modify:hover { background: #fbe6db; }
 .list-table > tbody > tr > .list-box { position: relative; padding: 12px 12px 3px; }
 .box-table> thead > tr > th { background: #f9f9f9; }
 .box-table .td-active { background: #ffe3e2; }
-.list-box .btn-sear { float: right; position: relative; top: -25px; margin-right: 25px; font-family: 'Microsoft Yahei'; font-size: 14px; padding: 0; width: 140px; height: 34px; line-height: 34px; font-weight: bold; }
+.list-box .btn-sear { float: right; position: absolute; top: 10px; right: 25px; font-family: 'Microsoft Yahei'; font-size: 14px; padding: 0; width: 140px; height: 34px; line-height: 34px; font-weight: bold; }
 .m-table-one > tbody > tr.modify-bottom > td { padding: 10px 0; }
 .m-table-one > tbody > tr.modify-bottom > td:hover { background: #fff; }
 .modify-bottom .btn { width: 150px; height: 36px; line-height: 36px; padding: 0; margin: 0 10px; font-family: 'Microsoft Yahei'; font-size: 16px; }
