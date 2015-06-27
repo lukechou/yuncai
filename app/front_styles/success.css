@@ -19,14 +19,28 @@
 .recommend-lottery { margin: 105px 20px 20px 20px; border-top: 1px dotted #dfdfdf; padding: 20px 20px 20px 0; }
 .recommend-lottery > .title { font-family: "微软雅黑"; font-size: 18px; color: #3D3D3D; margin-left: 8px; }
 .recommend-lottery .content { width: 100%; }
-.recommend-lottery .content-left { float: left; width: 215px; text-align: center; }
-.recommend-lottery .content-left.odd { margin: 15px 89px 0 157px; }
-.recommend-lottery .content-left.even { margin: 15px 157px 0 89px; }
+.recommend-lottery .content-left { float: left; width: 250px; text-align: center; }
+.recommend-lottery .content-left.odd { margin: 20px 54px 0 157px; }
+.recommend-lottery .content-left.even { margin: 20px 122px 0 89px; }
+
+
+.recommend-lottery .re-img > img { float: left; width: 77px; }
+.recommend-lottery .re-img > div { margin: 5px 0 0 20px; float: left; }
+.recommend-lottery .re-img .title { font-size: 24px; font-weight: bold; margin-bottom: 5px; text-align: left;}
+.recommend-lottery .re-img .slogan { text-align: left; font-size: 16px; font-weight: bold; }
+
+
 .recommend-lottery .tips { font-size: 12px; color: #a4a4a4; }
-.recommend-lottery .tips-left { margin-left: 31px; }
+.recommend-lottery .tips-left { margin-left: 31px; text-align: left; text-indent: 3px;}
 .recommend-lottery .tips i { float: left; margin: 7px 5px 0 0; }
 .recommend-lottery .btn-red { margin: 20px auto 10px; }
-.recommend-lottery .re-img > img { float: left; width: 77px; height: 77px; }
-.recommend-lottery .re-img > div { margin: 5px 0 0 20px; float: left; }
-.recommend-lottery .re-img .title { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-.recommend-lottery .re-img .slogan { text-align: left; font-size: 16px; font-weight: bold; }
+
+
+/* 充值 成功*/
+
+.main .cz-suc-box { width: 310px; }
+
+
+
+
+

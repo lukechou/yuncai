@@ -8,11 +8,14 @@
 .pl3 .m-num-group { float: left; margin: 0 0 10px 6px; }
 .pl3 .m-num-group-dt { float: left; margin: 0 0 10px -6px; }
 .pl3 .m-num-group > a { font-size: 16px; line-height: 33px; width: 33px; height: 33px; }
+.pl3 .m-num-group > a.dis { background: url(../front_images/ballicon/dis-ball.png) no-repeat; position: relative; color: #bebebe; }
+.pl3 .m-num-group > a.dis:before { content: ''; position: absolute; width: 33px; height: 2px; background: #bebebe; left: 0; top: 16px; }
 .pl3 .row-code .quick-method { float: left; width: 86px; margin: 0 0 0 40px; }
 .pl3 .row-code .quick-method span, .quick-method-dt span { line-height: 22px; display: inline-block; float: left; width: 22px; height: 22px; margin: 0 0 3px 3px; cursor: pointer; text-align: center; border-radius: 2px; background: #f1f1f1; font-size: 12px; }
 .pl3 .row-code .quick-method span:hover, .pl3 .row-code .quick-method span.active { background: #ffd06b; color: #fff; }
 .quick-method-dt { float: left; width: 86px; margin: 0 0 0 58px; }
 .quick-method-dt span:hover, .quick-method-dt span.active { background: #ffd06b; color: #fff; }
+.title-bage { color: #f13c38; font-weight: bold; margin: 0 5px; }
 .pl3 .br-zhu { width: 610px; }
 .pl3 .br-zhu-r { width: 80px; }
 .pl3 .br-zhu-item b { float: left; width: 75px; color: #3d3d3d; font-weight: normal; margin-right: 3px; }
@@ -66,6 +69,25 @@
 
 /* 小类切换 */
 .j-box-zx .j-nav-dt, .j-box-zx6 .j-nav-many, .j-box-zx3 .j-nav-many { display: none; }
+.j-nav-tx, .j-nav-bx, .j-nav-d1, .j-nav-d2, .j-nav-dx, .j-nav-qo, .j-nav-tlj, .j-nav-hs, .j-nav-st { display: none !important; }
+.j-box-d1 .j-nav-dt, .j-box-d1 .j-nav-cgtz, .j-box-d1 .j-nav-hz, .j-box-d1 .j-nav-up, .j-box-d1 .j-nav-many { display: none !important; }
+.j-box-d1 .j-nav-d1 { display: block !important; }
+.j-box-d2 .j-nav-dt, .j-box-d2 .j-nav-cgtz, .j-box-d2 .j-nav-hz, .j-box-d2 .j-nav-up, .j-box-d2 .j-nav-many { display: none !important; }
+.j-box-d2 .j-nav-d2 { display: block !important; }
+.j-box-bx .j-nav-dt, .j-box-bx .j-nav-cgtz, .j-box-bx .j-nav-hz, .j-box-bx .j-nav-up, .j-box-bx .j-nav-many { display: none !important; }
+.j-box-bx .j-nav-bx { display: block !important; }
+.j-box-tx .j-nav-dt, .j-box-tx .j-nav-cgtz, .j-box-tx .j-nav-hz, .j-box-tx .j-nav-up, .j-box-tx .j-nav-many { display: none !important; }
+.j-box-tx .j-nav-tx { display: block !important; }
+.j-box-hs .j-nav-dt, .j-box-hs .j-nav-cgtz, .j-box-hs .j-nav-hz, .j-box-hs .j-nav-up, .j-box-hs .j-nav-many { display: none !important; }
+.j-box-hs .j-nav-hs { display: block !important; }
+.j-box-dx .j-nav-dt, .j-box-dx .j-nav-cgtz, .j-box-dx .j-nav-hz, .j-box-dx .j-nav-up, .j-box-dx .j-nav-many { display: none !important; }
+.j-box-dx .j-nav-dx { display: block !important; }
+.j-box-qo .j-nav-dt, .j-box-qo .j-nav-cgtz, .j-box-qo .j-nav-hz, .j-box-qo .j-nav-up, .j-box-qo .j-nav-many { display: none !important; }
+.j-box-qo .j-nav-qo { display: block !important; }
+.j-box-st .j-nav-dt, .j-box-st .j-nav-cgtz, .j-box-st .j-nav-hz, .j-box-st .j-nav-up, .j-box-st .j-nav-many { display: none !important; }
+.j-box-st .j-nav-st { display: block !important; }
+.j-box-tlj .j-nav-dt, .j-box-tlj .j-nav-cgtz, .j-box-tlj .j-nav-hz, .j-box-tlj .j-nav-up, .j-box-tlj .j-nav-many { display: none !important; }
+.j-box-tlj .j-nav-tlj { display: block !important; }
 
 /* 福彩-3d */
 .fc3d .m-brhd-ti { color: #848484; font-size: 12px; margin-left: 20px; }
@@ -75,24 +97,56 @@
 .w68 { width: 68px; }
 .w40 { width: 40px; }
 .w80 { width: 80px; }
-.box-d1-d1 { display: none; }
+.box-d1-d1, .box-d1-cd1, .box-d2-d2, .box-d2-cd2, .box-bx-bx3, .box-bx-bx6, .box-tx, .box-hs, .box-dx, .box-qo, .box-st, .box-tlj { display: none; }
 
 /* 福彩-3d 1d 切换 */
 .j-box-d1 .j-box-d1 .box-d1-d1 { display: block; }
-.j-box-d1 .j-box-cd1 .box-d1-d1{}
+.j-box-d1 .j-box-cd1 .box-d1-cd1 { display: block; }
 
 /* 福彩-3d 2d 切换 */
+.j-box-d2 .j-box-d2 .box-d2-d2 { display: block; }
+.j-box-d2 .j-box-cd2 .box-d2-cd2 { display: block; }
 
 /* 福彩-3d 通选 切换 */
+.j-box-tx .box-tx { display: block; }
 
 /* 福彩-3d 包选 切换 */
+.j-box-bx3 .box-bx-bx3 { display: block; }
+.j-box-bx6 .box-bx-bx6 { display: block; }
 
 /* 福彩-3d 和数 切换 */
+.j-box-hs .box-hs { display: block; }
+.sel-num-con-danma { padding: 0 0 5px 22px; float: left; width: 658px; }
+.sel-num-title { float: left; display: inline-block; height: 54px; position: relative; font-size: 14px; line-height: 37px; color: #3d3d3d; text-align: left; }
+.list-ball-xlarge { float: left; width: 576px; }
+.list-ball-xlarge .ball { float: left; width: 74px; height: 80px; margin: 0 0 0 8px; }
+.list-ball-xlarge .ball a { display: inline-block; width: 74px; height: 50px; outline: 0; color: #555; font-family: Arial; font-size: 12px; text-align: center; border: 1px #dfdfdf solid; border-radius: 5px; outline: none; background: #f2f2f2; }
+.list-ball-xlarge .ball a:hover, .list-ball-xlarge .ball a:focus { text-decoration: none; }
+.list-ball-xlarge .ball a.active { background: #f13c38; color: #fff; border-color: #f13c38; }
+.list-ball-xlarge .ball a.active span { color: #fff; }
+.list-ball-xlarge .ball a b { display: block; font-size: 23px; line-height: 32px; }
+.list-ball-xlarge .ball a span { display: block; color: #999; font-size: 12px; font-weight: normal; line-height: 12px; }
 
 /* 福彩-3d 大小 切换 */
+.j-box-dx .box-dx { display: block; }
+.dx-area { width: 210px; margin: 0 auto 20px; overflow: hidden; }
+.dx-r { float: left; width: 165px; }
+.dx-btn { display: inline-block; width: 54px; height: 54px; text-align: center; color: #222; border: 1px #dfdfdf solid; border-radius: 50%; outline: none; background: #f2f2f2; line-height: 54px; font-size: 20px; margin-right: 20px; }
+.dx-btn:hover, .dx-btn:focus { text-decoration: none; }
+.dx-btn.active { color: #fff; background: #f13c38; }
 
-/* 福彩-3d 奇数 切换 */
+/* 福彩-3d 奇偶 切换 */
+.j-box-qo .box-qo { display: block; }
 
 /* 福彩-3d 三同 切换 */
+.j-box-st .box-st { display: block; }
 
 /* 福彩-3d 拖拉机 切换 */
+.j-box-tlj .box-tlj { display: block; }
+.choose-ws { float: left; width: 44px; margin: 17px 0 0 0; margin-top: 17px; }
+.choose-ws .choose-title { font-size: 14px; font-weight: bold; }
+.tlj-area { width: 210px; margin: 0 auto 20px; overflow: hidden; }
+.tlj-r { float: left; width: 165px; }
+.tlj-btn { display: inline-block; width: 165px; height: 50px; text-align: center; color: #222; border: 1px #dfdfdf solid; border-radius: 5px; outline: none; background: #f2f2f2; line-height: 50px; font-size: 20px; }
+.tlj-btn:hover, .tlj-btn:focus { text-decoration: none; }
+.tlj-btn.active { background: #f13c38; color: #fff; }

@@ -1,7 +1,13 @@
 define(['jquery', 'app', 'highcharts'], function($, APP) {
 
 	'use strict';
-	//https://github.com/highslide-software/highcharts.com/
+
+
+	/*
+	 * https://github.com/highslide-software/highcharts.com/
+	 * 用于模型中心创建图表的配置文件
+	 *
+	 */
 	var Graph = (function() {
 
 		function Graph(args) {
@@ -12,6 +18,7 @@ define(['jquery', 'app', 'highcharts'], function($, APP) {
 			// constructor body
 		}
 
+		// 图表宽度
 		Graph.prototype = {
 			width: 945
 		};

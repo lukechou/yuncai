@@ -395,6 +395,7 @@ define(['jquery', 'bootstrap'], function($) {
 
     };
 
+    // 确定后移除
     app.prototype.checkUserLoginStatus = function() {
 
       var _this = this;
@@ -631,6 +632,7 @@ define(['jquery', 'bootstrap'], function($) {
     };
 
     /**
+     * 可转为使用 updateHeadUserInfo 以便统一  确认后移除
      * Update User Money
      * @return {null}
      */
@@ -720,7 +722,11 @@ define(['jquery', 'bootstrap'], function($) {
       }
     };
 
-    /* 获取Get参数 */
+    /*
+     * 获取Get参数
+     * paraName 要获取的参数
+     * return
+     */
     app.prototype.getUrlPara = function(paraName) {
       var sUrl = window.location.href;
       var sReg = "(?:\\?|&){1}" + paraName + "=([^&]*)"
@@ -731,8 +737,9 @@ define(['jquery', 'bootstrap'], function($) {
 
     /**
      * 获取参数
-     * @param  {url} paraName 获取参数
-     * @return {String}
+     * @param  {url} kp2.yuncai.com?name=raymond&age=15
+     * @return 获取url 里面的 get参数 {name:raymond,age:15}
+     *
      */
     app.prototype.parseQueryString = function(url) {
       var re = /[\?&]([^\?&=]+)=([^&]+)/g,
@@ -751,19 +758,23 @@ define(['jquery', 'bootstrap'], function($) {
      * @return {String}
      */
     app.prototype.filterStr = function(str) {
+
       str = str || '';
       str = decodeURIComponent(str);
       str = str.replace(/<.*>/g, ''); // 过滤标签注入
       str = str.replace(/(java|vb|action)script/gi, ''); // 过滤脚本注入
       str = str.replace(/[\"\'][\s ]*([^=\"\'\s ]+[\s ]*=[\s ]*[\"\']?[^\"\']+[\"\']?)+/gi, ''); // 过滤HTML属性注入
       str = str.replace(/[\s ]/g, '&nbsp;'); // 替换空格
+
       return str;
+
     };
 
-    // 格式化 时间
-    // date  时间对象
+    // 格式化 时间  dateFormat(new Date(),'%Y-%M-%d %h:%m:%s')
+    // date  时间对象 new Date()
     // pattern  时间格式  '%Y-%M-%d %h:%m:%s'
-    // isFill  是否补零
+    // isFill  是否补零 默认补零
+    // return 2015-06-19 15:46:00
     app.prototype.dateFormat = function(date, pattern, isFill) {
 
       var Y = date.getFullYear();

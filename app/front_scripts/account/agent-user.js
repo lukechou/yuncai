@@ -67,7 +67,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
   function bindValEvent(){
 
-    $('.j-rebate-val.proxy,.j-rebate-val').on('keyup', function(event) {
+    $('.j-proxy-val,.j-rebate-val').on('keyup', function(event) {
 
       var v = filterNum($(this).val());
 
@@ -75,7 +75,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
     });
 
-    $('.j-rebate-val').on('change', function(event) {
+    $('.j-proxy-val,.j-rebate-val').on('change', function(event) {
 
       var v = Number(filterNum($(this).val()));
       var a = '';
@@ -133,13 +133,35 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
     var html = '';
     var data = res.data;
+    var selfData = res.self_data;
     var identity = '';
     var item = '';
-
+    var isFillProxy = '';
+    var isParentProxyType = '';
 
     if (res.size <= 0) {
       html = "<tr><td colspan='8'>没有数据</td></tr>";
       return html;
+    }
+    if(!(selfData === undefined))
+    {
+        if(selfData.used_limit == selfData.proxy_limit){
+
+          isFillProxy = true;
+
+        }else{
+
+          isFillProxy = false;
+
+        }
+
+        if(selfData.proxy_type > 4)
+        {
+          isParentProxyType = true;
+        }else{
+          isParentProxyType = false;
+        }
+
     }
 
     for (var i = 0; i < data.length; i++) {
@@ -159,11 +181,23 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
       if (item.identity == 1) {
 
-        html += '<td data-url="' + item['rebate_url'] + '" data-id="' + item['id'] + '" data-uid="' + item['uid'] + '"><a href="javascript:;" class="agent-point j-agent-rebase" >修改返点</a>';
+        html += '<td data-url="' + item['rebate_url'] + '" data-id="' + item['id'] + '" data-uid="' + item['uid'] + '">';
 
-        if(item['rebate'] == 0 || item['proxy_type'] == 5){
+        if(item['rebate']==0 && isFillProxy){
 
-          html += '<a href="javascript:;" class="agent-point">返点代理限额</a>';
+          html += '<a href="javascript:;" class="agent-point dis" >修改返点</a>';
+
+        }else{
+
+          html += '<a href="javascript:;" class="agent-point j-agent-rebase" >修改返点</a>';
+
+        }
+
+
+
+        if(item['rebate'] == 0 || ( isParentProxyType &&  (item['proxy_type'] > 5)  ) ){
+
+          html += '<a href="javascript:;" class="agent-point dis">返点代理限额</a>';
 
         }else{
 
@@ -253,6 +287,18 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
       var _this = this;
 
+      var LotyName = APP.getUrlPara('lotyname');
+
+      if(LotyName){
+
+        if($('#j-type [data-loty='+LotyName+']').length){
+          $('#j-type').val(LotyName);
+        }
+
+      }
+
+
+
       PAGE.pageTable = $(_this.tbody);
 
       // 默认参数
@@ -316,7 +362,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
         var td = $(this).parent('td');
         td.find('.btn').removeClass('hide');
-        td.find('.j-agent-rebase,.j-agent-proxy').addClass('hide');
+        td.find('.agent-point').addClass('hide');
         td.attr('data-method', 0);
 
         $(this).parents('tr').find('.j-rebate-view').addClass('hide');
@@ -330,7 +376,7 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
 
         var td = $(this).parent('td');
         td.find('.btn').removeClass('hide');
-        td.find('.j-agent-rebase,.j-agent-proxy').addClass('hide');
+        td.find('.agent-point').addClass('hide');
         td.attr('data-method', 1);
 
         $(this).parents('tr').find('.j-proxy-view').addClass('hide');
@@ -398,16 +444,18 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
           if (data.retCode == 100000) {
 
             APP.showTips({
-              text: '成功修改返点。',
+              text: '成功修改返点限额。',
               type: 1,
               onConfirm: function() {
-                window.location.reload();
+
+                window.location.href = '?lotyname='+_this.lotyname;
+
               }
             });
 
             $('body').on('click', '.close', function(event) {
 
-              window.history.go(0);
+              window.location.href = '?lotyname='+_this.lotyname;
 
             });
 
@@ -447,13 +495,13 @@ require(['jquery', 'app', 'PAGE', 'bootstrap', 'datetimepicker'], function($, AP
               text: '成功修改返点。',
               type: 1,
               onConfirm: function() {
-                window.location.reload();
+                window.location.href = '?lotyname='+_this.lotyname;
               }
             });
 
             $('body').on('click', '.close', function(event) {
 
-              window.history.go(0);
+              window.location.href = '?lotyname='+_this.lotyname;
 
             });
 

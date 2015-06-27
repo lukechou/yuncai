@@ -172,6 +172,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
     var Detail = {
       qihao: $('#j-qihao').val(),
       lotyName: $('#j-strLotyName').val(),
+      playName: $('#j-strPlayName').val(),
       lotyCNName: $('#j-loty-name').val(),
       projectStatu: $('#j-project-status').val(),
       colCount: 7
@@ -348,6 +349,59 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
   });
 
+  $(".j-fileForm").submit(function() {
+    //console.log(Detail);
+    //debugger;
+    var t = $(this);
+    var playName = Detail.playName;
+    var fileName = '';
+    var url = '';
+    var $upfile = t.find('.j-upfile');
+    var formData = new FormData(t[0]);
+
+
+    url = '/lottery/upload/code/match-in-project/jczq/' + playName;
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false
+    }).done(function(data) {
+      var zhushu;
+      if (data.retCode == 100000) {
+
+        _this.upFileResData = data.retData;
+
+        $upfile.val('');
+        t.hide();
+
+
+        zhushu = _this.upFileResData.data.length;
+
+
+
+      } else {
+        $upfile.val('');
+        APP.handRetCode(data.retCode, data.retMsg);
+      }
+    }).fail(function() {
+      $upfile.val('');
+      APP.onServiceFail();
+    });
+
+    return false;
+  });
+
+  $('.j-upfile').on('change', function(event) {
+    $(this).parents('.j-fileForm').submit();
+  });
+
+
+
   var submitHemai = function(obj) {
 
     $.ajax({
@@ -413,12 +467,10 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
       for (var j = 0; j < tdDataArr.length; j++) {
         result += '<td>' + tdDataArr[j] + '</td>';
-      };
-
+      }
       result += '</tr>';
 
-    };
-
+    }
     return result;
   }
 
@@ -477,8 +529,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
                           </tr>';
           }
 
-        };
-
+        }
         if (lotyName === 'sfc' || lotyName === 'r9') {
 
           htmlOutput = getSfcR9Html(data.retData);
@@ -500,7 +551,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       }
     };
     PAGE.onFail = function() {
-      return;
+
     };
   };
 
@@ -582,7 +633,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
       } else if (selctVal == "选号详情") {
         $('#j-total-zhu').show();
       }
-    })
+    });
 
     if ($('#myname').text() != $('.j-user-details td:nth-child(2)').text()) {
       $('.j-co-opertd a').remove();
@@ -654,8 +705,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
         $('.j-tou-ls-box2 div:nth-child(' + i + ')').css({
           display: 'none'
         });
-      };
-
+      }
     }
 
     $('.j-tzhm-more').on('click', function(event) {
@@ -677,7 +727,7 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
     var _this = cancelPage;
 
-    _this.ajaxUrl = '/lottery/cp-detail/' + Detail.lotyName + '/ajax'
+    _this.ajaxUrl = '/lottery/cp-detail/' + Detail.lotyName + '/ajax';
 
     _this.pageElement = $('#j-pager-box');
     _this.config.pageElement = '#j-pager-box';
@@ -716,12 +766,10 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
 
           for (var j = 0; j < tdDataArr.length; j++) {
             cancelStr += '<td>' + tdDataArr[j] + '</td>';
-          };
-
+          }
           cancelStr += '</tr>';
 
-        };
-
+        }
         cancelHtml = '<div class="ttil mid-ttil"><b>出票状态：已撤单</b></div><table class="table d-table-one d-table-cp"><thead><tr><th class="cp-cc">场次</th><th class="cp-num">1</th><th class="cp-num">2</th><th class="cp-num">3</th><th class="cp-num">4</th><th class="cp-num">5</th><th class="cp-num">6</th><th class="cp-num">7</th><th class="cp-num">8</th><th class="cp-num">9</th><th class="cp-num">10</th><th class="cp-num">11</th><th class="cp-num">12</th><th class="cp-num">13</th><th class="cp-num">14</th><th class="cp-num">玩法</th><th class="cp-num">注数</th><th class="cp-num">倍数</th></tr></thead>' + cancelStr + '</table>';
 
         _this.config.pageNum = Math.ceil(data.total / obj.pageSize);

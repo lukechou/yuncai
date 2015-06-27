@@ -47,6 +47,7 @@ define(['jquery', 'app'], function($, APP) {
 
     };
 
+    // 修改星级
     model.prototype.controlStar = function() {
 
       var _this = this;
@@ -61,6 +62,7 @@ define(['jquery', 'app'], function($, APP) {
 
     };
 
+    // 设置收藏弹出框属性
     model.prototype.setModelModal = function() {
 
       var _this = this;
@@ -71,6 +73,7 @@ define(['jquery', 'app'], function($, APP) {
 
     };
 
+    // 充值收藏弹出框
     model.prototype.resetModelModal = function() {
 
       var _this = this;
@@ -84,7 +87,7 @@ define(['jquery', 'app'], function($, APP) {
 
     };
 
-
+    // 绑定收藏事件
     model.prototype.bindCollectEvent = function() {
       var _this = this;
 
@@ -139,6 +142,7 @@ define(['jquery', 'app'], function($, APP) {
 
     };
 
+    // 确认修改
     model.prototype.sureModify = function(isModify) {
 
       var _this = this;
@@ -179,6 +183,7 @@ define(['jquery', 'app'], function($, APP) {
       $('#j-no-logined').remove();
     };
 
+    // 取消收藏
     model.prototype.cancelCollect = function(obj) {
       var _this = this;
 
@@ -204,6 +209,7 @@ define(['jquery', 'app'], function($, APP) {
 
     };
 
+    // 保存收藏
     model.prototype.saveCollect = function(obj) {
 
       var _this = this;
@@ -247,6 +253,7 @@ define(['jquery', 'app'], function($, APP) {
         });
     };
 
+    // 取消收藏时执行
     model.prototype.onCollectCancel = function(id) {
       var _this = this;
       if (_this.isCollectPage) {

@@ -21,7 +21,7 @@ require.config({
 
 require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, _, store, APP) {
   'use strict';
-
+  // 模型自动投注列表页
   // Config-Constant
   var BET_MIN = 30; //最小投注
   var BET_MAX = 500000; //最大投注
@@ -36,6 +36,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
   var percentTotal = 0; //比例总额
   var rInt = /^-?[0-9]{1,}$/; //整数正则
   var ar = null;
+
   /*
    *
    * data  模型自动投注列表数据
@@ -55,6 +56,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
     autoType: null
   };
 
+  // 更新table
   function afterTableUpdate() {
 
     AUTO.viewObj = $body.find('.j-rate-view');
@@ -645,6 +647,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
   }
 
+  // 创建自动投注表格主体
   function createTrHtml(item) {
 
     var h = '';
@@ -880,6 +883,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
   });
 
+  // 创建主体
   function getBodyHtml() {
 
     var data = {};
@@ -934,6 +938,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
     return html;
   }
 
+
+  // 创建购买弹出框
   function createBuyModal() {
 
     var item = _.find(Model.data, function(n) {
@@ -980,6 +986,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
     updateIssue();
   });
 
+  // 更新自动投注
   function updateIssue() {
 
     var item = _.find(Model.data, function(n) {
@@ -1064,6 +1071,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
       });
   }
 
+  // 获取一条自动投注详细信息
   function getNewIssue(rid) {
 
     if (Model.rid) {
@@ -1127,6 +1135,7 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
   });
 
+  // 筛选数据状态
   function filterItemStatu(type) {
 
     var group = [];

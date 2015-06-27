@@ -25,6 +25,8 @@ require.config({
 require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tipsy'], function($, _, store, chart, APP, model) {
   'use strict';
 
+  // 模型收藏js
+
   var active = 'icon-y2';
   var noActive = 'icon-y';
 
@@ -147,6 +149,7 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     toggleDelBtn(delId);
   });
 
+  // 收藏星级修改
   $('#j-collect-table').on('click', 'tbody .icon', function(event) {
     var t = $(this),
       delId = '';
@@ -156,6 +159,8 @@ require(['jquery', 'lodash', 'store', 'chart', 'app', 'model', 'bootstrap', 'tip
     if (delId == 0) $('#j-collect-table thead .' + active).removeClass(active).addClass(noActive);
   });
 
+
+  // 取消收藏按钮
   $('#j-del-manycollect').on('click', '.btn-del-collect', function(event) {
     event.preventDefault();
 

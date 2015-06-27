@@ -66,6 +66,7 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function($, APP, _) {
 
   var rowIndex = 0;
 
+  // 获取详情信息
   function getDetailHTML(data) {
 
     var html = '';
@@ -125,6 +126,7 @@ require(['jquery', 'app', 'lodash', 'bootstrap'], function($, APP, _) {
     return html;
   }
 
+  // 获取详情
   function getDetail(no, TR) {
 
     $.ajax({

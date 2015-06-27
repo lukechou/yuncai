@@ -22,6 +22,8 @@ require.config({
 require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, _, store, APP) {
   'use strict';
 
+  // 模型自动投注页面
+
   // Config-Constant
   var BET_MIN = 30; //最小投注
   var BET_MAX = 500000; //最大投注
@@ -422,6 +424,8 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
   //////////////////////////////
   /////////////////////////////////
   //////////////////////////////
+
+  // 页面初始化 执行
   function pageInit() {
 
     // 初始化 提示悬浮
@@ -539,12 +543,14 @@ require(['jquery', 'lodash', 'store', 'app', 'bootstrap', 'tipsy'], function($, 
 
   pageInit();
 
+  // 更新底部信息
   function updateBottomTips() {
 
     $('#j-count-result').removeClass('hide');
     $('#j-count-total').text(AUTO.addVal);
     $('#j-count-issue').text(AUTO.issueVal);
   }
+
 
   function createMoneyTableHtml(data) {
 
