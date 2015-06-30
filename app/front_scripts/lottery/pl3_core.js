@@ -264,9 +264,9 @@ define(['jquery', 'lodash', 'core'], function($, _) {
     pl3.prototype.produceNewCodes = function() {
 
       var _this = this;
-      var numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      var numArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       var groupArr = [0, 1, 2];
-      var dxArr = [1, 3];
+      var dxArr = ['1', '3'];
       var d1Index = 0;
       var result = [];
       var hsArr = [];
@@ -513,37 +513,44 @@ define(['jquery', 'lodash', 'core'], function($, _) {
       var secondVal = null;
       var thirdVal = null;
 
+      if (!code[index]) {
+        return;
+      }
+
       for (var j = 0; j < code[index].length; j++) {
 
         for (var i = 0; i < 3; i++) {
 
           if (i !== index) {
 
-            for (var m = 0; m < code[i].length; m++) {
+            if (code[i]) {
 
-              arr = [];
+              for (var m = 0; m < code[i].length; m++) {
 
-              for (var g = 0; g < 3; g++) {
+                arr = [];
 
-                if (g == i) {
+                for (var g = 0; g < 3; g++) {
 
-                  arr.push(code[i][m]);
+                  if (g == i) {
 
-                } else if (g === index) {
+                    arr.push(code[i][m]);
 
-                  arr.push(code[index][j]);
+                  } else if (g === index) {
 
-                } else {
+                    arr.push(code[index][j]);
 
-                  arr.push('_');
+                  } else {
 
-                }
+                    arr.push('_');
+
+                  }
+
+                };
+
+                result.push(arr.join('-'));
 
               };
-
-              result.push(arr.join('-'));
-
-            };
+            }
 
           }
 
@@ -617,7 +624,11 @@ define(['jquery', 'lodash', 'core'], function($, _) {
 
           for (var k = 0; k < codeC.length; k++) {
             thirdVal = codeC[k];
-            result.push([[firstVal],[secondVal],[thirdVal]]);
+            result.push([
+              [firstVal],
+              [secondVal],
+              [thirdVal]
+            ]);
           };
 
         };
@@ -636,6 +647,10 @@ define(['jquery', 'lodash', 'core'], function($, _) {
       var item = null;
       var arr = [];
       var d2Result = [];
+
+      if (!newCodes) {
+        newCodes[0] = ['_'];
+      };
 
       for (var i = 0; i < newCodes.length; i++) {
 
@@ -657,59 +672,69 @@ define(['jquery', 'lodash', 'core'], function($, _) {
 
           }
 
-          for (var m = 0; m < item.length; m++) {
+          if (_this.nav.small === 'd1' || _this.nav.small === 'cd1') {
 
-            arr = [];
+            if (item) {
 
-            if (_this.nav.small === 'd1') {
 
-              for (var f = 0; f < 3; f++) {
+              for (var m = 0; m < item.length; m++) {
 
-                if (f === j) {
+                arr = [];
 
-                  arr.push([item[m]]);
+                if (_this.nav.small === 'd1') {
 
-                } else {
+                  for (var f = 0; f < 3; f++) {
 
-                  arr.push(['_']);
+                    if (f === j) {
+
+                      arr.push([item[m]]);
+
+                    } else {
+
+                      arr.push(['_']);
+
+                    }
+
+                  };
+
+                  result.push(arr);
+
+                }
+
+                if (_this.nav.small === 'cd1') {
+
+                  for (var f = 0; f < 3; f++) {
+
+                    if (f === j) {
+
+                      arr.push([item[m]]);
+
+                    }
+
+                  };
+
+                  result.push(arr);
 
                 }
 
               };
-
-              result.push(arr);
-
             }
-
-            if (_this.nav.small === 'cd1') {
-
-              for (var f = 0; f < 3; f++) {
-
-                if (f === j) {
-
-                  arr.push([item[m]]);
-
-                }
-
-              };
-
-              result.push(arr);
-
-            }
-
-          };
-
+          }
         };
 
       };
 
       if (_this.nav.small === 'd2') {
 
-        result = _.uniq(result);
+        result = _.remove(_.uniq(result), function(n) {
+          return n;
+        });
 
         for (var i = 0; i < result.length; i++) {
 
+
           d2Result = result[i].split('-');
+
           result[i] = [];
 
           for (var k = 0; k < d2Result.length; k++) {
@@ -717,6 +742,7 @@ define(['jquery', 'lodash', 'core'], function($, _) {
             result[i].push([d2Result[k]]);
 
           };
+
 
         };
       }
@@ -818,13 +844,20 @@ define(['jquery', 'lodash', 'core'], function($, _) {
 
         }
 
-        if(_this.nav.small=='dx' || _this.nav.small=='qo'){
+        if (_this.nav.small == 'dx' || _this.nav.small == 'qo') {
 
           money = 2;
 
-          if(newCodes[0][0].length ===2){
+          if (newCodes[0][0].length === 2) {
 
-            newCodes = [[[newCodes[0][0][0]]],[[newCodes[0][0][1]]]];
+            newCodes = [
+              [
+                [newCodes[0][0][0]]
+              ],
+              [
+                [newCodes[0][0][1]]
+              ]
+            ];
 
           }
 

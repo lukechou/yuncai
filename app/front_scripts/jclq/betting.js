@@ -43,6 +43,8 @@ define(['jquery', 'app'], function($, APP) {
       maxBonus: null,
       bjdcPassWay: true,
       box: $('#bettingBox'),
+      navBox: $('#j-hd-nav'),
+      navType: 'ggtz',
       tab: 'hhtz',
       sfcSpValueArr: ['1-5', '6-10', '11-15', '16-20', '21-25', '26+'],
       rfsfSpValueArr: ['让分主胜', '让分客胜'],
@@ -563,7 +565,14 @@ define(['jquery', 'app'], function($, APP) {
       var startIndex = 2;
       var bunchHtml = '';
       var isActiveBunch = '';
+      var dgFlag = true;
+      var ggFlag = true;
 
+      //单关 过关方式只有单关
+      if(_this.navType == 'dg'){
+        _this.dgNav(len, list, tips, dgFlag, ggFlag, bunchHtml, _this);
+        return;
+      }
 
       // 几串几
       if (!_this.bjdcPassWay) {
@@ -714,6 +723,50 @@ define(['jquery', 'app'], function($, APP) {
           tips.hide();
           list.html(bunchHtml).show();
 
+        }
+
+      }
+
+    };
+
+    /**
+     * 处理单关
+     * @param  {[type]} len       match长度
+     * @param  {[type]} list      过关方式
+     * @param  {[type]} tips      没有选择过关方式时的tips
+     * @param  {[type]} dgFlag    单关标志
+     * @param  {[type]} ggFlag    过关标志
+     * @param  {[type]} bunchHtml 过关方式组合html
+     * @param  {[type]} _this     bet对象
+     * @return {[type]}           [description]
+     */
+    bet.prototype.dgNav = function(len, list, tips, dgFlag, ggFlag, bunchHtml, _this) {
+      if (len < 1) {
+
+        _this.bunch = [];
+        list.hide().html('');
+        tips.show();
+        return;
+
+      } else {
+
+        for (var j = 0; j < len; j++) {
+          if (_this.match[j]['dgSale'] == '0') {
+            dgFlag = false;
+          }
+          if (_this.match[j]['ggSale'] == '0') {
+            ggFlag = false;
+          }
+        }
+        if (dgFlag) {
+          _this.toggleBunch(true, '1_1');
+          bunchHtml = '<li class="jtip active j-me-1" data-method="1_1" data-check="true">单关</li>';
+          tips.hide();
+          list.html(bunchHtml).show();
+        } else {
+          _this.bunch = [];
+          list.hide().html('');
+          tips.show();
         }
 
       }
@@ -1346,7 +1399,6 @@ define(['jquery', 'app'], function($, APP) {
 
 
 
-
       });
 
       //  Buy Main Toggle
@@ -1459,6 +1511,28 @@ define(['jquery', 'app'], function($, APP) {
           $dgHintI.hide();
 
         }
+
+      });
+
+      _this.navBox.on('click', 'a' , function(event) {
+        var t = $(this);
+        var $hhtz = $('#j-vote-nav').find('a[data-type="onlyHhtz"]');
+        var $sf = $('#j-vote-nav').find('a[data-type="onlySf"]');
+        _this.navType = t.attr('nav-type');
+        t.siblings('a').removeClass('active');
+        t.addClass('active');
+
+        switch(_this.navType){
+          case 'dg':
+            $hhtz.hide();
+            $sf.trigger('click');
+          break;
+          case 'ggtz':
+            $hhtz.show();
+            $hhtz.trigger('click');
+          break;
+        }
+
 
       });
 

@@ -44,6 +44,9 @@ define(['jquery'], function ($) {
       // 方案总金额
       var totalMoney = box.find('#j-total-money').html() * 1;
 
+      if(!totalMoney){
+        totalMoney = box.find('#j-total-money').val() * 1;
+      }
       // 获取份数
       var copies = box.find('.j-share-num').val();
 
@@ -80,7 +83,7 @@ define(['jquery'], function ($) {
 
       // 无购买总金额
       if (totalMoney === 0) {
-        ZHUI.updateHemai(0, ticheng, 0, 0, 0);
+        _this.updateHemai(0, ticheng, 0, 0, 0);
         return;
       }
 
@@ -143,8 +146,8 @@ define(['jquery'], function ($) {
       } else {
         rengouPercent = (rengouCopies / copies * 100).toFixed(2);
       }
-
       _this.updateHemai(copies, oneCopiesMoney, rengouCopies, ticheng, rengouPercent, baodiPercent, baodiCopies);
+
 
     };
 
@@ -181,7 +184,7 @@ define(['jquery'], function ($) {
 
       var _this = this;
 
-      $('.j-rengou,.br-select,#j-full-bao,.j-baodi-text,.j-share-num').on('change', function (event) {
+      $('.j-rengou,.br-select,#j-full-bao,.j-baodi-text,.j-share-num,.j-max-money').on('change', function (event) {
         _this.setHeMaiTotal();
       });
 

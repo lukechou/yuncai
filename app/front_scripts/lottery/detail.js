@@ -313,13 +313,13 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
           }
         };
 
-        if (Detail.lotyName === 'r9' || Detail.lotyName === 'sfc') {
+        if (Detail.lotyName === 'r9' || Detail.lotyName === 'sfc' || Detail.lotyName === 'fc3d') {
 
           midHtml = '第' + Detail.qihao + '期';
 
         }
 
-        template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span></p><p>您认购<span><%= pay %></span>份</p><p>共需支付<span class="fc-3"><%= payMoney %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
+        template = _.template('<div class="frbox"><img src="' + staticHostURI + '/front_images/fail.png" alt="success" class="icon"><div class="text"><p><%= lotyName%> ' + midHtml + '</p><p>方案总金额<span class="fc-3"><%= total %></span>元</p><p>您认购<span><%= pay %></span>份</p><p>共需支付<span class="fc-3"><%= payMoney %>.00</span>元</p><div class="btns"><button class="btn btn-danger" id="buyConfirm">确定</button><button class="btn btn-gray" data-dismiss="modal">取消</button></div></div></div>');
 
         h = template({
           lotyName: Detail.lotyCNName,
@@ -350,15 +350,13 @@ require(['jquery', 'lodash', 'store', 'app', 'pager', 'bootstrap', 'tipsy'], fun
   });
 
   $(".j-fileForm").submit(function() {
-    //console.log(Detail);
-    //debugger;
+
     var t = $(this);
     var playName = Detail.playName;
     var fileName = '';
     var url = '';
     var $upfile = t.find('.j-upfile');
     var formData = new FormData(t[0]);
-
 
     url = '/lottery/upload/code/match-in-project/jczq/' + playName;
 

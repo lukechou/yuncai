@@ -221,7 +221,6 @@ define(['jquery', 'bootstrap'], function($) {
     app.prototype.checkLogin = function(money, o, notCheckMoney) {
 
       var _this = this;
-
       money = Number(money);
 
       _this.checkBuyMoney = money;
